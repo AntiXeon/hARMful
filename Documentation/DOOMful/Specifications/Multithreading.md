@@ -11,7 +11,7 @@ The current feature provides a thread manager. The aim of this manager is to let
 ## Terminology
 | Word           | Definition                                                                          |
 |----------------|-------------------------------------------------------------------------------------|
-| Developer      | User of the logging system to create new applications                               |
+| Developer      | User of the **hARMful** API to create new applications                              |
 | Join a thread  | Wait until the end of the execution of a thread                                     |
 | Loop           | Fixed or indeterminate amount of repetitions of a part of code                      |
 | Thread         | Task that can be concurrently executed to another task in the same application      |
