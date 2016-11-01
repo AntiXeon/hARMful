@@ -14,6 +14,7 @@ However, performances can themselves be lowered by the profiling tool. It is so 
 | Profiler       | Tool to measure the time a task (part of) takes to be executed                      |
 | Profiled task  | Task (part of) for which the execution time is measured                             |
 | Release mode   | Compilation configuration in which the execution time is minimized by the compiler  |
+| Thread         | Task that can be concurrently executed to another task in the same application      |
 
 ## Objectives
 The profiler can manage several profiled tasks. Each task is identified by a name.
@@ -25,9 +26,11 @@ A task may be split in different subparts, so the profiler must be able to aggre
 * From this moment, the execution time of each profiled tasks can be grabbed from the profiler, until the next end of the main loop.
 * When the application is closing, the profiler is closed too.
 
+Since it can measure different parts of the code, the profiler must be thread-safe.
+
 When the application is compiled using a release configuration, the profiler is not effective. There is no CPU overhead because of calling the profiler functions.
 
 ## Limitations
 The profiler is only available for the debug configuration.
 
-The execution time is measured in milliseconds.
+The execution time is measured in milliseconds. The cumulated execution time does not distinguish tasks running on separated threads.
