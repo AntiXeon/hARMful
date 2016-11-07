@@ -1,0 +1,92 @@
+template <class K, class V>
+PairList<K,V>::hIterator::hIterator() : Iterator(NULL), m_current(NULL) {}
+
+template <class K, class V>
+PairList<K,V>::hIterator::hIterator(PairList* list, PairNode* node) : Iterator(list), m_current(node) {}
+
+template <class K, class V>
+PairList<K,V>::hIterator::hIterator(PairList<K,V>::hIterator* other) : Iterator(other -> m_collection) {
+    m_accessIterator.lock() ;
+        (other -> m_accessIterator).lock() ;
+            m_current = other -> m_current ;
+        (other -> m_accessIterator).unlock() ;
+    m_accessIterator.unlock() ;
+}
+
+template <class K, class V>
+PairList<K,V>::hIterator::~hIterator() {}
+
+
+template <class K, class V>
+bool PairList<K,V>::hIterator::hasNext() {
+    bool result ;
+
+    m_accessIterator.lock() ;
+        result = (m_current != NULL) ;
+    m_accessIterator.unlock() ;
+
+    return result ;
+}
+
+template <class K, class V>
+K PairList<K,V>::hIterator::getKey() {
+    K key ;
+
+    m_accessIterator.lock() ;
+        key = (m_current != NULL) ? (m_current -> getPair()).m_key : 0 ;
+    m_accessIterator.unlock() ;
+
+    return key ;
+}
+
+template <class K, class V>
+V PairList<K,V>::hIterator::getValue() {
+    V value ;
+
+    m_accessIterator.lock() ;
+        value = (m_current != NULL) ? (m_current -> getPair()).m_value : 0 ;
+    m_accessIterator.unlock() ;
+
+    return value ;
+}
+
+
+template <class K, class V>
+typename PairList<K,V>::hIterator PairList<K,V>::hIterator::operator++(int) {
+    // Copy the iterator
+    hIterator copy(this) ;
+
+    m_accessIterator.lock() ;
+        // Go to the next node in this iteration
+        if (m_current != NULL)
+            m_current = m_current -> getNext() ;
+    m_accessIterator.unlock() ;
+
+    // Return the copy that is still on the previous node
+    return copy ;
+}
+
+template <class K, class V>
+typename PairList<K,V>::hIterator& PairList<K,V>::hIterator::operator++() {
+    m_accessIterator.lock() ;
+        // Go to the next node
+        if (m_current != NULL)
+            m_current = m_current -> getNext() ;
+    m_accessIterator.unlock() ;
+
+    // Return the current iterator
+    return *this ;
+}
+
+template <class K, class V>
+bool PairList<K,V>::hIterator::operator==(const PairList<K,V>::hIterator& other) {
+    bool isEqual = ((m_collection == (other.m_collection))
+                        && (m_current == (other.m_current))) ;
+
+    return isEqual ;
+}
+
+template <class K, class V>
+bool PairList<K,V>::hIterator::operator!=(const PairList<K,V>::hIterator& other) {
+    return !(*this == other) ;
+}

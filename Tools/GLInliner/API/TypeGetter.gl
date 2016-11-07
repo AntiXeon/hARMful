@@ -1,0 +1,10 @@
+void glGetBooleanv(GLenum pname,GLboolean* params);
+void glGetDoublev(GLenum pname,GLdouble* params);
+void glGetFloatv(GLenum pname,GLfloat* params);
+void glGetIntegerv(GLenum pname,GLint* params);
+void glGetInteger64v(GLenum pname,GLint64* params);
+void glGetBooleani_v(GLenum pname,GLuint index,GLboolean* data);
+void glGetIntegeri_v(GLenum pname,GLuint index,GLint* data);
+void glGetInteger64i_v(GLenum pname,GLuint index,GLint64* data);
+const GLubyte* glGetString(GLenum name);
+const GLubyte* glGetStringi(GLenum name,GLuint index);

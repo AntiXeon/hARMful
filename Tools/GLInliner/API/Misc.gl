@@ -1,0 +1,22 @@
+void glBindFragDataLocation(GLuint program,GLuint colorNumber,const char* name);
+void glBindFragDataLocationIndexed(GLuint program,GLuint colorNumber,GLuint index,const char* name);
+
+GLenum glGetError(void);
+GLint glGetFragDataIndex(GLuint program,const char* name);
+GLint glGetFragDataLocation(GLuint program,const char* name);
+void glGetMultisamplefv(GLenum pname,GLuint index,GLfloat* val);
+
+void glGetTransformFeedbackVarying(GLuint program,GLuint index,GLsizei bufSize,GLsizei* length,GLsizei* size,GLenum* type,char* name);
+
+void glHint(GLenum target,GLenum mode);
+
+void glPixelStoref(GLenum pname,GLfloat param);
+void glPixelStorei(GLenum pname,GLint param);
+
+void glPrimitiveRestartIndex(GLuint index);
+void glProvokingVertex(GLenum provokeMode);
+
+void glReadPixels(GLint x,GLint y,GLsizei width,GLsizei height,GLenum format,GLenum type,GLvoid* data);
+
+void glSampleCoverage(GLclampf value,GLboolean invert);
+void glSampleMaski(GLuint maskNumber,GLbitfield mask);

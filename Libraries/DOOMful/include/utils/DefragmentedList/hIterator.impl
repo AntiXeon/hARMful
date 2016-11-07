@@ -1,0 +1,91 @@
+template <class T>
+DefragmentedList<T>::hIterator::hIterator() : Iterator(NULL), m_current(NULL) {}
+
+template <class T>
+DefragmentedList<T>::hIterator::hIterator(DefragmentedList* list, Node* node) : Iterator(list), m_current(node) {}
+
+template <class T>
+DefragmentedList<T>::hIterator::hIterator(DefragmentedList<T>::hIterator* other) : Iterator(other -> m_collection) {
+    m_accessIterator.lock() ;
+        (other -> m_accessIterator).lock() ;
+            m_current = other -> m_current ;
+        (other -> m_accessIterator).unlock() ;
+    m_accessIterator.unlock() ;
+}
+
+template <class T>
+DefragmentedList<T>::hIterator::~hIterator() {}
+
+
+template <class T>
+bool DefragmentedList<T>::hIterator::hasNext() {
+    bool result ;
+
+    m_accessIterator.lock() ;
+        result = (m_current != NULL) ;
+    m_accessIterator.unlock() ;
+
+    return result ;
+}
+
+template <class T>
+T& DefragmentedList<T>::hIterator::getValue() {
+    m_accessIterator.lock() ;
+        T& value = m_current -> getValue() ;
+    m_accessIterator.unlock() ;
+
+    return value ;
+}
+
+template <class T>
+typename DefragmentedList<T>::Code DefragmentedList<T>::hIterator::getCode() {
+    Code code ;
+
+    m_accessIterator.lock() ;
+        code.node = m_current ;
+        code.list = (DefragmentedList<T>*) m_collection ;
+    m_accessIterator.unlock() ;
+
+    return code ;
+}
+
+
+template <class T>
+typename DefragmentedList<T>::hIterator DefragmentedList<T>::hIterator::operator++(int) {
+    // Copy the iterator
+    hIterator copy(this) ;
+
+    m_accessIterator.lock() ;
+        // Go to the next node in this iteration
+        if (m_current != NULL)
+            m_current = m_current -> getNext() ;
+    m_accessIterator.unlock() ;
+
+    // Return the copy that is still on the previous node
+    return copy ;
+}
+
+template <class T>
+typename DefragmentedList<T>::hIterator& DefragmentedList<T>::hIterator::operator++() {
+    m_accessIterator.lock() ;
+        // Go to the next node
+        if (m_current != NULL)
+            m_current = m_current -> getNext() ;
+    m_accessIterator.unlock() ;
+
+    // Return the current iterator
+    return *this ;
+}
+
+template <class T>
+bool DefragmentedList<T>::hIterator::operator==(const DefragmentedList<T>::hIterator& other) {
+    bool isEqual = ((m_collection == (other.m_collection))
+                        && (m_current == (other.m_current))) ;
+
+    return isEqual ;
+}
+
+template <class T>
+bool DefragmentedList<T>::hIterator::operator!=(const DefragmentedList<T>::hIterator& other) {
+    return !(*this == other) ;
+}

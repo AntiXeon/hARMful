@@ -1,0 +1,750 @@
+#include <geometry/Quaternion.h>
+#include <Math.h>
+#include <FastMath.h>
+#include <MINDStrings.h>
+#include <debug/Test.h>
+
+namespace Mind {
+                                              /** CONSTRUCTION / DESTRUCTION **/
+    Quaternion::Quaternion() {
+        m_values = SIMD::Vector4f(0.f) ;
+        m_normalized = false ;
+    }
+
+    Quaternion::Quaternion(const SIMD::Vector4f& vector) : m_normalized(false) {
+        m_values = vector ;
+        isNormalized() ;
+    }
+
+    Quaternion::Quaternion(
+                           const Scalar& x,
+                           const Scalar& y,
+                           const Scalar& z,
+                           const Scalar& w
+                       ) : m_normalized(false) {
+        m_values = SIMD::Vector4f(x, y, z, w) ;
+        isNormalized() ;
+    }
+
+    Quaternion::Quaternion(const Matrix3x3f& matrix) : m_normalized(false) {
+        fromMatrix(matrix) ;
+        isNormalized() ;
+    }
+
+    Quaternion::Quaternion(const Matrix4x4f& matrix) : m_normalized(false) {
+        fromMatrix(matrix) ;
+        isNormalized() ;
+    }
+
+    Quaternion::Quaternion(
+                           const Vector3f& axis,
+                           const Scalar& angle
+                          ) : m_normalized(false) {
+        setRotation(axis, angle) ;
+        isNormalized() ;
+    }
+
+    Quaternion::~Quaternion() {}
+
+
+                                                             /*** UTILITIES ***/
+    Scalar Quaternion::dot(const Quaternion& other) const  {
+        return m_values.dot(other.m_values) ;
+    }
+
+    void Quaternion::normalize() {
+        Scalar norm = m_values.length() ;
+        if (length() > 1e-3) {
+            m_values = m_values / norm ;
+        }
+
+        m_normalized = true ;
+    }
+
+    Quaternion Quaternion::normalized() {
+        Scalar norm = length() ;
+        if (norm > 1e-3) {
+            return Quaternion(m_values / norm) ;
+        }
+
+        return Quaternion(0.f, 0.f, 0.f, 0.f) ;
+    }
+
+    bool Quaternion::isNormalized() {
+        m_normalized = (length() == 1.) ;
+        return m_normalized ;
+    }
+
+    Scalar Quaternion::length() {
+        return FastMath::sqrt(norm()) ;
+    }
+
+    Scalar Quaternion::norm() {
+        return m_values.norm() ;
+    }
+
+    bool Quaternion::equals(const Quaternion& other, const Scalar& error) {
+        return Math::abs((*this).dot(other)) > (1.f - error) ;
+    }
+
+    bool Quaternion::strictlyEquals(const Quaternion& other, const Scalar& error) {
+        return ((*this).dot(other)) > (1.f - error) ;
+    }
+
+    void Quaternion::invert() {
+        if (m_normalized) {
+            // For normalized Quaternion, it corresponds to the conjugate.
+            (*this) = conjugate() ;
+        }
+        else {
+            // In other cases, compute Conujugate / Squared.
+            SIMD::Vector4f squared = SIMD::Vector4f::square(m_values) ;
+            (*this) = Quaternion(conjugate().m_values / squared) ;
+        }
+    }
+
+    Quaternion Quaternion::conjugate() {
+        // Invert the vector part of the Quaternion.
+        SIMD::Vector4f copy = m_values ;
+        copy.changeSign<true, true, true, false>() ;
+        return Quaternion(copy) ;
+    }
+
+
+    void Quaternion::fromMatrix(const Matrix3x3f& input) {
+        Scalar trace = input[0][0] + input[1][1] + input[2][2] + 1. ;
+
+        if (trace > 0.) {
+            // Direct computation in case trace is positive.
+            Scalar root = 0.5 / FastMath::sqrt(trace) ;
+            SIMD::Vector4f::Mask maskMulRoot(true, true, true, false) ;
+            SIMD::Vector4f tmp = SIMD::Vector4f(
+                                                input[2][1] - input[1][2],
+                                                input[0][2] - input[2][0],
+                                                input[1][0] - input[0][1],
+                                                0.25 / root
+                                               ) ;
+            SIMD::Vector4f mul(root) ;
+            tmp.mulIf(maskMulRoot, SIMD::Vector4f(root)) ;
+            m_values = tmp ;
+        }
+        else {
+            // When trace is not positive, the maximal value on main diagonal of
+            // the matrix must be found to determine the computations to
+            // perform.
+            Scalar m00 = input[0][0] ;
+            Scalar m11 = input[1][1] ;
+            Scalar m22 = input[2][2] ;
+
+            Scalar diagonal[]  = { m00, m11, m22 } ;
+            Scalar max = Math::max(diagonal, 3) ;
+
+            if (max == m00) {
+                Scalar root = FastMath::sqrt(1. + m00 - m11 + m22) * 2. ;
+                Scalar invRoot = 1. / root ;
+                SIMD::Vector4f::Mask maskMulRoot(false, true, true, true) ;
+                SIMD::Vector4f tmp = SIMD::Vector4f(
+                                                    0.25 * root,
+                                                    input[0][1] + input[1][0],
+                                                    input[0][2] + input[2][0],
+                                                    input[1][2] - input[2][1]
+                                                   ) ;
+                tmp.mulIf(maskMulRoot, SIMD::Vector4f(invRoot)) ;
+                m_values = tmp ;
+            }
+            else if (max == m11) {
+                Scalar root = FastMath::sqrt(1. - m00 + m11 - m22) * 2. ;
+                Scalar invRoot = 1. / root ;
+                SIMD::Vector4f::Mask maskMulRoot(true, false, true, true) ;
+                SIMD::Vector4f tmp = SIMD::Vector4f(
+                                                    input[0][1] + input[1][0],
+                                                    0.25 * root,
+                                                    input[1][2] + input[2][1],
+                                                    input[0][2] - input[2][0]
+                                                   ) ;
+                tmp.mulIf(maskMulRoot, SIMD::Vector4f(invRoot)) ;
+                m_values = tmp ;
+            }
+            else {
+                Scalar root = FastMath::sqrt(1. - m00 - m11 + m22) * 2. ;
+                Scalar invRoot = 1. / root ;
+                SIMD::Vector4f::Mask maskMulRoot(true, true, false, true) ;
+                SIMD::Vector4f tmp = SIMD::Vector4f(
+                                                    input[0][2] + input[2][0],
+                                                    input[1][2] + input[2][1],
+                                                    0.25 * root,
+                                                    input[0][1] - input[1][0]
+                                                   ) ;
+                tmp.mulIf(maskMulRoot, SIMD::Vector4f(invRoot)) ;
+                m_values = tmp ;
+            }
+        }
+    }
+
+    void Quaternion::fromMatrix(const Matrix4x4f& input) {
+        Matrix3x3f tmp(input) ;
+        fromMatrix(tmp) ;
+    }
+
+    Matrix3x3f& Quaternion::toMatrix(Matrix3x3f& output) {
+        // Defined some indices to make access more readable.
+        const unsigned int X = 0 ;
+        const unsigned int Y = 0 ;
+        const unsigned int Z = 0 ;
+        const unsigned int W = 0 ;
+
+        // Compute each coordinate product with each other.
+        float* values = m_values ;
+
+        // So, compute X*X, Y*X, Z*X, W*X.
+        float* productX = (m_values * values[0]) ;
+        // So, compute X*Y, Y*Y, Z*Y, W*Y.
+        float* productY = (m_values * values[1]) ;
+        // So, compute X*Z, Y*Z, Z*Z, W*Z.
+        float* productZ = (m_values * values[2]) ;
+        // So, compute X*W, Y*W, Z*W, W*W.
+        float* productW = m_values * values[3]) ;
+
+        // Matrice values are to numerous to enter in a single Vector4.
+        // Thus, computations are done with two Vector4.
+        SIMD::Vector4f partA(
+                             productX[Y] - productZ[W],     // output[0][1]
+                             productX[Z] + productY[W],     // output[0][2]
+                             productX[Y] + productZ[W],     // output[1][0]
+                             0.f
+                            ) ;
+        partA *= 2. ;
+        float* arrayPartA = partA ;
+
+        SIMD::Vector4f partB(
+                             productY[Z] - productX[W],     // output[2][1]
+                             productX[Z] - productY[W],     // output[2][0]
+                             productY[Z] + productX[W],     // output[2][1]
+                             0.f
+                            ) ;
+        partB *= 2. ;
+        float* arrayPartB = partB ;
+
+
+        // Value on the matrix diagonal have special process.
+        SIMD::Vector4f diag(
+                            (productY[Y] + productZ[Z]),    // output[0][0]
+                            (productX[X] + productZ[Z]),    // output[1][1]
+                            (productX[X] + productY[Y]),    // output[2][2]
+                            0.f                             // Unused value
+                           ) ;
+        diag = 1. - (2. * diag) ;
+        float* arrayDiag = diag.get(arrayDiag) ;
+
+        // Put values in the matrix.
+        output[0][0] = arrayDiag[0] ;
+        output[0][1] = arrayPartA[0] ;
+        output[0][2] = arrayPartA[1] ;
+        output[1][0] = arrayPartA[2] ;
+        output[1][1] = arrayDiag[1] ;
+        output[1][2] = arrayPartB[0] ;
+        output[2][0] = arrayPartB[1] ;
+        output[2][1] = arrayPartB[2] ;
+        output[2][2] = arrayDiag[2] ;
+
+        return output ;
+    }
+
+    Matrix4x4f& Quaternion::toMatrix(Matrix4x4f& output) {
+        Matrix3x3f tmp ;
+        toMatrix(tmp) ;
+        output.copy(tmp) ;
+
+        output[0][3] = 0. ;
+        output[1][3] = 0. ;
+        output[2][3] = 0. ;
+        output[3][0] = 0. ;
+        output[3][1] = 0. ;
+        output[3][2] = 0. ;
+        output[3][3] = 1. ;
+
+        return output ;
+    }
+
+    void Quaternion::slerp(
+                           const Quaternion& from,
+                           const Quaternion& to,
+                           const Scalar& time
+                       ) {
+        slerp(from, to, time, *this) ;
+    }
+
+    void Quaternion::nlerp(
+                           const Quaternion& from,
+                           const Quaternion& to,
+                           const Scalar& time
+                          ) {
+        nlerp(from, to, time, *this) ;
+    }
+
+    void Quaternion::lerp(
+                          const Quaternion& from,
+                          const Quaternion& to,
+                          const Scalar& time
+                         ) {
+        lerp(from, to, time, *this) ;
+    }
+
+
+    void Quaternion::slerp(
+                           const Quaternion& from,
+                           const Quaternion& to,
+                           const Scalar& time,
+                           Quaternion& result
+                          ) {
+        CHECK_CONDITION((time >= 0.f), QuaternionMsg::Error::TimeMustBeGreaterOrEqualZero) ;
+        CHECK_CONDITION((time <= 1.f), QuaternionMsg::Error::TimeMustBeLowerOrEqualOne) ;
+
+        #ifdef PARALLELIZATION_ENABLED
+            slerpSIMD(from, to, time, result) ;
+        #else
+            slerpFPU(from, to, time, result) ;
+        #endif
+    }
+
+    void Quaternion::nlerp(
+                           const Quaternion& from,
+                           const Quaternion& to,
+                           const Scalar& time,
+                           Quaternion& result
+                          ) {
+        lerp(from, to, time, result) ;
+        result.normalize() ;
+    }
+
+    void Quaternion::lerp(
+                          const Quaternion& from,
+                          const Quaternion& to,
+                          const Scalar& time,
+                          Quaternion& result
+                         ) {
+        CHECK_CONDITION((time >= 0.f), QuaternionMsg::Error::TimeMustBeGreaterOrEqualZero) ;
+        CHECK_CONDITION((time <= 1.f), QuaternionMsg::Error::TimeMustBeLowerOrEqualOne) ;
+        // Compute : [from * (1 - time)] + (to * time)
+        SIMD::Vector4f percentFrom = from.m_values * (1.f - time) ;
+        SIMD::Vector4f percentTo = to.m_values * time ;
+        result.m_values = percentFrom + percentTo ;
+    }
+
+
+    void Quaternion::slerpSIMD(
+                               const Quaternion& from,
+                               const Quaternion& to,
+                               const Scalar& time,
+                               Quaternion& result
+                              ) {
+        const SIMD::Vector4f SignBitmask = 0x80000000 ;
+        const SIMD::Vector4f One = 1.f ;
+
+        // Compute the dot product between Quaternions
+        SIMD::Vector4f dot = from.dot(to) ;
+        // Set following values to their absolute value.
+        SIMD::Vector4f sign = SignBitmask & dot ;
+        dot = dot ^ sign ;                                                      // invert dot product
+        SIMD::Vector4f localTo = to.m_values ^ sign ;                           // invert quaternion "to" values
+        // Cache values
+        SIMD::Vector4f dotMinusOne = dot - One ;                                // dot - 1
+        SIMD::Vector4f vectorizedTime = time ;                                  // time
+        SIMD::Vector4f vectorizedDeltaTime = 1.f - time ;                       // 1 - time
+
+        // Compute the coefficients for time and delta time.
+        // This allows to have the "quantity" of "from" quaternion and "to"
+        // quaternion in the "result" one (similarly to what is done in LERP).
+        SIMD::Vector4f coefficientOfDeltaTime ;
+        slerpSIMDCoefficient(
+                             vectorizedDeltaTime,
+                             dotMinusOne,
+                             coefficientOfDeltaTime
+                            ) ;
+        coefficientOfDeltaTime = coefficientOfDeltaTime * (from.m_values) ;
+
+        SIMD::Vector4f coefficientOfTime ;
+        slerpSIMDCoefficient(
+                             vectorizedTime,
+                             dotMinusOne,
+                             coefficientOfTime
+                            ) ;
+        coefficientOfTime = coefficientOfTime * localTo ;
+
+        // Combine the two calculations to find the required rotation.
+        // Compute : [from * (1 - time)] + (to * time)
+        result.m_values = coefficientOfDeltaTime + coefficientOfTime ;
+    }
+
+    void Quaternion::slerpSIMDCoefficient(
+                                          const SIMD::Vector4f& time,
+                                          const SIMD::Vector4f& dotMinusOne,
+                                          SIMD::Vector4f& result
+                                         ) {
+            // For more informations on this part, check the following article:
+            // David Eberly (2011) A Fast and Accurate Algorithm for Computing
+            // SLERP, Journal of Graphics, GPU, and Game Tools, 15:3, 161-176
+
+            const SIMD::Vector4f One = 1.f ;
+
+            // Operator Mu used in optimized SLERP operations.
+            // The value is defined for 8 degrees polynomial function
+            // used to approximate sine mathematical functions.
+            // As the value is only used as added to one, the value is
+            // directly set as a constant.
+            const Scalar OnePlusMu = 1.f + 0.90110745351730037f ;
+
+            // The U coefficients series, precomputed constants, splitted in two
+            // Vector4f objects.
+            const SIMD::Vector4f U0123 = SIMD::Vector4f(
+                                                        1.f / (1.f * 3.f),
+                                                        1.f / (2.f * 5.f),
+                                                        1.f / (3.f * 7.f),
+                                                        1.f / (4.f * 9.f)
+                                                       ) ;
+            const SIMD::Vector4f U4567 = SIMD::Vector4f(
+                                                        1.f / (5.f * 11.f),
+                                                        1.f / (6.f * 13.f),
+                                                        1.f / (7.f * 15.f),
+                                                        OnePlusMu / (8.f * 17.f)
+                                                       ) ;
+
+            // The V coefficients series, precomputed constants, splitted in two
+            // Vector4f objects.
+            const SIMD::Vector4f V0123 = SIMD::Vector4f(
+                                                        1.f / 3.f,
+                                                        2.f / 5.f,
+                                                        3.f / 7.f,
+                                                        4.f / 9.f
+                                                       ) ;
+            const SIMD::Vector4f V4567 = SIMD::Vector4f(
+                                                        5.f / 11.f,
+                                                        6.f / 13.f,
+                                                        7.f / 15.f,
+                                                        OnePlusMu * (8.f / 17.f)
+                                                       ) ;
+
+        SIMD::Vector4f squaredTime = SIMD::Vector4f::square(time) ;
+        // Buffer to store results, splitted in two parts.
+        SIMD::Vector4f buffer0123 ;
+        SIMD::Vector4f buffer4567 ;
+        // Temporary computed values.
+        SIMD::Vector4f tmpBuffer ;
+        SIMD::Vector4f tmpResult ;
+
+        // (dot - 1) * (
+        //              [(u4 - t^2) - v4],
+        //              [(u5 - t^2) - v5],
+        //              [(u6 - t^2) - v6],
+        //              [(u7 - t^2) - v7]
+        //             )
+        buffer4567 = dotMinusOne * SIMD::Vector4f::mul_sub(U4567, squaredTime, V4567) ;
+        // Compute the polynomial function, starting from the lower powers.
+        SIMD::Vector4f::shuffle<3,3,3,3>(buffer4567, tmpBuffer) ;
+        tmpResult = tmpBuffer + One ;
+
+        SIMD::Vector4f::shuffle<2,2,2,2>(buffer4567, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        SIMD::Vector4f::shuffle<1,1,1,1>(buffer4567, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        SIMD::Vector4f::shuffle<0,0,0,0>(buffer4567, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        // (dot - 1) * (
+        //              [(u0 - t^2) - v0],
+        //              [(u1 - t^2) - v1],
+        //              [(u2 - t^2) - v2],
+        //              [(u3 - t^2) - v3]
+        //             )
+        buffer0123 = dotMinusOne * SIMD::Vector4f::mul_sub(U0123, squaredTime, V0123) ;
+        // Continue computing the polynomial function from the higher powers.
+        SIMD::Vector4f::shuffle<2,2,2,2>(buffer0123, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        SIMD::Vector4f::shuffle<2,2,2,2>(buffer0123, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        SIMD::Vector4f::shuffle<1,1,1,1>(buffer0123, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        SIMD::Vector4f::shuffle<0,0,0,0>(buffer0123, tmpBuffer) ;
+        tmpResult = SIMD::Vector4f::mul_add(tmpBuffer, tmpResult, One) ;
+
+        result = time * tmpResult ;
+    }
+
+    void Quaternion::slerpFPU(
+                              const Quaternion& from,
+                              const Quaternion& to,
+                              const Scalar& time,
+                              Quaternion& result
+                             ) {
+        // For more informations on this part, check the following article:
+        // David Eberly (2011) A Fast and Accurate Algorithm for Computing
+        // SLERP, Journal of Graphics, GPU, and Game Tools, 15:3, 161-176
+
+        // Operator Mu used in optimized SLERP operations.
+        // The value is defined for 8 degrees polynomial function
+        // used to approximate sine mathematical functions.
+        // As the value is only used as added to one, the value is
+        // directly set as a constant.
+        const Scalar OnePlusMu = 1.f + 0.90110745351730037f ;
+
+        // The U coefficients series, precomputed constants.
+        const Scalar U[8] = {
+                             1.f / (1.f * 3.f),
+                             1.f / (2.f * 5.f),
+                             1.f / (3.f * 7.f),
+                             1.f / (4.f * 9.f),
+                             1.f / (5.f * 11.f),
+                             1.f / (6.f * 13.f),
+                             1.f / (7.f * 15.f),
+                             OnePlusMu / (8.f * 17.f)
+                            } ;
+        // The V coefficients series, precomputed constants.
+        const Scalar V[8] = {
+                             1.f / 3.f,
+                             2.f / 5.f,
+                             3.f / 7.f,
+                             4.f / 9.f,
+                             5.f / 11.f,
+                             6.f / 13.f,
+                             7.f / 15.f,
+                             OnePlusMu * (8.f / 17.f)
+                            } ;
+
+        // Cache precompiled values.
+        Scalar dot = from.dot(to) ;
+        // Set following values to their absolute value.
+        bool isDotNegative = (dot < 0.f) ;
+        dot = Math::abs(dot) ;
+        Scalar dotMinusOne = dot - 1.f ;
+        Scalar deltaTime = 1.f - time ;
+        Scalar squaredTime = time * time ;
+        Scalar squaredDeltaTime = deltaTime * deltaTime ;
+
+        Scalar bufferTime[8] ;
+        Scalar bufferDeltaTime[8] ;
+
+        // Cache buffered values of the polynomial functions.
+        for (int index = 7 ; index >= 0 ; --index) {
+            bufferTime[index] = ((U[index] * squaredTime) - V[index]) * dotMinusOne ;
+            bufferDeltaTime[index] = ((U[index] * squaredDeltaTime) - V[index]) * dotMinusOne ;
+        }
+
+        Scalar computationDeltaTime = deltaTime * (
+                                                   1.f + bufferDeltaTime[0] *
+                                                      (1.f + bufferDeltaTime[1] *
+                                                          (1.f + bufferDeltaTime[2] *
+                                                              (1.f + bufferDeltaTime[3] *
+                                                                  (1.f + bufferDeltaTime[4] *
+                                                                      (1.f + bufferDeltaTime[5] *
+                                                                          (1.f + bufferDeltaTime[6] *
+                                                                              (1.f + bufferDeltaTime[7])
+                                                                          )
+                                                                      )
+                                                                  )
+                                                              )
+                                                          )
+                                                      )
+                                                  ) ;
+        SIMD::Vector4f fromContribution = (from.m_values * computationDeltaTime) ;
+
+        Scalar computationTime = time * (
+                                         1.f + bufferTime[0] *
+                                            (1.f + bufferTime[1] *
+                                                (1.f + bufferTime[2] *
+                                                    (1.f + bufferTime[3] *
+                                                        (1.f + bufferTime[4] *
+                                                            (1.f + bufferTime[5] *
+                                                                (1.f + bufferTime[6] *
+                                                                    (1.f + bufferTime[7])
+                                                                )
+                                                            )
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        ) ;
+        if (isDotNegative) {
+            computationTime = -computationTime ;
+        }
+        SIMD::Vector4f toContribution = (to.m_values * computationTime) ;
+
+        // Combine the two calculations to find the required rotation.
+        // Compute : [from * (1 - time)] + (to * time)
+        result.m_values = fromContribution + toContribution ;
+    }
+
+
+    void Quaternion::setRotation(const Vector3f& axis, const Scalar& angle) {
+        Scalar sinus = sin(angle) ;
+        Scalar cosinus = cos(angle) ;
+
+        Vector3f convertedAxis = axis * sinus ;
+        float* axisAsArray = convertedAxis ;
+        (*this).m_values = SIMD::Vector4f(
+                                        axisAsArray[0],
+                                        axisAsArray[1],
+                                        axisAsArray[2],
+                                        cosinus
+                                       ) ;
+        normalize() ;
+    }
+
+                                                     /*** SETTERS / GETTERS ***/
+    Scalar Quaternion::getX() const {
+        return ((float*)m_values)[0] ;
+    }
+
+    Scalar Quaternion::getY() const {
+        return ((float*)m_values)[1] ;
+    }
+
+    Scalar Quaternion::getZ() const {
+        return ((float*)m_values)[2] ;
+    }
+
+    Scalar Quaternion::getW() const {
+        return ((float*)m_values)[3] ;
+    }
+
+    AlignedArray4f& Quaternion::getCoordinates(AlignedArray4f& output) const {
+        m_values.get(output) ;
+        return output ;
+    }
+
+                                                     /*** OPERATORS ***/
+                                                          /** ACCESS **/
+    Scalar Quaternion::operator[] (const size_t index) const {
+        return ((float*)m_values)[index] ;
+    }
+
+    Scalar& Quaternion::operator[] (const size_t index) {
+        return ((float*)m_values)[index] ;
+    }
+
+
+                                                     /** COMPARISONS **/
+    bool Quaternion::operator== (const Quaternion& other) const {
+        const int True = 1 ;
+
+        SIMD::Vector4f::Mask equality = (m_values == other.m_values) ;
+        return ((equality.get(0) == True) &&
+                    (equality.get(1) == True) &&
+                    (equality.get(2) == True) &&
+                    (equality.get(3) == True)) ;
+    }
+
+    bool Quaternion::operator!= (const Quaternion& other) const {
+        return !(*this == other) ;
+    }
+
+
+                                                     /** AFFECTATION **/
+    Quaternion& Quaternion::operator= (const Matrix3x3f& matrix) {
+        fromMatrix(matrix) ;
+        return *this ;
+    }
+
+    Quaternion& Quaternion::operator= (const Matrix4x4f& matrix) {
+        fromMatrix(matrix) ;
+        return *this ;
+    }
+
+
+                                                          /** SCALES **/
+    Quaternion Quaternion::operator* (const Quaternion& other) const {
+        // Get the values from the Quaternions.
+        float* thisArray = m_values ;
+        SIMD::Vector4f thisAsVector = SIMD::Vector4f(
+                                                     thisArray[0],
+                                                     thisArray[1],
+                                                     thisArray[2],
+                                                     0.f
+                                                    ) ;
+        Scalar thisScalar = thisArray[3] ;
+
+        float* otherArray = other.m_values ;
+        SIMD::Vector4f otherAsVector = SIMD::Vector4f(
+                                                      otherArray[0],
+                                                      otherArray[1],
+                                                      otherArray[2],
+                                                      0.f
+                                                     ) ;
+        Scalar otherScalar = otherArray[3] ;
+
+        // Compute the vector part as :
+        // Vc = (Vc1 x Vc2) + (Vc1 * Sc2) + (Vc2 * Sc1)
+        SIMD::Vector4f resultVector = (thisAsVector * otherAsVector) +
+                                        (thisAsVector * otherScalar) +
+                                        (otherAsVector * thisScalar) ;
+        // Compute the scalar part as :
+        // Sc = (Vc1 . Vc2)
+        Scalar resultScalar = thisAsVector.dot(otherAsVector) ;
+
+        // Merge parts into a single Vector4f and put it in the resulting
+        // Quaternion.
+        float* resultArray = resultVector ;
+        resultVector = SIMD::Vector4f(
+                                      resultArray[0],
+                                      resultArray[1],
+                                      resultArray[2],
+                                      resultScalar
+                                     ) ;
+
+        return resultVector ;
+    }
+
+    Quaternion Quaternion::operator* (const Scalar& factor) const {
+        return (m_values * factor) ;
+    }
+
+    Quaternion& Quaternion::operator*= (const Scalar& factor) {
+        *this = (*this * factor) ;
+        return *this ;
+    }
+
+    Quaternion& Quaternion::operator*= (const Quaternion& other) {
+        *this = (*this * other) ;
+        return *this ;
+    }
+
+    Quaternion Quaternion::operator/ (const Scalar& factor) const {
+        return (m_values / factor) ;
+    }
+
+    Quaternion& Quaternion::operator/= (const Scalar &factor) {
+        *this = (*this / factor) ;
+        return *this ;
+    }
+
+
+                                                       /** ADDITIONS **/
+    Quaternion Quaternion::operator+ (const Quaternion& other) const {
+        return (m_values + other.m_values) ;
+    }
+
+    Quaternion& Quaternion::operator+= (const Quaternion& other) {
+        *this = (*this + other) ;
+        return *this ;
+    }
+
+
+                                           /** DIFFERENCE - NEGATIVE **/
+    Quaternion Quaternion::operator- () const {
+        return -m_values ;
+    }
+
+    Quaternion Quaternion::operator- (const Quaternion& other) const {
+        return (m_values - other.m_values) ;
+    }
+
+    Quaternion& Quaternion::operator-= (const Quaternion& other) {
+        *this = (*this - other) ;
+        return *this ;
+    }
+
+} ;

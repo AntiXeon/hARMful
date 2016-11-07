@@ -1,0 +1,116 @@
+                                              /** CONSTRUCTION / DESTRUCTION **/
+template <typename Type, unsigned int Size>
+Array<Type, Size>::Array() {}
+
+template <typename Type, unsigned int Size>
+Array<Type, Size>::Array(Type* values) {
+    memcpy(m_array, values, sizeof(Type) * Size) ;
+}
+
+template <typename Type, unsigned int Size>
+Array<Type, Size>::~Array() {}
+
+
+                                                               /** UTILITIES **/
+template <typename Type, unsigned int Size>
+inline void Array<Type, Size>::fill(const Type& value) {
+    emset(m_array, value, sizeof(Type) * Size) ;
+}
+
+template <typename Type, unsigned int Size>
+inline void Array<Type, Size>::swap(Array<Type, Size>& other) {
+    const size_t TotalSizeInBytes = sizeof(Type) * Size ;
+
+    Type tmp[Size] ;
+    memcpy(tmp, m_array, TotalSizeInBytes) ;
+    memcpy(m_array, other.m_array, TotalSizeInBytes) ;
+    memcpy(other.m_array, tmp, TotalSizeInBytes) ;
+}
+
+
+                                                       /** GETTERS / SETTERS **/
+template <typename Type, unsigned int Size>
+inline bool Array<Type, Size>::empty() const {
+    return (Size == 0) ;
+}
+
+template <typename Type, unsigned int Size>
+Type* Array<Type, Size>::data() {
+    return m_array ;
+}
+
+template <typename Type, unsigned int Size>
+const Type* Array<Type, Size>::data() const {
+    return m_array ;
+}
+
+template <typename Type, unsigned int Size>
+inline Type& Array<Type, Size>::operator[] (uint32_t index) {
+    return at(index) ;
+}
+
+template <typename Type, unsigned int Size>
+inline const Type& Array<Type, Size>::operator[] (uint32_t index) const {
+    return m_array[index] ;
+}
+
+template <typename Type, unsigned int Size>
+inline Type& Array<Type, Size>::at(uint32_t index) {
+    return m_array[index] ;
+}
+
+template <typename Type, unsigned int Size>
+inline unsigned int Array<Type, Size>::length() const {
+    return length() ;
+}
+
+template <typename Type, unsigned int Size>
+inline unsigned int Array<Type, Size>::size() {
+    return Size ;
+}
+
+
+                                                 /*** AFFECTATION OPERATORS ***/
+template <typename Type, unsigned int Size>
+Array<Type, Size>& Array<Type, Size>::operator=(const Array<Type, Size>& other) {
+    for (unsigned int index = 0 ; index < Size ; ++index) {
+        m_array[index] = other.m_array[index] ;
+    }
+    return *this ;
+}
+
+template <typename Type, unsigned int Size>
+Array<Type, Size>& Array<Type, Size>::operator=(const Type* other) {
+    const size_t TotalSizeInBytes = sizeof(Type) * Size ;
+    memcpy(m_array, other, TotalSizeInBytes) ;
+    return *this ;
+}
+
+
+                                                  /*** COMPARISON OPERATORS ***/
+/**
+ * @brief   Check if two Array objects contain the same values.
+ * @param   a   First operand.
+ * @param   b   Second operand.
+ * @return  TRUE if the Arrays contain the same values, FALSE else.
+ */
+template <typename Type, unsigned int Size>
+static inline bool operator==(const Array<Type,Size>& a, const Array<Type,Size>& b) {
+    for (unsigned int index = 0 ; index < Size ; ++index) {
+        if (a[index] != b[index]) {
+            return false ;
+        }
+    }
+    return true ;
+}
+
+/**
+ * @brief   Check if two Array objects contain different values.
+ * @param   a   First operand.
+ * @param   b   Second operand.
+ * @return  TRUE if the Arrays contain the different values, FALSE else.
+ */
+template <typename Type, unsigned int Size>
+static inline bool operator!=(const Array<Type,Size>& a, const Array<Type,Size>& b) {
+    return !(a == b) ;
+}

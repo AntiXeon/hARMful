@@ -1,0 +1,10 @@
++--------------------------+
+| GUILEful version changes |
++--------------------------+
+
+V1.0:
+=====
+    * GUI : Simple GUI abstract classes. They are intended to be inherited in
+            concrete projects that depends on a specific graphic library.
+            The components are not intended to be moved on screen.
+                    

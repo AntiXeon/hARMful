@@ -1,0 +1,7 @@
+template <class T>
+DefragmentedList<T>::InnerList::InnerList() : length(0),
+                                              head(NULL),
+                                              tail(NULL) {}
+
+template <class T>
+DefragmentedList<T>::InnerList::~InnerList() {}

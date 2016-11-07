@@ -1,0 +1,379 @@
+template <class T>
+DefragmentedList<T>::DefragmentedList() {}
+
+template <class T>
+DefragmentedList<T>::DefragmentedList(size_t initialCacheSize) {
+    m_unused.head = new Node() ;
+
+    Node* last = m_unused.head ;
+    last -> transferTo(UnusedList) ;
+    for (size_t repeat = 1 ; repeat < initialCacheSize ; ++repeat) {
+        Node* newNode = new Node() ;
+        last -> setNext(newNode) ;
+        last = newNode ;
+        last -> transferTo(UnusedList) ;
+    }
+
+    m_unused.tail = last ;
+}
+
+template <class T>
+DefragmentedList<T>::~DefragmentedList() {
+    // Clear the "used" list
+    while (m_used.head != NULL) {
+        Node* oldHead = m_used.head ;
+        m_used.head = m_used.head -> getNext() ;
+        delete oldHead ;
+    }
+
+    // Clear the "unused" list
+    while (m_unused.head != NULL) {
+        Node* oldHead = m_unused.head ;
+        m_unused.head = m_unused.head -> getNext() ;
+        delete oldHead ;
+    }
+}
+
+
+template <class T>
+void DefragmentedList<T>::push(const T& value) {
+    m_accessCollection.lock() ;
+
+    invariant() ;
+
+    if (m_unused.head != NULL) {
+        // If there is at least one unused element, attach it to the used list.
+        if (m_used.tail != NULL) {
+            m_used.tail -> setNext(m_unused.head) ;
+            m_used.tail = m_unused.head ;
+        }
+        else {
+            m_used.head = m_used.tail = m_unused.head ;
+        }
+
+        m_used.tail -> setValue(value) ;
+        m_used.tail -> transferTo(UsedList) ;
+
+        // Change the unused head as the previous head is gone to "used" list.
+        m_unused.head = m_unused.head -> getNext() ;
+        if (m_unused.head != NULL) {
+            m_unused.head -> setPrevious(NULL) ;
+        }
+        else {
+            m_unused.tail = NULL ;
+        }
+
+        // Adjust the size of the lists
+        m_used.length = m_used.length + 1 ;
+        m_unused.length = m_unused.length - 1 ;
+    }
+    else {
+        // Else, no more Nodes in cache, a new one should be generated.
+        Node* newNode = new Node(value) ;
+
+        if (m_used.tail != NULL) {
+            m_used.tail -> setNext(newNode) ;
+            m_used.tail = newNode ;
+        }
+        else {
+            m_used.head = m_used.tail = newNode ;
+        }
+
+        m_used.tail -> setNext(NULL) ;
+        m_used.tail -> transferTo(UsedList) ;
+        // Adjust the size of the list
+        m_used.length = m_used.length + 1 ;
+    }
+
+    // Set the used list extremity clean of link to extra nodes
+    m_used.tail -> setNext(NULL) ;
+    m_used.head -> setPrevious(NULL) ;
+
+    if (m_unused.tail != NULL)
+        m_unused.tail -> setNext(NULL) ;
+
+    invariant() ;
+
+    m_accessCollection.unlock() ;
+}
+
+template <class T>
+void DefragmentedList<T>::pop() {
+    m_accessCollection.lock() ;
+
+    invariant() ;
+
+    if (m_used.tail != NULL) {
+        Node* newUsedTail = m_used.tail -> getPrevious() ;
+
+        if (m_unused.tail != NULL) {
+            m_unused.tail -> setNext(m_used.tail) ;
+        }
+        else {
+            m_unused.head = m_used.tail ;
+            m_unused.head -> setPrevious(NULL) ;
+        }
+
+        m_unused.tail = m_used.tail ;
+        m_used.tail -> transferTo(UnusedList) ;
+        m_used.tail = newUsedTail ;
+
+        // Adjust the size of the lists
+        m_used.length = m_used.length - 1 ;
+        m_unused.length = m_unused.length + 1 ;
+
+        // Adjust the extremities of the lists
+            // Used list
+        if (m_used.tail != NULL) {
+            m_used.tail -> setNext(NULL) ;
+        }
+        else {
+            ABORT_CONDITION((m_used.length == 0), ListMsg::Error::HeadNullButSizeGreaterThanZero) ;
+            m_used.head = NULL ;
+        }
+            // Unused list
+        if (m_unused.tail != NULL) {
+            m_unused.tail -> setNext(NULL) ;
+        }
+        else {
+            ABORT_CONDITION((m_unused.length == 0), ListMsg::Error::TailNullButSizeGreaterThanZero) ;
+            m_unused.head = NULL ;
+        }
+    }
+    else {
+        ABORT_CONDITION((m_used.head == NULL), ListMsg::Error::HeadNullIfNoTail) ;
+        ABORT_CONDITION((m_used.length == 0), ListMsg::Error::TailNullButSizeGreaterThanZero) ;
+    }
+
+    invariant() ;
+
+    m_accessCollection.unlock() ;
+}
+
+template <class T>
+void DefragmentedList<T>::insertAt(Code& code, const T& value) {
+    code.check(this) ;
+
+
+    m_accessCollection.lock() ;
+
+    invariant() ;
+
+    Node* previousNode = code.node ;
+    Node* nextNode = previousNode -> getNext() ;
+
+    if (m_unused.head != NULL) {
+        Node* insertedNode = m_unused.head ;
+        Node* nextUnusedHead = m_unused.head -> getNext() ;
+
+        // If there is at least one unused element, insert it to the position.
+        previousNode -> setNext(insertedNode) ;
+        insertedNode -> setNext(nextNode) ;
+        insertedNode -> setValue(value) ;
+        insertedNode -> transferTo(UsedList) ;
+
+        // Change the unused head as the previous head is gone to "used" list.
+        m_unused.head = nextUnusedHead ;
+        if (m_unused.head != NULL) {
+            m_unused.head -> setPrevious(NULL) ;
+        }
+        else {
+            m_unused.tail = NULL ;
+        }
+
+        // Adjust the size of the lists
+        m_used.length = m_used.length + 1 ;
+        m_unused.length = m_unused.length - 1 ;
+
+
+        if (previousNode == m_used.tail) {
+            m_used.tail = insertedNode ;
+        }
+    }
+    else {
+        // Else, no more Nodes in cache, a new one should be generated.
+        Node* newNode = new Node(value) ;
+        previousNode -> setNext(newNode) ;
+        newNode -> setNext(nextNode) ;
+        newNode -> transferTo(UsedList) ;
+
+        // Adjust the size of the list
+        m_used.length = m_used.length + 1 ;
+
+        if (previousNode == m_used.tail) {
+            m_used.tail = newNode ;
+        }
+    }
+
+    if (m_used.tail != NULL)
+        m_used.tail -> setNext(NULL) ;
+    if (m_unused.tail != NULL)
+        m_unused.tail -> setNext(NULL) ;
+
+    invariant() ;
+
+    m_accessCollection.unlock() ;
+}
+
+template <class T>
+void DefragmentedList<T>::remove(Code& code) {
+    code.check(this) ;
+
+
+    m_accessCollection.lock() ;
+
+    invariant() ;
+
+    if (m_used.tail != NULL) {
+        if (code.node == m_used.head) {
+            Node* unusedHead = m_unused.head ;
+            Node* nextNode = code.node -> getNext() ;
+
+            m_used.head -> setNext(unusedHead) ;
+            m_used.head -> transferTo(UnusedList) ;
+            m_unused.head = m_used.head ;
+            m_unused.head -> setPrevious(NULL) ;
+
+            m_used.head = nextNode ;
+            m_used.head -> setPrevious(NULL) ;
+        }
+        else {
+            Node* previousNode = code.node -> getPrevious() ;
+            Node* nextNode = code.node -> getNext() ;
+
+            if (m_unused.tail != NULL) {
+                m_unused.tail -> setNext(code.node) ;
+            }
+            else {
+                m_unused.head = m_unused.tail = code.node ;
+                m_unused.head -> setPrevious(NULL) ;
+            }
+
+            m_unused.tail = code.node ;
+            m_unused.tail -> transferTo(UnusedList) ;
+            m_unused.tail -> setNext(NULL) ;
+
+
+            previousNode -> setNext(nextNode) ;
+
+            // Update the tail of the list in case the tail has been removed.
+            if (m_used.tail == code.node) {
+                m_used.tail = previousNode ;
+            }
+            // Update the head of the list in case the head has been removed.
+            else if (m_used.head == code.node) {
+                m_used.head = nextNode ;
+            }
+        }
+
+        if (m_used.tail != NULL)
+            m_used.tail -> setNext(NULL) ;
+        if (m_unused.tail != NULL)
+            m_unused.tail -> setNext(NULL) ;
+
+        // Adjust the size of the lists
+        m_used.length = m_used.length - 1 ;
+        m_unused.length = m_unused.length + 1 ;
+    }
+
+    invariant() ;
+
+    m_accessCollection.unlock() ;
+}
+
+template <class T>
+size_t DefragmentedList<T>::size() {
+    size_t length ;
+
+    m_accessCollection.lock() ;
+        length = m_used.length ;
+    m_accessCollection.unlock() ;
+
+    return length ;
+}
+
+template <class T>
+typename DefragmentedList<T>::hIterator DefragmentedList<T>::begin() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_used.head) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+template <class T>
+typename DefragmentedList<T>::hIterator DefragmentedList<T>::end() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_used.tail -> getNext()) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+template <class T>
+typename DefragmentedList<T>::hIterator DefragmentedList<T>::rbegin() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_used.tail) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+template <class T>
+typename DefragmentedList<T>::hIterator DefragmentedList<T>::rend() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_used.head -> getPrevious()) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+template <class T>
+inline void DefragmentedList<T>::invariant() {
+    // USED LIST
+    if (m_used.head != NULL) {
+        ABORT_CONDITION((m_used.head -> getPrevious() == NULL), ListMsg::Error::NoPreviousNodeToHead) ;
+    }
+
+    if (m_used.tail != NULL) {
+        ABORT_CONDITION((m_used.tail -> getNext() == NULL), ListMsg::Error::NoNextNodeToTail) ;
+    }
+
+    if (m_used.length > 0) {
+        ABORT_CONDITION((m_used.head != NULL), ListMsg::Error::HeadNullButSizeGreaterThanZero) ;
+        ABORT_CONDITION((m_used.tail != NULL), ListMsg::Error::TailNullButSizeGreaterThanZero) ;
+
+        if (m_used.length == 1) {
+            ABORT_CONDITION((m_used.head == m_used.tail), ListMsg::Error::HeadIsTailIfSizeIsOne) ;
+        }
+    }
+    else {
+        ABORT_CONDITION((m_used.length >= 0), ListMsg::Error::SizeCannotBeNegative) ;
+        ABORT_CONDITION((m_used.head == NULL), ListMsg::Error::HeadNotNullButSizeIsZero) ;
+        ABORT_CONDITION((m_used.tail == NULL), ListMsg::Error::TailNotNullButSizeIsZero) ;
+    }
+
+
+    // UNUSED LIST
+    if (m_unused.head != NULL) {
+        ABORT_CONDITION((m_unused.head -> getPrevious() == NULL), ListMsg::Error::NoPreviousNodeToHead) ;
+    }
+
+    if (m_unused.tail != NULL) {
+        ABORT_CONDITION((m_unused.tail -> getNext() == NULL), ListMsg::Error::NoNextNodeToTail) ;
+    }
+
+    if (m_unused.length > 0) {
+        ABORT_CONDITION((m_unused.head != NULL), ListMsg::Error::HeadNullButSizeGreaterThanZero) ;
+        ABORT_CONDITION((m_unused.tail != NULL), ListMsg::Error::TailNullButSizeGreaterThanZero) ;
+
+        if (m_unused.length == 1) {
+            ABORT_CONDITION((m_unused.head == m_unused.tail), ListMsg::Error::HeadIsTailIfSizeIsOne) ;
+        }
+    }
+    else {
+        ABORT_CONDITION((m_unused.length >= 0), ListMsg::Error::SizeCannotBeNegative) ;
+        ABORT_CONDITION((m_unused.head == NULL), ListMsg::Error::HeadNotNullButSizeIsZero) ;
+        ABORT_CONDITION((m_unused.tail == NULL), ListMsg::Error::TailNotNullButSizeIsZero) ;
+    }
+}

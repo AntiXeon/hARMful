@@ -1,0 +1,11 @@
+ROOT_DIR = ../../..
+
+ACTIONMEMORY_CLASS = ActionMemory
+ACTIONMEMORYFAKE_CLASS = ActionMemoryFake
+MAGICMEMORY_CLASS = MagicMemory
+
+all : $(ACTIONMEMORY_CLASS).o $(ACTIONMEMORYFAKE_CLASS).o $(MAGICMEMORY_CLASS).o
+
+%.o: %.cpp
+	@echo "Compiling" $@
+	@$(CC) -o $(ROOT_DIR)/$(OBJ_DIR)/$@ -I$(ROOT_DIR)/$(INCLUDE_ROOT) -I$(ROOT_DIR)/$(INCLUDE_HARMFUL) -c $< $(CCOPTS)

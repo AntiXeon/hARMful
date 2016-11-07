@@ -1,0 +1,215 @@
+/*******************************************/
+/* DOOMful - Part of the hARMful Engine    */
+/* All rights reserved (c) Denis CARLUS    */
+/*                                         */
+/* FILE :       ObjectPool.impl            */
+/* AUTHOR :     Denis CARLUS               */
+/* VERSION:     1.0                        */
+/* CREATION:    09/01/2015                 */
+/* UPDATE:      09/01/2015                 */
+/*                                         */
+/* An ObjectPool create an initial amount  */
+/* of objects. They are cached when unused */
+/* and taken from cache when required,     */
+/* avoiding dynamic allocations and so the */
+/* related time consumption (against a     */
+/* higher amount of used memory).          */
+/*******************************************/
+
+#include <DOOMStrings.h>
+
+/** @brief  Value for instances grabbed when no more objects in cache. */
+#define UndefinedValue NULL
+
+                                              /** CONSTRUCTION / DESTRUCTION **/
+template <class PoolableClass>
+ObjectPool<PoolableClass>::ObjectPool(
+                                      PoolableObjectFactory* factory,
+                                      size_t maxSize
+                                     ) : m_maxSize(maxSize),
+                                         m_behavior(Behavior_CreateNewObjects) {
+    ABORT_CONDITION(
+                    (factory != NULL),
+                    ObjectPoolMsg::Error::NoNullFactoryAllowed
+                   ) ;
+
+    m_factory = factory ;
+}
+
+template <class PoolableClass>
+ObjectPool<PoolableClass>::ObjectPool(
+                                      PoolableObjectFactory* factory,
+                                      size_t originalSize,
+                                      PoolBehavior behavior,
+                                      size_t maxSize
+                                     ) : m_maxSize(maxSize),
+                                      m_behavior(behavior) {
+    if (behavior == Behavior_CreateNewObjects) {
+        ABORT_CONDITION(
+                        (factory != NULL),
+                        ObjectPoolMsg::Error::NoNullFactoryAllowed
+                       ) ;
+    }
+
+    m_factory = factory ;
+    for (size_t counter = 0 ; counter < originalSize ; ++counter) {
+        m_cache.push_back(generateObject()) ;
+    }
+    initializeCache() ;
+}
+
+template <class PoolableClass>
+ObjectPool<PoolableClass>::ObjectPool(
+                                      PoolableObjectFactory* factory,
+                                      const std::list<IPoolable*>& originalSet,
+                                      PoolBehavior behavior,
+                                      size_t maxSize
+                                     ) : m_maxSize(maxSize),
+                                         m_behavior(behavior) {
+    if (behavior == Behavior_CreateNewObjects) {
+        ABORT_CONDITION(
+                        (factory != NULL),
+                        ObjectPoolMsg::Error::NoNullFactoryAllowed
+                       ) ;
+    }
+
+    m_factory = factory ;
+    m_cache = originalSet ;
+    initializeCache() ;
+}
+
+template <class PoolableClass>
+ObjectPool<PoolableClass>::~ObjectPool() {
+    while (!m_trace.empty()) {
+        delete m_trace.front() ;
+        m_trace.pop_front() ;
+    }
+}
+
+
+                                                             /*** UTILITIES ***/
+template <class PoolableClass>
+typename ObjectPool<PoolableClass>::IPoolable* ObjectPool<PoolableClass>::grab() {
+    // TRUE for a valid value in "instance", FALSE when "instance" is an
+    // undefined value.
+    IPoolable* result = UndefinedValue ;
+    // Make the loop repeat (thread synchrozination requires this to "try
+    // again").
+    bool repeat = true ;
+
+    do {
+        // Here to relock the mutex when a thread wants to retry getting a
+        // value.
+        m_mutex.lock() ;
+
+        if (!m_cache.empty()) {
+            // When cache is filled, all behaviors make the cache poped front.
+            result = m_cache.front() ;
+            result -> m_state = State_Used ;
+            m_cache.pop_front() ;
+            repeat = false ;
+
+            // Lock over threads if behavior allows this action when cache is
+            // empty.
+            if ((m_behavior == Behavior_SynchronizeThreads)
+                    && m_cache.empty()) {
+                // This mutex is unlock in the "drop" function.
+                m_synchronize.lock() ;
+            }
+        }
+        else {
+            // Otherwise, the behavior is taken into account...
+            switch (m_behavior) {
+                case Behavior_CreateNewObjects:
+                    result = generateObject() ;
+                    result -> m_state = State_Used ;
+                    // Just stop looping, not affecting any value.
+                    repeat = false ;
+                    break ;
+
+                case Behavior_SynchronizeThreads:
+                    // Free the access to the ObjectPool to allow another thread
+                    // to put object in cache.
+                    m_mutex.unlock() ;
+                    // Yet, block the current thread for a value in the cache.
+                    m_synchronize.lock() ;
+                    // And unlock this mutex immediately to allow back the
+                    // synchronization.
+                    m_synchronize.unlock() ;
+                    // As repeat is still TRUE, the ObjectPool will try again to
+                    // given a cached value at next loop.
+                    break ;
+
+                case Behavior_UndefinedValue:
+                    // Just stop looping, not affecting any value.
+                    repeat = false ;
+                    break ;
+            }
+        }
+    } while (repeat) ;
+
+    // Here because Behavior_SynchronizeThreads already makes it unlock.
+    // Other conditions only make one loop (as a single call).
+    m_mutex.unlock() ;
+
+    return result ;
+}
+
+template <class PoolableClass>
+void ObjectPool<PoolableClass>::drop(IPoolable* instance) {
+    // Cannot insert data that has not been made for the current ObjectPool.
+    ABORT_CONDITION(
+                    ((instance -> m_parent) == this),
+                    ObjectPoolMsg::Error::DifferentOriginOfInstance
+                   ) ;
+
+    // A valid object is a used object.
+    ABORT_CONDITION(
+                    ((instance -> m_state) == State_Used),
+                    ObjectPoolMsg::Error::InstanceAlreadyInCache
+                   ) ;
+
+    if (instance != UndefinedValue) {
+        m_mutex.lock() ;
+            bool cacheWasEmpty = m_cache.empty() ;
+            m_cache.push_back(instance) ;
+            instance -> m_state = State_Cache ;
+            instance -> clearInnerData() ;
+            // Do not allow reuse of the cached value.
+            instance = NULL ;
+
+            // Unlock other threads awating for a value in the cache.
+            if ((m_behavior == Behavior_SynchronizeThreads) && cacheWasEmpty) {
+                m_synchronize.unlock() ;
+            }
+        m_mutex.unlock() ;
+    }
+    else {
+        Log::Write(Log::LogInfo, ObjectPoolMsg::Error::NoUndefinedValueInCacheAllowed) ;
+    }
+}
+
+template <class PoolableClass>
+void ObjectPool<PoolableClass>::assignObjectToPool(IPoolable* instance) {
+    instance -> m_parent = this ;
+    instance -> m_state = State_Cache ;
+}
+
+template <class PoolableClass>
+typename ObjectPool<PoolableClass>::IPoolable* ObjectPool<PoolableClass>::generateObject() {
+    IPoolable* instance = m_factory -> create() ;
+    // Keep a trace of the object to destruct it with the pool.
+    m_trace.push_back(instance) ;
+    instance -> m_parent = this ;
+    return instance ;
+}
+
+template <class PoolableClass>
+void ObjectPool<PoolableClass>::initializeCache() {
+    typename std::list<IPoolable*>::iterator it ;
+    for (it = m_cache.begin() ; it != m_cache.end() ; ++it) {
+        IPoolable* poolable = ((IPoolable*)(*it)) ;
+        poolable -> m_parent = this ;
+        poolable -> m_state = State_Cache ;
+    }
+}

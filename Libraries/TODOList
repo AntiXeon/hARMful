@@ -1,0 +1,11 @@
+* Make a global Makefile to compile all libraries at once + unit tests
+* Normalize APIs between each library
+* Manage concurrency in HOPE
+
+* Set all GUILE texts into a common header file
+* Update libraries diagram and dependencies
+
+* Rearrangement des sommets pour optimiser le "vertex cache" (HOPE) :
+	- NVTriStrip
+	- Tootle
+	- Tom Forsyth’s algorithm (http://home.comcast.net/~tom_forsyth/papers/fast_vert_cache_opt.html)

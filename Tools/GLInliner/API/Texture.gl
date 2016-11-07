@@ -1,0 +1,50 @@
+void glGenTextures(GLsizei n,GLuint* textures);
+
+void glDeleteTextures(GLsizei n,const GLuint* textures);
+
+void glActiveTexture(GLenum texture);
+
+void glBindTexture(GLenum target,GLuint texture);
+
+void glGenerateMipmap(GLenum target);
+
+void glGetCompressedTexImage(GLenum target,GLint lod,GLvoid* img);
+
+void glTexBuffer(GLenum target,GLenum internalFormat,GLuint buffer);
+void glTexImage1D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLint border,GLenum format,GLenum type,const GLvoid* data);
+void glTexImage2D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const GLvoid* data);
+void glTexImage2DMultisample(GLenum target,GLsizei samples,GLint internalformat,GLsizei width,GLsizei height,GLboolean fixedsamplelocations);
+void glTexImage3D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLenum format,GLenum type,const GLvoid* data);
+void glTexImage3DMultisample(GLenum target,GLsizei samples,GLint internalformat,GLsizei width,GLsizei height,GLsizei depth,GLboolean fixedsamplelocations);
+void glTexParameterf(GLenum target,GLenum pname,GLfloat param);
+void glTexParameteri(GLenum target,GLenum pname,GLint param);
+void glTexParameterfv(GLenum target,GLenum pname,const GLfloat* params);
+void glTexParameteriv(GLenum target,GLenum pname,const GLint* params);
+void glTexParameterIiv(GLenum target,GLenum pname,const GLint* params);
+void glTexParameterIuiv(GLenum target,GLenum pname,const GLuint* params);
+void glTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLenum type,const GLvoid* data);
+void glTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLenum type,const GLvoid* data);
+void glTexSubImage3D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLsizei width,GLsizei height,GLsizei depth,GLenum format,GLenum type,const GLvoid* data);
+
+void glGetTexImage(GLenum target,GLint level,GLenum format,GLenum type,GLvoid* img);
+void glGetTexLevelParameterfv(GLenum target,GLint level,GLenum pname,GLfloat* params);
+void glGetTexLevelParameteriv(GLenum target,GLint level,GLenum pname,GLint* params);
+void glGetTexParameterfv(GLenum target,GLenum pname,GLfloat* params);
+void glGetTexParameteriv(GLenum target,GLenum pname,GLint* params);
+void glGetTexParameterIiv(GLenum target,GLenum pname,GLint* params);
+void glGetTexParameterIuiv(GLenum target,GLenum pname,GLuint* params);
+
+void glCompressedTexImage1D(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLint border,GLsizei imageSize,const GLvoid* data);
+void glCompressedTexImage2D(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLint border,GLsizei imageSize,const GLvoid* data);
+void glCompressedTexImage3D(GLenum target,GLint level,GLenum internalformat,GLsizei width,GLsizei height,GLsizei depth,GLint border,GLsizei imageSize,const GLvoid* data);
+void glCompressedTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLsizei width,GLenum format,GLsizei imageSize,const GLvoid* data);
+void glCompressedTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLsizei width,GLsizei height,GLenum format,GLsizei imageSize,const GLvoid* data);
+void glCompressedTexSubImage3D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLsizei width,GLsizei height,GLsizei depth,GLenum format,GLsizei imageSize,const GLvoid* data);
+
+void glCopyTexImage1D(GLenum target,GLint level,GLenum internalformat,GLint x,GLint y,GLsizei width,GLint border);
+void glCopyTexImage2D(GLenum target,GLint level,GLenum internalformat,GLint x,GLint y,GLsizei width,GLsizei height,GLint border);
+void glCopyTexSubImage1D(GLenum target,GLint level,GLint xoffset,GLint x,GLint y,GLsizei width);
+void glCopyTexSubImage2D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint x,GLint y,GLsizei width,GLsizei height);
+void glCopyTexSubImage3D(GLenum target,GLint level,GLint xoffset,GLint yoffset,GLint zoffset,GLint x,GLint y,GLsizei width,GLsizei height);
+
+GLboolean glIsTexture(GLuint texture);

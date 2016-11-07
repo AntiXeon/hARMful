@@ -1,0 +1,116 @@
+                                              /** CONSTRUCTION / DESTRUCTION **/
+template <typename Type, unsigned int Size, unsigned int Align>
+AlignedArray<Type, Size, Align>::AlignedArray() {}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+AlignedArray<Type, Size, Align>::AlignedArray(Type* values) {
+    memcpy(m_array, values, sizeof(Type) * Size) ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+AlignedArray<Type, Size, Align>::~AlignedArray() {}
+
+
+                                                               /** UTILITIES **/
+template <typename Type, unsigned int Size, unsigned int Align>
+inline void AlignedArray<Type, Size, Align>::fill(const Type& value) {
+    memset(m_array, value, sizeof(Type) * Size) ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline void AlignedArray<Type, Size, Align>::swap(AlignedArray<Type, Size, Align>& other) {
+    const size_t TotalSizeInBytes = sizeof(Type) * Size ;
+
+    Type tmp[Size] ;
+    memcpy(tmp, m_array, TotalSizeInBytes) ;
+    memcpy(m_array, other.m_array, TotalSizeInBytes) ;
+    memcpy(other.m_array, tmp, TotalSizeInBytes) ;
+}
+
+
+                                                       /** GETTERS / SETTERS **/
+template <typename Type, unsigned int Size, unsigned int Align>
+inline bool AlignedArray<Type, Size, Align>::empty() const {
+    return (Size == 0) ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+Type* AlignedArray<Type, Size, Align>::data() {
+    return m_array ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+const Type* AlignedArray<Type, Size, Align>::data() const {
+    return m_array ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline Type& AlignedArray<Type, Size, Align>::operator[] (uint32_t index) {
+    return at(index) ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline const Type& AlignedArray<Type, Size, Align>::operator[] (uint32_t index) const {
+    return m_array[index] ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline Type& AlignedArray<Type, Size, Align>::at(uint32_t index) {
+    return m_array[index] ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline unsigned int AlignedArray<Type, Size, Align>::length() const {
+    return length() ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+inline unsigned int AlignedArray<Type, Size, Align>::size() {
+    return Size ;
+}
+
+
+                                                 /*** AFFECTATION OPERATORS ***/
+template <typename Type, unsigned int Size, unsigned int Align>
+AlignedArray<Type, Size, Align>& AlignedArray<Type, Size, Align>::operator=(const AlignedArray<Type, Size, Align>& other) {
+    for (unsigned int index = 0 ; index < Size ; ++index) {
+        m_array[index] = other.m_array[index] ;
+    }
+    return *this ;
+}
+
+template <typename Type, unsigned int Size, unsigned int Align>
+AlignedArray<Type, Size, Align>& AlignedArray<Type, Size, Align>::operator=(const Type* other) {
+    const size_t TotalSizeInBytes = sizeof(Type) * Size ;
+    memcpy(m_array, other, TotalSizeInBytes) ;
+    return *this ;
+}
+
+
+                                                  /*** COMPARISON OPERATORS ***/
+/**
+ * @brief   Check if two Array objects contain the same values.
+ * @param   a   First operand.
+ * @param   b   Second operand.
+ * @return  TRUE if the Arrays contain the same values, FALSE else.
+ */
+template <typename Type, unsigned int Size, unsigned int Align>
+static inline bool operator==(const Array<Type,Size>& a, const Array<Type,Size>& b) {
+    for (unsigned int index = 0 ; index < Size ; ++index) {
+        if (a[index] != b[index]) {
+            return false ;
+        }
+    }
+    return true ;
+}
+
+/**
+ * @brief   Check if two Array objects contain different values.
+ * @param   a   First operand.
+ * @param   b   Second operand.
+ * @return  TRUE if the Arrays contain the different values, FALSE else.
+ */
+template <typename Type, unsigned int Size, unsigned int Align>
+static inline bool operator!=(const Array<Type,Size>& a, const Array<Type,Size>& b) {
+    return !(a == b) ;
+}

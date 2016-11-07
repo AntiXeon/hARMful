@@ -1,0 +1,14 @@
+ROOT_DIR = ..
+
+MAGIC_CLASS = Magic
+BLACKMAGIC_CLASS = BlackMagic
+MAGICEFFECT_CLASS = MagicEffect
+MAGICELEMENT_CLASS = MagicElement
+WHITEMAGIC_CLASS = WhiteMagic
+
+all : $(MAGICELEMENT_CLASS).o $(MAGIC_CLASS).o $(BLACKMAGIC_CLASS).o \
+	  $(WHITEMAGIC_CLASS).o $(MAGICEFFECT_CLASS).o
+
+%.o: %.cpp
+	@echo "Compiling" $@
+	@$(CC) -o $(ROOT_DIR)/$(OBJ_DIR)/$@ -I$(ROOT_DIR)/$(INCLUDE_ROOT) -I$(ROOT_DIR)/$(INCLUDE_HARMFUL) -c $< $(CCOPTS)

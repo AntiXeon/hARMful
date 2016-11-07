@@ -1,0 +1,61 @@
+/*******************************************/
+/* DOOMful - Part of the hARMful Engine    */
+/* All rights reserved (c) Denis CARLUS    */
+/*                                         */
+/* FILE : 		BaseStateMachine.impl      */
+/* AUTHOR : 	Denis CARLUS               */
+/* VERSION: 	1.0                        */
+/* CREATION:	01/31/2015                 */
+/* UPDATE:      01/31/2015                 */
+/*                                         */
+/* Base class to create State Machines.    */
+/*******************************************/
+
+                                              /** CONSTRUCTION / DESTRUCTION **/
+template<class StateClass>
+BaseStateMachine<StateClass>::BaseStateMachine(const int& maxStateID) : m_currentState(NULL) {
+    m_states.resize(maxStateID + 1) ;
+}
+
+template<class StateClass>
+BaseStateMachine<StateClass>::~BaseStateMachine() {
+    m_states.clear() ;
+}
+
+                                                               /** UTILITIES **/
+template<class StateClass>
+bool BaseStateMachine<StateClass>::checkTransitionTo(const int& state) {
+    StateClass* towardState = &(m_states[state]) ;
+    return (m_currentState -> canMakeTransitionTo(towardState)) ;
+}
+
+template<class StateClass>
+bool BaseStateMachine<StateClass>::tryTransitionTo(const int& state) {
+    StateClass* towardState = &(m_states[state]) ;
+
+    bool canMakeTransition = (m_currentState -> canMakeTransitionTo(towardState)) ;
+    if (canMakeTransition) {
+        m_currentState = towardState ;
+    }
+
+    return canMakeTransition ;
+}
+
+template<class StateClass>
+void BaseStateMachine<StateClass>::addState(
+                                            const int& int,
+                                            const StateClass& state
+                                           ) {
+    m_states[stateID] = state ;
+}
+
+                                                       /** GETTERS / SETTERS **/
+template<class StateClass>
+void BaseStateMachine<StateClass>::setInitialState(const StateClass* state) {
+    m_currentState = state ;
+}
+
+template<class StateClass>
+StateClass* BaseStateMachine<StateClass>::getCurrentState() {
+    return m_state ;
+}

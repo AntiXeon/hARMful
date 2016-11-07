@@ -1,0 +1,9 @@
+template <class K, class V>
+PairList<K,V>::KeyValue::KeyValue() {}
+
+template <class K, class V>
+PairList<K,V>::KeyValue::KeyValue(const K& key, const V& value) : m_key(key),
+                                                                  m_value(value) {}
+
+template <class K, class V>
+PairList<K,V>::KeyValue::~KeyValue() {}

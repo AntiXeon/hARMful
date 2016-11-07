@@ -1,0 +1,26 @@
++-------------------------+
+| DOOMful version changes |
++-------------------------+
+
+TODO: V1.1:
+===========
+    * Utils: - Add CVector to vector support in C (similar to C++ STL ones)
+             - Create CStrings as specialized CVectors
+
+    * Close all threads on STOP_ON_ERRNO, ABORT, etc.
+
+    * Improve threads creation / termination synchronisation :
+        - All available threads are running, yet one (Ta) is being ending.
+        - Its pointed function returns, but a new one (Tb) requires a new ID 
+          before Ta pushes its ID.
+        - Tb cannot be created while Ta is finished.
+
+V1.0:
+=====
+    * Debug tools: Log system, printing coloured messages, basic condition
+                   checking (C/C++)
+
+    * Design patterns: Iterator, Observer, Singleton (C++ only)
+
+    * Utils: Lists (C), pair lists (C/C++), string utils (C/C++), processor
+             utils (C/C++), time utils (C/C++), threads manager (C/C++)

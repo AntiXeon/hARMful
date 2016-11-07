@@ -1,0 +1,92 @@
+template <class T>
+DefragmentedList<T>::Node::Node() {
+    m_next = NULL ;
+    m_previous = NULL ;
+}
+
+template <class T>
+DefragmentedList<T>::Node::Node(const T& value, Node* next) {
+    m_next = next ;
+    m_value = value ;
+}
+
+template <class T>
+DefragmentedList<T>::Node::~Node() {}
+
+template <class T>
+void DefragmentedList<T>::Node::setNext(Node* next) {
+    m_accessNode.lock() ;
+        m_next = next ;
+    m_accessNode.unlock() ;
+
+    if ((next != NULL) && (next -> getPrevious() != this)) {
+        next -> setPrevious(this) ;
+    }
+}
+
+template <class T>
+typename DefragmentedList<T>::Node* DefragmentedList<T>::Node::getNext() {
+    Node* next ;
+
+    m_accessNode.lock() ;
+        next = m_next ;
+    m_accessNode.unlock() ;
+
+    return next ;
+}
+
+template <class T>
+void DefragmentedList<T>::Node::setPrevious(Node* previous) {
+    m_accessNode.lock() ;
+        m_previous = previous ;
+    m_accessNode.unlock() ;
+
+    if ((previous != NULL) && (previous -> getNext() != this)) {
+        previous -> setNext(this) ;
+    }
+}
+
+template <class T>
+typename DefragmentedList<T>::Node* DefragmentedList<T>::Node::getPrevious() {
+    Node* previous ;
+
+    m_accessNode.lock() ;
+        previous = m_previous ;
+    m_accessNode.unlock() ;
+
+    return previous ;
+}
+
+template <class T>
+void DefragmentedList<T>::Node::setValue(const T& value) {
+    m_accessNode.lock() ;
+        m_value = value ;
+    m_accessNode.unlock() ;
+}
+
+template <class T>
+T& DefragmentedList<T>::Node::getValue() {
+    m_accessNode.lock() ;
+        T& value = m_value ;
+    m_accessNode.unlock() ;
+
+    return value ;
+}
+
+template <class T>
+void DefragmentedList<T>::Node::transferTo(TransferList list) {
+    m_accessNode.lock() ;
+        m_used = (bool) list ;
+    m_accessNode.unlock() ;
+}
+
+template <class T>
+bool DefragmentedList<T>::Node::isInUsedList() {
+    bool used ;
+
+    m_accessNode.lock() ;
+        used = m_used ;
+    m_accessNode.unlock() ;
+
+    return used ;
+}

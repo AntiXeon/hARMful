@@ -1,0 +1,81 @@
+void glBindAttribLocation(GLuint program,GLuint index,const GLchar* name);
+
+void glGetActiveAttrib(GLuint program,GLuint index,GLsizei bufSize,GLsizei* length,GLint* size,GLenum* type,GLchar* name);
+
+GLint glGetAttribLocation(GLuint program,const GLchar* name);
+
+
+void glEnableVertexAttribArray(GLuint index);
+
+void glDisableVertexAttribArray(GLuint index);
+
+void glGetVertexAttribdv(GLuint index,GLenum pname,GLdouble* params);
+void glGetVertexAttribfv(GLuint index,GLenum pname,GLfloat* params);
+void glGetVertexAttribiv(GLuint index,GLenum pname,GLint* params);
+void glGetVertexAttribIiv(GLuint index,GLenum pname,GLint* params);
+void glGetVertexAttribIuiv(GLuint index,GLenum pname,GLuint* params);
+void glGetVertexAttribPointerv(GLuint index,GLenum pname,GLvoid** pointer);
+
+void glVertexAttrib1f(GLuint index,GLfloat v0);
+void glVertexAttrib1s(GLuint index,GLshort v0);
+void glVertexAttrib1d(GLuint index,GLdouble v0);
+void glVertexAttribI1i(GLuint index,GLint v0);
+void glVertexAttribI1ui(GLuint index,GLuint v0);
+void glVertexAttrib2f(GLuint index,GLfloat v0,GLfloat v1);
+void glVertexAttrib2s(GLuint index,GLshort v0,GLshort v1);
+void glVertexAttrib2d(GLuint index,GLdouble v0,GLdouble v1);
+void glVertexAttribI2i(GLuint index,GLint v0,GLint v1);
+void glVertexAttribI2ui(GLuint index,GLuint v0,GLuint v1);
+void glVertexAttrib3f(GLuint index,GLfloat v0,GLfloat v1,GLfloat v2);
+void glVertexAttrib3s(GLuint index,GLshort v0,GLshort v1,GLshort v2);
+void glVertexAttrib3d(GLuint index,GLdouble v0,GLdouble v1,GLdouble v2);
+void glVertexAttribI3i(GLuint index,GLint v0,GLint v1,GLint v2);
+void glVertexAttribI3ui(GLuint index,GLuint v0,GLuint v1,GLuint v2);
+void glVertexAttrib4f(GLuint index,GLfloat v0,GLfloat v1,GLfloat v2,GLfloat v3);
+void glVertexAttrib4s(GLuint index,GLshort v0,GLshort v1,GLshort v2,GLshort v3);
+void glVertexAttrib4d(GLuint index,GLdouble v0,GLdouble v1,GLdouble v2,GLdouble v3);
+void glVertexAttrib4Nub(GLuint index,GLubyte v0,GLubyte v1,GLubyte v2,GLubyte v3);
+void glVertexAttribI4i(GLuint index,GLint v0,GLint v1,GLint v2,GLint v3);
+void glVertexAttribI4ui(GLuint index,GLuint v0,GLuint v1,GLuint v2,GLuint v3);
+void glVertexAttrib1fv(GLuint index,const GLfloat* v);
+void glVertexAttrib1sv(GLuint index,const GLshort* v);
+void glVertexAttrib1dv(GLuint index,const GLdouble* v);
+void glVertexAttribI1iv(GLuint index,const GLint* v);
+void glVertexAttribI1uiv(GLuint index,const GLuint* v);
+void glVertexAttrib2fv(GLuint index,const GLfloat* v);
+void glVertexAttrib2sv(GLuint index,const GLshort* v);
+void glVertexAttrib2dv(GLuint index,const GLdouble* v);
+void glVertexAttribI2iv(GLuint index,const GLint* v);
+void glVertexAttribI2uiv(GLuint index,const GLuint* v);
+void glVertexAttrib3fv(GLuint index,const GLfloat* v);
+void glVertexAttrib3sv(GLuint index,const GLshort* v);
+void glVertexAttrib3dv(GLuint index,const GLdouble* v);
+void glVertexAttribI3iv(GLuint index,const GLint* v);
+void glVertexAttribI3uiv(GLuint index,const GLuint* v);
+void glVertexAttrib4fv(GLuint index,const GLfloat* v);
+void glVertexAttrib4sv(GLuint index,const GLshort* v);
+void glVertexAttrib4dv(GLuint index,const GLdouble* v);
+void glVertexAttrib4iv(GLuint index,const GLint* v);
+void glVertexAttrib4bv(GLuint index,const GLbyte* v);
+void glVertexAttrib4ubv(GLuint index,const GLubyte* v);
+void glVertexAttrib4usv(GLuint index,const GLushort* v);
+void glVertexAttrib4uiv(GLuint index,const GLuint* v);
+void glVertexAttrib4Nbv(GLuint index,const GLbyte* v);
+void glVertexAttrib4Nsv(GLuint index,const GLshort* v);
+void glVertexAttrib4Niv(GLuint index,const GLint* v);
+void glVertexAttrib4Nubv(GLuint index,const GLubyte* v);
+void glVertexAttrib4Nusv(GLuint index,const GLushort* v);
+void glVertexAttrib4Nuiv(GLuint index,const GLuint* v);
+void glVertexAttribI4bv(GLuint index,const GLbyte* v);
+void glVertexAttribI4ubv(GLuint index,const GLubyte* v);
+void glVertexAttribI4sv(GLuint index,const GLshort* v);
+void glVertexAttribI4usv(GLuint index,const GLushort* v);
+void glVertexAttribI4iv(GLuint index,const GLint* v);
+void glVertexAttribI4uiv(GLuint index,const GLuint* v);
+void glVertexAttribP1ui(GLuint index,GLenum type,GLboolean normalized,GLuint value);
+void glVertexAttribP2ui(GLuint index,GLenum type,GLboolean normalized,GLuint value);
+void glVertexAttribP3ui(GLuint index,GLenum type,GLboolean normalized,GLuint value);
+void glVertexAttribP4ui(GLuint index,GLenum type,GLboolean normalized,GLuint value);
+void glVertexAttribDivisor(GLuint index,GLuint divisor);
+void glVertexAttribPointer(GLuint index,GLint size,GLenum type,GLboolean normalized,GLsizei stride,const GLvoid* pointer);
+void glVertexAttribIPointer(GLuint index,GLint size,GLenum type,GLsizei stride,const GLvoid* pointer);

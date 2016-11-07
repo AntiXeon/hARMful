@@ -1,0 +1,60 @@
+template <class K, class V>
+PairList<K,V>::PairNode::PairNode(const K& key,
+                                  const V& value,
+                                  PairNode* next,
+                                  PairNode* previous) {
+    m_nodeElement = KeyValue(key, value) ;
+    m_next = next ;
+    m_previous = previous ;
+}
+
+template <class K, class V>
+PairList<K,V>::PairNode::~PairNode() {}
+
+template <class K, class V>
+void PairList<K,V>::PairNode::setNext(PairNode* next) {
+    m_accessNode.lock() ;
+        m_next = next ;
+    m_accessNode.unlock() ;
+}
+
+template <class K, class V>
+void PairList<K,V>::PairNode::setPrevious(PairNode* previous) {
+    m_accessNode.lock() ;
+        m_previous = previous ;
+    m_accessNode.unlock() ;
+}
+
+
+template <class K, class V>
+typename PairList<K,V>::PairNode* PairList<K,V>::PairNode::getNext() {
+    PairNode* next ;
+
+    m_accessNode.lock() ;
+        next = m_next ;
+    m_accessNode.unlock() ;
+
+    return next ;
+}
+
+template <class K, class V>
+typename PairList<K,V>::PairNode* PairList<K,V>::PairNode::getPrevious() {
+    PairNode* previous ;
+
+    m_accessNode.lock() ;
+        previous = m_previous ;
+    m_accessNode.unlock() ;
+
+    return previous ;
+}
+
+template <class K, class V>
+typename PairList<K,V>::KeyValue PairList<K,V>::PairNode::getPair() {
+    KeyValue pair ;
+
+    m_accessNode.lock() ;
+        pair = m_nodeElement ;
+    m_accessNode.unlock() ;
+
+    return pair ;
+}

@@ -1,0 +1,14 @@
+GLuint glCreateProgram();
+
+void glDeleteProgram(GLuint program);
+
+void glValidateProgram(GLuint program);
+
+void glLinkProgram(GLuint program);
+
+void glUseProgram(GLuint program);
+
+void glGetProgramiv(GLuint program,GLenum pname,GLint* params);
+void glGetProgramInfoLog(GLuint program,GLsizei maxLength,GLsizei* length,GLchar* infoLog);
+
+GLboolean glIsProgram(GLuint program);

@@ -1,0 +1,16 @@
+ROOT_DIR = ../..
+
+ARMOR_CLASS = Armor
+BOOTS_CLASS = Boots
+GAUNTLETS_CLASS = Gauntlets
+HELMET_CLASS = Helmet
+PLATE_CLASS = Plate
+SHIELD_CLASS = Shield
+ARMORSTATUS_CLASS = ArmorStatus
+
+all : $(ARMOR_CLASS).o $(BOOTS_CLASS).o $(GAUNTLETS_CLASS).o $(HELMET_CLASS).o \
+      $(PLATE_CLASS).o $(SHIELD_CLASS).o $(ARMORSTATUS_CLASS).o
+
+%.o: %.cpp
+	@echo "Compiling" $@
+	@$(CC) -o $(ROOT_DIR)/$(OBJ_DIR)/$@ -I$(ROOT_DIR)/$(INCLUDE_ROOT) -I$(ROOT_DIR)/$(INCLUDE_HARMFUL) -c $< $(CCOPTS)

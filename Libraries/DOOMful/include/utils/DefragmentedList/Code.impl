@@ -1,0 +1,6 @@
+template <class T>
+void DefragmentedList<T>::Code::check(DefragmentedList* otherList) {
+    ABORT_CONDITION((list == otherList), ListMsg::Error::Mismatch) ;
+    ABORT_CONDITION((node != NULL), ListMsg::Error::NullNode) ;
+    ABORT_CONDITION((node -> isInUsedList()), ListMsg::Error::NodeNotUsed) ;
+}

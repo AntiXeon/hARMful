@@ -1,0 +1,94 @@
+#include <assert.h>
+
+
+                                              /** CONSTRUCTION / DESTRUCTION **/
+template <class T>
+SizedStack<T>::SizedStack(char maxSize) : m_top(-1),
+                                          m_size(0),
+                                          m_maxSize(maxSize) {
+    m_mutex.lock() ;
+    m_stack = new T[maxSize] ;
+    m_mutex.unlock() ;
+}
+
+
+template <class T>
+SizedStack<T>::~SizedStack() {
+    delete[] m_stack ;
+}
+
+
+                                                               /** UTILITIES **/
+template <class T>
+inline void SizedStack<T>::push(const T& value) {
+    m_mutex.lock() ;
+
+    invariant() ;
+    if (m_size < m_maxSize) {
+        m_top = m_top + 1 ;
+        m_size = m_size + 1 ;
+        m_stack[(unsigned char) m_top] = value ;
+    }
+    else {
+        if (Log::IsReady()) {
+            Log::Write(Log::LogWarning, SizedStack::Warning::AlreadyFull) ;
+        }
+    }
+    invariant() ;
+
+    m_mutex.unlock() ;
+}
+
+
+template <class T>
+inline void SizedStack<T>::pop() {
+    m_mutex.lock() ;
+    invariant() ;
+    m_top = m_top - 1 ;
+    m_size = m_size - 1 ;
+    invariant() ;
+    m_mutex.unlock() ;
+}
+
+
+                                                                 /** GETTERS **/
+template <class T>
+inline bool SizedStack<T>::empty() {
+    m_mutex.lock() ;
+    invariant() ;
+    bool isEmpty = !m_size ;
+    m_mutex.unlock() ;
+
+    return isEmpty ;
+}
+
+
+template <class T>
+inline unsigned char SizedStack<T>::size() {
+    char size = 0 ;
+
+    m_mutex.lock() ;
+    invariant() ;
+    size = m_size ;
+    m_mutex.unlock() ;
+
+    return size ;
+}
+
+
+template <class T>
+inline T& SizedStack<T>::top() {
+    m_mutex.lock() ;
+    ABORT_CONDITION((m_top > -1), SizedStack::Error::Empty) ;
+    T& value = m_stack[(unsigned char) m_top] ;
+    m_mutex.unlock() ;
+
+    return value ;
+}
+
+
+template <class T>
+inline void SizedStack<T>::invariant() {
+    ABORT_CONDITION((m_top > -2), SizedStack::Error::InvalidIndex) ;
+    ABORT_CONDITION((m_size > -1), SizedStack::Error::InvalidSize) ;
+}

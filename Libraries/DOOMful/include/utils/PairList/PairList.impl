@@ -1,0 +1,137 @@
+template <class K, class V>
+PairList<K,V>::PairList() : m_headNode(NULL),
+                            m_tailNode(NULL),
+                            m_length(0) {}
+
+template <class K, class V>
+PairList<K,V>::PairList(const K& key, const V& value) : m_headNode(NULL),
+                                                        m_tailNode(NULL),
+                                                        m_length(0) {
+    push_back(key, value) ;
+}
+
+template <class K, class V>
+PairList<K,V>::~PairList() {
+    m_accessCollection.lock() ;
+
+        while (m_headNode != NULL)
+            private_pop_front() ;
+
+    m_accessCollection.unlock() ;
+}
+
+
+
+template <class K, class V>
+void PairList<K,V>::push_front(const K& key, const V& value) {
+    m_accessCollection.lock() ;
+
+        PairNode* newNode = new PairNode(key, value) ;
+
+        if (m_headNode != NULL)
+            m_headNode -> setPrevious(newNode) ;
+
+        newNode -> setNext(m_headNode) ;
+        newNode -> setPrevious(NULL) ;
+        m_headNode = newNode ;
+
+        if (m_tailNode == NULL)
+            m_tailNode = m_headNode ;
+
+        m_length = m_length + 1 ;
+
+    m_accessCollection.unlock() ;
+}
+
+template <class K, class V>
+void PairList<K,V>::pop_front() {
+    m_accessCollection.lock() ;
+        private_pop_front() ;
+    m_accessCollection.unlock() ;
+}
+
+
+template <class K, class V>
+void PairList<K,V>::push_back(const K& key, const V& value) {
+    if (m_headNode == NULL) {
+        push_front(key, value) ;
+    }
+    else {
+        m_accessCollection.lock() ;
+
+            PairNode* newNode = new PairNode(key, value) ;
+            newNode -> setNext(NULL) ;
+            newNode -> setPrevious(m_tailNode) ;
+
+            if (m_tailNode != NULL)
+                m_tailNode -> setNext(newNode)  ;
+
+            m_tailNode = newNode ;
+
+            m_length = m_length + 1 ;
+
+        m_accessCollection.unlock() ;
+    }
+}
+
+template <class K, class V>
+void PairList<K,V>::pop_back() {
+    m_accessCollection.lock() ;
+
+        if (m_tailNode != NULL) {
+            PairNode* previousNode = m_tailNode -> getPrevious() ;
+
+            if (previousNode != NULL)
+                previousNode -> setNext(NULL) ;
+
+            delete m_tailNode ;
+            m_tailNode = previousNode ;
+            m_length = m_length - 1 ;
+        }
+
+    m_accessCollection.unlock() ;
+}
+
+template <class K, class V>
+size_t PairList<K,V>::size() {
+    m_accessCollection.lock() ;
+        size_t length = m_length ;
+    m_accessCollection.unlock() ;
+
+    return length ;
+}
+
+
+template <class K, class V>
+typename PairList<K,V>::hIterator PairList<K,V>::begin() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_headNode) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+template <class K, class V>
+typename PairList<K,V>::hIterator PairList<K,V>::end() {
+    m_accessCollection.lock() ;
+        hIterator hIt = hIterator(this, m_tailNode -> getNext()) ;
+    m_accessCollection.unlock() ;
+
+    return hIt ;
+}
+
+
+template <class K, class V>
+void PairList<K,V>::private_pop_front() {
+    if (m_headNode != NULL) {
+        PairNode* newHead = m_headNode -> getNext() ;
+
+        if (newHead != NULL)
+            newHead -> setPrevious(NULL) ;
+
+        delete m_headNode ;
+        m_headNode = newHead ;
+
+        m_length = m_length - 1 ;
+    }
+}

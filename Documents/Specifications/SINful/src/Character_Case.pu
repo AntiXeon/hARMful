@@ -1,0 +1,61 @@
+@startuml
+title SINful: Example of a Character\n
+
+' Object definitions '
+object Root             #FF8822
+object Behavior         #DDAAFF
+object Graphics         #99FF99
+object Body             #9999FF
+object CurrentAnimation #AAAAAA
+object ArmRight
+object Weapon
+object Head
+object ArmLeft
+object ArmLeftImage     #FF4444
+object ArmRightImage    #FF4444
+object HeadImage        #FF4444
+object ShieldImage      #FF4444
+object WeaponImage      #FF4444
+object Sounds
+object IdleSFX          #44EEFF
+object AttackSFX        #44EEFF
+object DiyingSFX        #44EEFF
+
+' Notes '
+note left of Root:  Root of the <b>Character</b>.
+
+note right of Behavior: Behavior of the <b>Character</b>.\nIt can contain IA, manual controls,\nworld position, etc.
+
+note top of Graphics: Special node that embeds\nthe <i>CurrentAnimation</i>. It\ntransmits the current animation\ndata to the <i>Body</i>.
+
+note right of Body: Special node that receives\ndata from <i>Graphics</i> to\ncorrectly draw its direct\nchildren.\nIt transmits the animation\ninformations to the\ncorresponding child when\nrendering them.
+
+note left of CurrentAnimation: Pointer to the current\nanimation data.
+
+note bottom of ShieldImage: It is an <i>ImageEntityInstance</i>.
+
+note bottom of IdleSFX: It is a <i>SoundEntityInstance</i>.
+
+' Relationships '
+Root            -*      Behavior
+Root            --*     Graphics
+Root            --*     Sounds
+Root            --*     CurrentAnimation
+
+Graphics        --*     Body
+Body            --*     ArmLeft
+Body            --*     ArmRight
+Body            --*     Head
+ArmLeft         --*     Shield
+ArmRight        --*     Weapon
+Head            --*     HeadImage
+ArmLeft         --*     ArmLeftImage
+ArmRight        --*     ArmRightImage
+Weapon          --*     WeaponImage
+Shield          --*     ShieldImage
+
+Sounds          --*     IdleSFX
+Sounds          --*     DiyingSFX
+Sounds          --*     AttackSFX
+
+@enduml

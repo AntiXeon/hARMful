@@ -1,0 +1,20 @@
+@startuml
+
+' Objects description '
+object ElementPattern
+object GraphicsPatternNode
+object SoundsPatternNode
+object AnimationSet
+object IImageEntity
+object ISoundEntity
+
+' Relationships '
+ElementPattern --* GraphicsPatternNode : graphics
+ElementPattern --* AnimationSet : animations
+ElementPattern --* SoundsPatternNode : sounds
+GraphicsPatternNode --* IImageEntity : entity
+SoundsPatternNode --* ISoundEntity : entity
+GraphicsPatternNode --* GraphicsPatternNode : children
+SoundsPatternNode --* SoundsPatternNode : children
+
+@enduml

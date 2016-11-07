@@ -1,0 +1,17 @@
++-------------------------+
+| MINDful version changes |
++-------------------------+
+
+V1.0:
+=====
+    * Mathematics : - Math module to make some basic operations and some
+                      algorithm from the C++11 standard. It allows the use of
+                      similar API to C++11 without the need of a modern
+                      compiler ;
+                    - FastMath module is used to perform fast operations with
+                      cached trigonometry results.
+
+    * Geometry :    - Includes several classes used to manage some 2D elements,
+                      such as points, lines and rectangles ;
+                    - Basic support of 3D points.
+                    

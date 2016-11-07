@@ -1,0 +1,3 @@
+SPRITE v1.0 :
+=============
+    * Unable to create a Path object when path does not exist (folders).
