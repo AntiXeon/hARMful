@@ -5,7 +5,6 @@ More informations on the project can be found [here](https://dcarlus.github.io/h
 
 ## Repository
 The repository is structured in different parts:
-* **Documentation**: contains all the documentation and specifications on the project and its libraries;
 * **Libraries**: the source code of the libraries that compose the project;
 * **Softwares**: some demos to show how to use the libraries and their capabilities;
 * **Tools**: some internal tools developed to help creating the libraries. They are not required to use the library nor to be integrated into the applications;
