@@ -26,7 +26,8 @@ I18N_DIR	= i18n
 
 # Required external tools
 ARCH        = $(shell uname -m)
-BINARY      = lib/$(ARCH)
+LIB_DIR     = lib
+BINARY      = $(LIB_DIR)/$(ARCH)
 STATIC      = $(BINARY)/static
 INCLUDE     = -I$(realpath ./include)
 LIBRARY     =
@@ -58,10 +59,11 @@ STATIC_EXT	= $(STATIC_UNIX)
 all: linux
 
 translation:
-	@xgettext -d DOOM -o $(I18N_DIR)/DOOM.pot -ki18n --add-comments -s src/DOOMStrings.cpp
+	@xgettext -d $(OUTPUT) -o $(I18N_DIR)/$(OUTPUT).pot -ki18n --add-comments -s src/$(OUTPUT)Strings.cpp
 
 clean:
 	@rm -r $(BINARY)
+	@rm -r $(LIB_DIR)
 	@rm -f $(OBJECTS)
 
 
