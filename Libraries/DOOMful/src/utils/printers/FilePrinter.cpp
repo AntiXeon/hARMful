@@ -4,7 +4,7 @@
  *
  * @Author:      Denis CARLUS
  * @Created on:  11-Nov-2016
- * @Last change: 13-Nov-2016
+ * @Last change: 14-Nov-2016
  */
 
 #include <utils/Translation.hpp>
@@ -21,7 +21,7 @@ namespace Doom {
         std::ios_base::openmode mode = getAccessMode(append) ;
         m_output.open(filepath, mode) ;
         if (!m_output.is_open()) {
-            std::string errorMsg = Translation::Get(File_NotOpened) + filepath ;
+            std::string errorMsg = Translation::Get(Texts::File_NotOpened) + filepath ;
             throw std::ios_base::failure(errorMsg) ;
         }
     }
