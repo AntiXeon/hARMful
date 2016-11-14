@@ -4,12 +4,12 @@
 # @Author: Denis CARLUS <dcarlus>
 # @Date:   01-Nov-2016
 # @Filename: Makefile
-# @Last modified by:   bibi09
-# @Last modified time: 12-Nov-2016
+# @Last modified by:   Denis CARLUS
+# @Last modified time: 14-Nov-2016
 # @License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
 CC          = g++
-CCOPTS      = --std=c++14
+CCOPTS      = -std=c++1y
 OBJ_OPTS	= -g3
 # Specific options to library types
 STATIC_OPTS = -W -Wall -Werror -Wfatal-errors -ffast-math -rdynamic

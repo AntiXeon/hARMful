@@ -1,0 +1,18 @@
+# @Author: Denis CARLUS
+# @Date:   14-Nov-2016
+# @Filename: circle.yml
+# @Last modified by:   Denis CARLUS
+# @Last modified time: 14-Nov-2016
+# @License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+
+machine:
+  test:
+      pre:
+          # Dependencies for HOPEful (3D engine library)
+          - sudo add-apt-repository ppa:keithw/glfw3; sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev libglfw3
+          - wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
+          - tar zxfv glew-2.0.0.tgz
+          - cd glew-2.0.0/build/ && cmake ./cmake && make && make install
+      override:
+          # Build libraries
+          - cd Libraries/DOOMful && make
