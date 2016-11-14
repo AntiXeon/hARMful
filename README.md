@@ -1,4 +1,13 @@
-# hARMful
+<!--
+@Author: Denis CARLUS
+@Date:   10-Nov-2016
+@Filename: README.md
+@Last modified by:   Denis CARLUS
+@Last modified time: 14-Nov-2016
+@License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+-->
+
+# hARMful [![CircleCI](https://circleci.com/gh/dcarlus/hARMful/tree/master.svg?style=svg)](https://circleci.com/gh/dcarlus/hARMful/tree/master)
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
 More informations on the project can be found [here](https://dcarlus.github.io/hARMful/).
