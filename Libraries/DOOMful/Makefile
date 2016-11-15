@@ -10,7 +10,7 @@
 
 CC          = g++
 CCOPTS      = -std=c++1y
-OBJ_OPTS	= -g3
+OBJ_OPTS    = -g3
 # Specific options to library types
 STATIC_OPTS = $(CCOPTS) -W -Wall -Werror -Wfatal-errors -ffast-math -rdynamic
 SHARED_OPTS = $(STATIC_OPTS)
