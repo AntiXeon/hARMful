@@ -1,190 +1,196 @@
-// This file is part of hARMful.
-//
-// hARMful is free software: you can redistribute
-// it and/or modify it under the terms of the GNU
-// General  Public License  as published  by  the
-// Free Software Foundation,  either version 3 of
-// the  License,  or (at your option)  any  later
-// version.
-//
-// hARMful is  distributed in  the hope  that  it
-// will  be  useful, but  WITHOUT  ANY  WARRANTY;
-// without   even   the   implied   warranty   of
-// MERCHANTABILITY  or  FITNESS FOR  A PARTICULAR
-// PURPOSE.  See the  GNU General  Public License
-// for more details.
-//
-// You  should have  received a  copy of  the GNU
-// General  Public  License  along  with hARMful.
-// If not, see <http://www.gnu.org/licenses/>.
+/**
+ * types.cpp
+ * GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+ *
+ * @Author:      Denis CARLUS
+ * @Created on:  18-Nov-2016
+ * @Last change: 18-Nov-2016
+ */
 
 static map<string, string> typesConversion ;
 
-static void initTypesConversion() {
-    typesConversion["GLboolean"]       = "Boolean" ;
-    typesConversion["GLbyte"]          = "Byte" ;
-    typesConversion["GLubyte"]         = "UByte" ;
-    typesConversion["GLchar"]          = "Char" ;
-    typesConversion["GLshort"]         = "Short" ;
-    typesConversion["GLushort"]        = "UShort" ;
-    typesConversion["GLint"]           = "Int" ;
-    typesConversion["GLuint"]          = "UInt" ;
-    typesConversion["GLfixed"]         = "Fixed" ;
-    typesConversion["GLint64"]         = "Int64" ;
-    typesConversion["GLuint64"]        = "UInt64" ;
-    typesConversion["GLfloat"]         = "Float" ;
-    typesConversion["GLdouble"]        = "Double" ;
-    typesConversion["GLhalf"]          = "Half" ;
-    typesConversion["GLclampf"]        = "Clampf" ;
-    typesConversion["GLclampd"]        = "Clampd" ;
-    typesConversion["GLsizei"]         = "Size" ;
-    typesConversion["GLenum"]          = "Enum" ;
-    typesConversion["GLvoid"]          = "Void" ;
-    typesConversion["void"]            = "Void" ;
-    typesConversion["GLintptr"]        = "IntPtr" ;
-    typesConversion["GLintptrARB"]     = "IntPtrARB" ;
-    typesConversion["GLsizeiptr"]      = "SizePtr" ;
-    typesConversion["GLsizeiptrARB"]   = "SizePtrARB" ;
-    typesConversion["GLsync"]          = "Sync" ;
-    typesConversion["GLbitfield"]      = "BitField" ;
+static std::string addNamespace(const std::string& type, const std::string ns) {
+    const std::string tag = "%n" ;
 
-    typesConversion["const GLboolean"]       = "const Boolean" ;
-    typesConversion["const GLbyte"]          = "const Byte" ;
-    typesConversion["const GLubyte"]         = "const UByte" ;
-    typesConversion["const GLchar"]          = "const Char" ;
-    typesConversion["const GLshort"]         = "const Short" ;
-    typesConversion["const GLushort"]        = "const UShort" ;
-    typesConversion["const GLint"]           = "const Int" ;
-    typesConversion["const GLuint"]          = "const UInt" ;
-    typesConversion["const GLfixed"]         = "const Fixed" ;
-    typesConversion["const GLint64"]         = "const Int64" ;
-    typesConversion["const GLuint64"]        = "const UInt64" ;
-    typesConversion["const GLfloat"]         = "const Float" ;
-    typesConversion["const GLdouble"]        = "const Double" ;
-    typesConversion["const GLhalf"]          = "const Half" ;
-    typesConversion["const GLclampf"]        = "const Clampf" ;
-    typesConversion["const GLclampd"]        = "const Clampd" ;
-    typesConversion["const GLsizei"]         = "const Size" ;
-    typesConversion["const GLenum"]          = "const Enum" ;
-    typesConversion["const GLvoid"]          = "const Void" ;
-    typesConversion["const void"]            = "const Void" ;
-    typesConversion["const GLintptr"]        = "const IntPtr" ;
-    typesConversion["const GLintptrARB"]     = "const IntPtrARB" ;
-    typesConversion["const GLsizeiptr"]      = "const SizePtr" ;
-    typesConversion["const GLsizeiptrARB"]   = "const SizePtrARB" ;
-    typesConversion["const GLsync"]          = "const Sync" ;
-    typesConversion["const GLbitfield"]      = "const BitField" ;
+    std::string copyType = type ;
+    size_t startPos = copyType.find(tag) ;
+    if (startPos == std::string::npos) {
+        return type ;
+    }
+
+    copyType.replace(startPos, tag.length(), ns + "::") ;
+    return copyType ;
+}
+
+/**
+ * Convert the OpenGL types to standard names.
+ * @param namesp [description]
+ */
+static void initTypesConversion(const std::string& namesp) {
+    typesConversion["GLboolean"]       = addNamespace("%nBoolean", namesp) ;
+    typesConversion["GLbyte"]          = addNamespace("%nByte", namesp) ;
+    typesConversion["GLubyte"]         = addNamespace("%nUByte", namesp) ;
+    typesConversion["GLchar"]          = addNamespace("%nChar", namesp) ;
+    typesConversion["GLshort"]         = addNamespace("%nShort", namesp) ;
+    typesConversion["GLushort"]        = addNamespace("%nUShort", namesp) ;
+    typesConversion["GLint"]           = addNamespace("%nInt", namesp) ;
+    typesConversion["GLuint"]          = addNamespace("%nUInt", namesp) ;
+    typesConversion["GLfixed"]         = addNamespace("%nFixed", namesp) ;
+    typesConversion["GLint64"]         = addNamespace("%nInt64", namesp) ;
+    typesConversion["GLuint64"]        = addNamespace("%nUInt64", namesp) ;
+    typesConversion["GLfloat"]         = addNamespace("%nFloat", namesp) ;
+    typesConversion["GLdouble"]        = addNamespace("%nDouble", namesp) ;
+    typesConversion["GLhalf"]          = addNamespace("%nHalf", namesp) ;
+    typesConversion["GLclampf"]        = addNamespace("%nClampf", namesp) ;
+    typesConversion["GLclampd"]        = addNamespace("%nClampd", namesp) ;
+    typesConversion["GLsizei"]         = addNamespace("%nSize", namesp) ;
+    typesConversion["GLenum"]          = addNamespace("%nEnum", namesp) ;
+    typesConversion["GLvoid"]          = addNamespace("%nVoid", namesp) ;
+    typesConversion["void"]            = addNamespace("%nVoid", namesp) ;
+    typesConversion["GLintptr"]        = addNamespace("%nIntPtr", namesp) ;
+    typesConversion["GLintptrARB"]     = addNamespace("%nIntPtrARB", namesp) ;
+    typesConversion["GLsizeiptr"]      = addNamespace("%nSizePtr", namesp) ;
+    typesConversion["GLsizeiptrARB"]   = addNamespace("%nSizePtrARB", namesp) ;
+    typesConversion["GLsync"]          = addNamespace("%nSync", namesp) ;
+    typesConversion["GLbitfield"]      = addNamespace("%nBitField", namesp) ;
+
+    typesConversion["const GLboolean"]       = addNamespace("const %nBoolean", namesp) ;
+    typesConversion["const GLbyte"]          = addNamespace("const %nByte", namesp) ;
+    typesConversion["const GLubyte"]         = addNamespace("const %nUByte", namesp) ;
+    typesConversion["const GLchar"]          = addNamespace("const %nChar", namesp) ;
+    typesConversion["const GLshort"]         = addNamespace("const %nShort", namesp) ;
+    typesConversion["const GLushort"]        = addNamespace("const %nUShort", namesp) ;
+    typesConversion["const GLint"]           = addNamespace("const %nInt", namesp) ;
+    typesConversion["const GLuint"]          = addNamespace("const %nUInt", namesp) ;
+    typesConversion["const GLfixed"]         = addNamespace("const %nFixed", namesp) ;
+    typesConversion["const GLint64"]         = addNamespace("const %nInt64", namesp) ;
+    typesConversion["const GLuint64"]        = addNamespace("const %nUInt64", namesp) ;
+    typesConversion["const GLfloat"]         = addNamespace("const %nFloat", namesp) ;
+    typesConversion["const GLdouble"]        = addNamespace("const %nDouble", namesp) ;
+    typesConversion["const GLhalf"]          = addNamespace("const %nHalf", namesp) ;
+    typesConversion["const GLclampf"]        = addNamespace("const %nClampf", namesp) ;
+    typesConversion["const GLclampd"]        = addNamespace("const %nClampd", namesp) ;
+    typesConversion["const GLsizei"]         = addNamespace("const %nSize", namesp) ;
+    typesConversion["const GLenum"]          = addNamespace("const %nEnum", namesp) ;
+    typesConversion["const GLvoid"]          = addNamespace("const %nVoid", namesp) ;
+    typesConversion["const void"]            = addNamespace("const %nVoid", namesp) ;
+    typesConversion["const GLintptr"]        = addNamespace("const %nIntPtr", namesp) ;
+    typesConversion["const GLintptrARB"]     = addNamespace("const %nIntPtrARB", namesp) ;
+    typesConversion["const GLsizeiptr"]      = addNamespace("const %nSizePtr", namesp) ;
+    typesConversion["const GLsizeiptrARB"]   = addNamespace("const %nSizePtrARB", namesp) ;
+    typesConversion["const GLsync"]          = addNamespace("const %nSync", namesp) ;
+    typesConversion["const GLbitfield"]      = addNamespace("const %nBitField", namesp) ;
 
 
-    typesConversion["GLboolean*"]       = "Boolean*" ;
-    typesConversion["GLbyte*"]          = "Byte*" ;
-    typesConversion["GLubyte*"]         = "UByte*" ;
-    typesConversion["GLchar*"]          = "Char*" ;
-    typesConversion["char*"]            = "Char*" ;
-    typesConversion["GLshort*"]         = "Short*" ;
-    typesConversion["GLushort*"]        = "UShort*" ;
-    typesConversion["GLint*"]           = "Int*" ;
-    typesConversion["GLuint*"]          = "UInt*" ;
-    typesConversion["GLfixed*"]         = "Fixed*" ;
-    typesConversion["GLint64*"]         = "Int64*" ;
-    typesConversion["GLuint64*"]        = "UInt64*" ;
-    typesConversion["GLfloat*"]         = "Float*" ;
-    typesConversion["GLdouble*"]        = "Double*" ;
-    typesConversion["GLhalf*"]          = "Half*" ;
-    typesConversion["GLclampf*"]        = "Clampf*" ;
-    typesConversion["GLclampd*"]        = "Clampd*" ;
-    typesConversion["GLsizei*"]         = "Size*" ;
-    typesConversion["GLenum*"]          = "Enum*" ;
-    typesConversion["GLvoid*"]          = "Void*" ;
-    typesConversion["void*"]            = "Void*" ;
-    typesConversion["GLintptr*"]        = "IntPtr*" ;
-    typesConversion["GLintptrARB*"]     = "IntPtrARB*" ;
-    typesConversion["GLsizeiptr*"]      = "SizePtr*" ;
-    typesConversion["GLsizeiptrARB*"]   = "SizePtrARB*" ;
-    typesConversion["GLsync*"]          = "Sync*" ;
-    typesConversion["GLbitfield*"]      = "BitField*" ;
+    typesConversion["GLboolean*"]       = addNamespace("%nBoolean*", namesp) ;
+    typesConversion["GLbyte*"]          = addNamespace("%nByte*", namesp) ;
+    typesConversion["GLubyte*"]         = addNamespace("%nUByte*", namesp) ;
+    typesConversion["GLchar*"]          = addNamespace("%nChar*", namesp) ;
+    typesConversion["char*"]            = addNamespace("%nChar*", namesp) ;
+    typesConversion["GLshort*"]         = addNamespace("%nShort*", namesp) ;
+    typesConversion["GLushort*"]        = addNamespace("%nUShort*", namesp) ;
+    typesConversion["GLint*"]           = addNamespace("%nInt*", namesp) ;
+    typesConversion["GLuint*"]          = addNamespace("%nUInt*", namesp) ;
+    typesConversion["GLfixed*"]         = addNamespace("%nFixed*", namesp) ;
+    typesConversion["GLint64*"]         = addNamespace("%nInt64*", namesp) ;
+    typesConversion["GLuint64*"]        = addNamespace("%nUInt64*", namesp) ;
+    typesConversion["GLfloat*"]         = addNamespace("%nFloat*", namesp) ;
+    typesConversion["GLdouble*"]        = addNamespace("%nDouble*", namesp) ;
+    typesConversion["GLhalf*"]          = addNamespace("%nHalf*", namesp) ;
+    typesConversion["GLclampf*"]        = addNamespace("%nClampf*", namesp) ;
+    typesConversion["GLclampd*"]        = addNamespace("%nClampd*", namesp) ;
+    typesConversion["GLsizei*"]         = addNamespace("%nSize*", namesp) ;
+    typesConversion["GLenum*"]          = addNamespace("%nEnum*", namesp) ;
+    typesConversion["GLvoid*"]          = addNamespace("%nVoid*", namesp) ;
+    typesConversion["void*"]            = addNamespace("%nVoid*", namesp) ;
+    typesConversion["GLintptr*"]        = addNamespace("%nIntPtr*", namesp) ;
+    typesConversion["GLintptrARB*"]     = addNamespace("%nIntPtrARB*", namesp) ;
+    typesConversion["GLsizeiptr*"]      = addNamespace("%nSizePtr*", namesp) ;
+    typesConversion["GLsizeiptrARB*"]   = addNamespace("%nSizePtrARB*", namesp) ;
+    typesConversion["GLsync*"]          = addNamespace("%nSync*", namesp) ;
+    typesConversion["GLbitfield*"]      = addNamespace("%nBitField*", namesp) ;
 
-    typesConversion["const GLboolean*"]       = "const Boolean*" ;
-    typesConversion["const GLbyte*"]          = "const Byte*" ;
-    typesConversion["const GLubyte*"]         = "const UByte*" ;
-    typesConversion["const GLchar*"]          = "const Char*" ;
-    typesConversion["const char*"]            = "const Char*" ;
-    typesConversion["const GLshort*"]         = "const Short*" ;
-    typesConversion["const GLushort*"]        = "const UShort*" ;
-    typesConversion["const GLint*"]           = "const Int*" ;
-    typesConversion["const GLuint*"]          = "const UInt*" ;
-    typesConversion["const GLfixed*"]         = "const Fixed*" ;
-    typesConversion["const GLint64*"]         = "const Int64*" ;
-    typesConversion["const GLuint64*"]        = "const UInt64*" ;
-    typesConversion["const GLfloat*"]         = "const Float*" ;
-    typesConversion["const GLdouble*"]        = "const Double*" ;
-    typesConversion["const GLhalf*"]          = "const Half*" ;
-    typesConversion["const GLclampf*"]        = "const Clampf*" ;
-    typesConversion["const GLclampd*"]        = "const Clampd*" ;
-    typesConversion["const GLsizei*"]         = "const Size*" ;
-    typesConversion["const GLenum*"]          = "const Enum*" ;
-    typesConversion["const GLvoid*"]          = "const Void*" ;
-    typesConversion["const void*"]            = "const Void*" ;
-    typesConversion["const GLintptr*"]        = "const IntPtr*" ;
-    typesConversion["const GLintptrARB*"]     = "const IntPtrARB*" ;
-    typesConversion["const GLsizeiptr*"]      = "const SizePtr*" ;
-    typesConversion["const GLsizeiptrARB*"]   = "const SizePtrARB*" ;
-    typesConversion["const GLsync*"]          = "const Sync*" ;
-    typesConversion["const GLbitfield*"]      = "const BitField*" ;
+    typesConversion["const GLboolean*"]       = addNamespace("const %nBoolean*", namesp) ;
+    typesConversion["const GLbyte*"]          = addNamespace("const %nByte*", namesp) ;
+    typesConversion["const GLubyte*"]         = addNamespace("const %nUByte*", namesp) ;
+    typesConversion["const GLchar*"]          = addNamespace("const %nChar*", namesp) ;
+    typesConversion["const char*"]            = addNamespace("const %nChar*", namesp) ;
+    typesConversion["const GLshort*"]         = addNamespace("const %nShort*", namesp) ;
+    typesConversion["const GLushort*"]        = addNamespace("const %nUShort*", namesp) ;
+    typesConversion["const GLint*"]           = addNamespace("const %nInt*", namesp) ;
+    typesConversion["const GLuint*"]          = addNamespace("const %nUInt*", namesp) ;
+    typesConversion["const GLfixed*"]         = addNamespace("const %nFixed*", namesp) ;
+    typesConversion["const GLint64*"]         = addNamespace("const %nInt64*", namesp) ;
+    typesConversion["const GLuint64*"]        = addNamespace("const %nUInt64*", namesp) ;
+    typesConversion["const GLfloat*"]         = addNamespace("const %nFloat*", namesp) ;
+    typesConversion["const GLdouble*"]        = addNamespace("const %nDouble*", namesp) ;
+    typesConversion["const GLhalf*"]          = addNamespace("const %nHalf*", namesp) ;
+    typesConversion["const GLclampf*"]        = addNamespace("const %nClampf*", namesp) ;
+    typesConversion["const GLclampd*"]        = addNamespace("const %nClampd*", namesp) ;
+    typesConversion["const GLsizei*"]         = addNamespace("const %nSize*", namesp) ;
+    typesConversion["const GLenum*"]          = addNamespace("const %nEnum*", namesp) ;
+    typesConversion["const GLvoid*"]          = addNamespace("const %nVoid*", namesp) ;
+    typesConversion["const void*"]            = addNamespace("const %nVoid*", namesp) ;
+    typesConversion["const GLintptr*"]        = addNamespace("const %nIntPtr*", namesp) ;
+    typesConversion["const GLintptrARB*"]     = addNamespace("const %nIntPtrARB*", namesp) ;
+    typesConversion["const GLsizeiptr*"]      = addNamespace("const %nSizePtr*", namesp) ;
+    typesConversion["const GLsizeiptrARB*"]   = addNamespace("const %nSizePtrARB*", namesp) ;
+    typesConversion["const GLsync*"]          = addNamespace("const %nSync*", namesp) ;
+    typesConversion["const GLbitfield*"]      = addNamespace("const %nBitField*", namesp) ;
 
-    typesConversion["GLboolean**"]       = "Boolean**" ;
-    typesConversion["GLbyte**"]          = "Byte**" ;
-    typesConversion["GLubyte**"]         = "UByte**" ;
-    typesConversion["GLchar**"]          = "Char**" ;
-    typesConversion["char**"]            = "Char**" ;
-    typesConversion["GLshort**"]         = "Short**" ;
-    typesConversion["GLushort**"]        = "UShort**" ;
-    typesConversion["GLint**"]           = "Int**" ;
-    typesConversion["GLuint**"]          = "UInt**" ;
-    typesConversion["GLfixed**"]         = "Fixed**" ;
-    typesConversion["GLint64**"]         = "Int64**" ;
-    typesConversion["GLuint64**"]        = "UInt64**" ;
-    typesConversion["GLfloat**"]         = "Float**" ;
-    typesConversion["GLdouble**"]        = "Double**" ;
-    typesConversion["GLhalf**"]          = "Half**" ;
-    typesConversion["GLclampf**"]        = "Clampf**" ;
-    typesConversion["GLclampd**"]        = "Clampd**" ;
-    typesConversion["GLsizei**"]         = "Size**" ;
-    typesConversion["GLenum**"]          = "Enum**" ;
-    typesConversion["GLvoid**"]          = "Void**" ;
-    typesConversion["void**"]            = "Void**" ;
-    typesConversion["GLintptr**"]        = "IntPtr**" ;
-    typesConversion["GLintptrARB**"]     = "IntPtrARB**" ;
-    typesConversion["GLsizeiptr**"]      = "SizePtr**" ;
-    typesConversion["GLsizeiptrARB**"]   = "SizePtrARB**" ;
-    typesConversion["GLsync**"]          = "Sync**" ;
-    typesConversion["GLbitfield**"]      = "BitField**" ;
+    typesConversion["GLboolean**"]       = addNamespace("%nBoolean**", namesp) ;
+    typesConversion["GLbyte**"]          = addNamespace("%nByte**", namesp) ;
+    typesConversion["GLubyte**"]         = addNamespace("%nUByte**", namesp) ;
+    typesConversion["GLchar**"]          = addNamespace("%nChar**", namesp) ;
+    typesConversion["char**"]            = addNamespace("%nChar**", namesp) ;
+    typesConversion["GLshort**"]         = addNamespace("%nShort**", namesp) ;
+    typesConversion["GLushort**"]        = addNamespace("%nUShort**", namesp) ;
+    typesConversion["GLint**"]           = addNamespace("%nInt**", namesp) ;
+    typesConversion["GLuint**"]          = addNamespace("%nUInt**", namesp) ;
+    typesConversion["GLfixed**"]         = addNamespace("%nFixed**", namesp) ;
+    typesConversion["GLint64**"]         = addNamespace("%nInt64**", namesp) ;
+    typesConversion["GLuint64**"]        = addNamespace("%nUInt64**", namesp) ;
+    typesConversion["GLfloat**"]         = addNamespace("%nFloat**", namesp) ;
+    typesConversion["GLdouble**"]        = addNamespace("%nDouble**", namesp) ;
+    typesConversion["GLhalf**"]          = addNamespace("%nHalf**", namesp) ;
+    typesConversion["GLclampf**"]        = addNamespace("%nClampf**", namesp) ;
+    typesConversion["GLclampd**"]        = addNamespace("%nClampd**", namesp) ;
+    typesConversion["GLsizei**"]         = addNamespace("%nSize**", namesp) ;
+    typesConversion["GLenum**"]          = addNamespace("%nEnum**", namesp) ;
+    typesConversion["GLvoid**"]          = addNamespace("%nVoid**", namesp) ;
+    typesConversion["void**"]            = addNamespace("%nVoid**", namesp) ;
+    typesConversion["GLintptr**"]        = addNamespace("%nIntPtr**", namesp) ;
+    typesConversion["GLintptrARB**"]     = addNamespace("%nIntPtrARB**", namesp) ;
+    typesConversion["GLsizeiptr**"]      = addNamespace("%nSizePtr**", namesp) ;
+    typesConversion["GLsizeiptrARB**"]   = addNamespace("%nSizePtrARB**", namesp) ;
+    typesConversion["GLsync**"]          = addNamespace("%nSync**", namesp) ;
+    typesConversion["GLbitfield**"]      = addNamespace("%nBitField**", namesp) ;
 
-    typesConversion["const GLboolean**"]       = "const Boolean**" ;
-    typesConversion["const GLbyte**"]          = "const Byte**" ;
-    typesConversion["const GLubyte**"]         = "const UByte**" ;
-    typesConversion["const GLchar**"]          = "const Char**" ;
-    typesConversion["const char**"]            = "const Char**" ;
-    typesConversion["const GLshort**"]         = "const Short**" ;
-    typesConversion["const GLushort**"]        = "const UShort**" ;
-    typesConversion["const GLint**"]           = "const Int**" ;
-    typesConversion["const GLuint**"]          = "const UInt**" ;
-    typesConversion["const GLfixed**"]         = "const Fixed**" ;
-    typesConversion["const GLint64**"]         = "const Int64**" ;
-    typesConversion["const GLuint64**"]        = "const UInt64**" ;
-    typesConversion["const GLfloat**"]         = "const Float**" ;
-    typesConversion["const GLdouble**"]        = "const Double**" ;
-    typesConversion["const GLhalf**"]          = "const Half**" ;
-    typesConversion["const GLclampf**"]        = "const Clampf**" ;
-    typesConversion["const GLclampd**"]        = "const Clampd**" ;
-    typesConversion["const GLsizei**"]         = "const Size**" ;
-    typesConversion["const GLenum**"]          = "const Enum**" ;
-    typesConversion["const GLvoid**"]          = "const Void**" ;
-    typesConversion["const void**"]            = "const Void**" ;
-    typesConversion["const GLintptr**"]        = "const IntPtr**" ;
-    typesConversion["const GLintptrARB**"]     = "const IntPtrARB**" ;
-    typesConversion["const GLsizeiptr**"]      = "const SizePtr**" ;
-    typesConversion["const GLsizeiptrARB**"]   = "const SizePtrARB**" ;
-    typesConversion["const GLsync**"]          = "const Sync**" ;
-    typesConversion["const GLbitfield**"]      = "const BitField**" ;
+    typesConversion["const GLboolean**"]       = addNamespace("const %nBoolean**", namesp) ;
+    typesConversion["const GLbyte**"]          = addNamespace("const %nByte**", namesp) ;
+    typesConversion["const GLubyte**"]         = addNamespace("const %nUByte**", namesp) ;
+    typesConversion["const GLchar**"]          = addNamespace("const %nChar**", namesp) ;
+    typesConversion["const char**"]            = addNamespace("const %nChar**", namesp) ;
+    typesConversion["const GLshort**"]         = addNamespace("const %nShort**", namesp) ;
+    typesConversion["const GLushort**"]        = addNamespace("const %nUShort**", namesp) ;
+    typesConversion["const GLint**"]           = addNamespace("const %nInt**", namesp) ;
+    typesConversion["const GLuint**"]          = addNamespace("const %nUInt**", namesp) ;
+    typesConversion["const GLfixed**"]         = addNamespace("const %nFixed**", namesp) ;
+    typesConversion["const GLint64**"]         = addNamespace("const %nInt64**", namesp) ;
+    typesConversion["const GLuint64**"]        = addNamespace("const %nUInt64**", namesp) ;
+    typesConversion["const GLfloat**"]         = addNamespace("const %nFloat**", namesp) ;
+    typesConversion["const GLdouble**"]        = addNamespace("const %nDouble**", namesp) ;
+    typesConversion["const GLhalf**"]          = addNamespace("const %nHalf**", namesp) ;
+    typesConversion["const GLclampf**"]        = addNamespace("const %nClampf**", namesp) ;
+    typesConversion["const GLclampd**"]        = addNamespace("const %nClampd**", namesp) ;
+    typesConversion["const GLsizei**"]         = addNamespace("const %nSize**", namesp) ;
+    typesConversion["const GLenum**"]          = addNamespace("const %nEnum**", namesp) ;
+    typesConversion["const GLvoid**"]          = addNamespace("const %nVoid**", namesp) ;
+    typesConversion["const void**"]            = addNamespace("const %nVoid**", namesp) ;
+    typesConversion["const GLintptr**"]        = addNamespace("const %nIntPtr**", namesp) ;
+    typesConversion["const GLintptrARB**"]     = addNamespace("const %nIntPtrARB**", namesp) ;
+    typesConversion["const GLsizeiptr**"]      = addNamespace("const %nSizePtr**", namesp) ;
+    typesConversion["const GLsizeiptrARB**"]   = addNamespace("const %nSizePtrARB**", namesp) ;
+    typesConversion["const GLsync**"]          = addNamespace("const %nSync**", namesp) ;
+    typesConversion["const GLbitfield**"]      = addNamespace("const %nBitField**", namesp) ;
 }

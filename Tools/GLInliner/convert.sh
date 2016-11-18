@@ -55,16 +55,21 @@ cd $HOME
 cd ./API
 for file in *.gl
 do
-    $HOME/bin/inliner "$file" $OUTPUT_INLINED/${file:0:(-3)}".inl" > null
+    $HOME/bin/inliner "$file" $OUTPUT_INLINED/${file:0:(-3)}".inl" "Types" > null
 done
 
 # Aggregate .inl files in a single .hpp
 cd $OUTPUT_INLINED
 
 touch $OUTPUT_HEADER
+echo "#include \"GL/glew.h\"" >> $OUTPUT_HEADER
+echo "#include \"GL/gl.h\"" >> $OUTPUT_HEADER
+echo "" >> $OUTPUT_HEADER
 echo "namespace $NAMESPACE {" >> $OUTPUT_HEADER
 echo -e "\tnamespace $GL_VERSION {" >> $OUTPUT_HEADER
+echo -e "\t\tnamespace Types {" >> $OUTPUT_HEADER
 cat $SOURCES/types.convert >> $OUTPUT_HEADER
+echo -e "\t\t} ;" >> $OUTPUT_HEADER
 echo "" >> $OUTPUT_HEADER
 for file in $OUTPUT_INLINED/*.inl
 do
@@ -75,7 +80,7 @@ echo -e "\t} ;" >> $OUTPUT_HEADER
 echo "} ;" >> $OUTPUT_HEADER
 echo "" >> $OUTPUT_HEADER
 echo "// To anticipate the use of Vulkan in future versions of the library." >> $OUTPUT_HEADER
-echo "using namespace $NAMESPACE::$GL_VERSION ;" >> $OUTPUT_HEADER
+echo "using namespace $NAMESPACE::$GL_VERSION::Types ;" >> $OUTPUT_HEADER
 
 # Clear the directory
 cd $SOURCES

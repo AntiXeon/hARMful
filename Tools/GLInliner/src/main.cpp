@@ -1,3 +1,12 @@
+/**
+ * main.cpp
+ * GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+ *
+ * @Author:      Denis CARLUS
+ * @Created on:  10-Nov-2016
+ * @Last change: 18-Nov-2016
+ */
+
 // This file is part of hARMful.
 
 //
@@ -32,10 +41,11 @@ using namespace std;
 #include "strings.cpp"
 
 int main(int argc, char** argv) {
-    assert(argc > 2);
+    assert(argc > 3);
     cout << endl;
 
-    initTypesConversion();
+    char* typesNamespace = argv[3] ;
+    initTypesConversion(typesNamespace);
 
     fstream output_file;
     output_file.open(argv[2], ios_base::out);
