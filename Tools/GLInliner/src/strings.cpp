@@ -1,3 +1,12 @@
+/**
+ * strings.cpp
+ * GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+ *
+ * @Author:      Denis CARLUS
+ * @Created on:  10-Nov-2016
+ * @Last change: 18-Nov-2016
+ */
+
 // This file is part of hARMful.
 //
 // hARMful is free software: you can redistribute
@@ -48,11 +57,17 @@ static void extractFunctionName(string& line, string& functionName, size_t posit
 }
 
 static void convertFunctionName(string& glFunctionName, string& convertedFunctioName) {
+    const int caseDiffASCII = 'a' - 'A' ;
+
     // type funcName(paramType1 param1, paramType2 param2, ...);
     assert(glFunctionName[0] == 'g') ;
     assert(glFunctionName[1] == 'l') ;
 
     convertedFunctioName = glFunctionName.substr(2);
+    // Make first letter be lowercase.
+    if (convertedFunctioName[0] >= 'A' && convertedFunctioName[0] <= 'Z') {
+        convertedFunctioName[0] = convertedFunctioName[0] + caseDiffASCII ;
+    }
 }
 
 static void extractParametersList(string& line, string& parameters) {
