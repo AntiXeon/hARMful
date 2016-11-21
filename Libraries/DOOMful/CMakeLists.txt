@@ -24,9 +24,3 @@ add_library (
     SHARED
     ${SOURCES}
 )
-
-add_library (
-    ${PROJECT_NAME}_static
-    STATIC
-    ${SOURCES}
-)
