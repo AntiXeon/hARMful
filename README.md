@@ -22,4 +22,14 @@ The repository is structured in different parts:
 ## Source code
 The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations. A compliant compiler is required, g++ is advised.
 
-At the moment, only GNU/Linux distributions are supported. Microsoft(r) Windows(r) OSes are not intended to be supported for now, even if it might be possible the code compiles on such systems.
+To compile the code, enter into the Libraries folder and compile each Librarie.
+
+### GNU/Linux
+To compile on a GNU/Linux system, type `cmake .` then `make`. It will generate the `.so` file.
+
+### Microsoft® Windows™
+To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Express](https://www.visualstudio.com/vs/visual-studio-express/) for free.
+Once the IDE is launched, compile the project and a `.dll` file is generated.
+
+### Mac™ OS
+Not officially supported.
