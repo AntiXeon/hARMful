@@ -26,7 +26,7 @@ namespace Doom {
         }
     }
 
-    FilePrinter::~FilePrinter() {
+    FilePrinter::~FilePrinter() noexcept {
         if (m_output.is_open()) {
             m_output.close() ;
         }
