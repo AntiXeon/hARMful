@@ -26,6 +26,21 @@ add_library (
     ${SOURCES}
 )
 
+# Versioning
+if (UNIX)
+    set(DOOMFUL_VERSION_MAJOR 0)
+    set(DOOMFUL_VERSION_MINOR 1)
+    set(DOOMFUL_VERSION_PATCH 0)
+    set(DOOMFUL_VERSION_STRING ${DOOMFUL_VERSION_MAJOR}.${DOOMFUL_VERSION_MINOR}.${DOOMFUL_VERSION_PATCH})
+
+    set_target_properties (
+        ${PROJECT_NAME}
+        PROPERTIES
+        VERSION ${DOOMFUL_VERSION_STRING}
+        SOVERSION ${DOOMFUL_VERSION_MAJOR}
+    )
+endif()
+
 # Expose DOOMful includes to other library projects.
 set(
     ${PROJECT_NAME}_INCLUDE_DIRS ${CMAKE_HOME_DIRECTORY}/include

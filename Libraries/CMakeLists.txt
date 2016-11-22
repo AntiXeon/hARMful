@@ -4,7 +4,7 @@ set(HARMFUL_LIBS_DIR ${CMAKE_SOURCE_DIR})
 
 # Remove prefix for shared libraries on Windows
 if (WIN32)
-  set(CMAKE_SHARED_LIBRARY_PREFIX "")
+    set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
 add_subdirectory(${HARMFUL_LIBS_DIR}/DOOMful/build)
