@@ -16,7 +16,7 @@ All the libraries require `cmake`.
 ## Source code
 The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations. A compliant compiler is required, g++ is advised.
 
-To compile the code, enter into the Libraries folder and compile each Librarie.
+To compile the code, enter into the Libraries folder and compile all the libraries at once by typing `cmake .`.
 
 ### GNU/Linux
 Install `cmake` on your GNU/Linux distribution or [download it](https://cmake.org/).
