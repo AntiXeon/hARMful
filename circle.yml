@@ -16,4 +16,4 @@ test:
         - cd glew-2.0.0/build/ && cmake ./cmake && make && sudo make install
     override:
         # Build libraries
-        - cd Libraries/DOOMful/build && cmake . && make
+        - cd Libraries && cmake . && make
