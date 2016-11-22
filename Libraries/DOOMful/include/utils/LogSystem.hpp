@@ -87,7 +87,6 @@ namespace Doom {
              */
             static std::shared_ptr<LogSystem> GetInstance() throw(std::runtime_error) ;
 
-        public:
             /**
              * Write a message on the Console and the FilePrinter.
              * @param   level   Level of gravity for the provided value.

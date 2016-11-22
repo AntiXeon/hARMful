@@ -11,27 +11,27 @@ namespace Doom {
         private:
 
             /**
-             * @brief   Disable copy constructor.
+             * Disable copy constructor.
              */
-            Singleton(Singleton&);
+            Singleton(Singleton&) ;
 
             /**
-             * @brief   Disable affectation.
+             * Disable affectation.
              */
-            void operator = (const Singleton &);
+            void operator= (const Singleton &) {}
 
         protected:
 
             /**
-             * @brief   Allowed default constructor, only for subclasses.
+             * Allowed default constructor, only for subclasses.
              */
-            Singleton() throw();
+            Singleton() noexcept ;
 
             /**
-             * @brief   Destruction, only for subclasses.
+             * Destruction, only for subclasses.
              */
-            virtual ~Singleton() throw();
+            virtual ~Singleton() noexcept ;
     };
 };
 
-#endif /* ifndef __DOOM__SINGLETON__ */
+#endif
