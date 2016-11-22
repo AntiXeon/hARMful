@@ -1,12 +1,3 @@
-/**
- * DOOMStrings.cpp
- * GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
- *
- * @Author:      Denis CARLUS
- * @Created on:  11-Nov-2016
- * @Last change: 14-Nov-2016
- */
-
 #include <DOOMStrings.hpp>
 
 /**
@@ -18,7 +9,10 @@
 
 namespace Doom {
     namespace Texts {
+        const std::string LogSys_NotInitialized     = i18n("The log system has not been initialized.") ;
+        const std::string LogSys_AlreadyInitialized = i18n("The log system has already been initialized.") ;
+
         /* Keep the space at the end of the string (filepath printed after). */
-        const std::string File_NotOpened =        i18n("Unable to open file at ") ;
+        const std::string File_NotOpened            = i18n("Unable to open file at ") ;
     } ;
 } ;

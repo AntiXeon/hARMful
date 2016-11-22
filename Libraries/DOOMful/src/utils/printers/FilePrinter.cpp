@@ -1,12 +1,3 @@
-/**
- * FilePrinter.cpp
- * GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
- *
- * @Author:      Denis CARLUS
- * @Created on:  11-Nov-2016
- * @Last change: 14-Nov-2016
- */
-
 #include <utils/Translation.hpp>
 #include <utils/printers/FilePrinter.hpp>
 
