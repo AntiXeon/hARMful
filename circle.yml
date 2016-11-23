@@ -8,7 +8,7 @@
 test:
     pre:
         # Dependencies for HOPEful (3D engine library)
-        - sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev
+        - sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
         # Get the source code from GLFW 3.2.1, compile it and install it.
         - wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
         - unzip glfw-3.2.1.zip
