@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 # Project declaration
-project(DOOM)
+project(HOPE)
 list(APPEND CMAKE_CXX_FLAGS "-std=c++1y ${CMAKE_CXX_FLAGS}")
 set(CMAKE_HOME_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib/${CMAKE_BUILD_TYPE})
@@ -16,6 +16,7 @@ file (
 
 # Set the include files for the library.
 include_directories (
+    ${DOOM_INCLUDE_DIRS}
     ${CMAKE_HOME_DIRECTORY}/include
 )
 
@@ -26,30 +27,31 @@ add_library (
     ${SOURCES}
 )
 
-set_target_properties (
-    ${PROJECT_NAME}
-    PROPERTIES POSITION_INDEPENDENT_CODE ON
-)
-
-target_link_libraries(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} DOOM)
 
 # Versioning
 if (UNIX)
-    set(DOOM_VERSION_MAJOR 0)
-    set(DOOM_VERSION_MINOR 1)
-    set(DOOM_VERSION_PATCH 0)
-    set(DOOM_VERSION_STRING ${DOOM_VERSION_MAJOR}.${DOOM_VERSION_MINOR}.${DOOM_VERSION_PATCH})
+    set(HOPE_VERSION_MAJOR 0)
+    set(HOPE_VERSION_MINOR 1)
+    set(HOPE_VERSION_PATCH 0)
+    set(HOPE_VERSION_STRING ${HOPE_VERSION_MAJOR}.${HOPE_VERSION_MINOR}.${HOPE_VERSION_PATCH})
 
     set_target_properties (
         ${PROJECT_NAME}
         PROPERTIES
-        VERSION ${DOOM_VERSION_STRING}
-        SOVERSION ${DOOM_VERSION_MAJOR}
+        VERSION ${HOPE_VERSION_STRING}
+        SOVERSION ${HOPE_VERSION_MAJOR}
     )
 endif()
 
-# Expose DOOM includes to other library projects.
-set(
-    ${PROJECT_NAME}_INCLUDE_DIRS ${CMAKE_HOME_DIRECTORY}/include
+set (
+    ${PROJECT_NAME}_DEFINITIONS
+    CACHE INTERNAL "${PROJECT_NAME}: Definitions" FORCE
+)
+
+set (
+    ${PROJECT_NAME}_INCLUDE_DIRS
+    ${PROJECT_SOURCE_DIR}/include
+    ${DOOM_INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE
 )

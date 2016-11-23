@@ -8,4 +8,4 @@ if (WIN32)
 endif()
 
 add_subdirectory(${HARMFUL_LIBS_DIR}/DOOMful/build)
-# add_subdirectory(${HARMFUL_LIBS_DIR}/HOPEful/build)
+add_subdirectory(${HARMFUL_LIBS_DIR}/HOPEful/build)
