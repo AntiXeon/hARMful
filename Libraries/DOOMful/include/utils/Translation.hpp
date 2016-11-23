@@ -1,5 +1,5 @@
-#ifndef __DOOM__TRANSLATION
-#define __DOOM__TRANSLATION
+#ifndef __DOOM__TRANSLATION__
+#define __DOOM__TRANSLATION__
 
 #include <DOOMStrings.hpp>
 
