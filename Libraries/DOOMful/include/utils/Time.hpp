@@ -31,11 +31,14 @@ namespace Doom {
         private:
             /**
              * Get an information from the current time.
-             * @param  format Format of the output as the one taken by strftime.
-             *                http://www.cplusplus.com/reference/ctime/strftime/
-             * @param  buffer Buffer to get the information as a string.
+             * @param  format       Format of the output as the one taken by
+             *                      strftime.
+             *                      http://www.cplusplus.com/reference/ctime/strftime/
+             * @param  buffer       Buffer to get the information as a string.
+             * @param  bufferLength Length of the buffer used to store the
+             *                      string.
              */
-            static void GetTimeInfo(const std::string& format, std::string& buffer) ;
+            static void GetTimeInfo(const std::string& format, char* buffer, size_t bufferLength) ;
     } ;
 }
 

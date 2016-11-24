@@ -14,6 +14,10 @@ namespace Doom {
         m_printer = nullptr ;
     }
 
+    std::string LogSystem::formatCurrentDateTime() {
+        return "[" + Time::GetDateTime() + "] " ;
+    }
+
     void LogSystem::Initialize(const std::string& path, const Gravity& minLevel) throw(std::runtime_error) {
         if (Instance) {
             std::string errorMessage = Translation::Get(Texts::LogSys_AlreadyInitialized) ;

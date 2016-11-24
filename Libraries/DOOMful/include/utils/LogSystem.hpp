@@ -74,6 +74,13 @@ namespace Doom {
              */
             friend void garbage(LogSystem* sys) ;
 
+            /**
+             * Format the current date and time to be printed in the logs.
+             * @return String representing the printed date and time in the
+             *         logs.
+             */
+            std::string formatCurrentDateTime() ;
+
         public:
             /**
              * Initialize the LogSystem. This is required before any call to the
@@ -102,13 +109,10 @@ namespace Doom {
             template<class T>
             void writeLine(const Gravity& level, const T& value) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
                     m_console.writeLine(dateTime, value) ;
-
-                    m_printer -> write(dateTime) ;
                     m_printer -> writeLine(dateTime, value) ;
                     m_mutex.unlock() ;
                 }
@@ -123,7 +127,7 @@ namespace Doom {
             template<class T, class ... Args>
             void writeLine(const Gravity& level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
                     m_console.write(dateTime) ;
@@ -143,14 +147,11 @@ namespace Doom {
             template<class T>
             void write(const Gravity& level, const T& value) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.write(value) ;
-
-                    m_printer -> write(dateTime) ;
-                    m_printer -> write(value) ;
+                    m_console.write(dateTime, value) ;
+                    m_printer -> write(dateTime, value) ;
                     m_mutex.unlock() ;
                 }
             }
@@ -164,7 +165,7 @@ namespace Doom {
             template<class T, class ... Args>
             void write(const Gravity& level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
                     m_console.write(dateTime) ;
@@ -185,11 +186,10 @@ namespace Doom {
             template<class T>
             void printLine(const Gravity& level, const T& value) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.writeLine(value) ;
+                    m_console.writeLine(dateTime, value) ;
                     m_mutex.unlock() ;
                 }
             }
@@ -203,7 +203,7 @@ namespace Doom {
             template<class T, class ... Args>
             void printLine(const Gravity& level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
                     m_console.write(dateTime) ;
@@ -220,11 +220,10 @@ namespace Doom {
             template<class T>
             void print(const Gravity& level, const T& value) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.write(value) ;
+                    m_console.write(dateTime, value) ;
                     m_mutex.unlock() ;
                 }
             }
@@ -238,7 +237,7 @@ namespace Doom {
             template<class T, class ... Args>
             void print(const Gravity& level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = Time::GetDateTime() ;
+                    std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
                     m_console.write(dateTime) ;

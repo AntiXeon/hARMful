@@ -11,30 +11,27 @@ namespace Doom {
 
         // %D gives the current day as MM/DD/YY
         // The string is so initialized with the right length.
-        std::string currentDate = "MM/DD/YY" ;
-
-        GetTimeInfo(DateFormat, currentDate) ;
-        return currentDate ;
+        char buffer[9] ;
+        GetTimeInfo(DateFormat, buffer, sizeof(buffer)) ;
+        return std::string(buffer) ;
     }
 
     std::string Time::GetTime() {
-        const std::string TimeFormat = "%D" ;
+        const std::string TimeFormat = "%T" ;
 
         // %T gives the current day as hh:mm:ss.
-        // The string is so initialized with the right length.
-        std::string currentTime = "hh:mm:ss" ;
-
-        GetTimeInfo(TimeFormat, currentTime) ;
-        return currentTime ;
+        char buffer[9] ;
+        GetTimeInfo(TimeFormat, buffer, sizeof(buffer)) ;
+        return std::string(buffer) ;
     }
 
-    void Time::GetTimeInfo(const std::string& format, std::string& buffer) {
+    void Time::GetTimeInfo(const std::string& format, char* buffer, size_t bufferLength) {
         time_t now ;
         time(&now) ;
 
         struct tm* timeinfo ;
         timeinfo = localtime(&now) ;
 
-        strftime(&buffer[0], buffer.size(), format.c_str(), timeinfo) ;
+        strftime(buffer, bufferLength, format.c_str(), timeinfo) ;
     }
 }
