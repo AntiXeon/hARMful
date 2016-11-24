@@ -140,45 +140,6 @@ namespace Doom {
             }
 
             /**
-             * Write a message on the Console and the FilePrinter.
-             * @param   level   Level of gravity for the provided value.
-             * @param   value   The value to be printed.
-             */
-            template<class T>
-            void write(const Gravity& level, const T& value) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
-
-                    m_mutex.lock() ;
-                    m_console.write(dateTime, value) ;
-                    m_printer -> write(dateTime, value) ;
-                    m_mutex.unlock() ;
-                }
-            }
-
-            /**
-             * Write messages on the Console and the FilePrinter.
-             * @param   level   Level of gravity for the provided value.
-             * @param   value   The value to be printed.
-             * @param   args    Remaining arguments to be printed.
-             */
-            template<class T, class ... Args>
-            void write(const Gravity& level, const T& value, const Args& ... args) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
-
-                    m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.write(value, args...) ;
-
-                    m_printer -> write(dateTime) ;
-                    m_printer -> write(value, args...) ;
-                    m_mutex.unlock() ;
-                }
-            }
-
-
-            /**
              * Write a message on the Console.
              * @param   level   Level of gravity for the provided value.
              * @param   value   The value to be printed.
@@ -208,40 +169,6 @@ namespace Doom {
                     m_mutex.lock() ;
                     m_console.write(dateTime) ;
                     m_console.writeLine(value, args...) ;
-                    m_mutex.unlock() ;
-                }
-            }
-
-            /**
-             * Write a message on the Console.
-             * @param   level   Level of gravity for the provided value.
-             * @param   value   The value to be printed.
-             */
-            template<class T>
-            void print(const Gravity& level, const T& value) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
-
-                    m_mutex.lock() ;
-                    m_console.write(dateTime, value) ;
-                    m_mutex.unlock() ;
-                }
-            }
-
-            /**
-             * Write messages on the Console.
-             * @param   level   Level of gravity for the provided value.
-             * @param   value   The value to be printed.
-             * @param   args    Remaining arguments to be printed.
-             */
-            template<class T, class ... Args>
-            void print(const Gravity& level, const T& value, const Args& ... args) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
-
-                    m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.write(value, args...) ;
                     m_mutex.unlock() ;
                 }
             }
