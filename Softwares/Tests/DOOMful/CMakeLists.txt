@@ -20,3 +20,4 @@ add_subdirectory(${DOOMFUL_ABSOLUTE}/build ./build)
 # Set tests executable sources
 add_subdirectory(${CMAKE_SOURCE_DIR}/LogSystem/build)
 add_subdirectory(${CMAKE_SOURCE_DIR}/Chrono/build)
+add_subdirectory(${CMAKE_SOURCE_DIR}/Profiler/build)
