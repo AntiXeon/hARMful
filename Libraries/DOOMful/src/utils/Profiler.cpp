@@ -23,24 +23,32 @@ namespace Doom {
 
     int Profiler::startProfiling(const std::string& name) {
         m_mutex.lock() ;
-            int sessionID = m_chronos[name].size() ;
+            int sessionID = -1 ;
+            if (m_chronos.count(name) == 1) {
+                sessionID = m_chronos[name].size() ;
 
-            m_chronos[name].push_back(Chrono()) ;
-            m_chronos[name].back().start() ;
+                m_chronos[name].push_back(Chrono()) ;
+                m_chronos[name].back().start() ;
+            }
         m_mutex.unlock() ;
         return sessionID ;
     }
 
     void Profiler::stopProfiling(const std::string& name, const int& sessionID) {
         m_mutex.lock() ;
-            size_t amountSessions = m_chronos[name].size() ;
+            size_t amountSessions = 0 ;
+            if (m_chronos.count(name) == 1) {
+                amountSessions = m_chronos[name].size() ;
+            }
         m_mutex.unlock() ;
 
         // The amount of sessions does not match with the provided session ID:
         // - either no session at all for the wanted source;
         // - or the session ID is wrong.
         // In both case, their is nothing to do.
-        if ((amountSessions == 0) || (sessionID > amountSessions)) {
+        bool hasSession = (amountSessions > 0) ;
+        bool isSessionValid = (sessionID >= 0) && (sessionID < amountSessions) ;
+        if (!hasSession || !isSessionValid) {
             return ;
         }
 
