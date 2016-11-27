@@ -20,3 +20,8 @@ test:
     override:
         # Build libraries
         - cd Libraries && cmake . && make
+        # Build functional tests and run it
+        - cd Softwares/Tests/DOOMful && cmake . && make
+        - cd Softwares/Tests/DOOMful/Chrono/bin && ./TestChrono.exe
+        - cd Softwares/Tests/DOOMful/LogSystem/bin && ./TestLogSystem.exe
+        - cd Softwares/Tests/DOOMful/Profiler/bin && ./TestProfiler.exe
