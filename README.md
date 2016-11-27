@@ -26,7 +26,7 @@ To compile the code, enter into the Libraries folder and compile all the librari
 To compile on a GNU/Linux system, type `cmake .` then `make`. It will generate the `.so` file.
 
 ### Microsoft® Windows™
-To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Express](https://www.visualstudio.com/vs/visual-studio-express/) for free.
+To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free.
 Once the IDE is launched, compile the project and a `.dll` file is generated.
 
 ### Mac™ OS
