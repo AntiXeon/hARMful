@@ -58,7 +58,9 @@ namespace Doom {
             template<class T>
             void writeLine(const T& value) {
                 m_mutex.lock() ;
+                {
                     m_output << value << std::endl ;
+                }
                 m_mutex.unlock() ;
             }
 
@@ -71,9 +73,11 @@ namespace Doom {
             template<class T, class ... Args>
             void writeLine(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
+                {
                     m_output << value ;
                     auto printer = { Printer::ValuePrinter(m_output, args)... } ;
                     m_output << std::endl ;
+                }
                 m_mutex.unlock() ;
             }
 
@@ -84,7 +88,9 @@ namespace Doom {
             template<class T>
             void write(const T& value) {
                 m_mutex.lock() ;
+                {
                     m_output << value << std::flush ;
+                }
                 m_mutex.unlock() ;
             }
 
@@ -96,9 +102,11 @@ namespace Doom {
             template<class T, class ... Args>
             void write(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
+                {
                     m_output << value ;
                     auto printer = { Printer::ValuePrinter(m_output, args)... } ;
                     m_output << std::flush ;
+                }
                 m_mutex.unlock() ;
             }
 

@@ -112,8 +112,10 @@ namespace Doom {
                     std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.writeLine(dateTime, value) ;
-                    m_printer -> writeLine(dateTime, value) ;
+                    {
+                        m_console.writeLine(dateTime, value) ;
+                        m_printer -> writeLine(dateTime, value) ;
+                    }
                     m_mutex.unlock() ;
                 }
             }
@@ -130,11 +132,13 @@ namespace Doom {
                     std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.writeLine(value, args...) ;
+                    {
+                        m_console.write(dateTime) ;
+                        m_console.writeLine(value, args...) ;
 
-                    m_printer -> write(dateTime) ;
-                    m_printer -> writeLine(value, args...) ;
+                        m_printer -> write(dateTime) ;
+                        m_printer -> writeLine(value, args...) ;
+                    }
                     m_mutex.unlock() ;
                 }
             }
@@ -150,7 +154,9 @@ namespace Doom {
                     std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.writeLine(dateTime, value) ;
+                    {
+                        m_console.writeLine(dateTime, value) ;
+                    }
                     m_mutex.unlock() ;
                 }
             }
@@ -167,8 +173,10 @@ namespace Doom {
                     std::string dateTime = formatCurrentDateTime() ;
 
                     m_mutex.lock() ;
-                    m_console.write(dateTime) ;
-                    m_console.writeLine(value, args...) ;
+                    {
+                        m_console.write(dateTime) ;
+                        m_console.writeLine(value, args...) ;
+                    }
                     m_mutex.unlock() ;
                 }
             }

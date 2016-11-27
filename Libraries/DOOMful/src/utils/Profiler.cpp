@@ -17,29 +17,35 @@ namespace Doom {
 
     void Profiler::addProfilingSource(const std::string& name) {
         m_mutex.lock() ;
+        {
             m_chronos[name].reserve(4) ;
+        }
         m_mutex.unlock() ;
     }
 
     int Profiler::startProfiling(const std::string& name) {
+        int sessionID = -1 ;
         m_mutex.lock() ;
-            int sessionID = -1 ;
+        {
             if (m_chronos.count(name) == 1) {
                 sessionID = m_chronos[name].size() ;
 
                 m_chronos[name].push_back(Chrono()) ;
                 m_chronos[name].back().start() ;
             }
+        }
         m_mutex.unlock() ;
         return sessionID ;
     }
 
     void Profiler::stopProfiling(const std::string& name, const int& sessionID) {
+        size_t amountSessions = 0 ;
         m_mutex.lock() ;
-            size_t amountSessions = 0 ;
+        {
             if (m_chronos.count(name) == 1) {
                 amountSessions = m_chronos[name].size() ;
             }
+        }
         m_mutex.unlock() ;
 
         // The amount of sessions does not match with the provided session ID:
@@ -53,14 +59,17 @@ namespace Doom {
         }
 
         m_mutex.lock() ;
+        {
             if (m_chronos[name][sessionID].isStarted()) {
                 m_chronos[name][sessionID].stop() ;
             }
+        }
         m_mutex.unlock() ;
     }
 
     void Profiler::flush() {
         m_mutex.lock() ;
+        {
             m_elapsedTimes.clear() ;
 
             // Cumulate the time for each session per source.
@@ -73,15 +82,18 @@ namespace Doom {
             }
 
             m_chronos.clear() ;
+        }
         m_mutex.unlock() ;
     }
 
     std::intmax_t Profiler::getTime(const std::string& name) {
         std::intmax_t cumulatedTime = 0 ;
         m_mutex.lock() ;
+        {
             if (m_elapsedTimes.count(name) == 1) {
                 cumulatedTime = m_elapsedTimes[name] ;
             }
+        }
         m_mutex.unlock() ;
         return cumulatedTime ;
     }
