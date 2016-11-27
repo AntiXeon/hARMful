@@ -33,6 +33,11 @@ namespace Doom {
             static std::shared_ptr<LogSystem> Instance ;
 
             /**
+             * Mutex for the static methods of the class.
+             */
+            static std::mutex ClassMutex ;
+
+            /**
              * Avoid concurrent accesses to the LogSystem.
              */
             std::mutex m_mutex ;

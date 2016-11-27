@@ -4,6 +4,7 @@
 
 namespace Doom {
     std::shared_ptr<LogSystem> LogSystem::Instance ;
+    std::mutex LogSystem::ClassMutex ;
 
     LogSystem::LogSystem(const std::string& path, const Gravity& minLevel) {
         m_minLevel = minLevel ;
@@ -19,19 +20,33 @@ namespace Doom {
     }
 
     void LogSystem::Initialize(const std::string& path, const Gravity& minLevel) throw(std::runtime_error) {
-        if (Instance) {
-            std::string errorMessage = Translation::Get(Texts::LogSys_AlreadyInitialized) ;
-            throw std::runtime_error(errorMessage) ;
-        }
+        ClassMutex.lock() ;
+        {
+            // The instance has already been initialized. This is not supported
+            // and this behavior throws an exception. However, this is not a
+            // critical error and the exception can be caught to continue the
+            // execution.
+            if (Instance) {
+                std::string errorMessage = Translation::Get(Texts::LogSys_AlreadyInitialized) ;
+                throw std::runtime_error(errorMessage) ;
+            }
 
-        Instance = std::shared_ptr<LogSystem>(new LogSystem(path, minLevel), garbage) ;
+            Instance = std::shared_ptr<LogSystem>(new LogSystem(path, minLevel), garbage) ;
+        }
+        ClassMutex.unlock() ;
     }
 
     std::shared_ptr<LogSystem> LogSystem::GetInstance() throw(std::runtime_error) {
-        if (!Instance) {
-            std::string errorMessage = Translation::Get(Texts::LogSys_NotInitialized) ;
-            throw std::runtime_error(errorMessage) ;
+        ClassMutex.lock() ;
+        {
+            // The instance has not been initialized. The instance pointer is
+            // thus a null pointer and the application should not use it.
+            if (!Instance) {
+                std::string errorMessage = Translation::Get(Texts::LogSys_NotInitialized) ;
+                throw std::runtime_error(errorMessage) ;
+            }
         }
+        ClassMutex.unlock() ;
 
         return Instance ;
     }
