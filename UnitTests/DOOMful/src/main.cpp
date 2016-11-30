@@ -2,5 +2,5 @@
 
 int main(int, char**) {
     UTDoom::UTStringExt().runTests() ;
-    return 0 ;
+    return UnitTest::Success() ;
 }

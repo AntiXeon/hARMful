@@ -26,3 +26,6 @@ test:
         - cd Softwares/Tests/DOOMful/LogSystem/bin && ./TestLogSystem.exe
         - cd Softwares/Tests/DOOMful/Profiler/bin && ./TestProfiler.exe
         - cd Softwares/Tests/DOOMful/Random/bin && ./TestRandom.exe
+        # Build unit tests and run it
+        - cd UnitTests && cmake . && make
+        - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
