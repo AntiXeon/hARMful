@@ -14,9 +14,9 @@ namespace UTDoom {
     }
 
     void UTStringExt::changeCase() {
-        // This is a test to check if the continuous integration can fail on a
-        // bad result.
-        check(false) ;
+        // This is a test to check if the continuous integration can succeed on
+        // a good result.
+        check(true) ;
     }
 
     void UTStringExt::split() {
