@@ -42,11 +42,13 @@ class UnitTest {
 
     protected:
         /**
-         * Test if the @a condition is TRUE.
-         * @param   condition     The condition to check.
-         * @warning Contrary to the assert macro from the C API, this method does not immediately stop the
+         * Check if the @a condition is TRUE.
+         * @param condition The condition to check.
+         * @param file      File that is calling the assert method.
+         * @param function  Function that is calling the assert method.
+         * @param line      Line at which the assert method is called.
          */
-        void assert(bool condition) ;
+        void checkCondition(bool condition, const char* file, const  char* function, int line) ;
 
         /**
          * Compare two float values and check if their difference is lower than
@@ -58,5 +60,11 @@ class UnitTest {
          */
         bool compare(float a, float b) ;
 } ;
+
+/**
+ * This macro is to be used into an inherited class.
+ * @param  condition The condition to check.
+ */
+#define check(condition) checkCondition(condition, __FILE__, __func__, __LINE__)
 
 #endif

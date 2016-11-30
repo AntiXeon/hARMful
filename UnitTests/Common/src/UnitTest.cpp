@@ -13,14 +13,14 @@ int UnitTest::Success() {
     return ValidatedUnitTestSession ;
 }
 
-void UnitTest::assert(bool condition) {
+void UnitTest::checkCondition(bool condition, const char* file, const  char* function, int line) {
     if (!condition) {
         std::cerr << "Failed at "
-                  << __FILE__
+                  << file
                   << "::"
-                  << __func__
+                  << function
                   << "() on line "
-                  << __LINE__
+                  << line
                   << std::endl ;
 
         ValidatedUnitTestSession = EXIT_FAILURE ;
