@@ -31,6 +31,26 @@ namespace UTDoom {
             void changeCase() ;
 
             /**
+             * Change the case of one character.
+             */
+            void changeCharCase() ;
+
+            /**
+             * Change the case of the first character.
+             */
+            void changeFirstCase() ;
+
+            /**
+             * Change the case of the first character of each word.
+             */
+            void changeWordsCase() ;
+
+            /**
+             * Test trimming strings.
+             */
+            void trim() ;
+
+            /**
              * Test splitting strings.
              */
             void split() ;

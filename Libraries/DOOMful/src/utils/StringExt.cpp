@@ -1,6 +1,7 @@
 #include <utils/StringExt.hpp>
 #include <utils/Random.hpp>
 #include <cmath>
+#include <cctype>
 
 namespace Doom {
     namespace StringExt {
@@ -33,19 +34,14 @@ namespace Doom {
             size_t characterPosition = 0 ;
             bool insideWord = false ;
             for (char& character : stringCap) {
-                if (!insideWord) {
+                bool isWhiteSpace = isspace(character) ;
+
+                if (!insideWord && !isWhiteSpace) {
                     insideWord = true ;
                     CaseChar(stringCap, characterPosition, charCase) ;
                 }
-                else {
-                    bool isLowerLetter = (character >= 'a') && (character <= 'z') ;
-                    bool isUpperLetter = (character >= 'A') && (character <= 'Z') ;
-                    bool isLetter = isLowerLetter || isUpperLetter ;
-                    bool isNumber = (character >= '0') && (character <= '9') ;
-
-                    if (!isLetter && !isNumber) {
-                        insideWord = false ;
-                    }
+                else if (isWhiteSpace) {
+                    insideWord = false ;
                 }
                 characterPosition++ ;
             }
@@ -69,24 +65,16 @@ namespace Doom {
 
             bool continueToTrim = true ;
             while(continueToTrim) {
-                switch(stringToTrim[index]) {
-                    case ' ':
-                    case '\a':
-                    case '\b':
-                    case '\n':
-                    case '\r':
-                    case '\t':
-                    case '\v':
-                        // Move the index to remove the character to delete.
-                        index = index + 1 ;
-                        continueToTrim = (index < strLength) ;
-                        break ;
-
-                    default:
-                        // Stop trimming and substring with the index.
-                        continueToTrim = false ;
-                        stringToTrim = stringToTrim.substr(index) ;
-                        break ;
+                bool isSpace = isspace(stringToTrim[index]) ;
+                if (isSpace) {
+                    // Move the index to remove the character to delete.
+                    index = index + 1 ;
+                    continueToTrim = (index < strLength) ;
+                }
+                else {
+                    // Stop trimming and substring with the index.
+                    continueToTrim = false ;
+                    stringToTrim = stringToTrim.substr(index) ;
                 }
             }
         }
@@ -101,24 +89,16 @@ namespace Doom {
 
             bool continueToTrim = true ;
             while(continueToTrim) {
-                switch(stringToTrim[index]) {
-                    case ' ':
-                    case '\a':
-                    case '\b':
-                    case '\n':
-                    case '\r':
-                    case '\t':
-                    case '\v':
-                        // Move the index to remove the character to delete.
-                        index = index - 1 ;
-                        continueToTrim = (index > 0) ;
-                        break ;
-
-                    default:
-                        // Stop trimming and substring with the index.
-                        continueToTrim = false ;
-                        stringToTrim = stringToTrim.substr(0, index + 1) ;
-                        break ;
+                bool isSpace = isspace(stringToTrim[index]) ;
+                if (isSpace) {
+                    // Move the index to remove the character to delete.
+                    index = index - 1 ;
+                    continueToTrim = (index > 0) ;
+                }
+                else {
+                    // Stop trimming and substring with the index.
+                    continueToTrim = false ;
+                    stringToTrim = stringToTrim.substr(0, index + 1) ;
                 }
             }
         }
@@ -140,24 +120,27 @@ namespace Doom {
             while (foundPosition != std::string::npos) {
                 std::size_t length = foundPosition - previousPosition ;
                 std::string part = toSplit.substr(previousPosition, length) ;
-                if (part.size() > 0) {
+                if (!part.empty()) {
                     result.push_back(part) ;
                 }
 
                 previousPosition = foundPosition + 1 ;
-                foundPosition = toSplit.find_first_of(characters, previousPosition + 1) ;
+                foundPosition = toSplit.find_first_of(characters, previousPosition) ;
             }
-            result.push_back(toSplit.substr(previousPosition)) ;
+            std::string remaining = toSplit.substr(previousPosition) ;
+            if (!remaining.empty()) {
+                result.push_back(remaining) ;
+            }
 
             return result ;
         }
 
         std::string ToStringi(int32_t value, unsigned char base) {
             const char ASCIINumberStart = '0' ;
-            const unsigned short MAX_BUFFER = 127 ;
-            char buffer[MAX_BUFFER + 2] ;
+            const char BufferSize = 32 ;
+            std::string buffer(BufferSize, '\0') ;
 
-            unsigned short offset = MAX_BUFFER + 1 ;
+            unsigned short offset = BufferSize - 1 ;
             bool isNegative = (value < 0) ;
             while ((value != 0) && (offset > 0)) {
                 int32_t tmp = value ;
@@ -173,8 +156,7 @@ namespace Doom {
             if (isNegative) {
                 buffer[offset] = '-' ;
             }
-
-            return std::string(buffer + offset + 1) ;
+            return buffer.substr(offset + 1, BufferSize - offset) ;
         }
 
         std::string ToStringf(float value, unsigned char precision) {
