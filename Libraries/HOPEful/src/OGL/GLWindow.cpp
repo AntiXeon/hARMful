@@ -6,9 +6,11 @@
 #include <cstdlib>
 
 namespace Hope {
-    GLWindow::GLWindow(const int& width,
-                       const int& height,
-                       const std::string& title) {
+    GLWindow::GLWindow(
+        const int& width,
+        const int& height,
+        const std::string& title
+    ) {
         createInternalWindow(width, height, title);
         useCurrentContext();
         initializeGLEW();
@@ -21,9 +23,11 @@ namespace Hope {
         glfwSwapBuffers(m_window);
     }
 
-    void GLWindow::createInternalWindow(const int& width,
-                                        const int& height,
-                                        const std::string& title) {
+    void GLWindow::createInternalWindow(
+        const int& width,
+        const int& height,
+        const std::string& title
+    ) {
         if (!glfwInit()) {
             std::shared_ptr<Doom::LogSystem> log = Doom::LogSystem::GetInstance() ;
             Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;

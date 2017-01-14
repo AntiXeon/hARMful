@@ -5,7 +5,7 @@
 
 namespace Hope {
     /**
-     * @brief   Options to configurate OpenGL.
+     * Options to configurate OpenGL.
      */
     class GLOptions {
         public:
@@ -26,8 +26,10 @@ namespace Hope {
              * @param major Major version number.
              * @param minor Minor version number.
              */
-            static void SetGLVersion(const int& major,
-                                     const int& minor);
+            static void SetGLVersion(
+                const int& major,
+                const int& minor
+            );
 
             /**
              * Set the sampling factor to compute antialiasing.
@@ -38,4 +40,4 @@ namespace Hope {
     };
 }
 
-#endif // ifndef __HOPE__GL_OPTIONS__
+#endif
