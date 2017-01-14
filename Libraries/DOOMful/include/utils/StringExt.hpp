@@ -7,7 +7,8 @@
 namespace Doom {
     namespace StringExt {
         /**
-         *
+         * Offset between the upper and lower case alphabetic characters in the
+         * ASCII table.
          */
         enum class CharacterCase : int8_t {
             Upper = 'A' - 'a',  // from lower to upper case in the ASCII table
