@@ -18,7 +18,7 @@ All the libraries require `cmake`.
 * GLEW 2.0.0: https://github.com/nigels-com/glew
 
 ### MINDful
-* Recommanded hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
+* Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
 
 ## Source code
 The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations. A compliant compiler is required, g++ is advised.
