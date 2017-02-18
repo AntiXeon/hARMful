@@ -1,17 +1,17 @@
 template <typename Type>
 inline int32x4_t Vector4<Type>::selection(
-	const int32x4_t& selector,
-	const int32x4_t& a,
-	const int32x4_t& b
+    const int32x4_t& selector,
+    const int32x4_t& a,
+    const int32x4_t& b
 ) {
-	#if defined(USE_INTEL_SSE4_1)
-	    return _mm_blendv_epi8 (b, a, selector) ;
-	#else
-	    return _mm_or_si128(
-			_mm_and_si128(selector, a),
-			_mm_andnot_si128(selector, b)
-		) ;
-	#endif
+    #if defined(USE_INTEL_SSE4_1)
+        return _mm_blendv_epi8 (b, a, selector) ;
+    #else
+        return _mm_or_si128(
+            _mm_and_si128(selector, a),
+            _mm_andnot_si128(selector, b)
+        ) ;
+    #endif
 }
 
                                               /** CONSTRUCTION / DESTRUCTION **/
@@ -20,10 +20,10 @@ Vector4<Type>::Vector4() {}
 
 template <typename Type>
 Vector4<Type>::Vector4(
-	const Type& i1,
-	const Type& i2,
-	const Type& i3,
-	const Type& i4
+    const Type& i1,
+    const Type& i2,
+    const Type& i3,
+    const Type& i4
 ) {
     m_inner = _mm_setr_epi32(i1, i2, i3, i4) ;
 }
@@ -35,7 +35,7 @@ Vector4<Type>::Vector4(const Type& value) {
 
 template <typename Type>
 Vector4<Type>::Vector4(const int32x4_t& vec) {
-	m_inner = vec ;
+    m_inner = vec ;
 }
 
 template <typename Type>
@@ -47,7 +47,7 @@ template <typename Type>
 Vector4<Type>::~Vector4() {}
 
 
-                                             				 /*** UTILITIES ***/
+                                                              /*** UTILITIES ***/
 template <typename Type>
 inline Type Vector4<Type>::horizontalAdd() {
     // The goal of this function is to put the sum of vector elements in the
@@ -78,16 +78,16 @@ inline Type Vector4<Type>::horizontalAdd() {
 
 template <typename Type>
 inline size_t Vector4<Type>::length() const {
-	return size() ;
+    return size() ;
 }
 
 template <typename Type>
 inline size_t Vector4<Type>::size() {
-	return 4 ;
+    return 4 ;
 }
 
 
 template <typename Type>
 Vector4<Type>::operator int32x4_t() const {
-	return m_inner ;
+    return m_inner ;
 }

@@ -8,14 +8,14 @@
 #include "SIMDVector4.hpp"
 
 namespace Mind {
-	namespace SSE2 {
+    namespace SSE2 {
         class Vector4ui : public Vector4uint32 {
             public:
                                               /** CONSTRUCTION / DESTRUCTION **/
                 /**
-				 * Create an empty vector.
-				 * @warning The content of this vector is not guaranteed!
-				 */
+                 * Create an empty vector.
+                 * @warning The content of this vector is not guaranteed!
+                 */
                 Vector4ui() ;
 
                 /**
@@ -26,11 +26,11 @@ namespace Mind {
                  * @param   i4  Fourth component of the Vector4ui.
                  */
                 Vector4ui(
-					const uint32_t& i1,
-					const uint32_t& i2,
-					const uint32_t& i3 = 0.f,
-					const uint32_t& i4 = 0.f
-				) ;
+                    const uint32_t& i1,
+                    const uint32_t& i2,
+                    const uint32_t& i3 = 0.f,
+                    const uint32_t& i4 = 0.f
+                ) ;
 
                 /**
                  * Create a Vector4ui in which all values are the given one.
@@ -51,10 +51,10 @@ namespace Mind {
                  */
                 Vector4ui(const float32x4_t& vec) ;
 
-				/**
-				 * Destruction of the Vector4ui.
-				 */
-				virtual ~Vector4ui() ;
+                /**
+                 * Destruction of the Vector4ui.
+                 */
+                virtual ~Vector4ui() ;
 
 
                                                         /** STATIC FUNCTIONS **/
@@ -65,36 +65,36 @@ namespace Mind {
                 template <uint32_t i0, uint32_t i1, uint32_t i2, uint32_t i3>
                 static uint32x4_t constant() ;
 
-				/**
-				 * Get a minimal Vector4ui. It is the consensus of a and b,
-				 * picking only the smallest value for a given element:
-				 * <code>
-				 * dst[i] = min(a[i], b[i]) ;
-				 * </code>
-				 * @param 	a 	First Vector4ui to test.
-				 * @param 	b 	Second Vector4ui to test.
-				 * @return 	A Vector4ui containing the minimal values contained
-				 *			in a or b.
-				 */
+                /**
+                 * Get a minimal Vector4ui. It is the consensus of a and b,
+                 * picking only the smallest value for a given element:
+                 * <code>
+                 * dst[i] = min(a[i], b[i]) ;
+                 * </code>
+                 * @param     a     First Vector4ui to test.
+                 * @param     b     Second Vector4ui to test.
+                 * @return     A Vector4ui containing the minimal values contained
+                 *            in a or b.
+                 */
                 static Vector4ui min(const Vector4ui& a, const Vector4ui& b) ;
 
-				/**
-				 * Get a maximal Vector4ui. It is the consensus of a and b,
-				 * picking only the greatest value for a given element:
-				 * <code>
-				 * dst[i] = max(a[i], b[i]) ;
-				 * </code>
-				 * @param 	a 	First Vector4ui to test.
-				 * @param 	b 	Second Vector4ui to test.
-				 * @return 	A Vector4ui containing the maximal values contained
-				 *			in a or b.
-				 */
-				static Vector4ui max(const Vector4ui& a, const Vector4ui& b) ;
+                /**
+                 * Get a maximal Vector4ui. It is the consensus of a and b,
+                 * picking only the greatest value for a given element:
+                 * <code>
+                 * dst[i] = max(a[i], b[i]) ;
+                 * </code>
+                 * @param     a     First Vector4ui to test.
+                 * @param     b     Second Vector4ui to test.
+                 * @return     A Vector4ui containing the maximal values contained
+                 *            in a or b.
+                 */
+                static Vector4ui max(const Vector4ui& a, const Vector4ui& b) ;
 
-				/**
-				 * Print the content of the Vector on the console output.
-				 */
-				void print() ;
+                /**
+                 * Print the content of the Vector on the console output.
+                 */
+                void print() ;
         } ;
 
         #include "impl/Vector4/Vector4ui/operators.hpp"

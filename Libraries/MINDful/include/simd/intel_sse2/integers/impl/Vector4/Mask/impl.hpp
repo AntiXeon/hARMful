@@ -1,4 +1,4 @@
-                              				  /** CONSTRUCTION / DESTRUCTION **/
+                                                /** CONSTRUCTION / DESTRUCTION **/
 template <typename Type>
 Vector4<Type>::Mask::Mask() {}
 
@@ -26,7 +26,7 @@ template <typename Type>
 Vector4<Type>::Mask::~Mask() {}
 
 
-                                             				 /*** UTILITIES ***/
+                                                              /*** UTILITIES ***/
 template <typename Type>
 inline void Vector4<Type>::Mask::get(AlignedArray4i& array) {
     int32_t* data = array.data() ;
@@ -51,8 +51,8 @@ inline size_t Vector4<Type>::Mask::size() {
 }
 
 
-                                             				 /*** OPERATORS ***/
-                                        				/** AFFECT OPERATORS **/
+                                                              /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
 template <typename Type>
 inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const Mask& mask) {
     m_inner = mask.m_inner ;
@@ -77,7 +77,7 @@ inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const float3
     return *this ;
 }
 
-                                          				  /** CAST OPERATORS **/
+                                                            /** CAST OPERATORS **/
 template <typename Type>
 inline Vector4<Type>::Mask::operator int32x4_t() const {
     return m_inner ;

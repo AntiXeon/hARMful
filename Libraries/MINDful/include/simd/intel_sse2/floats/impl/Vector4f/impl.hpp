@@ -37,7 +37,7 @@ Vector4f::Vector4f(const float32x4_t& vec) {
 Vector4f::~Vector4f() {}
 
 
-                                             				 /*** UTILITIES ***/
+                                                              /*** UTILITIES ***/
 inline Scalar Vector4f::horizontalAdd() {
     // The goal of this function is to put the sum of vector elements in the
     // lower element (ie. first position) of the result, and finally return the
@@ -166,7 +166,7 @@ inline void Vector4f::changeSign() {
 }
 
 
-												  /** CONDITIONAL ARITHMETIC **/
+                                                  /** CONDITIONAL ARITHMETIC **/
 inline void Vector4f::addIf(const Vector4f::Mask& mask, const Vector4f& add) {
     *this += (add & mask) ;
 }
@@ -184,7 +184,7 @@ inline Scalar Vector4f::norm() const {
 }
 
 
-		        										/** STATIC FUNCTIONS **/
+                                                        /** STATIC FUNCTIONS **/
 inline Vector4f Vector4f::select(
     const Vector4f::Mask& selector,
     const Vector4f& a,
@@ -252,7 +252,7 @@ inline Vector4f Vector4f::fast_sqrt(const Vector4f& vec) {
 }
 
 
-														/** FUSED OPERATIONS **/
+                                                        /** FUSED OPERATIONS **/
 inline Vector4f Vector4f::mul_add(
     const Vector4f& mula,
     const Vector4f& mulb,
@@ -296,7 +296,7 @@ inline Vector4f Vector4f::sub_mul(
 }
 
 
-													 /*** GETTERS / SETTERS ***/
+                                                     /*** GETTERS / SETTERS ***/
 inline Vector4f::Mask Vector4f::isNegative() {
     // Float structure :
     // [ S | EEEEEEEE | FFFFFFFFFFFFFFFFFFFFFFF ]
@@ -378,7 +378,7 @@ inline void Vector4f::print() {
                         << std::endl ;
 }
 
-                                                   			     /*** MXCSR ***/
+                                                                    /*** MXCSR ***/
 inline uint32_t Vector4f::getControlWord() {
     return _mm_getcsr() ;
 }
@@ -398,8 +398,8 @@ inline void Vector4f::resetControlWord() {
 }
 
 
-                                            				 /*** OPERATORS ***/
-                                        				/** AFFECT OPERATORS **/
+                                                             /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
 inline Vector4f& Vector4f::operator=(const Vector4f& vec4) {
     m_inner = vec4.m_inner ;
     return *this ;
@@ -425,7 +425,7 @@ inline Vector4f& Vector4f::operator=(const Vector4ui& vec4) {
     return *this ;
 }
 
-                                          				  /** CAST OPERATORS **/
+                                                            /** CAST OPERATORS **/
 inline Vector4f::operator float32x4_t() const {
     return m_inner ;
 }

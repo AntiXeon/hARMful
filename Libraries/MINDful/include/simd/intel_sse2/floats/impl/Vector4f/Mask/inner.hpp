@@ -2,12 +2,12 @@
  * Mask to perform logical operations on Vector4f.
  */
 class Mask {
-	private:
-		/** Inner vector of booleans (as floats). */
-		float32x4_t m_inner ;
+    private:
+        /** Inner vector of booleans (as floats). */
+        float32x4_t m_inner ;
 
 
-                              				  /** CONSTRUCTION / DESTRUCTION **/
+                                                /** CONSTRUCTION / DESTRUCTION **/
         /** Prevent construction from integers. */
         Mask(const int& value) ;
 
@@ -65,28 +65,28 @@ class Mask {
 
 
         /**
-		 * Destruction of the Mask.
-		 */
+         * Destruction of the Mask.
+         */
         virtual ~Mask() ;
 
 
-                                             				 /*** UTILITIES ***/
-	protected:
-		/**
-		 * Copy the values on the Vector4f into an aligned array.
-		 * @param 	array 	Output parameter in which values of the
-		 *					Vector4f are stored.
-		 * @param	count 	Amount of values to set, having
-		 *					0 < count < 4.
-		 */
-		void get(AlignedArray4i& array) ;
+                                                              /*** UTILITIES ***/
+    protected:
+        /**
+         * Copy the values on the Vector4f into an aligned array.
+         * @param     array     Output parameter in which values of the
+         *                    Vector4f are stored.
+         * @param    count     Amount of values to set, having
+         *                    0 < count < 4.
+         */
+        void get(AlignedArray4i& array) ;
 
 
-	public:
+    public:
         /**
          * Get one value from the mask.
          * @param   index   Index of the value to get (should be lower than
-		 *					length).
+         *                    length).
          * @return  Value in the mask at the given index.
          */
         bool get(const unsigned int& index) ;
@@ -104,14 +104,14 @@ class Mask {
          */
         static size_t size() ;
 
-		/**
-		 * Print the content of the Vector on the console output.
-		 */
-		void print() ;
+        /**
+         * Print the content of the Vector on the console output.
+         */
+        void print() ;
 
 
-                                             				 /*** OPERATORS ***/
-                                        				/** AFFECT OPERATORS **/
+                                                              /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
         /**
          * Get the values from another Mask and put it in inner data.
          * @param   mask    The mask to copy.
@@ -120,11 +120,11 @@ class Mask {
         Mask& operator=(const Mask& mask) ;
 
         /**
-		* Affect the inner value of the Mask to the broadcasted one given as
-		* parameter.
+        * Affect the inner value of the Mask to the broadcasted one given as
+        * parameter.
          * @param   value   The value to put in the Mask, to all its values.
          * @return  The current Mask once the value is affected to its inner
-		 *			data.
+         *            data.
          */
         Mask& operator=(const bool& value) ;
 
@@ -149,7 +149,7 @@ class Mask {
          */
         Mask& operator=(const Vector4i::Mask& mask) ;
 
-                                          				  /** CAST OPERATORS **/
+                                                            /** CAST OPERATORS **/
         /**
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.

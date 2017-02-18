@@ -1,4 +1,4 @@
-                              				  /** CONSTRUCTION / DESTRUCTION **/
+                                                /** CONSTRUCTION / DESTRUCTION **/
 inline Vector4f::Mask::Mask(
     const bool& b0,
     const bool& b1,
@@ -34,7 +34,7 @@ inline Vector4f::Mask::Mask(const Vector4ui::Mask& mask) {
 inline Vector4f::Mask::~Mask() {}
 
 
-                                             				 /*** UTILITIES ***/
+                                                              /*** UTILITIES ***/
 inline bool Vector4f::Mask::get(const unsigned int& index) {
     return Vector4i::Mask(_mm_castps_si128(m_inner)).get(index) ;
 }
@@ -60,8 +60,8 @@ inline void Vector4f::Mask::print() {
 }
 
 
-                                             				 /*** OPERATORS ***/
-                                        				/** AFFECT OPERATORS **/
+                                                              /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
 inline Vector4f::Mask& Vector4f::Mask::operator=(const Mask& mask) {
     m_inner = mask.m_inner ;
     return *this ;
@@ -87,7 +87,7 @@ inline Vector4f::Mask& Vector4f::Mask::operator=(const Vector4i::Mask& mask) {
     return *this ;
 }
 
-                                          				  /** CAST OPERATORS **/
+                                                            /** CAST OPERATORS **/
 inline Vector4f::Mask::operator int32x4_t() const {
     return _mm_castps_si128(m_inner) ;
 }

@@ -8,14 +8,14 @@
 #include "SIMDVector4.hpp"
 
 namespace Mind {
-	namespace SSE2 {
+    namespace SSE2 {
         class Vector4i : public Vector4int32 {
             public:
                                               /** CONSTRUCTION / DESTRUCTION **/
                 /**
-				 * Create an empty vector.
-				 * @warning The content of this vector is not guaranteed!
-				 */
+                 * Create an empty vector.
+                 * @warning The content of this vector is not guaranteed!
+                 */
                 Vector4i() ;
 
                 /**
@@ -26,11 +26,11 @@ namespace Mind {
                  * @param   i4  Fourth component of the Vector4i.
                  */
                 Vector4i(
-					const int32_t& i1,
-					const int32_t& i2,
-					const int32_t& i3 = 0.f,
-					const int32_t& i4 = 0.f
-				) ;
+                    const int32_t& i1,
+                    const int32_t& i2,
+                    const int32_t& i3 = 0.f,
+                    const int32_t& i4 = 0.f
+                ) ;
 
                 /**
                  * Create a Vector4i in which all values are the given one.
@@ -51,10 +51,10 @@ namespace Mind {
                  */
                 Vector4i(const float32x4_t& vec) ;
 
-				/**
-				 * Destruction of the Vector4i.
-				 */
-				virtual ~Vector4i() ;
+                /**
+                 * Destruction of the Vector4i.
+                 */
+                virtual ~Vector4i() ;
 
 
                                                         /** STATIC FUNCTIONS **/
@@ -65,45 +65,45 @@ namespace Mind {
                 template <int32_t i0, int32_t i1, int32_t i2, int32_t i3>
                 static int32x4_t constant() ;
 
-				/**
-				 * Get a minimal Vector4i. It is the consensus of a and b,
-				 * picking only the smallest value for a given element:
-				 * <code>
-				 * dst[i] = min(a[i], b[i]) ;
-				 * </code>
-				 * @param 	a 	First Vector4i to test.
-				 * @param 	b 	Second Vector4i to test.
-				 * @return 	A Vector4i containing the minimal values contained
-				 *			in a or b.
-				 */
+                /**
+                 * Get a minimal Vector4i. It is the consensus of a and b,
+                 * picking only the smallest value for a given element:
+                 * <code>
+                 * dst[i] = min(a[i], b[i]) ;
+                 * </code>
+                 * @param     a     First Vector4i to test.
+                 * @param     b     Second Vector4i to test.
+                 * @return     A Vector4i containing the minimal values contained
+                 *            in a or b.
+                 */
                 static Vector4i min(const Vector4i& a, const Vector4i& b) ;
 
-				/**
-				 * Get a maximal Vector4i. It is the consensus of a and b,
-				 * picking only the greatest value for a given element:
-				 * <code>
-				 * dst[i] = max(a[i], b[i]) ;
-				 * </code>
-				 * @param 	a 	First Vector4i to test.
-				 * @param 	b 	Second Vector4i to test.
-				 * @return 	A Vector4i containing the maximal values contained
-				 *			in a or b.
-				 */
-				static Vector4i max(const Vector4i& a, const Vector4i& b) ;
+                /**
+                 * Get a maximal Vector4i. It is the consensus of a and b,
+                 * picking only the greatest value for a given element:
+                 * <code>
+                 * dst[i] = max(a[i], b[i]) ;
+                 * </code>
+                 * @param     a     First Vector4i to test.
+                 * @param     b     Second Vector4i to test.
+                 * @return     A Vector4i containing the maximal values contained
+                 *            in a or b.
+                 */
+                static Vector4i max(const Vector4i& a, const Vector4i& b) ;
 
-				/**
-				 * Get a copy of the given Vector4i in which all elements are
-				 * absolute values.
-				 * @param 	vec 	Vector4i to get its absolute values.
-				 * @return 	Vector4i in which the values are absolute values
-				 *			from @a vec.
-				 */
-				static Vector4i abs(const Vector4i& vec) ;
+                /**
+                 * Get a copy of the given Vector4i in which all elements are
+                 * absolute values.
+                 * @param     vec     Vector4i to get its absolute values.
+                 * @return     Vector4i in which the values are absolute values
+                 *            from @a vec.
+                 */
+                static Vector4i abs(const Vector4i& vec) ;
 
-				/**
-				 * Print the content of the Vector on the console output.
-				 */
-				void print() ;
+                /**
+                 * Print the content of the Vector on the console output.
+                 */
+                void print() ;
         } ;
 
         #include "impl/Vector4/Vector4i/operators.hpp"

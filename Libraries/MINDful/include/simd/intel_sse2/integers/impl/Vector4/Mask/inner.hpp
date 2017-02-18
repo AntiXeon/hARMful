@@ -2,12 +2,12 @@
  * Mask to perform logical operations on Vector4.
  */
 class Mask {
-	private:
-		/** Inner vector of booleans. */
-		int32x4_t m_inner ;
+    private:
+        /** Inner vector of booleans. */
+        int32x4_t m_inner ;
 
 
-                              				  /** CONSTRUCTION / DESTRUCTION **/
+                                                /** CONSTRUCTION / DESTRUCTION **/
         /** Prevent construction from integers. */
         Mask(const int& value) ;
 
@@ -32,10 +32,10 @@ class Mask {
          * @param   b4  Fourth value mask.
          */
         Mask(
-			const bool& b0,
-			const bool& b1,
-			const bool& b2,
-			const bool& b3
+            const bool& b0,
+            const bool& b1,
+            const bool& b2,
+            const bool& b3
         ) ;
 
         /**
@@ -52,12 +52,12 @@ class Mask {
 
 
         /**
-		 * 	Destruction of the Mask.
-		 */
+         *     Destruction of the Mask.
+         */
         virtual ~Mask() ;
 
 
-                                             				 /*** UTILITIES ***/
+                                                              /*** UTILITIES ***/
         /**
          * Get values from the mask (unaligned).
          * @param   array   Array in which Mask values are stored.
@@ -68,7 +68,7 @@ class Mask {
         /**
          * Get one value from the mask.
          * @param   index   Index of the value to get (should be lower than
-		 *					length).
+         *                    length).
          * @return  Value in the mask at the given index.
          */
         bool get(const unsigned int& index) ;
@@ -87,8 +87,8 @@ class Mask {
         static size_t size() ;
 
 
-                                             				 /*** OPERATORS ***/
-                                        				/** AFFECT OPERATORS **/
+                                                              /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
         /**
          * Get the values from another Mask and put it in inner data.
          * @param   mask    The mask to copy.
@@ -101,7 +101,7 @@ class Mask {
          * parameter.
          * @param   value   The value to put in the Mask, to all its values.
          * @return  The current Mask once the value is affected to its inner
-		 *			data.
+         *            data.
          */
         Mask& operator=(const bool& value) ;
 
@@ -119,14 +119,14 @@ class Mask {
          */
         Mask& operator=(const float32x4_t& vec) ;
 
-                                          				  /** CAST OPERATORS **/
-		/**
-		 * Cast the current Mask to its inner data type.
-		 * @return  The inner data of the Mask.
-		 */
-		operator int32x4_t() const ;
+                                                            /** CAST OPERATORS **/
+        /**
+         * Cast the current Mask to its inner data type.
+         * @return  The inner data of the Mask.
+         */
+        operator int32x4_t() const ;
 
-		/**
+        /**
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
          */

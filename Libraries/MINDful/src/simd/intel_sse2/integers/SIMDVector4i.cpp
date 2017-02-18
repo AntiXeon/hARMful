@@ -4,7 +4,7 @@
 #include <simd/intel_sse2/integers/SIMDVector4i.hpp>
 
 namespace Mind {
-	namespace SSE2 {
+    namespace SSE2 {
                                               /** CONSTRUCTION / DESTRUCTION **/
         Vector4i::Vector4i() : Vector4int32() {}
 
