@@ -6,12 +6,11 @@
 #include <MINDOptions.hpp>
 
 /** Arrays **/
-using Array4f = std::array<float, 4> ;
+using AlignedArray4i alignas(ALIGNMENT_ON_STACK) = std::array<int32_t, 4> ;
 using AlignedArray4f alignas(ALIGNMENT_ON_STACK) = std::array<float, 4> ;
 
 using Array4i = std::array<int32_t, 4> ;
-using AlignedArray4i alignas(ALIGNMENT_ON_STACK) = std::array<int32_t, 4> ;
-
+using Array4f = std::array<float, 4> ;
 
             /** REMARK: Types names are based on NEON naming. **/
 
