@@ -1,21 +1,23 @@
 /**
- * Mask to perform logical operations on Vector4.
+ * Mask to perform logical operations on Vector4f.
  */
 class Mask {
     private:
-        /** Inner vector of booleans. */
-        int32x4_t m_inner ;
+        /** Inner vector of booleans (as floats). */
+        float32x4_t m_inner ;
 
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
-        /** Prevent construction from integers. */
-        Mask(const int& value) = delete ;
+        /**
+         * Prevent construction from integers.
+         */
+        Mask(const int& value) ;
 
         /**
          * Prevent affecting integer values.
          * @return  Nothing to use.
          */
-        Mask& operator=(const int&) = delete ;
+        Mask& operator=(const int&) ;
 
 
     public:
@@ -48,27 +50,61 @@ class Mask {
          * Create from inner type data.
          * @param   vec     The inner data to copy.
          */
-        Mask(const int32x4_t& vec) ;
+        Mask(const float32x4_t& vec) ;
 
 
         /**
-         *     Destruction of the Mask.
+         * Create from a Mask used by integer Vector4.
+         * @param   mask    Mask to cast.
+         */
+        Mask(const Vector4i::Mask& mask) ;
+
+        /**
+         * Create from a Mask used by integer Vector4.
+         * @param   mask    Mask to cast.
+         */
+        Mask(const Vector4ui::Mask& mask) ;
+
+
+        /**
+         * Destruction of the Mask.
          */
         virtual ~Mask() ;
 
 
                                                               /*** UTILITIES ***/
+    protected:
         /**
-         * Get values from the mask (unaligned).
-         * @param   array   Array in which Mask values are stored.
-         * @return  Value in the mask at the given index.
+         * Copy the binary value from integer to float.
+         * @param 	value 	Value to copy.
+         * @return 	Float containing the same binary value as the input integer
+         *			value.
+         */
+        static float binaryConvert(uint32_t value) ;
+
+        /**
+         * Copy the binary value from float to integer.
+         * @param 	value 	Value to copy.
+         * @return 	Integer containing the same binary value as the input float
+         *			value.
+         */
+        static uint32_t binaryConvert(float value) ;
+
+        /**
+         * Copy the values on the Vector4f into an aligned array.
+         * @param 	array 	Output parameter in which values of the
+         *					Vector4f are stored.
+         * @param	count 	Amount of values to set, having
+         *					0 < count < 4.
          */
         void get(AlignedArray4i& array) ;
 
+
+    public:
         /**
          * Get one value from the mask.
          * @param   index   Index of the value to get (should be lower than
-         *                    length).
+         *					length).
          * @return  Value in the mask at the given index.
          */
         bool get(const unsigned int& index) ;
@@ -86,6 +122,11 @@ class Mask {
          */
         static size_t size() ;
 
+        /**
+         * Print the content of the Vector on the console output.
+         */
+        void print() ;
+
 
                                                               /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
@@ -101,7 +142,7 @@ class Mask {
          * parameter.
          * @param   value   The value to put in the Mask, to all its values.
          * @return  The current Mask once the value is affected to its inner
-         *            data.
+         *			data.
          */
         Mask& operator=(const bool& value) ;
 
@@ -119,6 +160,13 @@ class Mask {
          */
         Mask& operator=(const float32x4_t& vec) ;
 
+        /**
+         * Affect the inner value to the Mask.
+         * @param   mask    The value to put in the Mask.
+         * @return  The current Mask once the vec is affected to its inner data.
+         */
+        Mask& operator=(const Vector4i::Mask& mask) ;
+
                                                             /** CAST OPERATORS **/
         /**
          * Cast the current Mask to its inner data type.
@@ -127,8 +175,27 @@ class Mask {
         operator int32x4_t() const ;
 
         /**
-         * Cast the current Mask to its inner data type.
-         * @return  The inner data of the Mask.
+         * Cast the current Mask to a float32x4_t.
+         * @return  The inner data of the Mask as a float32x4_t vector.
          */
         operator float32x4_t() const ;
+
+        /**
+         * Cast the current Mask to a float32x4_t.
+         * @return  The inner data of the Mask as a float32x4_t vector.
+         */
+        operator float32x4_t*() const ;
+
+        /**
+         * Cast the current Mask to a Vector4i::Mask.
+         * @return  The Vector4i::Mask version of the current Mask.
+         */
+        operator Vector4i::Mask() const ;
+
+        /**
+         * Cast the current Mask to a Vector4ui::Mask.
+         * @return  The Vector4ui::Mask version of the current Mask.
+         * @warning Be careful with negative values.
+         */
+        operator Vector4ui::Mask() const ;
 } ;

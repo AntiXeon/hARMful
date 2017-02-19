@@ -9,13 +9,13 @@ class Mask {
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
         /** Prevent construction from integers. */
-        Mask(const int& value) = delete ;
+        Mask(const int& value) ;
 
         /**
          * Prevent affecting integer values.
          * @return  Nothing to use.
          */
-        Mask& operator=(const int&) = delete ;
+        Mask& operator=(const int&) ;
 
 
     public:
@@ -52,7 +52,7 @@ class Mask {
 
 
         /**
-         *     Destruction of the Mask.
+         * Destruction of the Mask.
          */
         virtual ~Mask() ;
 
@@ -68,7 +68,7 @@ class Mask {
         /**
          * Get one value from the mask.
          * @param   index   Index of the value to get (should be lower than
-         *                    length).
+         *					length).
          * @return  Value in the mask at the given index.
          */
         bool get(const unsigned int& index) ;
@@ -101,7 +101,7 @@ class Mask {
          * parameter.
          * @param   value   The value to put in the Mask, to all its values.
          * @return  The current Mask once the value is affected to its inner
-         *            data.
+         *			data.
          */
         Mask& operator=(const bool& value) ;
 
@@ -119,7 +119,7 @@ class Mask {
          */
         Mask& operator=(const float32x4_t& vec) ;
 
-                                                            /** CAST OPERATORS **/
+                                                          /** CAST OPERATORS **/
         /**
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
@@ -130,5 +130,11 @@ class Mask {
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
          */
-        operator float32x4_t() const ;
+        operator int32x4_t*() const ;
+
+        /**
+         * Cast the current Mask to its inner data type.
+         * @return  The inner data of the Mask.
+         */
+        operator float32x4_t() ;
 } ;

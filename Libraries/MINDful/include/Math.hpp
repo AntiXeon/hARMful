@@ -3,8 +3,8 @@
 
 #include <utility>
 #include <vector>
-#include <stdint.h>
-#include <math.h>
+#include <cstdint>
+#include <cmath>
 
 #include <MINDTypes.hpp>
 

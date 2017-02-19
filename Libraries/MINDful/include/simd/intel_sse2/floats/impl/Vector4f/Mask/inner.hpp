@@ -9,13 +9,13 @@ class Mask {
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
         /** Prevent construction from integers. */
-        Mask(const int& value) ;
+        Mask(const int& value) = delete ;
 
         /**
          * Prevent affecting integer values.
          * @return  Nothing to use.
          */
-        Mask& operator=(const int&) ;
+        Mask& operator=(const int&) = delete ;
 
 
     public:

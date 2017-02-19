@@ -6,17 +6,17 @@
 namespace Mind {
     namespace SSE2 {
         float32x4_t Vector4f::selection(
-                                               const float32x4_t& selector,
-                                               const float32x4_t& a,
-                                               const float32x4_t& b
-                                              ) {
+            const float32x4_t& selector,
+            const float32x4_t& a,
+            const float32x4_t& b
+        ) {
             #if defined (USE_INTEL_SSE4_1)
                 return _mm_blendv_ps(b, a, selector) ;
             #else
                 return _mm_or_ps(
-                                 _mm_and_ps(selector, a),
-                                 _mm_andnot_ps(selector, b)
-                                ) ;
+                    _mm_and_ps(selector, a),
+                    _mm_andnot_ps(selector, b)
+                ) ;
             #endif
         }
 
@@ -25,11 +25,11 @@ namespace Mind {
         Vector4f::Vector4f() {}
 
         Vector4f::Vector4f(
-                           const Scalar& f1,
-                           const Scalar& f2,
-                           const Scalar& f3,
-                           const Scalar& f4
-                          ) {
+            const Scalar& f1,
+            const Scalar& f2,
+            const Scalar& f3,
+            const Scalar& f4
+        ) {
             m_inner = _mm_setr_ps(f1, f2, f3, f4) ;
         }
 
@@ -107,97 +107,6 @@ namespace Mind {
             m_inner = _mm_mul_ps(m_inner, m_inner) ;
         }
 
-        // template <int i0, int i1, int i2, int i3>
-        // void Vector4f::permute() {
-        //     static_assert((i0 <= 3), "Bad value. Expected i0 <= 3") ;
-        //     static_assert((i1 <= 3), "Bad value. Expected i1 <= 3") ;
-        //     static_assert((i2 <= 3), "Bad value. Expected i2 <= 3") ;
-        //     static_assert((i3 <= 3), "Bad value. Expected i3 <= 3") ;
-        //
-        //     // Check if shuffling is required.
-        //     const bool NeedShuffle = (i0 > 0)
-        //                                 || ((i1 != 1) && (i1 >= 0))
-        //                                 || ((i2 != 2) && (i2 >= 0))
-        //                                 || ((i3 != 3) && (i3 >= 0)) ;
-        //
-        //     // Check if zeroing required.
-        //     const bool DoZero = (((i0 | i1 | i2 | i3) < 0) && ((i0 | i1 | i2 | i3) & 0x80)) ;
-        //
-        //     if (DoZero and !NeedShuffle) {
-        //         // Only make some / all positions zeroed in the vector.
-        //         if ((i0 | i1 | i2 | i3) < 0) {
-        //             // Zero all values.
-        //             m_inner = _mm_setzero_ps() ;
-        //         }
-        //         else {
-        //             const int32x4_t MaskZeroPositions = Vector4i::constant<
-        //                                                                  -int(i0 > -1),
-        //                                                                  -int(i1 > -1),
-        //                                                                  -int(i2 > -1),
-        //                                                                  -int(i3 > -1)
-        //                                                                 >() ;
-        //
-        //             m_inner = _mm_and_ps(m_inner,_mm_castsi128_ps(MaskZeroPositions)) ;
-        //         }
-        //     }
-        //     else if (NeedShuffle and !DoZero) {
-        //         // Only shuffle the values in the vector.
-        //         m_inner = _mm_shuffle_ps(
-        //                                  m_inner,
-        //                                  m_inner,
-        //                                  ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))
-        //                                 ) ;
-        //     }
-        //     else if (((i0 & i1) < 0) && ((i2 | i3) >= 0)) {
-        //         // Zero on lower elements, shuffle higher ones.
-        //         m_inner = _mm_shuffle_ps(_mm_setzero_ps(), m_inner, (i2 << 4) | (i3 <<6));
-        //     }
-        //     else if ((i0 | i1) >= 0 && (i2 & i3) < 0) {
-        //         // Zero on higher elements, shuffle lower ones.
-        //         m_inner = _mm_shuffle_ps(m_inner, _mm_setzero_ps(), (i0 | (i1 << 2))) ;
-        //     }
-        //     else {
-        //         #if defined (USE_INTEL_SSSE3)
-        //             // With SSSE3 we can do both with the PSHUFB instruction
-        //             const int j0 = i0 << 2 ;
-        //             const int j1 = i1 << 2 ;
-        //             const int j2 = i2 << 2 ;
-        //             const int j3 = i3 << 2 ;
-        //             __m128i MaskZeroPositions = Vector4i::constant <
-        //                                                             i0 < 0 ? -1 : j0 | (j0+1)<<8 | (j0+2)<<16 | (j0+3) << 24,
-        //                                                             i1 < 0 ? -1 : j1 | (j1+1)<<8 | (j1+2)<<16 | (j1+3) << 24,
-        //                                                             i2 < 0 ? -1 : j2 | (j2+1)<<8 | (j2+2)<<16 | (j2+3) << 24,
-        //                                                             i3 < 0 ? -1 : j3 | (j3+1)<<8 | (j3+2)<<16 | (j3+3) << 24
-        //                                                            > () ;
-        //             m_inner = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(a),mask2)) ;
-        //         #else
-        //             __m128 tmp = _mm_shuffle_ps(m_inner, m_inner, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
-        //             __m128i MaskZeroPositions = Vector4i::constant<
-        //                                                            -int(i0 > -1),
-        //                                                            -int(i1 > -1),
-        //                                                            -int(i2 > -1),
-        //                                                            -int(i3 > -1)
-        //                                                           >() ;
-        //             m_inner = _mm_and_ps(tmp,_mm_castsi128_ps(MaskZeroPositions)) ;
-        //         #endif
-        //     }
-        // }
-        //
-        // template <bool i0, bool i1, bool i2, bool i3>
-        // void Vector4f::changeSign() {
-        //     if ((i0 | i1 | i2 | i3) == true) {
-        //         // Mask to set flip the bit for negative sign (on Scalar values).
-        //         const __m128i MaskNegative = Vector4i::constant<
-        //                                                         i0 ? 0x80000000 : 0,
-        //                                                         i1 ? 0x80000000 : 0,
-        //                                                         i2 ? 0x80000000 : 0,
-        //                                                         i3 ? 0x80000000 : 0
-        //                                                        >() ;
-        //
-        //         m_inner = _mm_xor_ps(m_inner, _mm_castsi128_ps(MaskNegative)) ;
-        //     }
-        // }
-
 
                                                           /** CONDITIONAL ARITHMETIC **/
         void Vector4f::addIf(const Vector4f::Mask& mask, const Vector4f& add) {
@@ -219,31 +128,12 @@ namespace Mind {
 
                                                                 /** STATIC FUNCTIONS **/
         Vector4f Vector4f::select(
-                                  const Vector4f::Mask& selector,
-                                  const Vector4f& a,
-                                  const Vector4f& b
-                                 ) {
+            const Vector4f::Mask& selector,
+            const Vector4f& a,
+            const Vector4f& b
+        ) {
             return selection((float32x4_t)selector, (float32x4_t)a, (float32x4_t)b) ;
         }
-
-        // template <unsigned char i0, unsigned char i1, unsigned char i2, unsigned char i3>
-        // Vector4f& Vector4f::shuffle(
-        //                                    const Vector4f& input,
-        //                                    Vector4f& output
-        //                                   ) {
-        //     static_assert((i0 <= 3), "Bad value. Expected i0 <= 3") ;
-        //     static_assert((i1 <= 3), "Bad value. Expected i1 <= 3") ;
-        //     static_assert((i2 <= 3), "Bad value. Expected i2 <= 3") ;
-        //     static_assert((i3 <= 3), "Bad value. Expected i3 <= 3") ;
-        //
-        //     output = _mm_shuffle_ps(
-        //                             input,
-        //                             input,
-        //                             ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))
-        //                            ) ;
-        //
-        //     return output ;
-        // }
 
         Vector4f Vector4f::min(const Vector4f& a, const Vector4f& b) {
             return _mm_min_ps(a, b) ;
@@ -287,10 +177,10 @@ namespace Mind {
 
                                                                 /** FUSED OPERATIONS **/
         Vector4f Vector4f::mul_add(
-                                          const Vector4f& mula,
-                                          const Vector4f& mulb,
-                                          const Vector4f& add
-                                         ) {
+            const Vector4f& mula,
+            const Vector4f& mulb,
+            const Vector4f& add
+        ) {
             #if defined (USE_FMA4)
                 return _mm_macc_ps(mula, mulb, add) ;
             #elif defined (USE_FMA)
@@ -301,10 +191,10 @@ namespace Mind {
         }
 
         Vector4f Vector4f::mul_sub(
-                                          const Vector4f& mula,
-                                          const Vector4f& mulb,
-                                          const Vector4f& sub
-                                         ) {
+            const Vector4f& mula,
+            const Vector4f& mulb,
+            const Vector4f& sub
+        ) {
             #if defined (USE_FMA4)
                 return _mm_msub_ps(mula, mulb, sub) ;
             #elif defined (USE_FMA)
@@ -315,10 +205,10 @@ namespace Mind {
         }
 
         Vector4f Vector4f::sub_mul(
-                                          const Vector4f& sub,
-                                          const Vector4f& mula,
-                                          const Vector4f& mulb
-                                         ) {
+            const Vector4f& sub,
+            const Vector4f& mula,
+            const Vector4f& mulb
+        ) {
             #if defined (USE_FMA4)
                 return _mm_nmacc_ps(mula, mulb, sub) ;
             #elif defined (USE_FMA)
@@ -329,11 +219,11 @@ namespace Mind {
         }
 
         void Vector4f::transposeMatrix(
-                                       Vector4f& row1,
-                                       Vector4f& row2,
-                                       Vector4f& row3,
-                                       Vector4f& row4
-                                      ) {
+            Vector4f& row1,
+            Vector4f& row2,
+            Vector4f& row3,
+            Vector4f& row4
+        ) {
             _MM_TRANSPOSE4_PS(row1, row2, row3, row4) ;
         }
 
@@ -422,7 +312,7 @@ namespace Mind {
                                 << std::endl ;
         }
 
-                                                                            /*** MXCSR ***/
+                                                                 /*** MXCSR ***/
         uint32_t Vector4f::getControlWord() {
             return _mm_getcsr() ;
         }
@@ -442,8 +332,8 @@ namespace Mind {
         }
 
 
-                                                                     /*** OPERATORS ***/
-                                                                /** AFFECT OPERATORS **/
+                                                             /*** OPERATORS ***/
+                                                        /** AFFECT OPERATORS **/
         Vector4f& Vector4f::operator=(const Vector4f& vec4) {
             m_inner = vec4.m_inner ;
             return *this ;
@@ -469,7 +359,7 @@ namespace Mind {
             return *this ;
         }
 
-                                                                    /** CAST OPERATORS **/
+                                                          /** CAST OPERATORS **/
         Vector4f::operator float32x4_t() const {
             return m_inner ;
         }
@@ -485,9 +375,7 @@ namespace Mind {
         Vector4f::operator Vector4ui() const {
             return Vector4ui(m_inner) ;
         }
-
     } ;
-
 } ;
 
 #endif

@@ -2,7 +2,7 @@
 #define __MIND__SIMD_TYPES__
 
 #include <array>
-#include <stdint.h>
+#include <cstdint>
 #include <MINDOptions.hpp>
 
 /** Arrays **/
