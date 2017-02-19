@@ -61,7 +61,7 @@ inline uint32x4_t Vector4ui::constant() {
 inline Vector4ui Vector4ui::min(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        result[index] = Math::min((*(uint32x4_t*)a)[index], (*(uint32x4_t*)b)[index]) ;
+        result[index] = std::min((*(uint32x4_t*)a)[index], (*(uint32x4_t*)b)[index]) ;
     }
     return result ;
 }
@@ -71,7 +71,7 @@ inline Vector4ui Vector4ui::max(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t* aRaw = a ;
     uint32x4_t* bRaw = b ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        result[index] = Math::max((*(uint32x4_t*)a)[index], (*(uint32x4_t*)b)[index]) ;
+        result[index] = std::max((*(uint32x4_t*)a)[index], (*(uint32x4_t*)b)[index]) ;
     }
     return result ;
 }

@@ -5,7 +5,7 @@ inline float32x4_t Vector4f::selection(
 ) {
     float32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        bool isNan = Math::is_nan(selector[index]) ;
+        bool isNan = Math::isNaN(selector[index]) ;
         result[index] = isNan ? a[index] : b[index] ;
     }
     return result ;
@@ -237,7 +237,7 @@ inline Vector4f Vector4f::abs(const Vector4f& vec) {
     float32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
         Scalar value = (*((float32x4_t*) vec))[index] ;
-        if (value < 0.f) {
+        if (Math::isNegative(value)) {
             result[index] = -value ;
         }
     }
@@ -350,7 +350,7 @@ inline Vector4f::Mask Vector4f::isNegative() {
     float32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
         Scalar value = m_inner[index] ;
-        uint32_t isNegative = -uint32_t(Math::is_negative(value)) ;
+        uint32_t isNegative = -uint32_t(Math::isNegative(value)) ;
         result[index] = *((float*) &isNegative) ;
     }
     return result ;
@@ -360,7 +360,7 @@ inline Vector4f::Mask Vector4f::isInfinite() {
     float32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
         Scalar value = m_inner[index] ;
-        uint32_t isInfinite = -uint32_t(Math::is_inf(value)) ;
+        uint32_t isInfinite = -uint32_t(Math::isInf(value)) ;
         result[index] = *((float*) &isInfinite) ;
     }
     return result ;
@@ -370,7 +370,7 @@ inline Vector4f::Mask Vector4f::isNaN() {
     float32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
         Scalar value = m_inner[index] ;
-        uint32_t isNaN = -uint32_t(Math::is_nan(value)) ;
+        uint32_t isNaN = -uint32_t(Math::isNaN(value)) ;
         result[index] = *((float*) &isNaN) ;
     }
     return result ;

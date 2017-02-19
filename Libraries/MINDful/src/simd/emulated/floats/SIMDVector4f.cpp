@@ -2,6 +2,7 @@
 #ifdef USE_NO_SIMD
 
 #include <simd/emulated/floats/SIMDVector4f.hpp>
+#include <Math.hpp>
 
 namespace Mind {
     namespace EmulatedSIMD {
@@ -12,7 +13,7 @@ namespace Mind {
         ) {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
-                bool isNan = std::isnan(selector[index]) ;
+                bool isNan = Math::isNaN(selector[index]) ;
                 result[index] = isNan ? a[index] : b[index] ;
             }
             return result ;
@@ -118,7 +119,7 @@ namespace Mind {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = (*((float32x4_t*) vec))[index] ;
-                if (value < 0.f) {
+                if (Math::isNegative(value)) {
                     result[index] = -value ;
                 }
             }
@@ -286,7 +287,7 @@ namespace Mind {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
-                uint32_t isNaN = -uint32_t(std::isnan(value)) ;
+                uint32_t isNaN = -uint32_t(Math::isNaN(value)) ;
                 result[index] = *((float*) &isNaN) ;
             }
             return result ;

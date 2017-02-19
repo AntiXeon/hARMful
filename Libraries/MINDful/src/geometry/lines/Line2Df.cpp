@@ -54,7 +54,9 @@ namespace Mind {
                 // Make P relative to the end point of S
                 p2 = p - l.m_end ;
                 ccw = (p2.getX() * l.m_end.getX()) + (p2.getY() * l.m_end.getY()) ;
-                if (ccw < 0) ccw = 0 ;
+                if (ccw < 0) {
+                    ccw = 0 ;
+                }
             }
         }
 

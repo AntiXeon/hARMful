@@ -62,7 +62,7 @@ inline int32x4_t Vector4i::constant() {
 inline Vector4i Vector4i::min(const Vector4i& a, const Vector4i& b) {
     int32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        result[index] = Math::min((*(int32x4_t*)a)[index], (*(int32x4_t*)b)[index]) ;
+        result[index] = std::min((*(int32x4_t*)a)[index], (*(int32x4_t*)b)[index]) ;
     }
     return result ;
 }
@@ -70,7 +70,7 @@ inline Vector4i Vector4i::min(const Vector4i& a, const Vector4i& b) {
 inline Vector4i Vector4i::max(const Vector4i& a, const Vector4i& b) {
     int32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        result[index] = Math::max((*(int32x4_t*)a)[index], (*(int32x4_t*)b)[index]) ;
+        result[index] = std::max((*(int32x4_t*)a)[index], (*(int32x4_t*)b)[index]) ;
     }
     return result ;
 }
@@ -78,7 +78,7 @@ inline Vector4i Vector4i::max(const Vector4i& a, const Vector4i& b) {
 inline Vector4i Vector4i::abs(const Vector4i& vec) {
     int32x4_t result ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
-        result[index] = Math::abs((*(int32x4_t*)vec)[index]) ;
+        result[index] = std::abs((*(int32x4_t*)vec)[index]) ;
     }
     return result ;
 }

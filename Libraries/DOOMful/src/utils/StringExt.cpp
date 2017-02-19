@@ -141,7 +141,7 @@ namespace Doom {
             std::string buffer(BufferSize, '\0') ;
 
             unsigned short offset = BufferSize - 1 ;
-            bool isNegative = (value < 0) ;
+            bool isNegative = value < 0 ;
             while ((value != 0) && (offset > 0)) {
                 int32_t tmp = value ;
                 value = value / base ;

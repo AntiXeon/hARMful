@@ -46,11 +46,11 @@ namespace Mind {
     }
 
     Scalar Point2Df::distanceX(const Point2Df& a, const Point2Df& b) {
-        return Math::abs(a.m_x - b.m_x) ;
+        return std::fabs(a.m_x - b.m_x) ;
     }
 
     Scalar Point2Df::distanceY(const Point2Df& a, const Point2Df& b) {
-        return Math::abs(a.m_y - b.m_y) ;
+        return std::fabs(a.m_y - b.m_y) ;
     }
 
     Scalar Point2Df::distance(const Point2Df& a, const Point2Df& b) {
@@ -93,7 +93,7 @@ namespace Mind {
             c_side.lengthSquared()) /
             (2 * b_side.length() * d_side.length()) ;
 
-        return Math::to_degree(acos(angle)) ;
+        return Math::toDegrees(acos(angle)) ;
     }
 
     int Point2Df::angleOrientation(
