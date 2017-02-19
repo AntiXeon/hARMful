@@ -6,8 +6,6 @@
 // Optimizations:
 // --------------
 // USE_APPROXIMATION                - Use some fast operations instead of slow and precises ones
-// APPROXIMATION_MEDIUM_PRECISION   - Improve precision on approximations
-// APPROXIMATION_MAX_PRECISION      - Highly improve precision on approximations
 
 // FPU EXTENSIONS :
 // ----------------
@@ -17,7 +15,7 @@
 // USE_INTEL_SSE4_1                 - Use SSE4.1 on Intel/ARM processors
 // USE_INTEL_SSE4_2                 - Use SSE4.2 on Intel/ARM processors
 // USE_ARM_NEON                     - Use NEON on ARM processors
-// USE_NO_FPU                       - No use of FPU on unable processors
+// USE_NO_SIMD                      - No use of SIMD on unable processors
 
 
     #define USE_APPROXIMATION

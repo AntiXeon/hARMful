@@ -4,13 +4,19 @@
 #include <array>
 #include <cstdint>
 #include <MINDOptions.hpp>
+#include <utils/Platform.hpp>
 
 /** Arrays **/
-using AlignedArray4i alignas(ALIGNMENT_ON_STACK) = std::array<int32_t, 4> ;
-using AlignedArray4f alignas(ALIGNMENT_ON_STACK) = std::array<float, 4> ;
-
 using Array4i = std::array<int32_t, 4> ;
 using Array4f = std::array<float, 4> ;
+
+#ifdef WindowsPlatform
+    using AlignedArray4i = std::array<int32_t, 4> ;
+    using AlignedArray4f = std::array<float, 4> ;
+#else
+    using AlignedArray4i alignas(ALIGNMENT_ON_STACK) = std::array<int32_t, 4> ;
+    using AlignedArray4f alignas(ALIGNMENT_ON_STACK) = std::array<float, 4> ;
+#endif
 
             /** REMARK: Types names are based on NEON naming. **/
 
