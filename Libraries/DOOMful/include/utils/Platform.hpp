@@ -7,7 +7,12 @@
     #elif _WIN32 || _WIN64
         #define WindowsPlatform
         // Required on Visual C++ to generate a .lib file alongside the .dll.
-        #defined exported __declspec(dllexport)
+        #define exported __declspec(dllexport)
+
+        // Disable warning:
+        // C++ exception specification ignored except to indicate a function is
+        // not __declspec(nothrow)
+        #pragma warning(disable: 4290)
     #else
         #error "Unsupported compiler and/or platform"
     #endif

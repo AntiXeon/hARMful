@@ -8,7 +8,7 @@ namespace Doom {
      * Simple random generation. This one does not use C++11 capabilities to
      * keep things as simple as possible.
      */
-    namespace exported Random {
+    namespace Random {
         /**
          * Initialize the generation of random numbers.
          * @param force [description]

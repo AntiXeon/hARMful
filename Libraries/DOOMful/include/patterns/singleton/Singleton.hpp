@@ -1,13 +1,15 @@
 #ifndef __DOOM__SINGLETON__
 #define __DOOM__SINGLETON__
 
+#include <utils/Platform.hpp>
+
 namespace Doom {
     /**
      * Class to create singletons.
      * @warning     No copy into the subclasses.
      * @warning     Private inheritage required.
      */
-    class Singleton {
+    class exported Singleton {
         private:
 
             /**

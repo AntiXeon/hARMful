@@ -1,13 +1,14 @@
 #ifndef __DOOM__BASE_PRINTER__
 #define __DOOM__BASE_PRINTER__
 
+#include <utils/Platform.hpp>
 #include <iostream>
 
 namespace Doom {
     /**
      * Base class to make a printer in a output stream.
      */
-    class Printer {
+    class exported Printer {
         protected:
             /**
              * A class to print a value on its creation.
