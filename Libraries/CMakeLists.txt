@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
+project(hARMful)
+
 set(HARMFUL_LIBS_DIR ${CMAKE_SOURCE_DIR})
 
 # Remove prefix for shared libraries on Windows
