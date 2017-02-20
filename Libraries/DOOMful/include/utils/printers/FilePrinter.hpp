@@ -2,6 +2,7 @@
 #define __DOOM__FILE_PRINTER__
 
 #include <utils/printers/Printer.hpp>
+#include <utils/Utils.hpp>
 #include <fstream>
 #include <string>
 #include <mutex>
@@ -75,7 +76,8 @@ namespace Doom {
                 m_mutex.lock() ;
                 {
                     m_output << value ;
-                    auto printer = { Printer::ValuePrinter(m_output, args)... } ;
+                    auto value = { Printer::ValuePrinter(m_output, args)... } ;
+                    UNUSED(value) ;
                     m_output << std::endl ;
                 }
                 m_mutex.unlock() ;
@@ -104,7 +106,8 @@ namespace Doom {
                 m_mutex.lock() ;
                 {
                     m_output << value ;
-                    auto printer = { Printer::ValuePrinter(m_output, args)... } ;
+                    auto value = { Printer::ValuePrinter(m_output, args)... } ;
+                    UNUSED(value) ;
                     m_output << std::flush ;
                 }
                 m_mutex.unlock() ;

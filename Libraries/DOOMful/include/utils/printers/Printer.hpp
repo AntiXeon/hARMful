@@ -36,7 +36,7 @@ namespace Doom {
                     ValuePrinter(std::ostream&) {}
 
                     /**
-                     * Destruction of the BasicPrinter instance.
+                     * Destruction of the ValuePrinter instance.
                      */
                     virtual ~ValuePrinter() {}
             } ;

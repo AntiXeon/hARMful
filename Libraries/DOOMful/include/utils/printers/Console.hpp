@@ -2,6 +2,7 @@
 #define __DOOM__CONSOLE__
 
 #include <utils/printers/Printer.hpp>
+#include <utils/Utils.hpp>
 #include <cstdint>
 #include <mutex>
 
@@ -90,7 +91,8 @@ namespace Doom {
                 m_mutex.lock() ;
                 {
                     std::cout << value ;
-                    auto printer = { Printer::ValuePrinter(std::cout, args)... } ;
+                    auto value = { Printer::ValuePrinter(std::cout, args)... } ;
+                    UNUSED(value) ;
                     std::cout << std::endl ;
                 }
                 m_mutex.unlock() ;
@@ -119,7 +121,8 @@ namespace Doom {
                 m_mutex.lock() ;
                 {
                     std::cout << value ;
-                    auto printer = { Printer::ValuePrinter(std::cout, args)... } ;
+                    auto value = { Printer::ValuePrinter(std::cout, args)... } ;
+                    UNUSED(value) ;
                     std::cout << std::flush ;
                 }
                 m_mutex.unlock() ;
