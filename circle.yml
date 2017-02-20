@@ -1,10 +1,3 @@
-# @Author: Denis CARLUS
-# @Date:   14-Nov-2016
-# @Filename: circle.yml
-# @Last modified by:   Denis CARLUS
-# @Last modified time: 22-Nov-2016
-# @License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
-
 test:
     pre:
         # Dependencies for HOPEful (3D engine library)
@@ -29,3 +22,4 @@ test:
         # Build unit tests and run it
         - cd UnitTests && cmake . && make
         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
+        - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
