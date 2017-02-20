@@ -88,7 +88,7 @@ namespace Mind {
     /**************************** IMPLEMENTATIONS *****************************/
                                                                 /*** ANGLES ***/
     Scalar Math::toRadians(Scalar degrees) {
-
+        return degrees * Math::DegreesToRadians ;
     }
 
 

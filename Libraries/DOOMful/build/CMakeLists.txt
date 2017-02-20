@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.12)
 
 # Project declaration
 project(DOOM)
-list(APPEND CMAKE_CXX_FLAGS "-std=c++1y ${CMAKE_CXX_FLAGS}")
 set(CMAKE_HOME_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib/${CMAKE_BUILD_TYPE})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib/${CMAKE_BUILD_TYPE})
@@ -35,6 +34,10 @@ target_link_libraries(${PROJECT_NAME})
 
 # Versioning
 if (UNIX)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        list(APPEND CMAKE_CXX_FLAGS "-W -Wall -Werror -std=c++1y ${CMAKE_CXX_FLAGS}")
+    endif()
+
     set(DOOM_VERSION_MAJOR 0)
     set(DOOM_VERSION_MINOR 1)
     set(DOOM_VERSION_PATCH 0)

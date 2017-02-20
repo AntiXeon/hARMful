@@ -48,10 +48,10 @@ namespace Doom {
         }
 
         void TextCase(std::string& stringCap, CharacterCase charCase) {
-            size_t characterPosition = 0 ;
-            for (char& character : stringCap) {
-                CaseChar(stringCap, characterPosition, charCase) ;
-                characterPosition++ ;
+            size_t length = stringCap.size() ;
+            for (size_t charIndex = 0 ; charIndex < length ; ++charIndex) {
+                CaseChar(stringCap, charIndex, charCase) ;
+                charIndex++ ;
             }
         }
 

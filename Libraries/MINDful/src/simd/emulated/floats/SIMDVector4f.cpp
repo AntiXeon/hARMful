@@ -161,7 +161,6 @@ namespace Mind {
 
         Vector4f Vector4f::fast_rsqrt(const Vector4f& vec) {
             float32x4_t result ;
-            float32x4_t vecLocal = vec ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = (*((float32x4_t*) vec))[index] ;
                 result[index] = ((Scalar) 1.) / FastMath::sqrt(value) ;
@@ -171,7 +170,6 @@ namespace Mind {
 
         Vector4f Vector4f::fast_sqrt(const Vector4f& vec) {
             float32x4_t result ;
-            float32x4_t vecLocal = vec ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = (*((float32x4_t*) vec))[index] ;
                 result[index] = FastMath::sqrt(value) ;

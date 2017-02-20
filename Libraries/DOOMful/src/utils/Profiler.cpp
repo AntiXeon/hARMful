@@ -39,7 +39,7 @@ namespace Doom {
     }
 
     void Profiler::stopProfiling(const std::string& name, const int& sessionID) {
-        size_t amountSessions = 0 ;
+        int amountSessions = 0 ;
         m_mutex.lock() ;
         {
             if (m_chronos.count(name) == 1) {
