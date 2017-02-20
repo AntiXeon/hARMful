@@ -53,8 +53,6 @@ set (
 )
 
 set (
-    ${PROJECT_NAME}_INCLUDE_DIRS
-    ${PROJECT_SOURCE_DIR}/include
-    ${DOOM_INCLUDE_DIRS}
+    ${PROJECT_NAME}_INCLUDE_DIRS ${CMAKE_HOME_DIRECTORY}/include
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE
 )

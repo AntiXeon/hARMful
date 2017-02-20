@@ -1,5 +1,6 @@
-#include <cstdlib>
+#include <modules/UTDimension2Df.hpp>
 
 int main(int, char**) {
-    return EXIT_SUCCESS ;
+    UTMind::UTDimension2Df().runTests() ;
+    return UnitTest::Success() ;
 }

@@ -17,6 +17,7 @@ include_directories (
     ${CURRENT_TEST_INCLUDE_DIR}
     ${COMMON_UNIT_TESTS_INCLUDE_DIR}
     ${DOOM_INCLUDE_DIRS}
+    ${MIND_INCLUDE_DIRS}
 )
 
 # List source files
@@ -32,4 +33,4 @@ add_executable (
     ${SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} DOOM)
+target_link_libraries(${PROJECT_NAME} DOOM MIND)
