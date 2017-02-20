@@ -1,6 +1,7 @@
 #ifndef __DOOM__FILE_PRINTER__
 #define __DOOM__FILE_PRINTER__
 
+#include <utils/Platform.hpp>
 #include <utils/printers/Printer.hpp>
 #include <utils/Utils.hpp>
 #include <fstream>
@@ -11,7 +12,7 @@ namespace Doom {
     /**
      * A FilePrinter to write values in a file.
      */
-    class FilePrinter final : public Printer {
+    class exported FilePrinter final : public Printer {
         private:
             /**
              * Avoid concurrent accesses to the Console.

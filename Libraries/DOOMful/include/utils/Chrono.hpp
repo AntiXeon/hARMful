@@ -1,13 +1,14 @@
 #ifndef __DOOM_CHRONO__
 #define __DOOM_CHRONO__
 
+#include <utils/Platform.hpp>
 #include <chrono>
 
 namespace Doom {
     /**
      * Measure elapsed time.
      */
-    class Chrono final {
+    class exported Chrono final {
         private:
             /**
              * TRUE if the chrono is started, FALSE if stopped.

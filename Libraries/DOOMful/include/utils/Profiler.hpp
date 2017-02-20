@@ -1,6 +1,7 @@
 #ifndef __DOOM__PROFILER__
 #define __DOOM__PROFILER__
 
+#include <utils/Platform.hpp>
 #include <patterns/singleton/Singleton.hpp>
 #include <utils/Chrono.hpp>
 #include <map>
@@ -15,7 +16,7 @@ namespace Doom {
      *          of the class. Indeed, they are more efficient for released
      *          softwares by disabling the profiler.
      */
-    class Profiler final : private Singleton {
+    class exported Profiler final : private Singleton {
         private:
             /**
              * The unique instance of the Profiler.

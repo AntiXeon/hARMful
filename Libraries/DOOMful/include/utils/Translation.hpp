@@ -1,6 +1,7 @@
 #ifndef __DOOM__TRANSLATION__
 #define __DOOM__TRANSLATION__
 
+#include <utils/Platform.hpp>
 #include <DOOMStrings.hpp>
 
 namespace Doom {
@@ -14,7 +15,7 @@ namespace Doom {
          * @param domain  Domain name for translations.
          * @param path    Path to the translation files.
          */
-        void Init(const std::string domain, const std::string& path) ;
+        exported void Init(const std::string domain, const std::string& path) ;
 
         /**
          * Translate the provided string into the user defined locale, if
@@ -25,7 +26,7 @@ namespace Doom {
          *             available, the same text than the provided @a str if the
          *             locale is not defined for the user current locale.
          */
-        std::string Get(const std::string& str) ;
+        exported std::string Get(const std::string& str) ;
     } ;
 } ;
 

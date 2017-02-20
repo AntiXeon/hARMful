@@ -1,6 +1,7 @@
 #ifndef __DOOM__STRING_EXTENSION__
 #define __DOOM__STRING_EXTENSION__
 
+#include <utils/Platform.hpp>
 #include <string>
 #include <vector>
 
@@ -22,14 +23,14 @@ namespace Doom {
          *                  uppercase.
          * @param charCase  Resulting case of the letter.
          */
-        void CaseChar(std::string& stringCap, size_t position, CharacterCase charCase) ;
+        exported void CaseChar(std::string& stringCap, size_t position, CharacterCase charCase) ;
 
         /**
          * Convert the first character in the string to the wanted case.
          * @param stringCap The string to modify.
          * @param charCase  Resulting case of the letters.
          */
-        void CaseFirst(std::string& stringCap, CharacterCase charCase) ;
+        exported void CaseFirst(std::string& stringCap, CharacterCase charCase) ;
 
         /**
          * Convert the first character of each word in the string to the wanted
@@ -37,14 +38,14 @@ namespace Doom {
          * @param stringCap The string to modify.
          * @param charCase  Resulting case of the letters.
          */
-        void CaseWords(std::string& stringCap, CharacterCase charCase) ;
+        exported void CaseWords(std::string& stringCap, CharacterCase charCase) ;
 
         /**
          * Change each letter in the string to the wanted case.
          * @param stringCap The string to modify.
          * @param charCase  Resulting case of the letters.
          */
-        void TextCase(std::string& stringCap, CharacterCase charCase) ;
+        exported void TextCase(std::string& stringCap, CharacterCase charCase) ;
 
 
         /**
@@ -52,7 +53,7 @@ namespace Doom {
          * and the right of a string.
          * @param stringToTrim The string to trim.
          */
-        void Trim(std::string& stringToTrim) ;
+        exported void Trim(std::string& stringToTrim) ;
 
         /**
          * Split a string at the given characters positions.
@@ -61,7 +62,7 @@ namespace Doom {
          *                   position.
          * @return           List of the resulting substrings.
          */
-        std::vector<std::string> Split(const std::string& toSplit, const std::string& characters) ;
+        exported std::vector<std::string> Split(const std::string& toSplit, const std::string& characters) ;
 
         /**
          * Convert an integer value to its string representation.
@@ -69,7 +70,7 @@ namespace Doom {
          * @param  base  Base used to represent the value.
          * @return       The string containing the value representation.
          */
-        std::string ToStringi(int32_t value, unsigned char base = 10) ;
+        exported std::string ToStringi(int32_t value, unsigned char base = 10) ;
 
         /**
          * Convert a floating value to its string representation.
@@ -77,14 +78,14 @@ namespace Doom {
          * @param  precision Precision of the representation.
          * @return           The string containing the value representation.
          */
-        std::string ToStringf(float value, unsigned char precision = 2) ;
+        exported std::string ToStringf(float value, unsigned char precision = 2) ;
 
         /**
          * Create a random string with numbers, uppercase and lowercase letters.
          * @param  length Length of the random string.
          * @return        The generated string.
          */
-        std::string Random(unsigned int length) ;
+        exported std::string Random(unsigned int length) ;
 
         /**
          * Create a random string with the provided characters.
@@ -93,7 +94,7 @@ namespace Doom {
          *                    generation.
          * @return            The generated string.
          */
-        std::string Random(unsigned int length, const std::string& characters) ;
+        exported std::string Random(unsigned int length, const std::string& characters) ;
     }
 }
 

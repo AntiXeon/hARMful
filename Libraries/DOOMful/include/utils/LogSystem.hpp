@@ -1,6 +1,7 @@
 #ifndef __DOOM__LOG_SYSTEM__
 #define __DOOM__LOG_SYSTEM__
 
+#include <utils/Platform.hpp>
 #include <patterns/singleton/Singleton.hpp>
 #include <utils/Time.hpp>
 #include <utils/printers/Console.hpp>
@@ -13,7 +14,7 @@ namespace Doom {
     /**
      * System to write logs in the Console and/or in a file.
      */
-    class LogSystem : private Singleton {
+    class exported LogSystem : private Singleton {
         public:
             /**
              * Level of gravity of the log messages.

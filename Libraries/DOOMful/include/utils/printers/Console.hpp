@@ -1,6 +1,7 @@
 #ifndef __DOOM__CONSOLE__
 #define __DOOM__CONSOLE__
 
+#include <utils/Platform.hpp>
 #include <utils/printers/Printer.hpp>
 #include <utils/Utils.hpp>
 #include <cstdint>
@@ -10,7 +11,7 @@ namespace Doom {
     /**
      * A Console to write and get values from user.
      */
-    class Console final : public Printer {
+    class exported Console final : public Printer {
         public:
 
             /**

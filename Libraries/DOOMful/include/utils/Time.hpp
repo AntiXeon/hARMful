@@ -1,13 +1,14 @@
 #ifndef __DOOM_TIME__
 #define __DOOM_TIME__
 
+#include <utils/Platform.hpp>
 #include <string>
 
 namespace Doom {
     /**
      * Get the current date and time in a human-readable way.
      */
-    class Time final {
+    class exported Time final {
         public:
             /**
              * Get a human-readable string of the current date and time.
