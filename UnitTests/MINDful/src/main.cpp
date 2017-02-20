@@ -1,3 +1,3 @@
 int main(int, char**) {
-    return true ;
+    return EXIT_SUCCESS ;
 }
