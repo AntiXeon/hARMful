@@ -1,4 +1,4 @@
-#include <modules/UTDimension2Df.hpp>
+#include <modules/dimensions/UTDimension2Df.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <geometry/dimensions/Dimension3Df.hpp>
 #include <geometry/points/Point2Df.hpp>

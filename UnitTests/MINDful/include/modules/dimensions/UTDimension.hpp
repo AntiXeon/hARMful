@@ -1,5 +1,5 @@
-#ifndef __UNIT_TEST__MIND__DIMENSION_EXTENSION__
-#define __UNIT_TEST__MIND__DIMENSION_EXTENSION__
+#ifndef __UNIT_TEST__MIND__DIMENSION__
+#define __UNIT_TEST__MIND__DIMENSION__
 
 #include <UnitTest.hpp>
 

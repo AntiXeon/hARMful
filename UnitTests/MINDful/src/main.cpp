@@ -1,7 +1,7 @@
-#include <modules/UTDimension2Df.hpp>
-#include <modules/UTDimension2Di.hpp>
-#include <modules/UTDimension3Df.hpp>
-#include <modules/UTDimension3Di.hpp>
+#include <modules/dimensions/UTDimension2Df.hpp>
+#include <modules/dimensions/UTDimension2Di.hpp>
+#include <modules/dimensions/UTDimension3Df.hpp>
+#include <modules/dimensions/UTDimension3Di.hpp>
 
 static void testDimensions() {
     UTMind::UTDimension2Df().runTests() ;

@@ -1,7 +1,7 @@
-#ifndef __UNIT_TEST__MIND__DIMENSION2DF_EXTENSION__
-#define __UNIT_TEST__MIND__DIMENSION2DF_EXTENSION__
+#ifndef __UNIT_TEST__MIND__DIMENSION2DF__
+#define __UNIT_TEST__MIND__DIMENSION2DF__
 
-#include <modules/UTDimension.hpp>
+#include <modules/dimensions/UTDimension.hpp>
 
 namespace UTMind {
     /**
