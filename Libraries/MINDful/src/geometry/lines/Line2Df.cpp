@@ -99,32 +99,13 @@ namespace Mind {
         // Make the point relative to start.
         Point2Df relativePointToStart = point - m_start ;
 
-        Scalar dotProduct = relativePointToStart.dot(m_end) ;
-        Scalar projectedLengthSquared ;
-        if (dotProduct <= 0.f) {
-            projectedLengthSquared = 0.f ;
-        }
-        else {
-            // Make the point relative to end.
-            Point2Df relativePointToEnd = point - m_end ;
-            dotProduct = relativePointToEnd.dot(m_end) ;
-
-            if (dotProduct <= 0.f) {
-                projectedLengthSquared = 0.f ;
-            }
-            else {
-                Scalar endNorm = m_end.dot(m_end) ;
-                projectedLengthSquared = (dotProduct * dotProduct) / endNorm ;
-            }
-        }
-
-        Scalar pointNorm = point.dot(point) ;
-        Scalar lengthSquared = pointNorm - projectedLengthSquared ;
+        Scalar dotProduct = relativePointToStart.dot(relativeLine) ;
+        Scalar projectedLengthSquared = dotProduct * dotProduct / relativeLine.dot(relativeLine) ;
+        Scalar lengthSquared = relativePointToStart.dot(relativePointToStart) - projectedLengthSquared ;
 
         if (lengthSquared < 0.f) {
             return 0.f ;
         }
-
         return lengthSquared ;
     }
 

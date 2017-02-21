@@ -10,6 +10,13 @@ UnitTest::UnitTest(float epsilon) : m_epsilon(epsilon) {}
 UnitTest::~UnitTest() {}
 
 int UnitTest::Success() {
+    if (ValidatedUnitTestSession == EXIT_SUCCESS) {
+        std::cout << "Unit test: passed" << std::endl ;
+    }
+    else {
+        std::cerr << "Unit test: failed" << std::endl ;
+    }
+
     return ValidatedUnitTestSession ;
 }
 

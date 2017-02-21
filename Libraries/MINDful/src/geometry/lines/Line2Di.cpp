@@ -93,14 +93,16 @@ namespace Mind {
 
     Scalar Line2Di::distanceSquaredTo(const Point2Di& point) {
         Point2Di relativeLine = m_end - m_start ;
-        Point2Di relativePoint = point - m_start ;
+        // Make the point relative to start.
+        Point2Di relativePointToStart = point - m_start ;
 
-        Scalar dotProduct = relativePoint * relativeLine ;
-        Scalar projLengthSquared = (dotProduct * dotProduct) / (relativeLine * relativeLine) ;
-        Scalar lengthSquared = (relativePoint * relativePoint) - projLengthSquared ;
+        Scalar dotProduct = relativePointToStart.dot(relativeLine) ;
+        Scalar projectedLengthSquared = dotProduct * dotProduct / relativeLine.dot(relativeLine) ;
+        Scalar lengthSquared = relativePointToStart.dot(relativePointToStart) - projectedLengthSquared ;
 
-        if (lengthSquared < 0)
-            return 0 ;
+        if (lengthSquared < 0.f) {
+            return 0.f ;
+        }
         return lengthSquared ;
     }
 

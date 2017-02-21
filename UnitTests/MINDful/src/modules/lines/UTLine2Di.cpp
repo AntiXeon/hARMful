@@ -185,12 +185,12 @@ namespace UTMind {
 
     void UTLine2Di::distance() {
         // Line 1
-        int p1StartX = 0 ;
-        int p1StartY = -10 ;
+        int p1StartX = -14 ;
+        int p1StartY = 12 ;
         Point2Di p1Start(p1StartX, p1StartY) ;
 
-        int p1EndX = 0 ;
-        int p1EndY = 10 ;
+        int p1EndX = 4 ;
+        int p1EndY = -63 ;
         Point2Di p1End(p1EndX, p1EndY) ;
 
         Line2Di l1(p1Start, p1End) ;
@@ -198,22 +198,27 @@ namespace UTMind {
 
         // Distance to Point A (at 5 units on right of L1)
         Point2Di pointA(5, 0) ;
+        float computedDistanceA = l1.distanceTo(pointA) ;
         float expectedDistanceA = pointDistance(l1, pointA) ;
-        check(compare(l1.distanceTo(pointA), expectedDistanceA)) ;
+        check(compare(computedDistanceA, expectedDistanceA)) ;
 
         // Seem difficult to evaluate, formula not well understood...
         Point2Di pointB(10, 5) ;
+        float computedDistanceB = l1.distanceTo(pointB) ;
         float expectedDistanceB = pointDistance(l1, pointB) ;
-        check(compare(l1.distanceTo(pointB), expectedDistanceB)) ;
+        check(compare(computedDistanceB, expectedDistanceB)) ;
     }
 
     UTLine::LinearEquation UTLine2Di::getEquation(const Line2Di& line) {
-        LinearEquation equation ;
+        LinearEquation equation = { 0.f, 0.f } ;
 
         float diffX = line.getEndX() - line.getStartX() ;
         float diffY = line.getEndY() - line.getStartY() ;
-        equation.m_gradient = diffY / diffX ;
-        equation.m_yIntercept = line.getStartY() - (equation.m_gradient * line.getStartX()) ;
+
+        if (!compare(diffX, 0.f) && !compare(diffY, 0.f)) {
+            equation.m_gradient = diffY / diffX ;
+            equation.m_yIntercept = line.getStartY() - (equation.m_gradient * line.getStartX()) ;
+        }
 
         return equation ;
     }
@@ -224,7 +229,7 @@ namespace UTMind {
         // y-axis (b is equal to -1 here).
         auto lineEquation = getEquation(line) ;
         float a = lineEquation.m_gradient ;
-        const float b = -1 ;
+        const float b = -1.f ;
         float c = lineEquation.m_yIntercept ;
 
         float numerator = std::abs((a * point.getX()) + (b * point.getY()) + c) ;
