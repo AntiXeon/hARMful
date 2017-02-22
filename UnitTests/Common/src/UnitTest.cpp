@@ -4,23 +4,26 @@
 #include <iostream>
 
 int UnitTest::ValidatedUnitTestSession = EXIT_SUCCESS ;
+unsigned int UnitTest::AmountRunTests = 0 ;
+unsigned int UnitTest::AmountSuccessfulTests = 0 ;
 
 UnitTest::UnitTest(float epsilon) : m_epsilon(epsilon) {}
 
 UnitTest::~UnitTest() {}
 
 int UnitTest::Success() {
-    if (ValidatedUnitTestSession == EXIT_SUCCESS) {
-        std::cout << "Unit test: passed" << std::endl ;
-    }
-    else {
-        std::cerr << "Unit test: failed" << std::endl ;
-    }
+    std::cout << AmountSuccessfulTests
+                << "/"
+                << AmountRunTests
+                << " passed tests"
+                << std::endl ;
 
     return ValidatedUnitTestSession ;
 }
 
 void UnitTest::checkCondition(bool condition, const char* file, const  char* function, int line) {
+    AmountRunTests++ ;
+
     if (!condition) {
         std::cerr << "Failed at "
                   << file
@@ -31,6 +34,9 @@ void UnitTest::checkCondition(bool condition, const char* file, const  char* fun
                   << std::endl ;
 
         ValidatedUnitTestSession = EXIT_FAILURE ;
+    }
+    else {
+        AmountSuccessfulTests++ ;
     }
 }
 

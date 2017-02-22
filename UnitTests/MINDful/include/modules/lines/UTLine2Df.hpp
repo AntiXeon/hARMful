@@ -42,24 +42,6 @@ namespace UTMind {
              * Test distances between different Line2Df objects.
              */
             virtual void distance() final ;
-
-            /**
-             * Get the equation of a @a line from its points.
-             * @param  line The line for which the equation is wanted.
-             * @return      The linear equation of the @a line.
-             */
-            LinearEquation getEquation(const Mind::Line2Df& line) ;
-
-            /**
-             * Compute the distance between a @a line and a @a point.
-             * This computation uses a different way to get the distance from
-             * the one implemented in the library. It is used to compare by both
-             * that the provided results match.
-             * @param  line  The provided line.
-             * @param  point The point to know its distance from the @a line.
-             * @return       The distance between the @a line and the @a point.
-             */
-            float pointDistance(const Mind::Line2Df& line, const Mind::Point2Df& point) ;
     } ;
 }
 

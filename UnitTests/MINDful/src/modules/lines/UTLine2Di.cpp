@@ -199,41 +199,13 @@ namespace UTMind {
         // Distance to Point A (at 5 units on right of L1)
         Point2Di pointA(5, 0) ;
         float computedDistanceA = l1.distanceTo(pointA) ;
-        float expectedDistanceA = pointDistance(l1, pointA) ;
+        float expectedDistanceA = 15.674883842468f ;
         check(compare(computedDistanceA, expectedDistanceA)) ;
 
         // Seem difficult to evaluate, formula not well understood...
         Point2Di pointB(10, 5) ;
         float computedDistanceB = l1.distanceTo(pointB) ;
-        float expectedDistanceB = pointDistance(l1, pointB) ;
+        float expectedDistanceB = 21.703685760498f ;
         check(compare(computedDistanceB, expectedDistanceB)) ;
-    }
-
-    UTLine::LinearEquation UTLine2Di::getEquation(const Line2Di& line) {
-        LinearEquation equation = { 0.f, 0.f } ;
-
-        float diffX = line.getEndX() - line.getStartX() ;
-        float diffY = line.getEndY() - line.getStartY() ;
-
-        if (!compare(diffX, 0.f) && !compare(diffY, 0.f)) {
-            equation.m_gradient = diffY / diffX ;
-            equation.m_yIntercept = line.getStartY() - (equation.m_gradient * line.getStartX()) ;
-        }
-
-        return equation ;
-    }
-
-    float UTLine2Di::pointDistance(const Line2Di& line, const Point2Di& point) {
-        // Line equation: ax + by + c = 0,
-        // where a is the gradient and c the point at which the line crosses the
-        // y-axis (b is equal to -1 here).
-        auto lineEquation = getEquation(line) ;
-        float a = lineEquation.m_gradient ;
-        const float b = -1.f ;
-        float c = lineEquation.m_yIntercept ;
-
-        float numerator = std::abs((a * point.getX()) + (b * point.getY()) + c) ;
-        float denominator = std::sqrt(((a * a) + (b * b))) ;
-        return numerator / denominator ;
     }
 }

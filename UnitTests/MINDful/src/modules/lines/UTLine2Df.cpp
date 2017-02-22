@@ -186,12 +186,12 @@ namespace UTMind {
 
     void UTLine2Df::distance() {
         // Line 1
-        Scalar p1StartX = -14.87f ;
-        Scalar p1StartY = 128.12f ;
+        Scalar p1StartX = -32.5f ;
+        Scalar p1StartY = 25.f ;
         Point2Df p1Start(p1StartX, p1StartY) ;
 
-        Scalar p1EndX = 98.45f ;
-        Scalar p1EndY = 124.58f ;
+        Scalar p1EndX = 8.f ;
+        Scalar p1EndY = 28.5f ;
         Point2Df p1End(p1EndX, p1EndY) ;
 
         Line2Df l1(p1Start, p1End) ;
@@ -200,40 +200,12 @@ namespace UTMind {
         // Distance to Point A
         Point2Df pointA(4.f, -9.f) ;
         float computedDistanceA = l1.distanceTo(pointA) ;
-        float expectedDistanceA = pointDistance(l1, pointA) ;
+        float expectedDistanceA = 37.016353607178f ;
         check(compare(computedDistanceA, expectedDistanceA)) ;
 
         Point2Df pointB(3.f, 5.f) ;
         float computedDistanceB = l1.distanceTo(pointB) ;
-        float expectedDistanceB = pointDistance(l1, pointB) ;
+        float expectedDistanceB = 22.982242584229f ;
         check(compare(computedDistanceB, expectedDistanceB)) ;
-    }
-
-    UTLine::LinearEquation UTLine2Df::getEquation(const Line2Df& line) {
-        LinearEquation equation = { 0.f, 0.f } ;
-
-        float diffX = line.getEndX() - line.getStartX() ;
-        float diffY = line.getEndY() - line.getStartY() ;
-
-        if (!compare(diffX, 0.f) && !compare(diffY, 0.f)) {
-            equation.m_gradient = diffY / diffX ;
-            equation.m_yIntercept = line.getStartY() - (equation.m_gradient * line.getStartX()) ;
-        }
-
-        return equation ;
-    }
-
-    float UTLine2Df::pointDistance(const Line2Df& line, const Point2Df& point) {
-        // Line equation: ax + by + c = 0,
-        // where a is the gradient and c the point at which the line crosses the
-        // y-axis (b is equal to -1 here).
-        auto lineEquation = getEquation(line) ;
-        float a = lineEquation.m_gradient ;
-        const float b = -1.f ;
-        float c = lineEquation.m_yIntercept ;
-
-        float numerator = std::abs((a * point.getX()) + (b * point.getY()) + c) ;
-        float denominator = std::sqrt(((a * a) + (b * b))) ;
-        return numerator / denominator ;
     }
 }

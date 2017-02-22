@@ -13,6 +13,16 @@ class UnitTest {
         static int ValidatedUnitTestSession ;
 
         /**
+         * Amount of tests that have run.
+         */
+        static unsigned int AmountRunTests ;
+
+        /**
+         * Amount of tests that have been successful.
+         */
+        static unsigned int AmountSuccessfulTests ;
+
+        /**
          * Precision for floats comparison.
          */
         float m_epsilon ;
