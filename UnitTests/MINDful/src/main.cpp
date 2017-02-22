@@ -7,6 +7,9 @@
 #include <modules/lines/UTLine2Di.hpp>
 
 #include <modules/points/UTPoint2Df.hpp>
+#include <modules/points/UTPoint2Di.hpp>
+#include <modules/points/UTPoint3Df.hpp>
+#include <modules/points/UTPoint3Di.hpp>
 
 static void testDimensions() {
     UTMind::UTDimension2Df().runTests() ;
@@ -22,6 +25,9 @@ static void testLines() {
 
 static void testPoints() {
     UTMind::UTPoint2Df().runTests() ;
+    UTMind::UTPoint2Di().runTests() ;
+    UTMind::UTPoint3Df().runTests() ;
+    UTMind::UTPoint3Di().runTests() ;
 }
 
 int main(int, char**) {
