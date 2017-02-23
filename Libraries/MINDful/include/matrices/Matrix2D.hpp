@@ -60,10 +60,10 @@ namespace Mind {
 
 
             /** Get the number of rows in the matrix. */
-            const size_t& rows() const ;
+            size_t rows() const ;
 
             /** Get the number of cols in the matrix. */
-            const size_t& cols() const ;
+            size_t cols() const ;
 
 
             /** Get a row from the matrix. */
@@ -91,7 +91,7 @@ namespace Mind {
 
     template <class T>
     void Matrix2D<T>::clear() {
-        for (size_t& row = 0 ; row < m_data.size() ; row++)
+        for (size_t row = 0 ; row < m_data.size() ; row++)
             m_data[row].clear() ;
         m_data.clear() ;
     }
@@ -99,7 +99,7 @@ namespace Mind {
     template <class T>
     void Matrix2D<T>::resize(const size_t& rows, const size_t& cols, const T& value) {
         m_data.resize(rows) ;
-        for (size_t& row = 0 ; row < m_data.size() ; row++) {
+        for (size_t row = 0 ; row < m_data.size() ; row++) {
             m_data[row].resize(cols, value) ;
         }
     }
@@ -107,7 +107,7 @@ namespace Mind {
     template <class T>
     void Matrix2D<T>::reserve(const size_t& rows, const size_t& cols) {
         m_data.reserve(rows) ;
-        for (size_t& row = 0 ; row < m_data.size() ; row++)
+        for (size_t row = 0 ; row < m_data.size() ; row++)
             m_data[row].reserve(cols) ;
     }
 
@@ -117,13 +117,13 @@ namespace Mind {
     }
 
     template <class T>
-    const size_t& Matrix2D<T>::rows() const {
-        return m_data.size() ;
+    size_t Matrix2D<T>::rows() const {
+        return m_data[0].size() ;
     }
 
     template <class T>
-    const size_t& Matrix2D<T>::cols() const {
-        return m_data[0].size() ;
+    size_t Matrix2D<T>::cols() const {
+        return m_data.size() ;
     }
 
     template <class T>
@@ -137,9 +137,9 @@ namespace Mind {
         const size_t& rows = mat.rows() ;
         const size_t& lastRow = rows - 1 ;
 
-        for (size_t& col = 0 ; col < cols ; col++) {
+        for (size_t col = 0 ; col < cols ; col++) {
             s << "[" ;
-                for (size_t& row = 0 ; row < rows ; row++) {
+                for (size_t row = 0 ; row < rows ; row++) {
                     s << mat.at(row, col) ;
                     if (row < lastRow)
                         s << "," ;
