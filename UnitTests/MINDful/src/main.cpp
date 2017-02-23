@@ -5,6 +5,7 @@
 #include <modules/points/UTPoint3Df.hpp>
 #include <modules/rectangles/UTRectangle2Df.hpp>
 #include <modules/matrices/UTMatrix2D.hpp>
+#include <modules/matrices/UTMatrix3x3f.hpp>
 
 static void testDimensions() {
     UTMind::UTDimension2Df().runTests() ;
@@ -26,6 +27,7 @@ static void testRectangles() {
 
 static void testMatrices() {
     UTMind::UTMatrix2D().runTests() ;
+    UTMind::UTMatrix3x3f().runTests() ;
 }
 
 int main(int, char**) {

@@ -68,7 +68,7 @@ namespace Mind {
 
             /**
              * Fill the SquareMatrix with zero values and put one on
-             *          matrix diagonal (left to right, top to bottom).
+             * matrix diagonal (left to right, top to bottom).
              */
             void identity() ;
 
@@ -134,7 +134,7 @@ namespace Mind {
              * Set or get the element a the specified position.
              * @param   index   Index of the wanted row.
              */
-            Scalar* operator[](int index) ;
+            SIMD::Vector4f operator[](int index) ;
 
             /**
              * Get the size of the SquareMatrix.

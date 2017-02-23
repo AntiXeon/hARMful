@@ -69,7 +69,7 @@ namespace Mind {
         rowValues[col] = value ;
     }
 
-    Scalar* SquareMatrixf::operator[](int index) {
+    SIMD::Vector4f SquareMatrixf::operator[](int index) {
         return m_data[index] ;
     }
 
