@@ -110,7 +110,7 @@ namespace UTMind {
         // Copy matrix.
         Matrix3x3f m3 ;
         m3.identity() ;
-        m3.copy(m2) ;
+        m3 = m2 ;
 
         check(m3[0][0] == p1X) ;
         check(m3[0][1] == 0.f) ;

@@ -115,7 +115,7 @@ namespace Mind {
         return m_y ;
     }
 
-    AlignedArray4f& Point2Df::getCoordinates(AlignedArray4f& output) const {
+    Array4f& Point2Df::getCoordinates(Array4f& output) const {
         output[X] = m_x ;
         output[Y] = m_y ;
         return output ;

@@ -3,7 +3,7 @@
 namespace Mind {
     Matrix3x3f::Matrix3x3f(const Scalar& value) : SquareMatrixf(3, value) {}
 
-    Matrix3x3f::Matrix3x3f(const SquareMatrixf& copied) : SquareMatrixf(copied) {}
+    Matrix3x3f::Matrix3x3f(const Matrix3x3f& mat) : SquareMatrixf(mat) {}
 
     Matrix3x3f::~Matrix3x3f() {}
 
@@ -58,6 +58,67 @@ namespace Mind {
         columnValues[0] = values.getX() ;
         columnValues[1] = values.getY() ;
         columnValues[2] = values.getZ() ;
+    }
+
+    Matrix3x3f& Matrix3x3f::operator*=(const Scalar& scalar) {
+        unsigned int length = size() ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            m_data[rowIndex] *= scalar ;
+        }
+        return *this ;
+    }
+
+    Matrix3x3f Matrix3x3f::operator*(const Scalar& scalar) {
+        Matrix3x3f mat(*this) ;
+        mat *= scalar ;
+        return mat ;
+    }
+
+    Matrix3x3f& Matrix3x3f::operator*=(Matrix3x3f& other) {
+        // Transpose the matrix to easily compute the product of each line of
+        // "this" by each column of "other".
+        Matrix3x3f otherCopy = other ;
+        SIMD::Vector4f::transposeMatrix(
+            otherCopy.m_data[0],
+            otherCopy.m_data[1],
+            otherCopy.m_data[2],
+            otherCopy.m_data[3]
+        ) ;
+
+        // Multiply each line of "this" by each column of "other".
+        // Then add each element of the resulting row and store it in "this".
+        unsigned int length = size() ;
+        for (unsigned int thisRowIndex = 0 ; thisRowIndex < length ; thisRowIndex++) {
+            Array4f rowResult ;
+            for(unsigned int otherRowIndex = 0 ; otherRowIndex < length ; otherRowIndex++) {
+                SIMD::Vector4f mulRow = m_data[thisRowIndex] * otherCopy.m_data[otherRowIndex] ;
+                Scalar value = mulRow.horizontalAdd() ;
+                rowResult[otherRowIndex] = value ;
+            }
+            m_data[thisRowIndex].set(rowResult) ;
+        }
+
+        return *this ;
+    }
+
+    Matrix3x3f Matrix3x3f::operator*(Matrix3x3f& other) {
+        Matrix3x3f mat(*this) ;
+        mat *= other ;
+        return mat ;
+    }
+
+    Matrix3x3f& Matrix3x3f::operator+=(Matrix3x3f& other) {
+        unsigned int length = size() ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            m_data[rowIndex] += other[rowIndex] ;
+        }
+        return *this ;
+    }
+
+    Matrix3x3f Matrix3x3f::operator+(Matrix3x3f& other) {
+        Matrix3x3f mat(*this) ;
+        mat += other ;
+        return mat ;
     }
 
     Matrix3x3f& Matrix3x3f::operator=(const Matrix3x3f& other) {

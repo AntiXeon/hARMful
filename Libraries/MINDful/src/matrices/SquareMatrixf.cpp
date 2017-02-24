@@ -15,7 +15,13 @@ namespace Mind {
     }
 
     SquareMatrixf::SquareMatrixf(const SquareMatrixf& copied) {
-        copy(copied) ;
+        m_size = copied.m_size ;
+        m_defaultValue = copied.m_defaultValue ;
+        std::copy(
+            std::begin(copied.m_data),
+            std::end(copied.m_data),
+            std::begin(m_data)
+        ) ;
     }
 
     SquareMatrixf::~SquareMatrixf() {}
@@ -38,13 +44,6 @@ namespace Mind {
                 columns[2],
                 columns[3]
             ) ;
-        }
-    }
-
-    void SquareMatrixf::copy(const SquareMatrixf& copied) {
-        int maxSize = std::min(m_size, copied.m_size) ;
-        for (int row = 0 ; row < maxSize ; ++row) {
-            m_data[row] = copied.m_data[row] ;
         }
     }
 
@@ -93,7 +92,7 @@ namespace Mind {
     }
 
     void SquareMatrixf::clearWith(const Scalar& value) {
-        AlignedArray4f values ;
+        Array4f values ;
         for (int col = 0 ; col < MaximalDataSize ; ++col) {
             if (col < m_size) {
                 values[col] = value ;

@@ -380,15 +380,7 @@ inline void Vector4f::set(const Array4f& array) {
     std::copy(array.begin(), array.end(), m_inner.begin()) ;
 }
 
-inline void Vector4f::set(const AlignedArray4f& array) {
-    std::copy(array.begin(), array.end(), m_inner.begin()) ;
-}
-
 inline void Vector4f::get(Array4f& array) const {
-    std::copy(array.begin(), array.end(), m_inner.begin()) ;
-}
-
-inline void Vector4f::get(AlignedArray4f& array) const {
     std::copy(array.begin(), array.end(), m_inner.begin()) ;
 }
 

@@ -27,15 +27,23 @@ Vector4<Type>::Mask::~Mask() {}
 
 
                                                               /*** UTILITIES ***/
-template <typename Type>
-inline void Vector4<Type>::Mask::get(AlignedArray4i& array) {
-    int32_t* data = array.data() ;
-    _mm_store_si128((__m128i*) data, m_inner) ;
-}
+#ifdef ALIGNED_ARRAY
+    template <typename Type>
+    inline void Vector4<Type>::Mask::get(Array4i& array) {
+        int32_t* data = array.data() ;
+        _mm_store_si128((__m128i*) data, m_inner) ;
+    }
+#else
+    template <typename Type>
+    inline void Vector4<Type>::Mask::get(Array4i& array) {
+        int32_t* data = array.data() ;
+        _mm_storeu_si128((__m128i*) data, m_inner) ;
+    }
+#endif
 
 template <typename Type>
 inline bool Vector4<Type>::Mask::get(const unsigned int& index) {
-    AlignedArray4i tmp ;
+    Array4i tmp ;
     get(tmp) ;
     return tmp[index] ;
 }

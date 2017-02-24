@@ -17,10 +17,9 @@ namespace Mind {
             Matrix4x4f(const Scalar& value = 0.f) ;
 
             /**
-             * Create a SquareMatrix containing values from another one.
-             * @param	copied  SquareMatrix to copy into the new one.
+             * Copy a Matrix4x4f.
              */
-            Matrix4x4f(const SquareMatrixf& copied) ;
+            Matrix4x4f(const Matrix4x4f& mat) ;
 
             /**
              * Destruction of the matrix.

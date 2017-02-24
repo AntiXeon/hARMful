@@ -4,7 +4,7 @@
 namespace Mind {
     Matrix4x4f::Matrix4x4f(const Scalar& value) : SquareMatrixf(4, value) {}
 
-    Matrix4x4f::Matrix4x4f(const SquareMatrixf& copied) : SquareMatrixf(copied) {}
+    Matrix4x4f::Matrix4x4f(const Matrix4x4f& mat) : SquareMatrixf(mat) {}
 
     Matrix4x4f::~Matrix4x4f() {}
 

@@ -17,10 +17,9 @@ namespace Mind {
             Matrix3x3f(const Scalar& value = 0.f) ;
 
             /**
-             * Create a SquareMatrix containing values from another one.
-             * @param	copied  SquareMatrix to copy into the new one.
+             * Copy a Matrix3x3f.
              */
-            Matrix3x3f(const SquareMatrixf& copied) ;
+            Matrix3x3f(const Matrix3x3f& mat) ;
 
             /**
              * Destruction of the matrix.
@@ -61,6 +60,61 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(const size_t& row, const Point3Df& values) final ;
+
+            /**
+             * Multiply the current matrix by a scalar value.
+             * The result is put into the current matrix.
+             * @param   scalar  The scalar value to multiply each component of
+             *                  the matrix with.
+             * @return  The result of the multiplication.
+             */
+            Matrix3x3f& operator*=(const Scalar& scalar) ;
+
+            /**
+             * Multiply the current matrix by a scalar value.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to multiply.
+             * @param   scalar  The scalar value to multiply each component of
+             *                  the matrix with.
+             * @return  The result of the multiplication.
+             */
+            Matrix3x3f operator*(const Scalar& scalar) ;
+
+            /**
+             * Multiply the current matrix by another matrix.
+             * The result is put into the current matrix.
+             * @param   other   The other matrix to multiply with the current
+             *                  one.
+             * @return  The result of the multiplication.
+             */
+            Matrix3x3f& operator*=(Matrix3x3f& other) ;
+
+            /**
+             * Multiply the current matrix by another value.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to multiply.
+             * @param   other   The other matrix to multiply with the current
+             *                  one.
+             * @return  The result of the multiplication.
+             */
+            Matrix3x3f operator*(Matrix3x3f& other) ;
+
+            /**
+             * Addition of the current matrix with another one.
+             * The result is put into the current matrix.
+             * @param   other   The other matrix to add to the current one.
+             * @return  The result of the addition.
+             */
+            Matrix3x3f& operator+=(Matrix3x3f& other) ;
+
+            /**
+             * Addition of the current matrix with another one.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to add.
+             * @param   other   The other matrix to add to the current one.
+             * @return  The result of the addition.
+             */
+            Matrix3x3f operator+(Matrix3x3f& other) ;
 
            /**
             * Assignment operator to copy a Matrix3x3.

@@ -148,12 +148,12 @@ namespace Mind {
             Scalar getZ() const ;
 
             /**
-              * Get the coordinates of the Vector3f in an
-              *          AlignedArray4f. The last index is set to zero.
+              * Get the coordinates of the Vector3f in an Array4f.
+              * The last index is set to zero.
               * @param   output  Output parameter that will contain the values.
               * @return  The @a output parameter for convenient use.
               */
-            AlignedArray4f& getCoordinates(AlignedArray4f& output) const ;
+            Array4f& getCoordinates(Array4f& output) const ;
 
             /** Set the X coordinate. */
             void setX(const Scalar& x) ;

@@ -390,29 +390,9 @@ namespace Mind {
                  */
                 Mask isNaN() ;
 
-            #ifdef ALIGNED_ARRAY
-                /**
-                 * Load from an array that is aligned on 16 bits.
-                 * @param    count     Amount of values to set, having
-                 *                     0 < count < 4.
-                 */
-                void set(const AlignedArray4f& array) ;
-
-                /**
-                 * Copy the values on the Vector4f into an aligned
-                 * array.
-                 * @param     array     Output parameter in which values of the
-                 *                     Vector4f are stored.
-                 * @param    count     Amount of values to set, having
-                 *                     0 < count < 4.
-                 */
-                void get(AlignedArray4f& array) const ;
-            #else
                 /**
                  * Load from an array that is not aligned.
                  * @param     array    The array to load into the Vector4f.
-                 * @warning Unaligned data may lower performances on old Intel
-                 *          CPUs (Pentium 4, Pentium M, Atom).
                  */
                 void set(const Array4f& array) ;
 
@@ -423,11 +403,8 @@ namespace Mind {
                  *                     Vector4f are stored.
                  * @param    count     Amount of values to set, having
                  *                     0 < count < 4.
-                 * @warning Unaligned data may lower performances on old Intel
-                 *          CPUs (Pentium 4, Pentium M, Atom).
                  */
                 void get(Array4f& array) const ;
-            #endif
 
                 /**
                  * Get the length of the Vector4f.

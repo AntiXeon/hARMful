@@ -71,17 +71,6 @@ class Mask {
 
 
                                                               /*** UTILITIES ***/
-    protected:
-        /**
-         * Copy the values on the Vector4f into an aligned array.
-         * @param     array     Output parameter in which values of the
-         *                    Vector4f are stored.
-         * @param    count     Amount of values to set, having
-         *                    0 < count < 4.
-         */
-        void get(AlignedArray4i& array) ;
-
-
     public:
         /**
          * Get one value from the mask.

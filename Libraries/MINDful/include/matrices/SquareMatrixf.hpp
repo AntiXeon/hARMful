@@ -51,10 +51,9 @@ namespace Mind {
             SquareMatrixf(const unsigned int& size, const Scalar& value = 0) ;
 
             /**
-             * Create a SquareMatrix containing values from another one.
-             * @param	copied  SquareMatrix to copy into the new one.
+             * Copy a SquareMatrixf.
              */
-            SquareMatrixf(const SquareMatrixf& copied) ;
+            SquareMatrixf(const SquareMatrixf& mat) ;
 
             /**
              * Destruction of the SquareMatrix.
@@ -99,12 +98,6 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(const size_t& row, const Point3Df& values) = 0 ;
-
-            /**
-             * Copy a SquareMatrix into the current one.
-             * @param   copied  SquareMatrix to copy into the new one.
-             */
-            void copy(const SquareMatrixf& copied) ;
 
             /**
              * Get the element a the specified position.

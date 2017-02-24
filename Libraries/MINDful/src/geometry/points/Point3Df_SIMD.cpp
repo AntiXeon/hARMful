@@ -87,7 +87,7 @@ namespace Mind {
         return ((float*)m_values)[Z] ;
     }
 
-    AlignedArray4f& Point3Df::getCoordinates(AlignedArray4f& output) const {
+    Array4f& Point3Df::getCoordinates(Array4f& output) const {
         m_values.get(output) ;
         return output ;
     }

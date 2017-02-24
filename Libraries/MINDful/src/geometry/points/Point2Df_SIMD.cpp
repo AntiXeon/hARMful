@@ -130,7 +130,7 @@ namespace Mind {
         return ((float*)m_values)[Y] ;
     }
 
-    AlignedArray4f& Point2Df::getCoordinates(AlignedArray4f& output) const {
+    Array4f& Point2Df::getCoordinates(Array4f& output) const {
         m_values.get(output) ;
         return output ;
     }

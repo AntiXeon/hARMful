@@ -101,7 +101,7 @@ namespace Mind {
         return m_z ;
     }
 
-    AlignedArray4f& Point3Df::getCoordinates(AlignedArray4f& output) const {
+    Array4f& Point3Df::getCoordinates(Array4f& output) const {
         output[X] = m_x ;
         output[Y] = m_y ;
         output[Z] = m_z ;

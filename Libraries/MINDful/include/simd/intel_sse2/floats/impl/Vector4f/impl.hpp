@@ -340,23 +340,25 @@ inline Vector4f::Mask Vector4f::isNaN() {
     return resultMask ;
 }
 
-inline void Vector4f::set(const Array4f& array) {
-    m_inner = _mm_loadu_ps(array.data()) ;
-}
+#ifdef ALIGNED_ARRAY
+    inline void Vector4f::get(Array4f& array) const {
+        float* data = array.data() ;
+        _mm_store_ps(data, m_inner) ;
+    }
 
-inline void Vector4f::set(const AlignedArray4f& array) {
-    m_inner = _mm_load_ps(array.data()) ;
-}
+    inline void Vector4f::set(const Array4f& array) {
+        m_inner = _mm_load_ps(array.data()) ;
+    }
+#else
+    inline void Vector4f::get(Array4f& array) const {
+        float* data = array.data() ;
+        _mm_storeu_ps(data, m_inner) ;
+    }
 
-inline void Vector4f::get(Array4f& array) const {
-    float* data = array.data() ;
-    _mm_storeu_ps(data, m_inner) ;
-}
-
-inline void Vector4f::get(AlignedArray4f& array) const {
-    float* data = array.data() ;
-    _mm_store_ps(data, m_inner) ;
-}
+    inline void Vector4f::set(const Array4f& array) {
+        m_inner = _mm_loadu_ps(array.data()) ;
+    }
+#endif
 
 inline size_t Vector4f::length() const {
     return Array4f::size() ;
