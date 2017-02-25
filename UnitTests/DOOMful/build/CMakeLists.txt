@@ -8,7 +8,7 @@ set(CURRENT_TEST_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 if (UNIX)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        list(APPEND CMAKE_CXX_FLAGS "-W -Wall -Werror -std=c++1y ${CMAKE_CXX_FLAGS}")
+        list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1y ${CMAKE_CXX_FLAGS}")
     endif()
 endif()
 

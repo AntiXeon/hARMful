@@ -266,7 +266,8 @@ namespace Mind {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
                 uint32_t isNegative = -uint32_t(std::isless(value, 0.f)) ;
-                result[index] = *((float*) &isNegative) ;
+                float* tmpPtr = reinterpret_cast<float*>(&isNegative) ;
+                result[index] = *tmpPtr ;
             }
             return result ;
         }
@@ -276,7 +277,8 @@ namespace Mind {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
                 uint32_t isInfinite = -uint32_t(std::isless(value, 0.f)) ;
-                result[index] = *((float*) &isInfinite) ;
+                float* tmpPtr = reinterpret_cast<float*>(&isInfinite) ;
+                result[index] = *tmpPtr ;
             }
             return result ;
         }
@@ -286,7 +288,8 @@ namespace Mind {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
                 uint32_t isNaN = -uint32_t(Math::isNaN(value)) ;
-                result[index] = *((float*) &isNaN) ;
+                float* tmpPtr = reinterpret_cast<float*>(&isNaN) ;
+                result[index] = *tmpPtr ;
             }
             return result ;
         }

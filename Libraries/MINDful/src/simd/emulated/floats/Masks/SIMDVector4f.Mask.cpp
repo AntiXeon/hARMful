@@ -6,11 +6,13 @@
 namespace Mind {
     namespace EmulatedSIMD {
         float Vector4f::Mask::binaryConvert(uint32_t value) {
-            return (*((float*) &value)) ;
+            float* tmpPtr = reinterpret_cast<float*>(&value) ;
+            return *tmpPtr ;
         }
 
         uint32_t Vector4f::Mask::binaryConvert(float value) {
-            return (*((uint32_t*) &value)) ;
+            uint32_t* tmpPtr = reinterpret_cast<uint32_t*>(&value) ;
+            return *tmpPtr ;
         }
 
 

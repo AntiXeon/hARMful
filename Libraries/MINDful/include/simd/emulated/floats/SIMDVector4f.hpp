@@ -568,7 +568,8 @@ namespace Mind {
                 // Only make some / all positions zeroed in the vector.
                 if ((i0 | i1 | i2 | i3) < 0) {
                     const float ZeroFloat = 0.f ;
-                    const int ZeroFloatAsInt = *((int*) &ZeroFloat) ;
+                    const uint32_t* ZeroFloatAsIntPtr = reinterpret_cast<int*>(&ZeroFloat) ;
+                    const uint32_t ZeroFloatAsInt = *ZeroFloatAsIntPtr ;
                     memset(&m_inner, ZeroFloatAsInt, sizeof(float32x4_t)) ;
                 }
                 else {
