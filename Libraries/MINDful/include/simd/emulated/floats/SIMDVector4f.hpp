@@ -501,6 +501,15 @@ namespace Mind {
                  */
                 Vector4f& operator=(const Vector4ui& vec4) ;
 
+                /**
+                 * Direct access to a value of the vector.
+                 * This is a way to disable the amiguishment between float32x4_t
+                 * and float* when accessing the values.
+                 * @param  index Index of the data to get from the vector.
+                 * @return       The value at the provided index.
+                 */
+                Scalar& operator[](const int& index) ;
+
                                                             /** CAST OPERATORS **/
                 /**
                  * Cast the current Vector4f to its inner data type.
@@ -538,7 +547,6 @@ namespace Mind {
         #include "impl/Vector4f/Mask/operators.hpp"
 
         #include "impl/Vector4f/operators.hpp"
-
 
         template <int i0, int i1, int i2, int i3>
         void Vector4f::permute() {

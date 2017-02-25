@@ -34,7 +34,7 @@ namespace Mind {
 
 
                                                               /*** UTILITIES ***/
-        void Vector4i::Mask::get(AlignedArray4i& array) {
+        void Vector4i::Mask::get(Array4i& array) {
             int32_t* data = array.data() ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 data[index] = m_inner[index] ;

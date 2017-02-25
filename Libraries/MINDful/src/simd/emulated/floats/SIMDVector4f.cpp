@@ -378,6 +378,10 @@ namespace Mind {
             return *this ;
         }
 
+        Scalar& Vector4f::operator[](const int& index) {
+            return m_inner[index] ;
+        }
+
                                                             /** CAST OPERATORS **/
         Vector4f::operator float32x4_t() const {
             return m_inner ;

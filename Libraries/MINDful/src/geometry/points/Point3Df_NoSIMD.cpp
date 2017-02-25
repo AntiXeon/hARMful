@@ -12,7 +12,8 @@ namespace Mind {
     Point3Df::Point3Df() : m_x(0.f), m_y(0.f), m_z(0.f) {}
 
     Point3Df::Point3Df(const Point3Df& copied) : m_x(copied.m_x),
-                                                 m_y(copied.m_y) {}
+                                                 m_y(copied.m_y),
+                                                 m_z(copied.m_z) {}
 
     Point3Df::Point3Df(
         const Scalar& x,

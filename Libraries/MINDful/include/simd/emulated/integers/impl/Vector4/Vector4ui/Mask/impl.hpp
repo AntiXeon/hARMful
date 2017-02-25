@@ -27,7 +27,7 @@ Vector4ui::Mask::~Mask() {}
 
 
                                                               /*** UTILITIES ***/
-inline void Vector4ui::Mask::get(AlignedArray4i& array) {
+inline void Vector4ui::Mask::get(Array4i& array) {
     int32_t* data = array.data() ;
     for (unsigned int index = 0 ; index < size() ; ++index) {
         data[index] = m_inner[index] ;

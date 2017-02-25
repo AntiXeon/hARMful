@@ -63,7 +63,7 @@ class Mask {
          * @param   array   Array in which Mask values are stored.
          * @return  Value in the mask at the given index.
          */
-        void get(AlignedArray4i& array) ;
+        void get(Array4i& array) ;
 
         /**
          * Get one value from the mask.
