@@ -1,3 +1,4 @@
+#include <MINDOptions.hpp>
 #include <modules/dimensions/UTDimension2Df.hpp>
 #include <modules/dimensions/UTDimension3Df.hpp>
 #include <modules/lines/UTLine2Df.hpp>
@@ -31,6 +32,12 @@ static void testMatrices() {
 }
 
 int main(int, char**) {
+    #ifdef FORCE_EMULATED_SIMD
+        std::cout << "Emulated SIMD" << std::endl ;
+    #else
+        std::cout << "CPU SIMD" << std::endl ;
+    #endif
+
     testDimensions() ;
     testLines() ;
     testPoints() ;
