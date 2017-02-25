@@ -21,14 +21,19 @@ namespace UTMind {
 
         protected:
             /**
-             * Test allocation of Matrix4x4f objects.
+             * Test allocation of Matrix4x4f.
              */
             virtual void allocation() ;
 
             /**
-             * Test utilities on Matrix4x4f objects.
+             * Test utilities on Matrix4x4f.
              */
             virtual void utilities() ;
+
+            /**
+             * Test operators on Matrix4x4f.
+             */
+            virtual void operators() ;
     } ;
 }
 

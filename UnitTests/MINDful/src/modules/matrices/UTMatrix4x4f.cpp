@@ -13,4 +13,6 @@ namespace UTMind {
     void UTMatrix4x4f::allocation() {}
 
     void UTMatrix4x4f::utilities() {}
+
+    void UTMatrix4x4f::operators() {}
 }
