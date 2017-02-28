@@ -15,10 +15,11 @@ static inline Vector4f::Mask operator&(
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary & bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) & (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -58,10 +59,11 @@ static inline Vector4f::Mask operator|(
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary | bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) | (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -101,10 +103,11 @@ static inline Vector4f::Mask operator^(
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary ^ bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) ^ (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -135,9 +138,13 @@ static inline Vector4f::Mask& operator^=(
 static inline Vector4f::Mask operator~(const Vector4f::Mask& a) {
     float32x4_t mask ;
     for (unsigned int index = 0 ; index < Vector4f::Mask::size() ; ++index) {
-        Scalar valueA = (*(float32x4_t*) a)[index] ;
-        uint32_t tmp = ~(*(uint32_t*) &valueA) ;
-        mask[index] = *((float*) &tmp) ;
+        float valueA = (*(float32x4_t*) a)[index] ;
+
+        uint32_t* tmpPtr = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t tmp = *tmpPtr ;
+        tmp = ~tmp ;
+        float* result = reinterpret_cast<float*>(&tmp) ;
+        mask[index] = *result ;
     }
     return mask ;
 }

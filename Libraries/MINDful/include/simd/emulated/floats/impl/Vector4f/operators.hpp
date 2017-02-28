@@ -420,10 +420,11 @@ static inline Vector4f operator&(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary & bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) & (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -451,10 +452,11 @@ static inline Vector4f operator&(const Vector4f& a, const Vector4f::Mask& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary & bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) & (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -482,10 +484,11 @@ static inline Vector4f operator&(const Vector4f::Mask& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary & bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) & (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -504,10 +507,11 @@ static inline Vector4f operator|(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary | bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) | (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -535,10 +539,11 @@ static inline Vector4f operator|(const Vector4f& a, const Vector4f::Mask& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary | bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) | (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -566,10 +571,11 @@ static inline Vector4f operator|(const Vector4f::Mask& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary | bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) | (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -588,10 +594,11 @@ static inline Vector4f operator^(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary ^ bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) ^ (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -619,10 +626,11 @@ static inline Vector4f operator^(const Vector4f& a, const Vector4f::Mask& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary ^ bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) ^ (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }
@@ -650,10 +658,11 @@ static inline Vector4f operator^(const Vector4f::Mask& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
 
-        uint32_t aBinary = (*(uint32_t*) &valueA) ;
-        uint32_t bBinary = (*(uint32_t*) &valueB) ;
-        uint32_t comparison = aBinary ^ bBinary ;
-        result[index] = *((Scalar*) &comparison) ;
+        uint32_t* aBinary = reinterpret_cast<uint32_t*>(&valueA) ;
+        uint32_t* bBinary = reinterpret_cast<uint32_t*>(&valueB) ;
+        uint32_t comparison = (*aBinary) ^ (*bBinary) ;
+        Scalar* result = reinterpret_cast<Scalar*>(&comparison) ;
+        result[index] = *result ;
     }
     return result ;
 }

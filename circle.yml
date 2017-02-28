@@ -19,7 +19,13 @@ test:
         - cd Softwares/Tests/DOOMful/LogSystem/bin && ./TestLogSystem.exe
         - cd Softwares/Tests/DOOMful/Profiler/bin && ./TestProfiler.exe
         - cd Softwares/Tests/DOOMful/Random/bin && ./TestRandom.exe
-        # Build unit tests and run it
-        - cd UnitTests && cmake . && make
+        # Build unit tests and run it (using CPU SIMD if available)
+        - cd UnitTests && cmake -DWITH_EMULATED_SIMD=OFF . && make
         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
         - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+        - cd UnitTests && make clean
+        # Build unit tests and run it (using emulated SIMD)
+        - cd UnitTests && cmake -DWITH_EMULATED_SIMD=ON . && make
+        - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
+        - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+        - cd UnitTests && make clean

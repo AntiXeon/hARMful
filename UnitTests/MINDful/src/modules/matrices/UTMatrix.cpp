@@ -10,5 +10,6 @@ namespace UTMind {
     void UTMatrix::runTests() {
         allocation() ;
         utilities() ;
+        operators() ;
     }
 }

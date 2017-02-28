@@ -26,14 +26,19 @@ namespace UTMind {
 
         protected:
             /**
-             * Test allocation of matrices objects.
+             * Test allocation of matrices.
              */
             virtual void allocation() = 0 ;
 
             /**
-             * Test utilities on matrices objects.
+             * Test utilities on matrices.
              */
             virtual void utilities() = 0 ;
+
+            /**
+             * Test operators on matrices.
+             */
+            virtual void operators() = 0 ;
     } ;
 }
 

@@ -21,14 +21,19 @@ namespace UTMind {
 
         protected:
             /**
-             * Test allocation of Matrix3x3f objects.
+             * Test allocation of Matrix3x3f.
              */
             virtual void allocation() ;
 
             /**
-             * Test utilities on Matrix3x3f objects.
+             * Test utilities on Matrix3x3f.
              */
             virtual void utilities() ;
+
+            /**
+             * Test operators on Matrix3x3f.
+             */
+            virtual void operators() ;
     } ;
 }
 

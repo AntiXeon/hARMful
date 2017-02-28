@@ -117,4 +117,6 @@ namespace UTMind {
         check(mat.cols() == 0) ;
         check(mat.rows() == 0) ;
     }
+
+    void UTMatrix2D::operators() {}
 }

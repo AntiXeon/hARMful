@@ -135,4 +135,50 @@ namespace UTMind {
         check(m3[2][1] == p4Y) ;
         check(m3.at(2,2) == p4Z) ;
     }
+
+    void UTMatrix3x3f::operators() {
+        Matrix3x3f m1 ;
+        m1.at(0, 0, 1.f) ;
+        m1.at(0, 1, 2.f) ;
+        m1.at(0, 2, 3.f) ;
+        m1.at(1, 0, 4.f) ;
+        m1.at(1, 1, 5.f) ;
+        m1.at(1, 2, 6.f) ;
+        m1.at(2, 0, 7.f) ;
+        m1.at(2, 1, 8.f) ;
+        m1.at(2, 2, 9.f) ;
+
+        Matrix3x3f m2 ;
+        m2.at(0, 0, 5.f) ;
+        m2.at(0, 1, 9.f) ;
+        m2.at(0, 2, 7.f) ;
+        m2.at(1, 0, 1.f) ;
+        m2.at(1, 1, 8.f) ;
+        m2.at(1, 2, 6.f) ;
+        m2.at(2, 0, 3.f) ;
+        m2.at(2, 1, 2.f) ;
+        m2.at(2, 2, 4.f) ;
+
+        Matrix3x3f m3 = m1 * m2 ;
+        check(m3.at(0,0) == 16.f) ;
+        check(m3.at(0,1) == 31.f) ;
+        check(m3.at(0,2) == 31.f) ;
+        check(m3.at(1,0) == 43.f) ;
+        check(m3.at(1,1) == 88.f) ;
+        check(m3.at(1,2) == 82.f) ;
+        check(m3.at(2,0) == 70.f) ;
+        check(m3.at(2,1) == 145.f) ;
+        check(m3.at(2,2) == 133.f) ;
+
+        Matrix3x3f m4 = m1 + m2 ;
+        check(m4.at(0,0) == 6.f) ;
+        check(m4.at(0,1) == 11.f) ;
+        check(m4.at(0,2) == 10.f) ;
+        check(m4.at(1,0) == 5.f) ;
+        check(m4.at(1,1) == 13.f) ;
+        check(m4.at(1,2) == 12.f) ;
+        check(m4.at(2,0) == 10.f) ;
+        check(m4.at(2,1) == 10.f) ;
+        check(m4.at(2,2) == 13.f) ;
+    }
 }

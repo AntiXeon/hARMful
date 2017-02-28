@@ -61,10 +61,65 @@ namespace Mind {
              */
             virtual void setRowValues(const size_t& row, const Point3Df& values) final ;
 
-           /**
-            * Assignment operator to copy a Matrix4x4.
-            * @return  The current Matrix4x4 with the copied values.
-            */
+            /**
+             * Multiply the current matrix by a scalar value.
+             * The result is put into the current matrix.
+             * @param   scalar  The scalar value to multiply each component of
+             *                  the matrix with.
+             * @return  The result of the multiplication.
+             */
+            Matrix4x4f& operator*=(const Scalar& scalar) ;
+
+            /**
+             * Multiply the current matrix by a scalar value.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to multiply.
+             * @param   scalar  The scalar value to multiply each component of
+             *                  the matrix with.
+             * @return  The result of the multiplication.
+             */
+            Matrix4x4f operator*(const Scalar& scalar) ;
+
+            /**
+             * Multiply the current matrix by another matrix.
+             * The result is put into the current matrix.
+             * @param   other   The other matrix to multiply with the current
+             *                  one.
+             * @return  The result of the multiplication.
+             */
+            Matrix4x4f& operator*=(Matrix4x4f& other) ;
+
+            /**
+             * Multiply the current matrix by another value.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to multiply.
+             * @param   other   The other matrix to multiply with the current
+             *                  one.
+             * @return  The result of the multiplication.
+             */
+            Matrix4x4f operator*(Matrix4x4f& other) ;
+
+            /**
+             * Addition of the current matrix with another one.
+             * The result is put into the current matrix.
+             * @param   other   The other matrix to add to the current one.
+             * @return  The result of the addition.
+             */
+            Matrix4x4f& operator+=(Matrix4x4f& other) ;
+
+            /**
+             * Addition of the current matrix with another one.
+             * The result is put into a new matrix.
+             * @param   mat     The matrix to add.
+             * @param   other   The other matrix to add to the current one.
+             * @return  The result of the addition.
+             */
+            Matrix4x4f operator+(Matrix4x4f& other) ;
+
+            /**
+             * Assignment operator to copy a Matrix4x4.
+             * @return  The current Matrix4x4 with the copied values.
+             */
             Matrix4x4f& operator=(const Matrix4x4f& other) ;
     } ;
 } ;

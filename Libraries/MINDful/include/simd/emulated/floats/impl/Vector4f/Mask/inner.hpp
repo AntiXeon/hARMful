@@ -97,7 +97,7 @@ class Mask {
          * @param	count 	Amount of values to set, having
          *					0 < count < 4.
          */
-        void get(AlignedArray4i& array) ;
+        void get(Array4i& array) ;
 
 
     public:

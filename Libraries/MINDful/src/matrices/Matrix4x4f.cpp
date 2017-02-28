@@ -61,6 +61,67 @@ namespace Mind {
         columnValues[2] = values.getZ() ;
     }
 
+    Matrix4x4f& Matrix4x4f::operator*=(const Scalar& scalar) {
+        unsigned int length = size() ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            m_data[rowIndex] *= scalar ;
+        }
+        return *this ;
+    }
+
+    Matrix4x4f Matrix4x4f::operator*(const Scalar& scalar) {
+        Matrix4x4f mat(*this) ;
+        mat *= scalar ;
+        return mat ;
+    }
+
+    Matrix4x4f& Matrix4x4f::operator*=(Matrix4x4f& other) {
+        // Transpose the matrix to easily compute the product of each line of
+        // "this" by each column of "other".
+        Matrix4x4f otherCopy = other ;
+        SIMD::Vector4f::transposeMatrix(
+            otherCopy.m_data[0],
+            otherCopy.m_data[1],
+            otherCopy.m_data[2],
+            otherCopy.m_data[3]
+        ) ;
+
+        // Multiply each line of "this" by each column of "other".
+        // Then add each element of the resulting row and store it in "this".
+        unsigned int length = size() ;
+        for (unsigned int thisRowIndex = 0 ; thisRowIndex < length ; thisRowIndex++) {
+            Array4f rowResult ;
+            for(unsigned int otherRowIndex = 0 ; otherRowIndex < length ; otherRowIndex++) {
+                SIMD::Vector4f mulRow = m_data[thisRowIndex] * otherCopy.m_data[otherRowIndex] ;
+                Scalar value = mulRow.horizontalAdd() ;
+                rowResult[otherRowIndex] = value ;
+            }
+            m_data[thisRowIndex].set(rowResult) ;
+        }
+
+        return *this ;
+    }
+
+    Matrix4x4f Matrix4x4f::operator*(Matrix4x4f& other) {
+        Matrix4x4f mat(*this) ;
+        mat *= other ;
+        return mat ;
+    }
+
+    Matrix4x4f& Matrix4x4f::operator+=(Matrix4x4f& other) {
+        unsigned int length = size() ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            m_data[rowIndex] += other[rowIndex] ;
+        }
+        return *this ;
+    }
+
+    Matrix4x4f Matrix4x4f::operator+(Matrix4x4f& other) {
+        Matrix4x4f mat(*this) ;
+        mat += other ;
+        return mat ;
+    }
+
     Matrix4x4f& Matrix4x4f::operator=(const Matrix4x4f& other) {
         std::copy(
             std::begin(other.m_data),
