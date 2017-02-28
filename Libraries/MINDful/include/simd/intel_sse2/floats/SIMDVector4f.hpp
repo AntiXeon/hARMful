@@ -158,8 +158,8 @@ namespace Mind {
                  * this[i] = mask[i] ? this[i] * mul[i] : this[i] ;
                  * </code>
                  * @param     mask     Mask to add some elements only.
-                 * @param     mul     The Vector4f to mulitply to the current one
-                 *                     for values being TRUE in the Mask.
+                 * @param     mul      The Vector4f to mulitply to the current
+                 *                     one for values being TRUE in the Mask.
                  */
                 void mulIf(const Mask& mask, const Vector4f& mul) ;
 
@@ -199,8 +199,8 @@ namespace Mind {
                  * Shuffle the values in a Vector4f and return the corresponding
                  * result.
                  * @param     input     Vector from which value must be shuffled.
-                 * @param     output     Resulting shuffle.
-                 * @return     Same reference as @a output for convenient use.
+                 * @param     output    Resulting shuffle.
+                 * @return    Same reference as @a output for convenient use.
                  */
                 template <unsigned char i0, unsigned char i1, unsigned char i2, unsigned char i3>
                 static Vector4f& shuffle(

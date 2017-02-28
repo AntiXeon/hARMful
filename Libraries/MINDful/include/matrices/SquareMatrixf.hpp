@@ -72,6 +72,13 @@ namespace Mind {
             void identity() ;
 
             /**
+             * Compute the trace of the SquareMatrix, that is to say add all its
+             * diagonal components.
+             * @return Value of the trace of the SquareMatrix.
+             */
+            Scalar trace() const ;
+
+            /**
              * Set the values of a column from a Point2D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
