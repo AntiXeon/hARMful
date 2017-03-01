@@ -56,7 +56,7 @@ namespace Mind {
                 at(3,3)
             ).horizontalAdd() ;
         #else
-            return m_data[0][0] + m_data[1][1] + m_data[2][2] + m_data[3][3] ;
+            return at(0,0) + at(1,1) + at(2,2) + at(3,3) ;
         #endif
     }
 

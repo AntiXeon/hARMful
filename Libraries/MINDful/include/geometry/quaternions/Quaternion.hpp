@@ -15,6 +15,12 @@ namespace Mind {
      */
     class Quaternion final {
         public:
+            /**
+             * Axis in the Quaternion. Made to add some semantic to the code
+             * instead of hardcoded values.
+             */
+            enum Axis : unsigned int { X, Y, Z, W } ;
+
             /** Quaternion with all its components set to zero. */
             static const Quaternion Zero ;
 
@@ -22,12 +28,6 @@ namespace Mind {
             static const Quaternion Identity ;
 
         private:
-            /**
-             * Axis in the Quaternion. Made to add some semantic to the code
-             * instead of hardcoded values.
-             */
-            enum Axis { X, Y, Z, W } ;
-
             #ifdef USE_NO_SIMD
                 /** Individual value of coordinate X. */
                 Scalar m_x ;
@@ -56,6 +56,12 @@ namespace Mind {
              * rotation.
              */
             Quaternion() ;
+
+            /**
+             * Copy constructor of a Quaternion.
+             * @param other The Quaternion to copy.
+             */
+            Quaternion(const Quaternion& other) ;
 
             /**
              * Create a Quaternion from the given value, as is.
@@ -116,6 +122,12 @@ namespace Mind {
             Scalar norm() ;
 
             /**
+             * Swap the current Quaternion with another one.
+             * @param other The other Quaternion to swap with the current one.
+             */
+            void swap(Quaternion& other) ;
+
+            /**
              * Set the values of the Quaternion from a rotation matrix.
              * @param matrix Rotation matrix to set the Quaternion values from.
              */
@@ -169,6 +181,116 @@ namespace Mind {
                 Vector3f& yAxis,
                 Vector3f& zAxis
             ) ;
+
+            /**
+             * Access to a component of the Quaternion (read-only).
+             * @param  axis  Axis to get value of.
+             * @return       Value of the component on the wanted @a axis.
+             */
+            Scalar operator[](const Axis& axis) const ;
+
+            /**
+             * Access to a component of the Quaternion (read and write).
+             * @param  axis  Axis to get value of.
+             * @return       Value of the component on the wanted @a axis.
+             */
+            Scalar& operator[](const Axis& axis) ;
+
+            /**
+             * Set the value of the other Quaternion into the current one.
+             * @param  other Another Quaternion for which the values are copied
+             *               into the current one.
+             * @return       Reference on the current Quaternion once it has
+             *               been affected.
+             */
+            Quaternion& operator=(const Quaternion& other) ;
+
+            /**
+             * Addition of two Quaternions.
+             * @param  other Another Quaternion that is added to the current
+             *               one.
+             * @return       Reference on the current Quaternion once it has
+             *               been added to the @other one.
+             */
+            Quaternion& operator+=(const Quaternion& other) ;
+
+            /**
+             * Addition of two Quaternions.
+             * @param  other Another Quaternion that is added to the current
+             *               one.
+             * @return       The result of the addition.
+             */
+            Quaternion operator+(const Quaternion& other) const ;
+
+            /**
+             * Soustraction of two Quaternions.
+             * @param  other Another Quaternion that is substracted from the
+             *               current one.
+             * @return       Reference on the current Quaternion once it has
+             *               been subtracted from the @other one.
+             */
+            Quaternion& operator-=(const Quaternion& other) ;
+
+            /**
+             * Soustraction of two Quaternions.
+             * @param  other Another Quaternion that is substracted from the
+             *               current one.
+             * @return       The result of the soustraction.
+             */
+            Quaternion operator-(const Quaternion& other) const ;
+
+            /**
+             * Mulitplication of a Quaternion with a Scalar.
+             * @param  scalar Value to multiply each component of the current
+             *                Quaternion.
+             * @return        Reference on the current Quaternion once it has
+             *                been multiplied by @a value.
+             */
+            Quaternion& operator*=(const Scalar& scalar) ;
+
+            /**
+             * Mulitplication of a Quaternion with a Scalar.
+             * @param  scalar Value to multiply each component of the Quaternion.
+             * @return        The result of the multiplication.
+             */
+            Quaternion operator*(const Scalar& scalar) const ;
+
+            /**
+             * Multiplication of a Quaternion with another one.
+             * Be aware that the multiplication is not commutative.
+             * @param  other Another Quaternion that is multiplied with the
+             *               current one.
+             * @return       Reference on the current Quaternion once it has
+             *               been subtracted from the @other one.
+             */
+            Quaternion& operator*=(const Quaternion& other) ;
+
+            /**
+             * Multiplication of a Quaternion with another one.
+             * Be aware that the multiplication is not commutative.
+             * @param  other Another Quaternion that is multiplied with the
+             *               current one.
+              * @return      The result of the multiplication.
+             */
+            Quaternion operator*(const Quaternion& other) const ;
+
+            /**
+             * Check if two Quaternions have the same values.
+             * @param  other Another Quaternion that is compared to the current
+             *               one.
+             * @return       TRUE if the Quaternions have the same component
+             *               values, FALSE otherwise.
+             */
+            bool operator==(const Quaternion& other) const ;
+
+            /**
+             * Check if two Quaternions have the different values.
+             * @param  other Another Quaternion that is compared to the current
+             *               one.
+             * @return       TRUE if the Quaternions have different component
+             *               values, FALSE otherwise.
+             */
+            bool operator!=(const Quaternion& other) const ;
     } ;
 }
 

@@ -12,6 +12,8 @@ namespace Mind {
         m_values = SIMD::Vector4f(0.f, 0.f, 0.f, 0.f) ;
     }
 
+    Quaternion::Quaternion(const Quaternion& other) : m_values(other.m_values) {}
+
     Quaternion::Quaternion(const SIMD::Vector4f& values) : m_values(values) {}
 
     Quaternion::Quaternion(
@@ -47,6 +49,10 @@ namespace Mind {
 
     Scalar Quaternion::norm() {
         return m_values.dot(m_values) ;
+    }
+
+    void Quaternion::swap(Quaternion& other) {
+        std::swap(m_values, other.m_values) ;
     }
 
     // From Ken Shoemake's explanations on quaternions.
@@ -261,6 +267,111 @@ namespace Mind {
             rotationMatrix.at(1,2),
             rotationMatrix.at(2,2)
         ) ;
+    }
+
+    Scalar Quaternion::operator[](const Axis& axis) const {
+        float* valuesArray = m_values ;
+        return valuesArray[axis] ;
+    }
+
+    Scalar& Quaternion::operator[](const Axis& axis) {
+        float* valuesArray = m_values ;
+        return valuesArray[axis] ;
+    }
+
+    Quaternion& Quaternion::operator=(const Quaternion& other) {
+        m_values = other.m_values ;
+        return *this ;
+    }
+
+    Quaternion& Quaternion::operator+=(const Quaternion& other) {
+        m_values += other.m_values ;
+        return *this ;
+    }
+
+    Quaternion Quaternion::operator+(const Quaternion& other) const {
+        auto copyValues = m_values ;
+        return Quaternion(copyValues + other.m_values) ;
+    }
+
+    Quaternion& Quaternion::operator-=(const Quaternion& other) {
+        m_values -= other.m_values ;
+        return *this ;
+    }
+
+    Quaternion Quaternion::operator-(const Quaternion& other) const {
+        auto copyValues = m_values ;
+        return Quaternion(copyValues - other.m_values) ;
+    }
+
+    Quaternion& Quaternion::operator*=(const Scalar& scalar) {
+        m_values *= scalar ;
+        return *this ;
+    }
+
+    Quaternion Quaternion::operator*(const Scalar& scalar) const {
+        return Quaternion(m_values * scalar) ;
+    }
+
+    Quaternion& Quaternion::operator*=(const Quaternion& other) {
+        Scalar newX ;
+        Scalar newY ;
+        Scalar newZ ;
+        Scalar newW ;
+
+        // Compute new X value of the curent Quaternion.
+        // (w * other.w) - (x * other.x) - (y * other.y) - (z * other.z)
+        {
+            auto changedSignOtherX = other.m_values ;
+            changedSignOtherX.changeSign<false, false, false, true>() ;
+            newX = (m_values * changedSignOtherX).horizontalSub() ;
+        }
+
+        // Compute new Y value of the curent Quaternion.
+        // (w * other.x) + (x * other.w) + (y * other.z) - (z * other.y)
+        {
+            auto permuteOtherY = other.m_values ;
+            permuteOtherY.permute<1,0,3,2>() ;
+            permuteOtherY.changeSign<false, false, false, true>() ;
+            newY = (m_values * permuteOtherY).horizontalAdd() ;
+        }
+
+        // Compute new Z value of the curent Quaternion.
+        // (w * other.y) + (y * other.w) + (z * other.x) - (x * other.z)
+        {
+            auto permuteOtherZ = other.m_values ;
+            permuteOtherZ.permute<2,0,3,1>() ;
+            permuteOtherZ.changeSign<false, false, false, true>() ;
+            newZ = (m_values * permuteOtherZ).horizontalAdd() ;
+        }
+
+        // Compute new W value of the curent Quaternion.
+        // (w * other.z) + (z * other.w) + (x * other.y) - (y * other.x)
+        {
+            auto permuteOtherW = other.m_values ;
+            permuteOtherW.permute<3,2,0,1>() ;
+            permuteOtherW.changeSign<false, false, false, true>() ;
+            newW = (m_values * permuteOtherW).horizontalAdd() ;
+        }
+
+        m_values = SIMD::Vector4f(newX, newY, newZ, newW) ;
+        return *this ;
+    }
+
+    Quaternion Quaternion::operator*(const Quaternion& other) const {
+        Quaternion tmp(*this) ;
+        tmp *= other ;
+        return tmp ;
+    }
+
+    bool Quaternion::operator==(const Quaternion& /*other*/) const {
+        // return m_values == other.m_values ;
+        return false ;
+    }
+
+    bool Quaternion::operator!=(const Quaternion& /*other*/) const {
+        // return m_values != other.m_values ;
+        return false ;
     }
 }
 
