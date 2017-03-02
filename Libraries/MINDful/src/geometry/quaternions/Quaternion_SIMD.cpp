@@ -43,12 +43,36 @@ namespace Mind {
 
     Quaternion::~Quaternion() {}
 
-    Scalar Quaternion::dot(const Quaternion& other) {
+    Scalar Quaternion::dot(const Quaternion& other) const {
         return m_values.dot(other.m_values) ;
     }
 
-    Scalar Quaternion::norm() {
-        return m_values.dot(m_values) ;
+    Scalar Quaternion::norm() const {
+        return dot(*this) ;
+    }
+
+    Scalar Quaternion::normalize() {
+        Scalar length = norm() ;
+        Scalar normalization = 1.f / FastMath::sqrt(length) ;
+        m_values *= normalization ;
+        return length ;
+    }
+
+    Quaternion Quaternion::inverse() const {
+        Scalar length = norm() ;
+        if (length > 0.f) {
+            Scalar invertedLength = 1.f / length ;
+            SIMD::Vector4f factor(
+                -invertedLength,
+                -invertedLength,
+                -invertedLength,
+                invertedLength
+            ) ;
+            return Quaternion(m_values * factor) ;
+        }
+        else {
+            return Quaternion::Zero ;
+        }
     }
 
     void Quaternion::swap(Quaternion& other) {
@@ -364,14 +388,17 @@ namespace Mind {
         return tmp ;
     }
 
-    bool Quaternion::operator==(const Quaternion& /*other*/) const {
-        // return m_values == other.m_values ;
-        return false ;
+    bool Quaternion::operator==(const Quaternion& other) const {
+        SIMD::Vector4f::Mask areEqual = (m_values == other.m_values) ;
+        return (areEqual.get(0)
+                    && areEqual.get(1)
+                    && areEqual.get(2)
+                    && areEqual.get(3)
+        ) ;
     }
 
-    bool Quaternion::operator!=(const Quaternion& /*other*/) const {
-        // return m_values != other.m_values ;
-        return false ;
+    bool Quaternion::operator!=(const Quaternion& other) const {
+        return !(*this == other) ;
     }
 }
 

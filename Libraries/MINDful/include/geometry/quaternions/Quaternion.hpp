@@ -113,13 +113,28 @@ namespace Mind {
              * @param   other   Another Quaternion to compute the dot product.
              * @return  The result of the dot product.
              */
-            Scalar dot(const Quaternion& other) ;
+            Scalar dot(const Quaternion& other) const ;
 
             /**
              * Norm of the Quaternion.
              * @return Norm of the Quaternion.
              */
-            Scalar norm() ;
+            Scalar norm() const ;
+
+            /**
+             * Normalize the current Quaternion. The norm before normalization
+             * is returned.
+             * @return The norm of the Quaternion before the normalization is
+             *         applied.
+             */
+            Scalar normalize() ;
+
+            /**
+             * Compute the inverse Quaternion of the current one.
+             * There is no change in the current Quaternion components values.
+             * @return The inverse of the current Quaternion.
+             */
+            Quaternion inverse() const ;
 
             /**
              * Swap the current Quaternion with another one.
