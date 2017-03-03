@@ -28,6 +28,16 @@ namespace Mind {
             static const Quaternion Identity ;
 
         private:
+            /**
+             * Threshold to consider a value near zero.
+             */
+            static const Scalar Epsilon ;
+
+            /**
+             * Used to extract the vector part of a Quaternion.
+             */
+            static const SIMD::Vector4f VectorPartExtractor ;
+
             #ifdef USE_NO_SIMD
                 /** Individual value of coordinate X. */
                 Scalar m_x ;
@@ -135,6 +145,20 @@ namespace Mind {
              * @return The inverse of the current Quaternion.
              */
             Quaternion inverse() const ;
+
+            /**
+             * Calculate the exponential of the current Quaternion.
+             * This method converts a pure Quaternion to a unit Quaternion.
+             * @return The exponential of the current Quaternion.
+             */
+            Quaternion exp() const ;
+
+            /**
+             * Calculate the natural logarithm of the current Quaternion.
+             * @return The natural logarithm of the current Quaternion.
+             * @warning This only works on unit quaternions.
+             */
+            Quaternion ln() const ;
 
             /**
              * Swap the current Quaternion with another one.

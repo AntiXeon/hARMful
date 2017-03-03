@@ -5,8 +5,10 @@
 #include <Math.hpp>
 
 namespace Mind {
+    const Scalar Quaternion::Epsilon = 1e-3 ;
     const Quaternion Quaternion::Zero = Quaternion() ;
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
+    const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;
 
     Quaternion::Quaternion() {
         m_values = SIMD::Vector4f(0.f, 0.f, 0.f, 0.f) ;
@@ -48,7 +50,7 @@ namespace Mind {
     }
 
     Scalar Quaternion::norm() const {
-        return dot(*this) ;
+        return m_values.norm() ;
     }
 
     Scalar Quaternion::normalize() {
@@ -73,6 +75,69 @@ namespace Mind {
         else {
             return Quaternion::Zero ;
         }
+    }
+
+    Quaternion Quaternion::exp() const {
+        SIMD::Vector4f vectorPart = m_values * VectorPartExtractor ;
+        Scalar vectorPartNorm = vectorPart.norm() ;
+        Scalar angle = FastMath::sqrt(vectorPartNorm) ;
+        Scalar angleSin = std::sin(angle) ;
+
+        Scalar resultW = std::cos(angle) ;
+        Scalar resultX ;
+        Scalar resultY ;
+        Scalar resultZ ;
+        if (std::abs(angleSin) < Epsilon) {
+            float* vectorPartArray = vectorPart ;
+            resultX = vectorPartArray[Axis::X] ;
+            resultY = vectorPartArray[Axis::Y] ;
+            resultZ = vectorPartArray[Axis::Z] ;
+        }
+        else {
+            Scalar coeff = angleSin / Math::toRadians(angle) ;
+            vectorPart *= coeff ;
+
+            float* vectorPartArray = vectorPart ;
+            resultX = vectorPartArray[Axis::X] ;
+            resultY = vectorPartArray[Axis::Y] ;
+            resultZ = vectorPartArray[Axis::Z] ;
+        }
+
+        return Quaternion(
+            resultX,
+            resultY,
+            resultZ,
+            resultW
+        ) ;
+    }
+
+    Quaternion Quaternion::ln() const {
+        SIMD::Vector4f vectorPart = m_values * VectorPartExtractor ;
+        float* vectorPartArray = vectorPart ;
+
+        if (std::abs(vectorPartArray[Axis::W]) < 1.f) {
+            Scalar angle = std::acos(vectorPartArray[Axis::W]) ;
+            Scalar angleSin = std::sin(angle) ;
+            if (std::abs(angleSin) >= Epsilon) {
+                Scalar coeff = Math::toRadians(angle) / angleSin ;
+                vectorPart *= coeff ;
+                vectorPartArray = vectorPart ;
+
+                return Quaternion(
+                    vectorPartArray[Axis::X],
+                    vectorPartArray[Axis::Y],
+                    vectorPartArray[Axis::Z],
+                    vectorPartArray[Axis::W]
+                ) ;
+            }
+        }
+
+        return Quaternion(
+            vectorPartArray[Axis::X],
+            vectorPartArray[Axis::Y],
+            vectorPartArray[Axis::Z],
+            vectorPartArray[Axis::W]
+        ) ;
     }
 
     void Quaternion::swap(Quaternion& other) {
