@@ -41,6 +41,14 @@ namespace Mind {
         return ((m_x * other.m_x) + (m_y * other.m_y) + (m_z * other.m_z)) ;
     }
 
+    Point3Df Point3Df::cross(const Point3Df& other) const {
+        return Point3Df(
+            (m_y * other.m_z - m_z * other.m_y),
+            (m_z * other.m_x - m_x * other.m_z),
+            (m_x * other.m_y - m_y * other.m_x)
+        ) ;
+    }
+
     void Point3Df::normalize() {
         Scalar lengthPoint = length() ;
         m_x /= lengthPoint ;

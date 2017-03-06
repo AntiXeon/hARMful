@@ -35,6 +35,10 @@ namespace Mind {
         return m_values.dot(other.m_values) ;
     }
 
+    Point3Df Point3Df::cross(const Point3Df& other) const {
+        return m_values.cross(other.m_values) ;
+    }
+
     void Point3Df::normalize() {
         m_values /= m_values.norm() ;
     }

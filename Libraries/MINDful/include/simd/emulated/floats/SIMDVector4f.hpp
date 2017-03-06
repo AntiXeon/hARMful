@@ -174,6 +174,14 @@ namespace Mind {
                 Scalar dot(const Vector4f& other) const ;
 
                 /**
+                 * Compute the cross product of the current Vector4f with an @a
+                 * other one.
+                 * @param  other The second operand of the cross product.
+                 * @return       Resulting Vector4f of the cross product.
+                 */
+                Vector4f cross(const Vector4f& other) const ;
+
+                /**
                  * Compute the norm of the Vector4f.
                  * @return     The norm of the Vector4f.
                  */
@@ -269,6 +277,13 @@ namespace Mind {
                  */
                 static Scalar dot(const Vector4f& a, const Vector4f& b) ;
 
+                /**
+                 * Get the cross product of a Vector4f.
+                 * @param     a    First Vector4f in cross product.
+                 * @param     b    Second Vector4f in cross product.
+                 * @return     The cross product of the given Vector4f.
+                 */
+                static Vector4f cross(const Vector4f& a, const Vector4f& b) ;
 
                                                  /** APPROXIMATE - FAST MATH **/
                 /**

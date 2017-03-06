@@ -81,6 +81,10 @@ namespace Mind {
             return dot(*this, other) ;
         }
 
+        Vector4f Vector4f::cross(const Vector4f& other) const {
+            return cross(*this, other) ;
+        }
+
         Scalar Vector4f::norm() const {
             return dot(*this) ;
         }
@@ -148,6 +152,15 @@ namespace Mind {
         Scalar Vector4f::dot(const Vector4f& a, const Vector4f& b) {
             Vector4f product = a * b ;
             return product.horizontalAdd() ;
+        }
+
+        Vector4f Vector4f::cross(const Vector4f& a, const Vector4f& b) {
+            return Vector4f(
+                (a.m_inner[1] * b.m_inner[2] - a.m_inner[2] * b.m_inner[1]),
+                (a.m_inner[2] * b.m_inner[0] - a.m_inner[0] * b.m_inner[2]),
+                (a.m_inner[0] * b.m_inner[1] - a.m_inner[1] * b.m_inner[0]),
+                0.f
+            ) ;
         }
 
         Vector4f Vector4f::fast_recriprocal(const Vector4f& vec) {
