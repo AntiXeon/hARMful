@@ -161,6 +161,64 @@ namespace Mind {
             Quaternion ln() const ;
 
             /**
+             * Spherical linear rotation interpolation using Quaternions.
+             * It is slower than NLERP.
+             * @param  time         Normalized time to get the corresponding
+             *                      interpolated rotation.
+             * @param  from         The starting rotation of the interpolation.
+             * @param  to           The ending rotation of the interpolation.
+             * @param  shortestPath TRUE to have a torque-minimal rotation,
+             *                      FALSE otherwise.
+             * @return              Result of the interpolation at the provided
+             *                      @a time.
+             * @remark The interpolations are NOT commutative!
+             * @see    nlerp
+             */
+            Quaternion slerp(
+                const Scalar& time,
+                const Quaternion& from,
+                const Quaternion& to,
+                bool shortestPath
+            ) ;
+
+            /**
+             * Normalized linear rotation interpolation using Quaternions.
+             * It is faster than SLERP.
+             * @param  time         Normalized time to get the corresponding
+             *                      interpolated rotation.
+             * @param  from         The starting rotation of the interpolation.
+             * @param  to           The ending rotation of the interpolation.
+             * @param  shortestPath TRUE to have a torque-minimal rotation,
+             *                      FALSE otherwise.
+             * @return              Result of the interpolation at the provided
+             *                      @a time.
+             * @remark The interpolations ARE commutative!
+             * @see    slerp
+             */
+            Quaternion nlerp(
+                const Scalar& time,
+                const Quaternion& from,
+                const Quaternion& to,
+                bool shortestPath
+            ) ;
+
+            /**
+             * Check if the current Quaternion and an @a other one are close
+             * enough, using a tolerance value.
+             * @param  other          The other Quaternion to compare.
+             * @param  radiansEpsilon Tolerance value to consider the
+             *                        Quaternions represent the same rotation,
+             *                        or not.
+             * @return                TRUE if the rotation are quite equal
+             *                        (depending on the @a angleEpsilon value)
+             *                        or FALSE if not.
+             */
+            bool closeTo(
+                const Quaternion& other,
+                const Scalar radiansEpsilon
+            ) const ;
+
+            /**
              * Swap the current Quaternion with another one.
              * @param other The other Quaternion to swap with the current one.
              */
@@ -279,6 +337,11 @@ namespace Mind {
             Quaternion operator-(const Quaternion& other) const ;
 
             /**
+             * Inverse the values of the Quaternion (X, Y, Z and W).
+             */
+            Quaternion operator-() const ;
+
+            /**
              * Mulitplication of a Quaternion with a Scalar.
              * @param  scalar Value to multiply each component of the current
              *                Quaternion.
@@ -312,6 +375,13 @@ namespace Mind {
               * @return      The result of the multiplication.
              */
             Quaternion operator*(const Quaternion& other) const ;
+
+            /**
+             * Rotation of a Vector3f by the current Quaternion.
+             * @param  vec3 The vector to rotate.
+             * @return The rotated vector.
+             */
+            Vector3f operator*(const Vector3f& vec3) const ;
 
             /**
              * Check if two Quaternions have the same values.

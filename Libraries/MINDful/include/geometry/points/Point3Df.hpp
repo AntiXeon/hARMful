@@ -81,7 +81,7 @@ namespace Mind {
 
             /**
              * Cross product between the current Point and another one.
-             *          The result is put in the current Point.
+             * The result is put in the current Point.
              * @param   other   Another Point to compute the cross product.
              */
             Point3Df cross(const Point3Df& other) const ;

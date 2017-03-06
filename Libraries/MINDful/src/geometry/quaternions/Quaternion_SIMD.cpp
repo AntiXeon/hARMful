@@ -122,13 +122,6 @@ namespace Mind {
                 Scalar coeff = Math::toRadians(angle) / angleSin ;
                 vectorPart *= coeff ;
                 vectorPartArray = vectorPart ;
-
-                return Quaternion(
-                    vectorPartArray[Axis::X],
-                    vectorPartArray[Axis::Y],
-                    vectorPartArray[Axis::Z],
-                    vectorPartArray[Axis::W]
-                ) ;
             }
         }
 
@@ -138,6 +131,76 @@ namespace Mind {
             vectorPartArray[Axis::Z],
             vectorPartArray[Axis::W]
         ) ;
+    }
+
+    Quaternion Quaternion::slerp(
+        const Scalar& time,
+        const Quaternion& from,
+        const Quaternion& to,
+        bool shortestPath
+    ) {
+        Scalar cos = from.dot(to) ;
+        Quaternion usedTo ;
+
+        if ((cos < 0.f) && shortestPath) {
+            cos = -cos ;
+            usedTo = -to ;
+        }
+        else {
+            usedTo = to ;
+        }
+
+        if (std::abs(cos) < (1.f - Epsilon)) {
+            // Standard case for SLERP
+            Scalar sin = FastMath::sqrt(1.f - (cos * cos)) ;
+            Scalar angle = std::atan2(sin, cos) ;
+            Scalar invertedSin = 1.f / sin ;
+            Scalar coeffFrom = std::sin((1.f - time) * angle) * invertedSin ;
+            Scalar coeffTo = std::sin(time * angle) * invertedSin ;
+            return (from * coeffFrom) + (usedTo * coeffTo) ;
+        }
+        else {
+            // Two cases here that do not correspond to the standard case:
+            // 1. "from" and "to" are very close, so a linerar interpolation can
+            //    be done;
+            // 2. "from" and "to" are close to be inverse one of the other, so
+            //    there is an infinite amount of solution. To solve it, a linear
+            //    interpolation is used as well.
+            Quaternion result = (from * (1.f - time)) + (usedTo * time) ;
+            result.normalize() ;
+            return result ;
+        }
+    }
+
+    Quaternion Quaternion::nlerp(
+        const Scalar& time,
+        const Quaternion& from,
+        const Quaternion& to,
+        bool shortestPath
+    ) {
+        Quaternion usedTo ;
+        Quaternion result ;
+        Scalar cos = from.dot(to) ;
+
+        if ((cos < 0.f) && shortestPath) {
+            usedTo = -to ;
+        }
+        else {
+            usedTo = to ;
+        }
+
+        result = from + ((usedTo - from) * time) ;
+        result.normalize() ;
+        return result ;
+    }
+
+    bool Quaternion::closeTo(
+        const Quaternion& other,
+        const Scalar radiansEpsilon
+    ) const {
+         Scalar distance = this -> dot(other) ;
+         Scalar angle = std::acos((2.f * distance * distance) - 1.f) ;
+         return std::abs(angle) <= radiansEpsilon ;
     }
 
     void Quaternion::swap(Quaternion& other) {
@@ -393,6 +456,11 @@ namespace Mind {
         return Quaternion(copyValues - other.m_values) ;
     }
 
+    Quaternion Quaternion::operator-() const {
+        auto inversedValues = -m_values ;
+        return Quaternion(inversedValues) ;
+    }
+
     Quaternion& Quaternion::operator*=(const Scalar& scalar) {
         m_values *= scalar ;
         return *this ;
@@ -451,6 +519,25 @@ namespace Mind {
         Quaternion tmp(*this) ;
         tmp *= other ;
         return tmp ;
+    }
+
+    Vector3f Quaternion::operator*(const Vector3f& vec3) const {
+        // Implementation from the NVidia SDK.
+        float* quaternion = m_values ;
+        Vector3f vecPartQuaternion(
+            quaternion[Axis::X],
+            quaternion[Axis::Y],
+            quaternion[Axis::Z]
+        ) ;
+
+        // Cross products of the quaternion vector part with the provided
+        // vector.
+        Vector3f uv = vecPartQuaternion.cross(vec3) ;
+        Vector3f uuv = vecPartQuaternion.cross(uv) ;
+        uv *= (2.f * quaternion[Axis::W]) ;
+        uuv *= 2.f ;
+
+        return vec3 + uv + uuv ;
     }
 
     bool Quaternion::operator==(const Quaternion& other) const {
