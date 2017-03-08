@@ -39,17 +39,8 @@ namespace Mind {
             static const SIMD::Vector4f VectorPartExtractor ;
 
             #ifdef USE_NO_SIMD
-                /** Individual value of coordinate X. */
-                Scalar m_x ;
-
-                /** Individual value of coordinate Y. */
-                Scalar m_y ;
-
-                /** Individual value of coordinate Z. */
-                Scalar m_z ;
-
-                /** Individual value of coordinate W. */
-                Scalar m_w ;
+                /** Values of the Quaternion. */
+                Array4f m_values ;
             #else
                 /** Values of the Quaternion. */
                 SIMD::Vector4f m_values ;
