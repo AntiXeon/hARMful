@@ -271,6 +271,18 @@ namespace Mind {
             ) ;
 
             /**
+             * Convert the Quaternion to Euler angles.
+             * @param roll  X-axis angle value.
+             * @param pitch Y-axis angle value.
+             * @param yaw   Z-axis angle value.
+             */
+            void to(
+                Scalar& roll,
+                Scalar& pitch,
+                Scalar& yaw
+            ) ;
+
+            /**
              * Access to a component of the Quaternion (read-only).
              * @param  axis  Axis to get value of.
              * @return       Value of the component on the wanted @a axis.

@@ -370,6 +370,35 @@ namespace Mind {
         ) ;
     }
 
+    void Quaternion::to(
+        Scalar& roll,
+        Scalar& pitch,
+        Scalar& yaw
+    ) {
+        Scalar squaredY = m_values[Axis::Y] * m_values[Axis::Y] ;
+
+        // Roll (x-axis rotation).
+        Scalar t0 = 2.f * (m_values[Axis::W] * m_values[Axis::X] + m_values[Axis::Y] * m_values[Axis::Z]) ;
+        Scalar t1 = 1.f - 2.f * (m_values[Axis::X] * m_values[Axis::X] + squaredY) ;
+        roll = std::atan2(t0, t1) ;
+
+        // Pitch (y-axis rotation).
+        Scalar t2 = 2.f * (m_values[Axis::W] * m_values[Axis::Y] - m_values[Axis::Z] + m_values[Axis::X]) ;
+        if (t2 > 1.f) {
+            t2 = 1.f ;
+        }
+        else if (t2 < -1.f) {
+            t2 = -1.f ;
+        }
+        pitch = std::asin(t2) ;
+
+        // Yaw (z-axis rotation).
+        Scalar t3 = 2.f * (m_values[Axis::W] * m_values[Axis::Z] + m_values[Axis::X] * m_values[Axis::Y]) ;
+        Scalar t4 = 1.f - 2.f * (squaredY + m_values[Axis::Z] * m_values[Axis::Z]) ;
+        yaw = std::atan2(t3, t4) ;
+    }
+
+
     Scalar Quaternion::operator[](const Axis& axis) const {
         return m_values[axis] ;
     }
