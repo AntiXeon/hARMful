@@ -13,25 +13,25 @@ namespace UTMind {
     void UTMatrix3x3f::allocation() {
         // Default constructor.
         Matrix3x3f m1 ;
-        check(m1[0][0] == 0.f) ;
-        check(m1[1][0] == 0.f) ;
-        check(m1[1][2] == 0.f) ;
+        check(m1.at(0, 0) == 0.f) ;
+        check(m1.at(1, 0) == 0.f) ;
+        check(m1.at(1, 2) == 0.f) ;
         check(m1.at(2,1) == 0.f) ;
         check(m1.size() == 3) ;
 
         // Initial value.
         const Scalar m2DefaultValue = 5.24f ;
         Matrix3x3f m2(m2DefaultValue) ;
-        check(m2[0][0] == m2DefaultValue) ;
-        check(m2[1][0] == m2DefaultValue) ;
-        check(m2[1][2] == m2DefaultValue) ;
+        check(m2.at(0, 0) == m2DefaultValue) ;
+        check(m2.at(1, 0) == m2DefaultValue) ;
+        check(m2.at(1, 2) == m2DefaultValue) ;
         check(m2.at(2,1) == m2DefaultValue) ;
 
         // Copy constructor.
         Matrix3x3f m3(m2) ;
-        check(m2[0][0] == m2DefaultValue) ;
-        check(m2[1][0] == m2DefaultValue) ;
-        check(m2[1][2] == m2DefaultValue) ;
+        check(m2.at(0, 0) == m2DefaultValue) ;
+        check(m2.at(1, 0) == m2DefaultValue) ;
+        check(m2.at(1, 2) == m2DefaultValue) ;
         check(m2.at(2,1) == m2DefaultValue) ;
     }
 
@@ -39,24 +39,24 @@ namespace UTMind {
         // Identity and clear.
         Matrix3x3f m1 ;
         m1.identity() ;
-        check(m1[0][0] == 1.f) ;
-        check(m1[0][1] == 0.f) ;
-        check(m1[0][2] == 0.f) ;
+        check(m1.at(0, 0) == 1.f) ;
+        check(m1.at(0, 1) == 0.f) ;
+        check(m1.at(0, 2) == 0.f) ;
         check(m1.at(1,0) == 0.f) ;
-        check(m1[1][1] == 1.f) ;
-        check(m1[1][2] == 0.f) ;
-        check(m1[2][0] == 0.f) ;
-        check(m1[2][1] == 0.f) ;
+        check(m1.at(1, 1) == 1.f) ;
+        check(m1.at(1, 2) == 0.f) ;
+        check(m1.at(2, 0) == 0.f) ;
+        check(m1.at(2, 1) == 0.f) ;
         check(m1.at(2,2) == 1.f) ;
         m1.clear() ;
-        check(m1[0][0] == 0.f) ;
-        check(m1[0][1] == 0.f) ;
-        check(m1[0][2] == 0.f) ;
+        check(m1.at(0, 0) == 0.f) ;
+        check(m1.at(0, 1) == 0.f) ;
+        check(m1.at(0, 2) == 0.f) ;
         check(m1.at(1,0) == 0.f) ;
-        check(m1[1][1] == 0.f) ;
-        check(m1[1][2] == 0.f) ;
-        check(m1[2][0] == 0.f) ;
-        check(m1[2][1] == 0.f) ;
+        check(m1.at(1, 1) == 0.f) ;
+        check(m1.at(1, 2) == 0.f) ;
+        check(m1.at(2, 0) == 0.f) ;
+        check(m1.at(2, 1) == 0.f) ;
         check(m1.at(2,2) == 0.f) ;
 
         // Set values from points.
@@ -75,14 +75,14 @@ namespace UTMind {
         Point3Df p2(p2X, p2Y, p2Z) ;
         m2.setColumnValues(2, p2) ;
 
-        check(m2[0][0] == p1X) ;
-        check(m2[0][1] == 0.f) ;
-        check(m2[0][2] == p2X) ;
+        check(m2.at(0, 0) == p1X) ;
+        check(m2.at(0, 1) == 0.f) ;
+        check(m2.at(0, 2) == p2X) ;
         check(m2.at(1,0) == p1Y) ;
-        check(m2[1][1] == 1.f) ;
-        check(m2[1][2] == p2Y) ;
-        check(m2[2][0] == 0.f) ;
-        check(m2[2][1] == 0.f) ;
+        check(m2.at(1, 1) == 1.f) ;
+        check(m2.at(1, 2) == p2Y) ;
+        check(m2.at(2, 0) == 0.f) ;
+        check(m2.at(2, 1) == 0.f) ;
         check(m2.at(2,2) == p2Z) ;
 
         // ...by row.
@@ -97,14 +97,14 @@ namespace UTMind {
         Point3Df p4(p4X, p4Y, p4Z) ;
         m2.setRowValues(2, p4) ;
 
-        check(m2[0][0] == p1X) ;
-        check(m2[0][1] == 0.f) ;
-        check(m2[0][2] == p2X) ;
+        check(m2.at(0, 0) == p1X) ;
+        check(m2.at(0, 1) == 0.f) ;
+        check(m2.at(0, 2) == p2X) ;
         check(m2.at(1,0) == p3X) ;
-        check(m2[1][1] == p3Y) ;
-        check(m2[1][2] == p2Y) ;
-        check(m2[2][0] == p4X) ;
-        check(m2[2][1] == p4Y) ;
+        check(m2.at(1, 1) == p3Y) ;
+        check(m2.at(1, 2) == p2Y) ;
+        check(m2.at(2, 0) == p4X) ;
+        check(m2.at(2, 1) == p4Y) ;
         check(m2.at(2,2) == p4Z) ;
 
         // Copy matrix.
@@ -112,27 +112,27 @@ namespace UTMind {
         m3.identity() ;
         m3 = m2 ;
 
-        check(m3[0][0] == p1X) ;
-        check(m3[0][1] == 0.f) ;
-        check(m3[0][2] == p2X) ;
+        check(m3.at(0, 0) == p1X) ;
+        check(m3.at(0, 1) == 0.f) ;
+        check(m3.at(0, 2) == p2X) ;
         check(m3.at(1,0) == p3X) ;
-        check(m3[1][1] == p3Y) ;
-        check(m3[1][2] == p2Y) ;
-        check(m3[2][0] == p4X) ;
-        check(m3[2][1] == p4Y) ;
+        check(m3.at(1, 1) == p3Y) ;
+        check(m3.at(1, 2) == p2Y) ;
+        check(m3.at(2, 0) == p4X) ;
+        check(m3.at(2, 1) == p4Y) ;
         check(m3.at(2,2) == p4Z) ;
 
         // Set a unique value.
         Scalar lifeAndUniverse = 42.f ;
         m3.at(0, 1, lifeAndUniverse) ;
-        check(m3[0][0] == p1X) ;
-        check(m3[0][1] == lifeAndUniverse) ;
-        check(m3[0][2] == p2X) ;
+        check(m3.at(0, 0) == p1X) ;
+        check(m3.at(0, 1) == lifeAndUniverse) ;
+        check(m3.at(0, 2) == p2X) ;
         check(m3.at(1,0) == p3X) ;
-        check(m3[1][1] == p3Y) ;
-        check(m3[1][2] == p2Y) ;
-        check(m3[2][0] == p4X) ;
-        check(m3[2][1] == p4Y) ;
+        check(m3.at(1, 1) == p3Y) ;
+        check(m3.at(1, 2) == p2Y) ;
+        check(m3.at(2, 0) == p4X) ;
+        check(m3.at(2, 1) == p4Y) ;
         check(m3.at(2,2) == p4Z) ;
     }
 

@@ -6,6 +6,12 @@ using namespace Doom ;
 using namespace Mind ;
 
 int main(int, char**) {
+    #ifdef FORCE_EMULATED_SIMD
+        #pragma message("EMULATED SIMD")
+    #else
+        #pragma message("CPU SIMD")
+    #endif
+
     Chrono chr ;
 
     Quaternion quat(0.f, 0.f, 0.f, 1.f) ;

@@ -61,23 +61,23 @@ namespace Mind {
     }
 
     Scalar& SquareMatrixf::at(
-        const unsigned int& row,
-        const unsigned int& col
+        const unsigned int& col,
+        const unsigned int& row
     ) const {
         SIMD::Vector4f& rowVector = (SIMD::Vector4f&) m_data[row] ;
 
-        Scalar* rowValues = rowVector ;
+        float* rowValues = (float*) rowVector ;
         return rowValues[col] ;
     }
 
     void SquareMatrixf::at(
-        const unsigned int& row,
         const unsigned int& col,
+        const unsigned int& row,
         const Scalar& value
     ) {
         SIMD::Vector4f& rowVector = m_data[row] ;
 
-        Scalar* rowValues = rowVector ;
+        float* rowValues = (float*) rowVector ;
         rowValues[col] = value ;
     }
 
@@ -94,7 +94,7 @@ namespace Mind {
             unsigned int size = p.size() ;
             for (unsigned int row = 0 ; row < size ; ++row) {
                 s << "{ " ;
-                Scalar* values = p.m_data[row] ;
+                float* values = (float*) p.m_data[row] ;
                 for (unsigned int col = 0 ; col < size ; ++col) {
                     s << values[col] << " ; " ;
                 }
@@ -123,7 +123,7 @@ namespace Mind {
     void SquareMatrixf::getData(Scalar* output) {
         unsigned int outputIndex = 0 ;
         for (int row = 0 ; row < m_size ; ++row) {
-            Scalar* rowValues = m_data[row] ;
+            float* rowValues = (float*) m_data[row] ;
 
             output[outputIndex]     = rowValues[0] ;
             output[outputIndex + 1] = rowValues[1] ;

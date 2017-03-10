@@ -114,7 +114,7 @@ namespace Mind {
                  * Cast the current Vector4 to its inner data type.
                  * @return  The inner data.
                  */
-                operator int32x4_t() const ;
+                explicit operator int32x4_t() const ;
         } ;
 
 

@@ -46,20 +46,20 @@ namespace Mind {
 
     Scalar Point2Df::distanceX(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
         return std::abs(diffValues[X]) ;
     }
 
     Scalar Point2Df::distanceY(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
         return std::abs(diffValues[Y]) ;
     }
 
     Scalar Point2Df::distance(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f::Mask comp = a.m_values == b.m_values ;
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
 
         bool isXEqual = comp.get(X) ;
         bool isYEqual = comp.get(Y) ;
@@ -153,12 +153,12 @@ namespace Mind {
     }
 
     Point2Df::operator Dimension2Df() {
-        float* values = m_values ;
+        float* values = (float*) m_values ;
         return Dimension2Df(values[X], values[Y]) ;
     }
 
     Point2Df::operator Point3Df() {
-        float* values = m_values ;
+        float* values = (float*) m_values ;
         return Point3Df(values[X], values[Y], 0.f) ;
     }
 

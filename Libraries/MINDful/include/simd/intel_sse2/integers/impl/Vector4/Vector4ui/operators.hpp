@@ -7,7 +7,7 @@
  * @return  Result of the addition.
  */
 static inline Vector4ui operator+(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_add_epi32(a, b) ;
+    return _mm_add_epi32((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -88,7 +88,7 @@ static inline Vector4ui& operator++(Vector4ui& a) {
  * @return  Result of the difference.
  */
 static inline Vector4ui operator-(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_sub_epi32(a, b) ;
+    return _mm_sub_epi32((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -146,7 +146,7 @@ static inline Vector4ui& operator-=(Vector4ui& a, const float& b) {
  */
 static inline Vector4ui operator-(const Vector4ui& a) {
     const int MaskNegateBit = 0x80000000 ;
-    return _mm_xor_si128(a, _mm_set1_epi32(MaskNegateBit)) ;
+    return _mm_xor_si128((__m128i) a, _mm_set1_epi32(MaskNegateBit)) ;
 }
 
 
@@ -182,15 +182,15 @@ static inline Vector4ui& operator--(Vector4ui& a) {
  */
 static inline Vector4ui operator*(const Vector4ui& a, const Vector4ui& b) {
     #if defined USE_INTEL_SSE4_1
-        return _mm_mullo_epi32(a, b) ;
+        return _mm_mullo_epi32((__m128i) a, (__m128i) b) ;
     #else
         // As for SSE4.1 built-in function :
         // Multiply the packed 32-bit integers in a and b, producing
         // intermediate 64-bit integers, and store the low 32 bits of the
         // intermediate integers in dst.
-        int32x4_t a13 = _mm_shuffle_epi32(a, 0xF5) ;                            // Keep values (-,a3,-,a1)
-        int32x4_t b13 = _mm_shuffle_epi32(b, 0xF5) ;                            // Keep values (-,b3,-,b1)
-        int32x4_t prod02 = _mm_mul_epu32(a, b) ;                                // (-,a2*b2,-,a0*b0)
+        int32x4_t a13 = _mm_shuffle_epi32((__m128i) a, 0xF5) ;                  // Keep values (-,a3,-,a1)
+        int32x4_t b13 = _mm_shuffle_epi32((__m128i) b, 0xF5) ;                  // Keep values (-,b3,-,b1)
+        int32x4_t prod02 = _mm_mul_epu32((__m128i) a, (__m128i) b) ;                                // (-,a2*b2,-,a0*b0)
         int32x4_t prod13 = _mm_mul_epu32(a13, b13) ;                            // (-,a3*b3,-,a1*b1)
         // Unpack and interleave 32-bit integers from the low half of a and b
         int32x4_t prod01 = _mm_unpacklo_epi32(prod02, prod13) ;                 // (-,-,a1*b1,a0*b0)
@@ -258,7 +258,7 @@ static inline Vector4ui& operator*=(Vector4ui& a, const float& b) {
  *          equal, FALSE for different values in the Vector4ui parameters.
  */
 static inline Vector4ui::Mask operator==(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_cmpeq_epi32(a, b) ;
+    return _mm_cmpeq_epi32((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -285,7 +285,7 @@ static inline Vector4ui::Mask operator!=(const Vector4ui& a, const Vector4ui& b)
  *          @a a are lower than values of @a b.
  */
 static inline Vector4ui::Mask operator<(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_cmplt_epi32(a, b) ;
+    return _mm_cmplt_epi32((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -333,7 +333,7 @@ static inline Vector4ui::Mask operator<=(const Vector4ui& a, const Vector4ui& b)
  * @return  A Vector4ui corresponding the the @a a reversed at bit level.
  */
 static inline Vector4ui operator~(const Vector4ui& a) {
-    return _mm_xor_si128(a, _mm_set1_epi32(-1)) ;
+    return _mm_xor_si128((__m128i) a, _mm_set1_epi32(-1)) ;
 }
 
                                                                      /** AND **/
@@ -344,7 +344,7 @@ static inline Vector4ui operator~(const Vector4ui& a) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4ui operator&(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_and_si128(a, b) ;
+    return _mm_and_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -365,7 +365,7 @@ static inline Vector4ui& operator&=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4ui operator&(const Vector4ui& a, const Vector4ui::Mask& b) {
-    return _mm_and_si128(a, b) ;
+    return _mm_and_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -386,7 +386,7 @@ static inline Vector4ui& operator&=(Vector4ui& a, const Vector4ui::Mask& b) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4ui operator&(const Vector4ui::Mask& a, const Vector4ui& b) {
-    return _mm_and_si128(a, b) ;
+    return _mm_and_si128((__m128i) a, (__m128i) b) ;
 }
 
 
@@ -398,7 +398,7 @@ static inline Vector4ui operator&(const Vector4ui::Mask& a, const Vector4ui& b) 
  * @return  Result of the bitwise OR.
  */
 static inline Vector4ui operator|(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_or_si128(a, b) ;
+    return _mm_or_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -419,7 +419,7 @@ static inline Vector4ui& operator|=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the bitwise OR.
  */
 static inline Vector4ui operator|(const Vector4ui& a, const Vector4ui::Mask& b) {
-    return _mm_or_si128(a, b) ;
+    return _mm_or_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -440,7 +440,7 @@ static inline Vector4ui& operator|=(Vector4ui& a, const Vector4ui::Mask& b) {
  * @return  Result of the bitwise OR.
  */
 static inline Vector4ui operator|(const Vector4ui::Mask& a, const Vector4ui& b) {
-    return _mm_or_si128(a, b) ;
+    return _mm_or_si128((__m128i) a, (__m128i) b) ;
 }
 
 
@@ -452,7 +452,7 @@ static inline Vector4ui operator|(const Vector4ui::Mask& a, const Vector4ui& b) 
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4ui operator^(const Vector4ui& a, const Vector4ui& b) {
-    return _mm_xor_si128(a, b) ;
+    return _mm_xor_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -473,7 +473,7 @@ static inline Vector4ui& operator^=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4ui operator^(const Vector4ui& a, const Vector4ui::Mask& b) {
-    return _mm_xor_si128(a, b) ;
+    return _mm_xor_si128((__m128i) a, (__m128i) b) ;
 }
 
 /**
@@ -494,7 +494,7 @@ static inline Vector4ui& operator^=(Vector4ui& a, const Vector4ui::Mask& b) {
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4ui operator^(const Vector4ui::Mask& a, const Vector4ui& b) {
-    return _mm_xor_si128(a, b) ;
+    return _mm_xor_si128((__m128i) a, (__m128i) b) ;
 }
 
 
@@ -506,7 +506,7 @@ static inline Vector4ui operator^(const Vector4ui::Mask& a, const Vector4ui& b) 
  * @return  The shifted Vector.
  */
 inline static Vector4ui operator<<(const Vector4ui& vec, const int32_t& bits) {
-    return _mm_sll_epi32(vec,_mm_cvtsi32_si128(bits)) ;
+    return _mm_sll_epi32((__m128i) vec,_mm_cvtsi32_si128(bits)) ;
 }
 
 /**
@@ -528,7 +528,7 @@ inline static Vector4ui& operator<<=(Vector4ui& vec, const int32_t& bits) {
  * @return  The shifted Vector.
  */
 inline static Vector4ui operator>>(const Vector4ui& vec, const int32_t& bits) {
-    return _mm_sra_epi32(vec,_mm_cvtsi32_si128(bits)) ;
+    return _mm_sra_epi32((__m128i) vec,_mm_cvtsi32_si128(bits)) ;
 }
 
 /**

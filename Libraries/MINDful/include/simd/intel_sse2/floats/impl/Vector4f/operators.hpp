@@ -7,7 +7,7 @@
  * @return  Result of the addition.
  */
 static inline Vector4f operator+(const Vector4f& a, const Vector4f& b) {
-    return _mm_add_ps(a, b) ;
+    return _mm_add_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -89,7 +89,7 @@ static inline Vector4f& operator++(Vector4f& a) {
  * @return  Result of the difference.
  */
 static inline Vector4f operator-(const Vector4f& a, const Vector4f& b) {
-    return _mm_sub_ps(a, b) ;
+    return _mm_sub_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -142,7 +142,7 @@ static inline Vector4f& operator-=(Vector4f& a, const float& b) {
                                                                   /** NEGATE **/
 static inline Vector4f operator-(const Vector4f& a) {
     const int MaskNegateBit = 0x80000000 ;
-    return _mm_xor_ps(a, _mm_castsi128_ps(_mm_set1_epi32(MaskNegateBit))) ;
+    return _mm_xor_ps((__m128) a, _mm_castsi128_ps(_mm_set1_epi32(MaskNegateBit))) ;
 }
 
 
@@ -178,7 +178,7 @@ static inline Vector4f& operator--(Vector4f& a) {
  * @return  Result of the product.
  */
 static inline Vector4f operator*(const Vector4f& a, const Vector4f& b) {
-    return _mm_mul_ps(a, b) ;
+    return _mm_mul_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -237,7 +237,7 @@ static inline Vector4f& operator*=(Vector4f& a, const float& b) {
  * @return  Result of the division.
  */
 static inline Vector4f operator/(const Vector4f& a, const Vector4f& b) {
-    return _mm_div_ps(a, b) ;
+    return _mm_div_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -296,7 +296,7 @@ static inline Vector4f& operator/=(Vector4f& a, const float& b) {
  *          equal, FALSE for different values in the Vector4f parameters.
  */
 static inline Vector4f::Mask operator==(const Vector4f& a, const Vector4f& b) {
-    return _mm_cmpeq_ps(a, b) ;
+    return _mm_cmpeq_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -308,7 +308,7 @@ static inline Vector4f::Mask operator==(const Vector4f& a, const Vector4f& b) {
  *          different, FALSE for equal values in the Vector4f parameters.
  */
 static inline Vector4f::Mask operator!=(const Vector4f& a, const Vector4f& b) {
-    return _mm_cmpneq_ps(a, b) ;
+    return _mm_cmpneq_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -320,7 +320,7 @@ static inline Vector4f::Mask operator!=(const Vector4f& a, const Vector4f& b) {
  *          @a a are lower than values of @a b.
  */
 static inline Vector4f::Mask operator<(const Vector4f& a, const Vector4f& b) {
-    return _mm_cmplt_ps(a, b) ;
+    return _mm_cmplt_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -332,7 +332,7 @@ static inline Vector4f::Mask operator<(const Vector4f& a, const Vector4f& b) {
  *          @a a are lower or equal to values of @a b.
  */
 static inline Vector4f::Mask operator<=(const Vector4f& a, const Vector4f& b) {
-    return _mm_cmple_ps(a, b) ;
+    return _mm_cmple_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -369,7 +369,7 @@ static inline Vector4f::Mask operator>=(const Vector4f& a, const Vector4f& b) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4f operator&(const Vector4f& a, const Vector4f& b) {
-    return _mm_and_ps(a, b) ;
+    return _mm_and_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -390,7 +390,7 @@ static inline Vector4f& operator&=(Vector4f& a, const Vector4f& b) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4f operator&(const Vector4f& a, const Vector4f::Mask& b) {
-    return _mm_and_ps(a, b) ;
+    return _mm_and_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -411,7 +411,7 @@ static inline Vector4f& operator&=(Vector4f& a, const Vector4f::Mask& b) {
  * @return  Result of the bitwise AND.
  */
 static inline Vector4f operator&(const Vector4f::Mask& a, const Vector4f& b) {
-    return _mm_and_ps(a, b) ;
+    return _mm_and_ps((__m128) a, (__m128) b) ;
 }
 
 
@@ -423,7 +423,7 @@ static inline Vector4f operator&(const Vector4f::Mask& a, const Vector4f& b) {
  * @return  Result of the bitwise OR.
  */
 static inline Vector4f operator|(const Vector4f& a, const Vector4f& b) {
-    return _mm_or_ps(a, b) ;
+    return _mm_or_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -444,7 +444,7 @@ static inline Vector4f& operator|=(Vector4f& a, const Vector4f& b) {
  * @return  Result of the bitwise OR.
  */
 static inline Vector4f operator|(const Vector4f& a, const Vector4f::Mask& b) {
-    return _mm_or_ps(a, b) ;
+    return _mm_or_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -465,7 +465,7 @@ static inline Vector4f& operator|=(Vector4f& a, const Vector4f::Mask& b) {
  * @return  Result of the bitwise OR.
  */
 static inline Vector4f operator|(const Vector4f::Mask& a, const Vector4f& b) {
-    return _mm_or_ps(a, b) ;
+    return _mm_or_ps((__m128) a, (__m128) b) ;
 }
 
 
@@ -477,7 +477,7 @@ static inline Vector4f operator|(const Vector4f::Mask& a, const Vector4f& b) {
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4f operator^(const Vector4f& a, const Vector4f& b) {
-    return _mm_xor_ps(a, b) ;
+    return _mm_xor_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -498,7 +498,7 @@ static inline Vector4f& operator^=(Vector4f& a, const Vector4f& b) {
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4f operator^(const Vector4f& a, const Vector4f::Mask& b) {
-    return _mm_xor_ps(a, b) ;
+    return _mm_xor_ps((__m128) a, (__m128) b) ;
 }
 
 /**
@@ -519,5 +519,5 @@ static inline Vector4f& operator^=(Vector4f& a, const Vector4f::Mask& b) {
  * @return  Result of the bitwise XOR.
  */
 static inline Vector4f operator^(const Vector4f::Mask& a, const Vector4f& b) {
-    return _mm_xor_ps(a, b) ;
+    return _mm_xor_ps((__m128) a, (__m128) b) ;
 }

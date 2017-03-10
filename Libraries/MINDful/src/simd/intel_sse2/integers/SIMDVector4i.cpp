@@ -27,19 +27,19 @@ namespace Mind {
                                                         /** STATIC FUNCTIONS **/
         Vector4i Vector4i::min(const Vector4i& a, const Vector4i& b) {
             #if defined(USE_INTEL_SSE4_1)
-                return _mm_min_epi32(a, b) ;
+                return _mm_min_epi32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32(a, b) ;
-                return Vector4::selection(greater, b, a) ;
+                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                return Vector4::selection(greater, (__m128i) b, (__m128i) a) ;
             #endif
         }
 
         Vector4i Vector4i::max(const Vector4i& a, const Vector4i& b) {
             #if defined(USE_INTEL_SSE4_1)
-                return _mm_max_epi32(a, b) ;
+                return _mm_max_epi32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32(a, b) ;
-                return Vector4::selection(greater, a, b) ;
+                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                return Vector4::selection(greater, (__m128i) a, (__m128i) b) ;
             #endif
         }
 
@@ -48,9 +48,9 @@ namespace Mind {
                 return _mm_sign_epi32(vec, vec) ;
             #else
                 // Get the sign of vector values.
-                int32x4_t sign = _mm_srai_epi32(vec, 31) ;
+                int32x4_t sign = _mm_srai_epi32((__m128i) vec, 31) ;
                 // Invert bits for negative values.
-                int32x4_t inv  = _mm_xor_si128(vec, sign) ;
+                int32x4_t inv  = _mm_xor_si128((__m128i) vec, (__m128i) sign) ;
                 // Add one to the inverted values (through shifted sign) to retrieve
                 // absolute values of vec.
                 return _mm_sub_epi32(inv, sign) ;

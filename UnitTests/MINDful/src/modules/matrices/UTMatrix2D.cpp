@@ -14,22 +14,22 @@ namespace UTMind {
         // Matrices of integers.
         {
             Matrix2D<int> m1 ;
-            check(m1[0][0] == 0) ;
+            check(m1.at(0, 0) == 0) ;
 
             const int m2Default = 5 ;
             Matrix2D<int> m2(1, 1, m2Default) ;
-            check(m2[0][0] == m2Default) ;
+            check(m2.at(0, 0) == m2Default) ;
 
             const int m3Width = 2 ;
             const int m3Height = 4 ;
             const int m3Default = -7 ;
             Matrix2D<int> m3(m3Width, m3Height, m3Default) ;
-            check(m3[0][0] == m3Default) ;
-            check(m3[1][1] == m3Default) ;
-            check(m3[0][3] == m3Default) ;
-            check(m3[0][0] == m3.at(0, 0)) ;
-            check(m3[1][1] == m3.at(1, 1)) ;
-            check(m3[0][3] == m3.at(0, 3)) ;
+            check(m3.at(0, 0) == m3Default) ;
+            check(m3.at(1, 1) == m3Default) ;
+            check(m3.at(0, 3) == m3Default) ;
+            check(m3.at(0, 0) == m3.at(0, 0)) ;
+            check(m3.at(1, 1) == m3.at(1, 1)) ;
+            check(m3.at(0, 3) == m3.at(0, 3)) ;
             check(m3.cols() == m3Width) ;
             check(m3.rows() == m3Height) ;
         }
@@ -37,11 +37,11 @@ namespace UTMind {
         // Matrices of floats.
         {
             Matrix2D<float> m1 ;
-            check(m1[0][0] == 0.f) ;
+            check(m1.at(0, 0) == 0.f) ;
 
             const float m2Default = -9.98f ;
             Matrix2D<float> m2(1, 1, m2Default) ;
-            check(compare(m2[0][0], m2Default)) ;
+            check(compare(m2.at(0, 0), m2Default)) ;
 
 
             const int m3Width = 2915 ;
@@ -50,10 +50,10 @@ namespace UTMind {
             Matrix2D<float> m3(m3Width, m3Height, m3Default) ;
             check(m3[2574][14] == m3Default) ;
             check(m3[174][2] == m3Default) ;
-            check(m3[6][0] == m3Default) ;
+            check(m3.at(6, 0) == m3Default) ;
             check(m3[2574][14] == m3.at(2574, 14)) ;
             check(m3[174][2] == m3.at(174, 2)) ;
-            check(m3[6][0] == m3.at(6, 0)) ;
+            check(m3.at(6, 0) == m3.at(6, 0)) ;
             check(m3.cols() == m3Width) ;
             check(m3.rows() == m3Height) ;
         }
@@ -61,11 +61,11 @@ namespace UTMind {
         // Matrices of double.
         {
             Matrix2D<double> m1 ;
-            check(m1[0][0] == 0.) ;
+            check(m1.at(0, 0) == 0.) ;
 
             const double m2Default = 18.35 ;
             Matrix2D<double> m2(1, 1, m2Default) ;
-            check(compare(m2[0][0], m2Default)) ;
+            check(compare(m2.at(0, 0), m2Default)) ;
 
             const int m3Width = 7751 ;
             const int m3Height = 9927 ;

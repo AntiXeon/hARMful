@@ -136,15 +136,19 @@ namespace Mind {
             const Vector4f& a,
             const Vector4f& b
         ) {
-            return selection((float32x4_t)selector, (float32x4_t)a, (float32x4_t)b) ;
+            return selection(
+                (float32x4_t) selector,
+                (float32x4_t) a,
+                (float32x4_t) b
+            ) ;
         }
 
         Vector4f Vector4f::min(const Vector4f& a, const Vector4f& b) {
-            return _mm_min_ps(a, b) ;
+            return _mm_min_ps((float32x4_t) a, (float32x4_t) b) ;
         }
 
         Vector4f Vector4f::max(const Vector4f& a, const Vector4f& b) {
-            return _mm_max_ps(a, b) ;
+            return _mm_max_ps((float32x4_t) a, (float32x4_t) b) ;
         }
 
         Vector4f Vector4f::abs(const Vector4f& vec) {
@@ -154,7 +158,7 @@ namespace Mind {
         }
 
         Vector4f Vector4f::sqrt(const Vector4f& vec) {
-            return _mm_sqrt_ps(vec) ;
+            return _mm_sqrt_ps((float32x4_t) vec) ;
         }
 
         Vector4f Vector4f::square(const Vector4f& vec) {
@@ -177,19 +181,19 @@ namespace Mind {
             float32x4_t secondB = _mm_shuffle_ps(b.m_inner, b.m_inner, _MM_SHUFFLE(0,2,1,3)) ;
             float32x4_t second = _mm_mul_ps(secondA, secondB) ;
 
-            return _mm_sub_ps(first, second) ;
+            return _mm_sub_ps((float32x4_t) first, (float32x4_t) second) ;
         }
 
         Vector4f Vector4f::fast_recriprocal(const Vector4f& vec) {
-            return _mm_rcp_ps(vec) ;
+            return _mm_rcp_ps((float32x4_t) vec) ;
         }
 
         Vector4f Vector4f::fast_rsqrt(const Vector4f& vec) {
-            return _mm_rsqrt_ps(vec) ;
+            return _mm_rsqrt_ps((float32x4_t) vec) ;
         }
 
         Vector4f Vector4f::fast_sqrt(const Vector4f& vec) {
-            return _mm_rcp_ps(_mm_rsqrt_ps(vec)) ;
+            return _mm_rcp_ps(_mm_rsqrt_ps((float32x4_t) vec)) ;
         }
 
 
@@ -242,7 +246,11 @@ namespace Mind {
             Vector4f& row3,
             Vector4f& row4
         ) {
-            _MM_TRANSPOSE4_PS(row1, row2, row3, row4) ;
+            float32x4_t& row1_t = (float32x4_t&) row1 ;
+            float32x4_t& row2_t = (float32x4_t&) row2 ;
+            float32x4_t& row3_t = (float32x4_t&) row3 ;
+            float32x4_t& row4_t = (float32x4_t&) row4 ;
+            _MM_TRANSPOSE4_PS(row1_t, row2_t, row3_t, row4_t) ;
         }
 
 
@@ -257,7 +265,7 @@ namespace Mind {
             Vector4i extendedSignBit = (converted >> 31) ;
             // Convert the extended sign vector to a Mask (containing either 0x00000000
             // or 0xFFFFFFFF).
-            return _mm_castsi128_ps(extendedSignBit) ;
+            return _mm_castsi128_ps((__m128i) extendedSignBit) ;
         }
 
         Vector4f::Mask Vector4f::isInfinite() {
@@ -284,7 +292,7 @@ namespace Mind {
             Vector4i converted = _mm_castps_si128(m_inner) ;
             Vector4i removedSignBit = converted << 1 ;
             Vector4i extractedExponent = removedSignBit & MaskExponent ;
-            Vector4i extractedFraction = _mm_andnot_si128(MaskExponent, removedSignBit) ;
+            Vector4i extractedFraction = _mm_andnot_si128((__m128i) MaskExponent, (__m128i) removedSignBit) ;
             // NaN = Exponent is null while fraction is not.
             Vector4i::Mask resultMask = (extractedExponent == MaskExponent) & (extractedFraction != 0) ;
             return resultMask ;
@@ -368,12 +376,12 @@ namespace Mind {
         }
 
         Vector4f& Vector4f::operator=(const Vector4i& vec4) {
-            m_inner = _mm_cvtepi32_ps(vec4) ;
+            m_inner = _mm_cvtepi32_ps((__m128i) vec4) ;
             return *this ;
         }
 
         Vector4f& Vector4f::operator=(const Vector4ui& vec4) {
-            m_inner = _mm_cvtepi32_ps(vec4) ;
+            m_inner = _mm_cvtepi32_ps((__m128i) vec4) ;
             return *this ;
         }
 

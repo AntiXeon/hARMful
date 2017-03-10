@@ -32,29 +32,29 @@ namespace Mind {
     }
 
     void Matrix3x3f::setColumnValues(const size_t& column, const Point2Df& values) {
-        Scalar* row0Values = m_data[0] ;
+        float* row0Values = (float*) m_data[0] ;
         row0Values[column] = values.getX() ;
-        Scalar* row1Values = m_data[1] ;
+        float* row1Values = (float*) m_data[1] ;
         row1Values[column] = values.getY() ;
     }
 
     void Matrix3x3f::setColumnValues(const size_t& column, const Point3Df& values) {
-        Scalar* row0Values = m_data[0] ;
+        float* row0Values = (float*) m_data[0] ;
         row0Values[column] = values.getX() ;
-        Scalar* row1Values = m_data[1] ;
+        float* row1Values = (float*) m_data[1] ;
         row1Values[column] = values.getY() ;
-        Scalar* row2Values = m_data[2] ;
+        float* row2Values = (float*) m_data[2] ;
         row2Values[column] = values.getZ() ;
     }
 
     void Matrix3x3f::setRowValues(const size_t& row, const Point2Df& values) {
-        Scalar* columnValues = m_data[row] ;
+        float* columnValues = (float*) m_data[row] ;
         columnValues[0] = values.getX() ;
         columnValues[1] = values.getY() ;
     }
 
     void Matrix3x3f::setRowValues(const size_t& row, const Point3Df& values) {
-        Scalar* columnValues = m_data[row] ;
+        float* columnValues = (float*) m_data[row] ;
         columnValues[0] = values.getX() ;
         columnValues[1] = values.getY() ;
         columnValues[2] = values.getZ() ;

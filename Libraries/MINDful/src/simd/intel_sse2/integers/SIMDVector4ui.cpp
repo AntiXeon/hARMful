@@ -27,19 +27,19 @@ namespace Mind {
                                                         /** STATIC FUNCTIONS **/
         Vector4ui Vector4ui::min(const Vector4ui& a, const Vector4ui& b) {
             #if defined(USE_INTEL_SSE4_1)
-                return _mm_min_epu32(a, b) ;
+                return _mm_min_epu32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32(a, b) ;
-                return Vector4::selection(greater, b, a) ;
+                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                return Vector4::selection(greater, (__m128i) b, (__m128i) a) ;
             #endif
         }
 
         Vector4ui Vector4ui::max(const Vector4ui& a, const Vector4ui& b) {
             #if defined(USE_INTEL_SSE4_1)
-                return _mm_max_epu32(a, b) ;
+                return _mm_max_epu32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32(a, b) ;
-                return Vector4::selection(greater, a, b) ;
+                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                return Vector4::selection(greater, (__m128i) a, (__m128i) b) ;
             #endif
         }
 

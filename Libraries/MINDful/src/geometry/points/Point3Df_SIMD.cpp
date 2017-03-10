@@ -50,19 +50,19 @@ namespace Mind {
 
     Scalar Point3Df::distanceX(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
         return std::fabs(diffValues[X]) ;
     }
 
     Scalar Point3Df::distanceY(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
         return std::fabs(diffValues[Y]) ;
     }
 
     Scalar Point3Df::distanceZ(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = diff ;
+        float* diffValues = (float*) diff ;
         return std::fabs(diffValues[Z]) ;
     }
 
@@ -119,12 +119,12 @@ namespace Mind {
     }
 
     Point3Df::operator Dimension3Df() {
-        float* values = m_values ;
+        float* values = (float*) m_values ;
         return Dimension3Df(values[X], values[Y], values[Z]) ;
     }
 
     Point3Df::operator Point2Df() {
-        float* values = m_values ;
+        float* values = (float*) m_values ;
         return Point2Df(values[X], values[Y]) ;
     }
 

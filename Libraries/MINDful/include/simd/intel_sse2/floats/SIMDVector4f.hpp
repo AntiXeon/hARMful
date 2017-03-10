@@ -522,26 +522,26 @@ namespace Mind {
                  * Cast the current Vector4f to its inner data type.
                  * @return  The inner data.
                  */
-                operator float32x4_t() const ;
+                explicit operator float32x4_t() const ;
 
                 /**
                  * Cast the current Vector4f to an array of float values.
                  * @return     The inner data as array of float values.
                  */
-                operator float*() const ;
+                explicit operator float*() const ;
 
                 /**
                  * Cast the current Vector4f to a Vector4i.
                  * @return  The current Vector4f converted to Vector4i object.
                  */
-                operator Vector4i() const ;
+                explicit operator Vector4i() const ;
 
                 /**
                  * Cast the current Vector4f to a Vector4ui.
                  * @return  The current Vector4f converted to Vector4ui object.
                  * @warning Be careful with negative values.
                  */
-                operator Vector4ui() const ;
+                explicit operator Vector4ui() const ;
         } ;
 
 
@@ -614,7 +614,7 @@ namespace Mind {
                     > () ;
                     m_inner = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(a),mask2)) ;
                 #else
-                    __m128 tmp = _mm_shuffle_ps(m_inner, m_inner, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
+                    float32x4_t tmp = _mm_shuffle_ps(m_inner, m_inner, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
                     __m128i MaskZeroPositions = Vector4i::constant<
                         -int(i0 > -1),
                         -int(i1 > -1),
@@ -652,8 +652,8 @@ namespace Mind {
             static_assert((i3 <= 3), "Bad value. Expected i3 <= 3") ;
 
             output = _mm_shuffle_ps(
-                input,
-                input,
+                (float32x4_t) input,
+                (float32x4_t) input,
                 ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))
             ) ;
 

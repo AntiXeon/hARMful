@@ -88,7 +88,7 @@ namespace Mind {
         Scalar resultY ;
         Scalar resultZ ;
         if (std::abs(angleSin) < Epsilon) {
-            float* vectorPartArray = vectorPart ;
+            float* vectorPartArray = (float*) vectorPart ;
             resultX = vectorPartArray[Axis::X] ;
             resultY = vectorPartArray[Axis::Y] ;
             resultZ = vectorPartArray[Axis::Z] ;
@@ -97,7 +97,7 @@ namespace Mind {
             Scalar coeff = angleSin / Math::toRadians(angle) ;
             vectorPart *= coeff ;
 
-            float* vectorPartArray = vectorPart ;
+            float* vectorPartArray = (float*) vectorPart ;
             resultX = vectorPartArray[Axis::X] ;
             resultY = vectorPartArray[Axis::Y] ;
             resultZ = vectorPartArray[Axis::Z] ;
@@ -113,7 +113,7 @@ namespace Mind {
 
     Quaternion Quaternion::ln() const {
         SIMD::Vector4f vectorPart = m_values * VectorPartExtractor ;
-        float* vectorPartArray = vectorPart ;
+        float* vectorPartArray = (float*) vectorPart ;
 
         if (std::abs(vectorPartArray[Axis::W]) < 1.f) {
             Scalar angle = std::acos(vectorPartArray[Axis::W]) ;
@@ -121,7 +121,7 @@ namespace Mind {
             if (std::abs(angleSin) >= Epsilon) {
                 Scalar coeff = Math::toRadians(angle) / angleSin ;
                 vectorPart *= coeff ;
-                vectorPartArray = vectorPart ;
+                vectorPartArray = (float*) vectorPart ;
             }
         }
 
@@ -342,12 +342,12 @@ namespace Mind {
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
     void Quaternion::to(Matrix3x3f& matrix) {
-        float* valueArray = m_values ;
+        float* valueArray = (float*) m_values ;
         auto twiceValues = m_values + m_values ;
-        float* twiceValuesX = twiceValues * SIMD::Vector4f(valueArray[Axis::X]) ;
-        float* twiceValuesY = twiceValues * SIMD::Vector4f(valueArray[Axis::Y]) ;
-        float* twiceValuesZ = twiceValues * SIMD::Vector4f(valueArray[Axis::Z]) ;
-        float* twiceValuesW = twiceValues * SIMD::Vector4f(valueArray[Axis::W]) ;
+        float* twiceValuesX = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::X])) ;
+        float* twiceValuesY = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::Y])) ;
+        float* twiceValuesZ = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::Z])) ;
+        float* twiceValuesW = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::W])) ;
 
         matrix.at(0,0, 1.f - (twiceValuesY[Axis::Y] + twiceValuesZ[Axis::Z])) ;
         matrix.at(0,1, twiceValuesX[Axis::Y] - twiceValuesW[Axis::Z]) ;
@@ -364,7 +364,7 @@ namespace Mind {
 
     void Quaternion::to(Vector3f& vector, Scalar& radAngle) {
         // Get the length of the vector part of the quaternion (x,y,z).
-        float* valueArray = m_values ;
+        float* valueArray = (float*) m_values ;
         SIMD::Vector4f tmp(
             valueArray[Axis::X],
             valueArray[Axis::Y],
@@ -380,7 +380,7 @@ namespace Mind {
             SIMD::Vector4f squaredLengthVec(squaredLength) ;
             auto invLength = SIMD::Vector4f::fast_rsqrt(squaredLengthVec) ;
             auto vectorValues = tmp * invLength ;
-            float* vectorValuesPtr = vectorValues ;
+            float* vectorValuesPtr = (float*) vectorValues ;
             vector.set(
                 vectorValuesPtr[Axis::X],
                 vectorValuesPtr[Axis::Y],
@@ -426,15 +426,16 @@ namespace Mind {
         Scalar& pitch,
         Scalar& yaw
     ) {
-        Scalar squaredY = m_values[Axis::Y] * m_values[Axis::Y] ;
+        float* quaternion = (float*) m_values ;
+        Scalar squaredY = quaternion[Axis::Y] * quaternion[Axis::Y] ;
 
         // Roll (x-axis rotation).
-        Scalar t0 = 2.f * (m_values[Axis::W] * m_values[Axis::X] + m_values[Axis::Y] * m_values[Axis::Z]) ;
-        Scalar t1 = 1.f - 2.f * (m_values[Axis::X] * m_values[Axis::X] + squaredY) ;
+        Scalar t0 = 2.f * (quaternion[Axis::W] * quaternion[Axis::X] + quaternion[Axis::Y] * quaternion[Axis::Z]) ;
+        Scalar t1 = 1.f - 2.f * (quaternion[Axis::X] * quaternion[Axis::X] + squaredY) ;
         roll = std::atan2(t0, t1) ;
 
         // Pitch (y-axis rotation).
-        Scalar t2 = 2.f * (m_values[Axis::W] * m_values[Axis::Y] - m_values[Axis::Z] + m_values[Axis::X]) ;
+        Scalar t2 = 2.f * (quaternion[Axis::W] * quaternion[Axis::Y] - quaternion[Axis::Z] + quaternion[Axis::X]) ;
         if (t2 > 1.f) {
             t2 = 1.f ;
         }
@@ -444,19 +445,19 @@ namespace Mind {
         pitch = std::asin(t2) ;
 
         // Yaw (z-axis rotation).
-        Scalar t3 = 2.f * (m_values[Axis::W] * m_values[Axis::Z] + m_values[Axis::X] * m_values[Axis::Y]) ;
-        Scalar t4 = 1.f - 2.f * (squaredY + m_values[Axis::Z] * m_values[Axis::Z]) ;
+        Scalar t3 = 2.f * (quaternion[Axis::W] * quaternion[Axis::Z] + quaternion[Axis::X] * quaternion[Axis::Y]) ;
+        Scalar t4 = 1.f - 2.f * (squaredY + quaternion[Axis::Z] * quaternion[Axis::Z]) ;
         yaw = std::atan2(t3, t4) ;
     }
 
 
     Scalar Quaternion::operator[](const Axis& axis) const {
-        float* valuesArray = m_values ;
+        float* valuesArray = (float*) m_values ;
         return valuesArray[axis] ;
     }
 
     Scalar& Quaternion::operator[](const Axis& axis) {
-        float* valuesArray = m_values ;
+        float* valuesArray = (float*) m_values ;
         return valuesArray[axis] ;
     }
 
@@ -552,7 +553,7 @@ namespace Mind {
 
     Vector3f Quaternion::operator*(const Vector3f& vec3) const {
         // Implementation from the NVidia SDK.
-        float* quaternion = m_values ;
+        float* quaternion = (float*) m_values ;
         Vector3f vecPartQuaternion(
             quaternion[Axis::X],
             quaternion[Axis::Y],
