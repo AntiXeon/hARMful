@@ -122,6 +122,35 @@ namespace Mind {
             */
             Matrix3x3f& operator=(const Matrix3x3f& other) ;
     } ;
+
+    inline Matrix3x3f::~Matrix3x3f() {}
+
+    inline Matrix3x3f Matrix3x3f::operator*(const Scalar& scalar) {
+        Matrix3x3f mat(*this) ;
+        mat *= scalar ;
+        return mat ;
+    }
+
+    inline Matrix3x3f Matrix3x3f::operator*(Matrix3x3f& other) {
+        Matrix3x3f mat(*this) ;
+        mat *= other ;
+        return mat ;
+    }
+
+    inline Matrix3x3f Matrix3x3f::operator+(Matrix3x3f& other) {
+        Matrix3x3f mat(*this) ;
+        mat += other ;
+        return mat ;
+    }
+
+    inline Matrix3x3f& Matrix3x3f::operator=(const Matrix3x3f& other) {
+        std::copy(
+            std::begin(other.m_data),
+            std::end(other.m_data),
+            std::begin(m_data)
+        ) ;
+        return *this ;
+    }
 } ;
 
 #endif

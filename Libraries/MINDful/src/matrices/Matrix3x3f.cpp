@@ -5,8 +5,6 @@ namespace Mind {
 
     Matrix3x3f::Matrix3x3f(const Matrix3x3f& mat) : SquareMatrixf(mat) {}
 
-    Matrix3x3f::~Matrix3x3f() {}
-
     void Matrix3x3f::multiply(const Matrix3x3f& other) {
         // Copy data from the other matrix.
         SIMD::Vector4f transposedOther[] = {
@@ -68,12 +66,6 @@ namespace Mind {
         return *this ;
     }
 
-    Matrix3x3f Matrix3x3f::operator*(const Scalar& scalar) {
-        Matrix3x3f mat(*this) ;
-        mat *= scalar ;
-        return mat ;
-    }
-
     Matrix3x3f& Matrix3x3f::operator*=(Matrix3x3f& other) {
         // Transpose the matrix to easily compute the product of each line of
         // "this" by each column of "other".
@@ -101,32 +93,11 @@ namespace Mind {
         return *this ;
     }
 
-    Matrix3x3f Matrix3x3f::operator*(Matrix3x3f& other) {
-        Matrix3x3f mat(*this) ;
-        mat *= other ;
-        return mat ;
-    }
-
     Matrix3x3f& Matrix3x3f::operator+=(Matrix3x3f& other) {
         unsigned int length = size() ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] += other[rowIndex] ;
         }
-        return *this ;
-    }
-
-    Matrix3x3f Matrix3x3f::operator+(Matrix3x3f& other) {
-        Matrix3x3f mat(*this) ;
-        mat += other ;
-        return mat ;
-    }
-
-    Matrix3x3f& Matrix3x3f::operator=(const Matrix3x3f& other) {
-        std::copy(
-            std::begin(other.m_data),
-            std::end(other.m_data),
-            std::begin(m_data)
-        ) ;
         return *this ;
     }
 } ;

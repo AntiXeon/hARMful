@@ -549,6 +549,7 @@ namespace Mind {
         #include "impl/Vector4f/Mask/impl.hpp"
 
         #include "impl/Vector4f/operators.hpp"
+        #include "impl/Vector4f/impl.hpp"
 
         template <int i0, int i1, int i2, int i3>
         void Vector4f::permute() {

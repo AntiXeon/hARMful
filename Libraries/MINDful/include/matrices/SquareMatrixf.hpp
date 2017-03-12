@@ -171,6 +171,33 @@ namespace Mind {
              */
             void getData(Scalar* output) ;
     } ;
+
+    inline SquareMatrixf::~SquareMatrixf() {}
+
+    inline void SquareMatrixf::clear() {
+        clearWith(m_defaultValue) ;
+    }
+
+    inline Scalar& SquareMatrixf::at(
+        const unsigned int& row,
+        const unsigned int& col
+    ) const {
+        float* rowValues = (float*) m_data[row] ;
+        return rowValues[col] ;
+    }
+
+    inline void SquareMatrixf::at(
+        const unsigned int& row,
+        const unsigned int& col,
+        const Scalar& value
+    ) {
+        float* rowValues = (float*) m_data[row] ;
+        rowValues[col] = value ;
+    }
+
+    inline SIMD::Vector4f SquareMatrixf::operator[](int index) {
+        return m_data[index] ;
+    }
 } ;
 
 #endif

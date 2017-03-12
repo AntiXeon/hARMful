@@ -6,8 +6,6 @@ namespace Mind {
 
     Matrix4x4f::Matrix4x4f(const Matrix4x4f& mat) : SquareMatrixf(mat) {}
 
-    Matrix4x4f::~Matrix4x4f() {}
-
     void Matrix4x4f::multiply(const Matrix4x4f& other) {
         // Copy data from the other matrix.
         SIMD::Vector4f transposedOther[] = {
@@ -69,12 +67,6 @@ namespace Mind {
         return *this ;
     }
 
-    Matrix4x4f Matrix4x4f::operator*(const Scalar& scalar) {
-        Matrix4x4f mat(*this) ;
-        mat *= scalar ;
-        return mat ;
-    }
-
     Matrix4x4f& Matrix4x4f::operator*=(Matrix4x4f& other) {
         // Transpose the matrix to easily compute the product of each line of
         // "this" by each column of "other".
@@ -102,32 +94,11 @@ namespace Mind {
         return *this ;
     }
 
-    Matrix4x4f Matrix4x4f::operator*(Matrix4x4f& other) {
-        Matrix4x4f mat(*this) ;
-        mat *= other ;
-        return mat ;
-    }
-
     Matrix4x4f& Matrix4x4f::operator+=(Matrix4x4f& other) {
         unsigned int length = size() ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] += other[rowIndex] ;
         }
-        return *this ;
-    }
-
-    Matrix4x4f Matrix4x4f::operator+(Matrix4x4f& other) {
-        Matrix4x4f mat(*this) ;
-        mat += other ;
-        return mat ;
-    }
-
-    Matrix4x4f& Matrix4x4f::operator=(const Matrix4x4f& other) {
-        std::copy(
-            std::begin(other.m_data),
-            std::end(other.m_data),
-            std::begin(m_data)
-        ) ;
         return *this ;
     }
 } ;

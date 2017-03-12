@@ -121,6 +121,8 @@ namespace Mind {
         #include "impl/Vector4/Mask/operators.hpp"
         #include "impl/Vector4/Mask/impl.hpp"
 
+        #include "impl/Vector4/impl.hpp"
+
         typedef Vector4<int32_t> Vector4int32 ;
         typedef Vector4<uint32_t> Vector4uint32 ;
     } ;

@@ -122,6 +122,35 @@ namespace Mind {
              */
             Matrix4x4f& operator=(const Matrix4x4f& other) ;
     } ;
+
+    inline Matrix4x4f::~Matrix4x4f() {}
+
+    inline Matrix4x4f Matrix4x4f::operator*(const Scalar& scalar) {
+        Matrix4x4f mat(*this) ;
+        mat *= scalar ;
+        return mat ;
+    }
+
+    inline Matrix4x4f Matrix4x4f::operator*(Matrix4x4f& other) {
+        Matrix4x4f mat(*this) ;
+        mat *= other ;
+        return mat ;
+    }
+
+    inline Matrix4x4f Matrix4x4f::operator+(Matrix4x4f& other) {
+        Matrix4x4f mat(*this) ;
+        mat += other ;
+        return mat ;
+    }
+
+    inline Matrix4x4f& Matrix4x4f::operator=(const Matrix4x4f& other) {
+        std::copy(
+            std::begin(other.m_data),
+            std::end(other.m_data),
+            std::begin(m_data)
+        ) ;
+        return *this ;
+    }
 } ;
 
 #endif

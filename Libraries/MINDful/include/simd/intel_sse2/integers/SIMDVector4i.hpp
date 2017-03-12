@@ -108,7 +108,6 @@ namespace Mind {
 
         #include "impl/Vector4/Vector4i/operators.hpp"
 
-
         template <int32_t i0, int32_t i1, int32_t i2, int32_t i3>
         int32x4_t Vector4i::constant() {
             static const union {
@@ -117,9 +116,7 @@ namespace Mind {
             } u = {{i0, i1, i2, i3}} ;
             return u.vector ;
         }
-
     } ;
-
 } ;
 
 

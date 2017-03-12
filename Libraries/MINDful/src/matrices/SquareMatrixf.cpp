@@ -24,12 +24,6 @@ namespace Mind {
         ) ;
     }
 
-    SquareMatrixf::~SquareMatrixf() {}
-
-    void SquareMatrixf::clear() {
-        clearWith(m_defaultValue) ;
-    }
-
     void SquareMatrixf::identity() {
         for (int row = 0 ; row < MaximalDataSize ; ++row) {
             Scalar columns[] = { 0.f, 0.f, 0.f, 0.f } ;
@@ -58,27 +52,6 @@ namespace Mind {
         #else
             return at(0,0) + at(1,1) + at(2,2) + at(3,3) ;
         #endif
-    }
-
-    Scalar& SquareMatrixf::at(
-        const unsigned int& row,
-        const unsigned int& col
-    ) const {
-        float* rowValues = (float*) m_data[row] ;
-        return rowValues[col] ;
-    }
-
-    void SquareMatrixf::at(
-        const unsigned int& row,
-        const unsigned int& col,
-        const Scalar& value
-    ) {
-        float* rowValues = (float*) m_data[row] ;
-        rowValues[col] = value ;
-    }
-
-    SIMD::Vector4f SquareMatrixf::operator[](int index) {
-        return m_data[index] ;
     }
 
     unsigned int SquareMatrixf::size() const {
