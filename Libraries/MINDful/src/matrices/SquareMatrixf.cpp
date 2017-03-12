@@ -61,23 +61,19 @@ namespace Mind {
     }
 
     Scalar& SquareMatrixf::at(
-        const unsigned int& col,
-        const unsigned int& row
+        const unsigned int& row,
+        const unsigned int& col
     ) const {
-        SIMD::Vector4f& rowVector = (SIMD::Vector4f&) m_data[row] ;
-
-        float* rowValues = (float*) rowVector ;
+        float* rowValues = (float*) m_data[row] ;
         return rowValues[col] ;
     }
 
     void SquareMatrixf::at(
-        const unsigned int& col,
         const unsigned int& row,
+        const unsigned int& col,
         const Scalar& value
     ) {
-        SIMD::Vector4f& rowVector = m_data[row] ;
-
-        float* rowValues = (float*) rowVector ;
+        float* rowValues = (float*) m_data[row] ;
         rowValues[col] = value ;
     }
 

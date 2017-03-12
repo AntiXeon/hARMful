@@ -246,11 +246,15 @@ namespace Mind {
             Vector4f& row3,
             Vector4f& row4
         ) {
-            float32x4_t& row1_t = (float32x4_t&) row1 ;
-            float32x4_t& row2_t = (float32x4_t&) row2 ;
-            float32x4_t& row3_t = (float32x4_t&) row3 ;
-            float32x4_t& row4_t = (float32x4_t&) row4 ;
+            float32x4_t row1_t = (float32x4_t) row1 ;
+            float32x4_t row2_t = (float32x4_t) row2 ;
+            float32x4_t row3_t = (float32x4_t) row3 ;
+            float32x4_t row4_t = (float32x4_t) row4 ;
             _MM_TRANSPOSE4_PS(row1_t, row2_t, row3_t, row4_t) ;
+            row1 = row1_t ;
+            row2 = row2_t ;
+            row3 = row3_t ;
+            row4 = row4_t ;
         }
 
 

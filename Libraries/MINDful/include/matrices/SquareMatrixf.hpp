@@ -108,25 +108,25 @@ namespace Mind {
 
             /**
              * Get the element a the specified position.
-             * @param   col     Index of the wanted column.
              * @param   row     Index of the wanted row.
+             * @param   col     Index of the wanted column.
              * @return	Reference to the element at the wanted column and row
              *			indices.
              */
             Scalar& at(
-                const unsigned int& col,
-                const unsigned int& row
+                const unsigned int& row,
+                const unsigned int& col
             ) const ;
 
             /**
              * Set the element a the specified position.
-             * @param   row     Index of the wanted row.
              * @param   col     Index of the wanted column.
+             * @param   row     Index of the wanted row.
              * @param   value   Value to set at the given position.
              */
             void at(
-                const unsigned int& col,
                 const unsigned int& row,
+                const unsigned int& col,
                 const Scalar& value
             ) ;
 
