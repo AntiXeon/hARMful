@@ -227,8 +227,8 @@ namespace Mind {
             Scalar root = std::sqrt(trace + 1.f) ;
             Scalar quartRoot = 0.5f / root ;
             m_values[Axis::X] = (matrix.at(2,1) - matrix.at(1,2)) * quartRoot ;
-            m_values[Axis::X] = (matrix.at(0,2) - matrix.at(2,0)) * quartRoot ;
-            m_values[Axis::X] = (matrix.at(1,0) - matrix.at(0,1)) * quartRoot ;
+            m_values[Axis::Y] = (matrix.at(0,2) - matrix.at(2,0)) * quartRoot ;
+            m_values[Axis::Z] = (matrix.at(1,0) - matrix.at(0,1)) * quartRoot ;
             m_values[Axis::W] = root * 0.5f ;
         }
         else {
@@ -398,7 +398,6 @@ namespace Mind {
         yaw = std::atan2(t3, t4) ;
     }
 
-
     Scalar Quaternion::operator[](const Axis& axis) const {
         return m_values[axis] ;
     }
@@ -533,6 +532,16 @@ namespace Mind {
 
     bool Quaternion::operator!=(const Quaternion& other) const {
         return !(*this == other) ;
+    }
+
+    std::ostream& operator<<(std::ostream& s, const Quaternion& p) {
+        s << "Quaternion: "
+            << p.m_values[Quaternion::Axis::X] << ", "
+            << p.m_values[Quaternion::Axis::Y] << ", "
+            << p.m_values[Quaternion::Axis::Z] << ", "
+            << p.m_values[Quaternion::Axis::W]
+        << std::endl ;
+        return s ;
     }
 }
 

@@ -78,12 +78,12 @@ namespace UTMind {
         check(m2.at(0, 0) == p1X) ;
         check(m2.at(0, 1) == 0.f) ;
         check(m2.at(0, 2) == p2X) ;
-        check(m2.at(1,0) == p1Y) ;
+        check(m2.at(1, 0) == p1Y) ;
         check(m2.at(1, 1) == 1.f) ;
         check(m2.at(1, 2) == p2Y) ;
         check(m2.at(2, 0) == 0.f) ;
         check(m2.at(2, 1) == 0.f) ;
-        check(m2.at(2,2) == p2Z) ;
+        check(m2.at(2, 2) == p2Z) ;
 
         // ...by row.
         const Scalar p3X = -1.24f ;

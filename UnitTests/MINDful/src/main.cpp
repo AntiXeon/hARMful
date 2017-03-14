@@ -8,6 +8,7 @@
 #include <modules/matrices/UTMatrix2D.hpp>
 #include <modules/matrices/UTMatrix3x3f.hpp>
 #include <modules/matrices/UTMatrix4x4f.hpp>
+#include <modules/quaternions/UTQuaternion.hpp>
 
 static void testDimensions() {
     UTMind::UTDimension2Df().runTests() ;
@@ -33,6 +34,10 @@ static void testMatrices() {
     UTMind::UTMatrix4x4f().runTests() ;
 }
 
+static void testQuaternions() {
+    UTMind::UTQuaternion().runTests() ;
+}
+
 int main(int, char**) {
     #ifdef FORCE_EMULATED_SIMD
         std::cout << "Emulated SIMD" << std::endl ;
@@ -45,5 +50,6 @@ int main(int, char**) {
     testPoints() ;
     testRectangles() ;
     testMatrices() ;
+    testQuaternions() ;
     return UnitTest::Success() ;
 }

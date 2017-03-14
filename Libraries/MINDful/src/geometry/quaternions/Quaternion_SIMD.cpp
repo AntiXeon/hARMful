@@ -582,6 +582,17 @@ namespace Mind {
     bool Quaternion::operator!=(const Quaternion& other) const {
         return !(*this == other) ;
     }
+
+    std::ostream& operator<<(std::ostream& s, const Quaternion& p) {
+        float* values = (float*) p.m_values ;
+        s << "Quaternion: "
+            << values[Quaternion::Axis::X] << ", "
+            << values[Quaternion::Axis::Y] << ", "
+            << values[Quaternion::Axis::Z] << ", "
+            << values[Quaternion::Axis::W]
+        << std::endl ;
+        return s ;
+    }
 }
 
 #endif

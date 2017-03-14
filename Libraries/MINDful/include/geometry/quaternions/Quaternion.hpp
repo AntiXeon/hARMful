@@ -403,6 +403,14 @@ namespace Mind {
              *               values, FALSE otherwise.
              */
             bool operator!=(const Quaternion& other) const ;
+
+            /**
+            * Echo the Quaternion values on console.
+            * @param   s   The stream in which print the formatted coordinates.
+            * @param   p   The Quaternion to print.
+            * @return  The stream with the printed Quaternion coordinates.
+            */
+            friend std::ostream& operator<<(std::ostream& s, const Quaternion& p) ;
     } ;
 }
 

@@ -67,7 +67,7 @@ namespace Mind {
                 for (unsigned int col = 0 ; col < size ; ++col) {
                     s << values[col] << " ; " ;
                 }
-                s << " }" << std::endl ;
+                s << "}" << std::endl ;
             }
         s << std::endl ;
         return s ;
