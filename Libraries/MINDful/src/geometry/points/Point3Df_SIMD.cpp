@@ -40,7 +40,7 @@ namespace Mind {
     }
 
     void Point3Df::normalize() {
-        m_values /= m_values.norm() ;
+        m_values /= length() ;
     }
 
     Point3Df Point3Df::merge(const Point3Df& a, const Point3Df& b) {
@@ -74,9 +74,7 @@ namespace Mind {
     }
 
     Scalar Point3Df::length() {
-        SIMD::Vector4f squared = SIMD::Vector4f::square(m_values) ;
-        Scalar squaredTotal = squared.horizontalAdd() ;
-        return FastMath::sqrt(squaredTotal) ;
+        return FastMath::sqrt(this -> dot(*this)) ;
     }
 
     Scalar Point3Df::getX() const {

@@ -237,6 +237,7 @@ namespace Mind {
              * Set the values of the Quaternion from a vector (seen as axis) and
              * an angle.
              * @param vector   Vector acting as the axis of the rotation.
+             *                 This vector must be normalized.
              * @param radAngle Angle of the rotation in radians.
              */
             void from(const Vector3f& vector, const Scalar& radAngle) ;

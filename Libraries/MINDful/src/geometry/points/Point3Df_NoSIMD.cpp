@@ -91,11 +91,7 @@ namespace Mind {
     }
 
     Scalar Point3Df::length() {
-        #ifdef USE_APPROXIMATION
-            return (FastMath::sqrt(this -> dot(*this)));
-        #else
-            return (sqrt(this -> dot(*this)));
-        #endif
+        return (sqrt(this -> dot(*this))) ;
     }
 
     Scalar Point3Df::getX() const {

@@ -507,37 +507,37 @@ namespace Mind {
         Scalar newW ;
 
         // Compute new X value of the curent Quaternion.
-        // (w * other.w) - (x * other.x) - (y * other.y) - (z * other.z)
+        // (x * other.w) + (y * other.z) - (z * other.y) + (w * other.x)
         {
-            auto changedSignOtherX = other.m_values ;
-            changedSignOtherX.changeSign<false, false, false, true>() ;
-            newX = (m_values * changedSignOtherX).horizontalSub() ;
+            auto permuteOtherX = other.m_values ;
+            permuteOtherX.changeSign<false, true, false, false>() ;
+            permuteOtherX.permute<3,2,1,0>() ;
+            newX = (m_values * permuteOtherX).horizontalAdd() ;
         }
 
         // Compute new Y value of the curent Quaternion.
-        // (w * other.x) + (x * other.w) + (y * other.z) - (z * other.y)
+        // (x * -other.z) + (y * other.w) + (z * other.x) - (w * other.y)
         {
             auto permuteOtherY = other.m_values ;
-            permuteOtherY.permute<1,0,3,2>() ;
-            permuteOtherY.changeSign<false, false, false, true>() ;
+            permuteOtherY.permute<2,3,0,1>() ;
+            permuteOtherY.changeSign<true, false, false, false>() ;
             newY = (m_values * permuteOtherY).horizontalAdd() ;
         }
 
         // Compute new Z value of the curent Quaternion.
-        // (w * other.y) + (y * other.w) + (z * other.x) - (x * other.z)
+        // (x * other.y) + (y * -other.x) + (z * other.w) - (w * other.z)
         {
             auto permuteOtherZ = other.m_values ;
-            permuteOtherZ.permute<2,0,3,1>() ;
-            permuteOtherZ.changeSign<false, false, false, true>() ;
+            permuteOtherZ.permute<1,0,3,2>() ;
+            permuteOtherZ.changeSign<false, true, false, false>() ;
             newZ = (m_values * permuteOtherZ).horizontalAdd() ;
         }
 
         // Compute new W value of the curent Quaternion.
-        // (w * other.z) + (z * other.w) + (x * other.y) - (y * other.x)
+        // (x * -other.x) + (y * other.y) + (z * -other.z) + (w * other.w)
         {
             auto permuteOtherW = other.m_values ;
-            permuteOtherW.permute<3,2,0,1>() ;
-            permuteOtherW.changeSign<false, false, false, true>() ;
+            permuteOtherW.changeSign<true, true, true, false>() ;
             newW = (m_values * permuteOtherW).horizontalAdd() ;
         }
 
