@@ -94,16 +94,124 @@ namespace UTMind {
             Scalar expectedW =  0.923879532511287 ;
 
             Quaternion q5(axis, angle) ;
-            std::cout << q5 << std::endl ;
             check(compare(q5[Quaternion::Axis::X], expectedX)) ;
             check(compare(q5[Quaternion::Axis::Y], expectedY)) ;
             check(compare(q5[Quaternion::Axis::Z], expectedZ)) ;
             check(compare(q5[Quaternion::Axis::W], expectedW)) ;
         }
+
+        // @TODO: Check constructor from 3 axes.
     }
 
     void UTQuaternion::utilities() {
-        // Dot product.
+        // Dot product and norm.
+        {
+            Quaternion q1(0.24f, 0.9f, -0.47f, 0.17f) ;
+            Quaternion q2(-0.21f, 0.78f, 0.01f, 0.98f) ;
+            Scalar dot = q1.dot(q2) ;
+
+            Scalar expectedDot = 0.8135f ;
+            check(compare(dot, expectedDot)) ;
+
+            Scalar normQ1 = q1.norm() ;
+            Scalar expectedNorm = 1.05707142615814f ;
+            check(compare(normQ1, expectedNorm)) ;
+        }
+
+        // Normalize.
+        {
+            Quaternion q3(0.2f, 0.9f, 0.4f, 0.5f) ;
+            q3.normalize() ;
+
+            /*
+            Octave result:
+            >> q3n = unit(q3)
+            q3n = 0.4454 + 0.1782i + 0.8018j + 0.3563k
+            */
+            Scalar expectedX = 0.178174161274950f ;
+            Scalar expectedY = 0.801783725737273f ;
+            Scalar expectedZ = 0.356348322549899f ;
+            Scalar expectedW = 0.445435403187374f ;
+
+            check(compare(q3[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q3[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q3[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q3[Quaternion::Axis::W], expectedW)) ;
+        }
+
+        // Inverse.
+        {
+            Quaternion q4(0.96f, -0.7f, 0.39f, 0.f) ;
+            Quaternion q4inv = q4.inverse() ;
+
+            /*
+             Octave result:
+             >> q4inv = inv(q4)
+             q4inv = 0 - 0.6139i + 0.4477j - 0.2494k
+            */
+            Scalar expectedX = -0.613928502909765f ;
+            Scalar expectedY =  0.447656200038371f ;
+            Scalar expectedZ = -0.249408454307092f ;
+            Scalar expectedW =  0.f ;
+
+            check(compare(q4inv[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q4inv[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q4inv[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q4inv[Quaternion::Axis::W], expectedW)) ;
+        }
+
+        // Exponential.
+        {
+            Quaternion q5(-0.01f, 0.97f, 0.144f, -0.987f) ;
+            Quaternion q5exp = q5.exp() ;
+
+            /*
+            Octave result:
+            >> q5exp = exp(q5)
+            q5exp = 0.2074 - 0.003158i + 0.3063j + 0.04547k
+            */
+            Scalar expectedX = -0.00315762103232588f ;
+            Scalar expectedY =  0.306289240135610f ;
+            Scalar expectedZ =  0.0454697428654927f ;
+            Scalar expectedW =  0.207387502635283f ;
+
+            check(compare(q5exp[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q5exp[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q5exp[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q5exp[Quaternion::Axis::W], expectedW)) ;
+        }
+
+        // Logarithmus naturalis.
+        {
+            Quaternion q6(-0.014f, -0.17f, 0.874f, 0.24f) ;
+            Quaternion q6ln = q6.ln() ;
+
+            /*
+             Octave result:
+             >> q6ln = log(q6)
+             q6ln = -0.08092 - 0.02056i - 0.2496j + 1.283k
+             But, according to Neil Dantam, W is simplified to 0.
+             http://www.neil.dantam.name/note/dantam-quaternion.pdf
+
+             The same result on the W component is seen on the Matlab
+             documentation:
+             for q=[cos(theta),sin(theta)v], with log(q)=[0,thetav].
+             https://fr.mathworks.com/help/aerotbx/ug/quatlog.html
+             */
+             Scalar expectedX = -0.0205566850320550f ;
+             Scalar expectedY = -0.249616889674954f ;
+             Scalar expectedZ =  1.28332447985829f ;
+             Scalar expectedW =  0.f ;
+
+             check(compare(q6ln[Quaternion::Axis::X], expectedX)) ;
+             check(compare(q6ln[Quaternion::Axis::Y], expectedY)) ;
+             check(compare(q6ln[Quaternion::Axis::Z], expectedZ)) ;
+             check(compare(q6ln[Quaternion::Axis::W], expectedW)) ;
+        }
+    }
+
+    void UTQuaternion::operators() {
+        // Product.
         {
             Quaternion q1(-0.47f, 0.1474f, 0.657f, 0.24f) ;
             Quaternion q2(-0.24f, 0.3f, -0.176f, -0.709f) ;
@@ -125,6 +233,4 @@ namespace UTMind {
             check(compare(qr[Quaternion::Axis::W], expectedW)) ;
         }
     }
-
-    void UTQuaternion::operators() {}
 }

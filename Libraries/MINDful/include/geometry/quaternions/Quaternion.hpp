@@ -12,6 +12,11 @@ namespace Mind {
     /**
      * A Point is a very simple element that can be used in a space to place
      * elements, get distances between elements, etc.
+     *
+     * Implemented with the help of Quaternion Computation by Neil Dantam
+     * (ntd@gatech.edu), Institute for Robotics and Intelligent Machines,
+     * Georgia Institute of Technology, Atlanta, GA, USA.
+     * http://www.neil.dantam.name/note/dantam-quaternion.pdf
      */
     class Quaternion final {
         public:

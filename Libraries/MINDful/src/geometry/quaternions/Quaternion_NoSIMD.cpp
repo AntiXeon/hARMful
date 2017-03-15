@@ -64,28 +64,29 @@ namespace Mind {
     }
 
     Scalar Quaternion::norm() const {
-        return (m_values[Axis::X] * m_values[Axis::X]) +
-                (m_values[Axis::Y] * m_values[Axis::Y]) +
-                (m_values[Axis::Z] * m_values[Axis::Z]) +
-                (m_values[Axis::W] * m_values[Axis::W]) ;
+        return std::sqrt(
+            (m_values[Axis::X] * m_values[Axis::X]) +
+            (m_values[Axis::Y] * m_values[Axis::Y]) +
+            (m_values[Axis::Z] * m_values[Axis::Z]) +
+            (m_values[Axis::W] * m_values[Axis::W])
+        ) ;
     }
 
     Scalar Quaternion::normalize() {
         Scalar length = norm() ;
-        Scalar normalization = 1.f / std::sqrt(length) ;
-        *this *= normalization ;
+        *this *= (1.f / length) ;
         return length ;
     }
 
     Quaternion Quaternion::inverse() const {
-        Scalar length = norm() ;
-        if (length > 0.f) {
-            Scalar invertedLength = 1.f / length ;
+        Scalar squaredLength = this -> dot(*this) ;
+        if (squaredLength > 0.f) {
+            Scalar invertedSquaredLength = 1.f / squaredLength ;
             return Quaternion(
-                -m_values[Axis::X] * invertedLength,
-                -m_values[Axis::Y] * invertedLength,
-                -m_values[Axis::Z] * invertedLength,
-                m_values[Axis::W] * invertedLength
+                -m_values[Axis::X] * invertedSquaredLength,
+                -m_values[Axis::Y] * invertedSquaredLength,
+                -m_values[Axis::Z] * invertedSquaredLength,
+                m_values[Axis::W] * invertedSquaredLength
             ) ;
         }
         else {
@@ -94,48 +95,59 @@ namespace Mind {
     }
 
     Quaternion Quaternion::exp() const {
-        Scalar angle = std::sqrt(
+        Scalar normV = std::sqrt(
             (m_values[Axis::X] * m_values[Axis::X]) +
             (m_values[Axis::Y] * m_values[Axis::Y]) +
             (m_values[Axis::Z] * m_values[Axis::Z])
         ) ;
-        Scalar angleSin = std::sin(angle) ;
+        Scalar angleSin = std::sin(normV) ;
+        Scalar angleCos = std::cos(normV) ;
+        Scalar expW = std::exp(m_values[Axis::W]) ;
 
         Quaternion result ;
-        result.m_values[Axis::W] = std::cos(angle) ;
         if (std::abs(angleSin) >= Epsilon) {
-            Scalar coeff = angleSin / angle ;
+            Scalar coeff = expW * (angleSin / normV) ;
             result.m_values[Axis::X] = m_values[Axis::X] * coeff ;
             result.m_values[Axis::Y] = m_values[Axis::Y] * coeff ;
             result.m_values[Axis::Z] = m_values[Axis::Z] * coeff ;
         }
         else {
-            result.m_values[Axis::X] = m_values[Axis::X] ;
-            result.m_values[Axis::Y] = m_values[Axis::Y] ;
-            result.m_values[Axis::Z] = m_values[Axis::Z] ;
+            result.m_values[Axis::X] = 0.f ;
+            result.m_values[Axis::Y] = 0.f ;
+            result.m_values[Axis::Z] = 0.f ;
         }
+        result.m_values[Axis::W] = angleCos * expW ;
 
         return result ;
     }
 
     Quaternion Quaternion::ln() const {
+        Quaternion unitQuaternion = *this ;
+        unitQuaternion.normalize() ;
+
         Quaternion result ;
         result.m_values[Axis::W] = 0.f ;
 
         if (std::abs(m_values[Axis::W]) < 1.f) {
-            Scalar angle = std::acos(m_values[Axis::W]) ;
+            Scalar normV = std::sqrt(
+                (unitQuaternion.m_values[Axis::X] * unitQuaternion.m_values[Axis::X]) +
+                (unitQuaternion.m_values[Axis::Y] * unitQuaternion.m_values[Axis::Y]) +
+                (unitQuaternion.m_values[Axis::Z] * unitQuaternion.m_values[Axis::Z])
+            ) ;
+            Scalar angle = std::atan2(normV, unitQuaternion.m_values[Axis::W]) ;
+
             Scalar angleSin = std::sin(angle) ;
             if (std::abs(angleSin) >= Epsilon) {
                 Scalar coeff = angle / angleSin ;
-                result.m_values[Axis::X] = m_values[Axis::X] * coeff ;
-                result.m_values[Axis::Y] = m_values[Axis::Y] * coeff ;
-                result.m_values[Axis::Z] = m_values[Axis::Z] * coeff ;
+                result.m_values[Axis::X] = unitQuaternion.m_values[Axis::X] * coeff ;
+                result.m_values[Axis::Y] = unitQuaternion.m_values[Axis::Y] * coeff ;
+                result.m_values[Axis::Z] = unitQuaternion.m_values[Axis::Z] * coeff ;
             }
         }
         else {
-            result.m_values[Axis::X] = m_values[Axis::X] ;
-            result.m_values[Axis::Y] = m_values[Axis::Y] ;
-            result.m_values[Axis::Z] = m_values[Axis::Z] ;
+            result.m_values[Axis::X] = unitQuaternion.m_values[Axis::X] ;
+            result.m_values[Axis::Y] = unitQuaternion.m_values[Axis::Y] ;
+            result.m_values[Axis::Z] = unitQuaternion.m_values[Axis::Z] ;
         }
 
         return result ;
