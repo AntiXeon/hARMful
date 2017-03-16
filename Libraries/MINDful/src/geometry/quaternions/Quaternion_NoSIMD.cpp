@@ -112,9 +112,9 @@ namespace Mind {
             result.m_values[Axis::Z] = m_values[Axis::Z] * coeff ;
         }
         else {
-            result.m_values[Axis::X] = 0.f ;
-            result.m_values[Axis::Y] = 0.f ;
-            result.m_values[Axis::Z] = 0.f ;
+            result.m_values[Axis::X] = m_values[Axis::X] * expW ;
+            result.m_values[Axis::Y] = m_values[Axis::Y] * expW ;
+            result.m_values[Axis::Z] = m_values[Axis::Z] * expW ;
         }
         result.m_values[Axis::W] = angleCos * expW ;
 
