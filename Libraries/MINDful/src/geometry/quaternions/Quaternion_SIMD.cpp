@@ -89,10 +89,13 @@ namespace Mind {
         Scalar resultX ;
         Scalar resultY ;
         Scalar resultZ ;
-        if (std::abs(angleSin) < Epsilon) {
+        // Avoid a division by zero...
+        if (std::abs(normV) < Epsilon) {
+            Scalar resultW = expW ;
             vectorPart *= expW ;
         }
         else {
+            Scalar resultW = angleCos * expW ;
             Scalar coeff = expW * (angleSin / normV) ;
             vectorPart *= coeff ;
         }
@@ -101,7 +104,6 @@ namespace Mind {
         resultX = vectorPartArray[Axis::X] ;
         resultY = vectorPartArray[Axis::Y] ;
         resultZ = vectorPartArray[Axis::Z] ;
-        Scalar resultW = angleCos * expW ;
 
         return Quaternion(
             resultX,
