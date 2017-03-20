@@ -208,6 +208,96 @@ namespace UTMind {
              check(compare(q6ln[Quaternion::Axis::Z], expectedZ)) ;
              check(compare(q6ln[Quaternion::Axis::W], expectedW)) ;
         }
+
+        // SLERP.
+        {
+            bool isShortestPath = true ;
+            Quaternion q7a(0.78f, -0.103f, -0.19f, 0.7409f) ;
+            q7a.normalize() ;
+
+            Quaternion q7b(1.f, -0.741f, 0.98f, -0.05f) ;
+            q7b.normalize() ;
+
+            Quaternion q7_32slerp = Quaternion::slerp(0.32, q7a, q7b, isShortestPath) ;
+
+            {
+                /*
+                 Values from Unity (no method in Octave for SLERP...).
+                */
+                Scalar expectedX =  0.8087177f ;
+                Scalar expectedY = -0.2611156f ;
+                Scalar expectedZ =  0.1130936f ;
+                Scalar expectedW =  0.5147855f ;
+
+                check(compare(q7_32slerp[Quaternion::Axis::X], expectedX)) ;
+                check(compare(q7_32slerp[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(q7_32slerp[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(q7_32slerp[Quaternion::Axis::W], expectedW)) ;
+            }
+
+
+            Quaternion q7_78slerp = Quaternion::slerp(0.78, q7a, q7b, isShortestPath) ;
+
+            {
+                /*
+                 Values from Unity (no method in Octave for SLERP...).
+                */
+                Scalar expectedX =  0.7437601f ;
+                Scalar expectedY = -0.4300286f ;
+                Scalar expectedZ =  0.485557f ;
+                Scalar expectedW =  0.1616511f ;
+
+                check(compare(q7_78slerp[Quaternion::Axis::X], expectedX)) ;
+                check(compare(q7_78slerp[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(q7_78slerp[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(q7_78slerp[Quaternion::Axis::W], expectedW)) ;
+            }
+        }
+
+        // NLERP.
+        {
+            bool isShortestPath = true ;
+            Quaternion q8a(-0.274f, 0.35f, -0.279f, 0.2999f) ;
+            q8a.normalize() ;
+
+            Quaternion q8b(-0.68f, -0.107f, 0.08f, 0.911f) ;
+            q8b.normalize() ;
+
+            Quaternion q8_43nlerp = Quaternion::nlerp(0.43f, q8a, q8b, isShortestPath) ;
+
+            {
+                /*
+                 Values from Ogre3D (no method in Octave for NLERP...).
+                */
+                Scalar expectedX = -0.577006f ;
+                Scalar expectedY =  0.32549f ;
+                Scalar expectedZ = -0.261695f ;
+                Scalar expectedW =  0.70188f ;
+
+                check(compare(q8_43nlerp[Quaternion::Axis::X], expectedX)) ;
+                check(compare(q8_43nlerp[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(q8_43nlerp[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(q8_43nlerp[Quaternion::Axis::W], expectedW)) ;
+            }
+
+
+            Quaternion q8_68nlerp = Quaternion::nlerp(0.68f, q8a, q8b, isShortestPath) ;
+
+            {
+                /*
+                 Values from Ogre3D (no method in Octave for NLERP...).
+                */
+                Scalar expectedX = -0.607693f ;
+                Scalar expectedY =  0.134732f ;
+                Scalar expectedZ = -0.110882f ;
+                Scalar expectedW =  0.774765f ;
+
+                check(compare(q8_68nlerp[Quaternion::Axis::X], expectedX)) ;
+                check(compare(q8_68nlerp[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(q8_68nlerp[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(q8_68nlerp[Quaternion::Axis::W], expectedW)) ;
+            }
+        }
     }
 
     void UTQuaternion::operators() {

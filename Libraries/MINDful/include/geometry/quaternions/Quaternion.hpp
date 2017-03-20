@@ -170,7 +170,7 @@ namespace Mind {
              * @remark The interpolations are NOT commutative!
              * @see    nlerp
              */
-            Quaternion slerp(
+            static Quaternion slerp(
                 const Scalar& time,
                 const Quaternion& from,
                 const Quaternion& to,
@@ -191,7 +191,7 @@ namespace Mind {
              * @remark The interpolations ARE commutative!
              * @see    slerp
              */
-            Quaternion nlerp(
+            static Quaternion nlerp(
                 const Scalar& time,
                 const Quaternion& from,
                 const Quaternion& to,
