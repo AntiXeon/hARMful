@@ -89,13 +89,14 @@ namespace Mind {
         Scalar resultX ;
         Scalar resultY ;
         Scalar resultZ ;
+        Scalar resultW ;
         // Avoid a division by zero...
         if (std::abs(normV) < Epsilon) {
-            Scalar resultW = expW ;
+            resultW = expW ;
             vectorPart *= expW ;
         }
         else {
-            Scalar resultW = angleCos * expW ;
+            resultW = angleCos * expW ;
             Scalar coeff = expW * (angleSin / normV) ;
             vectorPart *= coeff ;
         }
