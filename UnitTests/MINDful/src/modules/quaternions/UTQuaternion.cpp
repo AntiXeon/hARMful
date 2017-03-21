@@ -348,26 +348,240 @@ namespace UTMind {
     }
 
     void UTQuaternion::operators() {
-        // Product.
+        // Access.
         {
-            Quaternion q1(-0.47f, 0.1474f, 0.657f, 0.24f) ;
-            Quaternion q2(-0.24f, 0.3f, -0.176f, -0.709f) ;
-            Quaternion qr = q1 * q2 ;
+            // Variable quaternion.
+            Scalar varQ_x = 0.9f ;
+            Scalar varQ_y = 0.5f ;
+            Scalar varQ_z = 0.7f ;
+            Scalar varQ_w = 0.0f ;
+            Quaternion varQ(varQ_x, varQ_y, varQ_z, varQ_w) ;
+
+            check(varQ[Quaternion::Axis::X] == varQ_x) ;
+            check(varQ[Quaternion::Axis::Y] == varQ_y) ;
+            check(varQ[Quaternion::Axis::Z] == varQ_z) ;
+            check(varQ[Quaternion::Axis::W] == varQ_w) ;
+
+            varQ[Quaternion::Axis::W] = varQ_z ;
+            check(varQ[Quaternion::Axis::W] == varQ_z) ;
+
+            // Constant quaternion.
+            Scalar constQ_x = 0.7f ;
+            Scalar constQ_y = 0.1f ;
+            Scalar constQ_z = 0.5f ;
+            Scalar constQ_w = 0.9f ;
+            const Quaternion constQ(constQ_x, constQ_y, constQ_z, constQ_w) ;
+
+            check(constQ[Quaternion::Axis::X] == constQ_x) ;
+            check(constQ[Quaternion::Axis::Y] == constQ_y) ;
+            check(constQ[Quaternion::Axis::Z] == constQ_z) ;
+            check(constQ[Quaternion::Axis::W] == constQ_w) ;
+        }
+
+        // Affectation.
+        {
+            Scalar origQ_x = 0.9f ;
+            Scalar origQ_y = 0.5f ;
+            Scalar origQ_z = 0.7f ;
+            Scalar origQ_w = 0.0f ;
+            Quaternion origQ(origQ_x, origQ_y, origQ_z, origQ_w) ;
+
+            Quaternion copyQ = origQ ;
+            check(copyQ[Quaternion::Axis::X] == origQ_x) ;
+            check(copyQ[Quaternion::Axis::Y] == origQ_y) ;
+            check(copyQ[Quaternion::Axis::Z] == origQ_z) ;
+            check(copyQ[Quaternion::Axis::W] == origQ_w) ;
+
+            check(origQ[Quaternion::Axis::X] == origQ_x) ;
+            check(origQ[Quaternion::Axis::Y] == origQ_y) ;
+            check(origQ[Quaternion::Axis::Z] == origQ_z) ;
+            check(origQ[Quaternion::Axis::W] == origQ_w) ;
+        }
+
+        // Sum.
+        {
+            Quaternion qa(-0.8f, -0.2f, 0.9f, 0.2f) ;
+            Quaternion qb(-0.5f, 0.2f, 0.7f, -0.1f) ;
+            Quaternion qr = qa + qb ;
 
             /*
-            Octave result:
-            >> q1 .* q2
-            ans = -0.2115 + 0.05259i - 0.2729j - 0.6137k
+            Octave result (commutative):
+            >> qr = qa + qb
+            qr = 0.1 - 1.3i + 0j + 1.6k
             */
-            Scalar expectedX =  0.0525876f ;
-            Scalar expectedY = -0.2729066 ;
-            Scalar expectedZ = -0.613677 ;
-            Scalar expectedW = -0.211548 ;
+            Scalar expectedX = -1.3f ;
+            Scalar expectedY =  0.f ;
+            Scalar expectedZ =  1.6f ;
+            Scalar expectedW =  0.1f ;
 
             check(compare(qr[Quaternion::Axis::X], expectedX)) ;
             check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
             check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
             check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+            qr = qb + qa ;
+            check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+            check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+            qa += qb ;
+            check(compare(qa[Quaternion::Axis::X], expectedX)) ;
+            check(compare(qa[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(qa[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(qa[Quaternion::Axis::W], expectedW)) ;
         }
+
+        // Difference / Negate.
+        {
+            Quaternion qa(-0.8f, -0.2f, 0.9f, 0.2f) ;
+            Quaternion qb(-0.5f, 0.2f, 0.7f, -0.1f) ;
+            Quaternion qr = qa - qb ;
+
+            {
+                /*
+                Octave result:
+                >> qr = qa - qb
+                qr = 0.3 - 0.3i - 0.4j + 0.2k
+                */
+                Scalar expectedX = -0.3f ;
+                Scalar expectedY = -0.4f ;
+                Scalar expectedZ =  0.2f ;
+                Scalar expectedW =  0.3f ;
+
+                check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+                check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+
+                Quaternion copyQa = qa ;
+                copyQa -= qb ;
+                check(compare(copyQa[Quaternion::Axis::X], expectedX)) ;
+                check(compare(copyQa[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(copyQa[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(copyQa[Quaternion::Axis::W], expectedW)) ;
+            }
+
+            {
+                /*
+                Octave result:
+                >> qr = qr - qa
+                qr = -0.3 + 0.3i + 0.4j - 0.2k
+                */
+                Scalar expectedX =  0.3f ;
+                Scalar expectedY =  0.4f ;
+                Scalar expectedZ = -0.2f ;
+                Scalar expectedW = -0.3f ;
+
+                qr = qb - qa ;
+                check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+                check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+
+                qr = -qr ;
+                check(compare(qr[Quaternion::Axis::X], -expectedX)) ;
+                check(compare(qr[Quaternion::Axis::Y], -expectedY)) ;
+                check(compare(qr[Quaternion::Axis::Z], -expectedZ)) ;
+                check(compare(qr[Quaternion::Axis::W], -expectedW)) ;
+            }
+        }
+
+        // Scalar product of quaternion.
+        {
+            Quaternion q(0.2f, 0.8f, -0.4f, 0.7f) ;
+            Scalar product = 0.8f ;
+            Quaternion qr = q * product ;
+
+            /*
+            Octave result:
+            >> qr = 0.8 * q
+            qr = 0.56 + 0.16i + 0.64j - 0.32k
+            */
+            Scalar expectedX =  0.16f ;
+            Scalar expectedY =  0.64f ;
+            Scalar expectedZ = -0.32f ;
+            Scalar expectedW =  0.56f ;
+
+            check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+            check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+
+            q *= product ;
+
+            check(compare(q[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q[Quaternion::Axis::W], expectedW)) ;
+        }
+
+        // Quaternion product.
+        {
+            Quaternion qa(-0.47f, 0.1474f, 0.657f, 0.24f) ;
+            Quaternion qb(-0.24f, 0.3f, -0.176f, -0.709f) ;
+
+            {
+                Quaternion qr = qa * qb ;
+
+                /*
+                Octave result:
+                >> qr = qa .* qb
+                qr = -0.2115 + 0.05259i - 0.2729j - 0.6137k
+                */
+                Scalar expectedX =  0.0525876f ;
+                Scalar expectedY = -0.2729066f ;
+                Scalar expectedZ = -0.613677f ;
+                Scalar expectedW = -0.211548f ;
+
+                check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+                check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+
+                Quaternion copyQa = qa ;
+                copyQa *= qb ;
+                check(compare(copyQa[Quaternion::Axis::X], expectedX)) ;
+                check(compare(copyQa[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(copyQa[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(copyQa[Quaternion::Axis::W], expectedW)) ;
+            }
+
+            {
+                Quaternion qr = qb * qa ;
+
+                /*
+                Octave result:
+                >> qr = qb .* qa
+                qr = -0.2115 + 0.4987i + 0.2079j - 0.4024k
+                */
+                Scalar expectedX =  0.4986724f ;
+                Scalar expectedY =  0.2078934f ;
+                Scalar expectedZ = -0.402429f ;
+                Scalar expectedW = -0.211548f ;
+
+                check(compare(qr[Quaternion::Axis::X], expectedX)) ;
+                check(compare(qr[Quaternion::Axis::Y], expectedY)) ;
+                check(compare(qr[Quaternion::Axis::Z], expectedZ)) ;
+                check(compare(qr[Quaternion::Axis::W], expectedW)) ;
+            }
+        }
+
+        // Not working yet (see cross product from SIMD Vector4f).
+        // // Vector rotation by product with a quaternion.
+        // {
+        //     Vector3f vec(1.f, 0.f, 0.f) ;
+        //     Quaternion q(-0.813f, 0.481f, 0.201f, 0.258f) ;
+        //     Vector3f rotatedVec = q * vec ;
+        //
+        //     /*
+        //      Values from Ogre3D (no method in Octave for vector rotation...).
+        //     */
+        //     Scalar expectedX =  0.456476f ;
+        //     Scalar expectedY = -0.67839f ;
+        //     Scalar expectedZ = -0.575022f ;
+        //
+        //     check(compare(rotatedVec.getX(), expectedX)) ;
+        //     check(compare(rotatedVec.getY(), expectedY)) ;
+        //     check(compare(rotatedVec.getZ(), expectedZ)) ;
+        // }
     }
 }
