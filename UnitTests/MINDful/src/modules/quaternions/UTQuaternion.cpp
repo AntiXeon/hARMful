@@ -298,6 +298,26 @@ namespace UTMind {
                 check(compare(q8_68nlerp[Quaternion::Axis::W], expectedW)) ;
             }
         }
+
+        // Closeness.
+        {
+            Quaternion nearA(0.278f, -0.456f, 0.755f, -0.38f) ;
+            nearA.normalize() ;
+            Quaternion nearB(-0.281f, 0.455f, -0.756f, 0.382f) ;
+            nearB.normalize() ;
+
+            check(nearA.closeTo(nearB, 1e-2f)) ;
+            check(nearB.closeTo(nearA, 1e-2f)) ;
+            check(!nearA.closeTo(nearB, 1e-3f)) ;
+            check(!nearB.closeTo(nearA, 1e-3f)) ;
+
+            Quaternion far(0.713f, -0.188f, 0.178f, 0.651f) ;
+            far.normalize() ;
+            check(!nearA.closeTo(far, 1e-2f)) ;
+            check(!far.closeTo(nearA, 1e-2f)) ;
+            check(!nearB.closeTo(far, 1e-2f)) ;
+            check(!far.closeTo(nearB, 1e-2f)) ;
+        }
     }
 
     void UTQuaternion::operators() {
