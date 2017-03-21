@@ -14,8 +14,6 @@ namespace Mind {
         m_values = SIMD::Vector4f(0.f, 0.f, 0.f, 0.f) ;
     }
 
-    Quaternion::Quaternion(const Quaternion& other) : m_values(other.m_values) {}
-
     Quaternion::Quaternion(const SIMD::Vector4f& values) : m_values(values) {}
 
     Quaternion::Quaternion(
@@ -42,8 +40,6 @@ namespace Mind {
     ) {
         from(xAxis, yAxis, zAxis) ;
     }
-
-    Quaternion::~Quaternion() {}
 
     Scalar Quaternion::dot(const Quaternion& other) const {
         return m_values.dot(other.m_values) ;
@@ -468,11 +464,6 @@ namespace Mind {
     Scalar& Quaternion::operator[](const Axis& axis) {
         float* valuesArray = (float*) m_values ;
         return valuesArray[axis] ;
-    }
-
-    Quaternion& Quaternion::operator=(const Quaternion& other) {
-        m_values = other.m_values ;
-        return *this ;
     }
 
     Quaternion& Quaternion::operator+=(const Quaternion& other) {

@@ -5,10 +5,6 @@
 namespace Mind {
     Dimension3Df::Dimension3Df() : m_width(0), m_height(0), m_depth(0) {}
 
-    Dimension3Df::Dimension3Df(const Dimension3Df& copied) : m_width(copied.m_width),
-                                                             m_height(copied.m_height),
-                                                             m_depth(copied.m_depth) {}
-
     Dimension3Df::Dimension3Df(
         const Scalar& width,
         const Scalar& height,
@@ -16,8 +12,6 @@ namespace Mind {
     ) : m_width(width),
         m_height(height),
         m_depth(depth) {}
-
-    Dimension3Df::~Dimension3Df() {}
 
     void Dimension3Df::absolute() {
         m_width = std::fabs(m_width) ;
@@ -94,16 +88,6 @@ namespace Mind {
         m_width /= coeff ;
         m_height /= coeff ;
         m_depth /= coeff ;
-        return *this ;
-    }
-
-    Dimension3Df& Dimension3Df::operator=(const Dimension3Df& other) {
-        if (this != &other) {
-            m_width = other.m_width ;
-            m_height = other.m_height ;
-            m_depth = other.m_depth ;
-        }
-
         return *this ;
     }
 

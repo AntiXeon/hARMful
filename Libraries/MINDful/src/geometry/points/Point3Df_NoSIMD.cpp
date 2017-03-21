@@ -11,10 +11,6 @@ const int Z = 2 ;
 namespace Mind {
     Point3Df::Point3Df() : m_x(0.f), m_y(0.f), m_z(0.f) {}
 
-    Point3Df::Point3Df(const Point3Df& copied) : m_x(copied.m_x),
-                                                 m_y(copied.m_y),
-                                                 m_z(copied.m_z) {}
-
     Point3Df::Point3Df(
         const Scalar& x,
         const Scalar& y,
@@ -22,8 +18,6 @@ namespace Mind {
     ) : m_x(x),
         m_y(y),
         m_z(z) {}
-
-    Point3Df::~Point3Df() {}
 
     void Point3Df::translate(const Scalar& x, const Scalar& y, const Scalar& z) {
         m_x += x ;
@@ -170,16 +164,6 @@ namespace Mind {
         m_x /= coeff ;
         m_y /= coeff ;
         m_z /= coeff ;
-        return *this ;
-    }
-
-    Point3Df& Point3Df::operator=(const Point3Df& other) {
-        if (this != &other) {
-            m_x = other.m_x ;
-            m_y = other.m_y ;
-            m_z = other.m_z ;
-        }
-
         return *this ;
     }
 

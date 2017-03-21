@@ -5,15 +5,6 @@
 namespace Mind {
     Rectangle2Df::Rectangle2Df() : Rectangle2Df(0.f, 0.f, 0.f, 0.f, false) {}
 
-    Rectangle2Df::Rectangle2Df(const Rectangle2Df& copied)
-        : Rectangle2Df(
-            copied.getBottomLeftCornerX(),
-            copied.getBottomLeftCornerY(),
-            copied.getWidth(),
-            copied.getHeight(),
-            copied.m_isCentered
-        ) {}
-
     Rectangle2Df::Rectangle2Df(
         const Point2Df& location,
         const Dimension2Df& size,
@@ -76,8 +67,6 @@ namespace Mind {
         m_size = Dimension2Df(minMax_X.second - minMax_X.first,
                                 minMax_Y.second - minMax_Y.first) ;
     }
-
-    Rectangle2Df::~Rectangle2Df() {}
 
     void Rectangle2Df::translate(
         const Scalar& x,

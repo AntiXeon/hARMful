@@ -18,14 +18,6 @@ namespace Mind {
             0.f
         ) {}
 
-    Quaternion::Quaternion(const Quaternion& other):
-        Quaternion(
-            other.m_values[Axis::X],
-            other.m_values[Axis::Y],
-            other.m_values[Axis::Z],
-            other.m_values[Axis::W]
-        ) {}
-
     Quaternion::Quaternion(
         const Scalar& x,
         const Scalar& y,
@@ -53,8 +45,6 @@ namespace Mind {
     ) {
         from(xAxis, yAxis, zAxis) ;
     }
-
-    Quaternion::~Quaternion() {}
 
     Scalar Quaternion::dot(const Quaternion& other) const {
         return (m_values[Axis::X] * other.m_values[Axis::X]) +
@@ -416,11 +406,6 @@ namespace Mind {
 
     Scalar& Quaternion::operator[](const Axis& axis) {
         return m_values[axis] ;
-    }
-
-    Quaternion& Quaternion::operator=(const Quaternion& other) {
-        m_values = other.m_values ;
-        return *this ;
     }
 
     Quaternion& Quaternion::operator+=(const Quaternion& other) {

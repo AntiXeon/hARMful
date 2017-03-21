@@ -60,7 +60,13 @@ namespace Mind {
              * Copy a Rectangle.
              * @param   copied      The Rectangle to be copied.
              */
-            Rectangle2Df(const Rectangle2Df& copied) ;
+            Rectangle2Df(const Rectangle2Df& copied) = default ;
+
+            /**
+             * Move a Rectangle.
+             * @param   moved      The Rectangle to be move.
+             */
+            Rectangle2Df(Rectangle2Df&& moved) = default ;
 
             /**
              * Create a Rectangle at the given position and with the given size.
@@ -119,7 +125,7 @@ namespace Mind {
             ) ;
 
             /** Destroy the Rectangle. */
-            virtual ~Rectangle2Df() ;
+            virtual ~Rectangle2Df() = default ;
 
             /**
              * Translate the rectangle on the X and the Y axis.
@@ -316,6 +322,12 @@ namespace Mind {
              * @return  The current Rectangle with the copied values.
              */
             Rectangle2Df& operator=(const Rectangle2Df& other) ;
+
+            /**
+             * Assignment operator to move a Rectangle.
+             * @return  The current Rectangle with the moved values.
+             */
+            Rectangle2Df& operator=(Rectangle2Df&& other) = default ;
 
             /**
              * Add a Point and affect the result.

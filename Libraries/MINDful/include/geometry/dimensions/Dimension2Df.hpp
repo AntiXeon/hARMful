@@ -29,20 +29,11 @@ namespace Mind {
             Dimension2Df() ;
 
             /**
-             * Copy a Dimension object.
-             * @param   copied  The Dimension to copy.
-             */
-            Dimension2Df(const Dimension2Df& copied) ;
-
-            /**
              * Create a Dimension with the given sizes.
              * @param   width   Width to set the size of the element.
              * @param   height  Height to set the size of the element.
              */
             Dimension2Df(const Scalar& width, const Scalar& height) ;
-
-            /** Destroy the Dimension. */
-            virtual ~Dimension2Df() ;
 
             /** Set the Dimension as absolute values. */
             void absolute() ;
@@ -114,12 +105,6 @@ namespace Mind {
              */
             Dimension2Df& operator/=(const Scalar& coeff) ;
 
-
-            /**
-             * Assignment operator to copy a Dimension.
-             * @return  The current Dimension with the copied values.
-             */
-            Dimension2Df& operator=(const Dimension2Df& other) ;
 
             /**
              * Test if two Dimension have the same size.

@@ -32,21 +32,12 @@ namespace Mind {
             Dimension3Df() ;
 
             /**
-             * Copy a Dimension object.
-             * @param   copied  The Dimension to copy.
-             */
-            Dimension3Df(const Dimension3Df& copied) ;
-
-            /**
              * Create a Dimension with the given sizes.
              * @param   width   Width to set the size of the element.
              * @param   height  Height to set the size of the element.
              * @param   depth   Depth to set the size of the element.
              */
             Dimension3Df(const Scalar& width, const Scalar& height, const Scalar& depth) ;
-
-            /** Destroy the Dimension. */
-            virtual ~Dimension3Df() ;
 
 
             /** Set the Dimension as absolute values. */
@@ -129,12 +120,6 @@ namespace Mind {
              * @return  The result of the division.
              */
             Dimension3Df& operator/=(const Scalar& coeff) ;
-
-            /**
-             * Assignment operator to copy a Dimension.
-             * @return  The current Dimension with the copied values.
-             */
-            Dimension3Df& operator=(const Dimension3Df& other) ;
 
             /**
              * Test if two Dimension have the same size.

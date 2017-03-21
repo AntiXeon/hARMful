@@ -40,20 +40,11 @@ namespace Mind {
             Point2Df() ;
 
             /**
-             * Copy a Point.
-             * @param   copied  The Point to copy.
-             */
-            Point2Df(const Point2Df& copied) ;
-
-            /**
              * Create a Point at the given position.
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              */
             Point2Df(const Scalar& x, const Scalar& y) ;
-
-            /** Destroy the Point. */
-            virtual ~Point2Df() ;
 
             /**
              * Translate a point of the given offsets.
@@ -214,12 +205,6 @@ namespace Mind {
              * @return  The result of the division.
              */
             Point2Df& operator/=(const Scalar& coeff) ;
-
-            /**
-             * Assignment operator to copy a Point.
-             * @return  The current Point with the copied values.
-             */
-            Point2Df& operator=(const Point2Df& other) ;
 
             /**
              * Test if two Points are at the same position.

@@ -15,13 +15,9 @@ namespace Mind {
 
     Point3Df::Point3Df(const SIMD::Vector4f& values) : m_values(values) {}
 
-    Point3Df::Point3Df(const Point3Df& copied) : m_values(copied.m_values) {}
-
     Point3Df::Point3Df(const Scalar& x, const Scalar& y, const Scalar& z) {
        m_values = SIMD::Vector4f(x, y, z, 0.f) ;
     }
-
-    Point3Df::~Point3Df() {}
 
     void Point3Df::translate(const Scalar& x, const Scalar& y, const Scalar& z) {
         m_values += SIMD::Vector4f(x, y, z, 0.f) ;
@@ -143,14 +139,6 @@ namespace Mind {
 
     Point3Df& Point3Df::operator/=(const Scalar& coeff) {
         m_values /= coeff ;
-        return *this ;
-    }
-
-    Point3Df& Point3Df::operator=(const Point3Df& other) {
-        if (this != &other) {
-            m_values = other.m_values ;
-        }
-
         return *this ;
     }
 

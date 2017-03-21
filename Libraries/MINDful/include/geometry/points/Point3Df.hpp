@@ -42,21 +42,12 @@ namespace Mind {
             Point3Df() ;
 
             /**
-             * Copy a Point.
-             * @param   copied  The Point to copy.
-             */
-            Point3Df(const Point3Df& copied) ;
-
-            /**
              * Create a Point at the given position.
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
             Point3Df(const Scalar& x, const Scalar& y, const Scalar& z) ;
-
-            /** Destroy the Point. */
-            virtual ~Point3Df() ;
 
             /**
              * Translate a point of the given offsets.
@@ -211,13 +202,6 @@ namespace Mind {
              * @return  The result of the division.
              */
             Point3Df& operator/=(const Scalar& coeff) ;
-
-
-            /**
-             * Assignment operator to copy a Point.
-             * @return  The current Point with the copied values.
-             */
-            Point3Df& operator=(const Point3Df& other) ;
 
             /**
              * Test if two Points are at the same position.

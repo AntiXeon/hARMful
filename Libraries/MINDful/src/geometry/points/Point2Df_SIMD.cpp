@@ -15,13 +15,9 @@ namespace Mind {
 
     Point2Df::Point2Df(const SIMD::Vector4f& values) : m_values(values) {}
 
-    Point2Df::Point2Df(const Point2Df& copied) : m_values(copied.m_values) {}
-
     Point2Df::Point2Df(const Scalar& x, const Scalar& y) {
        m_values = SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
-
-    Point2Df::~Point2Df() {}
 
     void Point2Df::translate(const Scalar& x, const Scalar& y) {
         m_values += SIMD::Vector4f(x, y, 0.f, 0.f) ;
@@ -179,14 +175,6 @@ namespace Mind {
 
     Point2Df& Point2Df::operator/=(const Scalar& coeff) {
         m_values /= coeff ;
-        return *this ;
-    }
-
-    Point2Df& Point2Df::operator=(const Point2Df& other) {
-        if (this != &other) {
-            m_values = other.m_values ;
-        }
-
         return *this ;
     }
 

@@ -3,26 +3,17 @@
 #include <Math.hpp>
 
 namespace Mind {
-    Line2Df::Line2Df() : m_isChanged(false) {
+    Line2Df::Line2Df() {
         m_length = 0.f ;
-    }
-
-    Line2Df::Line2Df(const Line2Df& copied) : m_start(copied.m_start),
-                                              m_end(copied.m_end),
-                                              m_isChanged(false) {
-        m_length = Point2Df::distance(m_start, m_end) ;
     }
 
     Line2Df::Line2Df(
         const Point2Df& start,
         const Point2Df& end
     ) : m_start(start),
-        m_end(end),
-        m_isChanged(false) {
+        m_end(end) {
         m_length = Point2Df::distance(m_start, m_end) ;
     }
-
-    Line2Df::~Line2Df() {}
 
     Scalar Line2Df::length() {
         if (m_isChanged) {

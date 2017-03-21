@@ -5,16 +5,11 @@
 namespace Mind {
     Dimension2Df::Dimension2Df() : m_width(0.f), m_height(0.f) {}
 
-    Dimension2Df::Dimension2Df(const Dimension2Df& copied) : m_width(copied.m_width),
-                                                             m_height(copied.m_height) {}
-
     Dimension2Df::Dimension2Df(
         const Scalar& width,
         const Scalar& height
     ): m_width(width),
        m_height(height) {}
-
-    Dimension2Df::~Dimension2Df() {}
 
     void Dimension2Df::absolute() {
         m_width = std::fabs(m_width) ;
@@ -73,15 +68,6 @@ namespace Mind {
     Dimension2Df& Dimension2Df::operator/=(const Scalar& coeff) {
         m_width /= coeff ;
         m_height /= coeff ;
-        return *this ;
-    }
-
-    Dimension2Df& Dimension2Df::operator=(const Dimension2Df& other) {
-        if (this != &other) {
-            m_width = other.m_width ;
-            m_height = other.m_height ;
-        }
-
         return *this ;
     }
 

@@ -25,7 +25,7 @@ namespace Mind {
             Point2Df m_end ;
 
             /** Test if the Line has changed. */
-            bool m_isChanged ;
+            bool m_isChanged = false ;
 
             /** Length of the Line. */
             Scalar m_length ;
@@ -38,7 +38,13 @@ namespace Mind {
              * Copy a Line.
              * @param   copied      Line to copy.
              */
-            Line2Df(const Line2Df& copied) ;
+            Line2Df(const Line2Df& copied) = default ;
+
+            /**
+             * Move a Line.
+             * @param   moved       Line to move.
+             */
+            Line2Df(Line2Df&& moved) = default ;
 
             /**
              * Create an Line through the given points.
@@ -48,7 +54,7 @@ namespace Mind {
             Line2Df(const Point2Df& start, const Point2Df& end) ;
 
             /** Destroy the Line. */
-            virtual ~Line2Df() ;
+            virtual ~Line2Df() = default ;
 
             /**
              * Get the length of the Line.
@@ -173,6 +179,12 @@ namespace Mind {
              * @return  The current Line with the copied values.
              */
             Line2Df& operator=(const Line2Df& other) ;
+
+            /**
+             * Assignment operator to move a Line.
+             * @return  The current Line with the moved values.
+             */
+            Line2Df& operator=(Line2Df&& other) = default ;
 
             /**
              * Test if two Lines are at the same position.

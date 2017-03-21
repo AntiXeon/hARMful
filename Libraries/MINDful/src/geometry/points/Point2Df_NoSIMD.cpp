@@ -11,13 +11,8 @@ const int Y = 1 ;
 namespace Mind {
     Point2Df::Point2Df() : m_x(0.f), m_y(0.f) {}
 
-    Point2Df::Point2Df(const Point2Df& copied) : m_x(copied.m_x),
-                                                 m_y(copied.m_y) {}
-
     Point2Df::Point2Df(const Scalar& x, const Scalar& y) : m_x(x),
                                                            m_y(y) {}
-
-    Point2Df::~Point2Df() {}
 
     void Point2Df::translate(const Scalar& x, const Scalar& y) {
         m_x += x ;
@@ -168,15 +163,6 @@ namespace Mind {
     Point2Df& Point2Df::operator/=(const Scalar& coeff) {
         m_x /= coeff ;
         m_y /= coeff ;
-        return *this ;
-    }
-
-    Point2Df& Point2Df::operator=(const Point2Df& other) {
-        if (this != &other) {
-            m_x = other.m_x ;
-            m_y = other.m_y ;
-        }
-
         return *this ;
     }
 

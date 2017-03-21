@@ -64,12 +64,6 @@ namespace Mind {
             Quaternion() ;
 
             /**
-             * Copy constructor of a Quaternion.
-             * @param other The Quaternion to copy.
-             */
-            Quaternion(const Quaternion& other) ;
-
-            /**
              * Create a Quaternion from the given value, as is.
              * @param   x   Individual value of coordinate X.
              * @param   y   Individual value of coordinate Y.
@@ -108,11 +102,6 @@ namespace Mind {
                 const Vector3f& yAxis,
                 const Vector3f& zAxis
             ) ;
-
-            /**
-             * Destruction of a quaternion.
-             */
-            virtual ~Quaternion() ;
 
             /**
              * Dot product between the current Quaternion and another one.
@@ -301,15 +290,6 @@ namespace Mind {
              * @return       Value of the component on the wanted @a axis.
              */
             Scalar& operator[](const Axis& axis) ;
-
-            /**
-             * Set the value of the other Quaternion into the current one.
-             * @param  other Another Quaternion for which the values are copied
-             *               into the current one.
-             * @return       Reference on the current Quaternion once it has
-             *               been affected.
-             */
-            Quaternion& operator=(const Quaternion& other) ;
 
             /**
              * Addition of two Quaternions.
