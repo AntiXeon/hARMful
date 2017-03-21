@@ -299,6 +299,33 @@ namespace UTMind {
             }
         }
 
+        // Swap.
+        {
+            Scalar q9a_x = 0.1f ;
+            Scalar q9a_y = 0.2f ;
+            Scalar q9a_z = 0.3f ;
+            Scalar q9a_w = 0.4f ;
+            Quaternion q9a(q9a_x, q9a_y, q9a_z, q9a_w) ;
+
+            Scalar q9b_x = 0.5f ;
+            Scalar q9b_y = 0.6f ;
+            Scalar q9b_z = 0.7f ;
+            Scalar q9b_w = 0.8f ;
+            Quaternion q9b(q9b_x, q9b_y, q9b_z, q9b_w) ;
+
+            q9a.swap(q9b) ;
+
+            check(q9a[Quaternion::Axis::X] == q9b_x) ;
+            check(q9a[Quaternion::Axis::Y] == q9b_y) ;
+            check(q9a[Quaternion::Axis::Z] == q9b_z) ;
+            check(q9a[Quaternion::Axis::W] == q9b_w) ;
+
+            check(q9b[Quaternion::Axis::X] == q9a_x) ;
+            check(q9b[Quaternion::Axis::Y] == q9a_y) ;
+            check(q9b[Quaternion::Axis::Z] == q9a_z) ;
+            check(q9b[Quaternion::Axis::W] == q9a_w) ;
+        }
+
         // Closeness.
         {
             Quaternion nearA(0.278f, -0.456f, 0.755f, -0.38f) ;
