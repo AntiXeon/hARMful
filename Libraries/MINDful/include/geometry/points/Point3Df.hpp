@@ -47,7 +47,7 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            Point3Df(const Scalar& x, const Scalar& y, const Scalar& z) ;
+            Point3Df(Scalar x, Scalar y, Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
@@ -55,7 +55,7 @@ namespace Mind {
              * @param   y   Offset on Y axis.
              * @param   z   Offset on Z axis.
              */
-            void translate(const Scalar& x, const Scalar& y, const Scalar& z) ;
+            void translate(Scalar x, Scalar y, Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
@@ -147,13 +147,13 @@ namespace Mind {
             Array4f& getCoordinates(Array4f& output) const ;
 
             /** Set the X coordinate. */
-            void setX(const Scalar& x) ;
+            void setX(Scalar x) ;
 
             /** Set the Y coordinate. */
-            void setY(const Scalar& y) ;
+            void setY(Scalar y) ;
 
             /** Set the Z coordinate. */
-            void setZ(const Scalar& z) ;
+            void setZ(Scalar z) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -161,7 +161,7 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            void set(const Scalar& x, const Scalar& y, const Scalar& z) ;
+            void set(Scalar x, Scalar y, Scalar z) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -194,14 +194,14 @@ namespace Mind {
              * @param   coeff   The coeff to multiply the Point coordinates by.
              * @return  The result of the multiplication.
              */
-            Point3Df& operator*=(const Scalar& coeff) ;
+            Point3Df& operator*=(Scalar coeff) ;
 
             /**
              * Divide a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Point coordinates by.
              * @return  The result of the division.
              */
-            Point3Df& operator/=(const Scalar& coeff) ;
+            Point3Df& operator/=(Scalar coeff) ;
 
             /**
              * Test if two Points are at the same position.
@@ -255,7 +255,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x * coeff, a.y * coeff).
              */
-            friend Point3Df operator*(const Point3Df& p, const Scalar& coeff) ;
+            friend Point3Df operator*(const Point3Df& p, Scalar coeff) ;
 
             /**
              * Divide a Point coordinates by a scalar value (scale).
@@ -263,7 +263,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x / coeff, a.y / coeff).
              */
-            friend Point3Df operator/(const Point3Df& p, const Scalar& coeff) ;
+            friend Point3Df operator/(const Point3Df& p, Scalar coeff) ;
 
             /**
              * Echo the Point coordinates on console.

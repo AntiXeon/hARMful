@@ -12,14 +12,14 @@ namespace Mind {
     Point3Df::Point3Df() : m_x(0.f), m_y(0.f), m_z(0.f) {}
 
     Point3Df::Point3Df(
-        const Scalar& x,
-        const Scalar& y,
-        const Scalar& z
+        Scalar x,
+        Scalar y,
+        Scalar z
     ) : m_x(x),
         m_y(y),
         m_z(z) {}
 
-    void Point3Df::translate(const Scalar& x, const Scalar& y, const Scalar& z) {
+    void Point3Df::translate(Scalar x, Scalar y, Scalar z) {
         m_x += x ;
         m_y += y ;
         m_z += z ;
@@ -107,19 +107,19 @@ namespace Mind {
         return output ;
     }
 
-    void Point3Df::setX(const Scalar& x) {
+    void Point3Df::setX(Scalar x) {
         m_x = x ;
     }
 
-    void Point3Df::setY(const Scalar& y) {
+    void Point3Df::setY(Scalar y) {
         m_y = y ;
     }
 
-    void Point3Df::setZ(const Scalar& z) {
+    void Point3Df::setZ(Scalar z) {
         m_z = z ;
     }
 
-    void Point3Df::set(const Scalar& x, const Scalar& y, const Scalar& z) {
+    void Point3Df::set(Scalar x, Scalar y, Scalar z) {
         m_x = x ;
         m_y = y ;
         m_z = z ;
@@ -153,14 +153,14 @@ namespace Mind {
         return *this ;
     }
 
-    Point3Df& Point3Df::operator*=(const Scalar& coeff) {
+    Point3Df& Point3Df::operator*=(Scalar coeff) {
         m_x *= coeff ;
         m_y *= coeff ;
         m_z *= coeff ;
         return *this ;
     }
 
-    Point3Df& Point3Df::operator/=(const Scalar& coeff) {
+    Point3Df& Point3Df::operator/=(Scalar coeff) {
         m_x /= coeff ;
         m_y /= coeff ;
         m_z /= coeff ;
@@ -194,11 +194,11 @@ namespace Mind {
         return a.dot(b) ;
     }
 
-    Point3Df operator*(const Point3Df& p, const Scalar& coeff) {
+    Point3Df operator*(const Point3Df& p, Scalar coeff) {
         return Point3Df(p.m_x * coeff, p.m_y * coeff, p.m_z * coeff) ;
     }
 
-    Point3Df operator/(const Point3Df& p, const Scalar& coeff) {
+    Point3Df operator/(const Point3Df& p, Scalar coeff) {
         return Point3Df(p.m_x / coeff, p.m_y / coeff, p.m_z / coeff) ;
     }
 

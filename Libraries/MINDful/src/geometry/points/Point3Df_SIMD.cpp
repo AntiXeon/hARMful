@@ -15,11 +15,11 @@ namespace Mind {
 
     Point3Df::Point3Df(const SIMD::Vector4f& values) : m_values(values) {}
 
-    Point3Df::Point3Df(const Scalar& x, const Scalar& y, const Scalar& z) {
+    Point3Df::Point3Df(Scalar x, Scalar y, Scalar z) {
        m_values = SIMD::Vector4f(x, y, z, 0.f) ;
     }
 
-    void Point3Df::translate(const Scalar& x, const Scalar& y, const Scalar& z) {
+    void Point3Df::translate(Scalar x, Scalar y, Scalar z) {
         m_values += SIMD::Vector4f(x, y, z, 0.f) ;
     }
 
@@ -90,19 +90,19 @@ namespace Mind {
         return output ;
     }
 
-    void Point3Df::setX(const Scalar& x) {
+    void Point3Df::setX(Scalar x) {
         ((float*)m_values)[X] = x ;
     }
 
-    void Point3Df::setY(const Scalar& y) {
+    void Point3Df::setY(Scalar y) {
         ((float*)m_values)[Y] = y ;
     }
 
-    void Point3Df::setZ(const Scalar& z) {
+    void Point3Df::setZ(Scalar z) {
         ((float*)m_values)[Z] = z ;
     }
 
-    void Point3Df::set(const Scalar& x, const Scalar& y, const Scalar& z) {
+    void Point3Df::set(Scalar x, Scalar y, Scalar z) {
         ((float*)m_values)[X] = x ;
         ((float*)m_values)[Y] = y ;
         ((float*)m_values)[Z] = z ;
@@ -132,12 +132,12 @@ namespace Mind {
         return *this ;
     }
 
-    Point3Df& Point3Df::operator*=(const Scalar& coeff) {
+    Point3Df& Point3Df::operator*=(Scalar coeff) {
         m_values *= coeff ;
         return *this ;
     }
 
-    Point3Df& Point3Df::operator/=(const Scalar& coeff) {
+    Point3Df& Point3Df::operator/=(Scalar coeff) {
         m_values /= coeff ;
         return *this ;
     }
@@ -171,11 +171,11 @@ namespace Mind {
         return a.dot(b) ;
     }
 
-    Point3Df operator*(const Point3Df& p, const Scalar& coeff) {
+    Point3Df operator*(const Point3Df& p, Scalar coeff) {
         return Point3Df(p.m_values * coeff) ;
     }
 
-    Point3Df operator/(const Point3Df& p, const Scalar& coeff) {
+    Point3Df operator/(const Point3Df& p, Scalar coeff) {
         return Point3Df(p.m_values / coeff) ;
     }
 

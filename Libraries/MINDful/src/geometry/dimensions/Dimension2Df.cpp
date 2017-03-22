@@ -6,8 +6,8 @@ namespace Mind {
     Dimension2Df::Dimension2Df() : m_width(0.f), m_height(0.f) {}
 
     Dimension2Df::Dimension2Df(
-        const Scalar& width,
-        const Scalar& height
+        Scalar width,
+        Scalar height
     ): m_width(width),
        m_height(height) {}
 
@@ -25,15 +25,15 @@ namespace Mind {
         return m_height ;
     }
 
-    void Dimension2Df::setWidth(const Scalar& width) {
+    void Dimension2Df::setWidth(Scalar width) {
         m_width = std::fabs(width) ;
     }
 
-    void Dimension2Df::setHeight(const Scalar& height) {
+    void Dimension2Df::setHeight(Scalar height) {
         m_height = std::fabs(height) ;
     }
 
-    void Dimension2Df::set(const Scalar& width, const Scalar& height) {
+    void Dimension2Df::set(Scalar width, Scalar height) {
         m_width = std::fabs(width) ;
         m_height = std::fabs(height) ;
     }
@@ -59,13 +59,13 @@ namespace Mind {
         return *this ;
     }
 
-    Dimension2Df& Dimension2Df::operator*=(const Scalar& coeff) {
+    Dimension2Df& Dimension2Df::operator*=(Scalar coeff) {
         m_width *= coeff ;
         m_height *= coeff ;
         return *this ;
     }
 
-    Dimension2Df& Dimension2Df::operator/=(const Scalar& coeff) {
+    Dimension2Df& Dimension2Df::operator/=(Scalar coeff) {
         m_width /= coeff ;
         m_height /= coeff ;
         return *this ;
@@ -94,14 +94,14 @@ namespace Mind {
         ) ;
     }
 
-    Dimension2Df operator*(const Dimension2Df& d, const Scalar& coeff) {
+    Dimension2Df operator*(const Dimension2Df& d, Scalar coeff) {
         return Dimension2Df(
             d.getWidth() * coeff,
             d.getHeight() * coeff
         ) ;
     }
 
-    Dimension2Df operator/(const Dimension2Df& d, const Scalar& coeff) {
+    Dimension2Df operator/(const Dimension2Df& d, Scalar coeff) {
         return Dimension2Df(
             d.getWidth() / coeff,
             d.getHeight() / coeff

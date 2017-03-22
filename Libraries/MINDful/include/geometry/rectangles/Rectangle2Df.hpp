@@ -95,10 +95,10 @@ namespace Mind {
              *                      the given location.
              */
             Rectangle2Df(
-                const Scalar& x,
-                const Scalar& y,
-                const Scalar& w,
-                const Scalar& h,
+                Scalar x,
+                Scalar y,
+                Scalar w,
+                Scalar h,
                 bool centered
             ) ;
 
@@ -118,10 +118,10 @@ namespace Mind {
              * @param   y2          Coordinate on Y axis on second Point
              */
             Rectangle2Df(
-                const Scalar& x1,
-                const Scalar& y1,
-                const Scalar& x2,
-                const Scalar& y2
+                Scalar x1,
+                Scalar y1,
+                Scalar x2,
+                Scalar y2
             ) ;
 
             /** Destroy the Rectangle. */
@@ -132,7 +132,7 @@ namespace Mind {
              * @param   x    Horizontal shift.
              * @param   y    Vertical shift.
              */
-            void translate(const Scalar& x, const Scalar& y) ;
+            void translate(Scalar x, Scalar y) ;
 
             /**
              * Test if the given coordinate is inside the Line boundaries.
@@ -140,7 +140,7 @@ namespace Mind {
              * @param   y           Coordinate on Y axis.
              * @return  FALSE because a line has no area.
              */
-            bool contains(const Scalar& x, const Scalar& y) ;
+            bool contains(Scalar x, Scalar y) ;
 
             /**
              * Test if the given coordinate is inside the Rectangle
@@ -160,10 +160,10 @@ namespace Mind {
              * @return  FALSE because a line has no area.
              */
             bool contains(
-                const Scalar& x,
-                const Scalar& y,
-                const Scalar& w,
-                const Scalar& h
+                Scalar x,
+                Scalar y,
+                Scalar w,
+                Scalar h
             ) ;
 
             /**
@@ -183,10 +183,10 @@ namespace Mind {
              * @return  TRUE if the two Rectangles intersect, FALSE otherwise.
              */
             bool intersects(
-                const Scalar& x,
-                const Scalar& y,
-                const Scalar& w,
-                const Scalar& h
+                Scalar x,
+                Scalar y,
+                Scalar w,
+                Scalar h
             ) ;
 
             /**
@@ -213,7 +213,7 @@ namespace Mind {
              * @return  Bitmask of the positions where the Point is relatively
              *          to the Rectangle boundaries.
              */
-            char position(const Scalar& x, const Scalar& y) ;
+            char position(Scalar x, Scalar y) ;
 
             /**
              * Determine where the given Point lies in respect of the
@@ -298,19 +298,19 @@ namespace Mind {
             bool isEmpty() const ;
 
             /** Set the X location of the upper-left corner. */
-            void setX(const Scalar& x) ;
+            void setX(Scalar x) ;
 
             /** Set the Y location of the upper-left corner. */
-            void setY(const Scalar& y) ;
+            void setY(Scalar y) ;
 
             /** Set the location of the upper-left corner. */
-            void setAt(const Scalar& x, const Scalar& y) ;
+            void setAt(Scalar x, Scalar y) ;
 
             /** Set the width of the Rectangle. */
-            void setWidth(const Scalar& width) ;
+            void setWidth(Scalar width) ;
 
             /** Set the height of the Rectangle. */
-            void setHeight(const Scalar& height) ;
+            void setHeight(Scalar height) ;
 
         protected:
             /** Compute the bottom right corner that is cached. */

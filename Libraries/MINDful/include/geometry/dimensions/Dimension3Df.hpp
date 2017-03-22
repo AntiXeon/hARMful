@@ -37,7 +37,7 @@ namespace Mind {
              * @param   height  Height to set the size of the element.
              * @param   depth   Depth to set the size of the element.
              */
-            Dimension3Df(const Scalar& width, const Scalar& height, const Scalar& depth) ;
+            Dimension3Df(Scalar width, Scalar height, Scalar depth) ;
 
 
             /** Set the Dimension as absolute values. */
@@ -65,19 +65,19 @@ namespace Mind {
              * Set the width of the dimension.
              * @param   width   Width of the dimension.
              */
-            void setWidth(const Scalar& width) ;
+            void setWidth(Scalar width) ;
 
             /**
              * Set the height of the dimension.
              * @param   height  Height of the dimension.
              */
-            void setHeight(const Scalar& height) ;
+            void setHeight(Scalar height) ;
 
             /**
              * Set the depth of the dimension.
              * @param   depth   Depth of the dimension.
              */
-            void setDepth(const Scalar& depth) ;
+            void setDepth(Scalar depth) ;
 
             /**
              * Set the depth of the dimension.
@@ -85,7 +85,7 @@ namespace Mind {
              * @param   height  Height of the dimension.
              * @param   depth   Depth of the dimension.
              */
-            void set(const Scalar& width, const Scalar& height, const Scalar& depth) ;
+            void set(Scalar width, Scalar height, Scalar depth) ;
 
             /** Conversion from Dimension3D to Point3D. */
             operator Point3Df() ;
@@ -112,14 +112,14 @@ namespace Mind {
              * @param   coeff   The coeff to multiply the Dimension coordinates by.
              * @return  The result of the multiplication.
              */
-            Dimension3Df& operator*=(const Scalar& coeff) ;
+            Dimension3Df& operator*=(Scalar coeff) ;
 
             /**
              * Divide a Dimension by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Dimension coordinates by.
              * @return  The result of the division.
              */
-            Dimension3Df& operator/=(const Scalar& coeff) ;
+            Dimension3Df& operator/=(Scalar coeff) ;
 
             /**
              * Test if two Dimension have the same size.
@@ -157,7 +157,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (d.w * coeff, d.h * coeff).
              */
-            friend Dimension3Df operator*(const Dimension3Df& d, const Scalar& coeff) ;
+            friend Dimension3Df operator*(const Dimension3Df& d, Scalar coeff) ;
 
             /**
              * Divide a Dimension by a scalar value (scale).
@@ -165,7 +165,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (d.w / coeff, d.h / coeff).
              */
-            friend Dimension3Df operator/(const Dimension3Df& d, const Scalar& coeff) ;
+            friend Dimension3Df operator/(const Dimension3Df& d, Scalar coeff) ;
 
             /**
              * Echo the Dimension size on console.

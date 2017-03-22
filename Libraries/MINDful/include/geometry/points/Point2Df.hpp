@@ -44,14 +44,14 @@ namespace Mind {
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              */
-            Point2Df(const Scalar& x, const Scalar& y) ;
+            Point2Df(Scalar x, Scalar y) ;
 
             /**
              * Translate a point of the given offsets.
              * @param   x   Offset on X axis.
              * @param   y   Offset on Y axis.
              */
-            void translate(const Scalar& x, const Scalar& y) ;
+            void translate(Scalar x, Scalar y) ;
 
             /**
              * Translate a point of the given offsets.
@@ -154,17 +154,17 @@ namespace Mind {
             Array4f& getCoordinates(Array4f& output) const ;
 
             /** Set the X coordinate. */
-            void setX(const Scalar& x) ;
+            void setX(Scalar x) ;
 
             /** Set the Y coordinate. */
-            void setY(const Scalar& y) ;
+            void setY(Scalar y) ;
 
             /**
              * Move the point to the specified coordinates.
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              */
-            void set(const Scalar& x, const Scalar& y) ;
+            void set(Scalar x, Scalar y) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -197,14 +197,14 @@ namespace Mind {
              * @param   coeff   The coeff to multiply the Point coordinates by.
              * @return  The result of the multiplication.
              */
-            Point2Df& operator*=(const Scalar& coeff) ;
+            Point2Df& operator*=(Scalar coeff) ;
 
             /**
              * Divide a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Point coordinates by.
              * @return  The result of the division.
              */
-            Point2Df& operator/=(const Scalar& coeff) ;
+            Point2Df& operator/=(Scalar coeff) ;
 
             /**
              * Test if two Points are at the same position.
@@ -258,7 +258,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x * coeff, a.y * coeff).
              */
-            friend Point2Df operator*(const Point2Df& p, const Scalar& coeff) ;
+            friend Point2Df operator*(const Point2Df& p, Scalar coeff) ;
 
             /**
              * Divide a Point coordinates by a scalar value (scale).
@@ -266,7 +266,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x / coeff, a.y / coeff).
              */
-            friend Point2Df operator/(const Point2Df& p, const Scalar& coeff) ;
+            friend Point2Df operator/(const Point2Df& p, Scalar coeff) ;
 
             /**
              * Echo the Point coordinates on console.

@@ -17,10 +17,10 @@ namespace Mind {
     Quaternion::Quaternion(const SIMD::Vector4f& values) : m_values(values) {}
 
     Quaternion::Quaternion(
-        const Scalar& x,
-        const Scalar& y,
-        const Scalar& z,
-        const Scalar& w
+        Scalar x,
+        Scalar y,
+        Scalar z,
+        Scalar w
     ) {
         m_values = SIMD::Vector4f(x, y, z, w) ;
     }
@@ -29,7 +29,7 @@ namespace Mind {
         from(matrix) ;
     }
 
-    Quaternion::Quaternion(const Vector3f& vector, const Scalar& radAngle) {
+    Quaternion::Quaternion(const Vector3f& vector, Scalar radAngle) {
         from(vector, radAngle) ;
     }
 
@@ -139,7 +139,7 @@ namespace Mind {
     }
 
     Quaternion Quaternion::slerp(
-        const Scalar& time,
+        Scalar time,
         const Quaternion& from,
         const Quaternion& to,
         bool shortestPath
@@ -178,7 +178,7 @@ namespace Mind {
     }
 
     Quaternion Quaternion::nlerp(
-        const Scalar& time,
+        Scalar time,
         const Quaternion& from,
         const Quaternion& to,
         bool shortestPath
@@ -325,7 +325,7 @@ namespace Mind {
 
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
-    void Quaternion::from(const Vector3f& vector, const Scalar& radAngle) {
+    void Quaternion::from(const Vector3f& vector, Scalar radAngle) {
         Scalar halfAngle = radAngle * 0.5f ;
         Scalar halfAngleSinus = std::sin(halfAngle) ;
         Scalar halfAngleCosinus = std::cos(halfAngle) ;
@@ -456,12 +456,12 @@ namespace Mind {
     }
 
 
-    Scalar Quaternion::operator[](const Axis& axis) const {
+    Scalar Quaternion::operator[](Axis axis) const {
         float* valuesArray = (float*) m_values ;
         return valuesArray[axis] ;
     }
 
-    Scalar& Quaternion::operator[](const Axis& axis) {
+    Scalar& Quaternion::operator[](Axis axis) {
         float* valuesArray = (float*) m_values ;
         return valuesArray[axis] ;
     }
@@ -491,12 +491,12 @@ namespace Mind {
         return Quaternion(inversedValues) ;
     }
 
-    Quaternion& Quaternion::operator*=(const Scalar& scalar) {
+    Quaternion& Quaternion::operator*=(Scalar scalar) {
         m_values *= scalar ;
         return *this ;
     }
 
-    Quaternion Quaternion::operator*(const Scalar& scalar) const {
+    Quaternion Quaternion::operator*(Scalar scalar) const {
         return Quaternion(m_values * scalar) ;
     }
 

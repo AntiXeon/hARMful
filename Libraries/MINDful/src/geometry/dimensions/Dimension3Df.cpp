@@ -6,9 +6,9 @@ namespace Mind {
     Dimension3Df::Dimension3Df() : m_width(0), m_height(0), m_depth(0) {}
 
     Dimension3Df::Dimension3Df(
-        const Scalar& width,
-        const Scalar& height,
-        const Scalar& depth
+        Scalar width,
+        Scalar height,
+        Scalar depth
     ) : m_width(width),
         m_height(height),
         m_depth(depth) {}
@@ -31,22 +31,22 @@ namespace Mind {
         return m_depth ;
     }
 
-    void Dimension3Df::setWidth(const Scalar& width) {
+    void Dimension3Df::setWidth(Scalar width) {
         m_width = std::fabs(width) ;
     }
 
-    void Dimension3Df::setHeight(const Scalar& height) {
+    void Dimension3Df::setHeight(Scalar height) {
         m_height = std::fabs(height) ;
     }
 
-    void Dimension3Df::setDepth(const Scalar& depth) {
+    void Dimension3Df::setDepth(Scalar depth) {
         m_depth = std::fabs(depth) ;
     }
 
     void Dimension3Df::set(
-        const Scalar& width,
-        const Scalar& height,
-        const Scalar& depth
+        Scalar width,
+        Scalar height,
+        Scalar depth
     ) {
         m_width = std::fabs(width) ;
         m_height = std::fabs(height) ;
@@ -77,14 +77,14 @@ namespace Mind {
         return *this ;
     }
 
-    Dimension3Df& Dimension3Df::operator*=(const Scalar& coeff) {
+    Dimension3Df& Dimension3Df::operator*=(Scalar coeff) {
         m_width *= coeff ;
         m_height *= coeff ;
         m_depth *= coeff ;
         return *this ;
     }
 
-    Dimension3Df& Dimension3Df::operator/=(const Scalar& coeff) {
+    Dimension3Df& Dimension3Df::operator/=(Scalar coeff) {
         m_width /= coeff ;
         m_height /= coeff ;
         m_depth /= coeff ;
@@ -118,7 +118,7 @@ namespace Mind {
         ) ;
     }
 
-    Dimension3Df operator*(const Dimension3Df& d, const Scalar& coeff) {
+    Dimension3Df operator*(const Dimension3Df& d, Scalar coeff) {
         return Dimension3Df(
             d.getWidth() * coeff,
             d.getHeight() * coeff,
@@ -126,7 +126,7 @@ namespace Mind {
         ) ;
     }
 
-    Dimension3Df operator/(const Dimension3Df& d, const Scalar& coeff) {
+    Dimension3Df operator/(const Dimension3Df& d, Scalar coeff) {
         return Dimension3Df(
             d.getWidth() / coeff,
             d.getHeight() / coeff,

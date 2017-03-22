@@ -15,11 +15,11 @@ namespace Mind {
 
     Point2Df::Point2Df(const SIMD::Vector4f& values) : m_values(values) {}
 
-    Point2Df::Point2Df(const Scalar& x, const Scalar& y) {
+    Point2Df::Point2Df(Scalar x, Scalar y) {
        m_values = SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
 
-    void Point2Df::translate(const Scalar& x, const Scalar& y) {
+    void Point2Df::translate(Scalar x, Scalar y) {
         m_values += SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
 
@@ -131,15 +131,15 @@ namespace Mind {
         return output ;
     }
 
-    void Point2Df::setX(const Scalar& x) {
+    void Point2Df::setX(Scalar x) {
         ((float*)m_values)[X] = x ;
     }
 
-    void Point2Df::setY(const Scalar& y) {
+    void Point2Df::setY(Scalar y) {
         ((float*)m_values)[Y] = y ;
     }
 
-    void Point2Df::set(const Scalar& x, const Scalar& y) {
+    void Point2Df::set(Scalar x, Scalar y) {
         ((float*)m_values)[X] = x ;
         ((float*)m_values)[Y] = y ;
     }
@@ -168,12 +168,12 @@ namespace Mind {
         return *this ;
     }
 
-    Point2Df& Point2Df::operator*=(const Scalar& coeff) {
+    Point2Df& Point2Df::operator*=(Scalar coeff) {
         m_values *= coeff ;
         return *this ;
     }
 
-    Point2Df& Point2Df::operator/=(const Scalar& coeff) {
+    Point2Df& Point2Df::operator/=(Scalar coeff) {
         m_values /= coeff ;
         return *this ;
     }
@@ -207,11 +207,11 @@ namespace Mind {
         return a.dot(b) ;
     }
 
-    Point2Df operator*(const Point2Df& p, const Scalar& coeff) {
+    Point2Df operator*(const Point2Df& p, Scalar coeff) {
         return Point2Df(p.m_values * coeff) ;
     }
 
-    Point2Df operator/(const Point2Df& p, const Scalar& coeff) {
+    Point2Df operator/(const Point2Df& p, Scalar coeff) {
         return Point2Df(p.m_values / coeff) ;
     }
 
