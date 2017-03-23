@@ -8,7 +8,7 @@ namespace Mind {
     Rectangle2Df::Rectangle2Df(
         const Point2Df& location,
         const Dimension2Df& size,
-        bool centered
+        const bool centered
     ) : Rectangle2Df(
             location.getX(),
             location.getY(),
@@ -18,11 +18,11 @@ namespace Mind {
         ) {}
 
     Rectangle2Df::Rectangle2Df(
-        Scalar x,
-        Scalar y,
-        Scalar w,
-        Scalar h,
-        bool centered
+        const Scalar x,
+        const Scalar y,
+        const Scalar w,
+        const Scalar h,
+        const bool centered
     ) : m_isCentered(centered),
         m_hasChanged(true),
         m_size(w, h)
@@ -52,10 +52,10 @@ namespace Mind {
         ) {}
 
     Rectangle2Df::Rectangle2Df(
-        Scalar x1,
-        Scalar y1,
-        Scalar x2,
-        Scalar y2
+        const Scalar x1,
+        const Scalar y1,
+        const Scalar x2,
+        const Scalar y2
     ) : m_isCentered(false),
         m_hasChanged(false) {
         std::pair<Scalar, Scalar> minMax_X = std::minmax(x1, x2) ;
@@ -69,15 +69,15 @@ namespace Mind {
     }
 
     void Rectangle2Df::translate(
-        Scalar x,
-        Scalar y
+        const Scalar x,
+        const Scalar y
     ) {
         setAt(m_bottomLeftCorner.getX() + x, m_bottomLeftCorner.getY() + y) ;
     }
 
     bool Rectangle2Df::contains(
-        Scalar x,
-        Scalar y
+        const Scalar x,
+        const Scalar y
     ) {
         computeMaxPoint() ;
         return ((x >= m_bottomLeftCorner.getX()) && (x <= m_upRightCorner.getX())
@@ -97,10 +97,10 @@ namespace Mind {
     }
 
     bool Rectangle2Df::contains(
-        Scalar x,
-        Scalar y,
-        Scalar w,
-        Scalar h
+        const Scalar x,
+        const Scalar y,
+        const Scalar w,
+        const Scalar h
     ) {
         Scalar x2 = x + w ;
         Scalar y2 = y + h ;
@@ -117,10 +117,10 @@ namespace Mind {
     }
 
     bool Rectangle2Df::intersects(
-        Scalar x,
-        Scalar y,
-        Scalar w,
-        Scalar h
+        const Scalar x,
+        const Scalar y,
+        const Scalar w,
+        const Scalar h
     ) {
         if (isEmpty() || ((w == 0.f) || (h == 0.f))) {
             return false ;
@@ -248,7 +248,7 @@ namespace Mind {
         }
     }
 
-    void Rectangle2Df::setX(Scalar x) {
+    void Rectangle2Df::setX(const Scalar x) {
         if (m_isCentered) {
             m_bottomLeftCorner.setX(x - (getWidth() / 2.f)) ;
         }
@@ -258,7 +258,7 @@ namespace Mind {
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setY(Scalar y) {
+    void Rectangle2Df::setY(const Scalar y) {
         if (m_isCentered) {
             m_bottomLeftCorner.setY(y - (getHeight() / 2.f)) ;
         }
@@ -268,7 +268,7 @@ namespace Mind {
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setAt(Scalar x, Scalar y) {
+    void Rectangle2Df::setAt(const Scalar x, const Scalar y) {
         if (m_isCentered) {
             m_bottomLeftCorner.setX(x - (getWidth() / 2.f)) ;
             m_bottomLeftCorner.setY(y - (getHeight() / 2.f)) ;
@@ -280,7 +280,7 @@ namespace Mind {
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setWidth(Scalar width) {
+    void Rectangle2Df::setWidth(const Scalar width) {
         if (m_isCentered) {
             Scalar currentWidth = getWidth() ;
             Scalar halfWidthDiff = (currentWidth - width) / 2.f ;
@@ -294,7 +294,7 @@ namespace Mind {
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setHeight(Scalar height) {
+    void Rectangle2Df::setHeight(const Scalar height) {
         if (m_isCentered) {
             Scalar currentHeight = getHeight() ;
             Scalar halfHeightDiff = (currentHeight - height) / 2.f ;

@@ -11,9 +11,9 @@ const int Y = 1 ;
 namespace Mind {
     Point2Df::Point2Df() : m_x(0.f), m_y(0.f) {}
 
-    Point2Df::Point2Df(Scalar x, Scalar y) : m_x(x), m_y(y) {}
+    Point2Df::Point2Df(const Scalar x, const Scalar y) : m_x(x), m_y(y) {}
 
-    void Point2Df::translate(Scalar x, Scalar y) {
+    void Point2Df::translate(const Scalar x, const Scalar y) {
         m_x += x ;
         m_y += y ;
     }
@@ -115,15 +115,15 @@ namespace Mind {
         return output ;
     }
 
-    void Point2Df::setX(Scalar x) {
+    void Point2Df::setX(const Scalar x) {
         m_x = x ;
     }
 
-    void Point2Df::setY(Scalar y) {
+    void Point2Df::setY(const Scalar y) {
         m_y = y ;
     }
 
-    void Point2Df::set(Scalar x, Scalar y) {
+    void Point2Df::set(const Scalar x, const Scalar y) {
         m_x = x ;
         m_y = y ;
     }
@@ -153,13 +153,13 @@ namespace Mind {
         return *this ;
     }
 
-    Point2Df& Point2Df::operator*=(Scalar coeff) {
+    Point2Df& Point2Df::operator*=(const Scalar coeff) {
         m_x *= coeff ;
         m_y *= coeff ;
         return *this ;
     }
 
-    Point2Df& Point2Df::operator/=(Scalar coeff) {
+    Point2Df& Point2Df::operator/=(const Scalar coeff) {
         m_x /= coeff ;
         m_y /= coeff ;
         return *this ;

@@ -47,7 +47,7 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            Point3Df(Scalar x, Scalar y, Scalar z) ;
+            Point3Df(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
@@ -55,7 +55,7 @@ namespace Mind {
              * @param   y   Offset on Y axis.
              * @param   z   Offset on Z axis.
              */
-            void translate(Scalar x, Scalar y, Scalar z) ;
+            void translate(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
@@ -147,13 +147,13 @@ namespace Mind {
             Array4f& getCoordinates(Array4f& output) const ;
 
             /** Set the X coordinate. */
-            void setX(Scalar x) ;
+            void setX(const Scalar x) ;
 
             /** Set the Y coordinate. */
-            void setY(Scalar y) ;
+            void setY(const Scalar y) ;
 
             /** Set the Z coordinate. */
-            void setZ(Scalar z) ;
+            void setZ(const Scalar z) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -161,7 +161,7 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            void set(Scalar x, Scalar y, Scalar z) ;
+            void set(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Move the point to the specified coordinates.

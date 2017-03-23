@@ -12,14 +12,14 @@ namespace Mind {
     Point3Df::Point3Df() : m_x(0.f), m_y(0.f), m_z(0.f) {}
 
     Point3Df::Point3Df(
-        Scalar x,
-        Scalar y,
-        Scalar z
+        const Scalar x,
+        const Scalar y,
+        const Scalar z
     ) : m_x(x),
         m_y(y),
         m_z(z) {}
 
-    void Point3Df::translate(Scalar x, Scalar y, Scalar z) {
+    void Point3Df::translate(const Scalar x, const Scalar y, const Scalar z) {
         m_x += x ;
         m_y += y ;
         m_z += z ;
@@ -107,19 +107,19 @@ namespace Mind {
         return output ;
     }
 
-    void Point3Df::setX(Scalar x) {
+    void Point3Df::setX(const Scalar x) {
         m_x = x ;
     }
 
-    void Point3Df::setY(Scalar y) {
+    void Point3Df::setY(const Scalar y) {
         m_y = y ;
     }
 
-    void Point3Df::setZ(Scalar z) {
+    void Point3Df::setZ(const Scalar z) {
         m_z = z ;
     }
 
-    void Point3Df::set(Scalar x, Scalar y, Scalar z) {
+    void Point3Df::set(const Scalar x, const Scalar y, const Scalar z) {
         m_x = x ;
         m_y = y ;
         m_z = z ;
@@ -153,14 +153,14 @@ namespace Mind {
         return *this ;
     }
 
-    Point3Df& Point3Df::operator*=(Scalar coeff) {
+    Point3Df& Point3Df::operator*=(const Scalar coeff) {
         m_x *= coeff ;
         m_y *= coeff ;
         m_z *= coeff ;
         return *this ;
     }
 
-    Point3Df& Point3Df::operator/=(Scalar coeff) {
+    Point3Df& Point3Df::operator/=(const Scalar coeff) {
         m_x /= coeff ;
         m_y /= coeff ;
         m_z /= coeff ;

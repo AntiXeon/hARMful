@@ -33,7 +33,7 @@ namespace Mind {
              * @param   width   Width to set the size of the element.
              * @param   height  Height to set the size of the element.
              */
-            Dimension2Df(Scalar width, Scalar height) ;
+            Dimension2Df(const Scalar width, const Scalar height) ;
 
             /** Set the Dimension as absolute values. */
             void absolute() ;
@@ -54,20 +54,20 @@ namespace Mind {
              * Set the width of the dimension.
              * @param   width   Width of the dimension.
              */
-            void setWidth(Scalar width) ;
+            void setWidth(const Scalar width) ;
 
             /**
              * Set the height of the dimension.
              * @param   height  Height of the dimension.
              */
-            void setHeight(Scalar height) ;
+            void setHeight(const Scalar height) ;
 
             /**
              * Set the height of the dimension.
              * @param   width   Width of the dimension.
              * @param   height  Height of the dimension.
              */
-            void set(Scalar width, Scalar height) ;
+            void set(const Scalar width, const Scalar height) ;
 
             /** Conversion from Dimension2D to Point2D. */
             operator Point2Df() ;
@@ -96,14 +96,14 @@ namespace Mind {
              *                   by.
              * @return   The result of the multiplication.
              */
-            Dimension2Df& operator*=(Scalar coeff) ;
+            Dimension2Df& operator*=(const Scalar coeff) ;
 
             /**
              * Divide a Dimension by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Dimension coordinates by.
              * @return  The result of the division.
              */
-            Dimension2Df& operator/=(Scalar coeff) ;
+            Dimension2Df& operator/=(const Scalar coeff) ;
 
 
             /**
@@ -144,7 +144,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Dimension at (d.w * coeff, d.w * coeff).
              */
-            friend Dimension2Df operator*(const Dimension2Df& d, Scalar coeff) ;
+            friend Dimension2Df operator*(const Dimension2Df& d, const Scalar coeff) ;
 
 
             /**
@@ -153,7 +153,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Dimension of (d.w / coeff, d.h / coeff).
              */
-            friend Dimension2Df operator/(const Dimension2Df& d, Scalar coeff) ;
+            friend Dimension2Df operator/(const Dimension2Df& d, const Scalar coeff) ;
 
 
             /**

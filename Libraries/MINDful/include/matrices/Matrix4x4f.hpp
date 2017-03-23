@@ -14,17 +14,7 @@ namespace Mind {
              * @param   value   Value of the matrix when created or cleared.
              *                  The default value is zero.
              */
-            Matrix4x4f(const Scalar& value = 0.f) ;
-
-            /**
-             * Copy a Matrix4x4f.
-             */
-            Matrix4x4f(const Matrix4x4f& mat) ;
-
-            /**
-             * Destruction of the matrix.
-             */
-            virtual ~Matrix4x4f() ;
+            Matrix4x4f(const Scalar value = 0.f) ;
 
             /**
              * Multiplay the current Matrix4x4 by another one.
@@ -38,28 +28,40 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(const size_t& column, const Point2Df& values) final ;
+            virtual void setColumnValues(
+                const size_t column,
+                const Point2Df& values
+            ) final ;
 
             /**
              * Set the values of a column from a Point3D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(const size_t& column, const Point3Df& values) final ;
+            virtual void setColumnValues(
+                const size_t column,
+                const Point3Df& values
+            ) final ;
 
             /**
              * Set the values of a row from a Point2D.
              * @param   row     Index of the row in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(const size_t& row, const Point2Df& values) final ;
+            virtual void setRowValues(
+                const size_t row,
+                const Point2Df& values
+            ) final ;
 
             /**
              * Set the values of a row from a Point3D.
              * @param   row     Index of the row in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(const size_t& row, const Point3Df& values) final ;
+            virtual void setRowValues(
+                const size_t row,
+                const Point3Df& values
+            ) final ;
 
             /**
              * Multiply the current matrix by a scalar value.
@@ -68,7 +70,7 @@ namespace Mind {
              *                  the matrix with.
              * @return  The result of the multiplication.
              */
-            Matrix4x4f& operator*=(const Scalar& scalar) ;
+            Matrix4x4f& operator*=(const Scalar scalar) ;
 
             /**
              * Multiply the current matrix by a scalar value.
@@ -78,7 +80,7 @@ namespace Mind {
              *                  the matrix with.
              * @return  The result of the multiplication.
              */
-            Matrix4x4f operator*(const Scalar& scalar) ;
+            Matrix4x4f operator*(const Scalar scalar) ;
 
             /**
              * Multiply the current matrix by another matrix.
@@ -115,17 +117,9 @@ namespace Mind {
              * @return  The result of the addition.
              */
             Matrix4x4f operator+(Matrix4x4f& other) ;
-
-            /**
-             * Assignment operator to copy a Matrix4x4.
-             * @return  The current Matrix4x4 with the copied values.
-             */
-            Matrix4x4f& operator=(const Matrix4x4f& other) ;
     } ;
 
-    inline Matrix4x4f::~Matrix4x4f() {}
-
-    inline Matrix4x4f Matrix4x4f::operator*(const Scalar& scalar) {
+    inline Matrix4x4f Matrix4x4f::operator*(const Scalar scalar) {
         Matrix4x4f mat(*this) ;
         mat *= scalar ;
         return mat ;
@@ -141,15 +135,6 @@ namespace Mind {
         Matrix4x4f mat(*this) ;
         mat += other ;
         return mat ;
-    }
-
-    inline Matrix4x4f& Matrix4x4f::operator=(const Matrix4x4f& other) {
-        std::copy(
-            std::begin(other.m_data),
-            std::end(other.m_data),
-            std::begin(m_data)
-        ) ;
-        return *this ;
     }
 } ;
 

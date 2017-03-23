@@ -10,7 +10,7 @@ namespace Mind {
         /** Lookup table containing some tangent values. */
         static std::vector<Scalar> TangentCache ;
 
-        void init(unsigned int steps) {
+        void init(const unsigned int steps) {
             Scalar stepValue = Math::Pi / 180. ;
 
             SinusCache.clear() ;
@@ -40,19 +40,19 @@ namespace Mind {
             }
         }
 
-        float sin(unsigned int x) {
+        float sin(const unsigned int x) {
             return SinusCache[x] ;
         }
 
-        float cos(unsigned int x) {
+        float cos(const unsigned int x) {
             return CosinusCache[x] ;
         }
 
-        float tan(unsigned int x) {
+        float tan(const unsigned int x) {
             return TangentCache[x] ;
         }
 
-        int round(Scalar value) {
+        int round(const Scalar value) {
             int integer_value = value ;
             if (integer_value > 0) {
                 if (value - integer_value < 0.5f)
@@ -67,18 +67,18 @@ namespace Mind {
         }
 
 
-        int ceil(Scalar value) {
+        int ceil(const Scalar value) {
             int integer_value = value ;
             return (value > 0) ? integer_value + 1 : integer_value ;
         }
 
 
-        int floor(Scalar value) {
+        int floor(const Scalar value) {
             int integer_value = value ;
             return (integer_value > 0) ? integer_value : integer_value - 1 ;
         }
 
-        long pow(int value, unsigned char exponent) {
+        long pow(const int value, const unsigned char exponent) {
             if (exponent == 1) return value ;
 
             long acc = 1L ;
@@ -87,7 +87,7 @@ namespace Mind {
             return acc ;
         }
 
-        Scalar sqrt(Scalar value) {
+        Scalar sqrt(const Scalar value) {
             #ifdef USE_SIMD
                 SIMD::Vector4f valueVec4(value) ;
                 valueVec4 = SIMD::Vector4f::fast_sqrt(valueVec4) ;

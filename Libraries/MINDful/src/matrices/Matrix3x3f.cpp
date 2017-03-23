@@ -1,9 +1,7 @@
 #include <matrices/Matrix3x3f.hpp>
 
 namespace Mind {
-    Matrix3x3f::Matrix3x3f(const Scalar& value) : SquareMatrixf(3, value) {}
-
-    Matrix3x3f::Matrix3x3f(const Matrix3x3f& mat) : SquareMatrixf(mat) {}
+    Matrix3x3f::Matrix3x3f(const Scalar value) : SquareMatrixf(3, value) {}
 
     void Matrix3x3f::multiply(const Matrix3x3f& other) {
         // Copy data from the other matrix.
@@ -29,14 +27,20 @@ namespace Mind {
         m_data[3] = m_data[3] * transposedOther[3] ;
     }
 
-    void Matrix3x3f::setColumnValues(const size_t& column, const Point2Df& values) {
+    void Matrix3x3f::setColumnValues(
+        const size_t column,
+        const Point2Df& values
+    ) {
         float* row0Values = (float*) m_data[0] ;
         row0Values[column] = values.getX() ;
         float* row1Values = (float*) m_data[1] ;
         row1Values[column] = values.getY() ;
     }
 
-    void Matrix3x3f::setColumnValues(const size_t& column, const Point3Df& values) {
+    void Matrix3x3f::setColumnValues(
+        const size_t column,
+        const Point3Df& values
+    ) {
         float* row0Values = (float*) m_data[0] ;
         row0Values[column] = values.getX() ;
         float* row1Values = (float*) m_data[1] ;
@@ -45,20 +49,26 @@ namespace Mind {
         row2Values[column] = values.getZ() ;
     }
 
-    void Matrix3x3f::setRowValues(const size_t& row, const Point2Df& values) {
+    void Matrix3x3f::setRowValues(
+        const size_t row,
+        const Point2Df& values
+    ) {
         float* columnValues = (float*) m_data[row] ;
         columnValues[0] = values.getX() ;
         columnValues[1] = values.getY() ;
     }
 
-    void Matrix3x3f::setRowValues(const size_t& row, const Point3Df& values) {
+    void Matrix3x3f::setRowValues(
+        const size_t row,
+        const Point3Df& values
+    ) {
         float* columnValues = (float*) m_data[row] ;
         columnValues[0] = values.getX() ;
         columnValues[1] = values.getY() ;
         columnValues[2] = values.getZ() ;
     }
 
-    Matrix3x3f& Matrix3x3f::operator*=(const Scalar& scalar) {
+    Matrix3x3f& Matrix3x3f::operator*=(const Scalar scalar) {
         unsigned int length = size() ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] *= scalar ;

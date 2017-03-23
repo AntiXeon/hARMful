@@ -112,7 +112,7 @@ namespace Mind {
              * @param   y           Coordinate on Y axis.
              * @return  Distance between the Line and the Point.
              */
-            virtual Scalar distanceTo(Scalar x, Scalar y) ;
+            virtual Scalar distanceTo(const Scalar x, const Scalar y) ;
 
             /**
              * Compute the squared distance of the Line to the given Point.
@@ -127,7 +127,7 @@ namespace Mind {
              * @param   y           Coordinate on Y axis.
              * @return  Distance between the Line and the Point.
              */
-            virtual Scalar distanceSquaredTo(Scalar x, Scalar y) ;
+            virtual Scalar distanceSquaredTo(const Scalar x, const Scalar y) ;
 
             /**
              * Get the Rectangle that represents the boundaries of the Line.

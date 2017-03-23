@@ -71,10 +71,10 @@ namespace Mind {
              * @param   w   Individual value of coordinate W.
              */
             Quaternion(
-                Scalar x,
-                Scalar y,
-                Scalar z,
-                Scalar w
+                const Scalar x,
+                const Scalar y,
+                const Scalar z,
+                const Scalar w
             ) ;
 
             /**
@@ -89,7 +89,7 @@ namespace Mind {
              *                  rotation is applied.
              * @param   angle   Angle of the rotation in radians.
              */
-            Quaternion(const Vector3f& vector, Scalar radAngle) ;
+            Quaternion(const Vector3f& vector, const Scalar radAngle) ;
 
             /**
              * Create a Quaternion from three orthonormal axis.
@@ -160,7 +160,7 @@ namespace Mind {
              * @see    nlerp
              */
             static Quaternion slerp(
-                Scalar time,
+                const Scalar time,
                 const Quaternion& from,
                 const Quaternion& to,
                 bool shortestPath
@@ -181,7 +181,7 @@ namespace Mind {
              * @see    slerp
              */
             static Quaternion nlerp(
-                Scalar time,
+                const Scalar time,
                 const Quaternion& from,
                 const Quaternion& to,
                 bool shortestPath
@@ -234,7 +234,7 @@ namespace Mind {
              *                 This vector must be normalized.
              * @param radAngle Angle of the rotation in radians.
              */
-            void from(const Vector3f& vector, Scalar radAngle) ;
+            void from(const Vector3f& vector, const Scalar radAngle) ;
 
             /**
              * Get the values of the Quaternion as a rotation matrix.
@@ -282,14 +282,14 @@ namespace Mind {
              * @param  axis  Axis to get value of.
              * @return       Value of the component on the wanted @a axis.
              */
-            Scalar operator[](Axis axis) const ;
+            Scalar operator[](const Axis axis) const ;
 
             /**
              * Access to a component of the Quaternion (read and write).
              * @param  axis  Axis to get value of.
              * @return       Value of the component on the wanted @a axis.
              */
-            Scalar& operator[](Axis axis) ;
+            Scalar& operator[](const Axis axis) ;
 
             /**
              * Addition of two Quaternions.
@@ -337,14 +337,14 @@ namespace Mind {
              * @return        Reference on the current Quaternion once it has
              *                been multiplied by @a value.
              */
-            Quaternion& operator*=(Scalar scalar) ;
+            Quaternion& operator*=(const Scalar scalar) ;
 
             /**
              * Mulitplication of a Quaternion with a Scalar.
              * @param  scalar Value to multiply each component of the Quaternion.
              * @return        The result of the multiplication.
              */
-            Quaternion operator*(Scalar scalar) const ;
+            Quaternion operator*(const Scalar scalar) const ;
 
             /**
              * Multiplication of a Quaternion with another one.

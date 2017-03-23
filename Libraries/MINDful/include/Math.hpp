@@ -44,14 +44,14 @@ namespace Mind {
          * @param   degrees Value of the angle in degrees.
          * @return  Value of the angle in radians.
          */
-        inline Scalar toRadians(Scalar degrees) ;
+        inline Scalar toRadians(const Scalar degrees) ;
 
         /**
          * Convert radians to degrees.
          * @param   radians Value of the angle in radians.
          * @return  Value of the angle in degrees.
          */
-        inline Scalar toDegrees(Scalar radians) ;
+        inline Scalar toDegrees(const Scalar radians) ;
 
                                                             /*** ALGORITHMS ***/
         /**
@@ -60,44 +60,44 @@ namespace Mind {
          * @return  The absolute value.
          */
         template <class T>
-        Scalar hypot(const T& x, const T& y) ;
+        Scalar hypot(const T x, const T y) ;
 
         /**
          * Check if a Scalar value is negative.
          * @param   value   Value to check.
          * @return  TRUE if @a value is negative, FALSE otherwise.
          */
-        bool isNegative(const Scalar& value) ;
+        bool isNegative(const Scalar value) ;
 
         /**
          * Check if a Scalar value is not a number.
          * @param   value   Value to check.
          * @return  TRUE if @a value is NaN, FALSE otherwise.
          */
-        bool isNaN(const Scalar& value) ;
+        bool isNaN(const Scalar value) ;
 
         /**
          * Check if a Scalar value is infinite.
          * @param   value   Value to check.
          * @return  TRUE if @a value is infinite, FALSE otherwise.
          */
-        bool isInf(const Scalar& value) ;
+        bool isInf(const Scalar value) ;
     } ;
 
     /**************************** IMPLEMENTATIONS *****************************/
                                                                 /*** ANGLES ***/
-    Scalar Math::toRadians(Scalar degrees) {
+    Scalar Math::toRadians(const Scalar degrees) {
         return degrees * Math::DegreesToRadians ;
     }
 
 
-    Scalar Math::toDegrees(Scalar radians) {
+    Scalar Math::toDegrees(const Scalar radians) {
         return radians * Math::RadiansToDegrees ;
     }
 
                                                             /*** ALGORITHMS ***/
     template <class T>
-    Scalar Math::hypot(const T& x, const T& y) {
+    Scalar Math::hypot(const T x, const T y) {
         return sqrt((x * x) + (y * y)) ;
     }
 
@@ -107,7 +107,7 @@ namespace Mind {
      * @param   degrees Value of the angle in degrees.
      * @return  Value of the angle in radians.
      */
-    constexpr Scalar operator"" _deg(long double degrees) {
+    constexpr Scalar operator"" _deg(const long double degrees) {
         return degrees * Math::DegreesToRadians ;
     }
 
@@ -116,7 +116,7 @@ namespace Mind {
      * @param   radians Value of the angle in radians.
      * @return  Value of the angle in degrees.
      */
-    constexpr Scalar operator"" _rad(long double radians) {
+    constexpr Scalar operator"" _rad(const long double radians) {
         return radians * Math::RadiansToDegrees ;
     }
 } ;

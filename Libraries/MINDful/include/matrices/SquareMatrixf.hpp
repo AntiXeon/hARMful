@@ -48,17 +48,22 @@ namespace Mind {
              *					"size x size" matrix.
              * @param	value 	Initial value in the SquareMatrix.
              */
-            SquareMatrixf(const unsigned int& size, const Scalar& value = 0) ;
+            SquareMatrixf(const unsigned int size, const Scalar value = 0) ;
 
             /**
              * Copy a SquareMatrixf.
              */
-            SquareMatrixf(const SquareMatrixf& mat) ;
+            SquareMatrixf(const SquareMatrixf& mat) = default ;
+
+            /**
+             * Move a SquareMatrixf.
+             */
+            SquareMatrixf(SquareMatrixf&& mat) = default ;
 
             /**
              * Destruction of the SquareMatrix.
              */
-            virtual ~SquareMatrixf() ;
+            virtual ~SquareMatrixf() = default ;
 
             /**
              * Fill the SquareMatrix with its default value.
@@ -83,28 +88,40 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(const size_t& column, const Point2Df& values) = 0 ;
+            virtual void setColumnValues(
+                const size_t column,
+                const Point2Df& values
+            ) = 0 ;
 
             /**
              * Set the values of a column from a Point3D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(const size_t& column, const Point3Df& values) = 0 ;
+            virtual void setColumnValues(
+                const size_t column,
+                const Point3Df& values
+            ) = 0 ;
 
             /**
              * Set the values of a row from a Point2D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(const size_t& row, const Point2Df& values) = 0 ;
+            virtual void setRowValues(
+                const size_t row,
+                const Point2Df& values
+            ) = 0 ;
 
             /**
              * Set the values of a row from a Point3D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(const size_t& row, const Point3Df& values) = 0 ;
+            virtual void setRowValues(
+                const size_t row,
+                const Point3Df& values
+            ) = 0 ;
 
             /**
              * Get the element a the specified position.
@@ -114,8 +131,8 @@ namespace Mind {
              *			indices.
              */
             Scalar& at(
-                const unsigned int& row,
-                const unsigned int& col
+                const unsigned int row,
+                const unsigned int col
             ) const ;
 
             /**
@@ -125,9 +142,9 @@ namespace Mind {
              * @param   value   Value to set at the given position.
              */
             void at(
-                const unsigned int& row,
-                const unsigned int& col,
-                const Scalar& value
+                const unsigned int row,
+                const unsigned int col,
+                const Scalar value
             ) ;
 
             /**
@@ -144,12 +161,27 @@ namespace Mind {
             unsigned int size() const ;
 
             /**
+             * Assignment operator to copy a SquareMatrixf.
+             * @return  The current SquareMatrixf with the copied values.
+             */
+            SquareMatrixf& operator=(const SquareMatrixf& other) = default ;
+
+            /**
+             * Assignment operator to move a SquareMatrixf.
+             * @return  The current SquareMatrixf with the moved values.
+             */
+            SquareMatrixf& operator=(SquareMatrixf&& other) = default ;
+
+            /**
             * Echo the SquareMatrix values on console.
             * @param   s   The stream in which print the formatted coordinates.
             * @param   p   The SquareMatrix to print.
             * @return  The stream with the printed Point coordinates.
             */
-            friend std::ostream& operator<<(std::ostream& s, const SquareMatrixf& p) ;
+            friend std::ostream& operator<<(
+                std::ostream& s,
+                const SquareMatrixf& p
+            ) ;
 
         protected:
             /**
@@ -162,7 +194,7 @@ namespace Mind {
              * Clear the matrix with the given value.
              * @param   value   Value to fill the matrix with.
              */
-            void clearWith(const Scalar& value) ;
+            void clearWith(const Scalar value) ;
 
             /**
              * Get the inner data of the SquareMatrix.
@@ -172,24 +204,22 @@ namespace Mind {
             void getData(Scalar* output) ;
     } ;
 
-    inline SquareMatrixf::~SquareMatrixf() {}
-
     inline void SquareMatrixf::clear() {
         clearWith(m_defaultValue) ;
     }
 
     inline Scalar& SquareMatrixf::at(
-        const unsigned int& row,
-        const unsigned int& col
+        const unsigned int row,
+        const unsigned int col
     ) const {
         float* rowValues = (float*) m_data[row] ;
         return rowValues[col] ;
     }
 
     inline void SquareMatrixf::at(
-        const unsigned int& row,
-        const unsigned int& col,
-        const Scalar& value
+        const unsigned int row,
+        const unsigned int col,
+        const Scalar value
     ) {
         float* rowValues = (float*) m_data[row] ;
         rowValues[col] = value ;

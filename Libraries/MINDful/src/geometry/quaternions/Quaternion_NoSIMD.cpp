@@ -19,10 +19,10 @@ namespace Mind {
         ) {}
 
     Quaternion::Quaternion(
-        Scalar x,
-        Scalar y,
-        Scalar z,
-        Scalar w
+        const Scalar x,
+        const Scalar y,
+        const Scalar z,
+        const Scalar w
     ) {
         m_values[Axis::X] = x ;
         m_values[Axis::Y] = y ;
@@ -34,7 +34,7 @@ namespace Mind {
         from(matrix) ;
     }
 
-    Quaternion::Quaternion(const Vector3f& vector, Scalar radAngle) {
+    Quaternion::Quaternion(const Vector3f& vector, const Scalar radAngle) {
         from(vector, radAngle) ;
     }
 
@@ -144,7 +144,7 @@ namespace Mind {
     }
 
     Quaternion Quaternion::slerp(
-        Scalar time,
+        const Scalar time,
         const Quaternion& from,
         const Quaternion& to,
         bool shortestPath
@@ -183,7 +183,7 @@ namespace Mind {
     }
 
     Quaternion Quaternion::nlerp(
-        Scalar time,
+        const Scalar time,
         const Quaternion& from,
         const Quaternion& to,
         bool shortestPath
@@ -288,7 +288,7 @@ namespace Mind {
 
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
-    void Quaternion::from(const Vector3f& vector, Scalar radAngle) {
+    void Quaternion::from(const Vector3f& vector, const Scalar radAngle) {
         Scalar halfAngle = radAngle * 0.5f ;
         Scalar halfAngleSinus = std::sin(halfAngle) ;
         Scalar halfAngleCosinus = std::cos(halfAngle) ;
@@ -400,11 +400,11 @@ namespace Mind {
         yaw = std::atan2(t3, t4) ;
     }
 
-    Scalar Quaternion::operator[](Axis axis) const {
+    Scalar Quaternion::operator[](const Axis axis) const {
         return m_values[axis] ;
     }
 
-    Scalar& Quaternion::operator[](Axis axis) {
+    Scalar& Quaternion::operator[](const Axis axis) {
         return m_values[axis] ;
     }
 
@@ -457,7 +457,7 @@ namespace Mind {
         return tmp ;
     }
 
-    Quaternion& Quaternion::operator*=(Scalar scalar) {
+    Quaternion& Quaternion::operator*=(const Scalar scalar) {
         size_t axes = m_values.size() ;
         for (size_t axis = 0 ; axis < axes ; axis++) {
             m_values[axis] *= scalar ;
@@ -465,7 +465,7 @@ namespace Mind {
         return *this ;
     }
 
-    Quaternion Quaternion::operator*(Scalar scalar) const {
+    Quaternion Quaternion::operator*(const Scalar scalar) const {
         Quaternion tmp ;
 
         size_t axes = m_values.size() ;

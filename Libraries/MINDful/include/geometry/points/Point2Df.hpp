@@ -44,14 +44,14 @@ namespace Mind {
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              */
-            Point2Df(Scalar x, Scalar y) ;
+            Point2Df(const Scalar x, const Scalar y) ;
 
             /**
              * Translate a point of the given offsets.
              * @param   x   Offset on X axis.
              * @param   y   Offset on Y axis.
              */
-            void translate(Scalar x, Scalar y) ;
+            void translate(const Scalar x, const Scalar y) ;
 
             /**
              * Translate a point of the given offsets.
@@ -154,17 +154,17 @@ namespace Mind {
             Array4f& getCoordinates(Array4f& output) const ;
 
             /** Set the X coordinate. */
-            void setX(Scalar x) ;
+            void setX(const Scalar x) ;
 
             /** Set the Y coordinate. */
-            void setY(Scalar y) ;
+            void setY(const Scalar y) ;
 
             /**
              * Move the point to the specified coordinates.
              * @param   x   Coordinate on X axis.
              * @param   y   Coordinate on Y axis.
              */
-            void set(Scalar x, Scalar y) ;
+            void set(const Scalar x, const Scalar y) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -197,14 +197,14 @@ namespace Mind {
              * @param   coeff   The coeff to multiply the Point coordinates by.
              * @return  The result of the multiplication.
              */
-            Point2Df& operator*=(Scalar coeff) ;
+            Point2Df& operator*=(const Scalar coeff) ;
 
             /**
              * Divide a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Point coordinates by.
              * @return  The result of the division.
              */
-            Point2Df& operator/=(Scalar coeff) ;
+            Point2Df& operator/=(const Scalar coeff) ;
 
             /**
              * Test if two Points are at the same position.

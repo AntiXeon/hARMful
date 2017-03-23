@@ -22,7 +22,7 @@ namespace Mind {
          *                   later the function FastMath::sin(45) to get the
          *                   value of sin(45 degrees).
          */
-        void init(unsigned int steps = 360) ;
+        void init(const unsigned int steps = 360) ;
 
 
         /**
@@ -30,21 +30,21 @@ namespace Mind {
          * @param   x   Value of x in the sin(PI/x) equation (angle in degrees).
          * @return  The value of sin(PI/x).
          */
-        float sin(unsigned int x) ;
+        float sin(const unsigned int x) ;
 
         /**
          * Get the value of cosinus for the cached value of cos(PI/x).
          * @param   x   Value of x in the cos(PI/x) equation (angle in degrees).
          * @return  The value of cos(PI/x).
          */
-        float cos(unsigned int x) ;
+        float cos(const unsigned int x) ;
 
         /**
          * Get the value of cosinus for the cached value of tan(PI/x).
          * @param   x   Value of x in the tan(PI/x) equation (angle in degrees).
          * @return  The value of tan(PI/x).
          */
-        float tan(unsigned int x) ;
+        float tan(const unsigned int x) ;
 
 
 
@@ -54,7 +54,7 @@ namespace Mind {
          * @return  If value is smaller than x.5, x is returned. Otherwise, x+1 is
          *          returned.
          */
-        int round(Scalar value) ;
+        int round(const Scalar value) ;
 
         /**
          * Round a value upward.
@@ -62,7 +62,7 @@ namespace Mind {
          * @return  The smallest integer value that is not less than the given
          *          value.
          */
-        int ceil(Scalar value) ;
+        int ceil(const Scalar value) ;
 
         /**
          * Round a value downward.
@@ -70,7 +70,7 @@ namespace Mind {
          * @return  The smallest integer value that is not greater than the given
          *          value.
          */
-        int floor(Scalar value) ;
+        int floor(const Scalar value) ;
 
         /**
          * Compute value^exponent, with positive exponent only.
@@ -82,14 +82,14 @@ namespace Mind {
          * @warning As the function uses integer values to optimize computational
          *          time, no result is insured for exponents greater or equal to 15.
          */
-        long pow(int value, unsigned char exponent) ;
+        long pow(const int value, const unsigned char exponent) ;
 
         /**
          * Compute the square root of the given value.
          * @param   value   Value for which the square root is wanted.
          * @return  Square root of the given value.
          */
-        Scalar sqrt(Scalar value) ;
+        Scalar sqrt(const Scalar value) ;
     } ;
 } ;
 

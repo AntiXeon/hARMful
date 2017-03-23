@@ -5,23 +5,13 @@ namespace Mind {
     const int SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
 
     SquareMatrixf::SquareMatrixf(
-        const unsigned int& size,
-        const Scalar& value
+        const unsigned int size,
+        const Scalar value
     ) : m_size(size),
         m_defaultValue(value) {
         for (int row = 0 ; row < MaximalDataSize ; ++row) {
             m_data[row] = SIMD::Vector4f(value) ;
         }
-    }
-
-    SquareMatrixf::SquareMatrixf(const SquareMatrixf& copied) {
-        m_size = copied.m_size ;
-        m_defaultValue = copied.m_defaultValue ;
-        std::copy(
-            std::begin(copied.m_data),
-            std::end(copied.m_data),
-            std::begin(m_data)
-        ) ;
     }
 
     void SquareMatrixf::identity() {
@@ -73,7 +63,7 @@ namespace Mind {
         return s ;
     }
 
-    void SquareMatrixf::clearWith(const Scalar& value) {
+    void SquareMatrixf::clearWith(const Scalar value) {
         Array4f values ;
         for (int col = 0 ; col < MaximalDataSize ; ++col) {
             if (col < m_size) {

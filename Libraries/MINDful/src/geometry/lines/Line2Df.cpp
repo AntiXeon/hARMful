@@ -81,7 +81,7 @@ namespace Mind {
         return FastMath::sqrt(distanceSquaredTo(point)) ;
     }
 
-    Scalar Line2Df::distanceTo(Scalar x, Scalar y) {
+    Scalar Line2Df::distanceTo(const Scalar x, const Scalar y) {
         return distanceTo(Point2Df(x, y)) ;
     }
 
@@ -100,7 +100,7 @@ namespace Mind {
         return lengthSquared ;
     }
 
-    Scalar Line2Df::distanceSquaredTo(Scalar x, Scalar y) {
+    Scalar Line2Df::distanceSquaredTo(const Scalar x, const Scalar y) {
         return distanceSquaredTo(Point2Df(x, y)) ;
     }
 

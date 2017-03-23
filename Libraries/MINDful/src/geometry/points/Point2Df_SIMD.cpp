@@ -15,11 +15,11 @@ namespace Mind {
 
     Point2Df::Point2Df(const SIMD::Vector4f& values) : m_values(values) {}
 
-    Point2Df::Point2Df(Scalar x, Scalar y) {
+    Point2Df::Point2Df(const Scalar x, const Scalar y) {
        m_values = SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
 
-    void Point2Df::translate(Scalar x, Scalar y) {
+    void Point2Df::translate(const Scalar x, const Scalar y) {
         m_values += SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
 
@@ -131,15 +131,15 @@ namespace Mind {
         return output ;
     }
 
-    void Point2Df::setX(Scalar x) {
+    void Point2Df::setX(const Scalar x) {
         ((float*)m_values)[X] = x ;
     }
 
-    void Point2Df::setY(Scalar y) {
+    void Point2Df::setY(const Scalar y) {
         ((float*)m_values)[Y] = y ;
     }
 
-    void Point2Df::set(Scalar x, Scalar y) {
+    void Point2Df::set(const Scalar x, const Scalar y) {
         ((float*)m_values)[X] = x ;
         ((float*)m_values)[Y] = y ;
     }

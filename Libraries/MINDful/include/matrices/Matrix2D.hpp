@@ -24,10 +24,22 @@ namespace Mind {
              * @param   value   Initial value in the Matrix.
              */
             Matrix2D(
-                const size_t& cols = 1,
-                const size_t& rows = 1,
-                const T& value = {}
+                const size_t cols = 1,
+                const size_t rows = 1,
+                const T value = {}
             ) ;
+
+            /**
+             * Copy a Matrix2D.
+             * @param copy  The matrix to copy.
+             */
+            Matrix2D(const Matrix2D& copy) = default ;
+
+            /**
+             * Move a Matrix2D.
+             * @param move  The matrix to move.
+             */
+            Matrix2D(Matrix2D&& move) = default ;
 
             /** Destroy the matrix. */
             virtual ~Matrix2D() ;
@@ -43,9 +55,9 @@ namespace Mind {
              * @param   value   Initial value in the Matrix.
              */
             void resize(
-                const size_t& cols,
-                const size_t& rows,
-                const T& value = {}
+                const size_t cols,
+                const size_t rows,
+                const T value = {}
             ) ;
 
             /**
@@ -53,10 +65,10 @@ namespace Mind {
              * @param cols Amount of columns to reserve.
              * @param rows Amount of rows to reserve.
              */
-            void reserve(const size_t& cols, const size_t& rows) ;
+            void reserve(const size_t cols, const size_t rows) ;
 
             /** Get the element a the specified position. */
-            T& at(const size_t& col, const size_t& row) ;
+            T& at(const size_t col, const size_t row) ;
 
 
             /** Get the number of rows in the matrix. */
@@ -65,9 +77,20 @@ namespace Mind {
             /** Get the number of cols in the matrix. */
             size_t cols() const ;
 
+            /**
+             * Assignment operator to copy a Matrix2D.
+             * @return  The current Matrix2D with the copied values.
+             */
+            Matrix2D& operator=(const Matrix2D& other) = default ;
+
+            /**
+             * Assignment operator to move a Matrix2D.
+             * @return  The current Matrix2D with the moved values.
+             */
+            Matrix2D& operator=(Matrix2D&& other) = default ;
 
             /** Get a row from the matrix. */
-            std::vector<T>& operator[] (const size_t& iIndex) ;
+            std::vector<T>& operator[] (const size_t iIndex) ;
     } ;
 
     /** Echo the matrix on console. */
@@ -79,8 +102,12 @@ namespace Mind {
 
     ///****************************** IMPLEMENTATION *******************************/
     template <class T>
-    Matrix2D<T>::Matrix2D(const size_t& rows, const size_t& cols, const T& value) {
-        m_data = std::vector< std::vector<T> >(rows, std::vector<T>(cols, value)) ;
+    Matrix2D<T>::Matrix2D(
+        const size_t rows,
+        const size_t cols,
+        const T value
+    ) {
+        m_data = std::vector<std::vector<T>>(rows, std::vector<T>(cols, value)) ;
     }
 
     template <class T>
@@ -97,7 +124,11 @@ namespace Mind {
     }
 
     template <class T>
-    void Matrix2D<T>::resize(const size_t& rows, const size_t& cols, const T& value) {
+    void Matrix2D<T>::resize(
+        const size_t rows,
+        const size_t cols,
+        const T value
+    ) {
         m_data.resize(rows) ;
         for (size_t row = 0 ; row < m_data.size() ; row++) {
             m_data[row].resize(cols, value) ;
@@ -105,14 +136,20 @@ namespace Mind {
     }
 
     template <class T>
-    void Matrix2D<T>::reserve(const size_t& rows, const size_t& cols) {
+    void Matrix2D<T>::reserve(
+        const size_t rows,
+        const size_t cols
+    ) {
         m_data.reserve(rows) ;
         for (size_t row = 0 ; row < m_data.size() ; row++)
             m_data[row].reserve(cols) ;
     }
 
     template <class T>
-    T& Matrix2D<T>::at(const size_t& row, const size_t& col) {
+    T& Matrix2D<T>::at(
+        const size_t row,
+        const size_t col
+    ) {
         return m_data[row][col] ;
     }
 
@@ -127,15 +164,15 @@ namespace Mind {
     }
 
     template <class T>
-    std::vector<T>& Matrix2D<T>::operator[] (const size_t& iIndex) {
+    std::vector<T>& Matrix2D<T>::operator[] (const size_t iIndex) {
         return m_data[iIndex] ;
     }
 
     template<class T>
     std::ostream& operator<<(std::ostream& s, Matrix2D<T>& mat) {
-        const size_t& cols = mat.cols() ;
-        const size_t& rows = mat.rows() ;
-        const size_t& lastRow = rows - 1 ;
+        const size_t cols = mat.cols() ;
+        const size_t rows = mat.rows() ;
+        const size_t lastRow = rows - 1 ;
 
         for (size_t col = 0 ; col < cols ; col++) {
             s << "[" ;
