@@ -21,7 +21,7 @@ static inline Vector4f operator+(const Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the addition.
  */
-static inline Vector4f operator+(const Vector4f& a, const float& b) {
+static inline Vector4f operator+(const Vector4f& a, const float b) {
     return a + Vector4f(b) ;
 }
 
@@ -32,7 +32,7 @@ static inline Vector4f operator+(const Vector4f& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the addition.
  */
-static inline Vector4f operator+(const float& a, const Vector4f& b) {
+static inline Vector4f operator+(const float a, const Vector4f& b) {
     return Vector4f(a) + b ;
 }
 
@@ -55,7 +55,7 @@ static inline Vector4f& operator+=(Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the addition stored in the first operand.
  */
-static inline Vector4f& operator+=(Vector4f& a, const float& b) {
+static inline Vector4f& operator+=(Vector4f& a, const float b) {
     a = a + Vector4f(b) ;
     return a ;
 }
@@ -106,7 +106,7 @@ static inline Vector4f operator-(const Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the difference.
  */
-static inline Vector4f operator-(const Vector4f& a, const float& b) {
+static inline Vector4f operator-(const Vector4f& a, const float b) {
     return a - Vector4f(b) ;
 }
 
@@ -117,7 +117,7 @@ static inline Vector4f operator-(const Vector4f& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the difference.
  */
-static inline Vector4f operator-(const float& a, const Vector4f& b) {
+static inline Vector4f operator-(const float a, const Vector4f& b) {
     return Vector4f(a) - b ;
 }
 
@@ -140,7 +140,7 @@ static inline Vector4f& operator-=(Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the difference stored in the first operand.
  */
-static inline Vector4f& operator-=(Vector4f& a, const float& b) {
+static inline Vector4f& operator-=(Vector4f& a, const float b) {
     a = a - Vector4f(b) ;
     return a ;
 }
@@ -202,7 +202,7 @@ static inline Vector4f operator*(const Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the product.
  */
-static inline Vector4f operator*(const Vector4f& a, const float& b) {
+static inline Vector4f operator*(const Vector4f& a, const float b) {
     return a * Vector4f(b) ;
 }
 
@@ -213,7 +213,7 @@ static inline Vector4f operator*(const Vector4f& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the product.
  */
-static inline Vector4f operator*(const float& a, const Vector4f& b) {
+static inline Vector4f operator*(const float a, const Vector4f& b) {
     return Vector4f(a) * b ;
 }
 
@@ -236,7 +236,7 @@ static inline Vector4f& operator*=(Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the product stored in the first operand.
  */
-static inline Vector4f& operator*=(Vector4f& a, const float& b) {
+static inline Vector4f& operator*=(Vector4f& a, const float b) {
     a = a * Vector4f(b) ;
     return a ;
 }
@@ -265,7 +265,7 @@ static inline Vector4f operator/(const Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the division.
  */
-static inline Vector4f operator/(const Vector4f& a, const float& b) {
+static inline Vector4f operator/(const Vector4f& a, const float b) {
     return a / Vector4f(b) ;
 }
 
@@ -276,7 +276,7 @@ static inline Vector4f operator/(const Vector4f& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the division.
  */
-static inline Vector4f operator/(const float& a, const Vector4f& b) {
+static inline Vector4f operator/(const float a, const Vector4f& b) {
     return Vector4f(a) / b ;
 }
 
@@ -299,7 +299,7 @@ static inline Vector4f& operator/=(Vector4f& a, const Vector4f& b) {
  * @param   b   Second operand.
  * @return  Result of the division stored in the first operand.
  */
-static inline Vector4f& operator/=(Vector4f& a, const float& b) {
+static inline Vector4f& operator/=(Vector4f& a, const float b) {
     a = a / Vector4f(b) ;
     return a ;
 }

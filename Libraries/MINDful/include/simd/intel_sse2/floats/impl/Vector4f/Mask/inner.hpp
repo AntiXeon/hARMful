@@ -32,17 +32,17 @@ class Mask {
          * @param   b4  Fourth value mask.
          */
         Mask(
-             const bool& b0,
-             const bool& b1,
-             const bool& b2,
-             const bool& b3
+             const bool b0,
+             const bool b1,
+             const bool b2,
+             const bool b3
             ) ;
 
         /**
          * Create from one boolean, applied to all components of the Mask.
          * @param   value   The boolean to apply to all values of the Mask.
          */
-        Mask(const bool& value) ;
+        Mask(const bool value) ;
 
         /**
          * Create from inner type data.
@@ -78,7 +78,7 @@ class Mask {
          *                    length).
          * @return  Value in the mask at the given index.
          */
-        bool get(const unsigned int& index) ;
+        bool get(const unsigned int index) ;
 
         /**
          * Get the length of the Mask.
@@ -115,7 +115,7 @@ class Mask {
          * @return  The current Mask once the value is affected to its inner
          *            data.
          */
-        Mask& operator=(const bool& value) ;
+        Mask& operator=(const bool value) ;
 
         /**
          * Affect the inner value to the Mask.
@@ -143,24 +143,24 @@ class Mask {
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
          */
-        operator int32x4_t() const ;
+        explicit operator int32x4_t() const ;
 
         /**
          * Cast the current Mask to a float32x4_t.
          * @return  The inner data of the Mask as a float32x4_t vector.
          */
-        operator float32x4_t() const ;
+        explicit operator float32x4_t() const ;
 
         /**
          * Cast the current Mask to a Vector4i::Mask.
          * @return  The Vector4i::Mask version of the current Mask.
          */
-        operator Vector4i::Mask() const ;
+        explicit operator Vector4i::Mask() const ;
 
         /**
          * Cast the current Mask to a Vector4ui::Mask.
          * @return  The Vector4ui::Mask version of the current Mask.
          * @warning Be careful with negative values.
          */
-        operator Vector4ui::Mask() const ;
+        explicit operator Vector4ui::Mask() const ;
 } ;

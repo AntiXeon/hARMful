@@ -11,8 +11,8 @@ static inline typename Vector4i::Mask operator&(
     const typename Vector4i::Mask& b
 ) {
     int32x4_t result ;
-    int32x4_t* aLocal = a ;
-    int32x4_t* bLocal = b ;
+    int32x4_t* aLocal = static_cast<int32x4_t*>(a) ;
+    int32x4_t* bLocal = static_cast<int32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::Mask::size() ; ++index) {
         result[index] = (*aLocal)[index] & (*bLocal)[index] ;
     }
@@ -50,8 +50,8 @@ static inline typename Vector4i::Mask operator|(
     const typename Vector4i::Mask& b
 ) {
     int32x4_t result ;
-    int32x4_t* aLocal = a ;
-    int32x4_t* bLocal = b ;
+    int32x4_t* aLocal = static_cast<int32x4_t*>(a) ;
+    int32x4_t* bLocal = static_cast<int32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::Mask::size() ; ++index) {
         result[index] = (*aLocal)[index] | (*bLocal)[index] ;
     }
@@ -89,8 +89,8 @@ static inline typename Vector4i::Mask operator^(
     const typename Vector4i::Mask& b
 ) {
     int32x4_t result ;
-    int32x4_t* aLocal = a ;
-    int32x4_t* bLocal = b ;
+    int32x4_t* aLocal = static_cast<int32x4_t*>(a) ;
+    int32x4_t* bLocal = static_cast<int32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::Mask::size() ; ++index) {
         result[index] = (*aLocal)[index] ^ (*bLocal)[index] ;
     }
@@ -122,7 +122,7 @@ static inline typename Vector4i::Mask& operator^=(
  */
 static inline typename Vector4i::Mask operator~(const typename Vector4i::Mask& a) {
     int32x4_t result ;
-    int32x4_t* aLocal = a ;
+    int32x4_t* aLocal = static_cast<int32x4_t*>(a) ;
     for (unsigned int index = 0 ; index < Vector4i::Mask::size() ; ++index) {
         result[index] = ~(*aLocal)[index] ;
     }

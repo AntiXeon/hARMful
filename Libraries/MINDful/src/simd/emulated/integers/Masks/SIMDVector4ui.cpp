@@ -9,10 +9,10 @@ namespace Mind {
         Vector4ui::Mask::Mask() {}
 
         Vector4ui::Mask::Mask(
-            const bool& b0,
-            const bool& b1,
-            const bool& b2,
-            const bool& b3
+            const bool b0,
+            const bool b1,
+            const bool b2,
+            const bool b3
         ) {
              m_inner[0] = b0 ;
              m_inner[1] = b1 ;
@@ -20,7 +20,7 @@ namespace Mind {
              m_inner[3] = b3 ;
         }
 
-        Vector4ui::Mask::Mask(const bool& value) {
+        Vector4ui::Mask::Mask(const bool value) {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 m_inner[index] = value ;
             }
@@ -41,7 +41,7 @@ namespace Mind {
             }
         }
 
-        bool Vector4ui::Mask::get(const unsigned int& index) {
+        bool Vector4ui::Mask::get(const unsigned int index) {
             return m_inner[index] ;
         }
 
@@ -62,7 +62,7 @@ namespace Mind {
             return *this ;
         }
 
-        typename Vector4ui::Mask& Vector4ui::Mask::operator=(const bool& value) {
+        typename Vector4ui::Mask& Vector4ui::Mask::operator=(const bool value) {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 m_inner[index] = value ;
             }

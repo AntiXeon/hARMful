@@ -1,18 +1,18 @@
-inline float Vector4f::Mask::binaryConvert(uint32_t value) {
+inline float Vector4f::Mask::binaryConvert(const uint32_t value) {
     return (*((float*) &value)) ;
 }
 
-inline uint32_t Vector4f::Mask::binaryConvert(float value) {
+inline uint32_t Vector4f::Mask::binaryConvert(const float value) {
     return (*((uint32_t*) &value)) ;
 }
 
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
 inline Vector4f::Mask::Mask(
-    const bool& b0,
-    const bool& b1,
-    const bool& b2,
-    const bool& b3
+    const bool b0,
+    const bool b1,
+    const bool b2,
+    const bool b3
 ) {
     m_inner[0] = binaryConvert(-uint32_t(b0)) ;
     m_inner[1] = binaryConvert(-uint32_t(b1)) ;
@@ -20,7 +20,7 @@ inline Vector4f::Mask::Mask(
     m_inner[3] = binaryConvert(-uint32_t(b3)) ;
 }
 
-inline Vector4f::Mask::Mask(const bool& value) {
+inline Vector4f::Mask::Mask(const bool value) {
     m_inner[0] = binaryConvert(-uint32_t(value)) ;
     m_inner[1] = binaryConvert(-uint32_t(value)) ;
     m_inner[2] = binaryConvert(-uint32_t(value)) ;
@@ -51,7 +51,7 @@ inline Vector4f::Mask::~Mask() {}
 
 
                                                               /*** UTILITIES ***/
-inline bool Vector4f::Mask::get(const unsigned int& index) {
+inline bool Vector4f::Mask::get(const unsigned int index) {
     return (m_inner[index] != 0.f) ;
 }
 
@@ -83,7 +83,7 @@ inline Vector4f::Mask& Vector4f::Mask::operator=(const Mask& mask) {
     return *this ;
 }
 
-inline Vector4f::Mask& Vector4f::Mask::operator=(const bool& value) {
+inline Vector4f::Mask& Vector4f::Mask::operator=(const bool value) {
     m_inner[0] = binaryConvert(-uint32_t(value)) ;
     m_inner[1] = binaryConvert(-uint32_t(value)) ;
     m_inner[2] = binaryConvert(-uint32_t(value)) ;

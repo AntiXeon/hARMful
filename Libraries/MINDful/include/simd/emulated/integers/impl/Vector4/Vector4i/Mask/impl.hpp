@@ -2,10 +2,10 @@
 Vector4i::Mask::Mask() {}
 
 Vector4i::Mask::Mask(
-    const bool& b0,
-    const bool& b1,
-    const bool& b2,
-    const bool& b3
+    const bool b0,
+    const bool b1,
+    const bool b2,
+    const bool b3
 ) {
      m_inner[0] = b0 ;
      m_inner[1] = b1 ;
@@ -13,7 +13,7 @@ Vector4i::Mask::Mask(
      m_inner[3] = b3 ;
 }
 
-Vector4i::Mask::Mask(const bool& value) {
+Vector4i::Mask::Mask(const bool value) {
     for (unsigned int index = 0 ; index < size() ; ++index) {
         m_inner[index] = value ;
     }
@@ -34,7 +34,7 @@ inline void Vector4i::Mask::get(Array4i& array) {
     }
 }
 
-inline bool Vector4i::Mask::get(const unsigned int& index) {
+inline bool Vector4i::Mask::get(const unsigned int index) {
     return m_inner[index] ;
 }
 
@@ -55,7 +55,7 @@ inline typename Vector4i::Mask& Vector4i::Mask::operator=(const Mask& mask) {
     return *this ;
 }
 
-inline typename Vector4i::Mask& Vector4i::Mask::operator=(const bool& value) {
+inline typename Vector4i::Mask& Vector4i::Mask::operator=(const bool value) {
     for (unsigned int index = 0 ; index < size() ; ++index) {
         m_inner[index] = value ;
     }

@@ -24,10 +24,10 @@ namespace Mind {
         Vector4f::Vector4f() {}
 
         Vector4f::Vector4f(
-            const Scalar& f1,
-            const Scalar& f2,
-            const Scalar& f3,
-            const Scalar& f4
+            const Scalar f1,
+            const Scalar f2,
+            const Scalar f3,
+            const Scalar f4
         ) {
             m_inner[0] = f1 ;
             m_inner[1] = f2 ;
@@ -35,7 +35,7 @@ namespace Mind {
             m_inner[3] = f4 ;
         }
 
-        Vector4f::Vector4f(const Scalar& value) {
+        Vector4f::Vector4f(const Scalar value) {
             m_inner[0] = value ;
             m_inner[1] = value ;
             m_inner[2] = value ;
@@ -351,7 +351,7 @@ namespace Mind {
             return 0 ;
         }
 
-        void Vector4f::setControlWord(uint32_t) {}
+        void Vector4f::setControlWord(const uint32_t) {}
 
         void Vector4f::noSubnormals() {}
 
@@ -361,12 +361,12 @@ namespace Mind {
                                                              /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
         Vector4f& Vector4f::operator=(const Vector4f& vec4) {
-            auto other = (float32x4_t) vec4 ;
+            float32x4_t other = static_cast<float32x4_t>(vec4) ;
             std::copy(other.begin(), other.end(), m_inner.begin()) ;
             return *this ;
         }
 
-        Vector4f& Vector4f::operator=(const Scalar& value) {
+        Vector4f& Vector4f::operator=(const Scalar value) {
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 m_inner[index] = value ;
             }
@@ -379,7 +379,7 @@ namespace Mind {
         }
 
         Vector4f& Vector4f::operator=(const Vector4i& vec4) {
-            int32x4_t vec4Array = vec4 ;
+            int32x4_t vec4Array = static_cast<int32x4_t>(vec4) ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 m_inner[index] = vec4Array[index] ;
             }
@@ -387,14 +387,14 @@ namespace Mind {
         }
 
         Vector4f& Vector4f::operator=(const Vector4ui& vec4) {
-            uint32x4_t vec4Array = vec4 ;
+            uint32x4_t vec4Array = static_cast<uint32x4_t>(vec4) ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 m_inner[index] = vec4Array[index] ;
             }
             return *this ;
         }
 
-        Scalar& Vector4f::operator[](const int& index) {
+        Scalar& Vector4f::operator[](const int index) {
             return m_inner[index] ;
         }
 

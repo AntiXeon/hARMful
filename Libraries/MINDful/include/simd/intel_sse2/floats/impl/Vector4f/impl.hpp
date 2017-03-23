@@ -18,15 +18,15 @@ inline float32x4_t Vector4f::selection(
 inline Vector4f::Vector4f() {}
 
 inline Vector4f::Vector4f(
-    const Scalar& f1,
-    const Scalar& f2,
-    const Scalar& f3,
-    const Scalar& f4
+    const Scalar f1,
+    const Scalar f2,
+    const Scalar f3,
+    const Scalar f4
 ) {
     m_inner = _mm_setr_ps(f1, f2, f3, f4) ;
 }
 
-inline Vector4f::Vector4f(const Scalar& value) {
+inline Vector4f::Vector4f(const Scalar value) {
     m_inner = _mm_set1_ps(value) ;
 }
 
@@ -291,9 +291,10 @@ inline Vector4f::Mask Vector4f::isNaN() {
     Vector4i converted = _mm_castps_si128(m_inner) ;
     Vector4i removedSignBit = converted << 1 ;
     Vector4i extractedExponent = removedSignBit & MaskExponent ;
-    Vector4i extractedFraction = _mm_andnot_si128((__m128i) MaskExponent, (__m128i) removedSignBit) ;
+    Vector4i extractedFraction = _mm_andnot_si128((int32x4_t) MaskExponent, (int32x4_t) removedSignBit) ;
     // NaN = Exponent is null while fraction is not.
-    Vector4i::Mask resultMask = (extractedExponent == MaskExponent) & (extractedFraction != 0) ;
+    Vector4i::Mask isExponentOfNaN = extractedExponent == MaskExponent ;
+    Vector4i::Mask resultMask = (Vector4i::Mask) (isExponentOfNaN & (extractedFraction != 0)) ;
     return resultMask ;
 }
 
@@ -342,7 +343,7 @@ inline uint32_t Vector4f::getControlWord() {
     return _mm_getcsr() ;
 }
 
-inline void Vector4f::setControlWord(uint32_t csr) {
+inline void Vector4f::setControlWord(const uint32_t csr) {
     _mm_setcsr(csr) ;
 }
 
@@ -364,7 +365,7 @@ inline Vector4f& Vector4f::operator=(const Vector4f& vec4) {
     return *this ;
 }
 
-inline Vector4f& Vector4f::operator=(const Scalar& value) {
+inline Vector4f& Vector4f::operator=(const Scalar value) {
     m_inner = _mm_set1_ps(value) ;
     return *this ;
 }

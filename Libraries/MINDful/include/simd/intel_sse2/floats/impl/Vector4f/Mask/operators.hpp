@@ -10,7 +10,7 @@ static inline Vector4f::Mask operator&(
                                        const Vector4f::Mask& a,
                                        const Vector4f::Mask& b
                                       ) {
-    return _mm_and_ps(a, b) ;
+    return _mm_and_ps((float32x4_t) a, (float32x4_t) b) ;
 }
 
 /**
@@ -43,7 +43,7 @@ static inline Vector4f::Mask operator|(
                                        const Vector4f::Mask& a,
                                        const Vector4f::Mask& b
                                       ) {
-    return _mm_or_ps(a, b) ;
+    return _mm_or_ps((float32x4_t) a, (float32x4_t) b) ;
 }
 
 /**
@@ -76,7 +76,7 @@ static inline Vector4f::Mask operator^(
                                        const Vector4f::Mask& a,
                                        const Vector4f::Mask& b
                                       ) {
-    return _mm_xor_ps(a, b) ;
+    return _mm_xor_ps((float32x4_t) a, (float32x4_t) b) ;
 }
 
 /**
@@ -105,5 +105,5 @@ static inline Vector4f::Mask& operator^=(
 static inline Vector4f::Mask operator~(
                                        const Vector4f::Mask& a
                                       ) {
-    return _mm_xor_ps(a, _mm_castsi128_ps(_mm_set1_epi32(-1))) ;
+    return _mm_xor_ps((float32x4_t) a, _mm_castsi128_ps(_mm_set1_epi32(-1))) ;
 }

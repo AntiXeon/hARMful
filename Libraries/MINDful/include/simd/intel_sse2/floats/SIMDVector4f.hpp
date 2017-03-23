@@ -61,10 +61,10 @@ namespace Mind {
                  * @param   f4  Fourth component of the Vector4f.
                  */
                 Vector4f(
-                    const Scalar& f1,
-                    const Scalar& f2,
-                    const Scalar& f3 = 0.f,
-                    const Scalar& f4 = 0.f
+                    const Scalar f1,
+                    const Scalar f2,
+                    const Scalar f3 = 0.f,
+                    const Scalar f4 = 0.f
                 ) ;
 
                 /**
@@ -72,7 +72,7 @@ namespace Mind {
                  * @param   value   The value to copy in the four components of
                  *                  the Vector4f.
                  */
-                Vector4f(const Scalar& value) ;
+                Vector4f(const Scalar value) ;
 
                 /**
                  * Create directly from internally used data type.
@@ -452,7 +452,7 @@ namespace Mind {
                  * Write the MXCSR control word.
                  * @param     csr     The new MXCSR control word.
                  */
-                static void setControlWord(uint32_t csr) ;
+                static void setControlWord(const uint32_t csr) ;
 
                 /**
                  * Set "Denormals Are Zeros" and "Flush to Zero" mode
@@ -489,7 +489,7 @@ namespace Mind {
                  * @return  The current Vector4f once the value is affected to
                  *          its inner data.
                  */
-                Vector4f& operator=(const Scalar& value) ;
+                Vector4f& operator=(const Scalar value) ;
 
                 /**
                  * Affect the inner value to the Vector4f.

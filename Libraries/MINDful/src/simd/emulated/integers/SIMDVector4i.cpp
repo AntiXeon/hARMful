@@ -22,10 +22,10 @@ namespace Mind {
         Vector4i::Vector4i() {}
 
         Vector4i::Vector4i(
-            const int32_t& i1,
-            const int32_t& i2,
-            const int32_t& i3,
-            const int32_t& i4
+            const int32_t i1,
+            const int32_t i2,
+            const int32_t i3,
+            const int32_t i4
         ) {
             m_inner[0] = i1 ;
             m_inner[1] = i2 ;
@@ -33,7 +33,7 @@ namespace Mind {
             m_inner[3] = i4 ;
         }
 
-        Vector4i::Vector4i(const int32_t& value) {
+        Vector4i::Vector4i(const int32_t value) {
             m_inner[0] = value ;
             m_inner[1] = value ;
             m_inner[2] = value ;

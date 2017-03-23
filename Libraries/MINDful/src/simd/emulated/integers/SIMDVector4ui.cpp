@@ -21,10 +21,10 @@ namespace Mind {
         Vector4ui::Vector4ui() {}
 
         Vector4ui::Vector4ui(
-            const uint32_t& i1,
-            const uint32_t& i2,
-            const uint32_t& i3,
-            const uint32_t& i4
+            const uint32_t i1,
+            const uint32_t i2,
+            const uint32_t i3,
+            const uint32_t i4
         ) {
             m_inner[0] = i1 ;
             m_inner[1] = i2 ;
@@ -32,7 +32,7 @@ namespace Mind {
             m_inner[3] = i4 ;
         }
 
-        Vector4ui::Vector4ui(const uint32_t& value) {
+        Vector4ui::Vector4ui(const uint32_t value) {
             m_inner[0] = value ;
             m_inner[1] = value ;
             m_inner[2] = value ;

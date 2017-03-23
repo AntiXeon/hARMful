@@ -5,23 +5,23 @@
 
 namespace Mind {
     namespace EmulatedSIMD {
-        float Vector4f::Mask::binaryConvert(uint32_t value) {
-            float* tmpPtr = reinterpret_cast<float*>(&value) ;
+        float Vector4f::Mask::binaryConvert(const uint32_t value) {
+            const float* tmpPtr = reinterpret_cast<const float*>(&value) ;
             return *tmpPtr ;
         }
 
-        uint32_t Vector4f::Mask::binaryConvert(float value) {
-            uint32_t* tmpPtr = reinterpret_cast<uint32_t*>(&value) ;
+        uint32_t Vector4f::Mask::binaryConvert(const float value) {
+            const uint32_t* tmpPtr = reinterpret_cast<const uint32_t*>(&value) ;
             return *tmpPtr ;
         }
 
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
         Vector4f::Mask::Mask(
-            const bool& b0,
-            const bool& b1,
-            const bool& b2,
-            const bool& b3
+            const bool b0,
+            const bool b1,
+            const bool b2,
+            const bool b3
         ) {
             m_inner[0] = binaryConvert(-uint32_t(b0)) ;
             m_inner[1] = binaryConvert(-uint32_t(b1)) ;
@@ -29,7 +29,7 @@ namespace Mind {
             m_inner[3] = binaryConvert(-uint32_t(b3)) ;
         }
 
-        Vector4f::Mask::Mask(const bool& value) {
+        Vector4f::Mask::Mask(const bool value) {
             m_inner[0] = binaryConvert(-uint32_t(value)) ;
             m_inner[1] = binaryConvert(-uint32_t(value)) ;
             m_inner[2] = binaryConvert(-uint32_t(value)) ;
@@ -41,7 +41,7 @@ namespace Mind {
         }
 
         Vector4f::Mask::Mask(const Vector4i::Mask& mask) {
-            int32x4_t maskInner = mask ;
+            int32x4_t maskInner = static_cast<int32x4_t>(mask) ;
             m_inner[0] = binaryConvert(-uint32_t(maskInner[0])) ;
             m_inner[1] = binaryConvert(-uint32_t(maskInner[1])) ;
             m_inner[2] = binaryConvert(-uint32_t(maskInner[2])) ;
@@ -49,7 +49,7 @@ namespace Mind {
         }
 
         Vector4f::Mask::Mask(const Vector4ui::Mask& mask) {
-            uint32x4_t maskInner = mask ;
+            uint32x4_t maskInner = static_cast<uint32x4_t>(mask) ;
             m_inner[0] = binaryConvert(-uint32_t(maskInner[0])) ;
             m_inner[1] = binaryConvert(-uint32_t(maskInner[1])) ;
             m_inner[2] = binaryConvert(-uint32_t(maskInner[2])) ;
@@ -60,7 +60,7 @@ namespace Mind {
 
 
                                                               /*** UTILITIES ***/
-        bool Vector4f::Mask::get(const unsigned int& index) {
+        bool Vector4f::Mask::get(const unsigned int index) {
             return (m_inner[index] != 0.f) ;
         }
 
@@ -92,7 +92,7 @@ namespace Mind {
             return *this ;
         }
 
-        Vector4f::Mask& Vector4f::Mask::operator=(const bool& value) {
+        Vector4f::Mask& Vector4f::Mask::operator=(const bool value) {
             m_inner[0] = binaryConvert(-uint32_t(value)) ;
             m_inner[1] = binaryConvert(-uint32_t(value)) ;
             m_inner[2] = binaryConvert(-uint32_t(value)) ;

@@ -8,8 +8,8 @@
  */
 static inline Vector4ui operator+(const Vector4ui& a, const Vector4ui b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
          result[index] = (*aRaw)[index] + (*bRaw)[index] ;
     }
@@ -23,7 +23,7 @@ static inline Vector4ui operator+(const Vector4ui& a, const Vector4ui b) {
  * @param   b   Second operand.
  * @return  Result of the addition.
  */
-static inline Vector4ui operator+(const Vector4ui& a, const float& b) {
+static inline Vector4ui operator+(const Vector4ui& a, const float b) {
     return a + Vector4ui(b) ;
 }
 
@@ -34,7 +34,7 @@ static inline Vector4ui operator+(const Vector4ui& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the addition.
  */
-static inline Vector4ui operator+(const float& a, const Vector4ui& b) {
+static inline Vector4ui operator+(const float a, const Vector4ui& b) {
     return Vector4ui(a) + b ;
 }
 
@@ -57,7 +57,7 @@ static inline Vector4ui& operator+=(Vector4ui& a, const Vector4ui& b) {
  * @param   b   Second operand.
  * @return  Result of the addition stored in the first operand.
  */
-static inline Vector4ui& operator+=(Vector4ui& a, const float& b) {
+static inline Vector4ui& operator+=(Vector4ui& a, const float b) {
     a = a + Vector4ui(b) ;
     return a ;
 }
@@ -95,8 +95,8 @@ static inline Vector4ui& operator++(Vector4ui& a) {
  */
 static inline Vector4ui operator-(const Vector4ui& a, const Vector4ui b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] - (*bRaw)[index] ;
     }
@@ -110,7 +110,7 @@ static inline Vector4ui operator-(const Vector4ui& a, const Vector4ui b) {
  * @param   b   Second operand.
  * @return  Result of the difference.
  */
-static inline Vector4ui operator-(const Vector4ui& a, const float& b) {
+static inline Vector4ui operator-(const Vector4ui& a, const float b) {
     return a - Vector4ui(b) ;
 }
 
@@ -121,7 +121,7 @@ static inline Vector4ui operator-(const Vector4ui& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the difference.
  */
-static inline Vector4ui operator-(const float& a, const Vector4ui& b) {
+static inline Vector4ui operator-(const float a, const Vector4ui& b) {
     return Vector4ui(a) - b ;
 }
 
@@ -144,7 +144,7 @@ static inline Vector4ui& operator-=(Vector4ui& a, const Vector4ui& b) {
  * @param   b   Second operand.
  * @return  Result of the difference stored in the first operand.
  */
-static inline Vector4ui& operator-=(Vector4ui& a, const float& b) {
+static inline Vector4ui& operator-=(Vector4ui& a, const float b) {
     a = a - Vector4ui(b) ;
     return a ;
 }
@@ -158,7 +158,7 @@ static inline Vector4ui& operator-=(Vector4ui& a, const float& b) {
  */
 static inline Vector4ui operator-(const Vector4ui& a) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = -(*aRaw)[index] ;
     }
@@ -198,8 +198,8 @@ static inline Vector4ui& operator--(Vector4ui& a) {
  */
 static inline Vector4ui operator*(const Vector4ui& a, const Vector4ui b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] * (*bRaw)[index] ;
     }
@@ -213,7 +213,7 @@ static inline Vector4ui operator*(const Vector4ui& a, const Vector4ui b) {
  * @param   b   Second operand.
  * @return  Result of the product.
  */
-static inline Vector4ui operator*(const Vector4ui& a, const float& b) {
+static inline Vector4ui operator*(const Vector4ui& a, const float b) {
     return a * Vector4ui(b) ;
 }
 
@@ -224,7 +224,7 @@ static inline Vector4ui operator*(const Vector4ui& a, const float& b) {
  * @param   b   Second operand.
  * @return  Result of the product.
  */
-static inline Vector4ui operator*(const float& a, const Vector4ui& b) {
+static inline Vector4ui operator*(const float a, const Vector4ui& b) {
     return Vector4ui(a) * b ;
 }
 
@@ -247,7 +247,7 @@ static inline Vector4ui& operator*=(Vector4ui& a, const Vector4ui& b) {
  * @param   b   Second operand.
  * @return  Result of the product stored in the first operand.
  */
-static inline Vector4ui& operator*=(Vector4ui& a, const float& b) {
+static inline Vector4ui& operator*=(Vector4ui& a, const float b) {
     a = a * Vector4ui(b) ;
     return a ;
 }
@@ -264,8 +264,8 @@ static inline Vector4ui& operator*=(Vector4ui& a, const float& b) {
  */
 static inline Vector4ui::Mask operator==(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] == (*bRaw)[index] ;
     }
@@ -283,8 +283,8 @@ static inline Vector4ui::Mask operator==(const Vector4ui& a, const Vector4ui& b)
  */
 static inline Vector4ui::Mask operator!=(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] != (*bRaw)[index] ;
     }
@@ -301,8 +301,8 @@ static inline Vector4ui::Mask operator!=(const Vector4ui& a, const Vector4ui& b)
  */
 static inline Vector4ui::Mask operator<(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] < (*bRaw)[index] ;
     }
@@ -331,8 +331,8 @@ static inline Vector4ui::Mask operator>(const Vector4ui& a, const Vector4ui& b) 
  */
 static inline Vector4ui::Mask operator>=(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] >= (*bRaw)[index] ;
     }
@@ -359,7 +359,7 @@ static inline Vector4ui::Mask operator<=(const Vector4ui& a, const Vector4ui& b)
  */
 static inline Vector4ui operator~(const Vector4ui& a) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = ~(*aRaw)[index] ;
     }
@@ -375,8 +375,8 @@ static inline Vector4ui operator~(const Vector4ui& a) {
  */
 static inline Vector4ui operator&(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] & (*bRaw)[index] ;
     }
@@ -402,8 +402,8 @@ static inline Vector4ui& operator&=(Vector4ui& a, const Vector4ui& b) {
  */
 static inline Vector4ui operator&(const Vector4ui& a, const Vector4ui::Mask& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] & (*bRaw)[index] ;
     }
@@ -429,8 +429,8 @@ static inline Vector4ui& operator&=(Vector4ui& a, const Vector4ui::Mask& b) {
  */
 static inline Vector4ui operator&(const Vector4ui::Mask& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] & (*bRaw)[index] ;
     }
@@ -447,8 +447,8 @@ static inline Vector4ui operator&(const Vector4ui::Mask& a, const Vector4ui& b) 
  */
 static inline Vector4ui operator|(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] | (*bRaw)[index] ;
     }
@@ -474,8 +474,8 @@ static inline Vector4ui& operator|=(Vector4ui& a, const Vector4ui& b) {
  */
 static inline Vector4ui operator|(const Vector4ui& a, const Vector4ui::Mask& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] | (*bRaw)[index] ;
     }
@@ -501,8 +501,8 @@ static inline Vector4ui& operator|=(Vector4ui& a, const Vector4ui::Mask& b) {
  */
 static inline Vector4ui operator|(const Vector4ui::Mask& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] | (*bRaw)[index] ;
     }
@@ -519,8 +519,8 @@ static inline Vector4ui operator|(const Vector4ui::Mask& a, const Vector4ui& b) 
  */
 static inline Vector4ui operator^(const Vector4ui& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] ^ (*bRaw)[index] ;
     }
@@ -546,8 +546,8 @@ static inline Vector4ui& operator^=(Vector4ui& a, const Vector4ui& b) {
  */
 static inline Vector4ui operator^(const Vector4ui& a, const Vector4ui::Mask& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] ^ (*bRaw)[index] ;
     }
@@ -573,8 +573,8 @@ static inline Vector4ui& operator^=(Vector4ui& a, const Vector4ui::Mask& b) {
  */
 static inline Vector4ui operator^(const Vector4ui::Mask& a, const Vector4ui& b) {
     uint32x4_t result ;
-    uint32x4_t* aRaw = a ;
-    uint32x4_t* bRaw = b ;
+    uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
+    uint32x4_t* bRaw = static_cast<uint32x4_t*>(b) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*aRaw)[index] ^ (*bRaw)[index] ;
     }
@@ -591,7 +591,7 @@ static inline Vector4ui operator^(const Vector4ui::Mask& a, const Vector4ui& b) 
  */
 inline static Vector4ui operator<<(const Vector4ui& vec, int32_t bits) {
     uint32x4_t result ;
-    uint32x4_t* vecRaw = vec ;
+    uint32x4_t* vecRaw = static_cast<uint32x4_t*>(vec) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*vecRaw)[index] << bits ;
     }
@@ -618,7 +618,7 @@ inline static Vector4ui& operator<<=(Vector4ui& vec, int32_t bits) {
  */
 inline static Vector4ui operator>>(const Vector4ui& vec, int32_t bits) {
     uint32x4_t result ;
-    uint32x4_t* vecRaw = vec ;
+    uint32x4_t* vecRaw = static_cast<uint32x4_t*>(vec) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
         result[index] = (*vecRaw)[index] >> bits ;
     }

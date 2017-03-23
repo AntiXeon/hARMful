@@ -180,7 +180,7 @@ namespace Mind {
 
     bool Point2Df::operator==(const Point2Df& other) const {
         if (this != &other) {
-            SIMD::Vector4i::Mask equals = (m_values == other.m_values) ;
+            SIMD::Vector4i::Mask equals = (SIMD::Vector4i::Mask) (m_values == other.m_values) ;
             return ((equals.get(X) != 0) && (equals.get(Y) != 0)) ;
         }
 

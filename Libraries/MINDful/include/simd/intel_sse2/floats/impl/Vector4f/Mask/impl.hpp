@@ -1,9 +1,9 @@
                                                 /** CONSTRUCTION / DESTRUCTION **/
 inline Vector4f::Mask::Mask(
-    const bool& b0,
-    const bool& b1,
-    const bool& b2,
-    const bool& b3
+    const bool b0,
+    const bool b1,
+    const bool b2,
+    const bool b3
 ) {
     m_inner = _mm_castsi128_ps(
         _mm_setr_epi32(
@@ -15,7 +15,7 @@ inline Vector4f::Mask::Mask(
     ) ;
 }
 
-inline Vector4f::Mask::Mask(const bool& value) {
+inline Vector4f::Mask::Mask(const bool value) {
     m_inner = _mm_castsi128_ps(_mm_set1_epi32(-int32_t(value))) ;
 }
 
@@ -35,7 +35,7 @@ inline Vector4f::Mask::~Mask() {}
 
 
                                                               /*** UTILITIES ***/
-inline bool Vector4f::Mask::get(const unsigned int& index) {
+inline bool Vector4f::Mask::get(const unsigned int index) {
     return Vector4i::Mask(_mm_castps_si128(m_inner)).get(index) ;
 }
 
@@ -67,7 +67,7 @@ inline Vector4f::Mask& Vector4f::Mask::operator=(const Mask& mask) {
     return *this ;
 }
 
-inline Vector4f::Mask& Vector4f::Mask::operator=(const bool& value) {
+inline Vector4f::Mask& Vector4f::Mask::operator=(const bool value) {
     m_inner = _mm_castsi128_ps(_mm_set1_epi32(-int32_t(value))) ;
     return *this ;
 }

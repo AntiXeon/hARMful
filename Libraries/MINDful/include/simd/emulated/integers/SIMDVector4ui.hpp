@@ -51,18 +51,18 @@ namespace Mind {
                  * @param   i4  Fourth component of the Vector4ui.
                  */
                 Vector4ui(
-                         const uint32_t& i1,
-                         const uint32_t& i2,
-                         const uint32_t& i3 = 0.f,
-                         const uint32_t& i4 = 0.f
-                        ) ;
+                    const uint32_t i1,
+                    const uint32_t i2,
+                    const uint32_t i3 = 0.f,
+                    const uint32_t i4 = 0.f
+                ) ;
 
                 /**
                  * Create a Vector4ui in which all values are the given one.
                  * @param   value   The value to copy in the four components of
                  *                  the Vector4ui.
                  */
-                Vector4ui(const uint32_t& value) ;
+                Vector4ui(const uint32_t value) ;
 
                 /**
                  * Create directly from internally used data type.
@@ -144,13 +144,13 @@ namespace Mind {
                  * Cast the current Vector4 to its inner data type.
                  * @return  The inner data.
                  */
-                operator uint32x4_t() const ;
+                explicit operator uint32x4_t() const ;
 
                 /**
                  * Cast the current Vector4 to its inner data type.
                  * @return  The inner data.
                  */
-                operator uint32x4_t*() const ;
+                explicit operator uint32x4_t*() const ;
         } ;
 
         #include "impl/Vector4/Vector4ui/Mask/operators.hpp"
