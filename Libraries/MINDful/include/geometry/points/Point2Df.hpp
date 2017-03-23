@@ -173,10 +173,10 @@ namespace Mind {
             void set(const Point2Df& position) ;
 
             /** Conversion from Point2D to Dimension2D. */
-            operator Dimension2Df() ;
+            explicit operator Dimension2Df() ;
 
             /** Conversion from Point2D to Point3D. */
-            operator Point3Df() ;
+            explicit operator Point3Df() ;
 
             /**
              * Add a Point and affect the result.

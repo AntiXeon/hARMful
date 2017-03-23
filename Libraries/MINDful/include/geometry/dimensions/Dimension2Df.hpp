@@ -70,10 +70,10 @@ namespace Mind {
             void set(const Scalar width, const Scalar height) ;
 
             /** Conversion from Dimension2D to Point2D. */
-            operator Point2Df() ;
+            explicit operator Point2Df() ;
 
             /** Conversion from Dimension2D to Dimension3D. */
-            operator Dimension3Df() ;
+            explicit operator Dimension3Df() ;
 
 
             /**

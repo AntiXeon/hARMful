@@ -96,10 +96,10 @@ namespace Mind {
             ) ;
 
             /** Conversion from Dimension3D to Point3D. */
-            operator Point3Df() ;
+            explicit operator Point3Df() ;
 
             /** Conversion from Dimension3D to Dimension2D. */
-            operator Dimension2Df() ;
+            explicit operator Dimension2Df() ;
 
             /**
              * Add a Dimension and affect the result.
