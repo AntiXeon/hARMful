@@ -183,7 +183,7 @@ namespace Doom {
             for (unsigned char power = 0 ; power < precision ; power++) {
                 power_fractional *= 10 ;
             }
-            long fractional_integer = (fractional * (double) power_fractional) ;
+            long fractional_integer = static_cast<long>(fractional * (double) power_fractional) ;
             representation += "." ;
             representation += ToStringi(fractional_integer) ;
 

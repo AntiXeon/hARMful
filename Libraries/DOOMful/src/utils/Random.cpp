@@ -11,7 +11,8 @@ namespace Doom {
 
         void Initialize(const bool force) {
             if (!IsInitialized || force) {
-                srand(time(nullptr)) ;
+                auto seed = static_cast<unsigned int>(time(nullptr)) ;
+                srand(seed) ;
                 IsInitialized = true ;
             }
         }
@@ -32,7 +33,7 @@ namespace Doom {
 
         float GetNormalizedFloat() {
             const float MaxRandom = RAND_MAX ;
-            float random = rand() ;
+            float random = static_cast<float>(rand()) ;
             return random / MaxRandom ;
         }
     }
