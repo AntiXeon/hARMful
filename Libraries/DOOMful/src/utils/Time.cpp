@@ -1,4 +1,5 @@
 #include <utils/Time.hpp>
+#include <utils/Platform.hpp>
 #include <time.h>
 
 namespace Doom {
@@ -33,9 +34,14 @@ namespace Doom {
         time_t now ;
         time(&now) ;
 
-        struct tm* timeinfo ;
-        timeinfo = localtime(&now) ;
-
-        strftime(buffer, bufferLength, format.c_str(), timeinfo) ;
+        #ifdef WindowsPlatform
+    		struct tm timeinfo;
+    		localtime_s(&timeinfo, &now);
+    		strftime(buffer, bufferLength, format.c_str(), &timeinfo);
+        #else
+            struct tm* timeinfo ;
+            timeinfo = localtime(&now) ;
+            strftime(buffer, bufferLength, format.c_str(), timeinfo) ;
+        #endif
     }
 }
