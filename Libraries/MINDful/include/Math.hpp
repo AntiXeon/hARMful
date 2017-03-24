@@ -14,29 +14,29 @@ namespace Mind {
      */
     namespace Math {
         /** Perigon angle is a 360° angle. */
-        constexpr Scalar PerigonAngleDegrees     = 360.f ;
+        const Scalar PerigonAngleDegrees     = 360.f ;
         /** Straight angle is a 180° angle. */
-        constexpr Scalar StraightAngleDegrees    = Math::PerigonAngleDegrees / 2.f ;
+        const Scalar StraightAngleDegrees    = Math::PerigonAngleDegrees / 2.f ;
         /** Right is a 90° angle. */
-        constexpr Scalar RightAngleDegrees       = Math::PerigonAngleDegrees / 4.f ;
+        const Scalar RightAngleDegrees       = Math::PerigonAngleDegrees / 4.f ;
 
         /** Approximation of PI value. */
-        constexpr Scalar Pi                      = 4.f * atan(1.f) ;
+        const Scalar Pi                      = 4.f * atan(1.f) ;
         /** Approximation of PI/2 value. */
-        constexpr Scalar HalfPi                  = Math::Pi / 2.f ;
+        const Scalar HalfPi                  = Math::Pi / 2.f ;
         /** Approximation of PI/4 value. */
-        constexpr Scalar QuartPi                 = Math::Pi / 4.f ;
+        const Scalar QuartPi                 = Math::Pi / 4.f ;
         /** Approximation of PI*2 value. */
-        constexpr Scalar PiTwice                 = Math::Pi * 2.f ;
+        const Scalar PiTwice                 = Math::Pi * 2.f ;
         /** Computation of PI / 360. */
-        constexpr Scalar PiOver360               = Math::Pi / Math::PerigonAngleDegrees ;
+        const Scalar PiOver360               = Math::Pi / Math::PerigonAngleDegrees ;
         /** Approximation of PI^2 value. */
-        constexpr Scalar SquaredPi               = Math::Pi * Math::Pi ;
+        const Scalar SquaredPi               = Math::Pi * Math::Pi ;
 
         /** Value used to convert degrees to radians. */
-        constexpr Scalar DegreesToRadians = Math::Pi / Math::StraightAngleDegrees ;
+        const Scalar DegreesToRadians = Math::Pi / Math::StraightAngleDegrees ;
         /** Value used to convert radians to degrees. */
-        constexpr Scalar RadiansToDegrees = Math::StraightAngleDegrees / Math::Pi ;
+        const Scalar RadiansToDegrees = Math::StraightAngleDegrees / Math::Pi ;
 
                                                                 /*** ANGLES ***/
         /**
@@ -107,7 +107,7 @@ namespace Mind {
      * @param   degrees Value of the angle in degrees.
      * @return  Value of the angle in radians.
      */
-    constexpr Scalar operator"" _deg(const long double degrees) {
+    inline Scalar operator"" _deg(const long double degrees) {
         return degrees * Math::DegreesToRadians ;
     }
 
@@ -116,7 +116,7 @@ namespace Mind {
      * @param   radians Value of the angle in radians.
      * @return  Value of the angle in degrees.
      */
-    constexpr Scalar operator"" _rad(const long double radians) {
+    inline Scalar operator"" _rad(const long double radians) {
         return radians * Math::RadiansToDegrees ;
     }
 } ;
