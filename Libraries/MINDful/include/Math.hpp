@@ -107,7 +107,7 @@ namespace Mind {
      * @param   degrees Value of the angle in degrees.
      * @return  Value of the angle in radians.
      */
-    inline Scalar operator"" _deg(const long double degrees) {
+    inline long double operator"" _deg(const long double degrees) {
         return degrees * Math::DegreesToRadians ;
     }
 
@@ -116,7 +116,7 @@ namespace Mind {
      * @param   radians Value of the angle in radians.
      * @return  Value of the angle in degrees.
      */
-    inline Scalar operator"" _rad(const long double radians) {
+    inline long double operator"" _rad(const long double radians) {
         return radians * Math::RadiansToDegrees ;
     }
 } ;

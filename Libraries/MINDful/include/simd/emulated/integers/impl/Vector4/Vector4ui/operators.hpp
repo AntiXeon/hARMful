@@ -24,7 +24,7 @@ static inline Vector4ui operator+(const Vector4ui& a, const Vector4ui b) {
  * @return  Result of the addition.
  */
 static inline Vector4ui operator+(const Vector4ui& a, const float b) {
-    return a + Vector4ui(b) ;
+    return a + Vector4ui(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -35,7 +35,7 @@ static inline Vector4ui operator+(const Vector4ui& a, const float b) {
  * @return  Result of the addition.
  */
 static inline Vector4ui operator+(const float a, const Vector4ui& b) {
-    return Vector4ui(a) + b ;
+    return Vector4ui(static_cast<int32_t>(a)) + b ;
 }
 
 /**
@@ -58,7 +58,7 @@ static inline Vector4ui& operator+=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the addition stored in the first operand.
  */
 static inline Vector4ui& operator+=(Vector4ui& a, const float b) {
-    a = a + Vector4ui(b) ;
+    a = a + Vector4ui(static_cast<int32_t>(b)) ;
     return a ;
 }
 
@@ -111,7 +111,7 @@ static inline Vector4ui operator-(const Vector4ui& a, const Vector4ui b) {
  * @return  Result of the difference.
  */
 static inline Vector4ui operator-(const Vector4ui& a, const float b) {
-    return a - Vector4ui(b) ;
+    return a - Vector4ui(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -122,7 +122,7 @@ static inline Vector4ui operator-(const Vector4ui& a, const float b) {
  * @return  Result of the difference.
  */
 static inline Vector4ui operator-(const float a, const Vector4ui& b) {
-    return Vector4ui(a) - b ;
+    return Vector4ui(static_cast<int32_t>(a)) - b ;
 }
 
 /**
@@ -145,7 +145,7 @@ static inline Vector4ui& operator-=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the difference stored in the first operand.
  */
 static inline Vector4ui& operator-=(Vector4ui& a, const float b) {
-    a = a - Vector4ui(b) ;
+    a = a - Vector4ui(static_cast<int32_t>(b)) ;
     return a ;
 }
 
@@ -214,7 +214,7 @@ static inline Vector4ui operator*(const Vector4ui& a, const Vector4ui b) {
  * @return  Result of the product.
  */
 static inline Vector4ui operator*(const Vector4ui& a, const float b) {
-    return a * Vector4ui(b) ;
+    return a * Vector4ui(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -225,7 +225,7 @@ static inline Vector4ui operator*(const Vector4ui& a, const float b) {
  * @return  Result of the product.
  */
 static inline Vector4ui operator*(const float a, const Vector4ui& b) {
-    return Vector4ui(a) * b ;
+    return Vector4ui(static_cast<int32_t>(a)) * b ;
 }
 
 /**
@@ -248,7 +248,7 @@ static inline Vector4ui& operator*=(Vector4ui& a, const Vector4ui& b) {
  * @return  Result of the product stored in the first operand.
  */
 static inline Vector4ui& operator*=(Vector4ui& a, const float b) {
-    a = a * Vector4ui(b) ;
+    a = a * Vector4ui(static_cast<int32_t>(b)) ;
     return a ;
 }
 

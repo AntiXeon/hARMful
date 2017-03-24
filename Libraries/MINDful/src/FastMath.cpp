@@ -11,7 +11,7 @@ namespace Mind {
         static std::vector<Scalar> TangentCache ;
 
         void init(const unsigned int steps) {
-            Scalar stepValue = Math::Pi / 180. ;
+            Scalar stepValue = static_cast<Scalar>(Math::Pi / 180.) ;
 
             SinusCache.clear() ;
             CosinusCache.clear() ;
@@ -24,9 +24,9 @@ namespace Mind {
 
 
             // If access to index zero of the caches
-            SinusCache.push_back(::sin(0.)) ;
-            CosinusCache.push_back(::cos(0.)) ;
-            TangentCache.push_back(::tan(0.)) ;
+            SinusCache.push_back(static_cast<Scalar>(::sin(0.))) ;
+            CosinusCache.push_back(static_cast<Scalar>(::cos(0.))) ;
+            TangentCache.push_back(static_cast<Scalar>(::tan(0.))) ;
 
             SinusCache.push_back(::sin(stepValue)) ;
             CosinusCache.push_back(::cos(stepValue)) ;
@@ -53,7 +53,7 @@ namespace Mind {
         }
 
         int round(const Scalar value) {
-            int integer_value = value ;
+            int integer_value = static_cast<int>(value) ;
             if (integer_value > 0) {
                 if (value - integer_value < 0.5f)
                     return integer_value ;
@@ -68,13 +68,13 @@ namespace Mind {
 
 
         int ceil(const Scalar value) {
-            int integer_value = value ;
+            int integer_value = static_cast<int>(value) ;
             return (value > 0) ? integer_value + 1 : integer_value ;
         }
 
 
         int floor(const Scalar value) {
-            int integer_value = value ;
+            int integer_value = static_cast<int>(value) ;
             return (integer_value > 0) ? integer_value : integer_value - 1 ;
         }
 
