@@ -16,7 +16,7 @@ namespace Doom {
      *          of the class. Indeed, they are more efficient for released
      *          softwares by disabling the profiler.
      */
-    class exported Profiler final : private Singleton {
+    class Profiler final : private Singleton {
         private:
             /**
              * The unique instance of the Profiler.
@@ -43,7 +43,6 @@ namespace Doom {
              */
             std::map<std::string, std::intmax_t> m_elapsedTimes ;
 
-        private:
             /**
              * Instantiate the Profiler.
              */
@@ -78,7 +77,7 @@ namespace Doom {
             /**
              * Get the unique instance of the Profiler.
              */
-            static Profiler& GetInstance() ;
+            exported static Profiler& GetInstance() ;
 
             /**
              * Add a source of profiling. It can be named with an algorithm name
@@ -87,14 +86,14 @@ namespace Doom {
              * possible name would be "Render".
              * @param name The name of the new profiling source.
              */
-            void addProfilingSource(const std::string& name) ;
+            exported void addProfilingSource(const std::string& name) ;
 
             /**
              * Start profiling for the provided source.
              * @param  name Name of the source to profile.
              * @return      ID of the profiling session for the given source.
              */
-            int startProfiling(const std::string& name) ;
+            exported int startProfiling(const std::string& name) ;
 
             /**
              * Stop profiling a source.
@@ -105,12 +104,12 @@ namespace Doom {
              * @warning This function must be called in the same function than
              *          startProfiling() function.
              */
-            void stopProfiling(const std::string& name, const int sessionID) ;
+            exported void stopProfiling(const std::string& name, const int sessionID) ;
 
             /**
              * Flush the profiler to store data until the next flush time.
              */
-            void flush() ;
+            exported void flush() ;
 
             /**
              * Get the spent time for the given source of profiling.
@@ -121,7 +120,7 @@ namespace Doom {
              *          returns value of previous main loop of the software,
              *          until flush() has been called.
              */
-            std::intmax_t getTime(const std::string& name) ;
+            exported std::intmax_t getTime(const std::string& name) ;
     } ;
 }
 

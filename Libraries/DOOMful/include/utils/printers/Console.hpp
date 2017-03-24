@@ -11,7 +11,7 @@ namespace Doom {
     /**
      * A Console to write and get values from user.
      */
-    class exported Console final : public Printer {
+    class Console final : public Printer {
         public:
 
             /**
@@ -40,7 +40,7 @@ namespace Doom {
             /**
              * Instantiate a new Console object.
              */
-            Console() ;
+            exported Console() ;
 
             /**
              * Read a value from the Console.
@@ -48,7 +48,7 @@ namespace Doom {
              * @return  State of the Console once data are read.
              */
             template<class T>
-            State read(T& output) {
+            exported State read(T& output) {
                 State currentState ;
 
                 m_mutex.lock() ;
@@ -68,7 +68,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void writeLine(const T& value) {
+            exported void writeLine(const T& value) {
                 m_mutex.lock() ;
                 {
                     std::cout << value << std::endl ;
@@ -83,7 +83,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void writeLine(const T& value, const Args& ... args) {
+            exported void writeLine(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
                 {
                     std::cout << value ;
@@ -99,7 +99,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void write(const T& value) {
+            exported void write(const T& value) {
                 m_mutex.lock() ;
                 {
                     std::cout << value << std::flush ;
@@ -113,7 +113,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void write(const T& value, const Args& ... args) {
+            exported void write(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
                 {
                     std::cout << value ;

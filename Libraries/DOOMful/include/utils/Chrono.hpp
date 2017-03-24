@@ -8,7 +8,7 @@ namespace Doom {
     /**
      * Measure elapsed time.
      */
-    class exported Chrono final {
+    class Chrono final {
         private:
             /**
              * TRUE if the chrono is started, FALSE if stopped.
@@ -29,12 +29,12 @@ namespace Doom {
             /**
              * Start the chrono.
              */
-            void start() ;
+            exported void start() ;
 
             /**
              * Stop the chrono.
              */
-            void stop() ;
+            exported void stop() ;
 
             /**
              * Get the elapsed time of the last chrono session.
@@ -43,7 +43,7 @@ namespace Doom {
              *          stopped.
              */
             template <class ToDuration>
-            std::intmax_t elapsedTime() {
+            exported std::intmax_t elapsedTime() {
                 if (isStarted()) {
                     return 0 ;
                 }
@@ -55,7 +55,7 @@ namespace Doom {
              * To know if the chrono is started.
              * @return TRUE if the chrono is started, FALSE if stopped.
              */
-            bool isStarted() const ;
+            exported bool isStarted() const ;
     } ;
 }
 
