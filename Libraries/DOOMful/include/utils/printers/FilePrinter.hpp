@@ -12,7 +12,7 @@ namespace Doom {
     /**
      * A FilePrinter to write values in a file.
      */
-    class exported FilePrinter final : public Printer {
+    class FilePrinter final : public Printer {
         private:
             /**
              * Avoid concurrent accesses to the Console.
@@ -52,7 +52,7 @@ namespace Doom {
              * @param   filepath    Path to the file in which values are
              *                      written.
              */
-            FilePrinter(const std::string& filepath) throw(std::ios_base::failure) ;
+            exported FilePrinter(const std::string& filepath) throw(std::ios_base::failure) ;
 
            /**
             * Instantiate a new FilePrinter object that prints in a file.
@@ -62,7 +62,7 @@ namespace Doom {
             *                       if existing. FALSE to overwrite the full
             *                       content of the file.
             */
-            FilePrinter(
+            exported FilePrinter(
                 const std::string& filepath,
                 const bool& append
             ) throw(std::ios_base::failure) ;
@@ -70,7 +70,7 @@ namespace Doom {
             /**
              * Destruction of the FilePrinter instance.
              */
-            virtual ~FilePrinter() noexcept ;
+            exported virtual ~FilePrinter() noexcept ;
 
             /**
              * Write a message on the FilePrinter and create a new line in the
@@ -78,7 +78,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void writeLine(const T& value) {
+            exported void writeLine(const T& value) {
                 m_mutex.lock() ;
                 {
                     m_output << value << std::endl ;
@@ -93,7 +93,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void writeLine(const T& value, const Args& ... args) {
+            exported void writeLine(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
                 {
                     m_output << value ;
@@ -109,7 +109,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void write(const T& value) {
+            exported void write(const T& value) {
                 m_mutex.lock() ;
                 {
                     m_output << value << std::flush ;
@@ -123,7 +123,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void write(const T& value, const Args& ... args) {
+            exported void write(const T& value, const Args& ... args) {
                 m_mutex.lock() ;
                 {
                     m_output << value ;
