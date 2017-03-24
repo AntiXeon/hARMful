@@ -43,11 +43,6 @@ namespace Doom {
             Console() ;
 
             /**
-             * Destruction of the Console instance.
-             */
-            virtual ~Console() ;
-
-            /**
              * Read a value from the Console.
              * @param   output  The read value.
              * @return  State of the Console once data are read.

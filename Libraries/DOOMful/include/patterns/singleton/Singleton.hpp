@@ -11,16 +11,25 @@ namespace Doom {
      */
     class exported Singleton {
         private:
-
             /**
              * Disable copy constructor.
              */
-            Singleton(Singleton&) ;
+            Singleton(const Singleton&) ;
+
+            /**
+             * Disable move constructor.
+             */
+            Singleton(Singleton&&) noexcept ;
 
             /**
              * Disable affectation.
              */
-            void operator= (const Singleton &) {}
+            void operator= (const Singleton&) ;
+
+            /**
+             * Disable move.
+             */
+            void operator= (Singleton&&) noexcept ;
 
         protected:
 

@@ -24,6 +24,26 @@ namespace Doom {
              */
             std::ofstream m_output ;
 
+            /**
+             * Disable copy of FilePrinter.
+             */
+            FilePrinter(const FilePrinter&) ;
+
+            /**
+             * Disable move of FilePrinter.
+             */
+            FilePrinter(FilePrinter&&) noexcept ;
+
+            /**
+             * Disable affectation.
+             */
+            void operator= (const FilePrinter&) ;
+
+            /**
+             * Disable move.
+             */
+            void operator= (FilePrinter&&) noexcept ;
+
         public:
             /**
              * Instantiate a new FilePrinter object that prints in a file.

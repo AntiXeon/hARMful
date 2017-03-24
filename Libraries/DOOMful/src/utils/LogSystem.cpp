@@ -6,7 +6,7 @@ namespace Doom {
     std::shared_ptr<LogSystem> LogSystem::Instance ;
     std::mutex LogSystem::ClassMutex ;
 
-    LogSystem::LogSystem(const std::string& path, const Gravity& minLevel) {
+    LogSystem::LogSystem(const std::string& path, const Gravity minLevel) {
         m_minLevel = minLevel ;
         m_printer = std::make_shared<FilePrinter>(path) ;
     }
@@ -19,7 +19,7 @@ namespace Doom {
         return "[" + Time::GetDateTime() + "] " ;
     }
 
-    void LogSystem::Initialize(const std::string& path, const Gravity& minLevel) throw(std::runtime_error) {
+    void LogSystem::Initialize(const std::string& path, const Gravity minLevel) throw(std::runtime_error) {
         ClassMutex.lock() ;
         {
             // The instance has already been initialized. This is not supported

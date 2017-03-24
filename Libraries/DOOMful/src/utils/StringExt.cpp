@@ -5,7 +5,11 @@
 
 namespace Doom {
     namespace StringExt {
-        void CaseChar(std::string& stringCap, size_t position, CharacterCase charCase) {
+        void CaseChar(
+            std::string& stringCap,
+            const size_t position,
+            CharacterCase charCase
+        ) {
             if (position > stringCap.length()) {
                 return ;
             }
@@ -112,7 +116,10 @@ namespace Doom {
             TrimBack(stringToTrim) ;
         }
 
-        std::vector<std::string> Split(const std::string& toSplit, const std::string& characters) {
+        std::vector<std::string> Split(
+            const std::string& toSplit,
+            const std::string& characters
+        ) {
             std::vector<std::string> result ;
 
             std::size_t previousPosition = 0 ;
@@ -135,17 +142,18 @@ namespace Doom {
             return result ;
         }
 
-        std::string ToStringi(int32_t value, unsigned char base) {
+        std::string ToStringi(const int32_t value, const unsigned char base) {
             const char ASCIINumberStart = '0' ;
             const char BufferSize = 32 ;
             std::string buffer(BufferSize, '\0') ;
 
             unsigned short offset = BufferSize - 1 ;
             bool isNegative = value < 0 ;
+            int32_t tmpValue = value ;
             while ((value != 0) && (offset > 0)) {
                 int32_t tmp = value ;
-                value = value / base ;
-                buffer[offset] = std::abs(tmp - (value * base)) + ASCIINumberStart ;
+                tmpValue = tmpValue / base ;
+                buffer[offset] = std::abs(tmp - (tmpValue * base)) + ASCIINumberStart ;
                 if (buffer[offset] > '9') {
                     // Add difference between 9 and A in the ASCII table.
                     buffer[offset] += 8 ;
@@ -159,7 +167,7 @@ namespace Doom {
             return buffer.substr(offset + 1, BufferSize - offset) ;
         }
 
-        std::string ToStringf(float value, unsigned char precision) {
+        std::string ToStringf(const float value, const unsigned char precision) {
             int32_t integer = (int32_t) value ;
             float fractional = value - integer ;
 
@@ -182,12 +190,12 @@ namespace Doom {
             return representation ;
         }
 
-        std::string Random(unsigned int length) {
+        std::string Random(const unsigned int length) {
             const std::string alphanum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" ;
             return Random(length, alphanum) ;
         }
 
-        std::string Random(unsigned int length, const std::string& characters) {
+        std::string Random(const unsigned int length, const std::string& characters) {
             Random::Initialize() ;
 
             std::string output(length, '\0') ;

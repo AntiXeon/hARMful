@@ -25,7 +25,11 @@ namespace Doom {
         return std::string(buffer) ;
     }
 
-    void Time::GetTimeInfo(const std::string& format, char* buffer, size_t bufferLength) {
+    void Time::GetTimeInfo(
+        const std::string& format,
+        char* buffer,
+        const size_t bufferLength
+    ) {
         time_t now ;
         time(&now) ;
 

@@ -5,8 +5,6 @@ namespace Doom {
         checkInputStream() ;
     }
 
-    Console::~Console() {}
-
     void Console::checkInputStream() {
         if (std::cin.eof()) {
             m_inputState = Console::State::Error ;

@@ -35,18 +35,7 @@ namespace Doom {
                      * @param   stream  Stream in which the @a value is printed.
                      */
                     ValuePrinter(std::ostream&) {}
-
-                    /**
-                     * Destruction of the ValuePrinter instance.
-                     */
-                    virtual ~ValuePrinter() {}
             } ;
-
-        public:
-            /**
-             * Destruction of the Printer.
-             */
-            virtual ~Printer() {}
     } ;
 } ;
 

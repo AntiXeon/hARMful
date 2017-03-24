@@ -13,7 +13,7 @@ namespace Doom {
          * Initialize the generation of random numbers.
          * @param force [description]
          */
-        exported void Initialize(bool force = false) ;
+        exported void Initialize(const bool force = false) ;
 
         /**
          * Get an integer value from the pseudo-random value generator.
@@ -28,7 +28,7 @@ namespace Doom {
          * @param  max Maximal value of the interval.
          * @return     The generated value. If @a min >= @a max, 0 is returned.
          */
-        exported int GetInteger(int min, int max) ;
+        exported int GetInteger(const int min, const int max) ;
 
         /**
          * Get a float value normalized from the pseudo-random value generator.

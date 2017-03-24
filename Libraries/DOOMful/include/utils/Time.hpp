@@ -31,6 +31,31 @@ namespace Doom {
 
         private:
             /**
+             * Disable copy of Time.
+             */
+            Time(const Time&) ;
+
+            /**
+             * Disable move of Time.
+             */
+            Time(Time&&) noexcept ;
+
+            /**
+             * Destruction of the Time.
+             */
+            virtual ~Time() noexcept ;
+
+            /**
+             * Disable affectation.
+             */
+            void operator= (const Time&) ;
+
+            /**
+             * Disable move.
+             */
+            void operator= (Time&&) noexcept ;
+
+            /**
              * Get an information from the current time.
              * @param  format       Format of the output as the one taken by
              *                      strftime.
@@ -39,7 +64,11 @@ namespace Doom {
              * @param  bufferLength Length of the buffer used to store the
              *                      string.
              */
-            static void GetTimeInfo(const std::string& format, char* buffer, size_t bufferLength) ;
+            static void GetTimeInfo(
+                const std::string& format,
+                char* buffer,
+                const size_t bufferLength
+            ) ;
     } ;
 }
 

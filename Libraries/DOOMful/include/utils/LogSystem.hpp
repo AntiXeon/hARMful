@@ -66,12 +66,32 @@ namespace Doom {
              * @param   minLevel    Minimal level of the log system messages to
              *                      be written.
              */
-            LogSystem(const std::string& path, const Gravity& minLevel) ;
+            LogSystem(const std::string& path, const Gravity minLevel) ;
+
+            /**
+             * Disable copy of LogSystem.
+             */
+            LogSystem(const LogSystem&) ;
+
+            /**
+             * Disable move of LogSystem.
+             */
+            LogSystem(LogSystem&&) noexcept ;
 
             /**
              * Destruction of the LogSystem.
              */
             virtual ~LogSystem() noexcept ;
+
+            /**
+             * Disable affectation.
+             */
+            void operator= (const LogSystem&) ;
+
+            /**
+             * Disable move.
+             */
+            void operator= (LogSystem&&) noexcept ;
 
             /**
              * Function to delete the LogSystem from the shared_ptr of the
@@ -98,7 +118,7 @@ namespace Doom {
              * @exception   An exception is thrown if the LogSystem is
              *              initialized more than once.
              */
-            static void Initialize(const std::string& path, const Gravity& minLevel) throw(std::runtime_error) ;
+            static void Initialize(const std::string& path, const Gravity minLevel) throw(std::runtime_error) ;
 
             /**
              * Get the unique instance of the LogSystem.
@@ -113,7 +133,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void writeLine(const Gravity& level, const T& value) {
+            void writeLine(const Gravity level, const T& value) {
                 if (level <= m_minLevel) {
                     std::string dateTime = formatCurrentDateTime() ;
 
@@ -133,7 +153,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void writeLine(const Gravity& level, const T& value, const Args& ... args) {
+            void writeLine(const Gravity level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
                     std::string dateTime = formatCurrentDateTime() ;
 
@@ -155,7 +175,7 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            void printLine(const Gravity& level, const T& value) {
+            void printLine(const Gravity level, const T& value) {
                 if (level <= m_minLevel) {
                     std::string dateTime = formatCurrentDateTime() ;
 
@@ -174,7 +194,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            void printLine(const Gravity& level, const T& value, const Args& ... args) {
+            void printLine(const Gravity level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
                     std::string dateTime = formatCurrentDateTime() ;
 

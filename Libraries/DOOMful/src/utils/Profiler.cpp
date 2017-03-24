@@ -38,7 +38,7 @@ namespace Doom {
         return sessionID ;
     }
 
-    void Profiler::stopProfiling(const std::string& name, const int& sessionID) {
+    void Profiler::stopProfiling(const std::string& name, const int sessionID) {
         int amountSessions = 0 ;
         m_mutex.lock() ;
         {

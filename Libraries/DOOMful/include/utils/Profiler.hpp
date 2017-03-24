@@ -50,9 +50,29 @@ namespace Doom {
             Profiler() ;
 
             /**
+             * Disable copy of Profiler.
+             */
+            Profiler(const Profiler&) ;
+
+            /**
+             * Disable move of Profiler.
+             */
+            Profiler(Profiler&&) noexcept ;
+
+            /**
              * Destruction of the Profiler.
              */
             virtual ~Profiler() noexcept ;
+
+            /**
+             * Disable affectation.
+             */
+            void operator= (const Profiler&) ;
+
+            /**
+             * Disable move.
+             */
+            void operator= (Profiler&&) noexcept ;
 
         public:
             /**
@@ -85,7 +105,7 @@ namespace Doom {
              * @warning This function must be called in the same function than
              *          startProfiling() function.
              */
-            void stopProfiling(const std::string& name, const int& sessionID) ;
+            void stopProfiling(const std::string& name, const int sessionID) ;
 
             /**
              * Flush the profiler to store data until the next flush time.

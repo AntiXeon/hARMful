@@ -1,10 +1,6 @@
 #include <utils/Chrono.hpp>
 
 namespace Doom {
-    Chrono::Chrono() {}
-
-    Chrono::~Chrono() {}
-
     void Chrono::start() {
         m_start = std::chrono::system_clock::now() ;
         m_isStarted = true ;

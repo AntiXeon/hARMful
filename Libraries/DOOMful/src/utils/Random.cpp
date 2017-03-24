@@ -9,7 +9,7 @@ namespace Doom {
          */
         static bool IsInitialized = false ;
 
-        void Initialize(bool force) {
+        void Initialize(const bool force) {
             if (!IsInitialized || force) {
                 srand(time(nullptr)) ;
                 IsInitialized = true ;
@@ -20,7 +20,7 @@ namespace Doom {
             return rand() ;
         }
 
-        int GetInteger(int min, int max) {
+        int GetInteger(const int min, const int max) {
             if (min >= max) {
                 return 0 ;
             }

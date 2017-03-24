@@ -27,16 +27,6 @@ namespace Doom {
 
         public:
             /**
-             * Creation of a Chrono instance.
-             */
-            Chrono() ;
-
-            /**
-             * Destruction of the Chrono object.
-             */
-            virtual ~Chrono() ;
-
-            /**
              * Start the chrono.
              */
             void start() ;
