@@ -582,5 +582,28 @@ namespace UTMind {
             check(compare(rotatedVec.getY(), expectedY)) ;
             check(compare(rotatedVec.getZ(), expectedZ)) ;
         }
+
+        // Test quaternions are equal or different.
+        {
+            Quaternion qa1(-0.47f, 0.1474f, 0.657f, 0.24f) ;
+            Quaternion qa2(-0.47f, 0.1474f, 0.657f, 0.24f) ;
+            Quaternion qa3 = qa1 ;
+
+            Quaternion qb1(-0.24f, 0.3f, -0.176f, -0.709f) ;
+            Quaternion qb2(-0.24f, 0.3f, -0.176f, -0.709f) ;
+            Quaternion qb3 = qb1 ;
+
+            check(qa1 == qa2) ;
+            check(qa1 == qa3) ;
+            check(qa2 == qa3) ;
+
+            check(qb1 == qb2) ;
+            check(qb1 == qb3) ;
+            check(qb2 == qb3) ;
+
+            check(qa1 != qb1) ;
+            check(qa1 != qb2) ;
+            check(qa1 != qb3) ;
+        }
     }
 }
