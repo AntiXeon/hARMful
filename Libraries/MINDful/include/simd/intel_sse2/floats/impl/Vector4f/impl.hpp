@@ -166,17 +166,24 @@ inline Scalar Vector4f::dot(const Vector4f& a, const Vector4f& b) {
 }
 
 inline Vector4f Vector4f::cross(const Vector4f& a, const Vector4f& b) {
-    // The fourth component is not used (the cross product is not defined in
-    // R^4).
-    float32x4_t firstA = _mm_shuffle_ps(a.m_inner, a.m_inner, _MM_SHUFFLE(0,2,1,3)) ;
-    float32x4_t firstB = _mm_shuffle_ps(b.m_inner, b.m_inner, _MM_SHUFFLE(1,0,2,3)) ;
-    float32x4_t first = _mm_mul_ps(firstA, firstB) ;
+    float32x4_t aShuffle = _mm_shuffle_ps(
+        a.m_inner,
+        a.m_inner,
+        _MM_SHUFFLE(3, 0, 2, 1)
+    ) ;
 
-    float32x4_t secondA = _mm_shuffle_ps(a.m_inner, a.m_inner, _MM_SHUFFLE(1,0,2,3)) ;
-    float32x4_t secondB = _mm_shuffle_ps(b.m_inner, b.m_inner, _MM_SHUFFLE(0,2,1,3)) ;
-    float32x4_t second = _mm_mul_ps(secondA, secondB) ;
+    float32x4_t bShuffle = _mm_shuffle_ps(
+        b.m_inner,
+        b.m_inner,
+        _MM_SHUFFLE(3, 0, 2, 1)
+    ) ;
 
-    return _mm_sub_ps((float32x4_t) first, (float32x4_t) second) ;
+    float32x4_t result = _mm_sub_ps(
+        _mm_mul_ps(a.m_inner, bShuffle),
+        _mm_mul_ps(b.m_inner, aShuffle)
+    ) ;
+
+    return _mm_shuffle_ps(result, result, _MM_SHUFFLE(3, 0, 2, 1 )) ;
 }
 
 inline Vector4f Vector4f::fast_recriprocal(const Vector4f& vec) {

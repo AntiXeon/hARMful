@@ -565,23 +565,22 @@ namespace UTMind {
             }
         }
 
-        // Not working yet (see cross product from SIMD Vector4f).
-        // // Vector rotation by product with a quaternion.
-        // {
-        //     Vector3f vec(1.f, 0.f, 0.f) ;
-        //     Quaternion q(-0.813f, 0.481f, 0.201f, 0.258f) ;
-        //     Vector3f rotatedVec = q * vec ;
-        //
-        //     /*
-        //      Values from Ogre3D (no method in Octave for vector rotation...).
-        //     */
-        //     Scalar expectedX =  0.456476f ;
-        //     Scalar expectedY = -0.67839f ;
-        //     Scalar expectedZ = -0.575022f ;
-        //
-        //     check(compare(rotatedVec.getX(), expectedX)) ;
-        //     check(compare(rotatedVec.getY(), expectedY)) ;
-        //     check(compare(rotatedVec.getZ(), expectedZ)) ;
-        // }
+        // Vector rotation by product with a quaternion.
+        {
+            Vector3f vec(1.f, 0.f, 0.f) ;
+            Quaternion q(-0.813f, 0.481f, 0.201f, 0.258f) ;
+            Vector3f rotatedVec = q * vec ;
+
+            /*
+             Values from Ogre3D (no method in Octave for vector rotation...).
+            */
+            Scalar expectedX =  0.456476f ;
+            Scalar expectedY = -0.67839f ;
+            Scalar expectedZ = -0.575022f ;
+
+            check(compare(rotatedVec.getX(), expectedX)) ;
+            check(compare(rotatedVec.getY(), expectedY)) ;
+            check(compare(rotatedVec.getZ(), expectedZ)) ;
+        }
     }
 }
