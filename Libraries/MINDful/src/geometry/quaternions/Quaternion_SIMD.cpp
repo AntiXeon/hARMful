@@ -1,8 +1,6 @@
 #include <geometry/quaternions/Quaternion.hpp>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
-#include <FastMath.hpp>
-#include <Math.hpp>
 
 namespace Mind {
     const Scalar Quaternion::Epsilon = 1e-3 ;
@@ -10,49 +8,12 @@ namespace Mind {
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
     const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;
 
-    Quaternion::Quaternion() {
-        m_values = SIMD::Vector4f(0.f, 0.f, 0.f, 0.f) ;
-    }
-
-    Quaternion::Quaternion(const SIMD::Vector4f& values) : m_values(values) {}
-
-    Quaternion::Quaternion(
-        Scalar x,
-        Scalar y,
-        Scalar z,
-        Scalar w
-    ) {
-        m_values = SIMD::Vector4f(x, y, z, w) ;
-    }
-
-    Quaternion::Quaternion(const Matrix3x3f& matrix) {
-        from(matrix) ;
-    }
-
-    Quaternion::Quaternion(const Vector3f& vector, Scalar radAngle) {
-        from(vector, radAngle) ;
-    }
-
     Quaternion::Quaternion(
         const Vector3f& xAxis,
         const Vector3f& yAxis,
         const Vector3f& zAxis
     ) {
         from(xAxis, yAxis, zAxis) ;
-    }
-
-    Scalar Quaternion::dot(const Quaternion& other) const {
-        return m_values.dot(other.m_values) ;
-    }
-
-    Scalar Quaternion::norm() const {
-        return m_values.norm() ;
-    }
-
-    Scalar Quaternion::normalize() {
-        Scalar length = norm() ;
-        m_values /= length ;
-        return length ;
     }
 
     Quaternion Quaternion::inverse() const {
@@ -197,19 +158,6 @@ namespace Mind {
         result = from + ((usedTo - from) * time) ;
         result.normalize() ;
         return result ;
-    }
-
-    bool Quaternion::closeTo(
-        const Quaternion& other,
-        const Scalar radiansEpsilon
-    ) const {
-         Scalar distance = this -> dot(other) ;
-         Scalar angle = std::acos((2.f * distance * distance) - 1.f) ;
-         return std::abs(angle) <= radiansEpsilon ;
-    }
-
-    void Quaternion::swap(Quaternion& other) {
-        std::swap(m_values, other.m_values) ;
     }
 
     // From Ken Shoemake's explanations on quaternions.
@@ -456,50 +404,6 @@ namespace Mind {
     }
 
 
-    Scalar Quaternion::operator[](Axis axis) const {
-        float* valuesArray = (float*) m_values ;
-        return valuesArray[axis] ;
-    }
-
-    Scalar& Quaternion::operator[](Axis axis) {
-        float* valuesArray = (float*) m_values ;
-        return valuesArray[axis] ;
-    }
-
-    Quaternion& Quaternion::operator+=(const Quaternion& other) {
-        m_values += other.m_values ;
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator+(const Quaternion& other) const {
-        auto copyValues = m_values ;
-        return Quaternion(copyValues + other.m_values) ;
-    }
-
-    Quaternion& Quaternion::operator-=(const Quaternion& other) {
-        m_values -= other.m_values ;
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator-(const Quaternion& other) const {
-        auto copyValues = m_values ;
-        return Quaternion(copyValues - other.m_values) ;
-    }
-
-    Quaternion Quaternion::operator-() const {
-        auto inversedValues = -m_values ;
-        return Quaternion(inversedValues) ;
-    }
-
-    Quaternion& Quaternion::operator*=(Scalar scalar) {
-        m_values *= scalar ;
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator*(Scalar scalar) const {
-        return Quaternion(m_values * scalar) ;
-    }
-
     Quaternion& Quaternion::operator*=(const Quaternion& other) {
         Scalar newX ;
         Scalar newY ;
@@ -568,30 +472,6 @@ namespace Mind {
         uuv *= 2.f ;
 
         return vec3 + uv + uuv ;
-    }
-
-    bool Quaternion::operator==(const Quaternion& other) const {
-        SIMD::Vector4f::Mask areEqual = (m_values == other.m_values) ;
-        return (areEqual.get(0)
-                    && areEqual.get(1)
-                    && areEqual.get(2)
-                    && areEqual.get(3)
-        ) ;
-    }
-
-    bool Quaternion::operator!=(const Quaternion& other) const {
-        return !(*this == other) ;
-    }
-
-    std::ostream& operator<<(std::ostream& s, const Quaternion& p) {
-        float* values = (float*) p.m_values ;
-        s << "Quaternion: "
-            << values[Quaternion::Axis::X] << ", "
-            << values[Quaternion::Axis::Y] << ", "
-            << values[Quaternion::Axis::Z] << ", "
-            << values[Quaternion::Axis::W]
-        << std::endl ;
-        return s ;
     }
 }
 

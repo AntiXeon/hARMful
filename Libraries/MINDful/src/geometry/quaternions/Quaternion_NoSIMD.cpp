@@ -1,72 +1,12 @@
 #include <geometry/quaternions/Quaternion.hpp>
 
 #ifdef USE_NO_SIMD // for compilations where SSE and NEON are not available
-#include <FastMath.hpp>
-#include <Math.hpp>
 
 namespace Mind {
     const Scalar Quaternion::Epsilon = 1e-3 ;
     const Quaternion Quaternion::Zero = Quaternion() ;
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
     const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;
-
-    Quaternion::Quaternion():
-        Quaternion(
-            0.f,
-            0.f,
-            0.f,
-            0.f
-        ) {}
-
-    Quaternion::Quaternion(
-        const Scalar x,
-        const Scalar y,
-        const Scalar z,
-        const Scalar w
-    ) {
-        m_values[Axis::X] = x ;
-        m_values[Axis::Y] = y ;
-        m_values[Axis::Z] = z ;
-        m_values[Axis::W] = w ;
-    }
-
-    Quaternion::Quaternion(const Matrix3x3f& matrix) {
-        from(matrix) ;
-    }
-
-    Quaternion::Quaternion(const Vector3f& vector, const Scalar radAngle) {
-        from(vector, radAngle) ;
-    }
-
-    Quaternion::Quaternion(
-        const Vector3f& xAxis,
-        const Vector3f& yAxis,
-        const Vector3f& zAxis
-    ) {
-        from(xAxis, yAxis, zAxis) ;
-    }
-
-    Scalar Quaternion::dot(const Quaternion& other) const {
-        return (m_values[Axis::X] * other.m_values[Axis::X]) +
-                (m_values[Axis::Y] * other.m_values[Axis::Y]) +
-                (m_values[Axis::Z] * other.m_values[Axis::Z]) +
-                (m_values[Axis::W] * other.m_values[Axis::W]) ;
-    }
-
-    Scalar Quaternion::norm() const {
-        return std::sqrt(
-            (m_values[Axis::X] * m_values[Axis::X]) +
-            (m_values[Axis::Y] * m_values[Axis::Y]) +
-            (m_values[Axis::Z] * m_values[Axis::Z]) +
-            (m_values[Axis::W] * m_values[Axis::W])
-        ) ;
-    }
-
-    Scalar Quaternion::normalize() {
-        Scalar length = norm() ;
-        *this *= (1.f / length) ;
-        return length ;
-    }
 
     Quaternion Quaternion::inverse() const {
         Scalar squaredLength = this -> dot(*this) ;
@@ -202,22 +142,6 @@ namespace Mind {
         result = from + ((usedTo - from) * time) ;
         result.normalize() ;
         return result ;
-    }
-
-    bool Quaternion::closeTo(
-        const Quaternion& other,
-        const Scalar radiansEpsilon
-    ) const {
-         Scalar distance = this -> dot(other) ;
-         Scalar angle = std::acos((2.f * distance * distance) - 1.f) ;
-         return std::abs(angle) <= radiansEpsilon ;
-    }
-
-    void Quaternion::swap(Quaternion& other) {
-        std::swap(m_values[Axis::X], other.m_values[Axis::X]) ;
-        std::swap(m_values[Axis::Y], other.m_values[Axis::Y]) ;
-        std::swap(m_values[Axis::Z], other.m_values[Axis::Z]) ;
-        std::swap(m_values[Axis::W], other.m_values[Axis::W]) ;
     }
 
     // From Ken Shoemake's explanations on quaternions.
@@ -400,86 +324,12 @@ namespace Mind {
         yaw = std::atan2(t3, t4) ;
     }
 
-    Scalar Quaternion::operator[](const Axis axis) const {
-        return m_values[axis] ;
-    }
-
-    Scalar& Quaternion::operator[](const Axis axis) {
-        return m_values[axis] ;
-    }
-
-    Quaternion& Quaternion::operator+=(const Quaternion& other) {
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            m_values[axis] += other.m_values[axis] ;
-        }
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator+(const Quaternion& other) const {
-        Quaternion tmp ;
-
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            tmp.m_values[axis] = m_values[axis] + other.m_values[axis] ;
-        }
-
-        return tmp ;
-    }
-
-    Quaternion& Quaternion::operator-=(const Quaternion& other) {
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            m_values[axis] -= other.m_values[axis] ;
-        }
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator-(const Quaternion& other) const {
-        Quaternion tmp ;
-
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            tmp.m_values[axis] = m_values[axis] - other.m_values[axis] ;
-        }
-
-        return tmp ;
-    }
-
-    Quaternion Quaternion::operator-() const {
-        Quaternion tmp ;
-
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            tmp.m_values[axis] = -m_values[axis] ;
-        }
-
-        return tmp ;
-    }
-
-    Quaternion& Quaternion::operator*=(const Scalar scalar) {
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            m_values[axis] *= scalar ;
-        }
-        return *this ;
-    }
-
-    Quaternion Quaternion::operator*(const Scalar scalar) const {
-        Quaternion tmp ;
-
-        size_t axes = m_values.size() ;
-        for (size_t axis = 0 ; axis < axes ; axis++) {
-            tmp.m_values[axis] = m_values[axis] * scalar ;
-        }
-
-        return tmp ;
-    }
 
     Quaternion& Quaternion::operator*=(const Quaternion& other) {
         *this = (*this) * other ;
         return *this ;
     }
+
 
     Quaternion Quaternion::operator*(const Quaternion& other) const {
         return Quaternion(
@@ -518,27 +368,6 @@ namespace Mind {
         uuv *= 2.f ;
 
         return vec3 + uv + uuv ;
-    }
-
-    bool Quaternion::operator==(const Quaternion& other) const {
-        return (m_values[Axis::X] == other.m_values[Axis::X]) &&
-                    (m_values[Axis::Y] == other.m_values[Axis::Y]) &&
-                    (m_values[Axis::Z] == other.m_values[Axis::Z]) &&
-                    (m_values[Axis::W] == other.m_values[Axis::W]) ;
-    }
-
-    bool Quaternion::operator!=(const Quaternion& other) const {
-        return !(*this == other) ;
-    }
-
-    std::ostream& operator<<(std::ostream& s, const Quaternion& p) {
-        s << "Quaternion: "
-            << p.m_values[Quaternion::Axis::X] << ", "
-            << p.m_values[Quaternion::Axis::Y] << ", "
-            << p.m_values[Quaternion::Axis::Z] << ", "
-            << p.m_values[Quaternion::Axis::W]
-        << std::endl ;
-        return s ;
     }
 }
 
