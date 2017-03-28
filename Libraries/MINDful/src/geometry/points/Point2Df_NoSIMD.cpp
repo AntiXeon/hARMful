@@ -98,8 +98,10 @@ namespace Mind {
     ) {
         Point2Df relativeAToB = a - b ;
         Point2Df relativeCToB = c - b ;
-        return ((relativeAToB.m_x * relativeCToB.m_y) -
-                        (relativeCToB.m_x * relativeAToB.m_y)) ;
+        return static_cast<int>(
+            (relativeAToB.m_x * relativeCToB.m_y) -
+            (relativeCToB.m_x * relativeAToB.m_y)
+        ) ;
     }
 
     Scalar Point2Df::getX() const {
