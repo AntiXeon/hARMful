@@ -51,7 +51,7 @@ int main(int, char**) {
 
     Chrono chr ;
     chr.start() ;
-    for (int i = 0 ; i < 10'000'000 ; ++i) {
+    for (int i = 0 ; i < 10000000 ; ++i) {
         // Setup the matrix to create quaternion q1.
         Matrix3x3f matQ1 = generateRandomMatrix() ;
         Quaternion q1(matQ1) ;
