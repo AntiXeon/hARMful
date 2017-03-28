@@ -23,17 +23,17 @@ namespace Mind {
             const bool b2,
             const bool b3
         ) {
-            m_inner[0] = binaryConvert(-uint32_t(b0)) ;
-            m_inner[1] = binaryConvert(-uint32_t(b1)) ;
-            m_inner[2] = binaryConvert(-uint32_t(b2)) ;
-            m_inner[3] = binaryConvert(-uint32_t(b3)) ;
+            m_inner[0] = binaryConvert(BoolToUInt32(b0)) ;
+            m_inner[1] = binaryConvert(BoolToUInt32(b1)) ;
+            m_inner[2] = binaryConvert(BoolToUInt32(b2)) ;
+            m_inner[3] = binaryConvert(BoolToUInt32(b3)) ;
         }
 
         Vector4f::Mask::Mask(const bool value) {
-            m_inner[0] = binaryConvert(-uint32_t(value)) ;
-            m_inner[1] = binaryConvert(-uint32_t(value)) ;
-            m_inner[2] = binaryConvert(-uint32_t(value)) ;
-            m_inner[3] = binaryConvert(-uint32_t(value)) ;
+            m_inner[0] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[1] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[2] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[3] = binaryConvert(BoolToUInt32(value)) ;
         }
 
         Vector4f::Mask::Mask(const float32x4_t& vec) {
@@ -42,18 +42,18 @@ namespace Mind {
 
         Vector4f::Mask::Mask(const Vector4i::Mask& mask) {
             int32x4_t maskInner = static_cast<int32x4_t>(mask) ;
-            m_inner[0] = binaryConvert(-uint32_t(maskInner[0])) ;
-            m_inner[1] = binaryConvert(-uint32_t(maskInner[1])) ;
-            m_inner[2] = binaryConvert(-uint32_t(maskInner[2])) ;
-            m_inner[3] = binaryConvert(-uint32_t(maskInner[3])) ;
+            m_inner[0] = binaryConvert(BoolToUInt32(maskInner[0])) ;
+            m_inner[1] = binaryConvert(BoolToUInt32(maskInner[1])) ;
+            m_inner[2] = binaryConvert(BoolToUInt32(maskInner[2])) ;
+            m_inner[3] = binaryConvert(BoolToUInt32(maskInner[3])) ;
         }
 
         Vector4f::Mask::Mask(const Vector4ui::Mask& mask) {
             uint32x4_t maskInner = static_cast<uint32x4_t>(mask) ;
-            m_inner[0] = binaryConvert(-uint32_t(maskInner[0])) ;
-            m_inner[1] = binaryConvert(-uint32_t(maskInner[1])) ;
-            m_inner[2] = binaryConvert(-uint32_t(maskInner[2])) ;
-            m_inner[3] = binaryConvert(-uint32_t(maskInner[3])) ;
+            m_inner[0] = binaryConvert(BoolToUInt32(maskInner[0])) ;
+            m_inner[1] = binaryConvert(BoolToUInt32(maskInner[1])) ;
+            m_inner[2] = binaryConvert(BoolToUInt32(maskInner[2])) ;
+            m_inner[3] = binaryConvert(BoolToUInt32(maskInner[3])) ;
         }
 
         Vector4f::Mask::~Mask() {}
@@ -93,10 +93,10 @@ namespace Mind {
         }
 
         Vector4f::Mask& Vector4f::Mask::operator=(const bool value) {
-            m_inner[0] = binaryConvert(-uint32_t(value)) ;
-            m_inner[1] = binaryConvert(-uint32_t(value)) ;
-            m_inner[2] = binaryConvert(-uint32_t(value)) ;
-            m_inner[3] = binaryConvert(-uint32_t(value)) ;
+            m_inner[0] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[1] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[2] = binaryConvert(BoolToUInt32(value)) ;
+            m_inner[3] = binaryConvert(BoolToUInt32(value)) ;
             return *this ;
         }
 

@@ -278,7 +278,7 @@ namespace Mind {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
-                uint32_t isNegative = -uint32_t(std::isless(value, 0.f)) ;
+                uint32_t isNegative = BoolToUInt32(std::isless(value, 0.f)) ;
                 float* tmpPtr = reinterpret_cast<float*>(&isNegative) ;
                 result[index] = *tmpPtr ;
             }
@@ -289,7 +289,7 @@ namespace Mind {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
-                uint32_t isInfinite = -uint32_t(std::isless(value, 0.f)) ;
+                uint32_t isInfinite = BoolToUInt32(std::isless(value, 0.f)) ;
                 float* tmpPtr = reinterpret_cast<float*>(&isInfinite) ;
                 result[index] = *tmpPtr ;
             }
@@ -300,7 +300,7 @@ namespace Mind {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
                 Scalar value = m_inner[index] ;
-                uint32_t isNaN = -uint32_t(Math::isNaN(value)) ;
+                uint32_t isNaN = BoolToUInt32(Math::isNaN(value)) ;
                 float* tmpPtr = reinterpret_cast<float*>(&isNaN) ;
                 result[index] = *tmpPtr ;
             }
@@ -381,7 +381,7 @@ namespace Mind {
         Vector4f& Vector4f::operator=(const Vector4i& vec4) {
             int32x4_t vec4Array = static_cast<int32x4_t>(vec4) ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
-                m_inner[index] = vec4Array[index] ;
+                m_inner[index] = static_cast<float>(vec4Array[index]) ;
             }
             return *this ;
         }
@@ -389,7 +389,7 @@ namespace Mind {
         Vector4f& Vector4f::operator=(const Vector4ui& vec4) {
             uint32x4_t vec4Array = static_cast<uint32x4_t>(vec4) ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
-                m_inner[index] = vec4Array[index] ;
+                m_inner[index] = static_cast<float>(vec4Array[index]) ;
             }
             return *this ;
         }

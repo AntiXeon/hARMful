@@ -319,7 +319,7 @@ static inline Vector4f::Mask operator==(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
         bool areEqual = (valueA == valueB) ;
-        mask[index] = -uint32_t(areEqual) ;
+        mask[index] = BoolToFloat(areEqual) ;
     }
     return mask ;
 }
@@ -338,7 +338,7 @@ static inline Vector4f::Mask operator!=(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
         bool areNotEqual = (valueA != valueB) ;
-        mask[index] = -uint32_t(areNotEqual) ;
+        mask[index] = BoolToFloat(areNotEqual) ;
     }
     return mask ;
 }
@@ -357,7 +357,7 @@ static inline Vector4f::Mask operator<(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
         bool isALowerB = (valueA < valueB) ;
-        mask[index] = -uint32_t(isALowerB) ;
+        mask[index] = BoolToFloat(isALowerB) ;
     }
     return mask ;
 }
@@ -376,7 +376,7 @@ static inline Vector4f::Mask operator<=(const Vector4f& a, const Vector4f& b) {
         Scalar valueA = (*(float32x4_t*) a)[index] ;
         Scalar valueB = (*(float32x4_t*) b)[index] ;
         bool isALowerEqualB = (valueA <= valueB) ;
-        mask[index] = -uint32_t(isALowerEqualB) ;
+        mask[index] = BoolToFloat(isALowerEqualB) ;
     }
     return mask ;
 }

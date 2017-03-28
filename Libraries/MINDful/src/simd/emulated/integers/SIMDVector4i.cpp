@@ -46,10 +46,10 @@ namespace Mind {
 
         Vector4i::Vector4i(const float32x4_t& vec) {
             float32x4_t vecLocal = vec ;
-            m_inner[0] = vecLocal[0] ;
-            m_inner[1] = vecLocal[1] ;
-            m_inner[2] = vecLocal[2] ;
-            m_inner[3] = vecLocal[3] ;
+            m_inner[0] = static_cast<int32_t>(vecLocal[0]) ;
+            m_inner[1] = static_cast<int32_t>(vecLocal[1]) ;
+            m_inner[2] = static_cast<int32_t>(vecLocal[2]) ;
+            m_inner[3] = static_cast<int32_t>(vecLocal[3]) ;
         }
 
         Vector4i::~Vector4i() {}

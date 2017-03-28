@@ -5,6 +5,7 @@
 #include <FastMath.hpp>
 #include <MINDTypes.hpp>
 #include <simd/SIMDTypes.hpp>
+#include <simd/SIMDUtilities.hpp>
 #include <cstring>
 #include <typeinfo>
 

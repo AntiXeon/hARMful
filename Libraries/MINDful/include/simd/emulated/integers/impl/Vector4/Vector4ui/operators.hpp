@@ -160,7 +160,8 @@ static inline Vector4ui operator-(const Vector4ui& a) {
     uint32x4_t result ;
     uint32x4_t* aRaw = static_cast<uint32x4_t*>(a) ;
     for (unsigned int index = 0 ; index < Vector4i::size() ; ++index) {
-        result[index] = -(*aRaw)[index] ;
+        int32_t signedValue = static_cast<int32_t>((*aRaw)[index]);
+        result[index] = -signedValue ;
     }
     return result ;
 }
