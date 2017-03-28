@@ -32,5 +32,7 @@ To compile on a GNU/Linux system, type `cmake .` then `make`. It will generate t
 To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free.
 Once the IDE is launched, compile the project and a `.dll` file is generated with a `.lib` for the linker.
 
+PS: If you want to compile the DLLs using a 64-bit architecture, use the command `cmake -DCMAKE_GENERATOR_PLATFORM=x64 .`
+
 ### Mac™ OS
 Not officially supported.
