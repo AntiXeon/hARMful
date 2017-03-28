@@ -1,6 +1,7 @@
 #include <MINDOptions.hpp>
 #ifdef USE_NO_SIMD
 
+#include <cstring>
 #include <simd/emulated/floats/SIMDVector4f.hpp>
 
 namespace Mind {
@@ -101,25 +102,25 @@ namespace Mind {
         }
 
         Vector4f::Mask& Vector4f::Mask::operator=(const int32x4_t& vec) {
-            std::copy(vec.begin(), vec.end(), m_inner.begin()) ;
+            std::memcpy(m_inner.data(), vec.data(), sizeof(vec)) ;
             return *this ;
         }
 
         Vector4f::Mask& Vector4f::Mask::operator=(const float32x4_t& vec) {
-            std::copy(vec.begin(), vec.end(), m_inner.begin()) ;
+            std::memcpy(m_inner.data(), vec.data(), sizeof(vec)) ;
             return *this ;
         }
 
         Vector4f::Mask& Vector4f::Mask::operator=(const Vector4i::Mask& mask) {
             auto other = (int32x4_t) mask ;
-            std::copy(other.begin(), other.end(), m_inner.begin()) ;
+            std::memcpy(m_inner.data(), other.data(), sizeof(other)) ;
             return *this ;
         }
 
                                                             /** CAST OPERATORS **/
         Vector4f::Mask::operator int32x4_t() const {
             int32x4_t result ;
-            std::copy(m_inner.begin(), m_inner.end(), result.begin()) ;
+            std::memcpy(result.data(), m_inner.data(), sizeof(m_inner)) ;
             return result ;
         }
 
@@ -135,13 +136,13 @@ namespace Mind {
 
         Vector4f::Mask::operator Vector4i::Mask() const {
             int32x4_t result ;
-            std::copy(m_inner.begin(), m_inner.end(), result.begin()) ;
+            std::memcpy(result.data(), m_inner.data(), sizeof(m_inner)) ;
             return result ;
         }
 
         Vector4f::Mask::operator Vector4ui::Mask() const {
             uint32x4_t result ;
-            std::copy(m_inner.begin(), m_inner.end(), result.begin()) ;
+            std::memcpy(result.data(), m_inner.data(), sizeof(m_inner)) ;
             return result ;
         }
     } ;

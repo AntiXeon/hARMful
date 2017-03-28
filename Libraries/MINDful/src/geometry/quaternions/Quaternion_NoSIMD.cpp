@@ -3,7 +3,7 @@
 #ifdef USE_NO_SIMD // for compilations where SSE and NEON are not available
 
 namespace Mind {
-    const Scalar Quaternion::Epsilon = 1e-3 ;
+    const Scalar Quaternion::Epsilon = static_cast<Scalar>(1e-3) ;
     const Quaternion Quaternion::Zero = Quaternion() ;
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
     const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;

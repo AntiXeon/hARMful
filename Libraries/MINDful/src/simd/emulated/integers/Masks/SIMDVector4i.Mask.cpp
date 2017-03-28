@@ -1,6 +1,7 @@
 #include <MINDOptions.hpp>
 #ifdef USE_NO_SIMD
 
+#include <cstring>
 #include <simd/emulated/integers/SIMDVector4i.hpp>
 
 namespace Mind {
@@ -70,12 +71,12 @@ namespace Mind {
         }
 
         typename Vector4i::Mask& Vector4i::Mask::operator=(const int32x4_t& vec) {
-            std::copy(vec.begin(), vec.end(), m_inner.begin()) ;
+            std::memcpy(m_inner.data(), vec.data(), sizeof(vec)) ;
             return *this ;
         }
 
         typename Vector4i::Mask& Vector4i::Mask::operator=(const float32x4_t& vec) {
-            std::copy(vec.begin(), vec.end(), m_inner.begin()) ;
+            std::memcpy(m_inner.data(), vec.data(), sizeof(vec)) ;
             return *this ;
         }
 
@@ -91,7 +92,7 @@ namespace Mind {
         Vector4i::Mask::operator float32x4_t() {
             float32x4_t result ;
             for (unsigned int index = 0 ; index < size() ; ++index) {
-                result[index] = m_inner[index] ;
+                result[index] = static_cast<float>(m_inner[index]) ;
             }
             return result ;
         }

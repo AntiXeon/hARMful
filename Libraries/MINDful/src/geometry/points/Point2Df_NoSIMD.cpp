@@ -84,10 +84,11 @@ namespace Mind {
         (
             b_side.lengthSquared() +
             d_side.lengthSquared() -
-            c_side.lengthSquared()) /
-            (2 * b_side.length() * d_side.length()) ;
+            c_side.lengthSquared()
+        ) / (2 * b_side.length() * d_side.length()) ;
 
-        return Math::toDegrees(acos(angle)) ;
+        Scalar acosAngle = static_cast<Scalar>(acos(angle));
+        return Math::toDegrees(acosAngle);
     }
 
     int Point2Df::angleOrientation(
