@@ -1,5 +1,9 @@
 #include <utils/Profiler.hpp>
+#include <utils/Translation.hpp>
+#include <DOOMStrings.hpp>
 #include <iostream>
+#include <limits>
+#include <cassert>
 
 namespace Doom {
     Profiler Profiler::Instance ;
@@ -23,15 +27,23 @@ namespace Doom {
         m_mutex.unlock() ;
     }
 
-    int Profiler::startProfiling(const std::string& name) {
+    int Profiler::startProfiling(const std::string& name) throw(std::overflow_error) {
         int sessionID = -1 ;
         m_mutex.lock() ;
         {
             if (m_chronos.count(name) == 1) {
-                sessionID = m_chronos[name].size() ;
+                if (m_chronos[name].size() < std::numeric_limits<int>::max()) {
+					sessionID = static_cast<int>(m_chronos[name].size()) ;
 
-                m_chronos[name].push_back(Chrono()) ;
-                m_chronos[name].back().start() ;
+					m_chronos[name].push_back(Chrono()) ;
+					m_chronos[name].back().start() ;
+				}
+				else {
+					throw std::overflow_error(
+                        Translation::Get(Texts::Profiler_SessionIDTooHigh) +
+                        name
+                    ) ;
+				}
             }
         }
         m_mutex.unlock() ;
@@ -43,7 +55,8 @@ namespace Doom {
         m_mutex.lock() ;
         {
             if (m_chronos.count(name) == 1) {
-                amountSessions = m_chronos[name].size() ;
+                assert(m_chronos[name].size() < std::numeric_limits<int>::max()) ;
+                amountSessions = static_cast<int>(m_chronos[name].size()) ;
             }
         }
         m_mutex.unlock() ;

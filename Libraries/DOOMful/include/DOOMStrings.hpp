@@ -9,6 +9,8 @@ namespace Doom {
         extern const std::string LogSys_AlreadyInitialized ;
 
         extern const std::string File_NotOpened ;
+
+        extern const std::string Profiler_SessionIDTooHigh ;
     } ;
 } ;
 

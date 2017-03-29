@@ -1,5 +1,7 @@
 #include <utils/StringExt.hpp>
 #include <utils/Random.hpp>
+#include <algorithm>
+#include <limits>
 #include <cmath>
 #include <cctype>
 
@@ -196,15 +198,24 @@ namespace Doom {
         }
 
         std::string Random(const unsigned int length, const std::string& characters) {
+            const size_t MaxInteger = std::numeric_limits<int>::max();
+
             Random::Initialize() ;
 
             std::string output(length, '\0') ;
-            size_t charactersListLength = characters.length() ;
-            for (size_t index = 0 ; index < length ; ++index) {
+            auto charactersListLength = static_cast<unsigned int>(
+                std::min(
+                    MaxInteger,
+                    characters.length()
+                )
+            ) ;
+
+            for (unsigned int index = 0 ; index < length ; ++index) {
                 int characterPosition = Random::GetInteger(0, charactersListLength) ;
                 char pickedCharacter = characters[characterPosition] ;
                 output[index] = pickedCharacter ;
             }
+
             return output ;
         }
     }

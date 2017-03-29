@@ -14,5 +14,8 @@ namespace Doom {
 
         /* Keep the space at the end of the string (filepath printed after). */
         const std::string File_NotOpened            = i18n("Unable to open file at ") ;
+
+        /* Keep the space at the end of the string (text printed after). */
+        const std::string Profiler_SessionIDTooHigh = i18n("The session ID is too high for ") ;
     } ;
 } ;
