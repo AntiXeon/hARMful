@@ -2,20 +2,20 @@
 #include <Math.hpp>
 
 namespace Mind {
-    const int SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
+    const size_t SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
 
     SquareMatrixf::SquareMatrixf(
-        const unsigned int size,
+        const size_t size,
         const Scalar value
     ) : m_size(size),
         m_defaultValue(value) {
-        for (int row = 0 ; row < MaximalDataSize ; ++row) {
+        for (size_t row = 0 ; row < MaximalDataSize ; ++row) {
             m_data[row] = SIMD::Vector4f(value) ;
         }
     }
 
     void SquareMatrixf::identity() {
-        for (int row = 0 ; row < MaximalDataSize ; ++row) {
+        for (size_t row = 0 ; row < MaximalDataSize ; ++row) {
             Scalar columns[] = { 0.f, 0.f, 0.f, 0.f } ;
 
             if (row < m_size) {
@@ -65,7 +65,7 @@ namespace Mind {
 
     void SquareMatrixf::clearWith(const Scalar value) {
         Array4f values ;
-        for (int col = 0 ; col < MaximalDataSize ; ++col) {
+        for (size_t col = 0 ; col < MaximalDataSize ; ++col) {
             if (col < m_size) {
                 values[col] = value ;
             }
@@ -74,14 +74,14 @@ namespace Mind {
             }
         }
 
-        for (int row = 0 ; row < m_size ; ++row) {
+        for (size_t row = 0 ; row < m_size ; ++row) {
             m_data[row].set(values) ;
         }
     }
 
     void SquareMatrixf::getData(Scalar* output) {
-        unsigned int outputIndex = 0 ;
-        for (int row = 0 ; row < m_size ; ++row) {
+        size_t outputIndex = 0 ;
+        for (size_t row = 0 ; row < m_size ; ++row) {
             float* rowValues = (float*) m_data[row] ;
 
             output[outputIndex]     = rowValues[0] ;

@@ -23,12 +23,12 @@ namespace Mind {
             /**
              * Maximal amount of data in a direction.
              */
-            static const int MaximalDataSize ;
+            static const size_t MaximalDataSize ;
 
             /**
              * Size of the SquareMatrix (one side).
              */
-            int m_size ;
+            size_t m_size ;
 
             /**
              * Default value of the cleared SquareMatrix.
@@ -48,7 +48,7 @@ namespace Mind {
              *					"size x size" matrix.
              * @param	value 	Initial value in the SquareMatrix.
              */
-            SquareMatrixf(const unsigned int size, const Scalar value = 0) ;
+            SquareMatrixf(const size_t size, const Scalar value = 0) ;
 
             /**
              * Copy a SquareMatrixf.

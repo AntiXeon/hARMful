@@ -201,7 +201,7 @@ namespace Mind {
         Array4f zAxisArray ;
         zAxis.getCoordinates(zAxisArray) ;
 
-        for (size_t column = 0 ; column < 3 ; ++column) {
+        for (unsigned int column = 0 ; column < 3 ; ++column) {
             rotationMatrix.at(0, column) = xAxisArray[column] ;
             rotationMatrix.at(1, column) = yAxisArray[column] ;
             rotationMatrix.at(2, column) = zAxisArray[column] ;
