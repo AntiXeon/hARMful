@@ -40,7 +40,7 @@ namespace Doom {
             size_t characterPosition = 0 ;
             bool insideWord = false ;
             for (char& character : stringCap) {
-                bool isWhiteSpace = isspace(character) ;
+                bool isWhiteSpace = isspace(character) != 0 ;
 
                 if (!insideWord && !isWhiteSpace) {
                     insideWord = true ;
@@ -71,7 +71,7 @@ namespace Doom {
 
             bool continueToTrim = true ;
             while(continueToTrim) {
-                bool isSpace = isspace(stringToTrim[index]) ;
+                bool isSpace = isspace(stringToTrim[index]) != 0 ;
                 if (isSpace) {
                     // Move the index to remove the character to delete.
                     index = index + 1 ;
@@ -95,7 +95,7 @@ namespace Doom {
 
             bool continueToTrim = true ;
             while(continueToTrim) {
-                bool isSpace = isspace(stringToTrim[index]) ;
+                bool isSpace = isspace(stringToTrim[index]) != 0 ;
                 if (isSpace) {
                     // Move the index to remove the character to delete.
                     index = index - 1 ;

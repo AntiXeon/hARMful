@@ -5,7 +5,8 @@
 // ================================
 // Optimizations:
 // --------------
-// USE_APPROXIMATION                - Use some fast operations instead of slow and precises ones
+// USE_APPROXIMATION                - Use some fast operations instead of slow
+//                                    and precises ones
 
 // FPU EXTENSIONS :
 // ----------------
@@ -21,7 +22,8 @@
     #define USE_APPROXIMATION
 
     // INTEL - AMD
-    #if defined (__SSE2__) && !defined(FORCE_EMULATED_SIMD)
+    // __SSE2__ on Linux ; _M_X64 on Windows (Visual Studio) for x64.
+    #if (defined __SSE2__ || defined _M_X64) && !defined(FORCE_EMULATED_SIMD)
         #define USE_SIMD
         // At least SSE2 is required to run algorithms on Intel/AMD SIMD
         #define USE_INTEL_SSE2

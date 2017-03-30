@@ -45,6 +45,8 @@ if (UNIX)
         VERSION ${HOPE_VERSION_STRING}
         SOVERSION ${HOPE_VERSION_MAJOR}
     )
+elseif (MSVC)
+   ADD_DEFINITIONS(/arch:SSE2)
 endif()
 
 set (
