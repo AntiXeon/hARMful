@@ -197,8 +197,8 @@ namespace UTMind {
             const float Height = 469.198f ;
             Dimension2Df dim2d(Width, Height) ;
             Point2Df p2d = (Point2Df) dim2d ;
-            check(p2d.getX() == dim2d.getWidth()) ;
-            check(p2d.getY() == dim2d.getHeight()) ;
+            check(p2d.get(Point2Df::Axis::X) == dim2d.getWidth()) ;
+            check(p2d.get(Point2Df::Axis::Y) == dim2d.getHeight()) ;
         }
     }
 }

@@ -46,20 +46,17 @@ namespace Mind {
 
     Scalar Point3Df::distanceX(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
-        return std::fabs(diffValues[X]) ;
+        return std::fabs(diff[X]) ;
     }
 
     Scalar Point3Df::distanceY(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
-        return std::fabs(diffValues[Y]) ;
+        return std::fabs(diff[Y]) ;
     }
 
     Scalar Point3Df::distanceZ(const Point3Df& a, const Point3Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
-        return std::fabs(diffValues[Z]) ;
+        return std::fabs(diff[Z]) ;
     }
 
     Scalar Point3Df::distance(const Point3Df& a, const Point3Df& b) {
@@ -73,39 +70,18 @@ namespace Mind {
         return FastMath::sqrt(this -> dot(*this)) ;
     }
 
-    Scalar Point3Df::getX() const {
-        return ((float*)m_values)[X] ;
+    Scalar Point3Df::get(const Axis axis) const {
+        return m_values[axis] ;
     }
 
-    Scalar Point3Df::getY() const {
-        return ((float*)m_values)[Y] ;
-    }
-
-    Scalar Point3Df::getZ() const {
-        return ((float*)m_values)[Z] ;
-    }
-
-    Array4f& Point3Df::getCoordinates(Array4f& output) const {
-        m_values.get(output) ;
-        return output ;
-    }
-
-    void Point3Df::setX(const Scalar x) {
-        ((float*)m_values)[X] = x ;
-    }
-
-    void Point3Df::setY(const Scalar y) {
-        ((float*)m_values)[Y] = y ;
-    }
-
-    void Point3Df::setZ(const Scalar z) {
-        ((float*)m_values)[Z] = z ;
+    void Point3Df::set(const Axis axis, const Scalar value) {
+        m_values[axis] = value ;
     }
 
     void Point3Df::set(const Scalar x, const Scalar y, const Scalar z) {
-        ((float*)m_values)[X] = x ;
-        ((float*)m_values)[Y] = y ;
-        ((float*)m_values)[Z] = z ;
+        m_values[X] = x ;
+        m_values[Y] = y ;
+        m_values[Z] = z ;
     }
 
     void Point3Df::set(const Point3Df& position) {
@@ -113,13 +89,11 @@ namespace Mind {
     }
 
     Point3Df::operator Dimension3Df() {
-        float* values = (float*) m_values ;
-        return Dimension3Df(values[X], values[Y], values[Z]) ;
+        return Dimension3Df(m_values[X], m_values[Y], m_values[Z]) ;
     }
 
     Point3Df::operator Point2Df() {
-        float* values = (float*) m_values ;
-        return Point2Df(values[X], values[Y]) ;
+        return Point2Df(m_values[X], m_values[Y]) ;
     }
 
     Point3Df& Point3Df::operator+=(Point3Df& other) {
@@ -155,6 +129,14 @@ namespace Mind {
         return !(*this == other) ;
     }
 
+    Scalar Point3Df::operator[](const int axis) const {
+        return m_values[axis] ;
+    }
+
+    Scalar& Point3Df::operator[](const int axis) {
+        return m_values[axis] ;
+    }
+
     Point3Df operator-(const Point3Df& p) {
         return Point3Df(-p.m_values) ;
     }
@@ -181,9 +163,9 @@ namespace Mind {
 
     std::ostream& operator<<(std::ostream& s, const Point3Df& p) {
         s << "Point3Df (" <<
-                             p.getX() << "," <<
-                             p.getY() << "," <<
-                             p.getZ() <<
+                             p.get(Point3Df::Axis::X) << "," <<
+                             p.get(Point3Df::Axis::Y) << "," <<
+                             p.get(Point3Df::Axis::Z) <<
                       ")" ;
         return s ;
     }

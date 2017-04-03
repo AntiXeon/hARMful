@@ -17,9 +17,9 @@ namespace Mind {
 
         Vector4i::Vector4i(const int32_t& value) : Vector4int32(value) {}
 
-        Vector4i::Vector4i(const int32x4_t& vec) : Vector4int32(vec) {}
+        Vector4i::Vector4i(const __m128i& vec) : Vector4int32(vec) {}
 
-        Vector4i::Vector4i(const float32x4_t& vec) : Vector4int32(vec) {}
+        Vector4i::Vector4i(const __m128& vec) : Vector4int32(vec) {}
 
         Vector4i::~Vector4i() {}
 
@@ -29,7 +29,7 @@ namespace Mind {
             #if defined(USE_INTEL_SSE4_1)
                 return _mm_min_epi32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                __m128i greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
                 return Vector4::selection(greater, (__m128i) b, (__m128i) a) ;
             #endif
         }
@@ -38,7 +38,7 @@ namespace Mind {
             #if defined(USE_INTEL_SSE4_1)
                 return _mm_max_epi32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                __m128i greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
                 return Vector4::selection(greater, (__m128i) a, (__m128i) b) ;
             #endif
         }
@@ -48,9 +48,9 @@ namespace Mind {
                 return _mm_sign_epi32(vec, vec) ;
             #else
                 // Get the sign of vector values.
-                int32x4_t sign = _mm_srai_epi32((__m128i) vec, 31) ;
+                __m128i sign = _mm_srai_epi32((__m128i) vec, 31) ;
                 // Invert bits for negative values.
-                int32x4_t inv  = _mm_xor_si128((__m128i) vec, (__m128i) sign) ;
+                __m128i inv  = _mm_xor_si128((__m128i) vec, (__m128i) sign) ;
                 // Add one to the inverted values (through shifted sign) to retrieve
                 // absolute values of vec.
                 return _mm_sub_epi32(inv, sign) ;
@@ -58,7 +58,7 @@ namespace Mind {
         }
 
         void Vector4i::print() {
-            int32_t* splitted = (int32_t*) &m_inner ;
+            Array4i& splitted = m_inner.arr ;
             std::cout << "Vector4i @"
                                     << std::hex << this << std::dec << "= { "
                                         << splitted[0] << ", "

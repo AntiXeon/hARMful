@@ -1,6 +1,7 @@
 #ifndef __MIND__GEOMETRY_POINT2DF__
 #define __MIND__GEOMETRY_POINT2DF__
 
+#include <array>
 #include <iostream>
 
 #include <MINDTypes.hpp>
@@ -17,13 +18,19 @@ namespace Mind {
      * elements, get distances between elements, etc.
      */
     class Point2Df {
+        public:
+            /**
+             * Axis to get coordinates of the Point3D.
+             */
+            enum Axis {
+                X,
+                Y
+            } ;
+
         private:
             #ifdef USE_NO_SIMD
-                /** Individual value of coordinate X. */
-                Scalar m_x ;
-
-                /** Individual value of coordinate Y. */
-                Scalar m_y ;
+                /** Values of the Point2Df. */
+                std::array<float, 2> m_values ;
             #else
                 /** Values of the Point2Df. */
                 SIMD::Vector4f m_values ;
@@ -139,11 +146,8 @@ namespace Mind {
                 const Point2Df& c
             ) ;
 
-            /** Get the X coordinate. */
-            Scalar getX() const ;
-
-            /** Get the Y coordinate. */
-            Scalar getY() const ;
+            /** Get a coordinate. */
+            Scalar get(const Axis axis) const ;
 
             /**
               * Get the coordinates of the Vector3f in an Array4f.
@@ -153,11 +157,8 @@ namespace Mind {
               */
             Array4f& getCoordinates(Array4f& output) const ;
 
-            /** Set the X coordinate. */
-            void setX(const Scalar x) ;
-
-            /** Set the Y coordinate. */
-            void setY(const Scalar y) ;
+            /** Set a coordinate. */
+            void set(const Axis axis, const Scalar value) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -220,6 +221,20 @@ namespace Mind {
              *          else.
              */
             bool operator!=(const Point2Df& other) const ;
+
+            /**
+             * Access a value in the Point2Df.
+             * @param  axis  Axis of the coordinate to get in the Point3Df.
+             * @return       Value at the @a axis.
+             */
+            Scalar operator[](const int axis) const ;
+
+            /**
+             * Access a value in the Point2Df.
+             * @param  axis  Axis of the coordinate to get in the Point3Df.
+             * @return       Value at the @a axis.
+             */
+            Scalar& operator[](const int axis) ;
 
             /**
               * Negate the coordinates of the point.

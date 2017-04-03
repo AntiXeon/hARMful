@@ -40,15 +40,15 @@ namespace Mind {
              */
             static const Scalar Epsilon ;
 
-            /**
-             * Used to extract the vector part of a Quaternion.
-             */
-            static const SIMD::Vector4f VectorPartExtractor ;
-
             #ifdef USE_NO_SIMD
                 /** Values of the Quaternion. */
                 Array4f m_values ;
             #else
+                /**
+                 * Used to extract the vector part of a Quaternion.
+                 */
+                static const SIMD::Vector4f VectorPartExtractor ;
+
                 /** Values of the Quaternion. */
                 SIMD::Vector4f m_values ;
 

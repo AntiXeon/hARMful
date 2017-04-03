@@ -4,7 +4,7 @@
 class Mask {
     private:
         /** Inner vector of booleans. */
-        int32x4_t m_inner ;
+        Int32x4 m_inner ;
 
 
                                                 /** CONSTRUCTION / DESTRUCTION **/
@@ -48,7 +48,7 @@ class Mask {
          * Create from inner type data.
          * @param   vec     The inner data to copy.
          */
-        Mask(const int32x4_t& vec) ;
+        Mask(const __m128i& vec) ;
 
 
         /**
@@ -110,25 +110,25 @@ class Mask {
          * @param   vec     The value to put in the Mask.
          * @return  The current Mask once the vec is affected to its inner data.
          */
-        Mask& operator=(const int32x4_t& vec) ;
+        Mask& operator=(const __m128i& vec) ;
 
         /**
          * Affect the inner value to the Mask.
          * @param   vec     The value to put in the Mask.
          * @return  The current Mask once the vec is affected to its inner data.
          */
-        Mask& operator=(const float32x4_t& vec) ;
+        Mask& operator=(const __m128& vec) ;
 
                                                             /** CAST OPERATORS **/
         /**
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
          */
-        operator int32x4_t() const ;
+        operator __m128i() const ;
 
         /**
          * Cast the current Mask to its inner data type.
          * @return  The inner data of the Mask.
          */
-        operator float32x4_t() const ;
+        operator __m128() const ;
 } ;

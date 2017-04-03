@@ -1,6 +1,7 @@
 #ifndef __MIND__GEOMETRY_POINT3DF__
 #define __MIND__GEOMETRY_POINT3DF__
 
+#include <array>
 #include <iostream>
 
 #include <MINDTypes.hpp>
@@ -17,16 +18,20 @@ namespace Mind {
      * elements, get distances between elements, etc.
      */
     class Point3Df {
+        public:
+            /**
+             * Axis to get coordinates of the Point3D.
+             */
+            enum Axis {
+                X,
+                Y,
+                Z
+            } ;
+
         private:
             #ifdef USE_NO_SIMD
-                /** Individual value of coordinate X. */
-                Scalar m_x ;
-
-                /** Individual value of coordinate Y. */
-                Scalar m_y ;
-
-                /** Individual value of coordinate Z. */
-                Scalar m_z ;
+                /** Values of the Point2Df. */
+                std::array<float, 3> m_values ;
             #else
                 /** Values of the Point3Df. */
                 SIMD::Vector4f m_values ;
@@ -129,31 +134,11 @@ namespace Mind {
               */
             Scalar length() ;
 
-            /** Get the X coordinate. */
-            Scalar getX() const ;
+            /** Get a coordinate. */
+            Scalar get(const Axis axis) const ;
 
-            /** Get the Y coordinate. */
-            Scalar getY() const ;
-
-            /** Get the Z coordinate. */
-            Scalar getZ() const ;
-
-            /**
-              * Get the coordinates of the Vector3f in an Array4f.
-              * The last index is set to zero.
-              * @param   output  Output parameter that will contain the values.
-              * @return  The @a output parameter for convenient use.
-              */
-            Array4f& getCoordinates(Array4f& output) const ;
-
-            /** Set the X coordinate. */
-            void setX(const Scalar x) ;
-
-            /** Set the Y coordinate. */
-            void setY(const Scalar y) ;
-
-            /** Set the Z coordinate. */
-            void setZ(const Scalar z) ;
+            /** Set a coordinate. */
+            void set(const Axis axis, const Scalar value) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -217,6 +202,20 @@ namespace Mind {
              *          else.
              */
             bool operator!=(const Point3Df& other) const ;
+
+            /**
+             * Access a value in the Point3Df.
+             * @param  axis  Axis of the coordinate to get in the Point3Df.
+             * @return       Value at the @a axis.
+             */
+            Scalar operator[](const int axis) const ;
+
+            /**
+             * Access a value in the Point3Df.
+             * @param  axis  Axis of the coordinate to get in the Point3Df.
+             * @return       Value at the @a axis.
+             */
+            Scalar& operator[](const int axis) ;
 
             /**
               * Negate the coordinates of the point.

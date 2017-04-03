@@ -16,7 +16,7 @@ namespace Mind {
     Point2Df::Point2Df(const SIMD::Vector4f& values) : m_values(values) {}
 
     Point2Df::Point2Df(const Scalar x, const Scalar y) {
-       m_values = SIMD::Vector4f(x, y, 0.f, 0.f) ;
+        m_values = SIMD::Vector4f(x, y, 0.f, 0.f) ;
     }
 
     void Point2Df::translate(const Scalar x, const Scalar y) {
@@ -42,34 +42,31 @@ namespace Mind {
 
     Scalar Point2Df::distanceX(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
-        return std::abs(diffValues[X]) ;
+        return std::abs(diff[X]) ;
     }
 
     Scalar Point2Df::distanceY(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
-        return std::abs(diffValues[Y]) ;
+        return std::abs(diff[Y]) ;
     }
 
     Scalar Point2Df::distance(const Point2Df& a, const Point2Df& b) {
         SIMD::Vector4f::Mask comp = a.m_values == b.m_values ;
         SIMD::Vector4f diff = a.m_values - b.m_values ;
-        float* diffValues = (float*) diff ;
 
         bool isXEqual = comp.get(X) ;
         bool isYEqual = comp.get(Y) ;
 
         if (isXEqual) {
-            return std::abs(diffValues[Y]) ;
+            return std::abs(diff[Y]) ;
         }
         else if (isYEqual) {
-            return std::abs(diffValues[X]) ;
+            return std::abs(diff[X]) ;
         }
         else {
             return Math::hypot(
-                std::abs(diffValues[X]),
-                std::abs(diffValues[Y])
+                std::abs(diff[X]),
+                std::abs(diff[Y])
             ) ;
         }
     }
@@ -118,12 +115,8 @@ namespace Mind {
         return product.horizontalSub() ;
     }
 
-    Scalar Point2Df::getX() const {
-        return ((float*)m_values)[X] ;
-    }
-
-    Scalar Point2Df::getY() const {
-        return ((float*)m_values)[Y] ;
+    Scalar Point2Df::get(const Axis axis) const {
+        return m_values[axis] ;
     }
 
     Array4f& Point2Df::getCoordinates(Array4f& output) const {
@@ -131,17 +124,13 @@ namespace Mind {
         return output ;
     }
 
-    void Point2Df::setX(const Scalar x) {
-        ((float*)m_values)[X] = x ;
-    }
-
-    void Point2Df::setY(const Scalar y) {
-        ((float*)m_values)[Y] = y ;
+    void Point2Df::set(const Axis axis, const Scalar value) {
+        m_values[axis] = value ;
     }
 
     void Point2Df::set(const Scalar x, const Scalar y) {
-        ((float*)m_values)[X] = x ;
-        ((float*)m_values)[Y] = y ;
+        m_values[X] = x ;
+        m_values[Y] = y ;
     }
 
     void Point2Df::set(const Point2Df& position) {
@@ -149,13 +138,11 @@ namespace Mind {
     }
 
     Point2Df::operator Dimension2Df() {
-        float* values = (float*) m_values ;
-        return Dimension2Df(values[X], values[Y]) ;
+        return Dimension2Df(m_values[X], m_values[Y]) ;
     }
 
     Point2Df::operator Point3Df() {
-        float* values = (float*) m_values ;
-        return Point3Df(values[X], values[Y], 0.f) ;
+        return Point3Df(m_values[X], m_values[Y], 0.f) ;
     }
 
     Point2Df& Point2Df::operator+=(Point2Df& other) {
@@ -191,6 +178,14 @@ namespace Mind {
         return !(*this == other) ;
     }
 
+    Scalar Point2Df::operator[](const int axis) const {
+        return m_values[axis] ;
+    }
+
+    Scalar& Point2Df::operator[](const int axis) {
+        return m_values[axis] ;
+    }
+
     Point2Df operator-(const Point2Df& p) {
         return Point2Df(-p.m_values) ;
     }
@@ -216,7 +211,9 @@ namespace Mind {
     }
 
     std::ostream& operator<<(std::ostream& s, const Point2Df& p) {
-        s << "Point2Df (" << p.getX() << "," << p.getY() << ")" ;
+        s << "Point2Df ("
+            << p.get(Point2Df::Axis::X) << ","
+            << p.get(Point2Df::Axis::Y) << ")" ;
         return s ;
     }
 } ;

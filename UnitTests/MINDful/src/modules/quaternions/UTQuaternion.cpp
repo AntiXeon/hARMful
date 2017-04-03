@@ -55,7 +55,7 @@ namespace UTMind {
             matrix.at(2,0, +0.0f) ;
             matrix.at(2,1, -0.1f) ;
             matrix.at(2,2, +0.7f) ;
-
+std::cout << matrix.trace() << std::endl ;
             /*
             Octave result:
             q2 = 0.6124 - 0.2858i - 0.2041j + 0.2449k
@@ -578,9 +578,9 @@ namespace UTMind {
             Scalar expectedY = -0.67839f ;
             Scalar expectedZ = -0.575022f ;
 
-            check(compare(rotatedVec.getX(), expectedX)) ;
-            check(compare(rotatedVec.getY(), expectedY)) ;
-            check(compare(rotatedVec.getZ(), expectedZ)) ;
+            check(compare(rotatedVec.get(Point3Df::Axis::X), expectedX)) ;
+            check(compare(rotatedVec.get(Point3Df::Axis::Y), expectedY)) ;
+            check(compare(rotatedVec.get(Point3Df::Axis::Z), expectedZ)) ;
         }
 
         // Test quaternions are equal or different.

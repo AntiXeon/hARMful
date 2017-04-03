@@ -23,7 +23,7 @@ namespace Mind {
 
             protected:
                 /** Inner vector data. */
-                int32x4_t m_inner ;
+                Int32x4 m_inner ;
 
                 /**
                  * Get the combination of two inner objects. It follows this
@@ -36,10 +36,10 @@ namespace Mind {
                  * @return    An inner data object combining @a a and @a b
                  *            following the content of @a selector.
                  */
-                static int32x4_t selection(
-                    const int32x4_t& selector,
-                    const int32x4_t& a,
-                    const int32x4_t& b
+                static __m128i selection(
+                    const __m128i& selector,
+                    const __m128i& a,
+                    const __m128i& b
                 ) ;
 
 
@@ -75,13 +75,13 @@ namespace Mind {
                  * Create directly from internally used data type.
                  * @param   vec     Data using the inner data type.
                  */
-                Vector4(const int32x4_t& vec) ;
+                Vector4(const __m128i& vec) ;
 
                 /**
                  * Create from data of a Vector4f.
                  * @param   vec     Data using the inner data type of Vector4f.
                  */
-                Vector4(const float32x4_t& vec) ;
+                Vector4(const __m128& vec) ;
 
                 /**
                  * Destruction of the Vector4.
@@ -114,7 +114,7 @@ namespace Mind {
                  * Cast the current Vector4 to its inner data type.
                  * @return  The inner data.
                  */
-                explicit operator int32x4_t() const ;
+                explicit operator __m128i() const ;
         } ;
 
 

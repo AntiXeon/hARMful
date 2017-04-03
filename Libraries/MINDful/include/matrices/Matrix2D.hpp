@@ -100,7 +100,7 @@ namespace Mind {
 
 
 
-    ///****************************** IMPLEMENTATION *******************************/
+    /****************************** IMPLEMENTATION *******************************/
     template <class T>
     Matrix2D<T>::Matrix2D(
         const size_t rows,

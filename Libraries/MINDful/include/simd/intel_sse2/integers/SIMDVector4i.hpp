@@ -43,13 +43,13 @@ namespace Mind {
                  * Create directly from internally used data type.
                  * @param   vec     Data using the inner data type.
                  */
-                Vector4i(const int32x4_t& vec) ;
+                Vector4i(const __m128i& vec) ;
 
                 /**
                  * Create from data of a Vector4f.
                  * @param   vec     Data using the inner data type of Vector4f.
                  */
-                Vector4i(const float32x4_t& vec) ;
+                Vector4i(const __m128& vec) ;
 
                 /**
                  * Destruction of the Vector4i.
@@ -63,7 +63,7 @@ namespace Mind {
                  * Can be converted to any integer vector type.
                  */
                 template <int32_t i0, int32_t i1, int32_t i2, int32_t i3>
-                static int32x4_t constant() ;
+                static __m128i constant() ;
 
                 /**
                  * Get a minimal Vector4i. It is the consensus of a and b,
@@ -109,10 +109,10 @@ namespace Mind {
         #include "impl/Vector4/Vector4i/operators.hpp"
 
         template <int32_t i0, int32_t i1, int32_t i2, int32_t i3>
-        int32x4_t Vector4i::constant() {
+        __m128i Vector4i::constant() {
             static const union {
                 int integer[4] ;
-                int32x4_t vector ;
+                __m128i vector ;
             } u = {{i0, i1, i2, i3}} ;
             return u.vector ;
         }

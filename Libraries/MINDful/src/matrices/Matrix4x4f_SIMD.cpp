@@ -1,6 +1,8 @@
 #include <matrices/Matrix4x4f.hpp>
 #include <iomanip>
 
+#ifdef USE_SIMD // for compilations where SSE or NEON are available
+
 namespace Mind {
     Matrix4x4f::Matrix4x4f(const Scalar value) : SquareMatrixf(4, value) {}
 
@@ -32,41 +34,34 @@ namespace Mind {
         const size_t column,
         const Point2Df& values
     ) {
-        float* row0Values = (float*) m_data[0] ;
-        row0Values[column] = values.getX() ;
-        float* row1Values = (float*) m_data[1] ;
-        row1Values[column] = values.getY() ;
+        m_data[0][column] = values.get(Point2Df::Axis::X) ;
+        m_data[1][column] = values.get(Point2Df::Axis::Y) ;
     }
 
     void Matrix4x4f::setColumnValues(
         const size_t column,
         const Point3Df& values
     ) {
-        float* row0Values = (float*) m_data[0] ;
-        row0Values[column] = values.getX() ;
-        float* row1Values = (float*) m_data[1] ;
-        row1Values[column] = values.getY() ;
-        float* row2Values = (float*) m_data[2] ;
-        row2Values[column] = values.getZ() ;
+        m_data[0][column] = values.get(Point3Df::Axis::X) ;
+        m_data[1][column] = values.get(Point3Df::Axis::Y) ;
+        m_data[2][column] = values.get(Point3Df::Axis::Z) ;
     }
 
     void Matrix4x4f::setRowValues(
         const size_t row,
         const Point2Df& values
     ) {
-        float* columnValues = (float*) m_data[row] ;
-        columnValues[0] = values.getX() ;
-        columnValues[1] = values.getY() ;
+        m_data[row][0] = values.get(Point2Df::Axis::X) ;
+        m_data[row][1] = values.get(Point2Df::Axis::Y) ;
     }
 
     void Matrix4x4f::setRowValues(
         const size_t row,
         const Point3Df& values
     ) {
-        float* columnValues = (float*) m_data[row] ;
-        columnValues[0] = values.getX() ;
-        columnValues[1] = values.getY() ;
-        columnValues[2] = values.getZ() ;
+        m_data[row][0] = values.get(Point3Df::Axis::X) ;
+        m_data[row][1] = values.get(Point3Df::Axis::Y) ;
+        m_data[row][2] = values.get(Point3Df::Axis::Z) ;
     }
 
     Matrix4x4f& Matrix4x4f::operator*=(const Scalar scalar) {
@@ -112,3 +107,5 @@ namespace Mind {
         return *this ;
     }
 } ;
+
+#endif

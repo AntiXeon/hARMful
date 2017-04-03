@@ -1,5 +1,7 @@
 #include <matrices/Matrix3x3f.hpp>
 
+#ifdef USE_SIMD // for compilations where SSE or NEON are available
+
 namespace Mind {
     Matrix3x3f::Matrix3x3f(const Scalar value) : SquareMatrixf(3, value) {}
 
@@ -31,41 +33,34 @@ namespace Mind {
         const size_t column,
         const Point2Df& values
     ) {
-        float* row0Values = (float*) m_data[0] ;
-        row0Values[column] = values.getX() ;
-        float* row1Values = (float*) m_data[1] ;
-        row1Values[column] = values.getY() ;
+        m_data[0][column] = values.get(Vector2f::Axis::X) ;
+        m_data[1][column] = values.get(Vector2f::Axis::Y) ;
     }
 
     void Matrix3x3f::setColumnValues(
         const size_t column,
         const Point3Df& values
     ) {
-        float* row0Values = (float*) m_data[0] ;
-        row0Values[column] = values.getX() ;
-        float* row1Values = (float*) m_data[1] ;
-        row1Values[column] = values.getY() ;
-        float* row2Values = (float*) m_data[2] ;
-        row2Values[column] = values.getZ() ;
+        m_data[0][column] = values.get(Vector3f::Axis::X) ;
+        m_data[1][column] = values.get(Vector3f::Axis::Y) ;
+        m_data[2][column] = values.get(Vector3f::Axis::Z) ;
     }
 
     void Matrix3x3f::setRowValues(
         const size_t row,
         const Point2Df& values
     ) {
-        float* columnValues = (float*) m_data[row] ;
-        columnValues[0] = values.getX() ;
-        columnValues[1] = values.getY() ;
+        m_data[row][0] = values.get(Vector2f::Axis::X) ;
+        m_data[row][1] = values.get(Vector2f::Axis::Y) ;
     }
 
     void Matrix3x3f::setRowValues(
         const size_t row,
         const Point3Df& values
     ) {
-        float* columnValues = (float*) m_data[row] ;
-        columnValues[0] = values.getX() ;
-        columnValues[1] = values.getY() ;
-        columnValues[2] = values.getZ() ;
+        m_data[row][0] = values.get(Vector3f::Axis::X) ;
+        m_data[row][1] = values.get(Vector3f::Axis::Y) ;
+        m_data[row][2] = values.get(Vector3f::Axis::Z) ;
     }
 
     Matrix3x3f& Matrix3x3f::operator*=(const Scalar scalar) {
@@ -111,3 +106,5 @@ namespace Mind {
         return *this ;
     }
 } ;
+
+#endif

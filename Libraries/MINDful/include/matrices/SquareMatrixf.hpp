@@ -35,11 +35,17 @@ namespace Mind {
              */
             Scalar m_defaultValue ;
 
-            /**
-             * SquareMatrix content values.
-             */
-            SIMD::Vector4f m_data[4] ;
-
+            #ifdef USE_NO_SIMD
+                /**
+                 * SquareMatrix content values.
+                 */
+                std::array<std::array<float, 4>, 4> m_data ;
+            #else
+                /**
+                 * SquareMatrix content values.
+                 */
+                SIMD::Vector4f m_data[4] ;
+            #endif
 
         public:
             /**
@@ -130,10 +136,22 @@ namespace Mind {
              * @return	Reference to the element at the wanted column and row
              *			indices.
              */
-            Scalar& at(
+            Scalar at(
                 const unsigned int row,
                 const unsigned int col
             ) const ;
+
+            /**
+             * Get the element a the specified position.
+             * @param   row     Index of the wanted row.
+             * @param   col     Index of the wanted column.
+             * @return	Reference to the element at the wanted column and row
+             *			indices.
+             */
+            Scalar& at(
+                const unsigned int row,
+                const unsigned int col
+            ) ;
 
             /**
              * Set the element a the specified position.
@@ -147,11 +165,19 @@ namespace Mind {
                 const Scalar value
             ) ;
 
-            /**
-             * Set or get the element a the specified position.
-             * @param   index   Index of the wanted row.
-             */
-            SIMD::Vector4f operator[](int index) ;
+            #ifdef USE_NO_SIMD
+                /**
+                 * Set or get the element a the specified position.
+                 * @param   index   Index of the wanted row.
+                 */
+                std::array<float, 4>& operator[](int index) ;
+            #else
+                /**
+                 * Set or get the element a the specified position.
+                 * @param   index   Index of the wanted row.
+                 */
+                SIMD::Vector4f& operator[](int index) ;
+            #endif
 
             /**
              * Get the size of the SquareMatrix.
@@ -208,12 +234,18 @@ namespace Mind {
         clearWith(m_defaultValue) ;
     }
 
-    inline Scalar& SquareMatrixf::at(
+    inline Scalar SquareMatrixf::at(
         const unsigned int row,
         const unsigned int col
     ) const {
-        float* rowValues = (float*) m_data[row] ;
-        return rowValues[col] ;
+        return m_data[row][col] ;
+    }
+
+    inline Scalar& SquareMatrixf::at(
+        const unsigned int row,
+        const unsigned int col
+    ) {
+        return m_data[row][col] ;
     }
 
     inline void SquareMatrixf::at(
@@ -221,13 +253,18 @@ namespace Mind {
         const unsigned int col,
         const Scalar value
     ) {
-        float* rowValues = (float*) m_data[row] ;
-        rowValues[col] = value ;
+        m_data[row][col] = value ;
     }
 
-    inline SIMD::Vector4f SquareMatrixf::operator[](int index) {
-        return m_data[index] ;
-    }
+    #ifdef USE_NO_SIMD
+        inline std::array<float, 4>& SquareMatrixf::operator[](int index) {
+            return m_data[index] ;
+        }
+    #else
+        inline SIMD::Vector4f& SquareMatrixf::operator[](int index) {
+            return m_data[index] ;
+        }
+    #endif
 } ;
 
 #endif

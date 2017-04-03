@@ -47,13 +47,11 @@ inline void Quaternion::swap(Quaternion& other) {
 }
 
 inline Scalar Quaternion::operator[](Axis axis) const {
-    float* valuesArray = (float*) m_values ;
-    return valuesArray[axis] ;
+    return m_values[axis] ;
 }
 
 inline Scalar& Quaternion::operator[](Axis axis) {
-    float* valuesArray = (float*) m_values ;
-    return valuesArray[axis] ;
+    return m_values[axis] ;
 }
 
 inline Quaternion& Quaternion::operator+=(const Quaternion& other) {
@@ -104,12 +102,11 @@ inline bool Quaternion::operator!=(const Quaternion& other) const {
 }
 
 inline std::ostream& operator<<(std::ostream& s, const Quaternion& p) {
-    float* values = (float*) p.m_values ;
     s << "Quaternion: "
-        << values[Quaternion::Axis::X] << ", "
-        << values[Quaternion::Axis::Y] << ", "
-        << values[Quaternion::Axis::Z] << ", "
-        << values[Quaternion::Axis::W]
+        << p.m_values[Quaternion::Axis::X] << ", "
+        << p.m_values[Quaternion::Axis::Y] << ", "
+        << p.m_values[Quaternion::Axis::Z] << ", "
+        << p.m_values[Quaternion::Axis::W]
     << std::endl ;
     return s ;
 }

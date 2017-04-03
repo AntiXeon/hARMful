@@ -247,9 +247,9 @@ namespace UTMind {
             const float Depth = 7487.8785f ;
             Dimension3Df dim3d(Width, Height, Depth) ;
             Point3Df p3d = (Point3Df) dim3d ;
-            check(p3d.getX() == dim3d.getWidth()) ;
-            check(p3d.getY() == dim3d.getHeight()) ;
-            check(p3d.getZ() == dim3d.getDepth()) ;
+            check(p3d.get(Point3Df::Axis::X) == dim3d.getWidth()) ;
+            check(p3d.get(Point3Df::Axis::Y) == dim3d.getHeight()) ;
+            check(p3d.get(Point3Df::Axis::Z) == dim3d.getDepth()) ;
         }
     }
 }

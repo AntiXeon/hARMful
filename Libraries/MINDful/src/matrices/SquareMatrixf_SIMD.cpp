@@ -1,6 +1,8 @@
 #include <matrices/SquareMatrixf.hpp>
 #include <Math.hpp>
 
+#ifdef USE_SIMD
+
 namespace Mind {
     const size_t SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
 
@@ -32,16 +34,12 @@ namespace Mind {
     }
 
     Scalar SquareMatrixf::trace() const {
-        #ifdef USE_SIMD
-            return SIMD::Vector4f(
-                at(0,0),
-                at(1,1),
-                at(2,2),
-                at(3,3)
-            ).horizontalAdd() ;
-        #else
-            return at(0,0) + at(1,1) + at(2,2) + at(3,3) ;
-        #endif
+        return SIMD::Vector4f(
+            at(0,0),
+            at(1,1),
+            at(2,2),
+            at(3,3)
+        ).horizontalAdd() ;
     }
 
     unsigned int SquareMatrixf::size() const {
@@ -53,9 +51,8 @@ namespace Mind {
             unsigned int size = p.size() ;
             for (unsigned int row = 0 ; row < size ; ++row) {
                 s << "{ " ;
-                float* values = (float*) p.m_data[row] ;
                 for (unsigned int col = 0 ; col < size ; ++col) {
-                    s << values[col] << " ; " ;
+                    s << p.m_data[row][col] << " ; " ;
                 }
                 s << "}" << std::endl ;
             }
@@ -82,13 +79,13 @@ namespace Mind {
     void SquareMatrixf::getData(Scalar* output) {
         size_t outputIndex = 0 ;
         for (size_t row = 0 ; row < m_size ; ++row) {
-            float* rowValues = (float*) m_data[row] ;
-
-            output[outputIndex]     = rowValues[0] ;
-            output[outputIndex + 1] = rowValues[1] ;
-            output[outputIndex + 2] = rowValues[2] ;
-            output[outputIndex + 3] = rowValues[3] ;
+            output[outputIndex]     = m_data[row][0] ;
+            output[outputIndex + 1] = m_data[row][1] ;
+            output[outputIndex + 2] = m_data[row][2] ;
+            output[outputIndex + 3] = m_data[row][3] ;
             outputIndex += MaximalDataSize ;
         }
     }
 } ;
+
+#endif

@@ -17,9 +17,9 @@ namespace Mind {
 
         Vector4ui::Vector4ui(const uint32_t& value) : Vector4uint32(value) {}
 
-        Vector4ui::Vector4ui(const uint32x4_t& vec) : Vector4uint32(vec) {}
+        Vector4ui::Vector4ui(const __m128i& vec) : Vector4uint32(vec) {}
 
-        Vector4ui::Vector4ui(const float32x4_t& vec) : Vector4uint32(vec) {}
+        Vector4ui::Vector4ui(const __m128& vec) : Vector4uint32(vec) {}
 
         Vector4ui::~Vector4ui() {}
 
@@ -29,7 +29,7 @@ namespace Mind {
             #if defined(USE_INTEL_SSE4_1)
                 return _mm_min_epu32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                __m128i greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
                 return Vector4::selection(greater, (__m128i) b, (__m128i) a) ;
             #endif
         }
@@ -38,13 +38,13 @@ namespace Mind {
             #if defined(USE_INTEL_SSE4_1)
                 return _mm_max_epu32((__m128i) a, (__m128i) b) ;
             #else
-                int32x4_t greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
+                __m128i greater = _mm_cmpgt_epi32((__m128i) a, (__m128i) b) ;
                 return Vector4::selection(greater, (__m128i) a, (__m128i) b) ;
             #endif
         }
 
         void Vector4ui::print() {
-            int32_t* splitted = (int32_t*) &m_inner ;
+            Array4i& splitted = m_inner.arr ;
             std::cout << "Vector4ui @"
                                     << std::hex << this << std::dec << "= { "
                                         << splitted[0] << ", "

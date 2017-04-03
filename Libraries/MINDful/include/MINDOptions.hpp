@@ -68,8 +68,6 @@
     // Other CPUs
     #else
         #define USE_NO_SIMD
-        #define SIMD    EmulatedSIMD  // Generic namespace to emulate SIMD
-        #define ALIGNMENT_ON_STACK  8
     #endif
 
     #define __STDC_FORMAT_MACROS

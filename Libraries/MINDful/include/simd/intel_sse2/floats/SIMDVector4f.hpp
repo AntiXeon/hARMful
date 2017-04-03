@@ -25,7 +25,7 @@ namespace Mind {
 
             private:
                 /** Inner vector data. */
-                float32x4_t m_inner ;
+                Float32x4 m_inner ;
 
 
                 /**
@@ -39,10 +39,10 @@ namespace Mind {
                  * @return    An inner data object combining @a a and @a b
                  * following the content of @a selector.
                  */
-                static float32x4_t selection(
-                    const float32x4_t& selector,
-                    const float32x4_t& a,
-                    const float32x4_t& b
+                static __m128 selection(
+                    const __m128& selector,
+                    const __m128& a,
+                    const __m128& b
                 ) ;
 
 
@@ -78,7 +78,7 @@ namespace Mind {
                  * Create directly from internally used data type.
                  * @param   vec     Data using the inner data type.
                  */
-                Vector4f(const float32x4_t& vec) ;
+                Vector4f(const __m128& vec) ;
 
                 /**
                  * Destruction of the Vector4f.
@@ -497,7 +497,7 @@ namespace Mind {
                  * @return  The current Vector4f once the vec is affected to its
                  *          inner data.
                  */
-                Vector4f& operator=(const float32x4_t& vec) ;
+                Vector4f& operator=(const __m128& vec) ;
 
                 /**
                  * Get the values from a Vector4i (integers) and put it in
@@ -517,18 +517,32 @@ namespace Mind {
                  */
                 Vector4f& operator=(const Vector4ui& vec4) ;
 
+                /**
+                 * Access a value of the Vector4f.
+                 * @param  index Index in the Vector4f.
+                 * @return       Value at the wanted index.
+                 */
+                float operator[](const int index) const ;
+
+                /**
+                 * Access a value of the Vector4f.
+                 * @param  index Index in the Vector4f.
+                 * @return       Value at the wanted index.
+                 */
+                float& operator[](const int index) ;
+
                                                             /** CAST OPERATORS **/
                 /**
                  * Cast the current Vector4f to its inner data type.
                  * @return  The inner data.
                  */
-                explicit operator float32x4_t() const ;
+                explicit operator __m128() const ;
 
                 /**
                  * Cast the current Vector4f to an array of float values.
                  * @return     The inner data as array of float values.
                  */
-                explicit operator float*() const ;
+                explicit operator Array4f() const ;
 
                 /**
                  * Cast the current Vector4f to a Vector4i.
@@ -571,34 +585,34 @@ namespace Mind {
                 // Only make some / all positions zeroed in the vector.
                 if ((i0 | i1 | i2 | i3) < 0) {
                     // Zero all values.
-                    m_inner = _mm_setzero_ps() ;
+                    m_inner.vec = _mm_setzero_ps() ;
                 }
                 else {
-                    const int32x4_t MaskZeroPositions = Vector4i::constant<
+                    const __m128i MaskZeroPositions = Vector4i::constant<
                         -int(i0 > -1),
                         -int(i1 > -1),
                         -int(i2 > -1),
                         -int(i3 > -1)
                     >() ;
 
-                    m_inner = _mm_and_ps(m_inner,_mm_castsi128_ps(MaskZeroPositions)) ;
+                    m_inner.vec = _mm_and_ps(m_inner.vec,_mm_castsi128_ps(MaskZeroPositions)) ;
                 }
             }
             else if (NeedShuffle and !DoZero) {
                 // Only shuffle the values in the vector.
-                m_inner = _mm_shuffle_ps(
-                    m_inner,
-                    m_inner,
+                m_inner.vec = _mm_shuffle_ps(
+                    m_inner.vec,
+                    m_inner.vec,
                     ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))
                 ) ;
             }
             else if (((i0 & i1) < 0) && ((i2 | i3) >= 0)) {
                 // Zero on lower elements, shuffle higher ones.
-                m_inner = _mm_shuffle_ps(_mm_setzero_ps(), m_inner, (i2 << 4) | (i3 <<6));
+                m_inner.vec = _mm_shuffle_ps(_mm_setzero_ps(), m_inner.vec, (i2 << 4) | (i3 <<6));
             }
             else if ((i0 | i1) >= 0 && (i2 & i3) < 0) {
                 // Zero on higher elements, shuffle lower ones.
-                m_inner = _mm_shuffle_ps(m_inner, _mm_setzero_ps(), (i0 | (i1 << 2))) ;
+                m_inner.vec = _mm_shuffle_ps(m_inner.vec, _mm_setzero_ps(), (i0 | (i1 << 2))) ;
             }
             else {
                 #if defined (USE_INTEL_SSSE3)
@@ -613,16 +627,16 @@ namespace Mind {
                         i2 < 0 ? -1 : j2 | (j2+1)<<8 | (j2+2)<<16 | (j2+3) << 24,
                         i3 < 0 ? -1 : j3 | (j3+1)<<8 | (j3+2)<<16 | (j3+3) << 24
                     > () ;
-                    m_inner = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(a),mask2)) ;
+                    m_inner.vec = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(a),mask2)) ;
                 #else
-                    float32x4_t tmp = _mm_shuffle_ps(m_inner, m_inner, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
+                    __m128 tmp = _mm_shuffle_ps(m_inner.vec, m_inner.vec, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
                     __m128i MaskZeroPositions = Vector4i::constant<
                         -int(i0 > -1),
                         -int(i1 > -1),
                         -int(i2 > -1),
                         -int(i3 > -1)
                     >() ;
-                    m_inner = _mm_and_ps(tmp,_mm_castsi128_ps(MaskZeroPositions)) ;
+                    m_inner.vec = _mm_and_ps(tmp,_mm_castsi128_ps(MaskZeroPositions)) ;
                 #endif
             }
         }
@@ -638,7 +652,7 @@ namespace Mind {
                     i3 ? 0x80000000 : 0
                 >() ;
 
-                m_inner = _mm_xor_ps(m_inner, _mm_castsi128_ps(MaskNegative)) ;
+                m_inner.vec = _mm_xor_ps(m_inner.vec, _mm_castsi128_ps(MaskNegative)) ;
             }
         }
 
@@ -653,8 +667,8 @@ namespace Mind {
             static_assert((i3 <= 3), "Bad value. Expected i3 <= 3") ;
 
             output = _mm_shuffle_ps(
-                (float32x4_t) input,
-                (float32x4_t) input,
+                (__m128) input,
+                (__m128) input,
                 ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))
             ) ;
 

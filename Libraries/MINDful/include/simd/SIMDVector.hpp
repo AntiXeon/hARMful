@@ -16,10 +16,6 @@
         #include <simd/arm_neon/integers/SIMDVector4i.hpp>
         #include <simd/arm_neon/integers/SIMDVector4ui.hpp>
         #include <simd/arm_neon/floats/SIMDVector4f.hpp>
-    #else
-        #include <simd/emulated/integers/SIMDVector4i.hpp>
-        #include <simd/emulated/integers/SIMDVector4ui.hpp>
-        #include <simd/emulated/floats/SIMDVector4f.hpp>
     #endif
 
 #endif

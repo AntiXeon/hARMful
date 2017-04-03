@@ -6,7 +6,6 @@ namespace Mind {
     const Scalar Quaternion::Epsilon = static_cast<Scalar>(1e-3) ;
     const Quaternion Quaternion::Zero = Quaternion() ;
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
-    const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;
 
     Quaternion Quaternion::inverse() const {
         Scalar squaredLength = this -> dot(*this) ;
@@ -194,17 +193,10 @@ namespace Mind {
         // quaternion values.
         Matrix3x3f rotationMatrix ;
 
-        Array4f xAxisArray ;
-        xAxis.getCoordinates(xAxisArray) ;
-        Array4f yAxisArray ;
-        yAxis.getCoordinates(yAxisArray) ;
-        Array4f zAxisArray ;
-        zAxis.getCoordinates(zAxisArray) ;
-
         for (unsigned int column = 0 ; column < 3 ; ++column) {
-            rotationMatrix.at(0, column) = xAxisArray[column] ;
-            rotationMatrix.at(1, column) = yAxisArray[column] ;
-            rotationMatrix.at(2, column) = zAxisArray[column] ;
+            rotationMatrix.at(0, column) = xAxis[column] ;
+            rotationMatrix.at(1, column) = yAxis[column] ;
+            rotationMatrix.at(2, column) = zAxis[column] ;
         }
 
         from(rotationMatrix) ;
@@ -217,9 +209,9 @@ namespace Mind {
         Scalar halfAngleSinus = std::sin(halfAngle) ;
         Scalar halfAngleCosinus = std::cos(halfAngle) ;
 
-        m_values[Axis::X] = vector.getX() * halfAngleSinus ;
-        m_values[Axis::Y] = vector.getY() * halfAngleSinus ;
-        m_values[Axis::Z] = vector.getZ() * halfAngleSinus ;
+        m_values[Axis::X] = vector.get(Vector3f::Axis::X) * halfAngleSinus ;
+        m_values[Axis::Y] = vector.get(Vector3f::Axis::Y) * halfAngleSinus ;
+        m_values[Axis::Z] = vector.get(Vector3f::Axis::Z) * halfAngleSinus ;
         m_values[Axis::W] = halfAngleCosinus ;
     }
 
@@ -255,16 +247,16 @@ namespace Mind {
         Scalar squaredLength = (m_values[Axis::X] * m_values[Axis::X]) + (m_values[Axis::Y] * m_values[Axis::Y]) + (m_values[Axis::Z] * m_values[Axis::Z]) ;
         if (squaredLength > 0.f) {
             Scalar invertedLength = 1.f / std::sqrt(squaredLength) ;
-            vector.setX(m_values[Axis::X] * invertedLength) ;
-            vector.setY(m_values[Axis::Y] * invertedLength) ;
-            vector.setZ(m_values[Axis::Z] * invertedLength) ;
+            vector.set(Vector3f::Axis::X, m_values[Axis::X] * invertedLength) ;
+            vector.set(Vector3f::Axis::Y, m_values[Axis::Y] * invertedLength) ;
+            vector.set(Vector3f::Axis::Z, m_values[Axis::Z] * invertedLength) ;
             radAngle = 2.f * std::acos(m_values[Axis::W]) ;
         }
         else {
             // Several solution can exist (the angle is 0 % 2xPi radians...).
-            vector.setX(1.f) ;
-            vector.setY(0.f) ;
-            vector.setZ(0.f) ;
+            vector.set(Vector3f::Axis::X, 1.f) ;
+            vector.set(Vector3f::Axis::Y, 0.f) ;
+            vector.set(Vector3f::Axis::Z, 0.f) ;
             radAngle = 0.f ;
         }
     }

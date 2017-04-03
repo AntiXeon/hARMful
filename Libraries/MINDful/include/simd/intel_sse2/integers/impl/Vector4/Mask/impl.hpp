@@ -9,17 +9,17 @@ Vector4<Type>::Mask::Mask(
     const bool& b2,
     const bool& b3
 ) {
-     m_inner = _mm_setr_epi32(b0, b1, b2, b3) ;
+     m_inner.vec = _mm_setr_epi32(b0, b1, b2, b3) ;
 }
 
 template <typename Type>
 Vector4<Type>::Mask::Mask(const bool& value) {
-    m_inner = _mm_set1_epi32(value) ;
+    m_inner.vec = _mm_set1_epi32(value) ;
 }
 
 template <typename Type>
-Vector4<Type>::Mask::Mask(const int32x4_t& vec) {
-    m_inner = vec ;
+Vector4<Type>::Mask::Mask(const __m128i& vec) {
+    m_inner.vec = vec ;
 }
 
 template <typename Type>
@@ -31,13 +31,13 @@ Vector4<Type>::Mask::~Mask() {}
     template <typename Type>
     inline void Vector4<Type>::Mask::get(Array4i& array) {
         int32_t* data = array.data() ;
-        _mm_store_si128((__m128i*) data, m_inner) ;
+        _mm_store_si128((__m128i*) data, m_inner.vec) ;
     }
 #else
     template <typename Type>
     inline void Vector4<Type>::Mask::get(Array4i& array) {
         int32_t* data = array.data() ;
-        _mm_storeu_si128((__m128i*) data, m_inner) ;
+        _mm_storeu_si128((__m128i*) data, m_inner.vec) ;
     }
 #endif
 
@@ -63,35 +63,35 @@ inline size_t Vector4<Type>::Mask::size() {
                                                         /** AFFECT OPERATORS **/
 template <typename Type>
 inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const Mask& mask) {
-    m_inner = mask.m_inner ;
+    m_inner.vec = mask.m_inner.vec ;
     return *this ;
 }
 
 template <typename Type>
 inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const bool& value) {
-    m_inner = _mm_set1_epi32(-int32_t(value)) ;
+    m_inner.vec = _mm_set1_epi32(-int32_t(value)) ;
     return *this ;
 }
 
 template <typename Type>
-inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const int32x4_t& vec) {
-    m_inner = vec ;
+inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128i& vec) {
+    m_inner.vec = vec ;
     return *this ;
 }
 
 template <typename Type>
-inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const float32x4_t& vec) {
-    m_inner = _mm_castps_si128(vec) ;
+inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128& vec) {
+    m_inner.vec = _mm_castps_si128(vec) ;
     return *this ;
 }
 
                                                             /** CAST OPERATORS **/
 template <typename Type>
-inline Vector4<Type>::Mask::operator int32x4_t() const {
-    return m_inner ;
+inline Vector4<Type>::Mask::operator __m128i() const {
+    return m_inner.vec ;
 }
 
 template <typename Type>
-inline Vector4<Type>::Mask::operator float32x4_t() const {
-    return _mm_castsi128_ps(m_inner) ;
+inline Vector4<Type>::Mask::operator __m128() const {
+    return _mm_castsi128_ps(m_inner.vec) ;
 }

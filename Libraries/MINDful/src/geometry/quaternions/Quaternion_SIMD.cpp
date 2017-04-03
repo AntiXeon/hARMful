@@ -40,12 +40,9 @@ namespace Mind {
         Scalar angleSin = std::sin(normV) ;
         Scalar angleCos = std::cos(normV) ;
 
-        Scalar w = ((float*)m_values)[Axis::W] ;
+        Scalar w = m_values[Axis::W] ;
         Scalar expW = std::exp(w) ;
 
-        Scalar resultX ;
-        Scalar resultY ;
-        Scalar resultZ ;
         Scalar resultW ;
         // Avoid a division by zero...
         if (std::abs(normV) < Epsilon) {
@@ -58,15 +55,10 @@ namespace Mind {
             vectorPart *= coeff ;
         }
 
-        float* vectorPartArray = (float*) vectorPart ;
-        resultX = vectorPartArray[Axis::X] ;
-        resultY = vectorPartArray[Axis::Y] ;
-        resultZ = vectorPartArray[Axis::Z] ;
-
         return Quaternion(
-            resultX,
-            resultY,
-            resultZ,
+            vectorPart[Axis::X] ,
+            vectorPart[Axis::Y],
+            vectorPart[Axis::Z],
             resultW
         ) ;
     }
@@ -75,11 +67,10 @@ namespace Mind {
         Quaternion unitQuaternion = *this ;
         unitQuaternion.normalize() ;
 
-        Scalar unitW = ((float*)unitQuaternion.m_values)[Axis::W] ;
+        Scalar unitW = unitQuaternion.m_values[Axis::W] ;
         SIMD::Vector4f vectorPart = unitQuaternion.m_values * VectorPartExtractor ;
-        float* vectorPartArray = (float*) vectorPart ;
 
-        if (std::abs(vectorPartArray[Axis::W]) < 1.f) {
+        if (std::abs(vectorPart[Axis::W]) < 1.f) {
             Scalar normV = vectorPart.norm() ;
             Scalar angle = std::atan2(normV, unitW) ;
 
@@ -87,15 +78,14 @@ namespace Mind {
             if (std::abs(angleSin) >= Epsilon) {
                 Scalar coeff = angle / angleSin ;
                 vectorPart *= coeff ;
-                vectorPartArray = (float*) vectorPart ;
             }
         }
 
         return Quaternion(
-            vectorPartArray[Axis::X],
-            vectorPartArray[Axis::Y],
-            vectorPartArray[Axis::Z],
-            vectorPartArray[Axis::W]
+            vectorPart[Axis::X],
+            vectorPart[Axis::Y],
+            vectorPart[Axis::Z],
+            vectorPart[Axis::W]
         ) ;
     }
 
@@ -255,17 +245,10 @@ namespace Mind {
         // quaternion values.
         Matrix3x3f rotationMatrix ;
 
-        Array4f xAxisArray ;
-        xAxis.getCoordinates(xAxisArray) ;
-        Array4f yAxisArray ;
-        yAxis.getCoordinates(yAxisArray) ;
-        Array4f zAxisArray ;
-        zAxis.getCoordinates(zAxisArray) ;
-
         for (size_t column = 0 ; column < 3 ; ++column) {
-            rotationMatrix.at(0, column) = xAxisArray[column] ;
-            rotationMatrix.at(1, column) = yAxisArray[column] ;
-            rotationMatrix.at(2, column) = zAxisArray[column] ;
+            rotationMatrix.at(0, column) = xAxis[column] ;
+            rotationMatrix.at(1, column) = yAxis[column] ;
+            rotationMatrix.at(2, column) = zAxis[column] ;
         }
 
         from(rotationMatrix) ;
@@ -288,19 +271,23 @@ namespace Mind {
         // Multiply only the vector part of the quaternion with the provided
         // vector.
         SIMD::Vector4f::Mask maskMul(true, true, true, false) ;
-        SIMD::Vector4f tmp(vector.getX(), vector.getY(), vector.getZ(), 0.f) ;
+        SIMD::Vector4f tmp(
+            vector.get(Vector3f::Axis::X),
+            vector.get(Vector3f::Axis::Y),
+            vector.get(Vector3f::Axis::Z),
+            0.f
+        ) ;
         m_values.mulIf(maskMul, tmp) ;
     }
 
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
     void Quaternion::to(Matrix3x3f& matrix) {
-        float* valueArray = (float*) m_values ;
         auto twiceValues = m_values + m_values ;
-        float* twiceValuesX = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::X])) ;
-        float* twiceValuesY = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::Y])) ;
-        float* twiceValuesZ = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::Z])) ;
-        float* twiceValuesW = (float*) (twiceValues * SIMD::Vector4f(valueArray[Axis::W])) ;
+        auto twiceValuesX = twiceValues * SIMD::Vector4f(m_values[Axis::X]) ;
+        auto twiceValuesY = twiceValues * SIMD::Vector4f(m_values[Axis::Y]) ;
+        auto twiceValuesZ = twiceValues * SIMD::Vector4f(m_values[Axis::Z]) ;
+        auto twiceValuesW = twiceValues * SIMD::Vector4f(m_values[Axis::W]) ;
 
         matrix.at(0,0, 1.f - (twiceValuesY[Axis::Y] + twiceValuesZ[Axis::Z])) ;
         matrix.at(0,1, twiceValuesX[Axis::Y] - twiceValuesW[Axis::Z]) ;
@@ -317,11 +304,10 @@ namespace Mind {
 
     void Quaternion::to(Vector3f& vector, Scalar& radAngle) {
         // Get the length of the vector part of the quaternion (x,y,z).
-        float* valueArray = (float*) m_values ;
         SIMD::Vector4f tmp(
-            valueArray[Axis::X],
-            valueArray[Axis::Y],
-            valueArray[Axis::Z],
+            m_values[Axis::X],
+            m_values[Axis::Y],
+            m_values[Axis::Z],
             0.f
         ) ;
 
@@ -329,15 +315,14 @@ namespace Mind {
 
         if (squaredLength > 0.) {
             // A unique solution exists.
-            radAngle = 2.f * std::acos(valueArray[Axis::W]) ;
+            radAngle = 2.f * std::acos(m_values[Axis::W]) ;
             SIMD::Vector4f squaredLengthVec(squaredLength) ;
             auto invLength = SIMD::Vector4f::fast_rsqrt(squaredLengthVec) ;
             auto vectorValues = tmp * invLength ;
-            float* vectorValuesPtr = (float*) vectorValues ;
             vector.set(
-                vectorValuesPtr[Axis::X],
-                vectorValuesPtr[Axis::Y],
-                vectorValuesPtr[Axis::Z]
+                m_values[Axis::X],
+                m_values[Axis::Y],
+                m_values[Axis::Z]
             ) ;
         }
         else {
@@ -379,16 +364,15 @@ namespace Mind {
         Scalar& pitch,
         Scalar& yaw
     ) {
-        float* quaternion = (float*) m_values ;
-        Scalar squaredY = quaternion[Axis::Y] * quaternion[Axis::Y] ;
+        Scalar squaredY = m_values[Axis::Y] * m_values[Axis::Y] ;
 
         // Roll (x-axis rotation).
-        Scalar t0 = 2.f * (quaternion[Axis::W] * quaternion[Axis::X] + quaternion[Axis::Y] * quaternion[Axis::Z]) ;
-        Scalar t1 = 1.f - 2.f * (quaternion[Axis::X] * quaternion[Axis::X] + squaredY) ;
+        Scalar t0 = 2.f * (m_values[Axis::W] * m_values[Axis::X] + m_values[Axis::Y] * m_values[Axis::Z]) ;
+        Scalar t1 = 1.f - 2.f * (m_values[Axis::X] * m_values[Axis::X] + squaredY) ;
         roll = std::atan2(t0, t1) ;
 
         // Pitch (y-axis rotation).
-        Scalar t2 = 2.f * (quaternion[Axis::W] * quaternion[Axis::Y] - quaternion[Axis::Z] + quaternion[Axis::X]) ;
+        Scalar t2 = 2.f * (m_values[Axis::W] * m_values[Axis::Y] - m_values[Axis::Z] + m_values[Axis::X]) ;
         if (t2 > 1.f) {
             t2 = 1.f ;
         }
@@ -398,8 +382,8 @@ namespace Mind {
         pitch = std::asin(t2) ;
 
         // Yaw (z-axis rotation).
-        Scalar t3 = 2.f * (quaternion[Axis::W] * quaternion[Axis::Z] + quaternion[Axis::X] * quaternion[Axis::Y]) ;
-        Scalar t4 = 1.f - 2.f * (squaredY + quaternion[Axis::Z] * quaternion[Axis::Z]) ;
+        Scalar t3 = 2.f * (m_values[Axis::W] * m_values[Axis::Z] + m_values[Axis::X] * m_values[Axis::Y]) ;
+        Scalar t4 = 1.f - 2.f * (squaredY + m_values[Axis::Z] * m_values[Axis::Z]) ;
         yaw = std::atan2(t3, t4) ;
     }
 
@@ -457,18 +441,17 @@ namespace Mind {
 
     Vector3f Quaternion::operator*(const Vector3f& vec3) const {
         // Implementation from the NVidia SDK.
-        float* quaternion = (float*) m_values ;
         Vector3f vecPartQuaternion(
-            quaternion[Axis::X],
-            quaternion[Axis::Y],
-            quaternion[Axis::Z]
+            m_values[Axis::X],
+            m_values[Axis::Y],
+            m_values[Axis::Z]
         ) ;
 
         // Cross products of the quaternion vector part with the provided
         // vector.
         Vector3f uv = vecPartQuaternion.cross(vec3) ;
         Vector3f uuv = vecPartQuaternion.cross(uv) ;
-        uv *= (2.f * quaternion[Axis::W]) ;
+        uv *= (2.f * m_values[Axis::W]) ;
         uuv *= 2.f ;
 
         return vec3 + uv + uuv ;

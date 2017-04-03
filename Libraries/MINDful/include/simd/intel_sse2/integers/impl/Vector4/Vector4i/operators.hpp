@@ -188,14 +188,14 @@ static inline Vector4i operator*(const Vector4i& a, const Vector4i& b) {
         // Multiply the packed 32-bit integers in a and b, producing
         // intermediate 64-bit integers, and store the low 32 bits of the
         // intermediate integers in dst.
-        int32x4_t a13 = _mm_shuffle_epi32((__m128i) a, 0xF5) ;                  // Keep values (-,a3,-,a1)
-        int32x4_t b13 = _mm_shuffle_epi32((__m128i) b, 0xF5) ;                  // Keep values (-,b3,-,b1)
-        int32x4_t prod02 = _mm_mul_epu32((__m128i) a, (__m128i) b) ;                                // (-,a2*b2,-,a0*b0)
-        int32x4_t prod13 = _mm_mul_epu32(a13, b13) ;                            // (-,a3*b3,-,a1*b1)
+        __m128i a13 = _mm_shuffle_epi32((__m128i) a, 0xF5) ;                  // Keep values (-,a3,-,a1)
+        __m128i b13 = _mm_shuffle_epi32((__m128i) b, 0xF5) ;                  // Keep values (-,b3,-,b1)
+        __m128i prod02 = _mm_mul_epu32((__m128i) a, (__m128i) b) ;                                // (-,a2*b2,-,a0*b0)
+        __m128i prod13 = _mm_mul_epu32(a13, b13) ;                            // (-,a3*b3,-,a1*b1)
         // Unpack and interleave 32-bit integers from the low half of a and b
-        int32x4_t prod01 = _mm_unpacklo_epi32(prod02, prod13) ;                 // (-,-,a1*b1,a0*b0)
+        __m128i prod01 = _mm_unpacklo_epi32(prod02, prod13) ;                 // (-,-,a1*b1,a0*b0)
         // Unpack and interleave 32-bit integers from the high half of a and b
-        int32x4_t prod23 = _mm_unpackhi_epi32(prod02, prod13) ;                 // (-,-,a3*b3,a2*b2)
+        __m128i prod23 = _mm_unpackhi_epi32(prod02, prod13) ;                 // (-,-,a3*b3,a2*b2)
         // Unpack and interleave 64-bit integers from the low half of a and b   // (ab3,ab2,ab1,ab0)
         return _mm_unpacklo_epi64(prod01, prod23) ;
     #endif

@@ -38,13 +38,13 @@ namespace Mind {
         Line2Df l2 = relative(l) ;
         Point2Df p2 = p - l.m_start ;
 
-        Scalar ccw = (p2.getX() * l2.m_end.getY()) - (p2.getY() * l2.m_end.getX()) ;
+        Scalar ccw = (p2.get(Point2Df::Axis::X) * l2.m_end.get(Point2Df::Axis::Y)) - (p2.get(Point2Df::Axis::Y) * l2.m_end.get(Point2Df::Axis::X)) ;
         if (ccw == 0) {
-            ccw = (p2.getX() * l2.m_end.getX()) + (p2.getY() * l2.m_end.getY()) ;
+            ccw = (p2.get(Point2Df::Axis::X) * l2.m_end.get(Point2Df::Axis::X)) + (p2.get(Point2Df::Axis::Y) * l2.m_end.get(Point2Df::Axis::Y)) ;
             if (ccw > 0) {
                 // Make P relative to the end point of S
                 p2 = p - l.m_end ;
-                ccw = (p2.getX() * l.m_end.getX()) + (p2.getY() * l.m_end.getY()) ;
+                ccw = (p2.get(Point2Df::Axis::X) * l.m_end.get(Point2Df::Axis::X)) + (p2.get(Point2Df::Axis::Y) * l.m_end.get(Point2Df::Axis::Y)) ;
                 if (ccw < 0) {
                     ccw = 0 ;
                 }
@@ -117,24 +117,24 @@ namespace Mind {
     }
 
     Scalar Line2Df::getStartX() const {
-        return m_start.getX() ;
+        return m_start.get(Point2Df::Axis::X) ;
     }
 
     Scalar Line2Df::getStartY() const {
-        return m_start.getY() ;
+        return m_start.get(Point2Df::Axis::Y) ;
     }
 
     Scalar Line2Df::getEndX() const {
-        return m_end.getX() ;
+        return m_end.get(Point2Df::Axis::X) ;
     }
 
     Scalar Line2Df::getEndY() const {
-        return m_end.getY() ;
+        return m_end.get(Point2Df::Axis::Y) ;
     }
 
     bool Line2Df::isEmpty() const {
-        return ((m_start.getX() - m_end.getX() == 0)
-                    && (m_start.getY() - m_end.getY() == 0)) ;
+        return ((m_start.get(Point2Df::Axis::X) - m_end.get(Point2Df::Axis::X) == 0)
+                    && (m_start.get(Point2Df::Axis::Y) - m_end.get(Point2Df::Axis::Y) == 0)) ;
     }
 
     Line2Df& Line2Df::operator=(const Line2Df& other) {
