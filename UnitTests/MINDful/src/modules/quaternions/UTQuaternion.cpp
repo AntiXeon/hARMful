@@ -55,7 +55,7 @@ namespace UTMind {
             matrix.at(2,0, +0.0f) ;
             matrix.at(2,1, -0.1f) ;
             matrix.at(2,2, +0.7f) ;
-std::cout << matrix.trace() << std::endl ;
+
             /*
             Octave result:
             q2 = 0.6124 - 0.2858i - 0.2041j + 0.2449k

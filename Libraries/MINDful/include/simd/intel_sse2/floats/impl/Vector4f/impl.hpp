@@ -120,8 +120,10 @@ inline Vector4f Vector4f::cross(const Vector4f& other) const {
 
 inline Scalar Vector4f::norm() const {
     Vector4f norm2 = Vector4f(dot(*this)) ;
-    __m128 norm = _mm_sqrt_ps((__m128) norm2) ;
-    return norm[0] ;
+
+    Float32x4 norm ;
+    norm.vec = _mm_sqrt_ps((__m128) norm2) ;
+    return norm.arr[0] ;
 }
 
 

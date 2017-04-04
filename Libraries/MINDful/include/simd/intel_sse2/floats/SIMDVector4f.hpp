@@ -581,7 +581,7 @@ namespace Mind {
             // Check if zeroing required.
             const bool DoZero = (((i0 | i1 | i2 | i3) < 0) && ((i0 | i1 | i2 | i3) & 0x80)) ;
 
-            if (DoZero and !NeedShuffle) {
+            if (DoZero && !NeedShuffle) {
                 // Only make some / all positions zeroed in the vector.
                 if ((i0 | i1 | i2 | i3) < 0) {
                     // Zero all values.
@@ -598,7 +598,7 @@ namespace Mind {
                     m_inner.vec = _mm_and_ps(m_inner.vec,_mm_castsi128_ps(MaskZeroPositions)) ;
                 }
             }
-            else if (NeedShuffle and !DoZero) {
+            else if (NeedShuffle && !DoZero) {
                 // Only shuffle the values in the vector.
                 m_inner.vec = _mm_shuffle_ps(
                     m_inner.vec,

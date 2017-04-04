@@ -153,7 +153,7 @@ namespace Mind {
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
     void Quaternion::from(const Matrix3x3f& matrix) {
-        const int QuaternionSize = SIMD::Vector4f::size() ;
+        static const int QuaternionSize = 4 ;
         Scalar quaternionValues[QuaternionSize] ;
         Scalar trace = matrix.trace() ;
 
