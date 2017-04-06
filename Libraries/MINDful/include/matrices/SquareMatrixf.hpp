@@ -204,7 +204,7 @@ namespace Mind {
             * @param   p   The SquareMatrix to print.
             * @return  The stream with the printed Point coordinates.
             */
-            exported friend std::ostream& operator<<(
+            friend std::ostream& operator<<(
                 std::ostream& s,
                 const SquareMatrixf& p
             ) ;
