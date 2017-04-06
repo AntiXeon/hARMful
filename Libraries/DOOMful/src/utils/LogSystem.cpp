@@ -31,7 +31,7 @@ namespace Doom {
                 throw std::runtime_error(errorMessage) ;
             }
 
-            Instance = std::shared_ptr<LogSystem>(new LogSystem(path, minLevel), garbage) ;
+            Instance = std::shared_ptr<LogSystem>(new LogSystem(path, minLevel)) ;
         }
         ClassMutex.unlock() ;
     }

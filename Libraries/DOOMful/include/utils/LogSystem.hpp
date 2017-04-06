@@ -78,11 +78,6 @@ namespace Doom {
             LogSystem(LogSystem&&) noexcept ;
 
             /**
-             * Destruction of the LogSystem.
-             */
-            virtual ~LogSystem() noexcept ;
-
-            /**
              * Disable affectation.
              */
             void operator= (const LogSystem&) ;
@@ -93,13 +88,6 @@ namespace Doom {
             void operator= (LogSystem&&) noexcept ;
 
             /**
-             * Function to delete the LogSystem from the shared_ptr of the
-             * unique instance.
-             * @param sys   The pointer to manually delete.
-             */
-            friend void garbage(LogSystem* sys) ;
-
-            /**
              * Format the current date and time to be printed in the logs.
              * @return String representing the printed date and time in the
              *         logs.
@@ -107,6 +95,11 @@ namespace Doom {
             std::string formatCurrentDateTime() ;
 
         public:
+            /**
+             * Destruction of the LogSystem.
+             */
+            virtual ~LogSystem() noexcept ;
+
             /**
              * Initialize the LogSystem. This is required before any call to the
              * GetInstance function.
@@ -206,12 +199,6 @@ namespace Doom {
                 }
             }
     } ;
-
-    void garbage(LogSystem* sys) {
-        if (sys != nullptr) {
-            delete sys ;
-        }
-    }
 }
 
 #endif
