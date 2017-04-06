@@ -43,13 +43,13 @@ namespace Mind {
                  * Create directly from internally used data type.
                  * @param   vec     Data using the inner data type.
                  */
-                Vector4i(const __m128i& vec) ;
+                Vector4i(const __m128i vec) ;
 
                 /**
                  * Create from data of a Vector4f.
                  * @param   vec     Data using the inner data type of Vector4f.
                  */
-                Vector4i(const __m128& vec) ;
+                Vector4i(const __m128 vec) ;
 
                 /**
                  * Destruction of the Vector4i.

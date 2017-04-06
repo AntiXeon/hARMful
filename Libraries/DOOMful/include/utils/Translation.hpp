@@ -15,7 +15,7 @@ namespace Doom {
          * @param domain  Domain name for translations.
          * @param path    Path to the translation files.
          */
-        exported void Init(const std::string domain, const std::string& path) ;
+        exported void Init(const std::string& domain, const std::string& path) ;
 
         /**
          * Translate the provided string into the user defined locale, if

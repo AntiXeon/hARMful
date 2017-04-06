@@ -1,7 +1,7 @@
 inline __m128 Vector4f::selection(
-    const __m128& selector,
-    const __m128& a,
-    const __m128& b
+    const __m128 selector,
+    const __m128 a,
+    const __m128 b
 ) {
     #if defined (USE_INTEL_SSE4_1)
         return _mm_blendv_ps(b, a, selector) ;
@@ -30,7 +30,7 @@ inline Vector4f::Vector4f(const Scalar value) {
     m_inner = Float32x4(_mm_set1_ps(value)) ;
 }
 
-inline Vector4f::Vector4f(const __m128& vec) {
+inline Vector4f::Vector4f(const __m128 vec) {
     m_inner = Float32x4(vec) ;
 }
 
@@ -379,7 +379,7 @@ inline Vector4f& Vector4f::operator=(const Scalar value) {
     return *this ;
 }
 
-inline Vector4f& Vector4f::operator=(const __m128& vec) {
+inline Vector4f& Vector4f::operator=(const __m128 vec) {
     m_inner.vec = vec ;
     return *this ;
 }

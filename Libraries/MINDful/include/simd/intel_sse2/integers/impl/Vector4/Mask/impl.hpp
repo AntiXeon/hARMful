@@ -18,7 +18,7 @@ Vector4<Type>::Mask::Mask(const bool& value) {
 }
 
 template <typename Type>
-Vector4<Type>::Mask::Mask(const __m128i& vec) {
+Vector4<Type>::Mask::Mask(const __m128i vec) {
     m_inner.vec = vec ;
 }
 
@@ -74,13 +74,13 @@ inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const bool& 
 }
 
 template <typename Type>
-inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128i& vec) {
+inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128i vec) {
     m_inner.vec = vec ;
     return *this ;
 }
 
 template <typename Type>
-inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128& vec) {
+inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const __m128 vec) {
     m_inner.vec = _mm_castps_si128(vec) ;
     return *this ;
 }

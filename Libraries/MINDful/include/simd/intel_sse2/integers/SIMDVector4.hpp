@@ -37,9 +37,9 @@ namespace Mind {
                  *            following the content of @a selector.
                  */
                 static __m128i selection(
-                    const __m128i& selector,
-                    const __m128i& a,
-                    const __m128i& b
+                    const __m128i selector,
+                    const __m128i a,
+                    const __m128i b
                 ) ;
 
 
@@ -75,13 +75,13 @@ namespace Mind {
                  * Create directly from internally used data type.
                  * @param   vec     Data using the inner data type.
                  */
-                Vector4(const __m128i& vec) ;
+                Vector4(const __m128i vec) ;
 
                 /**
                  * Create from data of a Vector4f.
                  * @param   vec     Data using the inner data type of Vector4f.
                  */
-                Vector4(const __m128& vec) ;
+                Vector4(const __m128 vec) ;
 
                 /**
                  * Destruction of the Vector4.

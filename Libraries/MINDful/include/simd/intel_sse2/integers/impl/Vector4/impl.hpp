@@ -1,8 +1,8 @@
 template <typename Type>
 inline __m128i Vector4<Type>::selection(
-                                    const __m128i& selector,
-                                    const __m128i& a,
-                                    const __m128i& b
+                                    const __m128i selector,
+                                    const __m128i a,
+                                    const __m128i b
                                    ) {
     #if defined(USE_INTEL_SSE4_1)
         return _mm_blendv_epi8 (b, a, selector) ;
@@ -29,12 +29,12 @@ inline Vector4<Type>::Vector4(const Type& value) {
 }
 
 template <typename Type>
-inline Vector4<Type>::Vector4(const __m128i& vec) {
+inline Vector4<Type>::Vector4(const __m128i vec) {
     m_inner = Int32x4(vec) ;
 }
 
 template <typename Type>
-inline Vector4<Type>::Vector4(const __m128& vec) {
+inline Vector4<Type>::Vector4(const __m128 vec) {
     m_inner = Int32x4(_mm_castps_si128(vec)) ;
 }
 

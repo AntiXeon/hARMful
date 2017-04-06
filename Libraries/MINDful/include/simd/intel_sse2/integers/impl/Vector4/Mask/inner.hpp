@@ -48,7 +48,7 @@ class Mask {
          * Create from inner type data.
          * @param   vec     The inner data to copy.
          */
-        Mask(const __m128i& vec) ;
+        Mask(const __m128i vec) ;
 
 
         /**
@@ -110,14 +110,14 @@ class Mask {
          * @param   vec     The value to put in the Mask.
          * @return  The current Mask once the vec is affected to its inner data.
          */
-        Mask& operator=(const __m128i& vec) ;
+        Mask& operator=(const __m128i vec) ;
 
         /**
          * Affect the inner value to the Mask.
          * @param   vec     The value to put in the Mask.
          * @return  The current Mask once the vec is affected to its inner data.
          */
-        Mask& operator=(const __m128& vec) ;
+        Mask& operator=(const __m128 vec) ;
 
                                                             /** CAST OPERATORS **/
         /**

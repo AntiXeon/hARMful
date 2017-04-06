@@ -10,9 +10,9 @@ Vector4ui::Vector4ui(
 
 Vector4ui::Vector4ui(const uint32_t& value) : Vector4uint32(value) {}
 
-Vector4ui::Vector4ui(const __m128i& vec) : Vector4uint32(vec) {}
+Vector4ui::Vector4ui(const __m128i vec) : Vector4uint32(vec) {}
 
-Vector4ui::Vector4ui(const __m128& vec) : Vector4uint32(vec) {}
+Vector4ui::Vector4ui(const __m128 vec) : Vector4uint32(vec) {}
 
 Vector4ui::~Vector4ui() {}
 

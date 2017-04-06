@@ -17,9 +17,9 @@ namespace Mind {
 
         Vector4i::Vector4i(const int32_t& value) : Vector4int32(value) {}
 
-        Vector4i::Vector4i(const __m128i& vec) : Vector4int32(vec) {}
+        Vector4i::Vector4i(const __m128i vec) : Vector4int32(vec) {}
 
-        Vector4i::Vector4i(const __m128& vec) : Vector4int32(vec) {}
+        Vector4i::Vector4i(const __m128 vec) : Vector4int32(vec) {}
 
         Vector4i::~Vector4i() {}
 

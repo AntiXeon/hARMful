@@ -117,7 +117,7 @@ namespace Doom {
              * @exception   A runtime error is thrown if the instance is got
              *              before it has been initialized.
              */
-            exported static std::shared_ptr<LogSystem> GetInstance() throw(std::runtime_error) ;
+            exported static std::weak_ptr<LogSystem> GetInstance() throw(std::runtime_error) ;
 
             /**
              * Write a message on the Console and the FilePrinter.

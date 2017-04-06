@@ -124,18 +124,18 @@ namespace Doom {
     } ;
 }
 
-#ifdef DEBUG
-    #define Profiler_AddSource(name)    Doom::Profiler::GetInstance().addProfilingSource(name)
-    #define Profiler_Start(name)        int Profiler_SessionID = Doom::Profiler::GetInstance().startProfiling(name)
-    #define Profiler_Stop(name)         Doom::Profiler::GetInstance().stopProfiling(name, Profiler_SessionID)
-    #define Profiler_Flush()            Doom::Profiler::GetInstance().flush()
-    #define Profiler_GetTime(name)      Doom::Profiler::GetInstance().getTime(name)
-#else
-    #define Profiler_AddSource(name)
-    #define Profiler_Start(name)
-    #define Profiler_Stop(name)
-    #define Profiler_Flush()
-    #define Profiler_GetTime(name)      -1
-#endif
+    #ifdef DEBUG
+        #define Profiler_AddSource(name)    Doom::Profiler::GetInstance().addProfilingSource(name)
+        #define Profiler_Start(name)        int Profiler_SessionID = Doom::Profiler::GetInstance().startProfiling(name)
+        #define Profiler_Stop(name)         Doom::Profiler::GetInstance().stopProfiling(name, Profiler_SessionID)
+        #define Profiler_Flush()            Doom::Profiler::GetInstance().flush()
+        #define Profiler_GetTime(name)      Doom::Profiler::GetInstance().getTime(name)
+    #else
+        #define Profiler_AddSource(name)
+        #define Profiler_Start(name)
+        #define Profiler_Stop(name)
+        #define Profiler_Flush()
+        #define Profiler_GetTime(name)      -1
+    #endif
 
 #endif

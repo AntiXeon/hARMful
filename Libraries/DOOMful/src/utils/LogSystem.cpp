@@ -36,7 +36,7 @@ namespace Doom {
         ClassMutex.unlock() ;
     }
 
-    std::shared_ptr<LogSystem> LogSystem::GetInstance() throw(std::runtime_error) {
+    std::weak_ptr<LogSystem> LogSystem::GetInstance() throw(std::runtime_error) {
         ClassMutex.lock() ;
         {
             // The instance has not been initialized. The instance pointer is

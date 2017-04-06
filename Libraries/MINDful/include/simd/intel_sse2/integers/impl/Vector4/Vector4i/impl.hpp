@@ -10,9 +10,9 @@ inline Vector4i::Vector4i(
 
 inline Vector4i::Vector4i(const int32_t& value) : Vector4int32(value) {}
 
-inline Vector4i::Vector4i(const __m128i& vec) : Vector4int32(vec) {}
+inline Vector4i::Vector4i(const __m128i vec) : Vector4int32(vec) {}
 
-inline Vector4i::Vector4i(const __m128& vec) : Vector4int32(vec) {}
+inline Vector4i::Vector4i(const __m128 vec) : Vector4int32(vec) {}
 
 inline Vector4i::~Vector4i() {}
 
