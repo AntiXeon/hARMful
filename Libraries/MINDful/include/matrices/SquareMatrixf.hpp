@@ -54,47 +54,47 @@ namespace Mind {
              *					"size x size" matrix.
              * @param	value 	Initial value in the SquareMatrix.
              */
-            SquareMatrixf(const size_t size, const Scalar value = 0) ;
+            exported SquareMatrixf(const size_t size, const Scalar value = 0) ;
 
             /**
              * Copy a SquareMatrixf.
              */
-            SquareMatrixf(const SquareMatrixf& mat) = default ;
+            exported SquareMatrixf(const SquareMatrixf& mat) = default ;
 
             /**
              * Move a SquareMatrixf.
              */
-            SquareMatrixf(SquareMatrixf&& mat) = default ;
+            exported SquareMatrixf(SquareMatrixf&& mat) = default ;
 
             /**
              * Destruction of the SquareMatrix.
              */
-            virtual ~SquareMatrixf() = default ;
+            exported virtual ~SquareMatrixf() = default ;
 
             /**
              * Fill the SquareMatrix with its default value.
              */
-            void clear() ;
+            exported void clear() ;
 
             /**
              * Fill the SquareMatrix with zero values and put one on
              * matrix diagonal (left to right, top to bottom).
              */
-            void identity() ;
+            exported void identity() ;
 
             /**
              * Compute the trace of the SquareMatrix, that is to say add all its
              * diagonal components.
              * @return Value of the trace of the SquareMatrix.
              */
-            Scalar trace() const ;
+            exported Scalar trace() const ;
 
             /**
              * Set the values of a column from a Point2D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(
+            exported virtual void setColumnValues(
                 const unsigned int column,
                 const Point2Df& values
             ) = 0 ;
@@ -104,7 +104,7 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setColumnValues(
+            exported virtual void setColumnValues(
                 const unsigned int column,
                 const Point3Df& values
             ) = 0 ;
@@ -114,7 +114,7 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(
+            exported virtual void setRowValues(
                 const unsigned int row,
                 const Point2Df& values
             ) = 0 ;
@@ -124,7 +124,7 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.
              */
-            virtual void setRowValues(
+            exported virtual void setRowValues(
                 const unsigned int row,
                 const Point3Df& values
             ) = 0 ;
@@ -136,7 +136,7 @@ namespace Mind {
              * @return	Reference to the element at the wanted column and row
              *			indices.
              */
-            Scalar at(
+            exported Scalar at(
                 const unsigned int row,
                 const unsigned int col
             ) const ;
@@ -148,7 +148,7 @@ namespace Mind {
              * @return	Reference to the element at the wanted column and row
              *			indices.
              */
-            Scalar& at(
+            exported Scalar& at(
                 const unsigned int row,
                 const unsigned int col
             ) ;
@@ -159,7 +159,7 @@ namespace Mind {
              * @param   row     Index of the wanted row.
              * @param   value   Value to set at the given position.
              */
-            void at(
+            exported void at(
                 const unsigned int row,
                 const unsigned int col,
                 const Scalar value
@@ -170,13 +170,13 @@ namespace Mind {
                  * Set or get the element a the specified position.
                  * @param   index   Index of the wanted row.
                  */
-                std::array<float, 4>& operator[](int index) ;
+                exported std::array<float, 4>& operator[](int index) ;
             #else
                 /**
                  * Set or get the element a the specified position.
                  * @param   index   Index of the wanted row.
                  */
-                SIMD::Vector4f& operator[](int index) ;
+                exported SIMD::Vector4f& operator[](int index) ;
             #endif
 
             /**
@@ -184,19 +184,19 @@ namespace Mind {
              * @return	Size of the SquareMatrix (amount of both columns and
              *			rows).
              */
-            size_t size() const ;
+            exported size_t size() const ;
 
             /**
              * Assignment operator to copy a SquareMatrixf.
              * @return  The current SquareMatrixf with the copied values.
              */
-            SquareMatrixf& operator=(const SquareMatrixf& other) = default ;
+            exported SquareMatrixf& operator=(const SquareMatrixf& other) = default ;
 
             /**
              * Assignment operator to move a SquareMatrixf.
              * @return  The current SquareMatrixf with the moved values.
              */
-            SquareMatrixf& operator=(SquareMatrixf&& other) = default ;
+            exported SquareMatrixf& operator=(SquareMatrixf&& other) = default ;
 
             /**
             * Echo the SquareMatrix values on console.
@@ -204,7 +204,7 @@ namespace Mind {
             * @param   p   The SquareMatrix to print.
             * @return  The stream with the printed Point coordinates.
             */
-            friend std::ostream& operator<<(
+            exported friend std::ostream& operator<<(
                 std::ostream& s,
                 const SquareMatrixf& p
             ) ;

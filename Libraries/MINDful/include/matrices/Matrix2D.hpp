@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <cstddef>
+
+#include <utils/Platform.hpp>
 #include <MINDTypes.hpp>
 
 namespace Mind {
@@ -23,7 +25,7 @@ namespace Mind {
              * @param   rows    Amount of rows in the Matrix.
              * @param   value   Initial value in the Matrix.
              */
-            Matrix2D(
+            exported Matrix2D(
                 const size_t cols = 1,
                 const size_t rows = 1,
                 const T value = {}
@@ -33,19 +35,19 @@ namespace Mind {
              * Copy a Matrix2D.
              * @param copy  The matrix to copy.
              */
-            Matrix2D(const Matrix2D& copy) = default ;
+            exported Matrix2D(const Matrix2D& copy) = default ;
 
             /**
              * Move a Matrix2D.
              * @param move  The matrix to move.
              */
-            Matrix2D(Matrix2D&& move) = default ;
+            exported Matrix2D(Matrix2D&& move) = default ;
 
             /** Destroy the matrix. */
-            virtual ~Matrix2D() ;
+            exported virtual ~Matrix2D() ;
 
             /** Clear the matrix. */
-            void clear() ;
+            exported void clear() ;
 
             /**
              * Resize the matrix. Use 0 to leave a dimension with the current
@@ -54,7 +56,7 @@ namespace Mind {
              * @param   rows    Amount of rows in the Matrix.
              * @param   value   Initial value in the Matrix.
              */
-            void resize(
+            exported void resize(
                 const size_t cols,
                 const size_t rows,
                 const T value = {}
@@ -65,32 +67,32 @@ namespace Mind {
              * @param cols Amount of columns to reserve.
              * @param rows Amount of rows to reserve.
              */
-            void reserve(const size_t cols, const size_t rows) ;
+            exported void reserve(const size_t cols, const size_t rows) ;
 
             /** Get the element a the specified position. */
-            T& at(const size_t col, const size_t row) ;
+            exported T& at(const size_t col, const size_t row) ;
 
 
             /** Get the number of rows in the matrix. */
-            size_t rows() const ;
+            exported size_t rows() const ;
 
             /** Get the number of cols in the matrix. */
-            size_t cols() const ;
+            exported size_t cols() const ;
 
             /**
              * Assignment operator to copy a Matrix2D.
              * @return  The current Matrix2D with the copied values.
              */
-            Matrix2D& operator=(const Matrix2D& other) = default ;
+            exported Matrix2D& operator=(const Matrix2D& other) = default ;
 
             /**
              * Assignment operator to move a Matrix2D.
              * @return  The current Matrix2D with the moved values.
              */
-            Matrix2D& operator=(Matrix2D&& other) = default ;
+            exported Matrix2D& operator=(Matrix2D&& other) = default ;
 
             /** Get a row from the matrix. */
-            std::vector<T>& operator[] (const size_t iIndex) ;
+            exported std::vector<T>& operator[] (const size_t iIndex) ;
     } ;
 
     /** Echo the matrix on console. */
