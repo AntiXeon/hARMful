@@ -1,20 +1,20 @@
                                               /** CONSTRUCTION / DESTRUCTION **/
-Vector4ui::Vector4ui() : Vector4uint32() {}
+inline Vector4ui::Vector4ui() : Vector4uint32() {}
 
-Vector4ui::Vector4ui(
+inline Vector4ui::Vector4ui(
     const uint32_t& i1,
     const uint32_t& i2,
     const uint32_t& i3,
     const uint32_t& i4
 ) : Vector4uint32(i1, i2, i3, i4) {}
 
-Vector4ui::Vector4ui(const uint32_t& value) : Vector4uint32(value) {}
+inline Vector4ui::Vector4ui(const uint32_t& value) : Vector4uint32(value) {}
 
-Vector4ui::Vector4ui(const __m128i vec) : Vector4uint32(vec) {}
+inline Vector4ui::Vector4ui(const __m128i vec) : Vector4uint32(vec) {}
 
-Vector4ui::Vector4ui(const __m128 vec) : Vector4uint32(vec) {}
+inline Vector4ui::Vector4ui(const __m128 vec) : Vector4uint32(vec) {}
 
-Vector4ui::~Vector4ui() {}
+inline Vector4ui::~Vector4ui() {}
 
 
                                                         /** STATIC FUNCTIONS **/
