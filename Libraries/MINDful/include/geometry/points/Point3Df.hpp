@@ -44,7 +44,7 @@ namespace Mind {
 
         public:
             /** Create a Point at the origin. */
-            Point3Df() ;
+            exported Point3Df() ;
 
             /**
              * Create a Point at the given position.
@@ -52,7 +52,7 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            Point3Df(const Scalar x, const Scalar y, const Scalar z) ;
+            exported Point3Df(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
@@ -60,33 +60,33 @@ namespace Mind {
              * @param   y   Offset on Y axis.
              * @param   z   Offset on Z axis.
              */
-            void translate(const Scalar x, const Scalar y, const Scalar z) ;
+            exported void translate(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Translate a point of the given offsets.
              * @param   offset  Offset on the three axes.
              */
-            void translate(const Point3Df& offset) ;
+            exported void translate(const Point3Df& offset) ;
 
             /**
              * Dot product between the current Point and another one.
              * @param   other   Another Point to compute the dot product.
              * @return  The result of the dot product.
              */
-            Scalar dot(const Point3Df& other) const ;
+            exported Scalar dot(const Point3Df& other) const ;
 
             /**
              * Cross product between the current Point and another one.
              * The result is put in the current Point.
              * @param   other   Another Point to compute the cross product.
              */
-            Point3Df cross(const Point3Df& other) const ;
+            exported Point3Df cross(const Point3Df& other) const ;
 
             /**
              * Normalize the coordinates of the Point so that they are
              *          defined in [0, 1].
              */
-            void normalize() ;
+            exported void normalize() ;
 
             /**
              * Merge two points at a middle point.
@@ -94,7 +94,7 @@ namespace Mind {
              * @param b The second point to merge.
              * @return  The merged point at the center between both given points.
              */
-            static Point3Df merge(const Point3Df& a, const Point3Df& b) ;
+            exported static Point3Df merge(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Get the distance between two points on X axis.
@@ -102,7 +102,7 @@ namespace Mind {
              * @param b Second point.
              * @return  The distance between the points on the X axis.
              */
-            static Scalar distanceX(const Point3Df& a, const Point3Df& b) ;
+            exported static Scalar distanceX(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Get the distance between two points on Y axis.
@@ -110,7 +110,7 @@ namespace Mind {
              * @param b Second point.
              * @return  The distance between the points on the Y axis.
              */
-            static Scalar distanceY(const Point3Df& a, const Point3Df& b) ;
+            exported static Scalar distanceY(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Get the distance between two points on Z axis.
@@ -118,7 +118,7 @@ namespace Mind {
              * @param b Second point.
              * @return  The distance between the points on the Z axis.
              */
-            static Scalar distanceZ(const Point3Df& a, const Point3Df& b) ;
+            exported static Scalar distanceZ(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Give the distance between two points.
@@ -126,19 +126,19 @@ namespace Mind {
              * @param b Second point.
              * @return  Distance between A and B.
              */
-            static Scalar distance(const Point3Df& a, const Point3Df& b) ;
+            exported static Scalar distance(const Point3Df& a, const Point3Df& b) ;
 
             /**
               * Compute the length of a vector.
               * @return  The length of the vector.
               */
-            Scalar length() ;
+            exported Scalar length() ;
 
             /** Get a coordinate. */
-            Scalar get(const Axis axis) const ;
+            exported Scalar get(const Axis axis) const ;
 
             /** Set a coordinate. */
-            void set(const Axis axis, const Scalar value) ;
+            exported void set(const Axis axis, const Scalar value) ;
 
             /**
              * Move the point to the specified coordinates.
@@ -146,54 +146,54 @@ namespace Mind {
              * @param   y   Coordinate on Y axis.
              * @param   z   Coordinate on Z axis.
              */
-            void set(const Scalar x, const Scalar y, const Scalar z) ;
+            exported void set(const Scalar x, const Scalar y, const Scalar z) ;
 
             /**
              * Move the point to the specified coordinates.
              * @param   position    Position at which the point should be set.
              */
-            void set(const Point3Df& position) ;
+            exported void set(const Point3Df& position) ;
 
             /** Conversion from Point3D to Dimension3D. */
-            explicit operator Dimension3Df() ;
+            exported explicit operator Dimension3Df() ;
 
             /** Conversion from Point3D to Point2D. */
-            explicit operator Point2Df() ;
+            exported explicit operator Point2Df() ;
 
             /**
              * Add a Point and affect the result.
              * @param   other   The other Point to add.
              * @return  The sum of the two Points.
              */
-            Point3Df& operator+=(Point3Df& other) ;
+            exported Point3Df& operator+=(Point3Df& other) ;
 
             /**
              * Substract a Point and affect the result.
              * @param   other   The other Point to substract.
              * @return  The substract of the two Points.
              */
-            Point3Df& operator-=(Point3Df& other) ;
+            exported Point3Df& operator-=(Point3Df& other) ;
 
             /**
              * Multiply a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to multiply the Point coordinates by.
              * @return  The result of the multiplication.
              */
-            Point3Df& operator*=(Scalar coeff) ;
+            exported Point3Df& operator*=(Scalar coeff) ;
 
             /**
              * Divide a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Point coordinates by.
              * @return  The result of the division.
              */
-            Point3Df& operator/=(Scalar coeff) ;
+            exported Point3Df& operator/=(Scalar coeff) ;
 
             /**
              * Test if two Points are at the same position.
              * @param   other   An other Point to compare to the current one.
              * @return  TRUE if the Points are at the same position, FALSE else.
              */
-            bool operator==(const Point3Df& other) const ;
+            exported bool operator==(const Point3Df& other) const ;
 
             /**
              * Test if two Points are at two different positions.
@@ -201,21 +201,21 @@ namespace Mind {
              * @return  TRUE if the Points are at two different positions, FALSE
              *          else.
              */
-            bool operator!=(const Point3Df& other) const ;
+            exported bool operator!=(const Point3Df& other) const ;
 
             /**
              * Access a value in the Point3Df.
              * @param  axis  Axis of the coordinate to get in the Point3Df.
              * @return       Value at the @a axis.
              */
-            Scalar operator[](const int axis) const ;
+            exported Scalar operator[](const int axis) const ;
 
             /**
              * Access a value in the Point3Df.
              * @param  axis  Axis of the coordinate to get in the Point3Df.
              * @return       Value at the @a axis.
              */
-            Scalar& operator[](const int axis) ;
+            exported Scalar& operator[](const int axis) ;
 
             /**
               * Negate the coordinates of the point.

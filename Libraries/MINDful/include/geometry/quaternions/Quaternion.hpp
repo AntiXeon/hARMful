@@ -63,7 +63,7 @@ namespace Mind {
              * Create a default Quaternion. It is initialized to a zero degree
              * rotation.
              */
-            inline Quaternion() ;
+            exported inline Quaternion() ;
 
             /**
              * Create a Quaternion from the given value, as is.
@@ -72,7 +72,7 @@ namespace Mind {
              * @param   z   Individual value of coordinate Z.
              * @param   w   Individual value of coordinate W.
              */
-            inline Quaternion(
+            exported inline Quaternion(
                 const Scalar x,
                 const Scalar y,
                 const Scalar z,
@@ -83,7 +83,7 @@ namespace Mind {
              * Create a Quaternion from a rotation matrix.
              * @param   matrix  Rotation matrix to generate a Quaternion from.
              */
-            inline Quaternion(const Matrix3x3f& matrix) ;
+            exported inline Quaternion(const Matrix3x3f& matrix) ;
 
             /**
              * Create a Quaternion from a vector and an angle.
@@ -91,7 +91,7 @@ namespace Mind {
              *                  rotation is applied.
              * @param   angle   Angle of the rotation in radians.
              */
-            inline Quaternion(const Vector3f& vector, const Scalar radAngle) ;
+            exported inline Quaternion(const Vector3f& vector, const Scalar radAngle) ;
 
             /**
              * Create a Quaternion from three orthonormal axis.
@@ -99,7 +99,7 @@ namespace Mind {
              * @param yAxis Values of rotation for the Y axis.
              * @param zAxis Values of rotation for the Z axis.
              */
-            inline Quaternion(
+            exported inline Quaternion(
                 const Vector3f& xAxis,
                 const Vector3f& yAxis,
                 const Vector3f& zAxis
@@ -110,13 +110,13 @@ namespace Mind {
              * @param   other   Another Quaternion to compute the dot product.
              * @return  The result of the dot product.
              */
-            inline Scalar dot(const Quaternion& other) const ;
+            exported inline Scalar dot(const Quaternion& other) const ;
 
             /**
              * Norm of the Quaternion.
              * @return Norm of the Quaternion.
              */
-            inline Scalar norm() const ;
+            exported inline Scalar norm() const ;
 
             /**
              * Normalize the current Quaternion. The norm before normalization
@@ -124,28 +124,28 @@ namespace Mind {
              * @return The norm of the Quaternion before the normalization is
              *         applied.
              */
-            inline Scalar normalize() ;
+            exported inline Scalar normalize() ;
 
             /**
              * Compute the inverse Quaternion of the current one.
              * There is no change in the current Quaternion components values.
              * @return The inverse of the current Quaternion.
              */
-            Quaternion inverse() const ;
+            exported Quaternion inverse() const ;
 
             /**
              * Calculate the exponential of the current Quaternion.
              * This method converts a pure Quaternion to a unit Quaternion.
              * @return The exponential of the current Quaternion.
              */
-            Quaternion exp() const ;
+            exported Quaternion exp() const ;
 
             /**
              * Calculate the natural logarithm of the current Quaternion.
              * @return The natural logarithm of the current Quaternion.
              * @warning This only works on unit quaternions.
              */
-            Quaternion ln() const ;
+            exported Quaternion ln() const ;
 
             /**
              * Spherical linear rotation interpolation using Quaternions.
@@ -161,7 +161,7 @@ namespace Mind {
              * @remark The interpolations are NOT commutative!
              * @see    nlerp
              */
-            static Quaternion slerp(
+            exported static Quaternion slerp(
                 const Scalar time,
                 const Quaternion& from,
                 const Quaternion& to,
@@ -182,7 +182,7 @@ namespace Mind {
              * @remark The interpolations ARE commutative!
              * @see    slerp
              */
-            static Quaternion nlerp(
+            exported static Quaternion nlerp(
                 const Scalar time,
                 const Quaternion& from,
                 const Quaternion& to,
@@ -200,7 +200,7 @@ namespace Mind {
              *                        (depending on the @a angleEpsilon value)
              *                        or FALSE if not.
              */
-            inline bool closeTo(
+            exported inline bool closeTo(
                 const Quaternion& other,
                 const Scalar radiansEpsilon
             ) const ;
@@ -209,13 +209,13 @@ namespace Mind {
              * Swap the current Quaternion with another one.
              * @param other The other Quaternion to swap with the current one.
              */
-            inline void swap(Quaternion& other) ;
+            exported inline void swap(Quaternion& other) ;
 
             /**
              * Set the values of the Quaternion from a rotation matrix.
              * @param matrix Rotation matrix to set the Quaternion values from.
              */
-            void from(const Matrix3x3f& matrix) ;
+            exported void from(const Matrix3x3f& matrix) ;
 
             /**
              * Set the values of the Quaternion from axes.
@@ -223,7 +223,7 @@ namespace Mind {
              * @param yAxis Values of rotation for the Y axis.
              * @param zAxis Values of rotation for the Z axis.
              */
-            void from(
+            exported void from(
                 const Vector3f& xAxis,
                 const Vector3f& yAxis,
                 const Vector3f& zAxis
@@ -236,14 +236,14 @@ namespace Mind {
              *                 This vector must be normalized.
              * @param radAngle Angle of the rotation in radians.
              */
-            void from(const Vector3f& vector, const Scalar radAngle) ;
+            exported void from(const Vector3f& vector, const Scalar radAngle) ;
 
             /**
              * Get the values of the Quaternion as a rotation matrix.
              * @param matrix The Matrix3x3f that will represent the same
              *               rotation than the current quaternion.
              */
-            void to(Matrix3x3f& matrix) ;
+            exported void to(Matrix3x3f& matrix) ;
 
             /**
              * Get the values of the Quaternion as an axis (@a vector) and an
@@ -252,7 +252,7 @@ namespace Mind {
              *                 the rotation is applied.
              * @param radAngle Output angle of the rotation in radians.
              */
-            void to(Vector3f& vector, Scalar& radAngle) ;
+            exported void to(Vector3f& vector, Scalar& radAngle) ;
 
             /**
              * Get the values of the Quaternion as a serie of three vectors, one
@@ -261,7 +261,7 @@ namespace Mind {
              * @param yAxis Values for the Y axis.
              * @param zAxis Values for the Z axis.
              */
-            void to(
+            exported void to(
                 Vector3f& xAxis,
                 Vector3f& yAxis,
                 Vector3f& zAxis
@@ -273,7 +273,7 @@ namespace Mind {
              * @param pitch Y-axis angle value.
              * @param yaw   Z-axis angle value.
              */
-            void to(
+            exported void to(
                 Scalar& roll,
                 Scalar& pitch,
                 Scalar& yaw
@@ -284,14 +284,14 @@ namespace Mind {
              * @param  axis  Axis to get value of.
              * @return       Value of the component on the wanted @a axis.
              */
-            inline Scalar operator[](const Axis axis) const ;
+            exported inline Scalar operator[](const Axis axis) const ;
 
             /**
              * Access to a component of the Quaternion (read and write).
              * @param  axis  Axis to get value of.
              * @return       Value of the component on the wanted @a axis.
              */
-            inline Scalar& operator[](const Axis axis) ;
+            exported inline Scalar& operator[](const Axis axis) ;
 
             /**
              * Addition of two Quaternions.
@@ -300,7 +300,7 @@ namespace Mind {
              * @return       Reference on the current Quaternion once it has
              *               been added to the @other one.
              */
-            inline Quaternion& operator+=(const Quaternion& other) ;
+            exported inline Quaternion& operator+=(const Quaternion& other) ;
 
             /**
              * Addition of two Quaternions.
@@ -308,7 +308,7 @@ namespace Mind {
              *               one.
              * @return       The result of the addition.
              */
-            inline Quaternion operator+(const Quaternion& other) const ;
+            exported inline Quaternion operator+(const Quaternion& other) const ;
 
             /**
              * Soustraction of two Quaternions.
@@ -317,7 +317,7 @@ namespace Mind {
              * @return       Reference on the current Quaternion once it has
              *               been subtracted from the @other one.
              */
-            inline Quaternion& operator-=(const Quaternion& other) ;
+            exported inline Quaternion& operator-=(const Quaternion& other) ;
 
             /**
              * Soustraction of two Quaternions.
@@ -325,12 +325,12 @@ namespace Mind {
              *               current one.
              * @return       The result of the soustraction.
              */
-            inline Quaternion operator-(const Quaternion& other) const ;
+            exported inline Quaternion operator-(const Quaternion& other) const ;
 
             /**
              * Inverse the values of the Quaternion (X, Y, Z and W).
              */
-            inline Quaternion operator-() const ;
+            exported inline Quaternion operator-() const ;
 
             /**
              * Mulitplication of a Quaternion with a Scalar.
@@ -339,14 +339,14 @@ namespace Mind {
              * @return        Reference on the current Quaternion once it has
              *                been multiplied by @a value.
              */
-            inline Quaternion& operator*=(const Scalar scalar) ;
+            exported inline Quaternion& operator*=(const Scalar scalar) ;
 
             /**
              * Mulitplication of a Quaternion with a Scalar.
              * @param  scalar Value to multiply each component of the Quaternion.
              * @return        The result of the multiplication.
              */
-            inline Quaternion operator*(const Scalar scalar) const ;
+            exported inline Quaternion operator*(const Scalar scalar) const ;
 
             /**
              * Multiplication of a Quaternion with another one.
@@ -356,7 +356,7 @@ namespace Mind {
              * @return       Reference on the current Quaternion once it has
              *               been subtracted from the @other one.
              */
-            Quaternion& operator*=(const Quaternion& other) ;
+            exported Quaternion& operator*=(const Quaternion& other) ;
 
             /**
              * Multiplication of a Quaternion with another one.
@@ -365,14 +365,14 @@ namespace Mind {
              *               current one.
               * @return      The result of the multiplication.
              */
-            Quaternion operator*(const Quaternion& other) const ;
+            exported Quaternion operator*(const Quaternion& other) const ;
 
             /**
              * Rotation of a Vector3f by the current Quaternion.
              * @param  vec3 The vector to rotate.
              * @return The rotated vector.
              */
-            Vector3f operator*(const Vector3f& vec3) const ;
+            exported Vector3f operator*(const Vector3f& vec3) const ;
 
             /**
              * Check if two Quaternions have the same values.
@@ -381,7 +381,7 @@ namespace Mind {
              * @return       TRUE if the Quaternions have the same component
              *               values, FALSE otherwise.
              */
-            inline bool operator==(const Quaternion& other) const ;
+            exported inline bool operator==(const Quaternion& other) const ;
 
             /**
              * Check if two Quaternions have the different values.
@@ -390,7 +390,7 @@ namespace Mind {
              * @return       TRUE if the Quaternions have different component
              *               values, FALSE otherwise.
              */
-            inline bool operator!=(const Quaternion& other) const ;
+            exported inline bool operator!=(const Quaternion& other) const ;
 
             /**
             * Echo the Quaternion values on console.

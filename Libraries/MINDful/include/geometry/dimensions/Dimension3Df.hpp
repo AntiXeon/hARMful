@@ -29,7 +29,7 @@ namespace Mind {
 
         public:
             /** Create a Dimension of zero by zero. */
-            Dimension3Df() ;
+            exported Dimension3Df() ;
 
             /**
              * Create a Dimension with the given sizes.
@@ -37,7 +37,7 @@ namespace Mind {
              * @param   height  Height to set the size of the element.
              * @param   depth   Depth to set the size of the element.
              */
-            Dimension3Df(
+            exported Dimension3Df(
                 const Scalar width,
                 const Scalar height,
                 const Scalar depth
@@ -45,43 +45,43 @@ namespace Mind {
 
 
             /** Set the Dimension as absolute values. */
-            void absolute() ;
+            exported void absolute() ;
 
             /**
              * Get the width of the dimension.
              * @return  The width.
              */
-            Scalar getWidth() const ;
+            exported Scalar getWidth() const ;
 
             /**
              * Get the height of the dimension.
              * @return  The height.
              */
-            Scalar getHeight() const ;
+            exported Scalar getHeight() const ;
 
             /**
              * Get the depth of the dimension.
              * @return  The depth.
              */
-            Scalar getDepth() const ;
+            exported Scalar getDepth() const ;
 
             /**
              * Set the width of the dimension.
              * @param   width   Width of the dimension.
              */
-            void setWidth(const Scalar width) ;
+            exported void setWidth(const Scalar width) ;
 
             /**
              * Set the height of the dimension.
              * @param   height  Height of the dimension.
              */
-            void setHeight(const Scalar height) ;
+            exported void setHeight(const Scalar height) ;
 
             /**
              * Set the depth of the dimension.
              * @param   depth   Depth of the dimension.
              */
-            void setDepth(const Scalar depth) ;
+            exported void setDepth(const Scalar depth) ;
 
             /**
              * Set the depth of the dimension.
@@ -89,59 +89,59 @@ namespace Mind {
              * @param   height  Height of the dimension.
              * @param   depth   Depth of the dimension.
              */
-            void set(
+            exported void set(
                 const Scalar width,
                 const Scalar height,
                 const Scalar depth
             ) ;
 
             /** Conversion from Dimension3D to Point3D. */
-            explicit operator Point3Df() ;
+            exported explicit operator Point3Df() ;
 
             /** Conversion from Dimension3D to Dimension2D. */
-            explicit operator Dimension2Df() ;
+            exported explicit operator Dimension2Df() ;
 
             /**
              * Add a Dimension and affect the result.
              * @param   other   The other Dimension to add.
              * @return  The sum of the two Dimensions.
              */
-            Dimension3Df& operator+=(Dimension3Df& other) ;
+            exported Dimension3Df& operator+=(Dimension3Df& other) ;
 
             /**
              * Substract a Dimension and affect the result.
              * @param   other   The other Dimension to substract.
              * @return  The substract of the two Dimensions.
              */
-            Dimension3Df& operator-=(Dimension3Df& other) ;
+            exported Dimension3Df& operator-=(Dimension3Df& other) ;
 
             /**
              * Multiply a Dimension by a scalar value and affect the result.
              * @param   coeff   The coeff to multiply the Dimension coordinates by.
              * @return  The result of the multiplication.
              */
-            Dimension3Df& operator*=(const Scalar coeff) ;
+            exported Dimension3Df& operator*=(const Scalar coeff) ;
 
             /**
              * Divide a Dimension by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Dimension coordinates by.
              * @return  The result of the division.
              */
-            Dimension3Df& operator/=(const Scalar coeff) ;
+            exported Dimension3Df& operator/=(const Scalar coeff) ;
 
             /**
              * Test if two Dimension have the same size.
              * @param   other   An other Dimension to compare to the current one.
              * @return  TRUE if the Dimension have the same size, FALSE else.
              */
-            bool operator==(const Dimension3Df& other) const ;
+            exported bool operator==(const Dimension3Df& other) const ;
 
             /**
              * Test if two Dimension have not the same size.
              * @param   other   An other Dimension to compare to the current one.
              * @return  TRUE if the Dimension have two different size, FALSE else.
              */
-            bool operator!=(const Dimension3Df& other) const ;
+            exported bool operator!=(const Dimension3Df& other) const ;
 
             /**
              * Add a Dimension to another one.

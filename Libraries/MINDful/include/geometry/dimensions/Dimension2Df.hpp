@@ -26,54 +26,54 @@ namespace Mind {
 
         public:
             /** Create a Dimension of zero by zero. */
-            Dimension2Df() ;
+            exported Dimension2Df() ;
 
             /**
              * Create a Dimension with the given sizes.
              * @param   width   Width to set the size of the element.
              * @param   height  Height to set the size of the element.
              */
-            Dimension2Df(const Scalar width, const Scalar height) ;
+            exported Dimension2Df(const Scalar width, const Scalar height) ;
 
             /** Set the Dimension as absolute values. */
-            void absolute() ;
+            exported void absolute() ;
 
             /**
              * Get the width of the dimension.
              * @return  The width.
              */
-            Scalar getWidth() const ;
+            exported Scalar getWidth() const ;
 
             /**
              * Get the height of the dimension.
              * @return  The height.
              */
-            Scalar getHeight() const ;
+            exported Scalar getHeight() const ;
 
             /**
              * Set the width of the dimension.
              * @param   width   Width of the dimension.
              */
-            void setWidth(const Scalar width) ;
+            exported void setWidth(const Scalar width) ;
 
             /**
              * Set the height of the dimension.
              * @param   height  Height of the dimension.
              */
-            void setHeight(const Scalar height) ;
+            exported void setHeight(const Scalar height) ;
 
             /**
              * Set the height of the dimension.
              * @param   width   Width of the dimension.
              * @param   height  Height of the dimension.
              */
-            void set(const Scalar width, const Scalar height) ;
+            exported void set(const Scalar width, const Scalar height) ;
 
             /** Conversion from Dimension2D to Point2D. */
-            explicit operator Point2Df() ;
+            exported explicit operator Point2Df() ;
 
             /** Conversion from Dimension2D to Dimension3D. */
-            explicit operator Dimension3Df() ;
+            exported explicit operator Dimension3Df() ;
 
 
             /**
@@ -81,14 +81,14 @@ namespace Mind {
              * @param   other   The other Dimension to add.
              * @return  The sum of the two Dimension.
              */
-            Dimension2Df& operator+=(Dimension2Df& other) ;
+            exported Dimension2Df& operator+=(Dimension2Df& other) ;
 
             /**
              * Substract a Dimension and affect the result.
              * @param   other   The other Dimension to substract.
              * @return  The substract of the two Dimension.
              */
-            Dimension2Df& operator-=(Dimension2Df& other) ;
+            exported Dimension2Df& operator-=(Dimension2Df& other) ;
 
             /**
              * Multiply a Dimension by a scalar value and affect the result.
@@ -96,14 +96,14 @@ namespace Mind {
              *                   by.
              * @return   The result of the multiplication.
              */
-            Dimension2Df& operator*=(const Scalar coeff) ;
+            exported Dimension2Df& operator*=(const Scalar coeff) ;
 
             /**
              * Divide a Dimension by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Dimension coordinates by.
              * @return  The result of the division.
              */
-            Dimension2Df& operator/=(const Scalar coeff) ;
+            exported Dimension2Df& operator/=(const Scalar coeff) ;
 
 
             /**
@@ -111,14 +111,14 @@ namespace Mind {
              * @param   other   An other Dimension to compare to the current one.
              * @return  TRUE if the Dimension have the same size, FALSE else.
              */
-            bool operator==(const Dimension2Df& other) const ;
+            exported bool operator==(const Dimension2Df& other) const ;
 
             /**
              * Test if two Dimension have not the same size.
              * @param   other   An other Dimension to compare to the current one.
              * @return  TRUE if the Dimension have two different size, FALSE else.
              */
-            bool operator!=(const Dimension2Df& other) const ;
+            exported bool operator!=(const Dimension2Df& other) const ;
 
             /**
              * Add a Dimension to another one.
