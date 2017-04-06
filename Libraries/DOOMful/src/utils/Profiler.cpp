@@ -32,7 +32,7 @@ namespace Doom {
         m_mutex.lock() ;
         {
             if (m_chronos.count(name) == 1) {
-                if (m_chronos[name].size() < std::numeric_limits<int>::max()) {
+                if (m_chronos[name].size() < std::numeric_limits<unsigned int>::max()) {
 					sessionID = static_cast<int>(m_chronos[name].size()) ;
 
 					m_chronos[name].push_back(Chrono()) ;
@@ -55,7 +55,7 @@ namespace Doom {
         m_mutex.lock() ;
         {
             if (m_chronos.count(name) == 1) {
-                assert(m_chronos[name].size() < std::numeric_limits<int>::max()) ;
+                assert(m_chronos[name].size() < std::numeric_limits<unsigned int>::max()) ;
                 amountSessions = static_cast<int>(m_chronos[name].size()) ;
             }
         }
