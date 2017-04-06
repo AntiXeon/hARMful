@@ -29,18 +29,27 @@ namespace Hope {
         const std::string& title
     ) {
         if (!glfwInit()) {
-            std::shared_ptr<Doom::LogSystem> log = Doom::LogSystem::GetInstance() ;
+            auto logWeakPtr = Doom::LogSystem::GetInstance() ;
             Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            log -> writeLine(level, Texts::Init_Bad_GLFW) ;
+
+            auto logSharedPtr = logWeakPtr.lock() ;
+            if (logSharedPtr) {
+                logSharedPtr -> writeLine(level, Texts::Init_Bad_GLFW) ;
+            }
+
             exit(EXIT_FAILURE);
         }
 
         m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
         if (m_window == nullptr) {
-            std::shared_ptr<Doom::LogSystem> log = Doom::LogSystem::GetInstance() ;
+            auto logWeakPtr = Doom::LogSystem::GetInstance() ;
             Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            log -> writeLine(level, Texts::Init_GL_Window) ;
+
+            auto logSharedPtr = logWeakPtr.lock() ;
+            if (logSharedPtr) {
+                logSharedPtr -> writeLine(level, Texts::Init_GL_Window) ;
+            }
 
             glfwTerminate();
             exit(EXIT_FAILURE);
@@ -58,9 +67,18 @@ namespace Hope {
         GLenum initEror = glewInit();
 
         if (initEror != GLEW_OK) {
-            std::shared_ptr<Doom::LogSystem> log = Doom::LogSystem::GetInstance() ;
+            auto logWeakPtr = Doom::LogSystem::GetInstance() ;
             Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            log -> writeLine(level, Texts::Init_Bad_GLEW, glewGetErrorString(initEror)) ;
+
+            auto logSharedPtr = logWeakPtr.lock() ;
+            if (logSharedPtr) {
+                logSharedPtr -> writeLine(
+                    level,
+                    Texts::Init_Bad_GLEW,
+                    glewGetErrorString(initEror)
+                ) ;
+            }
+
             exit(EXIT_FAILURE);
         }
     }
