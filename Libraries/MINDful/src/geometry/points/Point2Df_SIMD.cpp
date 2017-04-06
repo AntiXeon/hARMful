@@ -97,7 +97,7 @@ namespace Mind {
             (2 * b_side.length() * d_side.length()
         ) ;
 
-        return Math::toDegrees(acos(angle)) ;
+        return Math::toDegrees(static_cast<Scalar>(acos(angle))) ;
     }
 
     int Point2Df::angleOrientation(
@@ -112,7 +112,7 @@ namespace Mind {
         // ((relativeAToB.m_x * relativeCToB.m_y) - (relativeAToB.m_y * relativeCToB.m_x))
         relativeCToB.m_values.permute<1,0,2,3>() ;
         SIMD::Vector4f product = (relativeAToB.m_values * relativeCToB.m_values) ;
-        return product.horizontalSub() ;
+        return static_cast<int>(product.horizontalSub()) ;
     }
 
     Scalar Point2Df::get(const Axis axis) const {

@@ -29,7 +29,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setColumnValues(
-                const size_t column,
+                const unsigned int column,
                 const Point2Df& values
             ) final ;
 
@@ -39,7 +39,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setColumnValues(
-                const size_t column,
+                const unsigned int column,
                 const Point3Df& values
             ) final ;
 
@@ -49,7 +49,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(
-                const size_t row,
+                const unsigned int row,
                 const Point2Df& values
             ) final ;
 
@@ -59,7 +59,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(
-                const size_t row,
+                const unsigned int row,
                 const Point3Df& values
             ) final ;
 

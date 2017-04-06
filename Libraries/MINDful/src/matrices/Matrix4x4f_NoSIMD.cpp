@@ -23,7 +23,7 @@ namespace Mind {
     }
 
     void Matrix4x4f::setColumnValues(
-        const size_t column,
+        const unsigned int column,
         const Point2Df& values
     ) {
         m_data[0][column] = values.get(Point2Df::Axis::X) ;
@@ -31,7 +31,7 @@ namespace Mind {
     }
 
     void Matrix4x4f::setColumnValues(
-        const size_t column,
+        const unsigned int column,
         const Point3Df& values
     ) {
         m_data[0][column] = values.get(Point3Df::Axis::X) ;
@@ -40,7 +40,7 @@ namespace Mind {
     }
 
     void Matrix4x4f::setRowValues(
-        const size_t row,
+        const unsigned int row,
         const Point2Df& values
     ) {
         m_data[row][0] = values.get(Point2Df::Axis::X) ;
@@ -48,7 +48,7 @@ namespace Mind {
     }
 
     void Matrix4x4f::setRowValues(
-        const size_t row,
+        const unsigned int row,
         const Point3Df& values
     ) {
         m_data[row][0] = values.get(Point3Df::Axis::X) ;
@@ -57,7 +57,7 @@ namespace Mind {
     }
 
     Matrix4x4f& Matrix4x4f::operator*=(const Scalar scalar) {
-        unsigned int length = size() ;
+        unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; ++rowIndex) {
             for (unsigned int colIndex = 0 ; colIndex < length ; ++colIndex) {
                 m_data[rowIndex][colIndex] *= scalar ;
@@ -69,7 +69,7 @@ namespace Mind {
     Matrix4x4f& Matrix4x4f::operator*=(Matrix4x4f& other) {
         std::array<std::array<float, 4>, 4> result ;
 
-        unsigned int dimension = size() ;
+        unsigned int dimension = static_cast<unsigned int>(size()) ;
         for (unsigned int col = 0 ; col < dimension ; ++col) {
             for (unsigned int row = 0 ; row < dimension ; ++row) {
                 result[row][col] = 0.f ;
@@ -85,7 +85,7 @@ namespace Mind {
     }
 
     Matrix4x4f& Matrix4x4f::operator+=(Matrix4x4f& other) {
-        unsigned int length = size() ;
+        unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int colIndex = 0 ; colIndex < length ; colIndex++) {
             for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
                 m_data[rowIndex][colIndex] += other[rowIndex][colIndex] ;

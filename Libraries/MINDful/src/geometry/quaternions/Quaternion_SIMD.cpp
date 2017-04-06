@@ -3,7 +3,7 @@
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
 
 namespace Mind {
-    const Scalar Quaternion::Epsilon = 1e-3 ;
+    const Scalar Quaternion::Epsilon = static_cast<Scalar>(1e-3) ;
     const Quaternion Quaternion::Zero = Quaternion() ;
     const Quaternion Quaternion::Identity = Quaternion(0.f, 0.f, 0.f, 1.f) ;
     const SIMD::Vector4f Quaternion::VectorPartExtractor = SIMD::Vector4f(1.f, 1.f, 1.f, 0.f) ;
@@ -245,7 +245,7 @@ namespace Mind {
         // quaternion values.
         Matrix3x3f rotationMatrix ;
 
-        for (size_t column = 0 ; column < 3 ; ++column) {
+        for (unsigned int column = 0 ; column < 3 ; ++column) {
             rotationMatrix.at(0, column) = xAxis[column] ;
             rotationMatrix.at(1, column) = yAxis[column] ;
             rotationMatrix.at(2, column) = zAxis[column] ;
@@ -327,7 +327,7 @@ namespace Mind {
         }
         else {
             // Several solution can exist (the angle is 0 % 2xPi radians...).
-            radAngle = 0._rad ;
+            radAngle = static_cast<Scalar>(0._rad) ;
             vector.set(1.f, 0.f, 0.f) ;
         }
     }

@@ -37,13 +37,13 @@ namespace Mind {
         return trace ;
     }
 
-    unsigned int SquareMatrixf::size() const {
+    size_t SquareMatrixf::size() const {
         return m_size ;
     }
 
     std::ostream& operator<<(std::ostream& s, const SquareMatrixf& p) {
         s << "SquareMatrixf: " << std::endl ;
-            unsigned int size = p.size() ;
+            size_t size = p.size() ;
             for (unsigned int row = 0 ; row < size ; ++row) {
                 s << "{ " ;
                 for (unsigned int col = 0 ; col < size ; ++col) {

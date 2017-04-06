@@ -18,7 +18,7 @@ static inline Vector4i operator+(const Vector4i& a, const Vector4i& b) {
  * @return  Result of the addition.
  */
 static inline Vector4i operator+(const Vector4i& a, const float& b) {
-    return a + Vector4i(b) ;
+    return a + Vector4i(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -29,7 +29,7 @@ static inline Vector4i operator+(const Vector4i& a, const float& b) {
  * @return  Result of the addition.
  */
 static inline Vector4i operator+(const float& a, const Vector4i& b) {
-    return Vector4i(a) + b ;
+    return Vector4i(static_cast<int32_t>(a)) + b ;
 }
 
 /**
@@ -52,7 +52,7 @@ static inline Vector4i& operator+=(Vector4i& a, const Vector4i& b) {
  * @return  Result of the addition stored in the first operand.
  */
 static inline Vector4i& operator+=(Vector4i& a, const float& b) {
-    a = a + Vector4i(b) ;
+    a = a + Vector4i(static_cast<int32_t>(b)) ;
     return a ;
 }
 
@@ -99,7 +99,7 @@ static inline Vector4i operator-(const Vector4i& a, const Vector4i& b) {
  * @return  Result of the difference.
  */
 static inline Vector4i operator-(const Vector4i& a, const float& b) {
-    return a - Vector4i(b) ;
+    return a - Vector4i(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -110,7 +110,7 @@ static inline Vector4i operator-(const Vector4i& a, const float& b) {
  * @return  Result of the difference.
  */
 static inline Vector4i operator-(const float& a, const Vector4i& b) {
-    return Vector4i(a) - b ;
+    return Vector4i(static_cast<int32_t>(a)) - b ;
 }
 
 /**
@@ -133,7 +133,7 @@ static inline Vector4i& operator-=(Vector4i& a, const Vector4i& b) {
  * @return  Result of the difference stored in the first operand.
  */
 static inline Vector4i& operator-=(Vector4i& a, const float& b) {
-    a = a - Vector4i(b) ;
+    a = a - Vector4i(static_cast<int32_t>(b)) ;
     return a ;
 }
 
@@ -209,7 +209,7 @@ static inline Vector4i operator*(const Vector4i& a, const Vector4i& b) {
  * @return  Result of the product.
  */
 static inline Vector4i operator*(const Vector4i& a, const float& b) {
-    return a * Vector4i(b) ;
+    return a * Vector4i(static_cast<int32_t>(b)) ;
 }
 
 /**
@@ -220,7 +220,7 @@ static inline Vector4i operator*(const Vector4i& a, const float& b) {
  * @return  Result of the product.
  */
 static inline Vector4i operator*(const float& a, const Vector4i& b) {
-    return Vector4i(a) * b ;
+    return Vector4i(static_cast<int32_t>(a)) * b ;
 }
 
 /**
@@ -243,7 +243,7 @@ static inline Vector4i& operator*=(Vector4i& a, const Vector4i& b) {
  * @return  Result of the product stored in the first operand.
  */
 static inline Vector4i& operator*=(Vector4i& a, const float& b) {
-    a = a * Vector4i(b) ;
+    a = a * Vector4i(static_cast<int32_t>(b)) ;
     return a ;
 }
 

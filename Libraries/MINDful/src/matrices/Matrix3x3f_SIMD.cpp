@@ -30,7 +30,7 @@ namespace Mind {
     }
 
     void Matrix3x3f::setColumnValues(
-        const size_t column,
+        const unsigned int column,
         const Point2Df& values
     ) {
         m_data[0][column] = values.get(Vector2f::Axis::X) ;
@@ -38,7 +38,7 @@ namespace Mind {
     }
 
     void Matrix3x3f::setColumnValues(
-        const size_t column,
+        const unsigned int column,
         const Point3Df& values
     ) {
         m_data[0][column] = values.get(Vector3f::Axis::X) ;
@@ -47,7 +47,7 @@ namespace Mind {
     }
 
     void Matrix3x3f::setRowValues(
-        const size_t row,
+        const unsigned int row,
         const Point2Df& values
     ) {
         m_data[row][0] = values.get(Vector2f::Axis::X) ;
@@ -55,7 +55,7 @@ namespace Mind {
     }
 
     void Matrix3x3f::setRowValues(
-        const size_t row,
+        const unsigned int row,
         const Point3Df& values
     ) {
         m_data[row][0] = values.get(Vector3f::Axis::X) ;
@@ -64,7 +64,7 @@ namespace Mind {
     }
 
     Matrix3x3f& Matrix3x3f::operator*=(const Scalar scalar) {
-        unsigned int length = size() ;
+        unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] *= scalar ;
         }
@@ -84,7 +84,7 @@ namespace Mind {
 
         // Multiply each line of "this" by each column of "other".
         // Then add each element of the resulting row and store it in "this".
-        unsigned int length = size() ;
+        unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int thisRowIndex = 0 ; thisRowIndex < length ; thisRowIndex++) {
             Array4f rowResult ;
             for(unsigned int otherRowIndex = 0 ; otherRowIndex < length ; otherRowIndex++) {
@@ -99,7 +99,7 @@ namespace Mind {
     }
 
     Matrix3x3f& Matrix3x3f::operator+=(Matrix3x3f& other) {
-        unsigned int length = size() ;
+        unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] += other[rowIndex] ;
         }

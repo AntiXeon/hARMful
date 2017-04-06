@@ -95,7 +95,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setColumnValues(
-                const size_t column,
+                const unsigned int column,
                 const Point2Df& values
             ) = 0 ;
 
@@ -105,7 +105,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setColumnValues(
-                const size_t column,
+                const unsigned int column,
                 const Point3Df& values
             ) = 0 ;
 
@@ -115,7 +115,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(
-                const size_t row,
+                const unsigned int row,
                 const Point2Df& values
             ) = 0 ;
 
@@ -125,7 +125,7 @@ namespace Mind {
              * @param   values  Values to set.
              */
             virtual void setRowValues(
-                const size_t row,
+                const unsigned int row,
                 const Point3Df& values
             ) = 0 ;
 
@@ -184,7 +184,7 @@ namespace Mind {
              * @return	Size of the SquareMatrix (amount of both columns and
              *			rows).
              */
-            unsigned int size() const ;
+            size_t size() const ;
 
             /**
              * Assignment operator to copy a SquareMatrixf.
