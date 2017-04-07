@@ -172,6 +172,10 @@ namespace UTMind {
         check(m3.at(3, 1) == 0.f) ;
         check(m3.at(3, 2) == 0.f) ;
         check(m3.at(3, 3) == 1.f) ;
+
+        // Trace.
+        Scalar expectedTrace = 8.457f ;
+        check(compare(m3.trace(), expectedTrace)) ;
     }
 
     void UTMatrix4x4f::operators() {
