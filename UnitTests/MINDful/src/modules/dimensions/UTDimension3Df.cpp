@@ -8,10 +8,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTDimension3Df::UTDimension3Df() {}
-
-    UTDimension3Df::~UTDimension3Df() {}
-
     void UTDimension3Df::allocation() {
         Dimension3Df dim3d1 ;
         check(dim3d1.getWidth() == 0.f) ;

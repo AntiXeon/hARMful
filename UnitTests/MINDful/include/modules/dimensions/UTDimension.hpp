@@ -10,16 +10,6 @@ namespace UTMind {
     class UTDimension: public UnitTest {
         public:
             /**
-             * Instantation of the unit tests for DimensionNDx.
-             */
-            UTDimension() ;
-
-            /**
-             * Destruction of the unit tests for DimensionNDx.
-             */
-            virtual ~UTDimension() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;

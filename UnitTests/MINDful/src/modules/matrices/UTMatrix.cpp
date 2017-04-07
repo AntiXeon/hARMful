@@ -3,10 +3,6 @@
 #include <iostream>
 
 namespace UTMind {
-    UTMatrix::UTMatrix() {}
-
-    UTMatrix::~UTMatrix() {}
-
     void UTMatrix::runTests() {
         allocation() ;
         utilities() ;

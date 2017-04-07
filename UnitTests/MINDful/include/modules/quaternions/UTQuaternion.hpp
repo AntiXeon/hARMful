@@ -10,16 +10,6 @@ namespace UTMind {
     class UTQuaternion: public UnitTest {
         public:
             /**
-             * Instantation of the unit tests for Quaternion.
-             */
-            UTQuaternion() ;
-
-            /**
-             * Destruction of the unit tests for Quaternion.
-             */
-            virtual ~UTQuaternion() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;

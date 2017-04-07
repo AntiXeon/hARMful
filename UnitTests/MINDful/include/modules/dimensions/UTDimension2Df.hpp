@@ -8,17 +8,6 @@ namespace UTMind {
      * For testing Dimension2Df.
      */
     class UTDimension2Df final: public UTDimension {
-        public:
-            /**
-             * Instantation of the unit tests for Dimension2Df.
-             */
-            UTDimension2Df() ;
-
-            /**
-             * Destruction of the unit tests for Dimension2Df.
-             */
-            virtual ~UTDimension2Df() ;
-
         protected:
             /**
              * Test allocation of Dimension2Df objects.

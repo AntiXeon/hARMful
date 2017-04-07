@@ -3,10 +3,6 @@
 #include <iostream>
 
 namespace UTMind {
-    UTPoint::UTPoint() {}
-
-    UTPoint::~UTPoint() {}
-
     void UTPoint::runTests() {
         allocation() ;
         utilities() ;

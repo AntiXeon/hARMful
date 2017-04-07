@@ -10,16 +10,6 @@ namespace UTMind {
     class UTPoint: public UnitTest {
         public:
             /**
-             * Instantation of the unit tests for PointNDx.
-             */
-            UTPoint() ;
-
-            /**
-             * Destruction of the unit tests for PointNDx.
-             */
-            virtual ~UTPoint() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;

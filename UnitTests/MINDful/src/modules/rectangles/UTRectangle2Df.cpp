@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTRectangle2Df::UTRectangle2Df() {}
-
-    UTRectangle2Df::~UTRectangle2Df() {}
-
     void UTRectangle2Df::allocation() {
         // Default constructor
         {
@@ -162,8 +158,9 @@ namespace UTMind {
         Scalar translationY = -55.0485f ;
         r.translate(translationX, translationY) ;
 
+        const Scalar LowerPrecision = 1e-4f ;
         check(compare(r.getBottomLeftCornerX(), (p1CoordX + translationX))) ;
-        check(compare(r.getUpRightCornerX(), (p2CoordX + translationX))) ;
+        check(compare(r.getUpRightCornerX(), (p2CoordX + translationX), LowerPrecision)) ;
         check(compare(r.getBottomLeftCornerY(), (p1CoordY + translationY))) ;
         check(compare(r.getUpRightCornerY(), (p2CoordY + translationY))) ;
     }

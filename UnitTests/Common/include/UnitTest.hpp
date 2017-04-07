@@ -22,23 +22,7 @@ class UnitTest {
          */
         static unsigned int AmountSuccessfulTests ;
 
-        /**
-         * Precision for floats comparison.
-         */
-        float m_epsilon ;
-
     public:
-        /**
-         * Instantiate a new UnitTest.
-         * @param epsilon   Precision for floats comparison.
-         */
-        UnitTest(float epsilon = 1e-4f) ;
-
-        /**
-         * Destruction of the UnitTest instance.
-         */
-        virtual ~UnitTest() ;
-
         /**
          * Run the different tests.
          */
@@ -58,17 +42,27 @@ class UnitTest {
          * @param function  Function that is calling the assert method.
          * @param line      Line at which the assert method is called.
          */
-        void checkCondition(bool condition, const char* file, const  char* function, int line) ;
+        void checkCondition(
+            const bool condition,
+            const char* file,
+            const char* function,
+            const int line
+        ) ;
 
         /**
          * Compare two float values and check if their difference is lower than
          * the epsilon of the test.
-         * @param  a First value.
-         * @param  b Second value.
+         * @param  a        First value.
+         * @param  b        Second value.
+         * @param  epsilon  Maximal distance between the two values.
          * @return   TRUE if the two float values are lower than the epsilon of
          *           the unit test. FALSE if the difference is higher.
          */
-        bool compare(float a, float b) ;
+        bool compare(
+            const float a,
+            const float b,
+            const float epsilon = 1e-6f
+        ) ;
 } ;
 
 /**

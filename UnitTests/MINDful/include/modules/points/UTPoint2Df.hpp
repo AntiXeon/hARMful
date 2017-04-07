@@ -9,17 +9,6 @@ namespace UTMind {
      * For testing Point2Df.
      */
     class UTPoint2Df final: public UTPoint {
-        public:
-            /**
-             * Instantation of the unit tests for Point2Df.
-             */
-            UTPoint2Df() ;
-
-            /**
-             * Destruction of the unit tests for Point2Df.
-             */
-            virtual ~UTPoint2Df() ;
-
         protected:
             /**
              * Test allocation of Point2Df objects.

@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTMatrix4x4f::UTMatrix4x4f() {}
-
-    UTMatrix4x4f::~UTMatrix4x4f() {}
-
     void UTMatrix4x4f::allocation() {
         // Default constructor.
         Matrix4x4f m1 ;

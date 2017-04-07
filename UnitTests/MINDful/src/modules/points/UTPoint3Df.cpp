@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTPoint3Df::UTPoint3Df() {}
-
-    UTPoint3Df::~UTPoint3Df() {}
-
     void UTPoint3Df::allocation() {
         Point3Df p1 ;
         check(compare(p1.get(Point3Df::Axis::X), 0.f)) ;

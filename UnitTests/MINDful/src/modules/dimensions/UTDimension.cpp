@@ -3,10 +3,6 @@
 #include <iostream>
 
 namespace UTMind {
-    UTDimension::UTDimension() {}
-
-    UTDimension::~UTDimension() {}
-
     void UTDimension::runTests() {
         allocation() ;
         scalarOperations() ;

@@ -8,17 +8,6 @@ namespace UTMind {
      * For testing Dimension3Df.
      */
     class UTDimension3Df final: public UTDimension {
-        public:
-            /**
-             * Instantation of the unit tests for Dimension3Df.
-             */
-            UTDimension3Df() ;
-
-            /**
-             * Destruction of the unit tests for Dimension3Df.
-             */
-            virtual ~UTDimension3Df() ;
-
         protected:
             /**
              * Test allocation of Dimension3Df objects.

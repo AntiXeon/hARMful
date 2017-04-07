@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTMatrix3x3f::UTMatrix3x3f() {}
-
-    UTMatrix3x3f::~UTMatrix3x3f() {}
-
     void UTMatrix3x3f::allocation() {
         // Default constructor.
         Matrix3x3f m1 ;
@@ -134,6 +130,10 @@ namespace UTMind {
         check(m3.at(2, 0) == p4X) ;
         check(m3.at(2, 1) == p4Y) ;
         check(m3.at(2,2) == p4Z) ;
+
+        // Trace.
+        Scalar expectedTrace = 7.457f ;
+        check(compare(m3.trace(), expectedTrace)) ;
     }
 
     void UTMatrix3x3f::operators() {

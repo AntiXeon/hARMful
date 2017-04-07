@@ -8,17 +8,6 @@ namespace UTMind {
      * For testing Matrix4x4f.
      */
     class UTMatrix4x4f: public UTMatrix {
-        public:
-            /**
-             * Instantation of the unit tests for Matrix4x4f.
-             */
-            UTMatrix4x4f() ;
-
-            /**
-             * Destruction of the unit tests for Matrix4x4f.
-             */
-            virtual ~UTMatrix4x4f() ;
-
         protected:
             /**
              * Test allocation of Matrix4x4f.

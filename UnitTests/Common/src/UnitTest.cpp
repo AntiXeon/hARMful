@@ -7,10 +7,6 @@ int UnitTest::ValidatedUnitTestSession = EXIT_SUCCESS ;
 unsigned int UnitTest::AmountRunTests = 0 ;
 unsigned int UnitTest::AmountSuccessfulTests = 0 ;
 
-UnitTest::UnitTest(float epsilon) : m_epsilon(epsilon) {}
-
-UnitTest::~UnitTest() {}
-
 int UnitTest::Success() {
     std::cout << AmountSuccessfulTests
                 << "/"
@@ -21,7 +17,12 @@ int UnitTest::Success() {
     return ValidatedUnitTestSession ;
 }
 
-void UnitTest::checkCondition(bool condition, const char* file, const  char* function, int line) {
+void UnitTest::checkCondition(
+    const bool condition,
+    const char* file,
+    const char* function,
+    const int line
+) {
     AmountRunTests++ ;
 
     if (!condition) {
@@ -40,7 +41,11 @@ void UnitTest::checkCondition(bool condition, const char* file, const  char* fun
     }
 }
 
-bool UnitTest::compare(float a, float b) {
+bool UnitTest::compare(
+    const float a,
+    const float b,
+    const float epsilon
+) {
     float diff = std::abs(a - b) ;
-    return diff < m_epsilon ;
+    return diff < epsilon ;
 }

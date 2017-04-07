@@ -3,10 +3,6 @@
 #include <iostream>
 
 namespace UTMind {
-    UTRectangle::UTRectangle() {}
-
-    UTRectangle::~UTRectangle() {}
-
     void UTRectangle::runTests() {
         allocation() ;
         translation() ;

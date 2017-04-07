@@ -8,17 +8,6 @@ namespace UTMind {
      * For testing Matrix2D.
      */
     class UTMatrix2D: public UTMatrix {
-        public:
-            /**
-             * Instantation of the unit tests for Matrix2D.
-             */
-            UTMatrix2D() ;
-
-            /**
-             * Destruction of the unit tests for Matrix2D.
-             */
-            virtual ~UTMatrix2D() ;
-
         protected:
             /**
              * Test allocation of Matrix2D.

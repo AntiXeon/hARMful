@@ -9,10 +9,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTQuaternion::UTQuaternion() {}
-
-    UTQuaternion::~UTQuaternion() {}
-
     void UTQuaternion::runTests() {
         allocation() ;
         utilities() ;

@@ -10,16 +10,6 @@ namespace UTMind {
     class UTRectangle: public UnitTest {
         public:
             /**
-             * Instantation of the unit tests for RectangleNDx.
-             */
-            UTRectangle() ;
-
-            /**
-             * Destruction of the unit tests for RectangleNDx.
-             */
-            virtual ~UTRectangle() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;

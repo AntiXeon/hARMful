@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTLine2Df::UTLine2Df() {}
-
-    UTLine2Df::~UTLine2Df() {}
-
     void UTLine2Df::allocation() {
         Line2Df l1 ;
         check(l1.getStartX() == 0.f) ;

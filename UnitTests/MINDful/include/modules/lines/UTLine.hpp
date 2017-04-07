@@ -27,16 +27,6 @@ namespace UTMind {
 
         public:
             /**
-             * Instantation of the unit tests for Line2Dx.
-             */
-            UTLine() ;
-
-            /**
-             * Destruction of the unit tests for Line2Dx.
-             */
-            virtual ~UTLine() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;

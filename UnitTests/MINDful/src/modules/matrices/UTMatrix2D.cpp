@@ -6,10 +6,6 @@
 using namespace Mind ;
 
 namespace UTMind {
-    UTMatrix2D::UTMatrix2D() {}
-
-    UTMatrix2D::~UTMatrix2D() {}
-
     void UTMatrix2D::allocation() {
         // Matrices of integers.
         {

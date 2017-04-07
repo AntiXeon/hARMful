@@ -10,16 +10,6 @@ namespace UTMind {
     class UTMatrix: public UnitTest {
         public:
             /**
-             * Instantation of the unit tests for matrices.
-             */
-            UTMatrix() ;
-
-            /**
-             * Destruction of the unit tests for matrices.
-             */
-            virtual ~UTMatrix() ;
-
-            /**
              * Run the different tests.
              */
             void runTests() final ;
