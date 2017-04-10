@@ -1,0 +1,26 @@
+# English translations for MINDful package.
+# Copyright (C) 2017 THE MINDful'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the MINDful package.
+# Denis CARLUS, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MINDful v0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/dcarlus/hARMful\n"
+"POT-Creation-Date: 2017-04-10 11:29+0200\n"
+"PO-Revision-Date: 2017-04-10 11:30+0200\n"
+"Last-Translator: Denis CARLUS\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: MINDStrings.cpp:12
+msgid "Time must be greater or equal to zero."
+msgstr "Time must be greater or equal to zero."
+
+#: MINDStrings.cpp:13
+msgid "Time must be lower or equal to one."
+msgstr "Time must be lower or equal to one."

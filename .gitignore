@@ -45,7 +45,6 @@
 
 # Translations
 *.pot
-*.po
 *.mo
 
 # CMake
