@@ -1,7 +1,7 @@
-# hARMful [![CircleCI](https://circleci.com/gh/AntiXeon/hARMful/tree/master.svg?style=svg)](https://circleci.com/gh/dcarlus/hARMful/tree/master)
+# hARMful [![CircleCI](https://circleci.com/gh/AntiXeon/hARMful/tree/master.svg?style=svg)](https://circleci.com/gh/AntiXeon/hARMful/tree/master)
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
-More informations on the project can be found [here](https://dcarlus.github.io/hARMful/).
+More informations on the project can be found [here](https://AntiXeon.github.io/hARMful/).
 
 ## Repository
 The repository is structured in different parts:
