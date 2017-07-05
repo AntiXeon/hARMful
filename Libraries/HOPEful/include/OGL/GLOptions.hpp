@@ -27,8 +27,8 @@ namespace Hope {
              * @param minor Minor version number.
              */
             static void SetGLVersion(
-                const int& major,
-                const int& minor
+                const int major,
+                const int minor
             );
 
             /**
@@ -36,7 +36,7 @@ namespace Hope {
              * @param sampling Value of the sampling factor. Common values are
              *                 0, 2, 4, 8, 16.
              */
-            static void SetSamplingFactor(const Sampling& sampling);
+            static void SetSamplingFactor(const Sampling sampling);
     };
 }
 

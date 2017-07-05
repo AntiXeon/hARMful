@@ -7,8 +7,8 @@
 
 namespace Hope {
     GLWindow::GLWindow(
-        const int& width,
-        const int& height,
+        const int width,
+        const int height,
         const std::string& title
     ) {
         createInternalWindow(width, height, title);
@@ -24,8 +24,8 @@ namespace Hope {
     }
 
     void GLWindow::createInternalWindow(
-        const int& width,
-        const int& height,
+        const int width,
+        const int height,
         const std::string& title
     ) {
         if (!glfwInit()) {

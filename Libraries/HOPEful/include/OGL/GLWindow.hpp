@@ -24,8 +24,8 @@ namespace Hope {
              * @param   title   Title of the window.
              */
             GLWindow(
-                const int& width,
-                const int& height,
+                const int width,
+                const int height,
                 const std::string& title
             );
 
@@ -47,8 +47,8 @@ namespace Hope {
              * @param   title   Title of the window.
              */
             void createInternalWindow(
-                const int& width,
-                const int& height,
+                const int width,
+                const int height,
                 const std::string& title
             );
 
