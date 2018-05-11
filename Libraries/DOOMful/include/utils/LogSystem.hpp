@@ -110,14 +110,14 @@ namespace Doom {
              * @exception   An exception is thrown if the LogSystem is
              *              initialized more than once.
              */
-            exported static void Initialize(const std::string& path, const Gravity minLevel) throw(std::runtime_error) ;
+            exported static void Initialize(const std::string& path, const Gravity minLevel) ;
 
             /**
              * Get the unique instance of the LogSystem.
              * @exception   A runtime error is thrown if the instance is got
              *              before it has been initialized.
              */
-            exported static std::weak_ptr<LogSystem> GetInstance() throw(std::runtime_error) ;
+            exported static std::weak_ptr<LogSystem> GetInstance() ;
 
             /**
              * Write a message on the Console and the FilePrinter.

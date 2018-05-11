@@ -3,12 +3,12 @@
 
 namespace Doom {
     FilePrinter::FilePrinter(const std::string& filepath)
-        throw(std::ios_base::failure) : FilePrinter(filepath, false) {}
+        : FilePrinter(filepath, false) {}
 
     FilePrinter::FilePrinter(
         const std::string& filepath,
         const bool& append
-    ) throw(std::ios_base::failure) {
+    ) {
         std::ios_base::openmode mode = getAccessMode(append) ;
         m_output.open(filepath, mode) ;
         if (!m_output.is_open()) {

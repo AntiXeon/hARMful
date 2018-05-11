@@ -27,7 +27,7 @@ namespace Doom {
         m_mutex.unlock() ;
     }
 
-    int Profiler::startProfiling(const std::string& name) throw(std::overflow_error) {
+    int Profiler::startProfiling(const std::string& name) {
         int sessionID = -1 ;
         m_mutex.lock() ;
         {

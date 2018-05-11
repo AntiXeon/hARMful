@@ -52,7 +52,7 @@ namespace Doom {
              * @param   filepath    Path to the file in which values are
              *                      written.
              */
-            exported FilePrinter(const std::string& filepath) throw(std::ios_base::failure) ;
+            exported FilePrinter(const std::string& filepath) ;
 
            /**
             * Instantiate a new FilePrinter object that prints in a file.
@@ -65,7 +65,7 @@ namespace Doom {
             exported FilePrinter(
                 const std::string& filepath,
                 const bool& append
-            ) throw(std::ios_base::failure) ;
+            ) ;
 
             /**
              * Destruction of the FilePrinter instance.

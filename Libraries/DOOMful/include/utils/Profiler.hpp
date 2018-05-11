@@ -93,7 +93,7 @@ namespace Doom {
              * @param  name Name of the source to profile.
              * @return      ID of the profiling session for the given source.
              */
-            exported int startProfiling(const std::string& name) throw(std::overflow_error) ;
+            exported int startProfiling(const std::string& name) ;
 
             /**
              * Stop profiling a source.

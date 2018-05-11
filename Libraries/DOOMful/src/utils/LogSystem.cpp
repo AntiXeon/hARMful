@@ -19,7 +19,7 @@ namespace Doom {
         return "[" + Time::GetDateTime() + "] " ;
     }
 
-    void LogSystem::Initialize(const std::string& path, const Gravity minLevel) throw(std::runtime_error) {
+    void LogSystem::Initialize(const std::string& path, const Gravity minLevel) {
         ClassMutex.lock() ;
         {
             // The instance has already been initialized. This is not supported
@@ -36,7 +36,7 @@ namespace Doom {
         ClassMutex.unlock() ;
     }
 
-    std::weak_ptr<LogSystem> LogSystem::GetInstance() throw(std::runtime_error) {
+    std::weak_ptr<LogSystem> LogSystem::GetInstance() {
         ClassMutex.lock() ;
         {
             // The instance has not been initialized. The instance pointer is
