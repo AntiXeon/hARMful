@@ -1,6 +1,6 @@
 #include <HOPEStrings.hpp>
-#include <OGL/GLWindow.hpp>
-#include <OGL/GLOptions.hpp>
+#include <ogl/GLWindow.hpp>
+#include <ogl/GLOptions.hpp>
 #include <utils/LogSystem.hpp>
 #include <iostream>
 #include <cstdlib>
