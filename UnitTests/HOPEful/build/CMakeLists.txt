@@ -34,4 +34,6 @@ add_executable (
     ${SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} glfw GLEW DOOM MIND HOPE)
+find_library(GLFW_LIBRARY glfw)
+find_library(GLEW_LIBRARY GLEW)
+target_link_libraries(${PROJECT_NAME} ${GLFW_LIBRARY} ${GLEW_LIBRARY} DOOM MIND HOPE)
