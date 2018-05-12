@@ -6,8 +6,7 @@ namespace Hope {
         if (parent) {
             bool success = parent -> addChild(this) ;
 
-            if (success)
-            {
+            if (success) {
                 m_parent = parent ;
             }
         }
