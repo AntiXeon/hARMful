@@ -23,11 +23,14 @@ endif()
 
 get_filename_component(DOOMFUL_ABSOLUTE ${HARMFUL_LIBS_DIR}/DOOMful ABSOLUTE)
 get_filename_component(MINDFUL_ABSOLUTE ${HARMFUL_LIBS_DIR}/MINDful ABSOLUTE)
+get_filename_component(HOPEFUL_ABSOLUTE ${HARMFUL_LIBS_DIR}/HOPEful ABSOLUTE)
 
 # Set hARMful libraries sources
 add_subdirectory(${DOOMFUL_ABSOLUTE}/build ./build/DOOMful)
 add_subdirectory(${MINDFUL_ABSOLUTE}/build ./build/MINDful)
+add_subdirectory(${HOPEFUL_ABSOLUTE}/build ./build/HOPEful)
 
 # Set tests executable sources
 add_subdirectory(${CMAKE_SOURCE_DIR}/DOOMful/build)
 add_subdirectory(${CMAKE_SOURCE_DIR}/MINDful/build)
+add_subdirectory(${CMAKE_SOURCE_DIR}/HOPEful/build)

@@ -29,9 +29,11 @@ test:
         - cd UnitTests && cmake -DWITH_EMULATED_SIMD=OFF . && make
         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
         - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+        - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
         - cd UnitTests && make clean
         # Build unit tests and run it (using emulated SIMD)
         - cd UnitTests && cmake -DWITH_EMULATED_SIMD=ON . && make
         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
         - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+        - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
         - cd UnitTests && make clean
