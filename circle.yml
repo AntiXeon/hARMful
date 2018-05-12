@@ -5,7 +5,7 @@ test:
         # Get the source code from GLFW 3.2.1, compile it and install it.
         - wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
         - unzip glfw-3.2.1.zip
-        - cd glfw-3.2.1 && mkdir build && cd build && cmake .. && make && sudo make install
+        - cd glfw-3.2.1 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && sudo make install
         # Get the source code from GLEW 2, compile it and install it.
         - wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
         - tar zxfv glew-2.0.0.tgz
