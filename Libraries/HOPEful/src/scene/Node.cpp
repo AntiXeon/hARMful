@@ -13,13 +13,11 @@ namespace Hope {
     }
 
     Node::~Node() {
-        if (m_parent) {
-            m_parent -> removeChild(this) ;
-        }
-
         for (Node* child : m_children) {
             delete child ;
         }
+
+        m_children.clear() ;
     }
 
     void Node::setParent(Node* parent) {

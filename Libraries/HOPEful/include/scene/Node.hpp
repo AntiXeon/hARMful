@@ -1,6 +1,7 @@
 #ifndef __HOPE__NODE__
 #define __HOPE__NODE__
 
+#include <string>
 #include <vector>
 
 namespace Hope {

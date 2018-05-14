@@ -17,8 +17,15 @@ namespace UTHope {
         private:
             /**
              * Test the relationship between nodes.
+             * Simple case where two nodes are attached to a root.
              */
-            void relationship() ;
+            void basicRelationship() ;
+
+            /**
+             * Test the relationship between nodes.
+             * Case where the parent of a node is changed.
+             */
+            void changeParent() ;
     } ;
 }
 
