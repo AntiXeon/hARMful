@@ -1,4 +1,5 @@
 #include <scene/Node.hpp>
+#include <algorithm>
 #include <cassert>
 
 namespace Hope {
@@ -48,25 +49,26 @@ namespace Hope {
             return false ;
         }
 
-        for (Node* existingChild : m_children) {
-            // Avoid listing several times the same node.
-            if (existingChild == newChild) {
-                return false ;
-            }
+        auto posNode = std::find(m_children.begin(), m_children.end(), newChild) ;
+        bool hasChild = (posNode != m_children.end()) ;
+
+        if (!hasChild) {
+            m_children.push_back(newChild) ;
+            return true ;
         }
 
-        m_children.push_back(newChild) ;
-        return true ;
+        return false ;
     }
 
     bool Node::removeChild(Node* child) {
         assert(child != nullptr) ;
 
-        for (auto it = m_children.begin() ; it != m_children.end() ; ++it) {
-            if (*it == child) {
-                m_children.erase(it) ;
-                return true ;
-            }
+        auto posNode = std::find(m_children.begin(), m_children.end(), child) ;
+        bool hasChild = (posNode != m_children.end()) ;
+
+        if (hasChild) {
+            m_children.erase(posNode) ;
+            return true ;
         }
 
         return false ;
