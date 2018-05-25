@@ -16,6 +16,7 @@ file (
 # Set the include files for the library.
 include_directories (
     ${DOOM_INCLUDE_DIRS}
+    ${MIND_INCLUDE_DIRS}
     ${CMAKE_HOME_DIRECTORY}/include
 )
 
