@@ -2,6 +2,7 @@
 #define __HOPE__COMPONENT__
 
 #include <scene/SceneTypes.hpp>
+#include <cstddef>
 #include <vector>
 
 namespace Hope {
