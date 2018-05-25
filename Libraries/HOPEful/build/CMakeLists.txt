@@ -26,7 +26,7 @@ add_library (
     ${SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} DOOM)
+target_link_libraries(${PROJECT_NAME} DOOM MIND)
 
 # Versioning
 if (UNIX)
