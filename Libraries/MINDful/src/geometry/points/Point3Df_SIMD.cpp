@@ -119,7 +119,11 @@ namespace Mind {
     bool Point3Df::operator==(const Point3Df& other) const {
         if (this != &other) {
             SIMD::Vector4i::Mask equals = (SIMD::Vector4i::Mask) (m_values == other.m_values) ;
-            return ((equals.get(X) != 0) && (equals.get(Y) != 0)) ;
+            return (
+                        (equals.get(X) != 0)
+                        && (equals.get(Y) != 0)
+                        && (equals.get(Z) != 0)
+                    ) ;
         }
 
         return true ;
