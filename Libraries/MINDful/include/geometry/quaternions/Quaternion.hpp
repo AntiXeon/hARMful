@@ -230,6 +230,18 @@ namespace Mind {
             ) ;
 
             /**
+             * Set the values of the Quaternion from Euler angles.
+             * @param roll  Value of the roll angle  in radians.
+             * @param pitch Value of the pitch angle in radians.
+             * @param yaw   Value of the yaw angle in radians.
+             */
+            exported void from(
+                const Scalar roll,
+                const Scalar pitch,
+                const Scalar yaw
+            ) ;
+
+            /**
              * Set the values of the Quaternion from a vector (seen as axis) and
              * an angle.
              * @param vector   Vector acting as the axis of the rotation.

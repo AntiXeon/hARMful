@@ -254,6 +254,31 @@ namespace Mind {
         from(rotationMatrix) ;
     }
 
+    void Quaternion::from(
+        const Scalar roll,
+        const Scalar pitch,
+        const Scalar yaw
+    ) {
+        Scalar halfRoll = roll * Scalar(0.5) ;
+        Scalar halfPitch = pitch * Scalar(0.5) ;
+        Scalar halfYaw = yaw * Scalar(0.5) ;
+
+        Scalar cosRoll = std::cos(halfRoll) ;
+        Scalar cosPitch = std::cos(halfPitch) ;
+        Scalar cosYaw = std::cos(halfYaw) ;
+
+        Scalar sinRoll = std::sin(halfRoll) ;
+        Scalar sinPitch = std::sin(halfPitch) ;
+        Scalar sinYaw = std::sin(halfYaw) ;
+
+        m_values = SIMD::Vector4f(
+            (cosRoll * sinPitch * cosYaw) + (sinRoll * cosPitch * sinYaw) ,
+            (cosRoll * cosPitch * sinYaw) - (sinRoll * sinPitch * cosYaw),
+            (sinRoll * cosPitch * cosYaw) - (cosRoll * sinPitch * sinYaw),
+            (cosRoll * cosPitch * cosYaw) + (sinRoll * sinPitch * sinYaw)
+        ) ;
+    }
+
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
     void Quaternion::from(const Vector3f& vector, Scalar radAngle) {

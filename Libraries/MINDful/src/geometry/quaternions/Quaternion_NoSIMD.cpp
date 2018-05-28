@@ -15,7 +15,7 @@ namespace Mind {
                 -m_values[Axis::X] * invertedSquaredLength,
                 -m_values[Axis::Y] * invertedSquaredLength,
                 -m_values[Axis::Z] * invertedSquaredLength,
-                m_values[Axis::W] * invertedSquaredLength
+                 m_values[Axis::W] * invertedSquaredLength
             ) ;
         }
         else {
@@ -200,6 +200,29 @@ namespace Mind {
         }
 
         from(rotationMatrix) ;
+    }
+
+    void Quaternion::from(
+        const Scalar roll,
+        const Scalar pitch,
+        const Scalar yaw
+    ) {
+        Scalar halfRoll = roll * Scalar(0.5) ;
+        Scalar halfPitch = pitch * Scalar(0.5) ;
+        Scalar halfYaw = yaw * Scalar(0.5) ;
+
+        Scalar cosRoll = std::cos(halfRoll) ;
+        Scalar cosPitch = std::cos(halfPitch) ;
+        Scalar cosYaw = std::cos(halfYaw) ;
+
+        Scalar sinRoll = std::sin(halfRoll) ;
+        Scalar sinPitch = std::sin(halfPitch) ;
+        Scalar sinYaw = std::sin(halfYaw) ;
+
+        m_values[Axis::X] = (cosRoll * sinPitch * cosYaw) + (sinRoll * cosPitch * sinYaw) ;
+        m_values[Axis::Y] = (cosRoll * cosPitch * sinYaw) - (sinRoll * sinPitch * cosYaw) ;
+        m_values[Axis::Z] = (sinRoll * cosPitch * cosYaw) - (cosRoll * sinPitch * sinYaw) ;
+        m_values[Axis::W] = (cosRoll * cosPitch * cosYaw) + (sinRoll * sinPitch * sinYaw) ;
     }
 
     // From Ken Shoemake's explanations on quaternions.
