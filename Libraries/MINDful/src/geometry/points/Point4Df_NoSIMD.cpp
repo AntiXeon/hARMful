@@ -96,7 +96,7 @@ namespace Mind {
     }
 
     Scalar Point4Df::distance(const Point4Df& a, const Point4Df& b) {
-        Scalar diffX, diffY, diffZ ;
+        Scalar diffX, diffY, diffZ, diffW ;
 
         diffX = a.m_values[Point4Df::Axis::X] - b.m_values[Point4Df::Axis::X] ;
         diffY = a.m_values[Point4Df::Axis::Y] - b.m_values[Point4Df::Axis::Y] ;
