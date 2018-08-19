@@ -97,6 +97,8 @@ namespace UTMind {
         }
 
         // @TODO: Check constructor from 3 axes.
+
+        // @TODO: Check constructor from Euler angles.
     }
 
     void UTQuaternion::utilities() {
