@@ -1,4 +1,5 @@
 #include <geometry/quaternions/Quaternion.hpp>
+#include <Math.hpp>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
 
@@ -259,9 +260,9 @@ namespace Mind {
         const Scalar pitch,
         const Scalar yaw
     ) {
-        Scalar halfRoll = roll * Scalar(0.5) ;
-        Scalar halfPitch = pitch * Scalar(0.5) ;
-        Scalar halfYaw = yaw * Scalar(0.5) ;
+        Scalar halfRoll = Math::toRadians(roll) * Scalar(0.5) ;
+        Scalar halfPitch = Math::toRadians(pitch) * Scalar(0.5) ;
+        Scalar halfYaw = Math::toRadians(yaw) * Scalar(0.5) ;
 
         Scalar cosRoll = std::cos(halfRoll) ;
         Scalar cosPitch = std::cos(halfPitch) ;
@@ -272,9 +273,9 @@ namespace Mind {
         Scalar sinYaw = std::sin(halfYaw) ;
 
         m_values = SIMD::Vector4f(
-            (cosRoll * sinPitch * cosYaw) + (sinRoll * cosPitch * sinYaw) ,
+            (sinRoll * cosPitch * cosYaw) + (cosRoll * sinPitch * sinYaw),
+            (cosRoll * sinPitch * cosYaw) - (sinRoll * cosPitch * sinYaw),
             (cosRoll * cosPitch * sinYaw) - (sinRoll * sinPitch * cosYaw),
-            (sinRoll * cosPitch * cosYaw) - (cosRoll * sinPitch * sinYaw),
             (cosRoll * cosPitch * cosYaw) + (sinRoll * sinPitch * sinYaw)
         ) ;
     }

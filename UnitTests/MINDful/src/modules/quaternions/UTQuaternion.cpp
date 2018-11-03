@@ -98,7 +98,30 @@ namespace UTMind {
 
         // @TODO: Check constructor from 3 axes.
 
-        // @TODO: Check constructor from Euler angles.
+        // Constructor from Euler angles.
+        {
+            Scalar roll = 6.97f ;
+            Scalar pitch = -65.2f ;
+            Scalar yaw = -0.274f ;
+
+            Scalar expectedX =  0.0524961f ;
+            Scalar expectedY = -0.53765f ;
+            Scalar expectedZ =  0.0307396f ;
+            Scalar expectedW =  0.84097f ;
+
+            Quaternion q7(roll, pitch, yaw) ;
+            check(compare(q7[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q7[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q7[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q7[Quaternion::Axis::W], expectedW)) ;
+
+            Quaternion q8 ;
+            q8.from(roll, pitch, yaw) ;            
+            check(compare(q8[Quaternion::Axis::X], expectedX)) ;
+            check(compare(q8[Quaternion::Axis::Y], expectedY)) ;
+            check(compare(q8[Quaternion::Axis::Z], expectedZ)) ;
+            check(compare(q8[Quaternion::Axis::W], expectedW)) ;
+        }
     }
 
     void UTQuaternion::utilities() {

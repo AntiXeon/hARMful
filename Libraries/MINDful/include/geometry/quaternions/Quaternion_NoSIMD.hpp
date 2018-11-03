@@ -12,6 +12,14 @@ inline Quaternion::Quaternion(
     m_values[Axis::W] = w ;
 }
 
+inline Quaternion::Quaternion(
+    const Scalar roll,
+    const Scalar pitch,
+    const Scalar yaw
+) {
+    from(roll, pitch, yaw) ;
+}
+
 inline Quaternion::Quaternion(const Matrix3x3f& matrix) {
     from(matrix) ;
 }

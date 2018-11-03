@@ -80,6 +80,18 @@ namespace Mind {
             ) ;
 
             /**
+             * Create a Quaternion from Euler angles.
+             * @param roll  Value of the roll angle in degrees.
+             * @param pitch Value of the pitch angle in degrees.
+             * @param yaw   Value of the yaw angle in degrees.
+             */
+            exported inline Quaternion(
+                const Scalar roll,
+                const Scalar pitch,
+                const Scalar yaw
+            ) ;
+
+            /**
              * Create a Quaternion from a rotation matrix.
              * @param   matrix  Rotation matrix to generate a Quaternion from.
              */
@@ -231,9 +243,9 @@ namespace Mind {
 
             /**
              * Set the values of the Quaternion from Euler angles.
-             * @param roll  Value of the roll angle  in radians.
-             * @param pitch Value of the pitch angle in radians.
-             * @param yaw   Value of the yaw angle in radians.
+             * @param roll  Value of the roll angle in degrees.
+             * @param pitch Value of the pitch angle in degrees.
+             * @param yaw   Value of the yaw angle in degrees.
              */
             exported void from(
                 const Scalar roll,

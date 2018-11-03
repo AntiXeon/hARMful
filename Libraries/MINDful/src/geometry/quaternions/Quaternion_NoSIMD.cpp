@@ -1,4 +1,5 @@
 #include <geometry/quaternions/Quaternion.hpp>
+#include <Math.hpp>
 
 #ifdef USE_NO_SIMD // for compilations where SSE and NEON are not available
 
@@ -207,9 +208,9 @@ namespace Mind {
         const Scalar pitch,
         const Scalar yaw
     ) {
-        Scalar halfRoll = roll * Scalar(0.5) ;
-        Scalar halfPitch = pitch * Scalar(0.5) ;
-        Scalar halfYaw = yaw * Scalar(0.5) ;
+        Scalar halfRoll = Math::toRadians(roll) * Scalar(0.5) ;
+        Scalar halfPitch = Math::toRadians(pitch) * Scalar(0.5) ;
+        Scalar halfYaw = Math::toRadians(yaw) * Scalar(0.5) ;
 
         Scalar cosRoll = std::cos(halfRoll) ;
         Scalar cosPitch = std::cos(halfPitch) ;
@@ -219,9 +220,9 @@ namespace Mind {
         Scalar sinPitch = std::sin(halfPitch) ;
         Scalar sinYaw = std::sin(halfYaw) ;
 
-        m_values[Axis::X] = (cosRoll * sinPitch * cosYaw) + (sinRoll * cosPitch * sinYaw) ;
-        m_values[Axis::Y] = (cosRoll * cosPitch * sinYaw) - (sinRoll * sinPitch * cosYaw) ;
-        m_values[Axis::Z] = (sinRoll * cosPitch * cosYaw) - (cosRoll * sinPitch * sinYaw) ;
+        m_values[Axis::X] = (sinRoll * cosPitch * cosYaw) + (cosRoll * sinPitch * sinYaw) ;
+        m_values[Axis::Y] = (cosRoll * sinPitch * cosYaw) - (sinRoll * cosPitch * sinYaw) ;
+        m_values[Axis::Z] = (cosRoll * cosPitch * sinYaw) - (sinRoll * sinPitch * cosYaw) ;
         m_values[Axis::W] = (cosRoll * cosPitch * cosYaw) + (sinRoll * sinPitch * sinYaw) ;
     }
 
