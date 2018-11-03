@@ -4,6 +4,7 @@
 #include <modules/lines/UTLine2Df.hpp>
 #include <modules/points/UTPoint2Df.hpp>
 #include <modules/points/UTPoint3Df.hpp>
+#include <modules/points/UTPoint4Df.hpp>
 #include <modules/rectangles/UTRectangle2Df.hpp>
 #include <modules/matrices/UTMatrix2D.hpp>
 #include <modules/matrices/UTMatrix3x3f.hpp>
@@ -22,6 +23,7 @@ static void testLines() {
 static void testPoints() {
     UTMind::UTPoint2Df().runTests() ;
     UTMind::UTPoint3Df().runTests() ;
+    UTMind::UTPoint4Df().runTests() ;
 }
 
 static void testRectangles() {
