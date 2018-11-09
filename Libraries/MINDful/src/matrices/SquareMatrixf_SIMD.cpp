@@ -46,6 +46,32 @@ namespace Mind {
         return m_size ;
     }
 
+    bool SquareMatrixf::operator==(const SquareMatrixf& other) const {
+        if (this != &other) {
+            if (size() != other.size()) {
+                return false ;
+            }
+
+            for (size_t row = 0 ; row < m_size ; ++row) {
+                SIMD::Vector4i::Mask equals = (SIMD::Vector4i::Mask) (m_data[row] == other.m_data[row]) ;
+
+                for (unsigned char col = 0 ; col < m_size ; ++col) {
+                    if (equals.get(col) == 0) {
+                        return false ;
+                    }
+                }
+            }
+
+            return true ;
+        }
+
+        return true ;
+    }
+
+    bool SquareMatrixf::operator!=(const SquareMatrixf& other) const {
+        return !(*this == other) ;
+    }
+
     std::ostream& operator<<(std::ostream& s, const SquareMatrixf& p) {
         s << "SquareMatrixf: " << std::endl ;
             size_t size = p.size() ;

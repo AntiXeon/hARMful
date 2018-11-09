@@ -41,6 +41,30 @@ namespace Mind {
         return m_size ;
     }
 
+    bool SquareMatrixf::operator==(const SquareMatrixf& other) const {
+        if (this != &other) {
+            if (size() != other.size()) {
+                return false ;
+            }
+
+            for (size_t row = 0; row < m_size; ++row) {
+                for (size_t col = 0; col < m_size; ++col) {
+                    if (m_data[row][col] != other.m_data[row][col]) {
+                        return false ;
+                    }
+                }
+            }
+
+            return true ;
+        }
+
+        return true ;
+    }
+
+    bool SquareMatrixf::operator!=(const SquareMatrixf& other) const {
+        return !(*this == other) ;
+    }
+
     std::ostream& operator<<(std::ostream& s, const SquareMatrixf& p) {
         s << "SquareMatrixf: " << std::endl ;
             size_t size = p.size() ;

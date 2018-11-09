@@ -199,6 +199,21 @@ namespace Mind {
             exported SquareMatrixf& operator=(SquareMatrixf&& other) = default ;
 
             /**
+             * Test if two SquareMatrixf have the same value at same position.
+             * @param   other   An other matrix to compare to the current one.
+             * @return  TRUE if the matrix have the same values, FALSE else.
+             */
+            exported bool operator==(const SquareMatrixf& other) const ;
+
+            /**
+             * Test if two SquareMatrixf have different values for a same
+             * position.
+             * @param   other   An other matrix to compare to the current one.
+             * @return  TRUE if the matrix have different values, FALSE else.
+             */
+            exported bool operator!=(const SquareMatrixf& other) const ;
+
+            /**
             * Echo the SquareMatrix values on console.
             * @param   s   The stream in which print the formatted coordinates.
             * @param   p   The SquareMatrix to print.

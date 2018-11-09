@@ -250,5 +250,26 @@ namespace UTMind {
         check(m4.at(3,1) == 32.f) ;
         check(m4.at(3,2) == 45.f) ;
         check(m4.at(3,3) == 45.f) ;
+
+
+        Matrix4x4f m5 = m2 + m1;
+        check(m5.at(0,0) == 6.f) ;
+        check(m5.at(0,1) == 11.f) ;
+        check(m5.at(0,2) == 10.f) ;
+        check(m5.at(0,3) == 30.f) ;
+        check(m5.at(1,0) == 5.f) ;
+        check(m5.at(1,1) == 13.f) ;
+        check(m5.at(1,2) == 12.f) ;
+        check(m5.at(1,3) == 23.f) ;
+        check(m5.at(2,0) == 10.f) ;
+        check(m5.at(2,1) == 10.f) ;
+        check(m5.at(2,2) == 13.f) ;
+        check(m5.at(2,3) == 22.f) ;
+        check(m5.at(3,0) == 41.f) ;
+        check(m5.at(3,1) == 32.f) ;
+        check(m5.at(3,2) == 45.f) ;
+        check(m5.at(3,3) == 45.f) ;
+        check(m4 == m5);
+        check(m4 != m3);
     }
 }
