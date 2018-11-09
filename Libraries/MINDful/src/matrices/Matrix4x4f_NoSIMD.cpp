@@ -39,6 +39,27 @@ namespace Mind {
         m_data[2][column] = values.get(Point3Df::Axis::Z) ;
     }
 
+    void Matrix4x4f::setColumnValues(
+        const unsigned int column,
+        const Point4Df& values
+    ) {
+        m_data[0][column] = values.get(Point4Df::Axis::X) ;
+        m_data[1][column] = values.get(Point4Df::Axis::Y) ;
+        m_data[2][column] = values.get(Point4Df::Axis::Z) ;
+        m_data[3][column] = values.get(Point4Df::Axis::W) ;
+    }
+
+    Point4Df Matrix4x4f::getColumnValues(const unsigned int column) {
+        Point4Df tmp ;
+        tmp.set(
+            m_data[0][column],
+            m_data[1][column],
+            m_data[2][column],
+            m_data[3][column]
+        );
+        return tmp;
+    }
+
     void Matrix4x4f::setRowValues(
         const unsigned int row,
         const Point2Df& values
@@ -54,6 +75,27 @@ namespace Mind {
         m_data[row][0] = values.get(Point3Df::Axis::X) ;
         m_data[row][1] = values.get(Point3Df::Axis::Y) ;
         m_data[row][2] = values.get(Point3Df::Axis::Z) ;
+    }
+
+    void Matrix4x4f::setRowValues(
+        const unsigned int row,
+        const Point4Df& values
+    ) {
+        m_data[row][0] = values.get(Point4Df::Axis::X) ;
+        m_data[row][1] = values.get(Point4Df::Axis::Y) ;
+        m_data[row][2] = values.get(Point4Df::Axis::Z) ;
+        m_data[row][3] = values.get(Point4Df::Axis::W) ;
+    }
+
+    Point4Df Matrix4x4f::getRowValues(const unsigned int row) {
+        Point4Df tmp ;
+        tmp.set(
+            m_data[row][0],
+            m_data[row][1],
+            m_data[row][2],
+            m_data[row][3]
+        );
+        return tmp;
     }
 
     Matrix4x4f& Matrix4x4f::operator*=(const Scalar scalar) {
@@ -92,6 +134,56 @@ namespace Mind {
             }
         }
         return *this ;
+    }
+
+    Vector3f Matrix4x4f::extractTranslation(Matrix4x4f& matrix) {
+        // Translation vector is stored in the last column.
+        const int TranslationVectorColumnIndex = 3;
+        Vector3f translation = static_cast<Vector3f>(matrix.getColumnValues(TranslationVectorColumnIndex)) ;
+
+        // Clear values in the matrix (with w = 1).
+        matrix.setColumnValues(TranslationVectorColumnIndex, Vector4f(0, 0, 0, 1)) ;
+
+        return translation ;
+    }
+
+    Vector3f Matrix4x4f::extractScale(Matrix4x4f& matrix) {
+        const int Vector3Size = 3;
+
+        Vector3f scale ;
+
+        // Take the length of the (remaining) column vectors.
+        // This will be the scale vector.
+        for (int columnIndex = 0; columnIndex < Vector3Size; ++columnIndex)
+        {
+            Vector3f tmpVector = static_cast<Vector3f>(matrix.getColumnValues(columnIndex)) ;
+            scale[columnIndex] = tmpVector.length() ;
+        }
+
+        return scale ;
+    }
+
+    Quaternion Matrix4x4f::extractRotation(
+        Matrix4x4f& matrix,
+        const Vector3f& scale
+    ) {
+        const int Vector3Size = 3;
+
+        // Divide the matrix columns with the previously computed scale vector
+        // components.
+        // This will give the rotation matrix that can be converted to quaternion.
+        for (int columnIndex = 0; columnIndex < Vector3Size; ++columnIndex)
+        {
+            Vector3f tmpVector = static_cast<Vector3f>(matrix.getColumnValues(columnIndex)) ;
+            tmpVector = tmpVector / scale[columnIndex];
+            matrix.setColumnValues(columnIndex, tmpVector);
+        }
+
+        Matrix3x3f rotationMatrix;
+        rotationMatrix.setRowValues(0, static_cast<Vector3f>(matrix.getRowValues(0))) ;
+        rotationMatrix.setRowValues(1, static_cast<Vector3f>(matrix.getRowValues(1))) ;
+        rotationMatrix.setRowValues(2, static_cast<Vector3f>(matrix.getRowValues(2))) ;
+        return Quaternion(rotationMatrix);
     }
 } ;
 
