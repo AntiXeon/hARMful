@@ -176,6 +176,29 @@ namespace UTMind {
         // Trace.
         Scalar expectedTrace = 8.457f ;
         check(compare(m3.trace(), expectedTrace)) ;
+
+        // Decomposition.
+        Matrix4x4f m4 ;
+        m4.setRowValues(0, Point4Df(1.41421f, -1.41421f, 0.f, -0.123258f));
+        m4.setRowValues(1, Point4Df(1.41421f,  1.41421f, 0.f,  0.730693f));
+        m4.setRowValues(2, Point4Df(0.f,       0.f,      2.f,  1.03899e-08f));
+        m4.setRowValues(3, Point4Df(0.f,       0.f,      0.f,  1.f));
+
+        Point3Df translation;
+        Quaternion rotation;
+        Point3Df scale;
+        m4.decompose(translation, rotation, scale);
+
+        check(compare(translation[Point3Df::X], -0.123258f));
+        check(compare(translation[Point3Df::Y],  0.730693f));
+        check(compare(translation[Point3Df::Z],  1.03899e-08f));
+        check(compare(rotation[Quaternion::X], 0.f));
+        check(compare(rotation[Quaternion::Y], 0.f));
+        check(compare(rotation[Quaternion::Z], 0.382683f));
+        check(compare(rotation[Quaternion::W], 0.92388f));
+        check(compare(scale[Point3Df::X], 2.f, 1e-5f));
+        check(compare(scale[Point3Df::Y], 2.f, 1e-5f));
+        check(compare(scale[Point3Df::Z], 2.f, 1e-5f));
     }
 
     void UTMatrix4x4f::operators() {
