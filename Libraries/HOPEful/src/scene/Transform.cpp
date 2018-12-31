@@ -23,9 +23,14 @@ void Transform::setRotationOnX(const float rotation) {
     }
 
     m_eulerAngles.set(Mind::Vector3f::X, rotation) ;
+
+    // Apply to quaternion.
     Mind::Quaternion newRotation ;
-    // Need to implement Quaternion::from(euler angles values):
-    // newRotation.from(roll, pitch, yaw) ;
+    newRotation.from(
+        m_eulerAngles[Mind::Vector3f::X],
+        m_eulerAngles[Mind::Vector3f::Y],
+        m_eulerAngles[Mind::Vector3f::Z]
+    ) ;
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
@@ -39,9 +44,14 @@ void Transform::setRotationOnY(const float rotation) {
     }
 
     m_eulerAngles.set(Mind::Vector3f::Y, rotation) ;
+
+    // Apply to quaternion.
     Mind::Quaternion newRotation ;
-    // Need to implement Quaternion::from(euler angles values):
-    // newRotation.from(roll, pitch, yaw) ;
+    newRotation.from(
+        m_eulerAngles[Mind::Vector3f::X],
+        m_eulerAngles[Mind::Vector3f::Y],
+        m_eulerAngles[Mind::Vector3f::Z]
+    ) ;
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
@@ -55,9 +65,14 @@ void Transform::setRotationOnZ(const float rotation) {
     }
 
     m_eulerAngles.set(Mind::Vector3f::Z, rotation) ;
+
+    // Apply to quaternion.
     Mind::Quaternion newRotation ;
-    // Need to implement Quaternion::from(euler angles values):
-    // newRotation.from(roll, pitch, yaw) ;
+    newRotation.from(
+        m_eulerAngles[Mind::Vector3f::X],
+        m_eulerAngles[Mind::Vector3f::Y],
+        m_eulerAngles[Mind::Vector3f::Z]
+    ) ;
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
@@ -92,16 +107,18 @@ void Transform::setScale3D(const Mind::Vector3f& scale) {
 }
 
 void Transform::setMatrix(const Mind::Matrix4x4f& matrix) {
-    // Implement matrix comparison.
-    // if (m_matrix == matrix) {
-    //     return ;
-    // }
+    if (m_matrix == matrix) {
+         return ;
+    }
 
     m_matrix = matrix ;
     m_outdatedMatrix = false ;
 
     // Decompose the matrix to rotation, translation and scale.
-    // Put values in the fields.
+    Mind::Vector3f translation ;
+    Mind::Quaternion rotation ;
+    Mind::Vector3f scale ;
+    m_matrix.decompose(translation, rotation, scale) ;
 }
 
 
@@ -136,6 +153,7 @@ Mind::Vector3f Transform::scale3D() const {
 Mind::Matrix4x4f Transform::matrix() {
     if (m_outdatedMatrix) {
         // Recompose the matrix from the different component values.
+        m_matrix.compose(m_translation, m_rotation, m_scale) ;
         m_outdatedMatrix = false ;
     }
 
