@@ -217,10 +217,6 @@ namespace UTMind {
         check(compare(m5.at(3, 1), m4.at(3, 1))) ;
         check(compare(m5.at(3, 2), m4.at(3, 2))) ;
         check(compare(m5.at(3, 3), m4.at(3, 3))) ;
-
-        std::cout << "M4 = " << m4 << std::endl;
-        std::cout << "M5 = " << m5 << std::endl;
-
     }
 
     void UTMatrix4x4f::operators() {
