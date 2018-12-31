@@ -1,6 +1,5 @@
 #include <scene/Component.hpp>
 #include <scene/Entity.hpp>
-#include <scene/Transform.hpp>
 #include <algorithm>
 #include <cassert>
 

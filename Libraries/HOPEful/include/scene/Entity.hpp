@@ -3,13 +3,13 @@
 
 #include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
+#include <scene/Transform.hpp>
 #include <memory>
 #include <vector>
 
 namespace Hope {
 
     class Component ;
-    class Transform ;
 
     /**
      * An entity is a node that can bear components for many purpose: rendering,
