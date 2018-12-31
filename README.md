@@ -14,8 +14,8 @@ The repository is structured in different parts:
 All the libraries require `cmake`.
 
 ### HOPEful
-* GLFW 3.2.1: https://github.com/glfw/glfw
-* GLEW 2.0.0: https://github.com/nigels-com/glew
+* GLFW 3.2.1: https://github.com/glfw/glfw (for window and inputs)
+* GLEW 2.0.0: https://github.com/nigels-com/glew (for modern OpenGL functions)
 
 ### MINDful
 * Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
