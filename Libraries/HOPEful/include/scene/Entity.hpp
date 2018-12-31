@@ -9,6 +9,7 @@
 namespace Hope {
 
     class Component ;
+    class Transform ;
 
     /**
      * An entity is a node that can bear components for many purpose: rendering,
@@ -16,6 +17,11 @@ namespace Hope {
      */
     class Entity: public Node {
         private:
+            /**
+             * Transform of the entity.
+             */
+            Transform m_transform ;
+
             /**
              * Components attached to the current entity.
              */
@@ -62,6 +68,11 @@ namespace Hope {
                         otherwise.
              */
             Component* component(const ComponentType type) const ;
+
+            /**
+             * Get the transform of the entity.
+             */
+            Transform& transform() ;
 
             /**
              * Get the list of the components attached to the current entity.

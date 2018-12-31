@@ -1,5 +1,6 @@
 #include <scene/Component.hpp>
 #include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 #include <algorithm>
 #include <cassert>
 
@@ -58,6 +59,10 @@ namespace Hope {
         }
 
         return nullptr ;
+    }
+
+    Transform& Entity::transform() {
+        return m_transform ;
     }
 
     const std::vector<Component*>& Entity::components() const {
