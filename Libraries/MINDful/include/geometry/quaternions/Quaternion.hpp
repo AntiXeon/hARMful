@@ -267,7 +267,7 @@ namespace Mind {
              * @param matrix The Matrix3x3f that will represent the same
              *               rotation than the current quaternion.
              */
-            exported void to(Matrix3x3f& matrix) ;
+            exported void to(Matrix3x3f& matrix) const ;
 
             /**
              * Get the values of the Quaternion as an axis (@a vector) and an
@@ -276,7 +276,7 @@ namespace Mind {
              *                 the rotation is applied.
              * @param radAngle Output angle of the rotation in radians.
              */
-            exported void to(Vector3f& vector, Scalar& radAngle) ;
+            exported void to(Vector3f& vector, Scalar& radAngle) const ;
 
             /**
              * Get the values of the Quaternion as a serie of three vectors, one
@@ -289,7 +289,7 @@ namespace Mind {
                 Vector3f& xAxis,
                 Vector3f& yAxis,
                 Vector3f& zAxis
-            ) ;
+            ) const ;
 
             /**
              * Convert the Quaternion to Euler angles.
@@ -301,7 +301,7 @@ namespace Mind {
                 Scalar& roll,
                 Scalar& pitch,
                 Scalar& yaw
-            ) ;
+            ) const ;
 
             /**
              * Access to a component of the Quaternion (read-only).

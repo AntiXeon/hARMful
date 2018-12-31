@@ -179,26 +179,48 @@ namespace UTMind {
 
         // Decomposition.
         Matrix4x4f m4 ;
-        m4.setRowValues(0, Point4Df(1.41421f, -1.41421f, 0.f, -0.123258f));
-        m4.setRowValues(1, Point4Df(1.41421f,  1.41421f, 0.f,  0.730693f));
-        m4.setRowValues(2, Point4Df(0.f,       0.f,      2.f,  1.03899e-08f));
-        m4.setRowValues(3, Point4Df(0.f,       0.f,      0.f,  1.f));
+        Point3Df translationM4 ;
+        Quaternion rotationM4 ;
+        Point3Df scaleM4 ;
+        m4.setRowValues(0, Point4Df(1.41421f, -1.41421f, 0.f, -0.123258f)) ;
+        m4.setRowValues(1, Point4Df(1.41421f,  1.41421f, 0.f,  0.730693f)) ;
+        m4.setRowValues(2, Point4Df(0.f,       0.f,      2.f,  1.03899e-08f)) ;
+        m4.setRowValues(3, Point4Df(0.f,       0.f,      0.f,  1.f)) ;
+        m4.decompose(translationM4, rotationM4, scaleM4) ;
+        check(compare(translationM4[Point3Df::X], -0.123258f)) ;
+        check(compare(translationM4[Point3Df::Y],  0.730693f)) ;
+        check(compare(translationM4[Point3Df::Z],  1.03899e-08f)) ;
+        check(compare(rotationM4[Quaternion::X], 0.f)) ;
+        check(compare(rotationM4[Quaternion::Y], 0.f)) ;
+        check(compare(rotationM4[Quaternion::Z], 0.382683f)) ;
+        check(compare(rotationM4[Quaternion::W], 0.92388f)) ;
+        check(compare(scaleM4[Point3Df::X], 2.f, 1e-5f)) ;
+        check(compare(scaleM4[Point3Df::Y], 2.f, 1e-5f)) ;
+        check(compare(scaleM4[Point3Df::Z], 2.f, 1e-5f)) ;
 
-        Point3Df translation;
-        Quaternion rotation;
-        Point3Df scale;
-        m4.decompose(translation, rotation, scale);
+        // Composition.
+        Matrix4x4f m5 ;
+        m5.compose(translationM4, rotationM4, scaleM4) ;
+        check(compare(m5.at(0, 0), m4.at(0, 0))) ;
+        check(compare(m5.at(0, 1), m4.at(0, 1))) ;
+        check(compare(m5.at(0, 2), m4.at(0, 2))) ;
+        check(compare(m5.at(0, 3), m4.at(0, 3))) ;
+        check(compare(m5.at(1, 0), m4.at(1, 0))) ;
+        check(compare(m5.at(1, 1), m4.at(1, 1))) ;
+        check(compare(m5.at(1, 2), m4.at(1, 2))) ;
+        check(compare(m5.at(1, 3), m4.at(1, 3))) ;
+        check(compare(m5.at(2, 0), m4.at(2, 0))) ;
+        check(compare(m5.at(2, 1), m4.at(2, 1))) ;
+        check(compare(m5.at(2, 2), m4.at(2, 2))) ;
+        check(compare(m5.at(2, 3), m4.at(2, 3))) ;
+        check(compare(m5.at(3, 0), m4.at(3, 0))) ;
+        check(compare(m5.at(3, 1), m4.at(3, 1))) ;
+        check(compare(m5.at(3, 2), m4.at(3, 2))) ;
+        check(compare(m5.at(3, 3), m4.at(3, 3))) ;
 
-        check(compare(translation[Point3Df::X], -0.123258f));
-        check(compare(translation[Point3Df::Y],  0.730693f));
-        check(compare(translation[Point3Df::Z],  1.03899e-08f));
-        check(compare(rotation[Quaternion::X], 0.f));
-        check(compare(rotation[Quaternion::Y], 0.f));
-        check(compare(rotation[Quaternion::Z], 0.382683f));
-        check(compare(rotation[Quaternion::W], 0.92388f));
-        check(compare(scale[Point3Df::X], 2.f, 1e-5f));
-        check(compare(scale[Point3Df::Y], 2.f, 1e-5f));
-        check(compare(scale[Point3Df::Z], 2.f, 1e-5f));
+        std::cout << "M4 = " << m4 << std::endl;
+        std::cout << "M5 = " << m5 << std::endl;
+
     }
 
     void UTMatrix4x4f::operators() {

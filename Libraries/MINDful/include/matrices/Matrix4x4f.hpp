@@ -41,6 +41,20 @@ namespace Mind {
             ) ;
 
             /**
+             * @brief   Compose the matrix 4x4 to store translation, rotation
+             *          and scale values inside.
+             * @param   translation Input translation vector contained in the
+             *                      matrix.
+             * @param   rotation    Input rotation contained in the matrix.
+             * @param   scale       Input scale vector contained in the matrix.
+             */
+            exported void compose(
+                const Vector3f& translation,
+                const Quaternion& rotation,
+                const Vector3f& scale
+            ) ;
+
+            /**
              * @brief   Extract the translation from the current matrix.
              * @return  Translation vector contained in the matrix.
              */

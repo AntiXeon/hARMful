@@ -241,7 +241,7 @@ namespace Mind {
 
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
-    void Quaternion::to(Matrix3x3f& matrix) {
+    void Quaternion::to(Matrix3x3f& matrix) const {
         Scalar twiceX  = m_values[Axis::X] + m_values[Axis::X] ;
         Scalar twiceY  = m_values[Axis::Y] + m_values[Axis::Y] ;
         Scalar twiceZ  = m_values[Axis::Z] + m_values[Axis::Z] ;
@@ -266,7 +266,7 @@ namespace Mind {
         matrix.at(2,2, 1.0f - (x2_x + y2_y)) ;
     }
 
-    void Quaternion::to(Vector3f& vector, Scalar& radAngle) {
+    void Quaternion::to(Vector3f& vector, Scalar& radAngle) const {
         // Get the length of the vector part of the quaternion (x,y,z).
         Scalar squaredLength = (m_values[Axis::X] * m_values[Axis::X]) + (m_values[Axis::Y] * m_values[Axis::Y]) + (m_values[Axis::Z] * m_values[Axis::Z]) ;
         if (squaredLength > 0.f) {
@@ -289,7 +289,7 @@ namespace Mind {
         Vector3f& xAxis,
         Vector3f& yAxis,
         Vector3f& zAxis
-    ) {
+    ) const {
         Matrix3x3f rotationMatrix ;
         to(rotationMatrix) ;
 
@@ -316,7 +316,7 @@ namespace Mind {
         Scalar& roll,
         Scalar& pitch,
         Scalar& yaw
-    ) {
+    ) const {
         Scalar squaredY = m_values[Axis::Y] * m_values[Axis::Y] ;
 
         // Roll (x-axis rotation).

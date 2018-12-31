@@ -17,7 +17,7 @@ namespace Mind {
             exported Matrix3x3f(const Scalar value = 0.f) ;
 
             /**
-             * Multiplay the current Matrix3x3 by another one.
+             * Multiply the current Matrix3x3 by another one.
              * The result is set in the current Matrix3x3.
              * @param   other   The other Matrix3x3 used in the product.
              */

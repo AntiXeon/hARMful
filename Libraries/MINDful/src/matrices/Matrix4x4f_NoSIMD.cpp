@@ -1,4 +1,5 @@
 #include <matrices/Matrix4x4f.hpp>
+#include <matrices/Matrix3x3f.hpp>
 #include <iomanip>
 
 #ifdef USE_NO_SIMD
@@ -20,6 +21,38 @@ namespace Mind {
         }
 
         m_data = result ;
+    }
+
+    void Matrix4x4f::compose(
+        const Vector3f& translation,
+        const Quaternion& rotation,
+        const Vector3f& scale
+    ) {
+        // Compose the matrix in this order: scale, rotation and translation.
+        // First, convert the quaternion to a 3x3 rotation matrix.
+        Matrix3x3f rotationMatrix ;
+        rotation.to(rotationMatrix) ;
+
+        // Then multiply scale by rotation matrix values and put it in the
+        // current transformation matrix.
+        m_data[0][0] = scale[Point3Df::X] * rotationMatrix[0][0] ;
+        m_data[0][1] = scale[Point3Df::Y] * rotationMatrix[0][1] ;
+        m_data[0][2] = scale[Point3Df::Z] * rotationMatrix[0][2] ;
+
+        m_data[1][0] = scale[Point3Df::X] * rotationMatrix[1][0] ;
+        m_data[1][1] = scale[Point3Df::Y] * rotationMatrix[1][1] ;
+        m_data[1][2] = scale[Point3Df::Z] * rotationMatrix[1][2] ;
+
+        m_data[2][0] = scale[Point3Df::X] * rotationMatrix[2][0] ;
+        m_data[2][1] = scale[Point3Df::Y] * rotationMatrix[2][1] ;
+        m_data[2][2] = scale[Point3Df::Z] * rotationMatrix[2][2] ;
+
+        // Put the translation value in the last column.
+        setColumnValues(3, translation) ;
+
+        // No projection.
+        Point4Df noProjection(0.f, 0.f, 0.f, 1.f) ;
+        setRowValues(3, noProjection) ;
     }
 
     void Matrix4x4f::setColumnValues(

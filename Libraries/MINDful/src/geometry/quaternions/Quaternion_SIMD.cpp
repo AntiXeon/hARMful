@@ -308,7 +308,7 @@ namespace Mind {
 
     // From Ken Shoemake's explanations on quaternions.
     // http://www.cs.ucr.edu/~vbz/resources/quatut.pdf
-    void Quaternion::to(Matrix3x3f& matrix) {
+    void Quaternion::to(Matrix3x3f& matrix) const {
         auto twiceValues = m_values + m_values ;
         auto twiceValuesX = twiceValues * SIMD::Vector4f(m_values[Axis::X]) ;
         auto twiceValuesY = twiceValues * SIMD::Vector4f(m_values[Axis::Y]) ;
@@ -328,7 +328,7 @@ namespace Mind {
         matrix.at(2,2, 1.f - (twiceValuesX[Axis::X] + twiceValuesY[Axis::Y])) ;
     }
 
-    void Quaternion::to(Vector3f& vector, Scalar& radAngle) {
+    void Quaternion::to(Vector3f& vector, Scalar& radAngle) const {
         // Get the length of the vector part of the quaternion (x,y,z).
         SIMD::Vector4f tmp(
             m_values[Axis::X],
@@ -362,7 +362,7 @@ namespace Mind {
         Vector3f& xAxis,
         Vector3f& yAxis,
         Vector3f& zAxis
-    ) {
+    ) const {
         Matrix3x3f rotationMatrix ;
         to(rotationMatrix) ;
 
@@ -389,7 +389,7 @@ namespace Mind {
         Scalar& roll,
         Scalar& pitch,
         Scalar& yaw
-    ) {
+    ) const {
         Scalar squaredY = m_values[Axis::Y] * m_values[Axis::Y] ;
 
         // Roll (x-axis rotation).
