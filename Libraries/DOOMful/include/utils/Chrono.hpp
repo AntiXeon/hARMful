@@ -3,6 +3,7 @@
 
 #include <utils/Platform.hpp>
 #include <chrono>
+#include <cstdint>
 
 namespace Doom {
     /**
