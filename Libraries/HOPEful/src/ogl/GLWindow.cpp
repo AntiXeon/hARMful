@@ -23,6 +23,10 @@ namespace Hope {
         glfwSwapBuffers(m_window);
     }
 
+    Scene& GLWindow::scene() {
+        return m_scene ;
+    }
+
     void GLWindow::createInternalWindow(
         const int width,
         const int height,

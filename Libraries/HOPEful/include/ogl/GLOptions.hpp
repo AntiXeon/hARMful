@@ -3,6 +3,12 @@
 
 #include <cstdint>
 
+#ifdef GL
+    #define API GL
+#elif defined VK
+    #define API Vulkan
+#endif
+
 namespace Hope {
     /**
      * Options to configurate OpenGL.

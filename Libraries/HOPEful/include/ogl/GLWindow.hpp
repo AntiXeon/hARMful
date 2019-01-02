@@ -1,8 +1,9 @@
-#ifndef __HOPE__WINDOW__
-#define __HOPE__WINDOW__
+#ifndef __HOPE__GL_WINDOW__
+#define __HOPE__GL_WINDOW__
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <scene/Scene.hpp>
 #include <string>
 
 namespace Hope {
@@ -15,6 +16,11 @@ namespace Hope {
              * Underlying window from GLFW library.
              */
             GLFWwindow* m_window;
+
+            /**
+             * Scene to be displayed in the window.
+             */
+            Scene m_scene ;
 
         public:
             /**
@@ -38,6 +44,11 @@ namespace Hope {
              * Swap buffers for rendering.
              */
             void swapBuffers();
+
+            /**
+             * Get the scene that is rendered in the current window.
+             */
+            Scene& scene() ;
 
         private:
             /**
