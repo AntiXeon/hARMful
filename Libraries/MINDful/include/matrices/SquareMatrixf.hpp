@@ -229,20 +229,20 @@ namespace Mind {
              * Get the total size of the SquareMatrix.
              * @return  Total amount of elements in the SquareMatrix.
              */
-            unsigned int totalSize() const ;
+            exported unsigned int totalSize() const ;
 
             /**
              * Clear the matrix with the given value.
              * @param   value   Value to fill the matrix with.
              */
-            void clearWith(const Scalar value) ;
+            exported void clearWith(const Scalar value) ;
 
             /**
              * Get the inner data of the SquareMatrix.
              * @param   output  Storage of the inner data.
              * @warning Output must have the right size as a single array.
              */
-            void getData(Scalar* output) ;
+            exported void getData(Scalar* output) ;
     } ;
 
     inline void SquareMatrixf::clear() {

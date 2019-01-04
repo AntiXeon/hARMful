@@ -314,7 +314,7 @@ namespace Mind {
 
         protected:
             /** Compute the bottom right corner that is cached. */
-            void computeMaxPoint() ;
+            exported void computeMaxPoint() ;
 
         public:
             /**
