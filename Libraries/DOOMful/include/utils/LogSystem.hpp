@@ -92,7 +92,7 @@ namespace Doom {
              * @return String representing the printed date and time in the
              *         logs.
              */
-            std::string formatCurrentDateTime() ;
+            exported std::string formatCurrentDateTime() ;
 
         public:
             /**

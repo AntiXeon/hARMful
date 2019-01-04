@@ -206,20 +206,20 @@ namespace Mind {
              * @brief   Extract the translation from the given matrix.
              * @return  Translation vector contained in the matrix.
              */
-            static Vector3f extractTranslation(Matrix4x4f& matrix) ;
+            exported static Vector3f extractTranslation(Matrix4x4f& matrix) ;
 
             /**
              * @brief   Extract the scale from the given matrix.
              * @return  Scale vector contained in the matrix.
              */
-            static Vector3f extractScale(Matrix4x4f& matrix) ;
+            exported static Vector3f extractScale(Matrix4x4f& matrix) ;
 
             /**
              * @brief   Extract the rotation from the given matrix.
              * @param   scale   Scale vector contained in the matrix.
              * @return  Quaternion contained in the matrix.
              */
-            static Quaternion extractRotation(
+            exported static Quaternion extractRotation(
                 Matrix4x4f& matrix,
                 const Vector3f& scale
             ) ;
