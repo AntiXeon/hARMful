@@ -11,7 +11,7 @@ The repository is structured in different parts:
 * **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
 
 ## Dependencies
-Use the command line `git clone git@github.com:dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
+Use the command line `git clone https://github.com/dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
 All the libraries require `cmake`.
 
 ### HOPEful
