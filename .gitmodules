@@ -1,0 +1,9 @@
+[submodule "Libraries/HOPEful/dependencies/glfw"]
+	path = Libraries/HOPEful/dependencies/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "Libraries/HOPEful/dependencies/glew"]
+	path = Libraries/HOPEful/dependencies/glew
+	url = https://github.com/nigels-com/glew.git
+[submodule "Libraries/HOPEful/dependencies/assimp"]
+	path = Libraries/HOPEful/dependencies/assimp
+	url = https://github.com/assimp/assimp.git
