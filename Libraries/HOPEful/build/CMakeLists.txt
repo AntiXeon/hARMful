@@ -29,6 +29,9 @@ add_library (
 
 target_link_libraries(${PROJECT_NAME} DOOM MIND)
 
+# Windows dependencies
+include("./WindowsDependencies.cmake")
+
 # Versioning
 if (UNIX)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
