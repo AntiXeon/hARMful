@@ -6,10 +6,14 @@ test:
         - wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
         - unzip glfw-3.2.1.zip
         - cd glfw-3.2.1 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && sudo make install
-        # Get the source code from GLEW 2, compile it and install it.
-        - wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
-        - tar zxfv glew-2.0.0.tgz
-        - cd glew-2.0.0/build/ && cmake ./cmake && make && sudo make install
+        # Get the source code from GLEW 2.1.0, compile it and install it.
+        - wget https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
+        - tar zxfv glew-2.1.0.tgz
+        - cd glew-2.1.0/build/ && cmake ./cmake && make && sudo make install
+        # Get the source code from ASSIMP 4.1.0, compile it and install it.
+        - wget https://github.com/assimp/assimp/archive/v4.1.0.tar.gz
+        - tar zxfv v4.1.0.tar.gz
+        - cd assimp-4.1.0 && cmake . && make && sudo make install
     override:
         # Build libraries
         - cd Libraries && cmake . && make
