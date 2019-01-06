@@ -29,6 +29,9 @@ add_library (
 
 target_link_libraries(${PROJECT_NAME} DOOM MIND)
 
+# Linux dependencies
+include("./LinuxDependencies.cmake")
+
 # Windows dependencies
 include("./WindowsDependencies.cmake")
 
