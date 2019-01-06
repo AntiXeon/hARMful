@@ -11,7 +11,6 @@ The repository is structured in different parts:
 * **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
 
 ## Dependencies
-Use the command line `git clone https://github.com/dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
 All the libraries require `cmake`.
 
 ### HOPEful
@@ -28,9 +27,13 @@ The source code of the **hARMful** project is mainly written in C++14 language a
 To compile the code, enter into the Libraries folder and compile all the libraries at once by typing `cmake .`.
 
 ### GNU/Linux
-To compile on a GNU/Linux system, type `cmake .` then `make`. It will generate the `.so` file.
+Install the dependencies on your system.
+
+To compile on a GNU/Linux system, type `cmake .` then `make`. It will generate the `.so` files.
 
 ### Microsoft® Windows™
+Use the command line `git clone https://github.com/dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
+
 To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free.
 Once the IDE is launched, compile the project and a `.dll` file is generated with a `.lib` for the linker.
 
