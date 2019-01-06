@@ -2,75 +2,75 @@
 #include <algorithm>
 #include <cassert>
 
-namespace Hope {
-    Node::Node(Node* parent) {
-        if (parent) {
-            bool success = parent -> addChild(this) ;
+using namespace Hope ;
 
-            if (success) {
-                m_parent = parent ;
-            }
+Node::Node(Node* parent) {
+    if (parent) {
+        bool success = parent -> addChild(this) ;
+
+        if (success) {
+            m_parent = parent ;
         }
     }
+}
 
-    Node::~Node() {
-        for (Node* child : m_children) {
-            delete child ;
-        }
-
-        m_children.clear() ;
+Node::~Node() {
+    for (Node* child : m_children) {
+        delete child ;
     }
 
-    void Node::setParent(Node* parent) {
-        if (m_parent) {
-            m_parent -> removeChild(this) ;
-        }
+    m_children.clear() ;
+}
 
-        m_parent = parent ;
-
-        if (m_parent) {
-            m_parent -> addChild(this) ;
-        }
+void Node::setParent(Node* parent) {
+    if (m_parent) {
+        m_parent -> removeChild(this) ;
     }
 
-    const Node* Node::parent() const {
-        return m_parent ;
+    m_parent = parent ;
+
+    if (m_parent) {
+        m_parent -> addChild(this) ;
     }
+}
 
-    const std::vector<Node*>& Node::children() const {
-        return m_children ;
-    }
+const Node* Node::parent() const {
+    return m_parent ;
+}
 
-    bool Node::addChild(Node* newChild) {
-        assert(newChild != nullptr) ;
+const std::vector<Node*>& Node::children() const {
+    return m_children ;
+}
 
-        if (newChild == this) {
-            // Avoid being its own child...
-            return false ;
-        }
+bool Node::addChild(Node* newChild) {
+    assert(newChild != nullptr) ;
 
-        auto posNode = std::find(m_children.begin(), m_children.end(), newChild) ;
-        bool hasChild = (posNode != m_children.end()) ;
-
-        if (!hasChild) {
-            m_children.push_back(newChild) ;
-            return true ;
-        }
-
+    if (newChild == this) {
+        // Avoid being its own child...
         return false ;
     }
 
-    bool Node::removeChild(Node* child) {
-        assert(child != nullptr) ;
+    auto posNode = std::find(m_children.begin(), m_children.end(), newChild) ;
+    bool hasChild = (posNode != m_children.end()) ;
 
-        auto posNode = std::find(m_children.begin(), m_children.end(), child) ;
-        bool hasChild = (posNode != m_children.end()) ;
-
-        if (hasChild) {
-            m_children.erase(posNode) ;
-            return true ;
-        }
-
-        return false ;
+    if (!hasChild) {
+        m_children.push_back(newChild) ;
+        return true ;
     }
+
+    return false ;
+}
+
+bool Node::removeChild(Node* child) {
+    assert(child != nullptr) ;
+
+    auto posNode = std::find(m_children.begin(), m_children.end(), child) ;
+    bool hasChild = (posNode != m_children.end()) ;
+
+    if (hasChild) {
+        m_children.erase(posNode) ;
+        return true ;
+    }
+
+    return false ;
 }

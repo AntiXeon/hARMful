@@ -6,11 +6,11 @@
 #include <scene/Scene.hpp>
 #include <string>
 
-namespace Hope {
+namespace Hope { namespace GL {
     /**
      * A window containing an OpenGL application.
      */
-    class GLWindow {
+    class Window {
         private:
             /**
              * Underlying window from GLFW library.
@@ -24,12 +24,12 @@ namespace Hope {
 
         public:
             /**
-             * Create a new GLWindow.
+             * Create a new Window.
              * @param   width   Width of the window.
              * @param   height  Height of the window.
              * @param   title   Title of the window.
              */
-            GLWindow(
+            Window(
                 const int width,
                 const int height,
                 const std::string& title
@@ -38,7 +38,7 @@ namespace Hope {
             /**
              * Destruction of the GLWindow.
              */
-            virtual ~GLWindow();
+            virtual ~Window();
 
             /**
              * Swap buffers for rendering.
@@ -49,6 +49,13 @@ namespace Hope {
              * Get the scene that is rendered in the current window.
              */
             Scene& scene() ;
+
+
+            // Remove copy/move operations.
+            Window(const Window& copied) = delete ;
+            Window(Window&& moved) = delete ;
+            Window& operator=(const Window& copied) = delete ;
+            Window& operator=(Window&& moved) = delete ;
 
         private:
             /**
@@ -79,6 +86,6 @@ namespace Hope {
              */
             void setInputMode();
     };
-}
+}}
 
 #endif

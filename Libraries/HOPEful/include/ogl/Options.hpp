@@ -3,17 +3,11 @@
 
 #include <cstdint>
 
-#ifdef GL
-    #define API GL
-#elif defined VK
-    #define API Vulkan
-#endif
-
-namespace Hope {
+namespace Hope { namespace GL {
     /**
      * Options to configurate OpenGL.
      */
-    class GLOptions {
+    class Options {
         public:
             /**
              * Sampling to enable or disable antialiasing.
@@ -44,6 +38,6 @@ namespace Hope {
              */
             static void SetSamplingFactor(const Sampling sampling);
     };
-}
+}}
 
 #endif
