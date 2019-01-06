@@ -1,4 +1,4 @@
-#include <ogl/Options.hpp>
+#include <scene/ogl/Options.hpp>
 #include <GLFW/glfw3.h>
 
 using namespace Hope::GL ;

@@ -1,4 +1,4 @@
-#include <ogl/mesh/MeshPart.hpp>
+#include <scene/ogl/mesh/MeshPart.hpp>
 #include <cstdint>
 
 using namespace Hope::GL ;

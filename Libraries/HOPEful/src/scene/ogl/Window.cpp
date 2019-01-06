@@ -1,6 +1,6 @@
 #include <HOPEStrings.hpp>
-#include <ogl/Window.hpp>
-#include <ogl/Options.hpp>
+#include <scene/ogl/Window.hpp>
+#include <scene/ogl/Options.hpp>
 #include <utils/LogSystem.hpp>
 #include <iostream>
 #include <cstdlib>

@@ -2,7 +2,7 @@
 #define __HOPE__GL_MESHPART__
 
 #include <vector>
-#include <ogl/GLDefines.hpp>
+#include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
 
 namespace Hope { namespace GL {

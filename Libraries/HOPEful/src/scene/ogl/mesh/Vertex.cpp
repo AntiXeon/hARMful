@@ -1,4 +1,4 @@
-#include <ogl/mesh/Vertex.hpp>
+#include <scene/ogl/mesh/Vertex.hpp>
 
 using namespace Hope::GL ;
 

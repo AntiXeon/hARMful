@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 #include <memory>
-#include <ogl/mesh/Mesh.hpp>
+#include <scene/ogl/mesh/Mesh.hpp>
 
 class Importer ;
 struct aiScene ;
