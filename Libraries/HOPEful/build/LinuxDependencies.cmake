@@ -14,7 +14,8 @@ if (UNIX)
 
     find_package(assimp REQUIRED)
     if (assimp_FOUND)
-        include_directories(${assimp_INCLUDE_DIRS})
-        target_link_libraries(${PROJECT_NAME} ${assimp_LIBRARIES})
+        # Because ASSIMP find_package seems to be broken...
+        set(ASSIMP_LIBRARY "assimp")
+        target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
     endif()
 endif()
