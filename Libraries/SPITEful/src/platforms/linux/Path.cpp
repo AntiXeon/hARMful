@@ -36,7 +36,7 @@ void Path::CurrentDirectory(std::string& outCWD) {
     char cwd[256] ;
 
     errno = 0 ;
-    getcwd(cwd, 256) ;
+    static_cast<void>(getcwd(cwd, 256)) ;
     STOP_ON_CERROR() ;
 
     outCWD.assign(cwd) ;
