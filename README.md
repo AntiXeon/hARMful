@@ -13,13 +13,17 @@ The repository is structured in different parts:
 ## Dependencies
 All the libraries require `cmake`.
 
-### HOPEful
+### HOPEful (OpenGL rendering)
 * GLFW 3.2.1: https://github.com/glfw/glfw (for window and inputs)
 * GLEW 2.1.0: https://github.com/nigels-com/glew (for modern OpenGL functions)
 * Assimp 4.1.0: https://github.com/assimp/assimp (for importing 3D file models)
 
-### MINDful
+### MINDful (mathematics tools)
 * Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
+
+### SPITEful (multimedia files management)
+* libpng 1.6.35: https://github.com/glennrp/libpng
+* libjpeg-turbo 2.0.1: https://github.com/libjpeg-turbo/libjpeg-turbo
 
 ## Source code
 The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations. A compliant compiler is required, g++ is advised.
