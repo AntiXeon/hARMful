@@ -1,3 +1,5 @@
+#ifdef LinuxPlatform
+
 #include <Path.hpp>
 #include <SPITEStrings.hpp>
 #include <utils/Platform.hpp>
@@ -30,7 +32,6 @@ const std::string& Path::extension() const {
 }
 
 
-#ifdef LinuxPlatform
 void Path::CurrentDirectory(std::string& outCWD) {
     char cwd[256] ;
 
@@ -116,16 +117,6 @@ void Path::convertToAbsolutePath(const std::string& filepath) {
         }
     }
 }
-#elif WindowsPlatform
-void Path::CurrentDirectory(std::string& outCWD) {
-    // To be done.
-}
-
-void Path::convertToAbsolutePath(const std::string& filepath) {
-    // To be done.
-}
-#endif
-
 
 void Path::extractFilenameAndExtension() {
     std::size_t lastPathCharPosition = m_absolutePath.find_last_of("/\\") ;
@@ -144,3 +135,5 @@ void Path::extractFilenameAndExtension() {
         m_extension.clear() ;
     }
 }
+
+#endif
