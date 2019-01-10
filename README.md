@@ -28,9 +28,7 @@ All the libraries require `cmake`.
 * libjpeg-turbo 2.0.1: https://github.com/libjpeg-turbo/libjpeg-turbo
 
 ## Source code
-The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations.
-
-For the Windows version of hARMful, some C++17 features are used, this requires an updated Microsoft® Visual Studio® version. See below for details.
+The source code of the **hARMful** project is mainly written in C++17 language and SIMD operations.
 
 To compile the code, enter into the Libraries folder and compile all the libraries at once by typing `cmake .`.
 
