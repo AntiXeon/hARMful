@@ -2,7 +2,6 @@
 #define __SPITE__ILOADABLE__
 
 #include <interfaces/IFileData.hpp>
-#include <exceptions/IOException.hpp>
 
 namespace Spite {
 
