@@ -13,6 +13,8 @@ The repository is structured in different parts:
 ## Dependencies
 All the libraries require `cmake`.
 
+**Important note:** Windows users do not have to install these dependencies. All of them are automatically downloaded and compiled within the hARMful project, you do not have to install them on your system.
+
 ### HOPEful (OpenGL rendering)
 * GLFW 3.2.1: https://github.com/glfw/glfw (for window and inputs)
 * GLEW 2.1.0: https://github.com/nigels-com/glew (for modern OpenGL functions)
@@ -26,11 +28,13 @@ All the libraries require `cmake`.
 * libjpeg-turbo 2.0.1: https://github.com/libjpeg-turbo/libjpeg-turbo
 
 ## Source code
-The source code of the **hARMful** project is mainly written in C++14 language and SIMD operations. A compliant compiler is required, g++ is advised.
+The source code of the **hARMful** project is mainly written in C++17 language and SIMD operations.
 
 To compile the code, enter into the Libraries folder and compile all the libraries at once by typing `cmake .`.
 
 ### GNU/Linux
+A compliant compiler is required, g++ is advised.
+
 Install the dependencies on your system.
 
 To compile on a GNU/Linux system, enter the `Library` folder and type `cmake .` then `make`. It will generate the `.so` files.
@@ -38,7 +42,7 @@ To compile on a GNU/Linux system, enter the `Library` folder and type `cmake .` 
 ### Microsoft® Windows™
 Use the command line `git clone https://github.com/dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
 
-Enter the `Library` folder. To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free.
+Enter the `Library` folder. To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free. **Visual Studio® 2017 15.9 or higher is supported, lower versions could not compile the code.**
 Once the IDE is launched, compile the project and a `.dll` file is generated with a `.lib` for the linker.
 
 PS: If you want to compile the DLLs using a 64-bit architecture, use the command `cmake -DCMAKE_GENERATOR_PLATFORM=x64 .`
