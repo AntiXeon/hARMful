@@ -8,7 +8,9 @@ jobs:
             - checkout
             - run:
                 name: Dependencies for HOPEful (3D engine library)
-                commmand: sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
+                commmand: |
+                    sudo apt-get update
+                    sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
 
 # test:
 #     pre:
