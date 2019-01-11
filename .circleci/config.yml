@@ -1,3 +1,5 @@
+version: 2
+
 test:
     pre:
         # Dependencies for HOPEful (3D engine library)
