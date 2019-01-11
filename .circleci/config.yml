@@ -2,26 +2,9 @@ version: 2
 jobs:
     build:
         docker:
-            - image: circleci/python:3.6.2-stretch-browsers
+            - image: dcarlus/harmful0.0.1
         steps:
             - checkout
-            # Install CMake
-            - run: sudo apt-get update
-            - run: sudo apt-get install build-essential g++-6 cmake
-            # Dependencies for HOPEful (3D engine library)
-            - run: sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
-            # Get the source code from GLFW 3.2.1, compile it and install it.
-            - run: wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
-            - run: unzip glfw-3.2.1.zip
-            - run: cd glfw-3.2.1 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && sudo make install
-            # Get the source code from GLEW 2.0.0, compile it and install it.
-            - run: wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
-            - run: tar zxfv glew-2.0.0.tgz
-            - run: cd glew-2.0.0/build/ && cmake ./cmake && make && sudo make install
-            # Get the source code from ASSIMP 4.1.0, compile it and install it.
-            - run: wget https://github.com/assimp/assimp/archive/v4.1.0.tar.gz
-            - run: tar zxfv v4.1.0.tar.gz
-            - run: cd assimp-4.1.0 && cmake . && make && sudo make install
 
             # Build libraries
             - run: cd Libraries && cmake . && make
