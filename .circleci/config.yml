@@ -1,45 +1,55 @@
 version: 2
 
-test:
-    pre:
-        # Dependencies for HOPEful (3D engine library)
-        - sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
-        # Get the source code from GLFW 3.2.1, compile it and install it.
-        - wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
-        - unzip glfw-3.2.1.zip
-        - cd glfw-3.2.1 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && sudo make install
-        # Get the source code from GLEW 2.0.0, compile it and install it.
-        - wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
-        - tar zxfv glew-2.0.0.tgz
-        - cd glew-2.0.0/build/ && cmake ./cmake && make && sudo make install
-        # Get the source code from ASSIMP 4.1.0, compile it and install it.
-        - wget https://github.com/assimp/assimp/archive/v4.1.0.tar.gz
-        - tar zxfv v4.1.0.tar.gz
-        - cd assimp-4.1.0 && cmake . && make && sudo make install
-    override:
-        # Build libraries
-        - cd Libraries && cmake . && make
-        # Build functional tests and run it
-        ## DOOM
-        - cd Softwares/Tests/DOOMful && cmake . && make
-        - cd Softwares/Tests/DOOMful/Chrono/bin && ./TestChrono.exe
-        - cd Softwares/Tests/DOOMful/LogSystem/bin && ./TestLogSystem.exe
-        - cd Softwares/Tests/DOOMful/Profiler/bin && ./TestProfiler.exe
-        - cd Softwares/Tests/DOOMful/Random/bin && ./TestRandom.exe
-        ## MIND
-        - cd Softwares/Tests/MINDful && cmake -DWITH_EMULATED_SIMD=OFF . && make
-        - cd Softwares/Tests/MINDful/Performances/bin && ./Performances.exe
-        - cd Softwares/Tests/MINDful && cmake -DWITH_EMULATED_SIMD=ON . && make
-        - cd Softwares/Tests/MINDful/Performances/bin && ./Performances.exe
-        # Build unit tests and run it (using CPU SIMD if available)
-        - cd UnitTests && cmake -DWITH_EMULATED_SIMD=OFF . && make
-        - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
-        - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
-        - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
-        - cd UnitTests && make clean
-        # Build unit tests and run it (using emulated SIMD)
-        - cd UnitTests && cmake -DWITH_EMULATED_SIMD=ON . && make
-        - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
-        - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
-        - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
-        - cd UnitTests && make clean
+jobs:
+    build:
+        docker:
+            - image: circleci/python:3.6.2-stretch-browsers
+        steps:
+            - checkout
+            - run:
+                name: Dependencies for HOPEful (3D engine library)
+                commmand: sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
+
+# test:
+#     pre:
+#         # Dependencies for HOPEful (3D engine library)
+#         - sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
+#         # Get the source code from GLFW 3.2.1, compile it and install it.
+#         - wget https://github.com/glfw/glfw/releases/download/3.2.1/glfw-3.2.1.zip
+#         - unzip glfw-3.2.1.zip
+#         - cd glfw-3.2.1 && mkdir build && cd build && cmake -DBUILD_SHARED_LIBS=ON .. && make && sudo make install
+#         # Get the source code from GLEW 2.0.0, compile it and install it.
+#         - wget https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz
+#         - tar zxfv glew-2.0.0.tgz
+#         - cd glew-2.0.0/build/ && cmake ./cmake && make && sudo make install
+#         # Get the source code from ASSIMP 4.1.0, compile it and install it.
+#         - wget https://github.com/assimp/assimp/archive/v4.1.0.tar.gz
+#         - tar zxfv v4.1.0.tar.gz
+#         - cd assimp-4.1.0 && cmake . && make && sudo make install
+#     override:
+#         # Build libraries
+#         - cd Libraries && cmake . && make
+#         # Build functional tests and run it
+#         ## DOOM
+#         - cd Softwares/Tests/DOOMful && cmake . && make
+#         - cd Softwares/Tests/DOOMful/Chrono/bin && ./TestChrono.exe
+#         - cd Softwares/Tests/DOOMful/LogSystem/bin && ./TestLogSystem.exe
+#         - cd Softwares/Tests/DOOMful/Profiler/bin && ./TestProfiler.exe
+#         - cd Softwares/Tests/DOOMful/Random/bin && ./TestRandom.exe
+#         ## MIND
+#         - cd Softwares/Tests/MINDful && cmake -DWITH_EMULATED_SIMD=OFF . && make
+#         - cd Softwares/Tests/MINDful/Performances/bin && ./Performances.exe
+#         - cd Softwares/Tests/MINDful && cmake -DWITH_EMULATED_SIMD=ON . && make
+#         - cd Softwares/Tests/MINDful/Performances/bin && ./Performances.exe
+#         # Build unit tests and run it (using CPU SIMD if available)
+#         - cd UnitTests && cmake -DWITH_EMULATED_SIMD=OFF . && make
+#         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
+#         - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+#         - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
+#         - cd UnitTests && make clean
+#         # Build unit tests and run it (using emulated SIMD)
+#         - cd UnitTests && cmake -DWITH_EMULATED_SIMD=ON . && make
+#         - cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
+#         - cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
+#         - cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
+#         - cd UnitTests && make clean
