@@ -17,6 +17,11 @@ namespace Spite {
 
         public:
             /**
+             * Destruction of the FileReader.
+             */
+            virtual ~FileReader() = default ;
+
+            /**
              * Set the stream of the FileReader.
              * @param   stream  The stream to use.
              */

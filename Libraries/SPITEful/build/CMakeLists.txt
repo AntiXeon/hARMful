@@ -26,6 +26,9 @@ add_library (
     ${SOURCES}
 )
 
+# Linux dependencies
+include("./LinuxDependencies.cmake")
+
 target_link_libraries(${PROJECT_NAME} DOOM)
 
 # Versioning

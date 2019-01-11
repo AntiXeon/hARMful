@@ -17,6 +17,11 @@ namespace Spite {
 
         public:
             /**
+             * Destruction of the FileWriter.
+             */
+            virtual ~FileWriter() = default ;
+
+            /**
              * Set the stream of the FileWriter.
              * @param   stream  The stream to use.
              */

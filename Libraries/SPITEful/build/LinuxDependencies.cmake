@@ -1,0 +1,13 @@
+if (UNIX)
+    find_package(JPEG REQUIRED)
+    if (JPEG_FOUND)
+        include_directories(${JPEG_INCLUDE_DIRS})
+        target_link_libraries(${PROJECT_NAME} ${JPEG_LIBRARIES})
+    endif()
+
+    find_package(PNG REQUIRED)
+    if (PNG_FOUND)
+        include_directories(${PNG_INCLUDE_DIRS})
+        target_link_libraries(${PROJECT_NAME} ${PNG_LIBRARIES})
+    endif()
+endif()
