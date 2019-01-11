@@ -1,16 +1,11 @@
 version: 2
-
 jobs:
     build:
         docker:
             - image: circleci/python:3.6.2-stretch-browsers
         steps:
             - checkout
-            - run:
-                name: Dependencies for HOPEful (3D engine library)
-                commmand: |
-                    sudo apt-get update
-                    sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
+            - run: sudo apt-get update; sudo apt-get install freeglut3 freeglut3-dev xorg-dev libglu1-mesa-dev
 
 # test:
 #     pre:
