@@ -3,7 +3,7 @@ This program is intended to automatically generate C++ inline versions of OpenGL
 
 It is not (yet) a C++14 code as it directly handles pointers from the underlying C API of OpenGL. This evolution will be provided once the HOPEful engine development will be initiated.
 
-## How does it work?
+## How it works
 Just run the `convert.sh` script. It will compile the converter program and process the `.gl` files. Moreover, the solution is automatically cleared once the conversion is done.
 You will just have to go into the output folder to get all the generated files.
 
