@@ -2,6 +2,8 @@
 #define __SPITE__CPU_ENDIANNESS_BINARY_FILE_READER__
 
 #include <readers/BinaryFileReader.hpp>
+#include <SPITEStrings.hpp>
+#include <ios>
 
 namespace Spite {
 
@@ -17,9 +19,12 @@ namespace Spite {
              */
             int8_t readChar() {
                 int8_t tmp ;
-                char* buffer = reinterpret_cast<char*>(&tmp) ;
-                m_stream -> read(buffer, sizeof(tmp)) ;
-                return tmp ;
+                if (m_stream -> read(reinterpret_cast<char*>(&tmp), sizeof(tmp))) {
+                    return tmp ;
+                }
+                else {
+                    throw std::ios_base::failure(FileMsg::Error::CannotReadFile) ;
+                }
             }
 
             /**
