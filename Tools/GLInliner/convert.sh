@@ -74,7 +74,7 @@ echo "" >> $OUTPUT_HEADER
 for file in $OUTPUT_INLINED/*.inl
 do
     FILENAME=$(basename $file)
-    echo -e '\t\t#include \"$GL_VERSION/"$FILENAME"\"' >> $OUTPUT_HEADER
+    echo -e "\t\t#include \"$GL_VERSION/"$FILENAME"\"" >> $OUTPUT_HEADER
 done
 echo -e "\t} ;" >> $OUTPUT_HEADER
 echo "} ;" >> $OUTPUT_HEADER
