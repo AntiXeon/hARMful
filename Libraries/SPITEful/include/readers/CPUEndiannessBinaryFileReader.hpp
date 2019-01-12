@@ -18,13 +18,14 @@ namespace Spite {
              * @return  The read value.
              */
             int8_t readChar() {
-                int8_t tmp ;
-                if (m_stream -> read(reinterpret_cast<char*>(&tmp), sizeof(tmp))) {
-                    return tmp ;
-                }
-                else {
-                    throw std::ios_base::failure(FileMsg::Error::CannotReadFile) ;
-                }
+                union Buffer {
+                    int8_t value ;
+                    char bytes[sizeof(int8_t)];
+                } ;
+
+                Buffer tmp ;
+                m_stream -> read(tmp.bytes, sizeof(Buffer)) ;
+                return tmp.value ;
             }
 
             /**
