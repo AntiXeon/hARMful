@@ -18,14 +18,9 @@ namespace Spite {
              * @return  The read value.
              */
             int8_t readChar() {
-                union Buffer {
-                    int8_t value ;
-                    char bytes[sizeof(int8_t)];
-                } ;
-
-                Buffer tmp ;
-                m_stream -> read(tmp.bytes, sizeof(Buffer)) ;
-                return tmp.value ;
+                int8_t tmp ;
+                m_stream -> read((char*) &tmp, sizeof(tmp)) ;
+                return tmp ;
             }
 
             /**
