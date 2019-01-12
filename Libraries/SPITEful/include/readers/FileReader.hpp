@@ -17,6 +17,11 @@ namespace Spite {
 
         public:
             /**
+             * Create a FileReader.
+             */
+            FileReader() = default ;
+
+            /**
              * Destruction of the FileReader.
              */
             virtual ~FileReader() = default ;
@@ -26,6 +31,12 @@ namespace Spite {
              * @param   stream  The stream to use.
              */
             void setFileStream(const std::fstream* stream) ;
+
+            // Remove copy/move operations.
+            FileReader(const FileReader& copied) = default;
+            FileReader(FileReader&& moved) = default;
+            FileReader& operator=(const FileReader& copied) = default;
+            FileReader& operator=(FileReader&& moved) = default;
     } ;
 }
 

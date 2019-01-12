@@ -20,7 +20,6 @@ namespace Spite {
              */
             unsigned int m_dataPosition ;
 
-
         protected:
             /**
              * Create a new ImageFile.
@@ -51,6 +50,12 @@ namespace Spite {
                 IFileData* output,
                 const std::string& path
             ) ;
+
+            // Remove copy/move operations.
+            ImageFile(const ImageFile& copied) = delete;
+            ImageFile(ImageFile&& moved) = delete;
+            ImageFile& operator=(const ImageFile& copied) = delete;
+            ImageFile& operator=(ImageFile&& moved) = delete;
 
         protected:
             /**

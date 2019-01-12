@@ -39,6 +39,12 @@ namespace Spite {
              */
             virtual ~BinaryFile() ;
 
+            // Remove copy/move operations.
+            BinaryFile(const BinaryFile& copied) = delete;
+            BinaryFile(BinaryFile&& moved) = delete;
+            BinaryFile& operator=(const BinaryFile& copied) = delete;
+            BinaryFile& operator=(BinaryFile&& moved) = delete;
+
         protected:
             /**
              * Specific mode to the type of File.

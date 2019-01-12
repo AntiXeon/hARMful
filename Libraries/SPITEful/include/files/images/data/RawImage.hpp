@@ -96,6 +96,12 @@ namespace Spite {
              * @return  The height of the image.
              */
             unsigned int height() const ;
+
+            // Remove copy/move operations.
+            RawImage(const RawImage& copied) = delete;
+            RawImage(RawImage&& moved) = delete;
+            RawImage& operator=(const RawImage& copied) = delete;
+            RawImage& operator=(RawImage&& moved) = delete;
     } ;
 }
 

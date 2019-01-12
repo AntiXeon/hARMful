@@ -66,6 +66,12 @@ namespace Spite {
              */
             bool load(IFileData* filedata) ;
 
+            // Remove copy/move operations.
+            BaseFile(const BaseFile& copied) = delete;
+            BaseFile(BaseFile&& moved) = delete;
+            BaseFile& operator=(const BaseFile& copied) = delete;
+            BaseFile& operator=(BaseFile&& moved) = delete;
+
         protected:
             /**
              * Open the BaseFile.

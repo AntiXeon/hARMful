@@ -17,6 +17,11 @@ namespace Spite {
 
         public:
             /**
+             * Create a FileWriter.
+             */
+            FileWriter() = default ;
+
+            /**
              * Destruction of the FileWriter.
              */
             virtual ~FileWriter() = default ;
@@ -28,6 +33,12 @@ namespace Spite {
             void setFileStream(std::fstream* stream) {
                 m_stream = stream ;
             }
+
+            // Remove copy/move operations.
+            FileWriter(const FileWriter& copied) = default;
+            FileWriter(FileWriter&& moved) = default;
+            FileWriter& operator=(const FileWriter& copied) = default;
+            FileWriter& operator=(FileWriter&& moved) = default;
     } ;
 }
 

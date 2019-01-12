@@ -23,7 +23,6 @@ namespace Spite {
              */
             TextFileWriter m_writer ;
 
-
         public:
             /**
              * Creation of a TextFile from a string.
@@ -41,6 +40,12 @@ namespace Spite {
              * @return  TRUE if the File instance can be used. FALSE else.
              */
             bool isValid() const ;
+
+            // Remove copy/move operations.
+            TextFile(const TextFile& copied) = delete;
+            TextFile(TextFile&& moved) = delete;
+            TextFile& operator=(const TextFile& copied) = delete;
+            TextFile& operator=(TextFile&& moved) = delete;
 
         protected:
             /**

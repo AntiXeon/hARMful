@@ -27,6 +27,11 @@ namespace Spite {
              */
             virtual ~JPEGFile() ;
 
+            // Remove copy/move operations.
+            JPEGFile(const JPEGFile& copied) = delete;
+            JPEGFile(JPEGFile&& moved) = delete;
+            JPEGFile& operator=(const JPEGFile& copied) = delete;
+            JPEGFile& operator=(JPEGFile&& moved) = delete;
 
         private:
             /**

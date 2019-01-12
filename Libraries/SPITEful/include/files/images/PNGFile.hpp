@@ -35,6 +35,12 @@ namespace Spite {
              */
             virtual ~PNGFile() ;
 
+            // Remove copy/move operations.
+            PNGFile(const PNGFile& copied) = delete;
+            PNGFile(PNGFile&& moved) = delete;
+            PNGFile& operator=(const PNGFile& copied) = delete;
+            PNGFile& operator=(PNGFile&& moved) = delete;
+
         private:
             /**
              * Parse the JPEG file and store raw data in the RawImage.
