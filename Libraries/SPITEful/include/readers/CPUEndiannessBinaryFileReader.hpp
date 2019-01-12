@@ -17,7 +17,8 @@ namespace Spite {
              */
             int8_t readChar() {
                 int8_t tmp ;
-                m_stream -> read((char*) &tmp, sizeof(tmp)) ;
+                char* buffer = static_cast<char*> &tmp ;
+                m_stream -> read(buffer, sizeof(tmp)) ;
                 return tmp ;
             }
 
