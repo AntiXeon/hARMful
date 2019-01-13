@@ -20,7 +20,7 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
-bool PNGFile::parse(IFileData* filedata) {
+bool PNGFile::parse(RawImage* filedata) {
     char* filepath = const_cast<char*>(fs::absolute(path()).string().c_str()) ;
 
     // Header of the PNG file. It is used to check if it is really a PNG
@@ -119,11 +119,8 @@ bool PNGFile::initializeDecompressionData(
 void PNGFile::startDecompression(
     png_structp& pngStruct,
     png_infop& pngInfo,
-    IFileData* output
+    RawImage* output
 ) {
-    RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
-
-
     // Get the color type and set the corresponding color format to the raw
     // picture.
     png_byte colorType = png_get_color_type(pngStruct, pngInfo) ;
@@ -131,19 +128,18 @@ void PNGFile::startDecompression(
         pngStruct,
         pngInfo,
         colorType,
-        rawImage
+        output
     ) ;
 
     unsigned int width = png_get_image_width(pngStruct, pngInfo) ;
     unsigned int height = png_get_image_height(pngStruct, pngInfo) ;
     // Set the dimensions of the output image raw data.
-    rawImage -> setDimensions(width, height) ;
+    output -> setDimensions(width, height) ;
 
     // Get the image allocated buffer.
-    void* imageData ;
+    unsigned char* imageDataBuffer ;
     unsigned int imageDataSize ;
-    output -> data(imageData, imageDataSize) ;
-    unsigned char* imageDataBuffer = (unsigned char*) imageData ;
+    output -> data(imageDataBuffer, imageDataSize) ;
     // The size of each row from the image is necessary to store data.
     unsigned int rowSize = png_get_rowbytes(pngStruct, pngInfo) * 4 * sizeFactor ;
 
@@ -174,11 +170,11 @@ unsigned int PNGFile::setAndConvertColorFormat(
     // are expanded to match this format.
     switch(colorType) {
         case PNG_COLOR_TYPE_RGB:
-            output -> setFormat(&ColorFormat::Get(ColorFormat::RGB)) ;
+            output -> setFormat(ColorFormat::RGB) ;
             return 1 ;
 
         case PNG_COLOR_TYPE_RGBA:
-            output -> setFormat(&ColorFormat::Get(ColorFormat::RGBA)) ;
+            output -> setFormat(ColorFormat::RGBA) ;
             return 1 ;
 
         case PNG_COLOR_TYPE_PALETTE:
@@ -186,11 +182,11 @@ unsigned int PNGFile::setAndConvertColorFormat(
             png_set_palette_to_rgb(pngStruct) ;
 
             if (png_get_valid(pngStruct, pngInfo, PNG_INFO_tRNS)) {
-                output -> setFormat(&ColorFormat::Get(ColorFormat::RGBA)) ;
+                output -> setFormat(ColorFormat::RGBA) ;
                 return 4 ;
             }
             else {
-                output -> setFormat(&ColorFormat::Get(ColorFormat::RGB)) ;
+                output -> setFormat(ColorFormat::RGB) ;
                 return 3 ;
             }
         }
@@ -198,19 +194,19 @@ unsigned int PNGFile::setAndConvertColorFormat(
         case PNG_COLOR_TYPE_GRAY:
             // Try expansion of raw data as they are not fully supported.
             png_set_gray_to_rgb(pngStruct) ;
-            output -> setFormat(&ColorFormat::Get(ColorFormat::RGB)) ;
+            output -> setFormat(ColorFormat::RGB) ;
             return 4 ;
 
         case PNG_COLOR_TYPE_GRAY_ALPHA:
             // Try expansion of raw data as they are not fully supported.
             png_set_gray_to_rgb(pngStruct) ;
-            output -> setFormat(&ColorFormat::Get(ColorFormat::RGBA)) ;
+            output -> setFormat(ColorFormat::RGBA) ;
             return 2 ;
 
         default:
             // Try expansion of raw data as they are not fully supported.
             png_set_expand(pngStruct) ;
-            output -> setFormat(&ColorFormat::Get(ColorFormat::RGB)) ;
+            output -> setFormat(ColorFormat::RGB) ;
             return 1 ;
     }
 }

@@ -18,7 +18,7 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
-bool JPEGFile::parse(IFileData* filedata) {
+bool JPEGFile::parse(RawImage* filedata) {
     // Decompression parameters and pointers.
     jpeg_decompress_struct cinfo ;
     // Length of a row in the buffer.
@@ -90,7 +90,7 @@ bool JPEGFile::initializeDecompressionData(
 bool JPEGFile::startDecompression(
     jpeg_decompress_struct& cinfo,
     int& rowStride,
-    IFileData* output
+    RawImage* output
 ) {
     // Start the decompression.
     jpeg_start_decompress(&cinfo) ;
@@ -98,14 +98,12 @@ bool JPEGFile::startDecompression(
     rowStride = cinfo.output_width * cinfo.output_components * 4 ;
 
     // Set the dimensions of the output image raw data.
-    RawImage* raw = dynamic_cast<RawImage*>(output) ;
-    raw -> setDimensions(cinfo.output_width, cinfo.output_height) ;
+    output -> setDimensions(cinfo.output_width, cinfo.output_height) ;
 
     // Get the image allocated buffer.
     unsigned char* imageDataBuffer = nullptr ;
-    void* voidImageDataBuffer = static_cast<void*>(imageDataBuffer) ;
     unsigned int imageDataSize ;
-    output -> data(voidImageDataBuffer, imageDataSize) ;
+    output -> data(imageDataBuffer, imageDataSize) ;
 
     // Read lines in the picture while the end of image is not reached
     // (using the libjpeg states).

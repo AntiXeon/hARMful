@@ -31,7 +31,8 @@ bool ImageFile::load(IFileData* output) {
         ) ;
     }
 
-    return parse(output) ;
+    RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
+    return parse(rawImage) ;
 }
 
 bool ImageFile::save(

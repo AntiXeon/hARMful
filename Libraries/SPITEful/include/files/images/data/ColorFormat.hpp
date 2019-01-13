@@ -20,7 +20,8 @@ namespace Spite {
                 RGBA,
                 ARGB,
                 YUV,
-                AmountOfIDs
+                AmountOfIDs,
+                Unknown = -1
             } ;
 
         private:

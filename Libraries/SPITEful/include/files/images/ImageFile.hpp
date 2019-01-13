@@ -2,7 +2,7 @@
 #define __SPITE__IMAGE_FILE__
 
 #include <File.hpp>
-#include <interfaces/IFileData.hpp>
+#include <files/images/data/RawImage.hpp>
 
 namespace Spite {
     /**
@@ -65,14 +65,16 @@ namespace Spite {
              */
             void open(OpenMode mode) ;
 
-            /** @brief  Close the JPEGFile. */
+            /**
+             * Close the JPEGFile.
+             */
             void close() ;
 
             /**
              * Parse the image file and store raw data in the @a output data.
              * @param   output  Output the raw data from the image file.
              */
-            virtual bool parse(IFileData* output) = 0 ;
+            virtual bool parse(RawImage* output) = 0 ;
 
         protected:
             /**

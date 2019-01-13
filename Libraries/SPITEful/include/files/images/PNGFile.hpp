@@ -46,7 +46,7 @@ namespace Spite {
              * Parse the JPEG file and store raw data in the RawImage.
              * @param   output  Output the raw data from the JPEG file.
              */
-            bool parse(IFileData* output) ;
+            bool parse(RawImage* output) ;
 
             /**
              * Initialize the decompression data.
@@ -72,7 +72,7 @@ namespace Spite {
             void startDecompression(
                 png_structp& pngStruct,
                 png_infop& pngInfo,
-                IFileData* output
+                RawImage* output
             ) ;
 
             /**

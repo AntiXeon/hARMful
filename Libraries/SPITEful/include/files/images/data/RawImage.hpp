@@ -14,22 +14,22 @@ namespace Spite {
             /**
              * Width of the picture.
              */
-            unsigned int m_width ;
+            unsigned int m_width = 0 ;
 
             /**
              * Height of the picture
              */
-            unsigned int m_height ;
+            unsigned int m_height = 0 ;
 
             /**
              * Picture pixel data.
              */
-            int* m_pixelData = nullptr ;
+            unsigned char* m_pixelData = nullptr ;
 
             /**
              * Format of the picture.
              */
-            ColorFormat* m_format = nullptr ;
+            ColorFormat::ID m_format = ColorFormat::Unknown ;
 
 
         public:
@@ -37,7 +37,7 @@ namespace Spite {
              * Create a new RawImage.
              * @param   format  Format of the RawImage.
              */
-            RawImage(ColorFormat* format = nullptr) ;
+            RawImage(ColorFormat::ID format = ColorFormat::Unknown) ;
 
             /**
              * Destruction of the RawImage
@@ -63,17 +63,14 @@ namespace Spite {
             /**
              * Set the color format of the picture.
              * @param   format  The format of the picture.
-             * @return  TRUE if the format has been set, FALSE else.
-             * @warning Format can only be set if it has not been defined yet.
-             *          Once it is done, calling this method has no effect.
              */
-            bool setFormat(ColorFormat* format) ;
+            void setFormat(ColorFormat::ID format) ;
 
             /**
              * Get the ColorFormat used by the RawImage.
              * @return  ColorFormat used by the RawImage.
              */
-            const ColorFormat* format() const ;
+            ColorFormat::ID format() ;
 
             /**
              * Get the image raw data.
@@ -83,7 +80,7 @@ namespace Spite {
              * @warning @a data should not be initialized, an array is
              *          allocated on getting data.
              */
-            void data(void*& data, unsigned int& size) ;
+            void data(unsigned char*& data, unsigned int& size) ;
 
             /**
              * Width of the image.

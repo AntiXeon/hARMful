@@ -20,6 +20,12 @@ namespace Spite {
                 getline(*m_stream, readLine) ;
                 return readLine ;
             }
+
+            /**
+             * Read the whole content of a text at once.
+             * @param   content Output the whole content of the file.
+             */
+            void readAll(std::string& content) ;
     } ;
 }
 

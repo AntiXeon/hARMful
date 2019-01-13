@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <vector>
 #include <readers/FileReader.hpp>
 
 namespace Spite {
@@ -67,6 +68,24 @@ namespace Spite {
                 std::string& buffer,
                 const unsigned int length
             ) = 0 ;
+
+            /**
+             * Read all the bytes from a binary file.
+             * @param   blob    Blob data got from the file.
+             */
+            void readAllBytes(char* blob, const size_t size) ;
+
+            /**
+             * Read all the bytes from a binary file.
+             * @param   blob    Blob data got from the file.
+             */
+            void readAllBytes(std::vector<char>& blob) ;
+
+            /**
+             * Read all the bytes from a binary file.
+             * @param   blob    Blob data got from the file.
+             */
+            void readAllBytes(std::vector<unsigned char>& blob) ;
     } ;
 }
 

@@ -12,7 +12,7 @@ extern "C" {
 namespace Spite {
 
     /**
-     * Load a JPEG file.
+     * Load a JPEG file using libjpeg.
      */
     class JPEGFile final : public ImageFile {
         public:
@@ -38,7 +38,7 @@ namespace Spite {
              * Parse the JPEG file and store raw data in the RawImage.
              * @param   output  Output the raw data from the JPEG file.
              */
-            bool parse(IFileData* output) ;
+            bool parse(RawImage* output) ;
 
             /**
              * Initialize the decompression data.
@@ -62,7 +62,7 @@ namespace Spite {
             bool startDecompression(
                 jpeg_decompress_struct& cinfo,
                 int& rowStride,
-                IFileData* output
+                RawImage* output
             ) ;
 
             /**

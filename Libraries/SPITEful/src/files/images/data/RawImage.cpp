@@ -5,7 +5,7 @@
 
 using namespace Spite ;
 
-RawImage::RawImage(ColorFormat* format)
+RawImage::RawImage(ColorFormat::ID format)
     : m_pixelData(nullptr),
       m_format(format) {}
 
@@ -25,35 +25,30 @@ void RawImage::setDimensions(
     const unsigned int& width,
     const unsigned int& height
 ) {
-    if (m_format == nullptr) {
+    if (m_format == ColorFormat::Unknown) {
         throw std::runtime_error(RawImageMsg::Error::UndefinedColorFormatWhenSettingSize) ;
     }
 
     m_width = width ;
     m_height = height ;
 
-    unsigned char amountOfComponents = m_format -> amountOfComponents() ;
-    m_pixelData = new int[width * height * amountOfComponents] ;
+    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
+    m_pixelData = new unsigned char[width * height * amountOfComponents] ;
 }
 
-bool RawImage::setFormat(ColorFormat* format) {
-    if (m_format == nullptr) {
-        m_format = format ;
-        return true ;
-    }
-
-    return false ;
+void RawImage::setFormat(ColorFormat::ID format) {
+    m_format = format ;
 }
 
-const ColorFormat* RawImage::format() const {
+ColorFormat::ID RawImage::format() {
     return m_format ;
 }
 
-void RawImage::data(void*& data, unsigned int& size) {
-    const unsigned char AmountOfComponents = m_format -> amountOfComponents() ;
-    const unsigned int TotalBufferSize = m_width * m_height * AmountOfComponents ;
+void RawImage::data(unsigned char*& data, unsigned int& size) {
+    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
+    unsigned int totalBufferSize = m_width * m_height * amountOfComponents ;
     data = m_pixelData ;
-    size = TotalBufferSize ;
+    size = totalBufferSize ;
 }
 
 unsigned int RawImage::width() const {
