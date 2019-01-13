@@ -35,12 +35,12 @@ namespace Spite {
             JPEGTurboFile& operator=(const JPEGTurboFile& copied) = delete;
             JPEGTurboFile& operator=(JPEGTurboFile&& moved) = delete;
 
-        public:
+        protected:
             /**
              * Load a data at a given place on disk.
              * @param   filedata    File data to store data in.
              */
-            bool load(RawImage* filedata) ;
+            bool loadSpecific(IFileData* filedata) override ;
 
             /**
              * Save a data at a given place on disk.
@@ -48,10 +48,10 @@ namespace Spite {
              *                      processed before saving.
              * @param   path        Path to the location on filesystem.
              */
-            bool save(
-                RawImage* output,
+            bool saveSpecific(
+                IFileData* filedata,
                 const std::string& path
-            ) ;
+            ) override ;
 
         private:
             /**

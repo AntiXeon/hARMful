@@ -20,6 +20,10 @@ namespace Spite {
                 RGBA,
                 ARGB,
                 YUV,
+                YCbCr,
+                CMYK,
+                YCCK,
+                Gray,
                 AmountOfIDs,
                 Unknown = -1
             } ;
@@ -136,7 +140,7 @@ namespace Spite {
             /**
              * Get the mask of the wanted component.
              * @param   componentID ID of the component for which the mask is
-             *                      wanted.
+             *          wanted.
              * @return  The mask for the given @a componentID.
              */
             unsigned int mask(const unsigned int& componentID) const ;

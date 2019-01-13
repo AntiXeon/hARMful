@@ -35,6 +35,18 @@ namespace Spite {
 
         public:
             /**
+             * Open the JPEGFile in the given mode.
+             * @param   mode    Mode to access BaseFile and perform some
+             *                  operations on it.
+             */
+            void open(OpenMode mode) ;
+
+            /**
+             * Close the JPEGFile.
+             */
+            void close() ;
+
+            /**
              * Load a data at a given place on disk.
              * @param   filedata    File data to store data in.
              */
@@ -58,18 +70,6 @@ namespace Spite {
             ImageFile& operator=(ImageFile&& moved) = delete;
 
         protected:
-            /**
-             * Open the JPEGFile in the given mode.
-             * @param   mode    Mode to access BaseFile and perform some
-             *                  operations on it.
-             */
-            void open(OpenMode mode) ;
-
-            /**
-             * Close the JPEGFile.
-             */
-            void close() ;
-
             /**
              * Parse the image file and store raw data in the @a output data.
              * @param   output  Output the raw data from the image file.

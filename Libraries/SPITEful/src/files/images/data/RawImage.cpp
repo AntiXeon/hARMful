@@ -32,12 +32,23 @@ void RawImage::setDimensions(
     m_width = width ;
     m_height = height ;
 
+    if (m_pixelData != nullptr) {
+        delete[] m_pixelData ;
+    }
+
     unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
-    m_pixelData = new unsigned char[width * height * amountOfComponents] ;
+    m_pixelData = new unsigned char[m_width * m_height * amountOfComponents] ;
 }
 
 void RawImage::setFormat(ColorFormat::ID format) {
     m_format = format ;
+
+    if (m_pixelData != nullptr) {
+        delete[] m_pixelData ;
+    }
+
+    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
+    m_pixelData = new unsigned char[m_width * m_height * amountOfComponents] ;
 }
 
 ColorFormat::ID RawImage::format() {

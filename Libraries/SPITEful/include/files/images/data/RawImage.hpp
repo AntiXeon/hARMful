@@ -48,7 +48,7 @@ namespace Spite {
              * Free data from the RawImage instance.
              * @warning Data are not usable anymore after this call.
              */
-            void freeData() ;
+            void freeData() override ;
 
             /**
              * Set the dimensions of the picture.
@@ -80,7 +80,7 @@ namespace Spite {
              * @warning @a data should not be initialized, an array is
              *          allocated on getting data.
              */
-            void data(unsigned char*& data, unsigned int& size) ;
+            void data(unsigned char*& data, unsigned int& size) override ;
 
             /**
              * Width of the image.

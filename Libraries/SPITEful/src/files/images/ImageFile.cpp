@@ -21,29 +21,6 @@ ImageFile::~ImageFile() {
     }
 }
 
-bool ImageFile::load(IFileData* output) {
-    open(File::Open_ReadOnly) ;
-
-    if (m_file == nullptr) {
-        throw std::ios_base::failure(
-            FileMsg::Error::UnableToOpen
-             + fs::absolute(m_path).string()
-        ) ;
-    }
-
-    RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
-    return parse(rawImage) ;
-}
-
-bool ImageFile::save(
-    IFileData*,
-    const std::string&
-) {
-    // Needs implementation!
-    return false ;
-}
-
-
 void ImageFile::open(OpenMode mode) {
     const char* filepath = fs::absolute(m_path).string().c_str() ;
 
@@ -79,6 +56,27 @@ void ImageFile::close() {
     m_file = nullptr ;
 }
 
+bool ImageFile::load(IFileData* output) {
+    open(File::Open_ReadOnly) ;
+
+    if (m_file == nullptr) {
+        throw std::ios_base::failure(
+            FileMsg::Error::UnableToOpen
+             + fs::absolute(m_path).string()
+        ) ;
+    }
+
+    RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
+    return parse(rawImage) ;
+}
+
+bool ImageFile::save(
+    IFileData*,
+    const std::string&
+) {
+    // Needs implementation!
+    return false ;
+}
 
 FILE* ImageFile::descriptor() const {
     return m_file ;

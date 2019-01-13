@@ -20,6 +20,10 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
+PNGFile::PNGFile(const std::string& path)
+    : ImageFile(path) {
+}
+
 bool PNGFile::parse(RawImage* filedata) {
     char* filepath = const_cast<char*>(fs::absolute(path()).string().c_str()) ;
 

@@ -33,7 +33,7 @@ namespace Spite {
             /**
              * Destruction of the PNGFile.
              */
-            virtual ~PNGFile() ;
+            virtual ~PNGFile() = default ;
 
             // Remove copy/move operations.
             PNGFile(const PNGFile& copied) = delete;

@@ -51,28 +51,28 @@ namespace Spite {
              * @param   mode    A specific openmode for a type of File.
              * @return  TRUE if the File has a specific openmode, FALSE else.
              */
-            bool hasSpecificMode(std::ios_base::openmode& mode) ;
+            bool hasSpecificMode(std::ios_base::openmode& mode) override ;
 
             /**
              * Make the subclasses return the FileReader they use.
              * It is then activated with the inner file stream.
              * @return  The FileReader used by subclasses of File.
              */
-            FileReader* defineFileReader() ;
+            FileReader* defineFileReader() override ;
 
             /**
              * Make the subclasses return the FileWriter they use.
              * It is then activated with the inner file stream.
              * @return  The FileWriter used by subclasses of File.
              */
-            FileWriter* defineFileWriter() ;
+            FileWriter* defineFileWriter() override ;
 
         public:
             /**
              * Check if the File instance is valid and can be used.
              * @return  TRUE if the File instance can be used. FALSE else.
              */
-            bool isValid() const ;
+            bool isValid() const override ;
 
     } ;
 }

@@ -56,7 +56,7 @@ bool BinaryFile::isValid() const {
 }
 
 bool BinaryFile::hasSpecificMode(std::ios_base::openmode& mode) {
-    mode = std::fstream::binary ;
+    mode = std::ios::binary ;
     return true ;
 }
 

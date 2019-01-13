@@ -25,7 +25,7 @@ namespace Spite {
             /**
              * Destruction of the JPEGFile.
              */
-            virtual ~JPEGFile() ;
+            virtual ~JPEGFile() = default ;
 
             // Remove copy/move operations.
             JPEGFile(const JPEGFile& copied) = delete;

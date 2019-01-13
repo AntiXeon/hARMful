@@ -18,6 +18,10 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
+JPEGFile::JPEGFile(const std::string& path)
+    : ImageFile(path) {
+}
+
 bool JPEGFile::parse(RawImage* filedata) {
     // Decompression parameters and pointers.
     jpeg_decompress_struct cinfo ;

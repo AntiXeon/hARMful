@@ -30,7 +30,9 @@ namespace Spite {
              * Set the stream of the FileReader.
              * @param   stream  The stream to use.
              */
-            void setFileStream(const std::fstream* stream) ;
+            void setFileStream(std::fstream* stream) {
+                m_stream = stream ;
+            }
 
             // Remove copy/move operations.
             FileReader(const FileReader& copied) = default;
