@@ -5,10 +5,10 @@ More informations on the project can be found [here](https://dcarlus.github.io/h
 
 ## Repository
 The repository is structured in different parts:
-  * **Libraries**: the source code of the libraries that compose the project;
-  * **Softwares**: some demos to show how to use the libraries and their capabilities;
-  * **Tools**: some internal tools developed to help creating the libraries. They are not required to use the library nor to be integrated into the applications;
-  * **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
+* **Libraries**: the source code of the libraries that compose the project;
+* **Softwares**: some demos to show how to use the libraries and their capabilities;
+* **Tools**: some internal tools developed to help creating the libraries. They are not required to use the library nor to be integrated into the applications;
+* **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
 
 ## Dependencies
 All the libraries require `cmake`.
@@ -16,16 +16,16 @@ All the libraries require `cmake`.
 **Important note:** Windows users do not have to install these dependencies. All of them are automatically downloaded and compiled within the hARMful project, you do not have to install them on your system.
 
 ### HOPEful (OpenGL rendering)
-  * GLFW 3.2.1: https://github.com/glfw/glfw (for window and inputs)
-  * GLEW 2.1.0: https://github.com/nigels-com/glew (for modern OpenGL functions)
-  * Assimp 4.1.0: https://github.com/assimp/assimp (for importing 3D file models)
+* GLFW 3.2.1: https://github.com/glfw/glfw (for window and inputs)
+* GLEW 2.1.0: https://github.com/nigels-com/glew (for modern OpenGL functions)
+* Assimp 4.1.0: https://github.com/assimp/assimp (for importing 3D file models)
 
 ### MINDful (mathematics tools)
-  * Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
+* Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
 
 ### SPITEful (multimedia files management)
-  * libpng 1.6.35: https://github.com/glennrp/libpng
-  * libjpeg-turbo 2.0.1: https://github.com/libjpeg-turbo/libjpeg-turbo
+* libpng 1.6.35: https://github.com/glennrp/libpng
+* libjpeg-turbo 2.0.1: https://github.com/libjpeg-turbo/libjpeg-turbo
 
 ## Source code
 The source code of the **hARMful** project is mainly written in C++17 language and SIMD operations.
