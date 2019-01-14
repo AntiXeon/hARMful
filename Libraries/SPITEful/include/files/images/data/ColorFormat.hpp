@@ -36,6 +36,11 @@ namespace Spite {
             static std::vector<ColorFormat> ColorFormats ;
 
             /**
+             * ID of the color format.
+             */
+            ID m_id ;
+
+            /**
              * Name of the ColorFormat.
              */
             std::string m_name ;
@@ -74,11 +79,13 @@ namespace Spite {
 
             /**
              * Create a new ColorFormat.
+             * @param   id                  ID of the ColorFormat.
              * @param   name                Name of the ColorFormat.
              * @param   components          Components in the ColorFormat.
              * @param   componentSize       Size of each component in bytes.
              */
             ColorFormat(
+                const ColorFormat::ID id,
                 const std::string& name,
                 const std::vector<unsigned int>& components,
                 const unsigned char& componentSize
@@ -106,6 +113,12 @@ namespace Spite {
              * @return  The wanted ColorFormat.
              */
             static ColorFormat& Get(const ColorFormat::ID& id) ;
+
+            /**
+             * Get the ID of the ColorFormat.
+             * @return  ID of the ColorFormat.
+             */
+            ID id() const ;
 
             /**
              * Get the name of the ColorFormat.

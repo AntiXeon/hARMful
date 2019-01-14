@@ -9,10 +9,12 @@ using namespace Spite ;
 std::vector<ColorFormat> ColorFormat::ColorFormats ;
 
 ColorFormat::ColorFormat(
+    const ColorFormat::ID id,
     const std::string& name,
     const std::vector<unsigned int>& components,
     const unsigned char& componentSize
-) : m_name(name),
+) : m_id(id),
+    m_name(name),
     m_componentMasks(components),
     m_componentSize(componentSize),
     m_pixelSize(components.size()),
@@ -38,6 +40,7 @@ void ColorFormat::Create(const ColorFormat::ID& id) {
 
         // Apply the data to the color format.
         ColorFormats[id] = ColorFormat(
+            id,
             name,
             components,
             componentSize
@@ -54,6 +57,9 @@ ColorFormat& ColorFormat::Get(const ColorFormat::ID& id) {
     return ColorFormats[id] ;
 }
 
+ColorFormat::ID ColorFormat::id() const {
+    return m_id ;
+}
 
 const std::string& ColorFormat::name() const {
     return m_name ;
