@@ -91,10 +91,9 @@ int main(int, char**) {
     SDL_Texture* dicesTexture = loadDices(renderer) ;
 
     SDL_Rect dicesRect ;
+    SDL_QueryTexture(dicesTexture, nullptr, nullptr, &dicesRect.w, &dicesRect.h) ;
     dicesRect.x = 150 ;
     dicesRect.y = 180 ;
-    dicesRect.w = 320 ;
-    dicesRect.h = 240 ;
 
     // Display pictures.
     SDL_RenderCopy(renderer, bgTexture, NULL, NULL) ;
