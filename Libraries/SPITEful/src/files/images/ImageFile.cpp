@@ -1,9 +1,13 @@
 #include <files/images/ImageFile.hpp>
+#include <debug/ErrorsManagement.hpp>
 #include <SPITEStrings.hpp>
 #include <cstdio>
 #include <ios>
 #include <filesystem>
-#include <string.h>
+#include <string>
+#include <cstring>
+
+#include <iostream>
 
 using namespace Spite ;
 namespace fs = std::filesystem ;
@@ -22,32 +26,37 @@ ImageFile::~ImageFile() {
 }
 
 void ImageFile::open(OpenMode mode) {
-    const char* filepath = fs::absolute(m_path).string().c_str() ;
+    std::string absolutePath = fs::absolute(m_path).string() ;
+    const char* filepath = absolutePath.c_str() ;
 
     switch(mode) {
         case File::Open_ReadOnly:
             m_file = fopen(filepath, "rb") ;
-            return ;
+            break ;
 
         case File::Open_Append:
             m_file = fopen(filepath, "ab") ;
-            return ;
+            break ;
 
         case File::Open_WriteOnly:
             m_file = fopen(filepath, "wb") ;
-            return ;
+            break ;
 
         case File::Open_ReadWrite:
             m_file = fopen(filepath, "rb+") ;
-            return ;
+            break ;
 
         case File::Open_ReadAppend:
             m_file = fopen(filepath, "ab+") ;
-            return ;
+            break ;
 
         default:
             m_file = nullptr ;
-            return ;
+            break ;
+    }
+
+    if (!m_file) {
+        STOP_ON_CERROR_MSG(filepath) ;
     }
 }
 
@@ -57,15 +66,6 @@ void ImageFile::close() {
 }
 
 bool ImageFile::load(IFileData* output) {
-    open(File::Open_ReadOnly) ;
-
-    if (m_file == nullptr) {
-        throw std::ios_base::failure(
-            FileMsg::Error::UnableToOpen
-             + fs::absolute(m_path).string()
-        ) ;
-    }
-
     RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
     return parse(rawImage) ;
 }

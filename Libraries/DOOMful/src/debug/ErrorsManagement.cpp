@@ -21,27 +21,34 @@ static void PrintErrno(
     }
 
     if (message) {
-        logSys -> printLine<const char*&, int&, const char*&, char*, const char*&>(
+        logSys -> writeLine<const char*, const char*, int, const char*, const char*, const char*, char*, const char*, const char*>(
             LogSystem::Gravity::Error,
             file,
+            "::",
             line,
+            "@",
             function,
+            ": ",
             ErrorFunction(errno),
+            "\nMESSAGE: ",
             message
         ) ;
     }
     else {
-        logSys -> printLine<const char*&, int&, const char*&, char*>(
+        logSys -> writeLine<const char*, const char*, int, const char*, const char*, const char*, char*>(
             LogSystem::Gravity::Error,
             file,
+            "::",
             line,
+            "@",
             function,
+            ": ",
             ErrorFunction(errno)
         ) ;
     }
 }
 
-void PrintCError(
+void Doom::ErrorsManagement::PrintCError(
     const char* file,
     int line,
     const char* function
@@ -51,11 +58,11 @@ void PrintCError(
     }
 }
 
-void ExitOnCError(
+void Doom::ErrorsManagement::ExitOnCError(
     const char* file,
     int line,
     const char* function,
-    const char* message = nullptr
+    const char* message
 ) {
     if (ErrorNumber != 0) {
         PrintErrno(file, line, function, message) ;

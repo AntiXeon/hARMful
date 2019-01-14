@@ -82,8 +82,8 @@ namespace Spite {
              * @param   pngInfo     Structure containing picture informations.
              */
             void endParsing(
-                png_structp& pngStruct,
-                png_infop& pngInfo
+                png_structp pngStruct,
+                png_infop pngInfo
             ) ;
 
             /**

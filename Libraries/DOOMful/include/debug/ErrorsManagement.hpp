@@ -27,7 +27,7 @@ namespace Doom {
          */
         void PrintCError(
             const char* file,
-            const int line,
+            int line,
             const char* function
         ) ;
 
@@ -41,7 +41,7 @@ namespace Doom {
          */
         void ExitOnCError(
             const char* file,
-            const int line,
+            int line,
             const char* function,
             const char* message = nullptr
         ) ;

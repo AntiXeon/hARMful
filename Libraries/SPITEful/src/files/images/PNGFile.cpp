@@ -4,6 +4,7 @@
 #include <SPITEStrings.hpp>
 #include <utils/LogSystem.hpp>
 #include <filesystem>
+#include <algorithm>
 
 #define CHECK_SUCCESS(success, message, path) {                                 \
     if (!success) {                                                             \
@@ -25,7 +26,8 @@ PNGFile::PNGFile(const std::string& path)
 }
 
 bool PNGFile::parse(RawImage* filedata) {
-    char* filepath = const_cast<char*>(fs::absolute(path()).string().c_str()) ;
+    std::string absolutePath = fs::absolute(m_path).string() ;
+    char* filepath = const_cast<char*>(absolutePath.c_str()) ;
 
     // Header of the PNG file. It is used to check if it is really a PNG
     // file.
@@ -53,9 +55,10 @@ bool PNGFile::parse(RawImage* filedata) {
     }
 
     // It is used for pure file management (inputs, outputs, etc).
-    png_structp pngStruct ;
+    png_structp pngStruct = nullptr ;
     // It stores informations on the PNG picture.
-    png_infop pngInfo ;
+    png_infop pngInfo = nullptr ;
+
     if (!initializeDecompressionData(pngStruct, pngInfo, filepath)) {
         return false ;
     }
@@ -73,7 +76,7 @@ bool PNGFile::initializeDecompressionData(
     // Allocate and initialize the PNG structure. It is used for pure file
     // management (inputs, outputs, etc).
     // It is possible to define functions for handling errors and warnings.
-    pngStruct = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL) ;
+    pngStruct = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr) ;
 
     if (!pngStruct) {
         // Log debug info.
@@ -125,42 +128,50 @@ void PNGFile::startDecompression(
     png_infop& pngInfo,
     RawImage* output
 ) {
-    // Get the color type and set the corresponding color format to the raw
-    // picture.
     png_byte colorType = png_get_color_type(pngStruct, pngInfo) ;
-    unsigned int sizeFactor = setAndConvertColorFormat(
-        pngStruct,
-        pngInfo,
-        colorType,
-        output
-    ) ;
+    png_byte bitDepth = png_get_bit_depth(pngStruct, pngInfo) ;
+
+    if (bitDepth == 16) {
+        png_set_strip_16(pngStruct) ;
+    }
+
+    // These color types don't have an alpha channel then fill it with 0xff.
+    if (colorType == PNG_COLOR_TYPE_RGB ||
+           colorType == PNG_COLOR_TYPE_GRAY ||
+           colorType == PNG_COLOR_TYPE_PALETTE) {
+        png_set_filler(pngStruct, 0xFF, PNG_FILLER_AFTER) ;
+    }
+
+    if (colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_GRAY_ALPHA) {
+        png_set_gray_to_rgb(pngStruct) ;
+    }
 
     unsigned int width = png_get_image_width(pngStruct, pngInfo) ;
     unsigned int height = png_get_image_height(pngStruct, pngInfo) ;
     // Set the dimensions of the output image raw data.
     output -> setDimensions(width, height) ;
+    output -> setFormat(ColorFormat::RGBA) ;
 
-    // Get the image allocated buffer.
+    png_read_update_info(pngStruct, pngInfo) ;
+
     unsigned char* imageDataBuffer ;
     unsigned int imageDataSize ;
     output -> data(imageDataBuffer, imageDataSize) ;
-    // The size of each row from the image is necessary to store data.
-    unsigned int rowSize = png_get_rowbytes(pngStruct, pngInfo) * 4 * sizeFactor ;
 
-    // Read each row of the image and store the data.
-    for (unsigned int rowIndex = 0 ; rowIndex < height ; ++rowIndex) {
-        unsigned int offset = rowIndex * rowSize ;
-        unsigned char* imageDataBufferOffset = imageDataBuffer + offset ;
-        png_read_row(pngStruct, imageDataBufferOffset, NULL) ;
+    // Get the image allocated buffer.
+    unsigned int pngRowBytesLength = png_get_rowbytes(pngStruct, pngInfo) ;
+    for (unsigned int y = 0; y < height; ++y) {
+        unsigned char* rowBuffer = imageDataBuffer + (y * pngRowBytesLength) ;
+        png_read_rows(pngStruct, &rowBuffer , nullptr, 1) ;
     }
 }
 
 void PNGFile::endParsing(
-    png_structp& pngStruct,
-    png_infop& pngInfo
+    png_structp pngStruct,
+    png_infop pngInfo
 ) {
-    png_destroy_read_struct(&pngStruct, &pngInfo, NULL) ;
     close() ;
+    png_destroy_read_struct(&pngStruct, &pngInfo, nullptr) ;
 }
 
 unsigned int PNGFile::setAndConvertColorFormat(
