@@ -1,6 +1,7 @@
 #ifndef __SPITE__FILE__
 #define __SPITE__FILE__
 
+#include <utils/Platform.hpp>
 #include <filesystem>
 #include <interfaces/ILoadable.hpp>
 #include <interfaces/ISavable.hpp>
@@ -36,7 +37,7 @@ namespace Spite {
              * Creation a File from a string.
              * @param   filepath    Path to the file to open.
              */
-            File(const std::string& filepath) {
+            exported File(const std::string& filepath) {
                 m_path = std::filesystem::path(filepath) ;
             }
 
@@ -45,18 +46,18 @@ namespace Spite {
              * @param   mode    Mode to access File and perform some
              *                  operations on it.
              */
-            virtual void open(OpenMode mode) = 0 ;
+            exported virtual void open(OpenMode mode) = 0 ;
 
             /**
              * Close the File.
              */
-            virtual void close() = 0 ;
+            exported virtual void close() = 0 ;
 
             /**
              * Get the path to the File.
              * @return  The path of the File.
              */
-            const std::filesystem::path& path() const {
+            exported const std::filesystem::path& path() const {
                 return m_path ;
             }
     } ;

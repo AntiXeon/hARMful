@@ -1,6 +1,7 @@
 #ifndef __SPITE__TEXT_FILE_READER__
 #define __SPITE__TEXT_FILE_READER__
 
+#include <utils/Platform.hpp>
 #include <string>
 #include <readers/FileReader.hpp>
 
@@ -16,7 +17,7 @@ namespace Spite {
              * @param   text    The line that is read.
              * @return  The line that is read.
              */
-            std::string& readLine(std::string& readLine) {
+            exported std::string& readLine(std::string& readLine) {
                 getline(*m_stream, readLine) ;
                 return readLine ;
             }
@@ -25,7 +26,7 @@ namespace Spite {
              * Read the whole content of a text at once.
              * @param   content Output the whole content of the file.
              */
-            void readAll(std::string& content) ;
+            exported void readAll(std::string& content) ;
     } ;
 }
 

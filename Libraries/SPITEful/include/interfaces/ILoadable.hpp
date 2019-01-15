@@ -1,6 +1,7 @@
 #ifndef __SPITE__ILOADABLE__
 #define __SPITE__ILOADABLE__
 
+#include <utils/Platform.hpp>
 #include <interfaces/IFileData.hpp>
 
 namespace Spite {
@@ -15,7 +16,7 @@ namespace Spite {
              * @param   filedata    File data to store data in.
              * @return  TRUE on success, FALSE on failure.
              */
-            virtual bool load(IFileData* filedata) = 0 ;
+            exported virtual bool load(IFileData* filedata) = 0 ;
     } ;
 
 } ;

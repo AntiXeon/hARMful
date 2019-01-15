@@ -7,6 +7,7 @@ extern "C" {
     #include <jpeglib.h>
 }
 
+#include <utils/Platform.hpp>
 #include <files/images/ImageFile.hpp>
 
 namespace Spite {
@@ -20,12 +21,12 @@ namespace Spite {
              * Create a new JPEGFile.
              * @param   path    Path of the file to open.
              */
-            JPEGFile(const std::string& path) ;
+            exported JPEGFile(const std::string& path) ;
 
             /**
              * Destruction of the JPEGFile.
              */
-            virtual ~JPEGFile() = default ;
+            exported virtual ~JPEGFile() = default ;
 
             // Remove copy/move operations.
             JPEGFile(const JPEGFile& copied) = delete;

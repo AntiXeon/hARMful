@@ -1,6 +1,7 @@
 #ifndef __SPITE__IMAGE_FILE__
 #define __SPITE__IMAGE_FILE__
 
+#include <utils/Platform.hpp>
 #include <File.hpp>
 #include <files/images/data/RawImage.hpp>
 
@@ -26,12 +27,12 @@ namespace Spite {
              * @param   path    Path of the file to open.
              * @param   format  Color format used by the image file.
              */
-            ImageFile(const std::string& path) ;
+            exported ImageFile(const std::string& path) ;
 
             /**
              * Destruction of the ImageFile.
              */
-            virtual ~ImageFile() ;
+            exported virtual ~ImageFile() ;
 
         public:
             /**
@@ -39,18 +40,18 @@ namespace Spite {
              * @param   mode    Mode to access BaseFile and perform some
              *                  operations on it.
              */
-            void open(OpenMode mode) ;
+            exported void open(OpenMode mode) ;
 
             /**
              * Close the JPEGFile.
              */
-            void close() ;
+            exported void close() ;
 
             /**
              * Load a data at a given place on disk.
              * @param   filedata    File data to store data in.
              */
-            bool load(IFileData* filedata) ;
+            exported bool load(IFileData* filedata) ;
 
             /**
              * Save a data at a given place on disk.
@@ -58,7 +59,7 @@ namespace Spite {
              *                      processed before saving.
              * @param   path        Path to the location on filesystem.
              */
-            bool save(
+            exported bool save(
                 IFileData* output,
                 const std::string& path
             ) ;
@@ -74,14 +75,13 @@ namespace Spite {
              * Parse the image file and store raw data in the @a output data.
              * @param   output  Output the raw data from the image file.
              */
-            virtual bool parse(RawImage* output) = 0 ;
+            exported virtual bool parse(RawImage* output) = 0 ;
 
-        protected:
             /**
              * Get the file descriptor.
              * @return  The descriptor of the file.
              */
-            FILE* descriptor() const ;
+            exported FILE* descriptor() const ;
     } ;
 }
 

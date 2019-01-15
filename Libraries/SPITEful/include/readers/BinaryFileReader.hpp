@@ -1,6 +1,7 @@
 #ifndef __SPITE__BINARY_FILE_READER__
 #define __SPITE__BINARY_FILE_READER__
 
+#include <utils/Platform.hpp>
 #include <stdint.h>
 #include <string>
 #include <vector>
@@ -17,44 +18,44 @@ namespace Spite {
              * Read a 8-bit integer value.
              * @return  The read value.
              */
-            virtual int8_t readChar() = 0 ;
+            exported virtual int8_t readChar() = 0 ;
 
             /**
              * Read a 16-bit integer value.
              * @return  The read value.
              */
-            virtual int16_t readShort() = 0 ;
+            exported virtual int16_t readShort() = 0 ;
 
             /**
              * Read a 32-bit integer value.
              * @return  The read value.
              */
-            virtual int32_t readInt32() = 0 ;
+            exported virtual int32_t readInt32() = 0 ;
 
             /**
              * Read a 64-bit integer value.
              * @return  The read value.
              */
-            virtual int64_t readInt64() = 0 ;
+            exported virtual int64_t readInt64() = 0 ;
 
             /**
              * Read a 32-bit float value.
              * @return  The read value.
              */
-            virtual float readFloat() = 0 ;
+            exported virtual float readFloat() = 0 ;
 
             /**
              * Read a 64-bit float value.
              * @return  The read value.
              */
-            virtual double readDouble() = 0 ;
+            exported virtual double readDouble() = 0 ;
 
             /**
              * Read a string byte by byte.
              * @param   string  Buffer to store the content of the string.
              * @param   length  Length of the string in byte.
              */
-            virtual void readString(
+            exported virtual void readString(
                 char string[],
                 const unsigned int length
             ) = 0 ;
@@ -64,7 +65,7 @@ namespace Spite {
              * @param   buffer  Buffer to store the characters of the string.
              * @param   length  Length of the string in byte.
              */
-            virtual void readString(
+            exported virtual void readString(
                 std::string& buffer,
                 const unsigned int length
             ) = 0 ;
@@ -73,19 +74,19 @@ namespace Spite {
              * Read all the bytes from a binary file.
              * @param   blob    Blob data got from the file.
              */
-            void readAllBytes(char* blob, const size_t size) ;
+            exported void readAllBytes(char* blob, const size_t size) ;
 
             /**
              * Read all the bytes from a binary file.
              * @param   blob    Blob data got from the file.
              */
-            void readAllBytes(std::vector<char>& blob) ;
+            exported void readAllBytes(std::vector<char>& blob) ;
 
             /**
              * Read all the bytes from a binary file.
              * @param   blob    Blob data got from the file.
              */
-            void readAllBytes(std::vector<unsigned char>& blob) ;
+            exported void readAllBytes(std::vector<unsigned char>& blob) ;
     } ;
 }
 

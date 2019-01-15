@@ -1,6 +1,7 @@
 #ifndef __SPITE__CPU_ENDIANNESS_BINARY_FILE_READER__
 #define __SPITE__CPU_ENDIANNESS_BINARY_FILE_READER__
 
+#include <utils/Platform.hpp>
 #include <readers/BinaryFileReader.hpp>
 #include <SPITEStrings.hpp>
 #include <ios>
@@ -17,7 +18,7 @@ namespace Spite {
              * Read a 8-bit integer value.
              * @return  The read value.
              */
-            int8_t readChar() {
+            exported int8_t readChar() {
                 int8_t tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -27,7 +28,7 @@ namespace Spite {
              * Read a 16-bit integer value.
              * @return  The read value.
              */
-            int16_t readShort() {
+            exported int16_t readShort() {
                 int16_t tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -37,7 +38,7 @@ namespace Spite {
              * Read a 32-bit integer value.
              * @return  The read value.
              */
-            int32_t readInt32() {
+            exported int32_t readInt32() {
                 int32_t tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -47,7 +48,7 @@ namespace Spite {
              * Read a 64-bit integer value.
              * @return  The read value.
              */
-            int64_t readInt64() {
+            exported int64_t readInt64() {
                 int64_t tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -57,7 +58,7 @@ namespace Spite {
              * Read a 32-bit float value.
              * @return  The read value.
              */
-            float readFloat() {
+            exported float readFloat() {
                 float tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -67,7 +68,7 @@ namespace Spite {
              * Read a 64-bit float value.
              * @return  The read value.
              */
-            double readDouble() {
+            exported double readDouble() {
                 double tmp ;
                 m_stream -> read((char*) &tmp, sizeof(tmp)) ;
                 return tmp ;
@@ -79,7 +80,7 @@ namespace Spite {
              * @param   length  Length of the string in byte.
              * @warning No null character inserted at the end of the string.
              */
-            void readString(char string[], const unsigned int length) {
+            exported void readString(char string[], const unsigned int length) {
                 for (unsigned int index = 0 ; index < length ; ++index) {
                     m_stream -> read((char*) &string[index], sizeof(char)) ;
                 }
@@ -90,7 +91,7 @@ namespace Spite {
              * @param   buffer  Buffer to store the characters of the string.
              * @param   length  Length of the string in byte.
              */
-            void readString(std::string& buffer, const unsigned int length) {
+            exported void readString(std::string& buffer, const unsigned int length) {
                 buffer.clear() ;
                 buffer.reserve(length) ;
 

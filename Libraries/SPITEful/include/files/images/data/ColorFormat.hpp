@@ -1,6 +1,7 @@
 #ifndef __SPITE__COLOR_FORMAT__
 #define __SPITE__COLOR_FORMAT__
 
+#include <utils/Platform.hpp>
 #include <string>
 #include <vector>
 
@@ -75,7 +76,7 @@ namespace Spite {
             /**
              * Empty constructor, just for optimization.
              */
-            ColorFormat() = default ;
+            exported ColorFormat() = default ;
 
             /**
              * Create a new ColorFormat.
@@ -84,7 +85,7 @@ namespace Spite {
              * @param   components          Components in the ColorFormat.
              * @param   componentSize       Size of each component in bytes.
              */
-            ColorFormat(
+            exported ColorFormat(
                 const ColorFormat::ID id,
                 const std::string& name,
                 const std::vector<unsigned int>& components,
@@ -94,61 +95,61 @@ namespace Spite {
             /**
              * Initialize the class for standard color formats.
              */
-            static void Initialize() ;
+            exported static void Initialize() ;
 
             /**
              * Create a ColorFormat.
              * @param   id  ID of the ColorFormat.
              */
-            static void Create(const ColorFormat::ID& id) ;
+            exported static void Create(const ColorFormat::ID& id) ;
 
             /**
              * Clear all ColorFormat instances.
              */
-            static void Clear() ;
+            exported static void Clear() ;
 
             /**
              * Get the wanted ColorFormat.
              * @param   id  ID of the ColorFormat to get.
              * @return  The wanted ColorFormat.
              */
-            static ColorFormat& Get(const ColorFormat::ID& id) ;
+            exported static ColorFormat& Get(const ColorFormat::ID& id) ;
 
             /**
              * Get the ID of the ColorFormat.
              * @return  ID of the ColorFormat.
              */
-            ID id() const ;
+            exported ID id() const ;
 
             /**
              * Get the name of the ColorFormat.
              * @return  Name of the ColorFormat.
              */
-            const std::string& name() const ;
+            exported const std::string& name() const ;
 
             /**
              * Get the amount of components used in the ColorFormat.
              * @return  Amount of components in the ColorFormat.
              */
-            unsigned char amountOfComponents() const ;
+            exported unsigned char amountOfComponents() const ;
 
             /**
              * Get the total size in bytes of each pixel information.
              * @return  Amount of bytes used to represent each pixel of an image.
              */
-            unsigned char pixelSizeInBytes() const ;
+            exported unsigned char pixelSizeInBytes() const ;
 
             /**
              * Get the color depth of the ColorFormat.
              * @return  Color depth in bits.
              */
-            unsigned char colorDepth() const ;
+            exported unsigned char colorDepth() const ;
 
             /**
              * Get the size of each component in bytes.
              * @return  Size of a component in bytes.
              */
-            unsigned char componentSize() const ;
+            exported unsigned char componentSize() const ;
 
             /**
              * Get the mask of the wanted component.
@@ -156,7 +157,7 @@ namespace Spite {
              *          wanted.
              * @return  The mask for the given @a componentID.
              */
-            unsigned int mask(const unsigned int& componentID) const ;
+            exported unsigned int mask(const unsigned int& componentID) const ;
 
         private:
             /**

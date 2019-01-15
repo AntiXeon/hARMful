@@ -7,6 +7,7 @@ extern "C" {
     #include <png.h>
 }
 
+#include <utils/Platform.hpp>
 #include <files/images/ImageFile.hpp>
 
 namespace Spite {
@@ -28,12 +29,12 @@ namespace Spite {
              * Create a new PNGFile.
              * @param   path    Path of the file to open.
              */
-            PNGFile(const std::string& path) ;
+            exported PNGFile(const std::string& path) ;
 
             /**
              * Destruction of the PNGFile.
              */
-            virtual ~PNGFile() = default ;
+            exported virtual ~PNGFile() = default ;
 
             // Remove copy/move operations.
             PNGFile(const PNGFile& copied) = delete;

@@ -1,6 +1,7 @@
 #ifndef __SPITE__FILE_READER__
 #define __SPITE__FILE_READER__
 
+#include <utils/Platform.hpp>
 #include <fstream>
 
 namespace Spite {
@@ -19,26 +20,26 @@ namespace Spite {
             /**
              * Create a FileReader.
              */
-            FileReader() = default ;
+            exported FileReader() = default ;
 
             /**
              * Destruction of the FileReader.
              */
-            virtual ~FileReader() = default ;
+            exported virtual ~FileReader() = default ;
 
             /**
              * Set the stream of the FileReader.
              * @param   stream  The stream to use.
              */
-            void setFileStream(std::fstream* stream) {
+            exported void setFileStream(std::fstream* stream) {
                 m_stream = stream ;
             }
 
             // Remove copy/move operations.
-            FileReader(const FileReader& copied) = default;
-            FileReader(FileReader&& moved) = default;
-            FileReader& operator=(const FileReader& copied) = default;
-            FileReader& operator=(FileReader&& moved) = default;
+            exported FileReader(const FileReader& copied) = default;
+            exported FileReader(FileReader&& moved) = default;
+            exported FileReader& operator=(const FileReader& copied) = default;
+            exported FileReader& operator=(FileReader&& moved) = default;
     } ;
 }
 

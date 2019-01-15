@@ -1,6 +1,7 @@
 #ifndef __SPITE__BINARY_FILE__
 #define __SPITE__BINARY_FILE__
 
+#include <utils/Platform.hpp>
 #include <files/BaseFile.hpp>
 
 namespace Spite {
@@ -32,12 +33,12 @@ namespace Spite {
              *                      endianness than the CPU, FALSE if it is the
              *                      reversed endianness.
              */
-            BinaryFile(const std::string& filepath, const bool isCPUEndian) ;
+            exported BinaryFile(const std::string& filepath, const bool isCPUEndian) ;
 
             /**
              * Destroy the BinaryFile.
              */
-            virtual ~BinaryFile() ;
+            exported virtual ~BinaryFile() ;
 
             // Remove copy/move operations.
             BinaryFile(const BinaryFile& copied) = delete;
@@ -51,28 +52,28 @@ namespace Spite {
              * @param   mode    A specific openmode for a type of File.
              * @return  TRUE if the File has a specific openmode, FALSE else.
              */
-            bool hasSpecificMode(std::ios_base::openmode& mode) override ;
+            exported bool hasSpecificMode(std::ios_base::openmode& mode) override ;
 
             /**
              * Make the subclasses return the FileReader they use.
              * It is then activated with the inner file stream.
              * @return  The FileReader used by subclasses of File.
              */
-            FileReader* defineFileReader() override ;
+            exported FileReader* defineFileReader() override ;
 
             /**
              * Make the subclasses return the FileWriter they use.
              * It is then activated with the inner file stream.
              * @return  The FileWriter used by subclasses of File.
              */
-            FileWriter* defineFileWriter() override ;
+            exported FileWriter* defineFileWriter() override ;
 
         public:
             /**
              * Check if the File instance is valid and can be used.
              * @return  TRUE if the File instance can be used. FALSE else.
              */
-            bool isValid() const override ;
+            exported bool isValid() const override ;
 
     } ;
 }

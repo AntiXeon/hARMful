@@ -1,6 +1,7 @@
 #ifndef __SPITE__ISAVABLE__
 #define __SPITE__ISAVABLE__
 
+#include <utils/Platform.hpp>
 #include <interfaces/IFileData.hpp>
 
 namespace Spite {
@@ -17,7 +18,7 @@ namespace Spite {
              * @param   path        Path to the location on filesystem.
              * @return  TRUE on success, FALSE on failure.
              */
-            virtual bool save(
+            exported virtual bool save(
                 IFileData* filedata,
                 const std::string& path
             ) = 0 ;

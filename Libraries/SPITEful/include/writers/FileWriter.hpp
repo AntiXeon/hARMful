@@ -1,6 +1,7 @@
 #ifndef __SPITE__FILE_WRITER__
 #define __SPITE__FILE_WRITER__
 
+#include <utils/Platform.hpp>
 #include <fstream>
 
 namespace Spite {
@@ -19,26 +20,26 @@ namespace Spite {
             /**
              * Create a FileWriter.
              */
-            FileWriter() = default ;
+            exported FileWriter() = default ;
 
             /**
              * Destruction of the FileWriter.
              */
-            virtual ~FileWriter() = default ;
+            exported virtual ~FileWriter() = default ;
 
             /**
              * Set the stream of the FileWriter.
              * @param   stream  The stream to use.
              */
-            void setFileStream(std::fstream* stream) {
+            exported void setFileStream(std::fstream* stream) {
                 m_stream = stream ;
             }
 
             // Remove copy/move operations.
-            FileWriter(const FileWriter& copied) = default;
-            FileWriter(FileWriter&& moved) = default;
-            FileWriter& operator=(const FileWriter& copied) = default;
-            FileWriter& operator=(FileWriter&& moved) = default;
+            exported FileWriter(const FileWriter& copied) = default;
+            exported FileWriter(FileWriter&& moved) = default;
+            exported FileWriter& operator=(const FileWriter& copied) = default;
+            exported FileWriter& operator=(FileWriter&& moved) = default;
     } ;
 }
 

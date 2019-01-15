@@ -1,6 +1,8 @@
 #ifndef __SPITE__IFILEDATA__
 #define __SPITE__IFILEDATA__
 
+#include <utils/Platform.hpp>
+
 namespace Spite {
 
     /**
@@ -13,12 +15,12 @@ namespace Spite {
              * @param   data    Output the raw data of the file.
              * @param   size    Output the size of the file @a data.
              */
-            virtual void data(unsigned char*& data, unsigned int& size) = 0 ;
+            exported virtual void data(unsigned char*& data, unsigned int& size) = 0 ;
 
             /**
              * Free data from memory.
              */
-            virtual void freeData() = 0 ;
+            exported virtual void freeData() = 0 ;
     } ;
 
 } ;
