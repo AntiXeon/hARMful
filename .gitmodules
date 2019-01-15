@@ -4,3 +4,9 @@
 [submodule "Libraries/HOPEful/dependencies/assimp"]
 	path = Libraries/HOPEful/dependencies/assimp
 	url = https://github.com/assimp/assimp.git
+[submodule "Libraries/SPITEful/dependencies/libpng"]
+	path = Libraries/SPITEful/dependencies/libpng
+	url = https://github.com/glennrp/libpng.git
+[submodule "Libraries/SPITEful/dependencies/libjpeg-turbo"]
+	path = Libraries/SPITEful/dependencies/libjpeg-turbo
+	url = https://github.com/libjpeg-turbo/libjpeg-turbo.git
