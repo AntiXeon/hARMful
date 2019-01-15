@@ -3,7 +3,7 @@ if (UNIX)
 
     find_package(LibJpegTurbo REQUIRED)
     if (JPEGTURBO_FOUND)
-        include_directories(${JPEGTURBO_INCLUDE_DIRS})
+        include_directories(${JPEGTURBO_INCLUDE_DIR})
         target_link_libraries(${PROJECT_NAME} ${JPEGTURBO_LIBRARIES})
         target_link_libraries(${PROJECT_NAME} ${JPEG_LIBRARIES})
     endif()
