@@ -2,7 +2,7 @@ version: 2
 jobs:
     build:
         docker:
-            - image: dcarlus/harmful0.0.2
+            - image: dcarlus/harmful0.0.3
         steps:
             - checkout
 
