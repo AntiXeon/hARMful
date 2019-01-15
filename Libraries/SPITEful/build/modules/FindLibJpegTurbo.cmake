@@ -21,6 +21,7 @@ find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
                    ${JPEGTURBO_PATH}/lib
                    /usr/local/opt/jpeg-turbo/lib
                    /usr/local/opt/jpeg-turbo/lib64
+                   /usr/lib/x86_64-linux-gnu/
                    NO_DEFAULT_PATH)
 
 if (NOT JPEGTURBO_LIBRARY)
