@@ -20,7 +20,8 @@ find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
                    ${JPEGTURBO_PATH}/lib64
                    ${JPEGTURBO_PATH}/lib
                    /opt/libjpeg-turbo/lib64
-                   NO_DEFAULT_PATH)
+                   NO_DEFAULT_PATH
+                   NO_CMAKE_SYSTEM_PATH)
 
 if (NOT JPEGTURBO_LIBRARY)
 find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
@@ -29,7 +30,9 @@ find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
                    ${JPEGTURBO_PATH}/lib
                    ${JPEGTURBO_PATH}/lib64
                    /usr/lib
-                   /usr/lib64)
+                   /usr/lib64
+                   NO_DEFAULT_PATH
+                   NO_CMAKE_SYSTEM_PATH)
 endif ()
 
 # handle the QUIETLY and REQUIRED arguments and set JPEG_FOUND to TRUE if
