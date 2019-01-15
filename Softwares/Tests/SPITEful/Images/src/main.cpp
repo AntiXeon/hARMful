@@ -54,6 +54,29 @@ static SDL_Texture* loadDices(SDL_Renderer* renderer) {
     return SDL_CreateTextureFromSurface(renderer, surface) ;
 }
 
+static SDL_Texture* loadPanda(SDL_Renderer* renderer) {
+    Spite::RawImage raw(Spite::ColorFormat::RGB) ;
+    Spite::JPEGFile pic("../pictures/red_panda.jpg") ;
+    pic.open(Spite::File::Open_ReadOnly) ;
+    pic.load(&raw) ;
+    // Convert pictures to SDL structures.
+    unsigned char* pixelData = nullptr ;
+    unsigned int pixelDataSize = 0 ;
+    raw.data(pixelData, pixelDataSize) ;
+    Spite::ColorFormat format = Spite::ColorFormat::Get(raw.format()) ;
+
+    SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormatFrom(
+        pixelData,
+        raw.width(),
+        raw.height(),
+        format.colorDepth(),
+        format.pixelSizeInBytes() * raw.width(),
+        SDL_PIXELFORMAT_RGB24
+    ) ;
+
+    return SDL_CreateTextureFromSurface(renderer, surface) ;
+}
+
 int main(int, char**) {
     Doom::LogSystem::Initialize("Images.log", Doom::LogSystem::Gravity::Debug) ;
 
@@ -89,6 +112,12 @@ int main(int, char**) {
     // Load pictures.
     SDL_Texture* bgTexture = loadBackground(renderer) ;
     SDL_Texture* dicesTexture = loadDices(renderer) ;
+    SDL_Texture* pandaTexture = loadPanda(renderer) ;
+
+    SDL_Rect pandaRect ;
+    SDL_QueryTexture(pandaTexture, nullptr, nullptr, &pandaRect.w, &pandaRect.h) ;
+    pandaRect.x = 30 ;
+    pandaRect.y = 10 ;
 
     SDL_Rect dicesRect ;
     SDL_QueryTexture(dicesTexture, nullptr, nullptr, &dicesRect.w, &dicesRect.h) ;
@@ -96,8 +125,9 @@ int main(int, char**) {
     dicesRect.y = 180 ;
 
     // Display pictures.
-    SDL_RenderCopy(renderer, bgTexture, NULL, NULL) ;
-    SDL_RenderCopy(renderer, dicesTexture, NULL, &dicesRect) ;
+    SDL_RenderCopy(renderer, bgTexture, nullptr, nullptr) ;
+    SDL_RenderCopy(renderer, pandaTexture, nullptr, &pandaRect) ;
+    SDL_RenderCopy(renderer, dicesTexture, nullptr, &dicesRect) ;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE) ;
     SDL_RenderPresent(renderer) ;
     SDL_RenderClear(renderer) ;

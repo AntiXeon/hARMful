@@ -99,7 +99,7 @@ bool JPEGFile::startDecompression(
     // Start the decompression.
     jpeg_start_decompress(&cinfo) ;
     // Amount of JSAMPLE per row in the output buffer.
-    rowStride = cinfo.output_width * cinfo.output_components * 4 ;
+    rowStride = cinfo.output_width * cinfo.output_components ;
 
     // Set the dimensions of the output image raw data.
     output -> setDimensions(cinfo.output_width, cinfo.output_height) ;
