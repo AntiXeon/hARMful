@@ -12,23 +12,24 @@ include (FindPackageHandleStandardArgs)
 find_path(JPEGTURBO_INCLUDE_DIR turbojpeg.h
           PATHS ${JPEGTURBO_PATH}/include
                 /usr/include
-                /usr/local/opt/libjpeg-turbo/include)
+                /opt/libjpeg-turbo/include)
 set(JPEGTURBO_NAMES ${JPEGTURBO_NAMES} libturbojpeg turbojpeg)
 
 find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
              PATHS ${JPEGTURBO_INCLUDE_DIR}/../lib
                    ${JPEGTURBO_PATH}/lib64
                    ${JPEGTURBO_PATH}/lib
-                   /usr/local/opt/jpeg-turbo/lib
-                   /usr/local/opt/jpeg-turbo/lib64
-                   /usr/lib/x86_64-linux-gnu/
+                   /opt/libjpeg-turbo/lib64
                    NO_DEFAULT_PATH)
 
 if (NOT JPEGTURBO_LIBRARY)
 find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
              PATHS ${JPEGTURBO_INCLUDE_DIR}/../lib
+                   ${JPEGTURBO_INCLUDE_DIR}/../lib64
                    ${JPEGTURBO_PATH}/lib
-                   /usr/lib)
+                   ${JPEGTURBO_PATH}/lib64
+                   /usr/lib
+                   /usr/lib64)
 endif ()
 
 # handle the QUIETLY and REQUIRED arguments and set JPEG_FOUND to TRUE if
