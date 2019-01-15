@@ -12,7 +12,8 @@ include (FindPackageHandleStandardArgs)
 find_path(JPEGTURBO_INCLUDE_DIR turbojpeg.h
           PATHS ${JPEGTURBO_PATH}/include
                 /usr/include
-                /opt/libjpeg-turbo/include)
+                /opt/libjpeg-turbo/include
+                NO_DEFAULT_PATH)
 set(JPEGTURBO_NAMES ${JPEGTURBO_NAMES} libturbojpeg turbojpeg)
 
 find_library(JPEGTURBO_LIBRARY NAMES ${JPEGTURBO_NAMES}
