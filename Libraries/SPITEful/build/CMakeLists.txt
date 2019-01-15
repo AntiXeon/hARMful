@@ -31,6 +31,9 @@ include("./LinuxDependencies.cmake")
 
 target_link_libraries(${PROJECT_NAME} DOOM)
 
+# Windows dependencies
+include("./WindowsDependencies.cmake")
+
 # Versioning
 if (UNIX)
     target_link_libraries(${PROJECT_NAME} -lstdc++fs)
