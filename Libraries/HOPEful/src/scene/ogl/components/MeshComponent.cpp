@@ -1,6 +1,6 @@
 #include <scene/ogl/components/MeshComponent.hpp>
-#include <scene/ogl/mesh/loader/MeshLoader.hpp>
-#include <scene/ogl/mesh/Mesh.hpp>
+#include <scene/ogl/components/mesh/loader/MeshLoader.hpp>
+#include <scene/ogl/components/mesh/Mesh.hpp>
 #include <scene/SceneTypes.hpp>
 
 using namespace Hope::GL ;
