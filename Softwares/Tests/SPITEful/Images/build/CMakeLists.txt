@@ -19,6 +19,8 @@ include_directories (
     ${DOOM_INCLUDE_DIRS}
     ${SPITE_INCLUDE_DIRS}
     ${SDL2_INCLUDE_DIRS}
+    ${JPEGTURBO_INCLUDE_DIR}
+    ${PNG_INCLUDE_DIRS}
 )
 
 # List source files
