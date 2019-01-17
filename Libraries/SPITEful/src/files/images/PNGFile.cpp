@@ -32,7 +32,25 @@ bool PNGFile::parse(RawImage* filedata) {
     // Header of the PNG file. It is used to check if it is really a PNG
     // file.
     unsigned char pngHeader[HeaderLength] ;
-    fread(pngHeader, sizeof(char), HeaderLength, descriptor()) ;
+    size_t amountReadBytes = fread(pngHeader, sizeof(char), HeaderLength, descriptor()) ;
+
+    if (amountReadBytes != HeaderLength) {
+        // Log debug info.
+        std::weak_ptr<Doom::LogSystem> logWeakPtr = Doom::LogSystem::GetInstance() ;
+        std::shared_ptr<Doom::LogSystem> logSystem = logWeakPtr.lock() ;
+
+        if (!logSystem) {
+            return false ;
+        }
+
+        logSystem -> writeLine(
+            Doom::LogSystem::Gravity::Debug,
+            PNGMsg::Error::BadPNGHeaderSize,
+            filepath
+         ) ;
+
+        return false ;
+    }
 
     bool isPNG = (png_sig_cmp(pngHeader, 0, HeaderLength) == 0) ;
 

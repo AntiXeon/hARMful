@@ -32,6 +32,7 @@ namespace Spite {
     namespace PNGMsg {
         namespace Error {
             extern const std::string NotPNGFile ;
+            extern const std::string BadPNGHeaderSize ;
             extern const std::string InitializationStructureFailed ;
             extern const std::string InitializationInfosFailed ;
         } ;

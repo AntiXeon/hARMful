@@ -36,6 +36,7 @@ namespace Spite {
     namespace PNGMsg {
         namespace Error {
             const std::string NotPNGFile = i18n("The provided file is not a PNG image: %s.") ;
+            const std::string BadPNGHeaderSize = i18n("The header size of the PNG file does not match with the expected length. Is it a PNG file?") ;
             const std::string InitializationStructureFailed = i18n("Unable to initialize PNG structure for ") ;
             const std::string InitializationInfosFailed = i18n("Unable to initialize PNG infos for ") ;
         } ;
