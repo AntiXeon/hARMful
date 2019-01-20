@@ -56,6 +56,17 @@ namespace Hope {
              */
             size_t amountAttachedEntities() const ;
 
+            /**
+             * Get the entities that bear the current component.
+             * @param   entities    Output the entities.
+             */
+            void entities(std::vector<Entity*>& entities) ;
+
+            /**
+             * Get the first entity bearing this component.
+             */
+            Entity* firstEntity() ;
+
             // Remove copy/move operations.
             Component(const Component& copied) = delete;
             Component(Component&& moved) = delete;

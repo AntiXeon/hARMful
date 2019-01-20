@@ -5,6 +5,7 @@ namespace Hope {
     typedef unsigned int ComponentType ;
 
     extern ComponentType MeshComponent ;
+    extern ComponentType CameraComponent ;
 }
 
 #endif

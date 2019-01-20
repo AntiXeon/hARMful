@@ -25,6 +25,20 @@ size_t Component::amountAttachedEntities() const {
     return m_entities.size() ;
 }
 
+void Component::entities(std::vector<Entity*>& entities) {
+    if (m_entities.size() > 0) {
+        std::copy(m_entities.begin(), m_entities.end(), entities.begin()) ;
+    }
+}
+
+Entity* Component::firstEntity() {
+    if (m_entities.size() > 0) {
+        return m_entities[0] ;
+    }
+
+    return nullptr ;
+}
+
 void Component::attach(Entity* entity) {
     auto posEntity = std::find(m_entities.begin(), m_entities.end(), entity) ;
     bool alreadyAttached = (posEntity != m_entities.end()) ;

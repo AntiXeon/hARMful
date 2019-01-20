@@ -1,4 +1,4 @@
-#include <scene/ogl/components/MeshComponent.hpp>
+#include <scene/ogl/components/mesh/MeshComponent.hpp>
 #include <scene/ogl/components/mesh/loader/MeshLoader.hpp>
 #include <scene/ogl/components/mesh/Mesh.hpp>
 #include <scene/SceneTypes.hpp>
