@@ -6,12 +6,8 @@
 
 #ifdef LinuxPlatform
     #include <cerrno>
-    #define ErrorNumber errno
-    #define ErrorFunction ::strerror
-#elif WindowsPlatform
+#elif defined(WindowsPlatform)
     #include <windows.h>
-    #define ErrorNumber errno
-    #define ErrorFunction ::_strerror
 #endif
 
 namespace Doom {

@@ -20,6 +20,7 @@ static void PrintErrno(
         return ;
     }
 
+#ifdef LinuxPlatform
     if (message) {
         logSys -> writeLine<const char*, const char*, int, const char*, const char*, const char*, char*, const char*, const char*>(
             LogSystem::Gravity::Error,
@@ -29,7 +30,7 @@ static void PrintErrno(
             "@",
             function,
             ": ",
-            ErrorFunction(errno),
+            ::strerror(errno),
             "\nMESSAGE: ",
             message
         ) ;
@@ -43,9 +44,33 @@ static void PrintErrno(
             "@",
             function,
             ": ",
-            ErrorFunction(errno)
+            ::strerror(errno)
         ) ;
     }
+#elif defined(WindowsPlatform)
+    if (message) {
+        logSys -> writeLine<const char*, const char*, const char*, const char*, int, const char*, const char*>(
+            LogSystem::Gravity::Error,
+            message,
+            "\n",
+            file,
+            "::",
+            line,
+            "@",
+            function
+        ) ;
+    }
+    else {
+        logSys -> writeLine<const char*, const char*, int, const char*, const char*>(
+            LogSystem::Gravity::Error,
+            file,
+            "::",
+            line,
+            "@",
+            function
+        ) ;
+    }
+#endif
 }
 
 void Doom::ErrorsManagement::PrintCError(
@@ -53,7 +78,7 @@ void Doom::ErrorsManagement::PrintCError(
     int line,
     const char* function
 ) {
-    if (ErrorNumber != 0) {
+    if (errno != 0) {
         PrintErrno(file, line, function) ;
     }
 }
@@ -64,7 +89,7 @@ void Doom::ErrorsManagement::ExitOnCError(
     const char* function,
     const char* message
 ) {
-    if (ErrorNumber != 0) {
+    if (errno != 0) {
         PrintErrno(file, line, function, message) ;
         exit(-1) ;
     }
