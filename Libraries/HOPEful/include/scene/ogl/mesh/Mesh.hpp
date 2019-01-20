@@ -4,7 +4,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <interfaces/IRenderable.hpp>
-#include <scene/ogl/components/mesh/MeshPart.hpp>
+#include <scene/ogl/mesh/MeshPart.hpp>
 
 namespace Hope { namespace GL {
 

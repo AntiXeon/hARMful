@@ -1,4 +1,4 @@
-#include <scene/ogl/components/CameraComponent.hpp>
+#include <scene/components/CameraComponent.hpp>
 #include <scene/Entity.hpp>
 
 using namespace Hope::GL ;

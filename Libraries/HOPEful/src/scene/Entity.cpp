@@ -1,4 +1,4 @@
-#include <scene/Component.hpp>
+#include <scene/components/Component.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
 #include <cassert>

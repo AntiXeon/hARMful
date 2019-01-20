@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include <scene/Component.hpp>
+#include <scene/components/Component.hpp>
 
 namespace Hope { namespace GL {
 

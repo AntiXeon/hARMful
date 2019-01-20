@@ -1,5 +1,5 @@
-#include <scene/ogl/components/mesh/loader/MeshLoader.hpp>
-#include <scene/ogl/components/mesh/Vertex.hpp>
+#include <scene/ogl/mesh/loader/MeshLoader.hpp>
+#include <scene/ogl/mesh/Vertex.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>

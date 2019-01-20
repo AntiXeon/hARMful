@@ -1,6 +1,13 @@
-#include <scene/ogl/components/mesh/MeshComponent.hpp>
-#include <scene/ogl/components/mesh/loader/MeshLoader.hpp>
-#include <scene/ogl/components/mesh/Mesh.hpp>
+#include <HopeAPI.hpp>
+#include <scene/components/MeshComponent.hpp>
+
+#ifdef OGL
+    #include <scene/ogl/mesh/loader/MeshLoader.hpp>
+    #include <scene/ogl/mesh/Mesh.hpp>
+#elif defined(VK)
+    #error "Unsupported graphics API"
+#endif
+
 #include <scene/SceneTypes.hpp>
 
 using namespace Hope::GL ;

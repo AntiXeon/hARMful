@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_CAMERA_COMPONENT__
 #define __HOPE__GL_CAMERA_COMPONENT__
 
-#include <scene/Component.hpp>
+#include <scene/components/Component.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
 

@@ -1,4 +1,4 @@
-#include <scene/ogl/components/mesh/Mesh.hpp>
+#include <scene/ogl/mesh/Mesh.hpp>
 
 using namespace Hope::GL ;
 
