@@ -74,3 +74,7 @@ Mind::Vector3f CameraComponent::rightAxis() {
 Mind::Vector3f CameraComponent::up() {
     return m_up ;
 }
+
+Color CameraComponent::clearColor() {
+    return m_clearColor ;
+}
