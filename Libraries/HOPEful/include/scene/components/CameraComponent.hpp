@@ -4,6 +4,7 @@
 #include <scene/components/Component.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
+#include <scene/common/Color.hpp>
 
 namespace Hope {
     /**
@@ -15,6 +16,11 @@ namespace Hope {
              * Up vector of the world.
              */
             static const Mind::Vector3f WorldUpVector ;
+
+            /**
+             * Default clear color.
+             */
+            static const Color DefaultClearColor ;
 
             /**
              * Point in the 3D space the camera is targetting.
@@ -41,6 +47,11 @@ namespace Hope {
              */
             Mind::Matrix4x4f m_projectionMatrix ;
 
+            /**
+             * Clear color when using the current camera.
+             */
+            Color m_clearColor ;
+
         public:
             /**
              * Create a new CameraComponent.
@@ -52,6 +63,11 @@ namespace Hope {
              * @return  false, the CameraComponent cannot be shared.
              */
             bool isShareable() const override ;
+
+            /**
+             * Set the clear color of the camera.
+             */
+            void setClearColor(const Color& color) ;
 
             /**
              * Generate the projection matrix.
@@ -88,6 +104,11 @@ namespace Hope {
              * Get the up vector of the camera.
              */
             Mind::Vector3f up() ;
+
+            /**
+             * Get the clear color of the camera.
+             */
+            Color clearColor() ;
     } ;
 }
 
