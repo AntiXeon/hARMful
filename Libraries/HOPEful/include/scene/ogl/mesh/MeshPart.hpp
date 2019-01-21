@@ -5,7 +5,7 @@
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
 
-namespace Hope { namespace GL {
+namespace Hope::GL {
 
     class Vertex ;
 
@@ -57,6 +57,6 @@ namespace Hope { namespace GL {
             MeshPart& operator=(const MeshPart& copied) = default ;
             MeshPart& operator=(MeshPart&& moved) = default ;
     } ;
-}}
+}
 
 #endif

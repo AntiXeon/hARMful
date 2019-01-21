@@ -6,7 +6,7 @@
 #include <interfaces/IRenderable.hpp>
 #include <scene/ogl/mesh/MeshPart.hpp>
 
-namespace Hope { namespace GL {
+namespace Hope::GL {
 
     class MeshPart ;
 
@@ -43,6 +43,6 @@ namespace Hope { namespace GL {
             Mesh& operator=(const Mesh& copied) = default ;
             Mesh& operator=(Mesh&& moved) = default ;
     } ;
-}}
+}
 
 #endif

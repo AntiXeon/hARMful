@@ -5,8 +5,10 @@
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/points/Point3Df.hpp>
 
-namespace Hope { namespace GL {
-
+namespace Hope::GL {
+    /**
+     * Vertex data.
+     */
     class Vertex final
     {
         private:
@@ -35,7 +37,6 @@ namespace Hope { namespace GL {
                 const Mind::Vector3f& normal
             ) ;
     };
-
-}}
+}
 
 #endif

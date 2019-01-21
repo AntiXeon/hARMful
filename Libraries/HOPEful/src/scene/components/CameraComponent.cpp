@@ -1,7 +1,7 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/Entity.hpp>
 
-using namespace Hope::GL ;
+using namespace Hope ;
 
 const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0.f) ;
 

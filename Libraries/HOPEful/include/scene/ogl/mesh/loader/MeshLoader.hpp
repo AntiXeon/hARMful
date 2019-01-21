@@ -10,7 +10,7 @@ class Importer ;
 struct aiScene ;
 struct aiMesh ;
 
-namespace Hope { namespace GL {
+namespace Hope::GL {
     /**
      * Loader of a 3D mesh model and expose the generated Mesh used by the
      * engine later.
@@ -67,6 +67,6 @@ namespace Hope { namespace GL {
                 const aiMesh* part
             ) ;
     } ;
-}}
+}
 
 #endif

@@ -5,10 +5,13 @@
 #include <string>
 #include <scene/components/Component.hpp>
 
-namespace Hope { namespace GL {
+#ifdef OGL
+    #include <scene/ogl/mesh/loader/MeshLoader.hpp>
+    #include <scene/ogl/mesh/Mesh.hpp>
+    namespace API = Hope::GL ;
+#endif
 
-    class Mesh ;
-
+namespace Hope {
     /**
      * Component to link a 3D mesh to an entity.
      */
@@ -17,7 +20,7 @@ namespace Hope { namespace GL {
             /**
              * Mesh that is beared by the component.
              */
-            std::shared_ptr<Mesh> m_mesh = nullptr ;
+            std::shared_ptr<API::Mesh> m_mesh = nullptr ;
 
         public:
             /**
@@ -33,6 +36,6 @@ namespace Hope { namespace GL {
              */
             bool isShareable() const override ;
     } ;
-}}
+}
 
 #endif

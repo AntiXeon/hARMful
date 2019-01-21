@@ -5,8 +5,7 @@
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
 
-namespace Hope { namespace GL {
-
+namespace Hope {
     /**
      * Component that represents a camera, a point of view of the 3D world.
      */
@@ -90,6 +89,6 @@ namespace Hope { namespace GL {
              */
             Mind::Vector3f up() ;
     } ;
-}}
+}
 
 #endif
