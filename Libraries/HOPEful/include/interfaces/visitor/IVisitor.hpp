@@ -1,6 +1,8 @@
 #ifndef __HOPE__IVISITOR__
 #define __HOPE__IVISITOR__
 
+#include <scene/SceneTypes.hpp>
+
 namespace Hope {
     class CameraComponent ;
     class MeshComponent ;
@@ -11,14 +13,19 @@ namespace Hope {
     class IVisitor {
         public:
             /**
+             * Get the current frame ID while visiting.
+             */
+            virtual FrameID currentFrameID() const = 0 ;
+
+            /**
              * Visit a camera component.
              */
-            virtual void visit(CameraComponent* component) = 0 ;
+            virtual void visit(Hope::CameraComponent* component) = 0 ;
 
             /**
              * Visit a mesh component.
              */
-            virtual void visit(MeshComponent* component) = 0 ;
+            virtual void visit(Hope::MeshComponent* component) = 0 ;
     } ;
 }
 

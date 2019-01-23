@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <scene/components/Component.hpp>
+#include <HopeAPI.hpp>
 
 #ifdef OGL
     #include <scene/ogl/mesh/loader/MeshLoader.hpp>
@@ -12,10 +13,12 @@
 #endif
 
 namespace Hope {
+    class IVisitor ;
+
     /**
      * Component to link a 3D mesh to an entity.
      */
-    class MeshComponent final : public Hope::Component {
+    class MeshComponent final : public Component {
         private:
             /**
              * Mesh that is beared by the component.
@@ -29,6 +32,11 @@ namespace Hope {
              *                      component.
              */
             MeshComponent(const std::string& meshFile) ;
+
+            /**
+             * Accept the visitor.
+             */
+            void accept(IVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

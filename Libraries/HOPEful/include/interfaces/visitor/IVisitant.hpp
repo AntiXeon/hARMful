@@ -10,9 +10,9 @@ namespace Hope {
     class IVisitant {
         public:
             /**
-             * Visit a camera component.
+             * Accept the visitor.
              */
-            virtual void accept(IVisitor* component) = 0 ;
+            virtual void accept(IVisitor* visitor) = 0 ;
     } ;
 }
 

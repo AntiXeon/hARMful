@@ -1,6 +1,7 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/Entity.hpp>
 #include <utils/literals/NumberLiterals.hpp>
+#include <interfaces/visitor/IVisitor.hpp>
 
 using namespace Hope ;
 
@@ -8,7 +9,7 @@ const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0
 const Color CameraComponent::DefaultClearColor = Color(4_uchar, 90_uchar, 120_uchar) ;
 
 CameraComponent::CameraComponent()
-    : Component(Hope::CameraComponent),
+    : Component(Hope::CameraComponentType),
       m_viewDirection(Mind::Vector3f(0.f, 0.f, -1.f)),
       m_clearColor(DefaultClearColor) {
       Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
@@ -18,6 +19,15 @@ CameraComponent::CameraComponent()
       m_rightAxis.normalize() ;
 
       m_up = m_viewDirection.cross(m_rightAxis) ;
+}
+
+void CameraComponent::accept(IVisitor* visitor) {
+    FrameID currentFrame = visitor -> currentFrameID() ;
+
+    if (lastFrame() < currentFrame) {
+        visitor -> visit(this) ;
+        updateLastFrame(currentFrame) ;
+    }
 }
 
 bool CameraComponent::isShareable() const {

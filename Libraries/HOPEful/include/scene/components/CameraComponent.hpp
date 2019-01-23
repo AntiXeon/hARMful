@@ -7,10 +7,12 @@
 #include <scene/common/Color.hpp>
 
 namespace Hope {
+    class IVisitor ;
+
     /**
      * Component that represents a camera, a point of view of the 3D world.
      */
-    class CameraComponent final : public Hope::Component {
+    class CameraComponent final : public Component {
         private:
             /**
              * Up vector of the world.
@@ -57,6 +59,11 @@ namespace Hope {
              * Create a new CameraComponent.
              */
             CameraComponent() ;
+
+            /**
+             * Accept the visitor.
+             */
+            void accept(IVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

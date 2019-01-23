@@ -8,7 +8,23 @@ namespace Hope::GL {
      * Visitor for rendering objects using the OpenGL API.
      */
     class OpenGLRenderVisitor final : public IVisitor {
+        private:
+            /**
+             * The ID of the current frame being rendered.
+             */
+            FrameID m_currentFrameID = 0 ;
+
         public:
+            /**
+             * A new frame starts to be rendered.
+             */
+            void startNewFrame() ;
+
+            /**
+             * Get the current frame ID while visiting.
+             */
+            FrameID currentFrameID() const override ;
+
             /**
              * Visit a camera component.
              */

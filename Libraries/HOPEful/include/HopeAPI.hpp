@@ -1,11 +1,7 @@
 #ifndef __HOPE__API__
-    #ifndef API
-        namespace Hope::GL {}
-        #define API GL
-    #endif
 #define __HOPE__API__
 
-#define OGL
+#define OGL // use OpenGL API
 //#define VK    // Not yet implemented.
 
 #ifdef OGL
@@ -14,4 +10,4 @@
     #error "Unsupported graphics API"
 #endif
 
-#endif
+#endif  // __HOPE__API__
