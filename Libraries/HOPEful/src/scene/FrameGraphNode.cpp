@@ -22,6 +22,14 @@ FrameGraphNode::~FrameGraphNode() {
     m_children.clear() ;
 }
 
+void FrameGraphNode::process() {
+    internalProcess() ;
+
+    for (FrameGraphNode* child : m_children) {
+        child -> process() ;
+    }
+}
+
 void FrameGraphNode::setParent(FrameGraphNode* parent) {
     if (m_parent) {
         m_parent -> removeChild(this) ;
@@ -40,6 +48,10 @@ const FrameGraphNode* FrameGraphNode::parent() const {
 
 const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
     return m_children ;
+}
+
+void FrameGraphNode::internalProcess() {
+    // Do nothing here, implemented in inherited classes.
 }
 
 bool FrameGraphNode::addChild(FrameGraphNode* newChild) {
