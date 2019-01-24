@@ -1,5 +1,5 @@
 #ifndef __HOPE__GL_VERTEX__
-#define __HOPE__GL_VGERTEX__
+#define __HOPE__GL_VERTEX__
 
 #include <GL/glew.h>
 #include <geometry/points/Point2Df.hpp>
