@@ -18,3 +18,7 @@ void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
 void OpenGLRenderVisitor::visit(MeshComponent* /*component*/) {
     // TODO
 }
+
+void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
+
+}

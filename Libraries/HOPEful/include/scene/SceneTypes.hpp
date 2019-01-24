@@ -8,6 +8,7 @@ namespace Hope {
 
     extern ComponentType MeshComponentType ;
     extern ComponentType CameraComponentType ;
+    extern ComponentType RenderConfigurationType ;
 }
 
 #endif

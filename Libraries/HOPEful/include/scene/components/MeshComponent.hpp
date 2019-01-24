@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_MESH_COMPONENT__
-#define __HOPE__GL_MESH_COMPONENT__
+#ifndef __HOPE__MESH_COMPONENT__
+#define __HOPE__MESH_COMPONENT__
 
 #include <memory>
 #include <string>

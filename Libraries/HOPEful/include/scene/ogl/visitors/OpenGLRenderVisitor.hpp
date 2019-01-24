@@ -34,6 +34,11 @@ namespace Hope::GL {
              * Visit a mesh component.
              */
             void visit(MeshComponent* component) override ;
+
+            /**
+             * Visit a render configuration component.
+             */
+            void visit(Hope::RenderConfiguration* component) override ;
     } ;
 }
 

@@ -20,7 +20,6 @@ namespace Hope {
              */
             Entity& root() ;
     } ;
-
 }
 
 #endif

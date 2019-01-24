@@ -1,6 +1,7 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
-    ComponentType MeshComponent =       0x1 ;
-    ComponentType CameraComponent =     0x2 ;
+    ComponentType MeshComponent =               1 ;
+    ComponentType CameraComponent =             MeshComponent + 1 ;
+    ComponentType RenderConfigurationType =     CameraComponent + 1 ;
 }

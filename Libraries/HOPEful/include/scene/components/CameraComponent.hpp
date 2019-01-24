@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_CAMERA_COMPONENT__
-#define __HOPE__GL_CAMERA_COMPONENT__
+#ifndef __HOPE__CAMERA_COMPONENT__
+#define __HOPE__CAMERA_COMPONENT__
 
 #include <scene/components/Component.hpp>
 #include <geometry/points/Point3Df.hpp>
