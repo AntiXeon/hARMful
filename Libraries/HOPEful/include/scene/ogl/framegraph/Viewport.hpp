@@ -3,7 +3,7 @@
 
 #include <scene/FrameGraphNode.hpp>
 #include <geometry/points/Point2Df.hpp>
-#include <geometry/dimensions/Dimension2Di.hpp>
+#include <geometry/dimensions/Dimension2Df.hpp>
 
 namespace Hope::GL {
     /**
@@ -18,9 +18,9 @@ namespace Hope::GL {
             Mind::Point2Df m_position = Mind::Point2Df(0.f, 0.f) ;
 
             /**
-             * Dimension of the viewport in pixels.
+             * Dimension of the viewport relatively to the window size.
              */
-            Mind::Dimension2Di m_dimension = Mind::Dimension2Di(320, 240) ;
+            Mind::Dimension2Df m_dimension = Mind::Dimension2Df(1.f, 1.f) ;
 
         public:
             /**
@@ -40,7 +40,7 @@ namespace Hope::GL {
             /**
              * Set the dimension of the viewport.
              */
-            void setDimension(Mind::Dimension2Di& dimension) {
+            void setDimension(Mind::Dimension2Df& dimension) {
                 m_dimension = dimension ;
             }
 
@@ -55,7 +55,7 @@ namespace Hope::GL {
             /**
              * Get the dimension of the viewport.
              */
-            Mind::Dimension2Di dimension() {
+            Mind::Dimension2Df dimension() {
                 return m_dimension ;
             }
     } ;

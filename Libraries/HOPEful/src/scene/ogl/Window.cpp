@@ -4,6 +4,7 @@
 #include <utils/LogSystem.hpp>
 #include <iostream>
 #include <cstdlib>
+#include <functional>
 
 using namespace Hope ;
 using namespace Hope::GL ;
@@ -13,10 +14,11 @@ Window::Window(
     const int height,
     const std::string& title
 ) {
-    createInternalWindow(width, height, title);
-    useCurrentContext();
-    initializeGLEW();
-    setInputMode();
+    createInternalWindow(width, height, title) ;
+    useCurrentContext() ;
+    initializeGLEW() ;
+    setInputMode() ;
+    setCallbacks() ;
 }
 
 Window::~Window() {}
@@ -46,20 +48,24 @@ void Window::createInternalWindow(
         exit(EXIT_FAILURE);
     }
 
-    m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    // Use GLFW 2.1.0
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2) ;
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1) ;
+
+    m_window = glfwCreateWindow(
+        width,
+        height,
+        title.c_str(),
+        nullptr,
+        nullptr
+    ) ;
 
     if (m_window == nullptr) {
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            logSharedPtr -> writeLine(level, Texts::Init_GL_Window) ;
-        }
-
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+        glfwTerminate() ;
+        exit(EXIT_FAILURE) ;
     }
+
+    glfwSetWindowUserPointer(m_window, this) ;
 }
 
 void Window::useCurrentContext() {
@@ -90,5 +96,38 @@ void Window::initializeGLEW()    {
 }
 
 void Window::setInputMode() {
-    glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE) ;
+}
+
+void Window::setCallbacks() {
+    // Set the error callback to print errors while GLFW is running.
+    glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
+
+    // Callback for window resizing.
+    auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
+        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
+        that -> resizedWindow(window, width, height) ;
+    } ;
+    glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
+}
+
+void Window::GLFWErrorCallback(
+    int /*error*/,
+    const char* description
+) {
+    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
+
+    auto logSharedPtr = logWeakPtr.lock() ;
+    if (logSharedPtr) {
+        logSharedPtr -> writeLine(level, description) ;
+    }
+}
+
+void Window::resizedWindow(
+    GLFWwindow* /*window*/,
+    int /*width*/,
+    int /*height*/
+) {
+    // Update the viewport(s) here (position and size).
 }

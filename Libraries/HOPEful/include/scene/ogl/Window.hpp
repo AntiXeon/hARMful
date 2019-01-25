@@ -15,7 +15,7 @@ namespace Hope { namespace GL {
             /**
              * Underlying window from GLFW library.
              */
-            GLFWwindow* m_window;
+            GLFWwindow* m_window = nullptr ;
 
             /**
              * Scene to be displayed in the window.
@@ -68,24 +68,48 @@ namespace Hope { namespace GL {
                 const int width,
                 const int height,
                 const std::string& title
-            );
+            ) ;
 
             /**
              * Use the context of the window as the current OpenGL
              * context.
              */
-            void useCurrentContext();
+            void useCurrentContext() ;
 
             /**
              * Initialize GLEW to support OpenGL3.
              */
-            void initializeGLEW();
+            void initializeGLEW() ;
 
             /**
              * Listen for inputs from the user.
              */
-            void setInputMode();
-    };
+            void setInputMode() ;
+
+            /**
+             * Set up the callback functions.
+             */
+            void setCallbacks() ;
+
+        // Callbacks
+        private:
+            /**
+             * Print errors from GLFW.
+             */
+            static void GLFWErrorCallback(
+                int error,
+                const char* description
+            ) ;
+
+            /**
+             * Callback when the window is resized.
+             */
+            static void resizedWindow(
+                GLFWwindow* window,
+                int width,
+                int height
+            ) ;
+    } ;
 }}
 
 #endif
