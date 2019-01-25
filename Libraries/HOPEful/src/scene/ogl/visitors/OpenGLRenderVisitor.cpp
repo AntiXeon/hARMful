@@ -1,4 +1,7 @@
 #include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
+#include <scene/components/CameraComponent.hpp>
+#include <scene/components/MeshComponent.hpp>
+#include <scene/components/RenderConfiguration.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;

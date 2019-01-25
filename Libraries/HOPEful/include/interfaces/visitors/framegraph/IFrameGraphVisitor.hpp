@@ -5,24 +5,17 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    namespace API = Hope::GL ;
+    #include <scene/ogl/framegraph/ActiveCamera.hpp>
+    #include <scene/ogl/framegraph/FrustumCulling.hpp>
+    #include <scene/ogl/framegraph/Viewport.hpp>
 #endif
 
 namespace Hope {
-    class API::ActiveCamera ;
-    class API::FrustumCulling ;
-    class API::Viewport ;
-
     /**
      * Interface for the Visitor design pattern for nodes of the frame graph.
      */
-    class ISceneGraphVisitor {
+    class IFrameGraphVisitor {
         public:
-            /**
-             * Get the current frame ID while visiting.
-             */
-            virtual FrameID currentFrameID() const = 0 ;
-
             /**
              * Visit a camera node.
              */
