@@ -2,7 +2,7 @@
 #define __HOPE__COMPONENT__
 
 #include <scene/SceneTypes.hpp>
-#include <interfaces/visitor/IVisitant.hpp>
+#include <interfaces/visitors/scenegraph/ISceneGraphVisitant.hpp>
 #include <cstddef>
 #include <vector>
 
@@ -13,7 +13,7 @@ namespace Hope {
     /**
      * Base class for all components that can be linked to entities.
      */
-    class Component : public IVisitant {
+    class Component : public ISceneGraphVisitant {
         friend Entity ;
 
         private:
@@ -47,7 +47,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            virtual void accept(IVisitor* visitor) = 0 ;
+            virtual void accept(ISceneGraphVisitor* visitor) = 0 ;
 
             /**
              * To know if the component can be shared by several entities.

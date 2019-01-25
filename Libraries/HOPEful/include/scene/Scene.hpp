@@ -27,7 +27,6 @@ namespace Hope {
              */
             Scene() ;
 
-
             /**
              * Get the root entity of the scene.
              */

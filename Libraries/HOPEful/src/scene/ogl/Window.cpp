@@ -23,8 +23,14 @@ Window::Window(
 
 Window::~Window() {}
 
-void Window::swapBuffers() {
-    glfwSwapBuffers(m_window);
+void Window::run() {
+    while (!glfwWindowShouldClose(m_window)) {
+        glClear(GL_COLOR_BUFFER_BIT) ;
+        glfwSwapBuffers(m_window) ;
+        glfwPollEvents() ;
+    }
+
+    glfwTerminate() ;
 }
 
 Scene& Window::scene() {

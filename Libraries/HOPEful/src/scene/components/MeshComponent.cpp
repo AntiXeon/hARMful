@@ -1,7 +1,7 @@
 #include <HopeAPI.hpp>
 #include <scene/components/MeshComponent.hpp>
 #include <scene/SceneTypes.hpp>
-#include <interfaces/visitor/IVisitor.hpp>
+#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 
 using namespace Hope ;
 
@@ -11,7 +11,7 @@ MeshComponent::MeshComponent(const std::string& meshFile)
     m_mesh = loader.mesh() ;
 }
 
-void MeshComponent::accept(IVisitor* visitor) {
+void MeshComponent::accept(ISceneGraphVisitor* visitor) {
     FrameID currentFrame = visitor -> currentFrameID() ;
 
     if (lastFrame() < currentFrame) {

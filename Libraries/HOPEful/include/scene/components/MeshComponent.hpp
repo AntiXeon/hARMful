@@ -13,7 +13,7 @@
 #endif
 
 namespace Hope {
-    class IVisitor ;
+    class ISceneGraphVisitor ;
 
     /**
      * Component to link a 3D mesh to an entity.
@@ -36,7 +36,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void accept(IVisitor* visitor) override ;
+            void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

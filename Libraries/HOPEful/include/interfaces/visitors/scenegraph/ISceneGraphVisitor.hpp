@@ -1,5 +1,5 @@
-#ifndef __HOPE__IVISITOR__
-#define __HOPE__IVISITOR__
+#ifndef __HOPE__ISCENEGRAPHVISITOR__
+#define __HOPE__ISCENEGRAPHVISITOR__
 
 #include <scene/SceneTypes.hpp>
 
@@ -9,9 +9,10 @@ namespace Hope {
     class RenderConfiguration ;
 
     /**
-     * Interface for the Visitor design pattern.
+     * Interface for the Visitor design pattern for objects inside the scene
+     * graph.
      */
-    class IVisitor {
+    class ISceneGraphVisitor {
         public:
             /**
              * Get the current frame ID while visiting.

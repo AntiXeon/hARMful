@@ -33,17 +33,17 @@ namespace Hope { namespace GL {
                 const int width,
                 const int height,
                 const std::string& title
-            );
+            ) ;
 
             /**
              * Destruction of the GLWindow.
              */
-            virtual ~Window();
+            virtual ~Window() ;
 
             /**
-             * Swap buffers for rendering.
+             * Run the rendering/input acquisition loop of the window.
              */
-            void swapBuffers();
+            void run() ;
 
             /**
              * Get the scene that is rendered in the current window.

@@ -7,7 +7,7 @@
 #include <scene/common/Color.hpp>
 
 namespace Hope {
-    class IVisitor ;
+    class ISceneGraphVisitor ;
 
     /**
      * Component that represents a camera, a point of view of the 3D world.
@@ -63,7 +63,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void accept(IVisitor* visitor) override ;
+            void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

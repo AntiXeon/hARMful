@@ -1,7 +1,7 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/Entity.hpp>
 #include <utils/literals/NumberLiterals.hpp>
-#include <interfaces/visitor/IVisitor.hpp>
+#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 
 using namespace Hope ;
 
@@ -21,7 +21,7 @@ CameraComponent::CameraComponent()
       m_up = m_viewDirection.cross(m_rightAxis) ;
 }
 
-void CameraComponent::accept(IVisitor* visitor) {
+void CameraComponent::accept(ISceneGraphVisitor* visitor) {
     FrameID currentFrame = visitor -> currentFrameID() ;
 
     if (lastFrame() < currentFrame) {
