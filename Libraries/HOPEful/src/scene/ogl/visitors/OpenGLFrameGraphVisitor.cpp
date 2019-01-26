@@ -1,8 +1,9 @@
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
-#include <scene/ogl/framegraph/ActiveCamera.hpp>
-#include <scene/ogl/framegraph/FrustumCulling.hpp>
-#include <scene/ogl/framegraph/Viewport.hpp>
+#include <scene/framegraph/ActiveCamera.hpp>
+#include <scene/framegraph/FrustumCulling.hpp>
+#include <scene/framegraph/Viewport.hpp>
 
+using namespace Hope ;
 using namespace Hope::GL ;
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* /*node*/) {

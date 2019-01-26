@@ -4,7 +4,7 @@
 #include <scene/FrameGraphNode.hpp>
 #include <scene/components/CameraComponent.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
      * Set the active camera used for rendering the scene.
      */

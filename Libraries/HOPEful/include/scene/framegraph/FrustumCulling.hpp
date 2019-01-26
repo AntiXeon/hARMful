@@ -3,7 +3,7 @@
 
 #include <scene/FrameGraphNode.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
      * If inserted in a frame graph, this node can enable viewing frustum
      * culling. This means that all the objects that are not inside the active

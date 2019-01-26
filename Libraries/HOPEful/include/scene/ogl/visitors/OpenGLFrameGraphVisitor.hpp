@@ -33,17 +33,17 @@ namespace Hope::GL {
             /**
              * Visit a camera node.
              */
-            void visit(API::ActiveCamera* node) override ;
+            void visit(ActiveCamera* node) override ;
 
             /**
              * Visit a frustum culling node.
              */
-            void visit(API::FrustumCulling* node) override ;
+            void visit(FrustumCulling* node) override ;
 
             /**
              * Visit a viewport node.
              */
-            void visit(API::Viewport* node) override ;
+            void visit(Viewport* node) override ;
     } ;
 }
 

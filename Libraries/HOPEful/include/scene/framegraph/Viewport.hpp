@@ -5,7 +5,7 @@
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
      * The viewport defines the area of the screen / window in which a 3D scene
      * is rendered.
