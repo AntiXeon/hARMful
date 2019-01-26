@@ -62,6 +62,19 @@ namespace Hope { namespace GL {
             Window& operator=(const Window& copied) = delete ;
             Window& operator=(Window&& moved) = delete ;
 
+        protected:
+            /**
+             * Allow the user to perform custom actions before rendering the
+             * frame.
+             */
+            virtual void preRender() {}
+
+            /**
+             * Allow the user to perform custom actions after rendering the
+             * frame.
+             */
+            virtual void postRender() {}
+
         private:
             /**
              * Create the internal window.

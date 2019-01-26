@@ -31,7 +31,9 @@ Window::~Window() {
 void Window::run() {
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
+        preRender() ;
         m_scene.render() ;
+        postRender() ;
         glfwSwapBuffers(m_window) ;
         glfwPollEvents() ;
     }
