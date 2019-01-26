@@ -55,9 +55,9 @@ namespace Hope {
              * @param   color   Hexadecimal representation of a RGBA color.
              */
             Color(const int32_t color) {
-                uint8_t red = (color & 0xFF000000) >> 6 ;
-                uint8_t green = (color & 0x00FF0000) >> 4 ;
-                uint8_t blue = (color & 0x0000FF00) >> 2 ;
+                uint8_t red = (color & 0xFF000000) >> 24 ;
+                uint8_t green = (color & 0x00FF0000) >> 16 ;
+                uint8_t blue = (color & 0x0000FF00) >> 8 ;
                 uint8_t alpha = (color & 0x000000FF) >> 0 ;
                 convertFromUInt8(red, green, blue, alpha) ;
             }

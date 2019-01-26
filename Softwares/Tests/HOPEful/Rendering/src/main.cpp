@@ -15,7 +15,7 @@ int main(int, char**) {
     Hope::Entity* cameraEntity = new Hope::Entity(rootEntity) ;
     Hope::CameraComponent* cameraComponent = new Hope::CameraComponent() ;
     cameraEntity -> addComponent(cameraComponent) ;
-    const int ClearColor = 0xFF00FFFF ;
+    const int ClearColor = 0x123456FF ;
     cameraComponent -> setClearColor(Hope::Color(ClearColor)) ;
 
     // Set up the frame graph.
