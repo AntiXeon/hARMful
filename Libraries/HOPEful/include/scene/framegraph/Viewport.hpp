@@ -4,6 +4,7 @@
 #include <scene/FrameGraphNode.hpp>
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
+#include <algorithm>
 
 namespace Hope {
     /**
@@ -13,7 +14,8 @@ namespace Hope {
     class Viewport final : public Hope::FrameGraphNode {
         private:
             /**
-             * Position of the top left corner of the viewport in pixels.
+             * Position of the top left corner of the viewport in relative value
+             * (between 0 and 1).
              */
             Mind::Point2Df m_position = Mind::Point2Df(0.f, 0.f) ;
 
@@ -31,22 +33,32 @@ namespace Hope {
 
             /**
              * Set the position of the top left corner of the viewport in
-             * pixels.
+             * relative value (between 0 and 1).
              */
             void setPosition(const Mind::Point2Df& position) {
-                m_position = position ;
+                const float MinValue = 0.f ;
+                const float MaxValue = 1.f ;
+
+                float x = std::clamp(position.get(Mind::Point2Df::X), MinValue, MaxValue) ;
+                float y = std::clamp(position.get(Mind::Point2Df::Y), MinValue, MaxValue) ;
+                m_position.set(x, y) ;
             }
 
             /**
              * Set the dimension of the viewport.
              */
             void setDimension(Mind::Dimension2Df& dimension) {
-                m_dimension = dimension ;
+                const float MinValue = 0.f ;
+                const float MaxValue = 1.f ;
+
+                float w = std::clamp(dimension.width(), MinValue, MaxValue) ;
+                float h = std::clamp(dimension.height(), MinValue, MaxValue) ;
+                m_dimension.set(w, h) ;
             }
 
             /**
              * Get the position of the top left corner of the viewport in
-             * pixels.
+             * relative value (between 0 and 1).
              */
             Mind::Point2Df position() {
                 return m_position ;
