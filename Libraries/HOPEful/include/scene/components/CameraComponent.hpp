@@ -116,6 +116,14 @@ namespace Hope {
              * Get the clear color of the camera.
              */
             Color clearColor() ;
+
+        protected:
+            /**
+             * Action to performed when the component is attached to an
+             * entity.
+             * @param   entity  Entity to attach the component to.
+             */
+            void onAttach(Entity* entity) override ;
     } ;
 }
 

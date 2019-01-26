@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include <iostream>
+
 using namespace Hope ;
 
 Node::Node(Node* parent) {

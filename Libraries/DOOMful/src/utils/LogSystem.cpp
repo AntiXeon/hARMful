@@ -3,6 +3,7 @@
 #include <DOOMStrings.hpp>
 
 namespace Doom {
+    const std::string LogSystem::LogFileExtension = ".log" ;
     std::shared_ptr<LogSystem> LogSystem::Instance ;
     std::mutex LogSystem::ClassMutex ;
 
@@ -31,7 +32,7 @@ namespace Doom {
                 throw std::runtime_error(errorMessage) ;
             }
 
-            Instance = std::shared_ptr<LogSystem>(new LogSystem(path, minLevel)) ;
+            Instance = std::shared_ptr<LogSystem>(new LogSystem(path + LogFileExtension, minLevel)) ;
         }
         ClassMutex.unlock() ;
     }

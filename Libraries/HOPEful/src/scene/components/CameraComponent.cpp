@@ -11,15 +11,7 @@ const Color CameraComponent::DefaultClearColor = Color(4_uchar, 90_uchar, 120_uc
 CameraComponent::CameraComponent()
     : Component(Hope::CameraComponentType),
       m_viewDirection(Mind::Vector3f(0.f, 0.f, -1.f)),
-      m_clearColor(DefaultClearColor) {
-      Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
-      m_target = position + m_viewDirection ;
-
-      m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
-      m_rightAxis.normalize() ;
-
-      m_up = m_viewDirection.cross(m_rightAxis) ;
-}
+      m_clearColor(DefaultClearColor) {}
 
 void CameraComponent::accept(ISceneGraphVisitor* visitor) {
     FrameID currentFrame = visitor -> currentFrameID() ;
@@ -87,4 +79,14 @@ Mind::Vector3f CameraComponent::up() {
 
 Color CameraComponent::clearColor() {
     return m_clearColor ;
+}
+
+void CameraComponent::onAttach(Entity* entity) {
+    Mind::Vector3f position = (entity -> transform()).translation() ;
+    m_target = position + m_viewDirection ;
+
+    m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
+    m_rightAxis.normalize() ;
+
+    m_up = m_viewDirection.cross(m_rightAxis) ;
 }

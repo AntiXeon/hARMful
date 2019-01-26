@@ -38,7 +38,11 @@ target_link_libraries(${PROJECT_NAME})
 # Versioning
 if (UNIX)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
+        if(DEBUG)
+            list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
+        else()
+            list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
+        endif()
     endif()
 
     set(DOOM_VERSION_MAJOR 0)

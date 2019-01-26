@@ -15,13 +15,13 @@ namespace Hope {
             /**
              * Root entity of the scene.
              */
-            Entity m_root ;
+            Entity* m_root = nullptr ;
 
             /**
              * Enable the configuration of the rendering through frame graph
              * nodes.
              */
-            RenderConfiguration m_renderConfig ;
+            RenderConfiguration* m_renderConfig = nullptr ;
 
             /**
              * Frame graph visitor for rendering the scene.
@@ -35,6 +35,11 @@ namespace Hope {
             Scene() ;
 
             /**
+             * Destroy the Scene instance.
+             */
+            virtual ~Scene() ;
+
+            /**
              * Render the scene.
              */
             void render() override ;
@@ -42,12 +47,19 @@ namespace Hope {
             /**
              * Get the root entity of the scene.
              */
-            Entity& root() ;
+            Entity* root() ;
 
             /**
              * Set the root of the framegraph.
              */
             void setFrameGraphRoot(FrameGraphNode* root) ;
+
+
+            // Remove copy/move operations.
+            Scene(const Scene& copied) = delete;
+            Scene(Scene&& moved) = delete;
+            Scene& operator=(const Scene& copied) = delete;
+            Scene& operator=(Scene&& moved) = delete;
     } ;
 }
 

@@ -13,28 +13,32 @@ Window::Window(
     const int width,
     const int height,
     const std::string& title
-) {
-    createInternalWindow(width, height, title) ;
+) : m_title(title) {
+    Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Error) ;
+
+    createInternalWindow(width, height, m_title) ;
     useCurrentContext() ;
     initializeGLEW() ;
     setInputMode() ;
     setCallbacks() ;
 }
 
-Window::~Window() {}
+Window::~Window() {
+    glfwDestroyWindow(m_window) ;
+    glfwTerminate() ;
+}
 
 void Window::run() {
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
+        m_scene.render() ;
         glfwSwapBuffers(m_window) ;
         glfwPollEvents() ;
     }
-
-    glfwTerminate() ;
 }
 
-Scene& Window::scene() {
-    return m_scene ;
+Scene* Window::scene() {
+    return &m_scene ;
 }
 
 void Window::createInternalWindow(

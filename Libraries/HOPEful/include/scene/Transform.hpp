@@ -18,12 +18,12 @@ namespace Hope {
             /**
              * Rotation of the object.
              */
-            Mind::Quaternion m_rotation ;
+            Mind::Quaternion m_rotation = Mind::Quaternion(0.f, 0.f, 0.f, 1.f) ;
 
             /**
              * Translation of the object.
              */
-            Mind::Vector3f m_translation ;
+            Mind::Vector3f m_translation = Mind::Vector3f(0.f, 0.f, 0.f) ;
 
             /**
              * Scale of the object.

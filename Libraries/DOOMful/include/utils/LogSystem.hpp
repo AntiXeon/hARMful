@@ -17,6 +17,11 @@ namespace Doom {
     class LogSystem : private Singleton {
         public:
             /**
+             * Extension of the log file.
+             */
+            static const std::string LogFileExtension ;
+
+            /**
              * Level of gravity of the log messages.
              */
             enum class Gravity: int8_t {

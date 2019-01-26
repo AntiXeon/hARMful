@@ -13,6 +13,11 @@ namespace Hope { namespace GL {
     class Window {
         private:
             /**
+             * Title of the window / name of the application.
+             */
+            std::string m_title ;
+
+            /**
              * Underlying window from GLFW library.
              */
             GLFWwindow* m_window = nullptr ;
@@ -48,7 +53,7 @@ namespace Hope { namespace GL {
             /**
              * Get the scene that is rendered in the current window.
              */
-            Scene& scene() ;
+            Scene* scene() ;
 
 
             // Remove copy/move operations.

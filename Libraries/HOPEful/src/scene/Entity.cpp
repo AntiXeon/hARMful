@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include <iostream>
+
 using namespace Hope ;
 
 Entity::Entity(Entity* parent) : Node(parent) {
@@ -31,6 +33,7 @@ void Entity::addComponent(Component* component) {
         removeComponent((*existingComponentPos)) ;
     }
 
+    component -> attach(this) ;
     m_components.push_back(component) ;
 }
 

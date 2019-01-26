@@ -4,20 +4,26 @@ using namespace Hope ;
 using namespace Hope::GL ;
 
 Scene::Scene() {
-    m_root.addComponent(&m_renderConfig) ;
+    m_root = new Entity() ;
+    m_renderConfig = new RenderConfiguration() ;
+    m_root -> addComponent(m_renderConfig) ;
+}
+
+Scene::~Scene() {
+    delete m_root ;
 }
 
 void Scene::render() {
     // Execute the frame graph processing for rendering the scene.
-    FrameGraphNode* fgRoot = m_renderConfig.root() ;
+    FrameGraphNode* fgRoot = m_renderConfig -> root() ;
     fgRoot -> accept(&m_frameGraphVisitor) ;
 }
 
-Entity& Scene::root() {
+Entity* Scene::root() {
     return m_root ;
 }
 
 void Scene::setFrameGraphRoot(FrameGraphNode* root) {
-    root -> setSceneGraphRoot(&m_root) ;
-    m_renderConfig.setFrameGraphRoot(root) ;
+    root -> setSceneGraphRoot(m_root) ;
+    m_renderConfig -> setFrameGraphRoot(root) ;
 }
