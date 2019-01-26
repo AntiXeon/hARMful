@@ -109,7 +109,7 @@ void Window::setCallbacks() {
     // Set the error callback to print errors while GLFW is running.
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
 
-    // Keep this code in case it can be re/used for /another callback!
+    // [!] Keep this code in case it can be re/used for /another callback! [!]
     // // Callback for window resizing.
     // auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
     //     Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
