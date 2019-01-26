@@ -22,14 +22,6 @@ FrameGraphNode::~FrameGraphNode() {
     m_children.clear() ;
 }
 
-void FrameGraphNode::process() {
-    internalProcess() ;
-
-    for (FrameGraphNode* child : m_children) {
-        child -> process() ;
-    }
-}
-
 void FrameGraphNode::setParent(FrameGraphNode* parent) {
     if (m_parent) {
         m_parent -> removeChild(this) ;
@@ -50,8 +42,12 @@ const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
     return m_children ;
 }
 
-void FrameGraphNode::internalProcess() {
-    // Do nothing here, implemented in inherited classes.
+void FrameGraphNode::setSceneGraphRoot(Entity* root) {
+    m_sceneGraphRoot = root ;
+
+    for (FrameGraphNode* child : m_children) {
+        child -> setSceneGraphRoot(root) ;
+    }
 }
 
 bool FrameGraphNode::addChild(FrameGraphNode* newChild) {
@@ -70,11 +66,15 @@ bool FrameGraphNode::addChild(FrameGraphNode* newChild) {
         return true ;
     }
 
+    newChild -> setSceneGraphRoot(m_sceneGraphRoot) ;
+
     return false ;
 }
 
 bool FrameGraphNode::removeChild(FrameGraphNode* child) {
     assert(child != nullptr) ;
+
+    child -> setSceneGraphRoot(nullptr) ;
 
     auto posNode = std::find(m_children.begin(), m_children.end(), child) ;
     bool hasChild = (posNode != m_children.end()) ;

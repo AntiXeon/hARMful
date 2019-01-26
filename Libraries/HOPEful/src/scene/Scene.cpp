@@ -11,5 +11,6 @@ Entity& Scene::root() {
 }
 
 void Scene::setFrameGraphRoot(FrameGraphNode* root) {
+    root -> setSceneGraphRoot(&m_root) ;
     m_renderConfig.setFrameGraphRoot(root) ;
 }

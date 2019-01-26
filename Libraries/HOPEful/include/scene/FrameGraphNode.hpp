@@ -5,6 +5,8 @@
 #include <vector>
 
 namespace Hope {
+    class Entity ;
+
     /**
      * Base of nodes for the frame graph.
      * The frame graph can be used to make rendering passes, layers, post-prod
@@ -15,6 +17,8 @@ namespace Hope {
      */
     class FrameGraphNode
     {
+        friend class Scene ;
+
         private:
             /**
              * Parent node.
@@ -25,6 +29,11 @@ namespace Hope {
              * Children of the current node.
              */
             std::vector<FrameGraphNode*> m_children ;
+
+            /**
+             * Root entity of the scene.
+             */
+            Entity* m_sceneGraphRoot = nullptr ;
 
         public:
             /**
@@ -37,12 +46,6 @@ namespace Hope {
              * Destruction of the node instance.
              */
             virtual ~FrameGraphNode() ;
-
-            /**
-             * Run processing of the frame graph node.
-             * It is recursively called for each of the node children.
-             */
-            void process() ;
 
             /**
              * Set the parent of the current node.
@@ -65,13 +68,12 @@ namespace Hope {
             FrameGraphNode& operator=(const FrameGraphNode& copied) = delete;
             FrameGraphNode& operator=(FrameGraphNode&& moved) = delete;
 
-        protected:
-            /**
-             * Internal implementation of the frame graph node processing.
-             */
-            virtual void internalProcess() ;
-
         private:
+            /**
+             * Set the root entity of the scene graph.
+             */
+            void setSceneGraphRoot(Entity* root) ;
+
             /**
              * Add a child.
              * @param   newChild    Child node to add to the children list.
