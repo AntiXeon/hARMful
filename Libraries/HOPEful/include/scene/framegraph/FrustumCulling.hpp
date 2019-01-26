@@ -14,13 +14,18 @@ namespace Hope {
      * @warning An ActiveCamera node must be inserted in the same frame graph
      *          than the current FrustumCulling node to work properly.
      */
-    class FrustumCulling final : public Hope::FrameGraphNode {
+    class FrustumCulling final : public FrameGraphNode {
         public:
             /**
              * Create a new FrustumCulling node.
              */
             FrustumCulling(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
+
+            /**
+             * Accept the visitor.
+             */
+            void accept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

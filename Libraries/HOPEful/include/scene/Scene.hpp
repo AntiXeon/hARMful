@@ -3,12 +3,14 @@
 
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
+#include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
+#include <interfaces/IRenderable.hpp>
 
 namespace Hope {
     /**
      * Scene that embeds the scene graph.
      */
-    class Scene {
+    class Scene : public IRenderable {
         private:
             /**
              * Root entity of the scene.
@@ -21,11 +23,21 @@ namespace Hope {
              */
             RenderConfiguration m_renderConfig ;
 
+            /**
+             * Frame graph visitor for rendering the scene.
+             */
+            Hope::GL::OpenGLFrameGraphVisitor m_frameGraphVisitor ;
+
         public:
             /**
              * Create a new Scene instance.
              */
             Scene() ;
+
+            /**
+             * Render the scene.
+             */
+            void render() override ;
 
             /**
              * Get the root entity of the scene.

@@ -42,6 +42,13 @@ namespace Hope {
             void setFrameGraphRoot(FrameGraphNode* root) {
                 m_frameGraphRoot = root ;
             }
+
+            /**
+             * Get the frame graph root node.
+             */
+            FrameGraphNode* root() const {
+                return m_frameGraphRoot ;
+            }
     } ;
 }
 

@@ -3,8 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <interfaces/visitors/framegraph/IFrameGraphVisitant.hpp>
 
 namespace Hope {
+
     class Entity ;
 
     /**
@@ -15,8 +17,7 @@ namespace Hope {
      * nothing. However it can interesting to create a group of nodes in a
      * hierarchy.
      */
-    class FrameGraphNode
-    {
+    class FrameGraphNode : public IFrameGraphVisitant {
         friend class Scene ;
 
         private:
@@ -46,6 +47,11 @@ namespace Hope {
              * Destruction of the node instance.
              */
             virtual ~FrameGraphNode() ;
+
+            /**
+             * Accept the visitor.
+             */
+            virtual void accept(IFrameGraphVisitor* /*visitor*/) override {}
 
             /**
              * Set the parent of the current node.

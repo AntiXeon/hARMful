@@ -25,7 +25,7 @@ Window::~Window() {}
 
 void Window::run() {
     while (!glfwWindowShouldClose(m_window)) {
-        glClear(GL_COLOR_BUFFER_BIT) ;
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
         glfwSwapBuffers(m_window) ;
         glfwPollEvents() ;
     }
@@ -109,12 +109,13 @@ void Window::setCallbacks() {
     // Set the error callback to print errors while GLFW is running.
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
 
-    // Callback for window resizing.
-    auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
-        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
-        that -> resizedWindow(window, width, height) ;
-    } ;
-    glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
+    // Keep this code in case it can be re/used for /another callback!
+    // // Callback for window resizing.
+    // auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
+    //     Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
+    //     that -> resizedWindow(window, width, height) ;
+    // } ;
+    // glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
 }
 
 void Window::GLFWErrorCallback(
@@ -135,5 +136,5 @@ void Window::resizedWindow(
     int /*width*/,
     int /*height*/
 ) {
-    // Update the viewport(s) here (position and size).
+    // May be used one day?
 }

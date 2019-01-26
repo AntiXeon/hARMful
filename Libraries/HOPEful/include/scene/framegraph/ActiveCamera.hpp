@@ -8,7 +8,7 @@ namespace Hope {
     /**
      * Set the active camera used for rendering the scene.
      */
-    class ActiveCamera final : public Hope::FrameGraphNode {
+    class ActiveCamera final : public FrameGraphNode {
         private:
             /**
              * Camera that is used to render the scene.
@@ -21,6 +21,11 @@ namespace Hope {
              */
             ActiveCamera(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
+
+            /**
+             * Accept the visitor.
+             */
+            void accept(IFrameGraphVisitor* visitor) override ;
 
             /**
              * Set the camera that is used to render the scene.

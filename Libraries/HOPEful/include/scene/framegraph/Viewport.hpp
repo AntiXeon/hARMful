@@ -11,7 +11,7 @@ namespace Hope {
      * The viewport defines the area of the screen / window in which a 3D scene
      * is rendered.
      */
-    class Viewport final : public Hope::FrameGraphNode {
+    class Viewport final : public FrameGraphNode {
         private:
             /**
              * Position of the top left corner of the viewport in relative value
@@ -30,6 +30,11 @@ namespace Hope {
              */
             Viewport(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
+
+            /**
+             * Accept the visitor.
+             */
+            void accept(IFrameGraphVisitor* visitor) override ;
 
             /**
              * Set the position of the top left corner of the viewport in
