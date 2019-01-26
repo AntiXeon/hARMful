@@ -8,10 +8,10 @@ using namespace Mind ;
 namespace UTMind {
     void UTLine2Df::allocation() {
         Line2Df l1 ;
-        check(l1.getStartX() == 0.f) ;
-        check(l1.getStartY() == 0.f) ;
-        check(l1.getEndX() == 0.f) ;
-        check(l1.getEndY() == 0.f) ;
+        check(l1.startX() == 0.f) ;
+        check(l1.startY() == 0.f) ;
+        check(l1.endX() == 0.f) ;
+        check(l1.endY() == 0.f) ;
 
         Scalar pStartX = 5.75f ;
         Scalar pStartY = 0.574f ;
@@ -22,17 +22,17 @@ namespace UTMind {
         Point2Df pEnd(pEndX, pEndY) ;
 
         Line2Df l2(pStart, pEnd) ;
-        check(l2.getStartX() == pStartX) ;
-        check(l2.getStartY() == pStartY) ;
-        check(l2.getEndX() == pEndX) ;
-        check(l2.getEndY() == pEndY) ;
+        check(l2.startX() == pStartX) ;
+        check(l2.startY() == pStartY) ;
+        check(l2.endX() == pEndX) ;
+        check(l2.endY() == pEndY) ;
         check(l2 != l1) ;
 
         Line2Df l3(l2) ;
-        check(l3.getStartX() == l2.getStartX()) ;
-        check(l3.getStartY() == l2.getStartY()) ;
-        check(l3.getEndX() == l2.getEndX()) ;
-        check(l3.getEndY() == l2.getEndY()) ;
+        check(l3.startX() == l2.startX()) ;
+        check(l3.startY() == l2.startY()) ;
+        check(l3.endX() == l2.endX()) ;
+        check(l3.endY() == l2.endY()) ;
         check(l3 == l2) ;
     }
 
@@ -96,10 +96,10 @@ namespace UTMind {
 
         // Relative line to plan origin
         Line2Df relativeL1 = Line2Df::relative(l1) ;
-        check(relativeL1.getStartX() == 0.f) ;
-        check(relativeL1.getStartY() == 0.f) ;
-        check(relativeL1.getEndX() == (p1EndX - p1StartX)) ;
-        check(relativeL1.getEndY() == (p1EndY - p1StartY)) ;
+        check(relativeL1.startX() == 0.f) ;
+        check(relativeL1.startY() == 0.f) ;
+        check(relativeL1.endX() == (p1EndX - p1StartX)) ;
+        check(relativeL1.endY() == (p1EndY - p1StartY)) ;
     }
 
     void UTLine2Df::intersections() {

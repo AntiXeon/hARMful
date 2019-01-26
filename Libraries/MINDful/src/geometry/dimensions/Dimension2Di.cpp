@@ -10,11 +10,11 @@ namespace Mind {
     ): m_width(width),
        m_height(height) {}
 
-    uint32_t Dimension2Di::getWidth() const {
+    uint32_t Dimension2Di::width() const {
         return m_width ;
     }
 
-    uint32_t Dimension2Di::getHeight() const {
+    uint32_t Dimension2Di::height() const {
         return m_height ;
     }
 
@@ -67,36 +67,36 @@ namespace Mind {
 
     Dimension2Di operator+(const Dimension2Di& a, const Dimension2Di& b) {
         return Dimension2Di(
-            a.getWidth() + b.getWidth(),
-            a.getHeight() + b.getHeight()
+            a.width() + b.width(),
+            a.height() + b.height()
         ) ;
     }
 
     Dimension2Di operator-(const Dimension2Di& a, const Dimension2Di& b) {
         return Dimension2Di(
-            a.getWidth() - b.getWidth(),
-            a.getHeight() - b.getHeight()
+            a.width() - b.width(),
+            a.height() - b.height()
         ) ;
     }
 
     Dimension2Di operator*(const Dimension2Di& d, const uint32_t coeff) {
         return Dimension2Di(
-            d.getWidth() * coeff,
-            d.getHeight() * coeff
+            d.width() * coeff,
+            d.height() * coeff
         ) ;
     }
 
     Dimension2Di operator/(const Dimension2Di& d, const uint32_t coeff) {
         return Dimension2Di(
-            d.getWidth() / coeff,
-            d.getHeight() / coeff
+            d.width() / coeff,
+            d.height() / coeff
         ) ;
     }
 
     std::ostream& operator<<(std::ostream& s, const Dimension2Di& p) {
         s << "Dimension2Di {" <<
-                                 p.getWidth() << "," <<
-                                 p.getHeight() <<
+                                 p.width() << "," <<
+                                 p.height() <<
                            "}" ;
         return s ;
     }

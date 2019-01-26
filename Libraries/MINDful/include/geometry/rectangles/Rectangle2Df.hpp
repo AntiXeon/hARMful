@@ -228,67 +228,67 @@ namespace Mind {
               * Get the X coordinate of the upper-left corner.
               * @return  Up left corner coordinate X.
               */
-            exported Scalar getUpLeftCornerX() ;
+            exported Scalar upLeftCornerX() ;
 
             /**
               * Get the Y coordinate of the upper-left corner.
               * @return  Up left corner coordinate Y.
               */
-            exported Scalar getUpLeftCornerY() ;
+            exported Scalar upLeftCornerY() ;
 
             /**
               * Get the X coordinate of the upper-right corner.
               * @return  Up right corner coordinate X.
               */
-            exported Scalar getUpRightCornerX() ;
+            exported Scalar upRightCornerX() ;
 
             /**
               * Get the Y coordinate of the upper-right corner.
               * @return  Up right corner coordinate Y.
               */
-            exported Scalar getUpRightCornerY() ;
+            exported Scalar upRightCornerY() ;
 
             /**
               * Get the X coordinate of the bottom-left corner.
               * @return  Bottom left corner coordinate X.
               */
-            exported Scalar getBottomLeftCornerX() const ;
+            exported Scalar bottomLeftCornerX() const ;
 
             /**
               * Get the Y coordinate of the bottom-left corner.
               * @return  Bottom left corner coordinate Y.
               */
-            exported Scalar getBottomLeftCornerY() const ;
+            exported Scalar bottomLeftCornerY() const ;
 
             /**
               * Get the X coordinate of the bottom-right corner.
               * @return  Bottom right corner coordinate X.
               */
-            exported Scalar getBottomRightCornerX() ;
+            exported Scalar bottomRightCornerX() ;
 
             /**
               * Get the Y coordinate of the bottom-right corner.
               * @return  Bottom right corner coordinate Y.
               */
-            exported Scalar getBottomRightCornerY() ;
+            exported Scalar bottomRightCornerY() ;
 
             /**
               * Get the dimension of the Rectangle.
               * @return  Dimension of the Rectangle2D.
               */
-            exported const Dimension2Df& getSize() const ;
+            exported const Dimension2Df& size() const ;
 
             /**
               * Get the width of the Rectangle.
               * @return  Width of the Rectangle2D.
               */
-            exported Scalar getWidth() const ;
+            exported Scalar width() const ;
 
             /**
               * Get the height of the Rectangle.
               * @return  Height of the Rectangle2D.
               */
-            exported Scalar getHeight() const ;
+            exported Scalar height() const ;
 
             /**
               * Test if the Rectangle is empty.
@@ -307,10 +307,10 @@ namespace Mind {
             exported void setAt(const Scalar x, const Scalar y) ;
 
             /** Set the width of the Rectangle. */
-            exported void setWidth(const Scalar width) ;
+            exported void setWidth(const Scalar w) ;
 
             /** Set the height of the Rectangle. */
-            exported void setHeight(const Scalar height) ;
+            exported void setHeight(const Scalar h) ;
 
         protected:
             /** Compute the bottom right corner that is cached. */

@@ -116,7 +116,7 @@ namespace UTMind {
             check(compare(q7[Quaternion::Axis::W], expectedW)) ;
 
             Quaternion q8 ;
-            q8.from(roll, pitch, yaw) ;            
+            q8.from(roll, pitch, yaw) ;
             check(compare(q8[Quaternion::Axis::X], expectedX)) ;
             check(compare(q8[Quaternion::Axis::Y], expectedY)) ;
             check(compare(q8[Quaternion::Axis::Z], expectedZ)) ;

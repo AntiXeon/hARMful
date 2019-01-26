@@ -10,12 +10,12 @@ namespace UTMind {
         // Default constructor
         {
             Rectangle2Df r ;
-            check(r.getBottomLeftCornerX() == 0.f) ;
-            check(r.getBottomLeftCornerY() == 0.f) ;
-            check(r.getUpRightCornerX() == 0.f) ;
-            check(r.getUpRightCornerY() == 0.f) ;
-            check(r.getWidth() == 0.f) ;
-            check(r.getHeight() == 0.f) ;
+            check(r.bottomLeftCornerX() == 0.f) ;
+            check(r.bottomLeftCornerY() == 0.f) ;
+            check(r.upRightCornerX() == 0.f) ;
+            check(r.upRightCornerY() == 0.f) ;
+            check(r.width() == 0.f) ;
+            check(r.height() == 0.f) ;
         }
 
         // Rectangle from Point and Dimension
@@ -29,12 +29,12 @@ namespace UTMind {
             bool isCentered = true ;
             Rectangle2Df r(pBottomLeft, dim, !isCentered) ;
 
-            check(compare(r.getBottomLeftCornerX(), pCoordX)) ;
-            check(compare(r.getBottomLeftCornerY(), pCoordY)) ;
-            check(compare(r.getUpRightCornerX(), pCoordX + width)) ;
-            check(compare(r.getUpRightCornerY(), pCoordY + height)) ;
-            check(compare(r.getWidth(), width)) ;
-            check(compare(r.getHeight(), height)) ;
+            check(compare(r.bottomLeftCornerX(), pCoordX)) ;
+            check(compare(r.bottomLeftCornerY(), pCoordY)) ;
+            check(compare(r.upRightCornerX(), pCoordX + width)) ;
+            check(compare(r.upRightCornerY(), pCoordY + height)) ;
+            check(compare(r.width(), width)) ;
+            check(compare(r.height(), height)) ;
         }
 
         // Rectangle from Point and Dimension (centered)
@@ -48,12 +48,12 @@ namespace UTMind {
             bool isCentered = true ;
             Rectangle2Df r(pBottomLeft, dim, isCentered) ;
 
-            check(compare(r.getBottomLeftCornerX(), pCoordX - (width / 2.f))) ;
-            check(compare(r.getBottomLeftCornerY(), pCoordY - (height / 2.f))) ;
-            check(compare(r.getUpRightCornerX(), pCoordX + (width / 2.f))) ;
-            check(compare(r.getUpRightCornerY(), pCoordY + (height / 2.f))) ;
-            check(compare(r.getWidth(), width)) ;
-            check(compare(r.getHeight(), height)) ;
+            check(compare(r.bottomLeftCornerX(), pCoordX - (width / 2.f))) ;
+            check(compare(r.bottomLeftCornerY(), pCoordY - (height / 2.f))) ;
+            check(compare(r.upRightCornerX(), pCoordX + (width / 2.f))) ;
+            check(compare(r.upRightCornerY(), pCoordY + (height / 2.f))) ;
+            check(compare(r.width(), width)) ;
+            check(compare(r.height(), height)) ;
         }
 
         // Copy constructor
@@ -68,12 +68,12 @@ namespace UTMind {
             Rectangle2Df rOriginal(pBottomLeft, dim, !isCentered) ;
             Rectangle2Df rCopy(rOriginal) ;
 
-            check(compare(rCopy.getBottomLeftCornerX(), rOriginal.getBottomLeftCornerX())) ;
-            check(compare(rCopy.getBottomLeftCornerY(), rOriginal.getBottomLeftCornerY())) ;
-            check(compare(rCopy.getUpRightCornerX(), rOriginal.getUpRightCornerX())) ;
-            check(compare(rCopy.getUpRightCornerY(), rOriginal.getUpRightCornerY())) ;
-            check(compare(rCopy.getWidth(), rOriginal.getWidth())) ;
-            check(compare(rCopy.getHeight(), rOriginal.getHeight())) ;
+            check(compare(rCopy.bottomLeftCornerX(), rOriginal.bottomLeftCornerX())) ;
+            check(compare(rCopy.bottomLeftCornerY(), rOriginal.bottomLeftCornerY())) ;
+            check(compare(rCopy.upRightCornerX(), rOriginal.upRightCornerX())) ;
+            check(compare(rCopy.upRightCornerY(), rOriginal.upRightCornerY())) ;
+            check(compare(rCopy.width(), rOriginal.width())) ;
+            check(compare(rCopy.height(), rOriginal.height())) ;
         }
 
         // Rectangle from Point and Dimension (as individual values)
@@ -85,12 +85,12 @@ namespace UTMind {
             bool isCentered = true ;
             Rectangle2Df r(pCoordX, pCoordY, width, height, !isCentered) ;
 
-            check(compare(r.getBottomLeftCornerX(), pCoordX)) ;
-            check(compare(r.getBottomLeftCornerY(), pCoordY)) ;
-            check(compare(r.getUpRightCornerX(), pCoordX + width)) ;
-            check(compare(r.getUpRightCornerY(), pCoordY + height)) ;
-            check(compare(r.getWidth(), width)) ;
-            check(compare(r.getHeight(), height)) ;
+            check(compare(r.bottomLeftCornerX(), pCoordX)) ;
+            check(compare(r.bottomLeftCornerY(), pCoordY)) ;
+            check(compare(r.upRightCornerX(), pCoordX + width)) ;
+            check(compare(r.upRightCornerY(), pCoordY + height)) ;
+            check(compare(r.width(), width)) ;
+            check(compare(r.height(), height)) ;
         }
 
         // Rectangle from Point and Dimension (as individual values, centered)
@@ -102,12 +102,12 @@ namespace UTMind {
             bool isCentered = true ;
             Rectangle2Df r(pCoordX, pCoordY, width, height, isCentered) ;
 
-            check(compare(r.getBottomLeftCornerX(), pCoordX - (width / 2.f))) ;
-            check(compare(r.getBottomLeftCornerY(), pCoordY - (height / 2.f))) ;
-            check(compare(r.getUpRightCornerX(), pCoordX + (width / 2.f))) ;
-            check(compare(r.getUpRightCornerY(), pCoordY + (height / 2.f))) ;
-            check(compare(r.getWidth(), width)) ;
-            check(compare(r.getHeight(), height)) ;
+            check(compare(r.bottomLeftCornerX(), pCoordX - (width / 2.f))) ;
+            check(compare(r.bottomLeftCornerY(), pCoordY - (height / 2.f))) ;
+            check(compare(r.upRightCornerX(), pCoordX + (width / 2.f))) ;
+            check(compare(r.upRightCornerY(), pCoordY + (height / 2.f))) ;
+            check(compare(r.width(), width)) ;
+            check(compare(r.height(), height)) ;
         }
 
         // Rectangle from two points
@@ -120,12 +120,12 @@ namespace UTMind {
             Point2Df p2(p2CoordX, p2CoordY) ;
             Rectangle2Df r(p1, p2) ;
 
-            check(compare(r.getBottomLeftCornerX(), p1CoordX)) ;
-            check(compare(r.getBottomLeftCornerY(), p1CoordY)) ;
-            check(compare(r.getUpRightCornerX(), p2CoordX)) ;
-            check(compare(r.getUpRightCornerY(), p2CoordY)) ;
-            check(compare(r.getWidth(), (p2CoordX - p1CoordX))) ;
-            check(compare(r.getHeight(), (p2CoordY - p1CoordY))) ;
+            check(compare(r.bottomLeftCornerX(), p1CoordX)) ;
+            check(compare(r.bottomLeftCornerY(), p1CoordY)) ;
+            check(compare(r.upRightCornerX(), p2CoordX)) ;
+            check(compare(r.upRightCornerY(), p2CoordY)) ;
+            check(compare(r.width(), (p2CoordX - p1CoordX))) ;
+            check(compare(r.height(), (p2CoordY - p1CoordY))) ;
         }
 
         // Rectangle from two points (as individual values)
@@ -136,12 +136,12 @@ namespace UTMind {
             Scalar p2CoordY = 944.4185f ;
             Rectangle2Df r(p1CoordX, p1CoordY, p2CoordX, p2CoordY) ;
 
-            check(compare(r.getBottomLeftCornerX(), p1CoordX)) ;
-            check(compare(r.getBottomLeftCornerY(), p1CoordY)) ;
-            check(compare(r.getUpRightCornerX(), p2CoordX)) ;
-            check(compare(r.getUpRightCornerY(), p2CoordY)) ;
-            check(compare(r.getWidth(), (p2CoordX - p1CoordX))) ;
-            check(compare(r.getHeight(), (p2CoordY - p1CoordY))) ;
+            check(compare(r.bottomLeftCornerX(), p1CoordX)) ;
+            check(compare(r.bottomLeftCornerY(), p1CoordY)) ;
+            check(compare(r.upRightCornerX(), p2CoordX)) ;
+            check(compare(r.upRightCornerY(), p2CoordY)) ;
+            check(compare(r.width(), (p2CoordX - p1CoordX))) ;
+            check(compare(r.height(), (p2CoordY - p1CoordY))) ;
         }
     }
 
@@ -159,10 +159,10 @@ namespace UTMind {
         r.translate(translationX, translationY) ;
 
         const Scalar LowerPrecision = 1e-4f ;
-        check(compare(r.getBottomLeftCornerX(), (p1CoordX + translationX))) ;
-        check(compare(r.getUpRightCornerX(), (p2CoordX + translationX), LowerPrecision)) ;
-        check(compare(r.getBottomLeftCornerY(), (p1CoordY + translationY))) ;
-        check(compare(r.getUpRightCornerY(), (p2CoordY + translationY))) ;
+        check(compare(r.bottomLeftCornerX(), (p1CoordX + translationX))) ;
+        check(compare(r.upRightCornerX(), (p2CoordX + translationX), LowerPrecision)) ;
+        check(compare(r.bottomLeftCornerY(), (p1CoordY + translationY))) ;
+        check(compare(r.upRightCornerY(), (p2CoordY + translationY))) ;
     }
 
     void UTRectangle2Df::contain() {
@@ -214,8 +214,8 @@ namespace UTMind {
                 r.contains(
                     insideP1CoordX,
                     insideP1CoordY,
-                    inside.getWidth(),
-                    inside.getHeight()
+                    inside.width(),
+                    inside.height()
                 )
             ) ;
 
@@ -233,8 +233,8 @@ namespace UTMind {
                 !r.contains(
                     outsideP1CoordX,
                     outsideP1CoordY,
-                    outside.getWidth(),
-                    outside.getHeight()
+                    outside.width(),
+                    outside.height()
                 )
             ) ;
         }
@@ -263,8 +263,8 @@ namespace UTMind {
                 r.intersects(
                     insideP1CoordX,
                     insideP1CoordY,
-                    inside.getWidth(),
-                    inside.getHeight()
+                    inside.width(),
+                    inside.height()
                 )
             ) ;
 
@@ -283,8 +283,8 @@ namespace UTMind {
                 r.intersects(
                     outside1P1CoordX,
                     outside1P1CoordY,
-                    outside1.getWidth(),
-                    outside1.getHeight()
+                    outside1.width(),
+                    outside1.height()
                 )
             ) ;
 
@@ -303,8 +303,8 @@ namespace UTMind {
             !r.intersects(
                     outside2P1CoordX,
                     outside2P1CoordY,
-                    outside2.getWidth(),
-                    outside2.getHeight()
+                    outside2.width(),
+                    outside2.height()
                 )
             ) ;
         }
@@ -376,12 +376,12 @@ namespace UTMind {
             Rectangle2Df rCopy = rOriginal ;
             check(rCopyConstr == rCopy) ;
             check(rOriginal == rCopy) ;
-            check(compare(rCopy.getBottomLeftCornerX(), rOriginal.getBottomLeftCornerX())) ;
-            check(compare(rCopy.getBottomLeftCornerY(), rOriginal.getBottomLeftCornerY())) ;
-            check(compare(rCopy.getUpRightCornerX(), rOriginal.getUpRightCornerX())) ;
-            check(compare(rCopy.getUpRightCornerY(), rOriginal.getUpRightCornerY())) ;
-            check(compare(rCopy.getWidth(), rOriginal.getWidth())) ;
-            check(compare(rCopy.getHeight(), rOriginal.getHeight())) ;
+            check(compare(rCopy.bottomLeftCornerX(), rOriginal.bottomLeftCornerX())) ;
+            check(compare(rCopy.bottomLeftCornerY(), rOriginal.bottomLeftCornerY())) ;
+            check(compare(rCopy.upRightCornerX(), rOriginal.upRightCornerX())) ;
+            check(compare(rCopy.upRightCornerY(), rOriginal.upRightCornerY())) ;
+            check(compare(rCopy.width(), rOriginal.width())) ;
+            check(compare(rCopy.height(), rOriginal.height())) ;
 
             Scalar rDifferentp1CoordX = 854.485f ;
             Scalar rDifferentp1CoordY = -3267.4798f ;
@@ -415,10 +415,10 @@ namespace UTMind {
             Point2Df pMerged(pMergedX, pMergedY) ;
 
             rOriginal += pMerged ;
-            check(compare(rOriginal.getBottomLeftCornerX(), pMergedX)) ;
-            check(compare(rOriginal.getBottomLeftCornerY(), pMergedY)) ;
-            check(compare(rOriginal.getUpRightCornerX(), rOriginalp2CoordX)) ;
-            check(compare(rOriginal.getUpRightCornerY(), rOriginalp2CoordY)) ;
+            check(compare(rOriginal.bottomLeftCornerX(), pMergedX)) ;
+            check(compare(rOriginal.bottomLeftCornerY(), pMergedY)) ;
+            check(compare(rOriginal.upRightCornerX(), rOriginalp2CoordX)) ;
+            check(compare(rOriginal.upRightCornerY(), rOriginalp2CoordY)) ;
 
             // Rectangle merged
             Scalar pMergedP1CoordX = 9.48f ;
@@ -433,10 +433,10 @@ namespace UTMind {
             ) ;
             rOriginal += rMerged ;
 
-            check(compare(rOriginal.getBottomLeftCornerX(), pMergedX)) ;
-            check(compare(rOriginal.getBottomLeftCornerY(), pMergedP1CoordY)) ;
-            check(compare(rOriginal.getUpRightCornerX(), rOriginalp2CoordX)) ;
-            check(compare(rOriginal.getUpRightCornerY(), rOriginalp2CoordY)) ;
+            check(compare(rOriginal.bottomLeftCornerX(), pMergedX)) ;
+            check(compare(rOriginal.bottomLeftCornerY(), pMergedP1CoordY)) ;
+            check(compare(rOriginal.upRightCornerX(), rOriginalp2CoordX)) ;
+            check(compare(rOriginal.upRightCornerY(), rOriginalp2CoordY)) ;
         }
     }
 }

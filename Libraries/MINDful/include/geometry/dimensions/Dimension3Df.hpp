@@ -51,19 +51,19 @@ namespace Mind {
              * Get the width of the dimension.
              * @return  The width.
              */
-            exported Scalar getWidth() const ;
+            exported Scalar width() const ;
 
             /**
              * Get the height of the dimension.
              * @return  The height.
              */
-            exported Scalar getHeight() const ;
+            exported Scalar height() const ;
 
             /**
              * Get the depth of the dimension.
              * @return  The depth.
              */
-            exported Scalar getDepth() const ;
+            exported Scalar depth() const ;
 
             /**
              * Set the width of the dimension.

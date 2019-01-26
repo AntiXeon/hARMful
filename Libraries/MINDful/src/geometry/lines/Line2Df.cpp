@@ -104,31 +104,31 @@ namespace Mind {
         return distanceSquaredTo(Point2Df(x, y)) ;
     }
 
-    const Rectangle2Df Line2Df::getBounds() const {
+    const Rectangle2Df Line2Df::bounds() const {
         return Rectangle2Df(m_start, m_end) ;
     }
 
-    const Point2Df& Line2Df::getStartPoint() const {
+    const Point2Df& Line2Df::startPoint() const {
         return m_start ;
     }
 
-    const Point2Df& Line2Df::getEndPoint() const {
+    const Point2Df& Line2Df::endPoint() const {
         return m_end ;
     }
 
-    Scalar Line2Df::getStartX() const {
+    Scalar Line2Df::startX() const {
         return m_start.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Line2Df::getStartY() const {
+    Scalar Line2Df::startY() const {
         return m_start.get(Point2Df::Axis::Y) ;
     }
 
-    Scalar Line2Df::getEndX() const {
+    Scalar Line2Df::endX() const {
         return m_end.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Line2Df::getEndY() const {
+    Scalar Line2Df::endY() const {
         return m_end.get(Point2Df::Axis::Y) ;
     }
 
@@ -158,9 +158,9 @@ namespace Mind {
 
     std::ostream& operator<<(std::ostream& s, const Line2Df& l) {
         s << "Line2Df ("
-                         << l.getStartPoint()
+                         << l.startPoint()
                          << " | "
-                         << l.getEndPoint()
+                         << l.endPoint()
                          << ")" << std::endl ;
         return s ;
     }

@@ -133,45 +133,47 @@ namespace Mind {
              * Get the Rectangle that represents the boundaries of the Line.
              * @return  The Rectangle representing the boundaries of the line.
              */
-            exported const Rectangle2Df getBounds() const ;
+            exported const Rectangle2Df bounds() const ;
 
             /**
              * Get the starting point of the Line.
              * @return  The start point of the Line.
              */
-            exported const Point2Df& getStartPoint() const ;
+            exported const Point2Df& startPoint() const ;
 
             /**
              * Get the ending point of the Line.
              * @return  The ending point of the Line.
              */
-            exported const Point2Df& getEndPoint() const ;
+            exported const Point2Df& endPoint() const ;
 
             /**
              * Get the X coordinate of the start point.
              * @return  The X coordinate of the start point.
              */
-            exported Scalar getStartX() const ;
+            exported Scalar startX() const ;
 
             /**
              * Get the Y coordinate of the start point.
              * @return  The Y coordinate of the start point.
              */
-            exported Scalar getStartY() const ;
+            exported Scalar startY() const ;
 
             /**
              * Get the X coordinate of the end point.
              * @return  The X coordinate of the end point.
              */
-            exported Scalar getEndX() const ;
+            exported Scalar endX() const ;
 
             /**
              * Get the Y coordinate of the end point.
              * @return  The Y coordinate of the end point.
              */
-            exported Scalar getEndY() const ;
+            exported Scalar endY() const ;
 
-            /** Test if the Line is empty (no length). */
+            /**
+             * Test if the Line is empty (no length).
+             */
             exported bool isEmpty() const ;
 
             /**

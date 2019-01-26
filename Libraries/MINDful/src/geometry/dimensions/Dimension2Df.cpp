@@ -16,12 +16,12 @@ namespace Mind {
         m_height = std::fabs(m_height) ;
     }
 
-    Scalar Dimension2Df::getWidth() const {
+    Scalar Dimension2Df::width() const {
         return m_width ;
     }
 
 
-    Scalar Dimension2Df::getHeight() const {
+    Scalar Dimension2Df::height() const {
         return m_height ;
     }
 
@@ -82,36 +82,36 @@ namespace Mind {
 
     Dimension2Df operator+(const Dimension2Df& a, const Dimension2Df& b) {
         return Dimension2Df(
-            a.getWidth() + b.getWidth(),
-            a.getHeight() + b.getHeight()
+            a.width() + b.width(),
+            a.height() + b.height()
         ) ;
     }
 
     Dimension2Df operator-(const Dimension2Df& a, const Dimension2Df& b) {
         return Dimension2Df(
-            a.getWidth() - b.getWidth(),
-            a.getHeight() - b.getHeight()
+            a.width() - b.width(),
+            a.height() - b.height()
         ) ;
     }
 
     Dimension2Df operator*(const Dimension2Df& d, const Scalar coeff) {
         return Dimension2Df(
-            d.getWidth() * coeff,
-            d.getHeight() * coeff
+            d.width() * coeff,
+            d.height() * coeff
         ) ;
     }
 
     Dimension2Df operator/(const Dimension2Df& d, const Scalar coeff) {
         return Dimension2Df(
-            d.getWidth() / coeff,
-            d.getHeight() / coeff
+            d.width() / coeff,
+            d.height() / coeff
         ) ;
     }
 
     std::ostream& operator<<(std::ostream& s, const Dimension2Df& p) {
         s << "Dimension2Df {" <<
-                                 p.getWidth() << "," <<
-                                 p.getHeight() <<
+                                 p.width() << "," <<
+                                 p.height() <<
                            "}" ;
         return s ;
     }

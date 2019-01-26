@@ -35,13 +35,13 @@ namespace Mind {
              * Get the width of the dimension.
              * @return  The width.
              */
-            exported uint32_t getWidth() const ;
+            exported uint32_t width() const ;
 
             /**
              * Get the height of the dimension.
              * @return  The height.
              */
-            exported uint32_t getHeight() const ;
+            exported uint32_t height() const ;
 
             /**
              * Set the width of the dimension.

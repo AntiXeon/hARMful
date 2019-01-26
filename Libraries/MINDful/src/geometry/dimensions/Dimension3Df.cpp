@@ -19,15 +19,15 @@ namespace Mind {
         m_depth = std::fabs(m_depth) ;
     }
 
-    Scalar Dimension3Df::getWidth() const {
+    Scalar Dimension3Df::width() const {
         return m_width ;
     }
 
-    Scalar Dimension3Df::getHeight() const {
+    Scalar Dimension3Df::height() const {
         return m_height ;
     }
 
-    Scalar Dimension3Df::getDepth() const {
+    Scalar Dimension3Df::depth() const {
         return m_depth ;
     }
 
@@ -104,41 +104,41 @@ namespace Mind {
 
     Dimension3Df operator+(const Dimension3Df& a, const Dimension3Df& b) {
         return Dimension3Df(
-            a.getWidth() + b.getWidth(),
-            a.getHeight() + b.getHeight(),
-            a.getDepth() + b.getDepth()
+            a.width() + b.width(),
+            a.height() + b.height(),
+            a.depth() + b.depth()
         ) ;
     }
 
     Dimension3Df operator-(const Dimension3Df& a, const Dimension3Df& b) {
         return Dimension3Df(
-            a.getWidth() - b.getWidth(),
-            a.getHeight() - b.getHeight(),
-            a.getDepth() - b.getDepth()
+            a.width() - b.width(),
+            a.height() - b.height(),
+            a.depth() - b.depth()
         ) ;
     }
 
     Dimension3Df operator*(const Dimension3Df& d, const Scalar coeff) {
         return Dimension3Df(
-            d.getWidth() * coeff,
-            d.getHeight() * coeff,
-            d.getDepth() * coeff
+            d.width() * coeff,
+            d.height() * coeff,
+            d.depth() * coeff
         ) ;
     }
 
     Dimension3Df operator/(const Dimension3Df& d, const Scalar coeff) {
         return Dimension3Df(
-            d.getWidth() / coeff,
-            d.getHeight() / coeff,
-            d.getDepth() / coeff
+            d.width() / coeff,
+            d.height() / coeff,
+            d.depth() / coeff
         ) ;
     }
 
     std::ostream& operator<<(std::ostream& s, const Dimension3Df& p) {
         s << "Dimension3Df {" <<
-                                 p.getWidth() << "," <<
-                                 p.getHeight() << "," <<
-                                 p.getDepth() <<
+                                 p.width() << "," <<
+                                 p.height() << "," <<
+                                 p.depth() <<
                            "}" ;
         return s ;
     }

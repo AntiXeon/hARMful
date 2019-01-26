@@ -10,19 +10,19 @@ using namespace Mind ;
 namespace UTMind {
     void UTDimension3Df::allocation() {
         Dimension3Df dim3d1 ;
-        check(dim3d1.getWidth() == 0.f) ;
-        check(dim3d1.getHeight() == 0.f) ;
-        check(dim3d1.getDepth() == 0.f) ;
+        check(dim3d1.width() == 0.f) ;
+        check(dim3d1.height() == 0.f) ;
+        check(dim3d1.depth() == 0.f) ;
 
         Dimension3Df dim3d2(5.2f, 3.9f, 9.5f) ;
-        check(dim3d2.getWidth() == 5.2f) ;
-        check(dim3d2.getHeight() == 3.9f) ;
-        check(dim3d2.getDepth() == 9.5f) ;
+        check(dim3d2.width() == 5.2f) ;
+        check(dim3d2.height() == 3.9f) ;
+        check(dim3d2.depth() == 9.5f) ;
 
         Dimension3Df dim3d3(dim3d2) ;
-        check(dim3d3.getWidth() == 5.2f) ;
-        check(dim3d3.getHeight() == 3.9f) ;
-        check(dim3d3.getDepth() == 9.5f) ;
+        check(dim3d3.width() == 5.2f) ;
+        check(dim3d3.height() == 3.9f) ;
+        check(dim3d3.depth() == 9.5f) ;
     }
 
     void UTDimension3Df::scalarOperations() {
@@ -35,25 +35,25 @@ namespace UTMind {
 
         /* Divisions */
         Dimension3Df dim3d2 = dim3d1 / Divisor ;
-        check(compare(dim3d2.getWidth(), Width / Divisor)) ;
-        check(compare(dim3d2.getHeight(), Height / Divisor)) ;
-        check(compare(dim3d2.getDepth(), Depth / Divisor)) ;
+        check(compare(dim3d2.width(), Width / Divisor)) ;
+        check(compare(dim3d2.height(), Height / Divisor)) ;
+        check(compare(dim3d2.depth(), Depth / Divisor)) ;
 
         dim3d2 /= Divisor ;
-        check(compare(dim3d2.getWidth(), Width / Divisor / Divisor)) ;
-        check(compare(dim3d2.getHeight(), Height / Divisor / Divisor)) ;
-        check(compare(dim3d2.getDepth(), Depth / Divisor / Divisor)) ;
+        check(compare(dim3d2.width(), Width / Divisor / Divisor)) ;
+        check(compare(dim3d2.height(), Height / Divisor / Divisor)) ;
+        check(compare(dim3d2.depth(), Depth / Divisor / Divisor)) ;
 
         /* Products */
         Dimension3Df dim3d3 = dim3d1 * Factor ;
-        check(compare(dim3d3.getWidth(), Width * Factor)) ;
-        check(compare(dim3d3.getHeight(), Height * Factor)) ;
-        check(compare(dim3d3.getDepth(), Depth * Factor)) ;
+        check(compare(dim3d3.width(), Width * Factor)) ;
+        check(compare(dim3d3.height(), Height * Factor)) ;
+        check(compare(dim3d3.depth(), Depth * Factor)) ;
 
         dim3d3 *= Factor ;
-        check(compare(dim3d3.getWidth(), Width * Factor * Factor)) ;
-        check(compare(dim3d3.getHeight(), Height * Factor * Factor)) ;
-        check(compare(dim3d3.getDepth(), Depth * Factor * Factor)) ;
+        check(compare(dim3d3.width(), Width * Factor * Factor)) ;
+        check(compare(dim3d3.height(), Height * Factor * Factor)) ;
+        check(compare(dim3d3.depth(), Depth * Factor * Factor)) ;
     }
 
     void UTDimension3Df::dimensionsOperations() {
@@ -74,46 +74,46 @@ namespace UTMind {
 
         /* Addition */
         Dimension3Df dim3d1PLUSd2 = dim3d1 + dim3d2 ;
-        check(compare(dim3d1PLUSd2.getWidth(), Width1 + Width2)) ;
-        check(compare(dim3d1PLUSd2.getHeight(), Height1 + Height2)) ;
-        check(compare(dim3d1PLUSd2.getDepth(), Depth1 + Depth2)) ;
+        check(compare(dim3d1PLUSd2.width(), Width1 + Width2)) ;
+        check(compare(dim3d1PLUSd2.height(), Height1 + Height2)) ;
+        check(compare(dim3d1PLUSd2.depth(), Depth1 + Depth2)) ;
 
         Dimension3Df dim3d1PLUSd3 = dim3d1 + dim3d3 ;
-        check(compare(dim3d1PLUSd3.getWidth(), Width1 + Width3)) ;
-        check(compare(dim3d1PLUSd3.getHeight(), Height1 + Height3)) ;
-        check(compare(dim3d1PLUSd3.getDepth(), Depth1 + Depth3)) ;
+        check(compare(dim3d1PLUSd3.width(), Width1 + Width3)) ;
+        check(compare(dim3d1PLUSd3.height(), Height1 + Height3)) ;
+        check(compare(dim3d1PLUSd3.depth(), Depth1 + Depth3)) ;
 
         Dimension3Df dim3d2PLUSd3 = dim3d2 + dim3d3 ;
-        check(compare(dim3d2PLUSd3.getWidth(), Width2 + Width3)) ;
-        check(compare(dim3d2PLUSd3.getHeight(), Height2 + Height3)) ;
-        check(compare(dim3d2PLUSd3.getDepth(), Depth2 + Depth3)) ;
+        check(compare(dim3d2PLUSd3.width(), Width2 + Width3)) ;
+        check(compare(dim3d2PLUSd3.height(), Height2 + Height3)) ;
+        check(compare(dim3d2PLUSd3.depth(), Depth2 + Depth3)) ;
 
         dim3d2PLUSd3 += dim3d1 ;
-        check(compare(dim3d2PLUSd3.getWidth(), Width2 + Width3 + Width1)) ;
-        check(compare(dim3d2PLUSd3.getHeight(), Height2 + Height3 + Height1)) ;
-        check(compare(dim3d2PLUSd3.getDepth(), Depth2 + Depth3 + Depth1)) ;
+        check(compare(dim3d2PLUSd3.width(), Width2 + Width3 + Width1)) ;
+        check(compare(dim3d2PLUSd3.height(), Height2 + Height3 + Height1)) ;
+        check(compare(dim3d2PLUSd3.depth(), Depth2 + Depth3 + Depth1)) ;
 
 
         /* Difference */
         Dimension3Df dim3d1MINUSd2 = dim3d1 - dim3d2 ;
-        check(compare(dim3d1MINUSd2.getWidth(), Width1 - Width2)) ;
-        check(compare(dim3d1MINUSd2.getHeight(), Height1 - Height2)) ;
-        check(compare(dim3d1MINUSd2.getDepth(), Depth1 - Depth2)) ;
+        check(compare(dim3d1MINUSd2.width(), Width1 - Width2)) ;
+        check(compare(dim3d1MINUSd2.height(), Height1 - Height2)) ;
+        check(compare(dim3d1MINUSd2.depth(), Depth1 - Depth2)) ;
 
         Dimension3Df dim3d1MINUSd3 = dim3d1 - dim3d3 ;
-        check(compare(dim3d1MINUSd3.getWidth(), Width1 - Width3)) ;
-        check(compare(dim3d1MINUSd3.getHeight(), Height1 - Height3)) ;
-        check(compare(dim3d1MINUSd3.getDepth(), Depth1 - Depth3)) ;
+        check(compare(dim3d1MINUSd3.width(), Width1 - Width3)) ;
+        check(compare(dim3d1MINUSd3.height(), Height1 - Height3)) ;
+        check(compare(dim3d1MINUSd3.depth(), Depth1 - Depth3)) ;
 
         Dimension3Df dim3d2MINUSd3 = dim3d2 - dim3d3 ;
-        check(compare(dim3d2MINUSd3.getWidth(), Width2 - Width3)) ;
-        check(compare(dim3d2MINUSd3.getHeight(), Height2 - Height3)) ;
-        check(compare(dim3d2MINUSd3.getDepth(), Depth2 - Depth3)) ;
+        check(compare(dim3d2MINUSd3.width(), Width2 - Width3)) ;
+        check(compare(dim3d2MINUSd3.height(), Height2 - Height3)) ;
+        check(compare(dim3d2MINUSd3.depth(), Depth2 - Depth3)) ;
 
         dim3d2MINUSd3 -= dim3d1 ;
-        check(compare(dim3d2MINUSd3.getWidth(), Width2 - Width3 - Width1)) ;
-        check(compare(dim3d2MINUSd3.getHeight(), Height2 - Height3 - Height1)) ;
-        check(compare(dim3d2MINUSd3.getDepth(), Depth2 - Depth3 - Depth1)) ;
+        check(compare(dim3d2MINUSd3.width(), Width2 - Width3 - Width1)) ;
+        check(compare(dim3d2MINUSd3.height(), Height2 - Height3 - Height1)) ;
+        check(compare(dim3d2MINUSd3.depth(), Depth2 - Depth3 - Depth1)) ;
     }
 
     void UTDimension3Df::equality() {
@@ -202,27 +202,27 @@ namespace UTMind {
         float height = 14.132f ;
         float depth = 3.14f ;
         dim3d.set(width, height, depth) ;
-        check(dim3d.getWidth() == width) ;
-        check(dim3d.getHeight() == height) ;
-        check(dim3d.getDepth() == depth) ;
+        check(dim3d.width() == width) ;
+        check(dim3d.height() == height) ;
+        check(dim3d.depth() == depth) ;
 
         width = 9.465f ;
         dim3d.setWidth(width) ;
-        check(dim3d.getWidth() == width) ;
-        check(dim3d.getHeight() == height) ;
-        check(dim3d.getDepth() == depth) ;
+        check(dim3d.width() == width) ;
+        check(dim3d.height() == height) ;
+        check(dim3d.depth() == depth) ;
 
         height = 87.517f ;
         dim3d.setHeight(height) ;
-        check(dim3d.getWidth() == width) ;
-        check(dim3d.getHeight() == height) ;
-        check(dim3d.getDepth() == depth) ;
+        check(dim3d.width() == width) ;
+        check(dim3d.height() == height) ;
+        check(dim3d.depth() == depth) ;
 
         depth = 2.698f ;
         dim3d.setDepth(depth) ;
-        check(dim3d.getWidth() == width) ;
-        check(dim3d.getHeight() == height) ;
-        check(dim3d.getDepth() == depth) ;
+        check(dim3d.width() == width) ;
+        check(dim3d.height() == height) ;
+        check(dim3d.depth() == depth) ;
     }
 
     void UTDimension3Df::cast() {
@@ -233,8 +233,8 @@ namespace UTMind {
             const float Depth = 487.4f ;
             Dimension3Df dim3d(Width, Height, Depth) ;
             Dimension2Df dim2d = (Dimension2Df) dim3d ;
-            check(dim2d.getWidth() == dim3d.getWidth()) ;
-            check(dim2d.getHeight() == dim3d.getHeight()) ;
+            check(dim2d.width() == dim3d.width()) ;
+            check(dim2d.height() == dim3d.height()) ;
         }
         // To Point3Df.
         {
@@ -243,9 +243,9 @@ namespace UTMind {
             const float Depth = 7487.8785f ;
             Dimension3Df dim3d(Width, Height, Depth) ;
             Point3Df p3d = (Point3Df) dim3d ;
-            check(p3d.get(Point3Df::Axis::X) == dim3d.getWidth()) ;
-            check(p3d.get(Point3Df::Axis::Y) == dim3d.getHeight()) ;
-            check(p3d.get(Point3Df::Axis::Z) == dim3d.getDepth()) ;
+            check(p3d.get(Point3Df::Axis::X) == dim3d.width()) ;
+            check(p3d.get(Point3Df::Axis::Y) == dim3d.height()) ;
+            check(p3d.get(Point3Df::Axis::Z) == dim3d.depth()) ;
         }
     }
 }

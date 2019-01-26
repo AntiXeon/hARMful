@@ -10,16 +10,16 @@ using namespace Mind ;
 namespace UTMind {
     void UTDimension2Df::allocation() {
         Dimension2Df dim2d1 ;
-        check(dim2d1.getWidth() == 0.f) ;
-        check(dim2d1.getHeight() == 0.f) ;
+        check(dim2d1.width() == 0.f) ;
+        check(dim2d1.height() == 0.f) ;
 
         Dimension2Df dim2d2(5.2f, 3.9f) ;
-        check(dim2d2.getWidth() == 5.2f) ;
-        check(dim2d2.getHeight() == 3.9f) ;
+        check(dim2d2.width() == 5.2f) ;
+        check(dim2d2.height() == 3.9f) ;
 
         Dimension2Df dim2d3(dim2d2) ;
-        check(dim2d3.getWidth() == 5.2f) ;
-        check(dim2d3.getHeight() == 3.9f) ;
+        check(dim2d3.width() == 5.2f) ;
+        check(dim2d3.height() == 3.9f) ;
     }
 
     void UTDimension2Df::scalarOperations() {
@@ -31,21 +31,21 @@ namespace UTMind {
 
         /* Divisions */
         Dimension2Df dim2d2 = dim2d1 / Divisor ;
-        check(compare(dim2d2.getWidth(), Width / Divisor)) ;
-        check(compare(dim2d2.getHeight(), Height / Divisor)) ;
+        check(compare(dim2d2.width(), Width / Divisor)) ;
+        check(compare(dim2d2.height(), Height / Divisor)) ;
 
         dim2d2 /= Divisor ;
-        check(compare(dim2d2.getWidth(), Width / Divisor / Divisor)) ;
-        check(compare(dim2d2.getHeight(), Height / Divisor / Divisor)) ;
+        check(compare(dim2d2.width(), Width / Divisor / Divisor)) ;
+        check(compare(dim2d2.height(), Height / Divisor / Divisor)) ;
 
         /* Products */
         Dimension2Df dim2d3 = dim2d1 * Factor ;
-        check(compare(dim2d3.getWidth(), Width * Factor)) ;
-        check(compare(dim2d3.getHeight(), Height * Factor)) ;
+        check(compare(dim2d3.width(), Width * Factor)) ;
+        check(compare(dim2d3.height(), Height * Factor)) ;
 
         dim2d3 *= Factor ;
-        check(compare(dim2d3.getWidth(), Width * Factor * Factor)) ;
-        check(compare(dim2d3.getHeight(), Height * Factor * Factor)) ;
+        check(compare(dim2d3.width(), Width * Factor * Factor)) ;
+        check(compare(dim2d3.height(), Height * Factor * Factor)) ;
     }
 
     void UTDimension2Df::dimensionsOperations() {
@@ -63,37 +63,37 @@ namespace UTMind {
 
         /* Addition */
         Dimension2Df dim2d1PLUSd2 = dim2d1 + dim2d2 ;
-        check(compare(dim2d1PLUSd2.getWidth(), Width1 + Width2)) ;
-        check(compare(dim2d1PLUSd2.getHeight(), Height1 + Height2)) ;
+        check(compare(dim2d1PLUSd2.width(), Width1 + Width2)) ;
+        check(compare(dim2d1PLUSd2.height(), Height1 + Height2)) ;
 
         Dimension2Df dim2d1PLUSd3 = dim2d1 + dim2d3 ;
-        check(compare(dim2d1PLUSd3.getWidth(), Width1 + Width3)) ;
-        check(compare(dim2d1PLUSd3.getHeight(), Height1 + Height3)) ;
+        check(compare(dim2d1PLUSd3.width(), Width1 + Width3)) ;
+        check(compare(dim2d1PLUSd3.height(), Height1 + Height3)) ;
 
         Dimension2Df dim2d2PLUSd3 = dim2d2 + dim2d3 ;
-        check(compare(dim2d2PLUSd3.getWidth(), Width2 + Width3)) ;
-        check(compare(dim2d2PLUSd3.getHeight(), Height2 + Height3)) ;
+        check(compare(dim2d2PLUSd3.width(), Width2 + Width3)) ;
+        check(compare(dim2d2PLUSd3.height(), Height2 + Height3)) ;
 
         dim2d2PLUSd3 += dim2d1 ;
-        check(compare(dim2d2PLUSd3.getWidth(), Width2 + Width3 + Width1)) ;
-        check(compare(dim2d2PLUSd3.getHeight(), Height2 + Height3 + Height1)) ;
+        check(compare(dim2d2PLUSd3.width(), Width2 + Width3 + Width1)) ;
+        check(compare(dim2d2PLUSd3.height(), Height2 + Height3 + Height1)) ;
 
         /* Difference */
         Dimension2Df dim2d1MINUSd2 = dim2d1 - dim2d2 ;
-        check(compare(dim2d1MINUSd2.getWidth(), Width1 - Width2)) ;
-        check(compare(dim2d1MINUSd2.getHeight(), Height1 - Height2)) ;
+        check(compare(dim2d1MINUSd2.width(), Width1 - Width2)) ;
+        check(compare(dim2d1MINUSd2.height(), Height1 - Height2)) ;
 
         Dimension2Df dim2d1MINUSd3 = dim2d1 - dim2d3 ;
-        check(compare(dim2d1MINUSd3.getWidth(), Width1 - Width3)) ;
-        check(compare(dim2d1MINUSd3.getHeight(), Height1 - Height3)) ;
+        check(compare(dim2d1MINUSd3.width(), Width1 - Width3)) ;
+        check(compare(dim2d1MINUSd3.height(), Height1 - Height3)) ;
 
         Dimension2Df dim2d2MINUSd3 = dim2d2 - dim2d3 ;
-        check(compare(dim2d2MINUSd3.getWidth(), Width2 - Width3)) ;
-        check(compare(dim2d2MINUSd3.getHeight(), Height2 - Height3)) ;
+        check(compare(dim2d2MINUSd3.width(), Width2 - Width3)) ;
+        check(compare(dim2d2MINUSd3.height(), Height2 - Height3)) ;
 
         dim2d2MINUSd3 -= dim2d1 ;
-        check(compare(dim2d2MINUSd3.getWidth(), Width2 - Width3 - Width1)) ;
-        check(compare(dim2d2MINUSd3.getHeight(), Height2 - Height3 - Height1)) ;
+        check(compare(dim2d2MINUSd3.width(), Width2 - Width3 - Width1)) ;
+        check(compare(dim2d2MINUSd3.height(), Height2 - Height3 - Height1)) ;
     }
 
     void UTDimension2Df::equality() {
@@ -162,18 +162,18 @@ namespace UTMind {
         float width = 7.874f ;
         float height = 14.132f ;
         dim2d.set(width, height) ;
-        check(dim2d.getWidth() == width) ;
-        check(dim2d.getHeight() == height) ;
+        check(dim2d.width() == width) ;
+        check(dim2d.height() == height) ;
 
         width = 9.465f ;
         dim2d.setWidth(width) ;
-        check(dim2d.getWidth() == width) ;
-        check(dim2d.getHeight() == height) ;
+        check(dim2d.width() == width) ;
+        check(dim2d.height() == height) ;
 
         height = 87.517f ;
         dim2d.setHeight(height) ;
-        check(dim2d.getWidth() == width) ;
-        check(dim2d.getHeight() == height) ;
+        check(dim2d.width() == width) ;
+        check(dim2d.height() == height) ;
     }
 
     void UTDimension2Df::cast() {
@@ -183,9 +183,9 @@ namespace UTMind {
             const float Height = 5452.f ;
             Dimension2Df dim2d(Width, Height) ;
             Dimension3Df dim3d = (Dimension3Df) dim2d ;
-            check(dim3d.getWidth() == dim2d.getWidth()) ;
-            check(dim3d.getHeight() == dim2d.getHeight()) ;
-            check(dim3d.getDepth() == 0.f) ;
+            check(dim3d.width() == dim2d.width()) ;
+            check(dim3d.height() == dim2d.height()) ;
+            check(dim3d.depth() == 0.f) ;
         }
         // To Point2Df.
         {
@@ -193,8 +193,8 @@ namespace UTMind {
             const float Height = 469.198f ;
             Dimension2Df dim2d(Width, Height) ;
             Point2Df p2d = (Point2Df) dim2d ;
-            check(p2d.get(Point2Df::Axis::X) == dim2d.getWidth()) ;
-            check(p2d.get(Point2Df::Axis::Y) == dim2d.getHeight()) ;
+            check(p2d.get(Point2Df::Axis::X) == dim2d.width()) ;
+            check(p2d.get(Point2Df::Axis::Y) == dim2d.height()) ;
         }
     }
 }

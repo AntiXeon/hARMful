@@ -12,8 +12,8 @@ namespace Mind {
     ) : Rectangle2Df(
             location.get(Point2Df::Axis::X),
             location.get(Point2Df::Axis::Y),
-            size.getWidth(),
-            size.getHeight(),
+            size.width(),
+            size.height(),
             centered
         ) {}
 
@@ -90,9 +90,9 @@ namespace Mind {
         Scalar x = point.get(Point2Df::Axis::X) ;
         Scalar y = point.get(Point2Df::Axis::Y) ;
         return (
-                ((x >= getBottomLeftCornerX()) && (x <= getUpRightCornerX()))
+                ((x >= bottomLeftCornerX()) && (x <= upRightCornerX()))
                  &&
-                ((y >= getBottomLeftCornerY()) && (y <= getUpRightCornerY()))
+                ((y >= bottomLeftCornerY()) && (y <= upRightCornerY()))
                ) ;
     }
 
@@ -109,10 +109,10 @@ namespace Mind {
 
     bool Rectangle2Df::contains(Rectangle2Df& boundaries) {
         return contains(
-            boundaries.getBottomLeftCornerX(),
-            boundaries.getBottomLeftCornerY(),
-            boundaries.getWidth(),
-            boundaries.getHeight()
+            boundaries.bottomLeftCornerX(),
+            boundaries.bottomLeftCornerY(),
+            boundaries.width(),
+            boundaries.height()
         ) ;
     }
 
@@ -126,10 +126,10 @@ namespace Mind {
             return false ;
         }
 
-        Scalar xThis = getBottomLeftCornerX() ;
-        Scalar yThis = getBottomLeftCornerY() ;
-        Scalar x2This = getUpRightCornerX() ;
-        Scalar y2This = getUpRightCornerY() ;
+        Scalar xThis = bottomLeftCornerX() ;
+        Scalar yThis = bottomLeftCornerY() ;
+        Scalar x2This = upRightCornerX() ;
+        Scalar y2This = upRightCornerY() ;
 
         return (
                 ((x + w) > xThis)
@@ -140,42 +140,42 @@ namespace Mind {
     }
 
     bool Rectangle2Df::intersects(const Line2Df& line) {
-        Scalar x = std::min(line.getStartX(), line.getEndX()) ;
-        Scalar y = std::min(line.getStartY(), line.getEndY()) ;
-        Scalar w = std::abs(line.getEndX() - line.getStartX()) ;
-        Scalar h = std::abs(line.getEndY() - line.getStartY()) ;
+        Scalar x = std::min(line.startX(), line.endX()) ;
+        Scalar y = std::min(line.startY(), line.endY()) ;
+        Scalar w = std::abs(line.endX() - line.startX()) ;
+        Scalar h = std::abs(line.endY() - line.startY()) ;
         return intersects(x, y, w, h) ;
     }
 
     bool Rectangle2Df::intersects(const Rectangle2Df& boundaries) {
         return intersects(
-            ((Rectangle2Df)boundaries).getBottomLeftCornerX(),
-            ((Rectangle2Df)boundaries).getBottomLeftCornerY(),
-            ((Rectangle2Df)boundaries).getWidth(),
-            ((Rectangle2Df)boundaries).getHeight()
+            ((Rectangle2Df)boundaries).bottomLeftCornerX(),
+            ((Rectangle2Df)boundaries).bottomLeftCornerY(),
+            ((Rectangle2Df)boundaries).width(),
+            ((Rectangle2Df)boundaries).height()
         ) ;
     }
 
     char Rectangle2Df::position(Scalar x, Scalar y) {
         char pos = 0 ;
 
-        if (getWidth() <= 0) {
+        if (width() <= 0) {
             pos = PointOnLeft | PointOnRight ;
         }
-        else if (x < getBottomLeftCornerX()) {
+        else if (x < bottomLeftCornerX()) {
             pos = PointOnLeft ;
         }
-        else if (x > getUpRightCornerX()) {
+        else if (x > upRightCornerX()) {
             pos = PointOnRight ;
         }
 
-        if (getHeight() <= 0) {
+        if (height() <= 0) {
             return pos | PointAbove | PointBelow ;
         }
-        else if (y > getUpRightCornerY()) {
+        else if (y > upRightCornerY()) {
             return pos | PointAbove ;
         }
-        else if (y < getBottomRightCornerY()) {
+        else if (y < bottomRightCornerY()) {
             return pos | PointBelow ;
         }
 
@@ -186,63 +186,63 @@ namespace Mind {
         return position(p.get(Point2Df::Axis::X), p.get(Point2Df::Axis::Y)) ;
     }
 
-    Scalar Rectangle2Df::getUpLeftCornerX() {
+    Scalar Rectangle2Df::upLeftCornerX() {
         return m_bottomLeftCorner.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Rectangle2Df::getUpLeftCornerY() {
+    Scalar Rectangle2Df::upLeftCornerY() {
         computeMaxPoint() ;
         return m_upRightCorner.get(Point2Df::Axis::Y) ;
     }
 
-    Scalar Rectangle2Df::getUpRightCornerX() {
+    Scalar Rectangle2Df::upRightCornerX() {
         computeMaxPoint() ;
         return m_upRightCorner.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Rectangle2Df::getUpRightCornerY()  {
+    Scalar Rectangle2Df::upRightCornerY()  {
         computeMaxPoint() ;
         return m_upRightCorner.get(Point2Df::Axis::Y) ;
     }
 
-    Scalar Rectangle2Df::getBottomLeftCornerX() const {
+    Scalar Rectangle2Df::bottomLeftCornerX() const {
         return m_bottomLeftCorner.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Rectangle2Df::getBottomLeftCornerY() const {
+    Scalar Rectangle2Df::bottomLeftCornerY() const {
         return m_bottomLeftCorner.get(Point2Df::Axis::Y) ;
     }
 
-    Scalar Rectangle2Df::getBottomRightCornerX() {
+    Scalar Rectangle2Df::bottomRightCornerX() {
         computeMaxPoint() ;
         return m_upRightCorner.get(Point2Df::Axis::X) ;
     }
 
-    Scalar Rectangle2Df::getBottomRightCornerY() {
+    Scalar Rectangle2Df::bottomRightCornerY() {
         return m_bottomLeftCorner.get(Point2Df::Axis::Y) ;
     }
 
-    const Dimension2Df& Rectangle2Df::getSize() const {
+    const Dimension2Df& Rectangle2Df::size() const {
         return m_size ;
     }
 
-    Scalar Rectangle2Df::getWidth() const {
-        return m_size.getWidth() ;
+    Scalar Rectangle2Df::width() const {
+        return m_size.width() ;
     }
 
-    Scalar Rectangle2Df::getHeight() const {
-        return m_size.getHeight() ;
+    Scalar Rectangle2Df::height() const {
+        return m_size.height() ;
     }
 
     bool Rectangle2Df::isEmpty() const {
-        return ((m_size.getWidth() == 0.f) || (m_size.getHeight() == 0.f)) ;
+        return ((m_size.width() == 0.f) || (m_size.height() == 0.f)) ;
     }
 
     void Rectangle2Df::computeMaxPoint() {
         if (m_hasChanged) {
             m_upRightCorner.set(
-                m_bottomLeftCorner.get(Point2Df::Axis::X) + m_size.getWidth(),
-                m_bottomLeftCorner.get(Point2Df::Axis::Y) + m_size.getHeight()
+                m_bottomLeftCorner.get(Point2Df::Axis::X) + m_size.width(),
+                m_bottomLeftCorner.get(Point2Df::Axis::Y) + m_size.height()
             ) ;
             m_hasChanged = false ;
         }
@@ -250,7 +250,7 @@ namespace Mind {
 
     void Rectangle2Df::setX(const Scalar x) {
         if (m_isCentered) {
-            m_bottomLeftCorner.set(Point2Df::Axis::X, x - (getWidth() / 2.f)) ;
+            m_bottomLeftCorner.set(Point2Df::Axis::X, x - (width() / 2.f)) ;
         }
         else {
             m_bottomLeftCorner.set(Point2Df::Axis::X, x) ;
@@ -260,7 +260,7 @@ namespace Mind {
 
     void Rectangle2Df::setY(const Scalar y) {
         if (m_isCentered) {
-            m_bottomLeftCorner.set(Point2Df::Axis::Y, y - (getHeight() / 2.f)) ;
+            m_bottomLeftCorner.set(Point2Df::Axis::Y, y - (height() / 2.f)) ;
         }
         else {
             m_bottomLeftCorner.set(Point2Df::Axis::Y, y) ;
@@ -270,8 +270,8 @@ namespace Mind {
 
     void Rectangle2Df::setAt(const Scalar x, const Scalar y) {
         if (m_isCentered) {
-            m_bottomLeftCorner.set(Point2Df::Axis::X, x - (getWidth() / 2.f)) ;
-            m_bottomLeftCorner.set(Point2Df::Axis::Y, y - (getHeight() / 2.f)) ;
+            m_bottomLeftCorner.set(Point2Df::Axis::X, x - (width() / 2.f)) ;
+            m_bottomLeftCorner.set(Point2Df::Axis::Y, y - (height() / 2.f)) ;
         }
         else {
             m_bottomLeftCorner.set(Point2Df::Axis::X, x) ;
@@ -280,30 +280,30 @@ namespace Mind {
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setWidth(const Scalar width) {
+    void Rectangle2Df::setWidth(const Scalar w) {
         if (m_isCentered) {
-            Scalar currentWidth = getWidth() ;
-            Scalar halfWidthDiff = (currentWidth - width) / 2.f ;
-            Scalar currentBottomLeftX = getBottomLeftCornerX() ;
+            Scalar currentWidth = width() ;
+            Scalar halfWidthDiff = (currentWidth - w) / 2.f ;
+            Scalar currentBottomLeftX = bottomLeftCornerX() ;
             m_bottomLeftCorner.set(Point2Df::Axis::X, currentBottomLeftX + halfWidthDiff) ;
-            m_size.setWidth(width) ;
+            m_size.setWidth(w) ;
         }
         else {
-            m_size.setWidth(width) ;
+            m_size.setWidth(w) ;
         }
         m_hasChanged = true ;
     }
 
-    void Rectangle2Df::setHeight(const Scalar height) {
+    void Rectangle2Df::setHeight(const Scalar h) {
         if (m_isCentered) {
-            Scalar currentHeight = getHeight() ;
-            Scalar halfHeightDiff = (currentHeight - height) / 2.f ;
-            Scalar currentBottomLeftY = getBottomLeftCornerY() ;
+            Scalar currentHeight = height() ;
+            Scalar halfHeightDiff = (currentHeight - h) / 2.f ;
+            Scalar currentBottomLeftY = bottomLeftCornerY() ;
             m_bottomLeftCorner.set(Point2Df::Axis::Y, currentBottomLeftY + halfHeightDiff) ;
-            m_size.setHeight(height) ;
+            m_size.setHeight(h) ;
         }
         else {
-            m_size.setHeight(height) ;
+            m_size.setHeight(h) ;
         }
         m_hasChanged = true ;
     }
@@ -343,10 +343,10 @@ namespace Mind {
             return r ;
         }
         else {
-            Scalar x1 = std::min(r.getBottomLeftCornerX(), p.get(Point2Df::Axis::X)) ;
-            Scalar y1 = std::min(r.getBottomLeftCornerY(), p.get(Point2Df::Axis::Y)) ;
-            Scalar x2 = std::max(r.getUpRightCornerX(), p.get(Point2Df::Axis::X)) ;
-            Scalar y2 = std::max(r.getUpRightCornerY(), p.get(Point2Df::Axis::Y)) ;
+            Scalar x1 = std::min(r.bottomLeftCornerX(), p.get(Point2Df::Axis::X)) ;
+            Scalar y1 = std::min(r.bottomLeftCornerY(), p.get(Point2Df::Axis::Y)) ;
+            Scalar x2 = std::max(r.upRightCornerX(), p.get(Point2Df::Axis::X)) ;
+            Scalar y2 = std::max(r.upRightCornerY(), p.get(Point2Df::Axis::Y)) ;
             return Rectangle2Df(x1, y1, x2, y2) ;
         }
     }
@@ -359,23 +359,23 @@ namespace Mind {
             return r2 ;
         }
         else {
-            Scalar x1 = std::min(r1.getBottomLeftCornerX(), r2.getBottomLeftCornerX()) ;
-            Scalar y1 = std::min(r1.getBottomLeftCornerY(), r2.getBottomLeftCornerY()) ;
-            Scalar x2 = std::max(r1.getUpRightCornerX(), r2.getUpRightCornerX()) ;
-            Scalar y2 = std::max(r1.getUpRightCornerY(), r2.getUpRightCornerY()) ;
+            Scalar x1 = std::min(r1.bottomLeftCornerX(), r2.bottomLeftCornerX()) ;
+            Scalar y1 = std::min(r1.bottomLeftCornerY(), r2.bottomLeftCornerY()) ;
+            Scalar x2 = std::max(r1.upRightCornerX(), r2.upRightCornerX()) ;
+            Scalar y2 = std::max(r1.upRightCornerY(), r2.upRightCornerY()) ;
             return Rectangle2Df(x1, y1, x2, y2) ;
         }
     }
 
     std::ostream& operator<<(std::ostream& s, const Rectangle2Df& r) {
         s << "Rectangle2Df ("
-                    << ((Rectangle2Df)r).getBottomLeftCornerX()
+                    << ((Rectangle2Df)r).bottomLeftCornerX()
                     << ","
-                    << ((Rectangle2Df)r).getBottomLeftCornerY()
+                    << ((Rectangle2Df)r).bottomLeftCornerY()
                  << " | "
-                    << ((Rectangle2Df)r).getUpRightCornerX()
+                    << ((Rectangle2Df)r).upRightCornerX()
                     << ","
-                    << ((Rectangle2Df)r).getUpRightCornerY()
+                    << ((Rectangle2Df)r).upRightCornerY()
                  << ")" << std::endl ;
         return s ;
     }
