@@ -15,6 +15,7 @@ endif()
 
 # Set the include files for the library.
 include_directories (
+    ${CMAKE_HOME_DIRECTORY}/include
     ${DOOM_INCLUDE_DIRS}
     ${MIND_INCLUDE_DIRS}
     ${SPITE_INCLUDE_DIRS}
