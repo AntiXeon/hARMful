@@ -52,7 +52,7 @@ namespace Hope {
             /**
              * Set the dimension of the viewport.
              */
-            void setDimension(Mind::Dimension2Df& dimension) {
+            void setDimension(const Mind::Dimension2Df& dimension) {
                 const float MinValue = 0.f ;
                 const float MaxValue = 1.f ;
 

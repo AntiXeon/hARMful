@@ -21,6 +21,8 @@ Window::Window(
     initializeGLEW() ;
     setInputMode() ;
     setCallbacks() ;
+
+    m_scene.setWindowSize(Mind::Dimension2Df(width, height)) ;
 }
 
 Window::~Window() {

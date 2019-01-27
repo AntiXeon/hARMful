@@ -56,6 +56,35 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
     // TODO
 }
 
-void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
-    // TODO
+void OpenGLFrameGraphVisitor::visit(Viewport* node) {
+    if (!m_hasWindowChanged) {
+        return ;
+    }
+
+    // Update the projection matrix.
+    glMatrixMode(GL_PROJECTION) ;
+
+    Mind::Point2Df relativePosition = node -> position() ;
+    Mind::Dimension2Df relativeDimension = node -> dimension() ;
+
+    Mind::Point2Df absolutePosition(
+        relativePosition.get(Mind::Point2Df::X) * m_windowSize.width(),
+        relativePosition.get(Mind::Point2Df::Y) * m_windowSize.height()
+    ) ;
+
+    Mind::Dimension2Df absoluteDimension(
+        relativeDimension.width() * m_windowSize.width(),
+        relativeDimension.height() * m_windowSize.height()
+    ) ;
+
+    // Apply the viewport parameters.
+    glViewport(
+        absolutePosition.get(Mind::Point2Df::X),
+        absolutePosition.get(Mind::Point2Df::Y),
+        absoluteDimension.width(),
+        absoluteDimension.height()
+    ) ;
+
+    // Switch back to the modelview matrix.
+    glMatrixMode(GL_MODELVIEW) ;
 }
