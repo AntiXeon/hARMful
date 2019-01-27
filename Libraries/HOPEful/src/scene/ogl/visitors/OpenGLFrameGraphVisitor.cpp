@@ -2,6 +2,7 @@
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
+#include <scene/ogl/Utils.hpp>
 #include <GL/glew.h>
 
 using namespace Hope ;
@@ -27,7 +28,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
     glMatrixMode(GL_PROJECTION) ;
     glLoadIdentity() ;
-    gluPerspective(CameraFOV, aspectRatio, NearPlaneDistance, FarPlaneDistance) ;
+    GLPerspective(CameraFOV, aspectRatio, NearPlaneDistance, FarPlaneDistance) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
