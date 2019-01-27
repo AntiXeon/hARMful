@@ -3,6 +3,7 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
+#include <scene/ogl/visitor/OpenGLRenderVisitor.hpp>
 #include <algorithm>
 
 namespace Hope::GL {
@@ -22,7 +23,26 @@ namespace Hope::GL {
              */
             Mind::Dimension2Df m_windowSize ;
 
+            /**
+             * Visitor that can be used for some frame graph nodes when
+             * rendering the scene.
+             */
+            OpenGLRenderVisitor m_renderVisitor ;
+
+            /**
+             * Root of the scene graph. May be used by some frame graph nodes
+             * to render the scene.
+             */
+            Hope::Entity* m_root = nullptr ;
+
         public:
+            /**
+             * Set the root of the scene graph.
+             */
+            void setSceneRoot(Hope::Entity* root) {
+                m_root = root ;
+            }
+
             /**
              * Set the window size.
              */
@@ -71,6 +91,7 @@ namespace Hope::GL {
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
+                m_renderVisitor.startNewFrame() ;
             }
     } ;
 }
