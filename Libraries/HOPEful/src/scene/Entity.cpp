@@ -12,7 +12,8 @@ Entity::Entity(Entity* parent) : Node(parent) {
 }
 
 Entity::~Entity() {
-    for (Component* component : m_components) {
+    for (auto const& entry : m_components) {
+        Component* component = entry.second ;
         component -> detach(this) ;
 
         if (component -> amountAttachedEntities() == 0) {
@@ -24,41 +25,37 @@ Entity::~Entity() {
 }
 
 void Entity::addComponent(Component* component) {
-    ComponentType newComponentType = component -> type() ;
-    auto existingComponentPos = find(newComponentType) ;
-
-    if (existingComponentPos != m_components.end()) {
-        // Here we have found a component with the same type, so we detach
-        // the previous component before adding the new one.
-        removeComponent((*existingComponentPos)) ;
+    if (!component) {
+        return ;
     }
 
+    ComponentType newComponentType = component -> type() ;
     component -> attach(this) ;
-    m_components.push_back(component) ;
+    m_components[newComponentType] = component ;
 }
 
 void Entity::removeComponent(Component* component) {
-    auto posComponent = std::find(m_components.begin(), m_components.end(), component) ;
+    if (!component) {
+        return ;
+    }
 
-    component -> detach(this) ;
-    m_components.erase(posComponent) ;
+    if (m_components.count(component -> type()) > 0) {
+        component -> detach(this) ;
+        m_components.erase(component -> type()) ;
+    }
 }
 
 void Entity::removeComponent(const ComponentType type) {
-    auto posComponent = find(type) ;
-
-    (*posComponent) -> detach(this) ;
-    m_components.erase(posComponent) ;
+    if (m_components.count(type) > 0) {
+        Component* component = m_components[type] ;
+        component -> detach(this) ;
+        m_components.erase(type) ;
+    }
 }
 
 Component* Entity::component(const ComponentType type) const {
-    auto it = m_components.begin() ;
-
-    // Replace the component of the given type by the new one if necessary.
-    for (; it != m_components.end() ; ++it) {
-        if (((*it) -> type()) == type) {
-            return (*it) ;
-        }
+    if (m_components.count(type) > 0) {
+        return m_components.at(type) ;
     }
 
     return nullptr ;
@@ -68,19 +65,12 @@ Transform& Entity::transform() {
     return m_transform ;
 }
 
-const std::vector<Component*>& Entity::components() const {
-    return m_components ;
-}
+std::vector<Component*> Entity::components() const {
+    std::vector<Component*> output ;
 
-std::vector<Component*>::iterator Entity::find(const ComponentType type) {
-    auto it = m_components.begin() ;
-
-    // Replace the component of the given type by the new one if necessary.
-    for (; it != m_components.end() ; ++it) {
-        if (((*it) -> type()) == type) {
-            return it ;
-        }
+    for (auto const& entry : m_components) {
+        output.push_back(entry.second) ;
     }
 
-    return m_components.end() ;
+    return output ;
 }

@@ -5,7 +5,7 @@
 #include <scene/SceneTypes.hpp>
 #include <scene/Transform.hpp>
 #include <memory>
-#include <vector>
+#include <map>
 
 namespace Hope {
 
@@ -25,7 +25,7 @@ namespace Hope {
             /**
              * Components attached to the current entity.
              */
-            std::vector<Component*> m_components ;
+            std::map<ComponentType, Component*> m_components ;
 
         public:
             /**
@@ -77,23 +77,13 @@ namespace Hope {
             /**
              * Get the list of the components attached to the current entity.
              */
-            const std::vector<Component*>& components() const ;
+            std::vector<Component*> components() const ;
 
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;
             Entity(Entity&& moved) = delete;
             Entity& operator=(const Entity& copied) = delete;
             Entity& operator=(Entity&& moved) = delete;
-
-        private:
-            /**
-             * Find the position of the component of given type.
-             * @param   type    Type of the component to find the position in
-             *                  the list of components.
-             * @return  The iterator at the position of the wanted component;
-             *          end iterator if not found.
-             */
-            std::vector<Component*>::iterator find(const ComponentType type) ;
     } ;
 }
 
