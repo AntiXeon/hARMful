@@ -3,6 +3,7 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
+#include <algorithm>
 
 namespace Hope::GL {
     /**
@@ -21,6 +22,10 @@ namespace Hope::GL {
              */
             void setWindowSize(const Mind::Dimension2Df& size) {
                 m_windowSize = size ;
+
+                if (m_windowSize.height() < 1.f) {
+                    m_windowSize.setHeight(1.f) ;
+                }
             }
 
             /**

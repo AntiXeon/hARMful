@@ -122,7 +122,7 @@ namespace Hope { namespace GL {
             /**
              * Callback when the window is resized.
              */
-            static void resizedWindow(
+            void resizedWindow(
                 GLFWwindow* window,
                 int width,
                 int height

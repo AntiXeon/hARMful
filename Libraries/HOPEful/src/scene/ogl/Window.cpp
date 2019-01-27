@@ -115,13 +115,12 @@ void Window::setCallbacks() {
     // Set the error callback to print errors while GLFW is running.
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
 
-    // [!] Keep this code in case it can be re/used for /another callback! [!]
-    // // Callback for window resizing.
-    // auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
-    //     Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
-    //     that -> resizedWindow(window, width, height) ;
-    // } ;
-    // glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
+    // Callback for window resizing.
+    auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
+        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
+        that -> resizedWindow(window, width, height) ;
+    } ;
+    glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
 }
 
 void Window::GLFWErrorCallback(
@@ -139,8 +138,8 @@ void Window::GLFWErrorCallback(
 
 void Window::resizedWindow(
     GLFWwindow* /*window*/,
-    int /*width*/,
-    int /*height*/
+    int width,
+    int height
 ) {
-    // May be used one day?
+    m_scene.setWindowSize(Mind::Dimension2Df(width, height)) ;
 }

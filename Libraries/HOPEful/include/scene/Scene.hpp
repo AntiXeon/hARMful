@@ -54,6 +54,12 @@ namespace Hope {
              */
             void setFrameGraphRoot(FrameGraphNode* root) ;
 
+            /**
+             * Set the size of the window.
+             */
+            void setWindowSize(const Mind::Dimension2Df& size) {
+                m_frameGraphVisitor.setWindowSize(size) ;
+            }
 
             // Remove copy/move operations.
             Scene(const Scene& copied) = delete;

@@ -11,6 +11,7 @@ namespace Hope {
 
     /**
      * Component that represents a camera, a point of view of the 3D world.
+     * This is a perspective camera.
      */
     class CameraComponent final : public Component {
         private:

@@ -9,14 +9,25 @@ using namespace Hope::GL ;
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Hope::CameraComponent* camera = node -> camera() ;
-    Color clearColor = camera -> clearColor() ;
 
+    // Set up the clear color.
+    Color clearColor = camera -> clearColor() ;
     glClearColor(
         clearColor.red(),
         clearColor.green(),
         clearColor.blue(),
         clearColor.alpha()
     ) ;
+
+    // Set up the projection matrix.
+    const float CameraFOV = 45.f ;
+    const float NearPlaneDistance = 1.f ;
+    const float FarPlaneDistance = 1000.f ;
+    float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+
+    glMatrixMode(GL_PROJECTION) ;
+    glLoadIdentity() ;
+    gluPerspective(CameraFOV, aspectRatio, NearPlaneDistance, FarPlaneDistance) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
