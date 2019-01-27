@@ -51,7 +51,10 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            virtual void accept(IFrameGraphVisitor* /*visitor*/) override {}
+            void accept(IFrameGraphVisitor* visitor) override {
+                specificAccept(visitor) ;
+                generalAccept(visitor) ;
+            }
 
             /**
              * Set the parent of the current node.
@@ -74,7 +77,18 @@ namespace Hope {
             FrameGraphNode& operator=(const FrameGraphNode& copied) = delete;
             FrameGraphNode& operator=(FrameGraphNode&& moved) = delete;
 
+        protected:
+            /**
+             * Specific implementation for visitors.
+             */
+            virtual void specificAccept(IFrameGraphVisitor* /*visitor*/) {}
+
         private:
+            /**
+             * General method for accepting visitors.
+             */
+            void generalAccept(IFrameGraphVisitor* visitor) ;
+
             /**
              * Set the root entity of the scene graph.
              */

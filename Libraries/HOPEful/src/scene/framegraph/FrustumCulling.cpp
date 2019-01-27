@@ -3,10 +3,6 @@
 
 using namespace Hope ;
 
-void FrustumCulling::accept(IFrameGraphVisitor* visitor) {
+void FrustumCulling::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
-
-    for (FrameGraphNode* child : children()) {
-        child -> accept(visitor) ;
-    }
 }

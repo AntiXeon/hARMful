@@ -3,10 +3,6 @@
 
 using namespace Hope ;
 
-void ActiveCamera::accept(IFrameGraphVisitor* visitor) {
+void ActiveCamera::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
-
-    for (FrameGraphNode* child : children()) {
-        child -> accept(visitor) ;
-    }
 }

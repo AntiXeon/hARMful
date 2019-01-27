@@ -3,7 +3,6 @@
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/ogl/Utils.hpp>
-#include <scene/Entity.hpp>
 #include <GL/glew.h>
 
 using namespace Hope ;
@@ -87,4 +86,8 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 
     // Switch back to the modelview matrix.
     glMatrixMode(GL_MODELVIEW) ;
+}
+
+void OpenGLFrameGraphVisitor::makeRender() {
+    // To be done using RenderConditionAggregator when implemented!
 }

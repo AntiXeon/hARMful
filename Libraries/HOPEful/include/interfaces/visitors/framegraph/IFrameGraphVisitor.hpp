@@ -27,6 +27,12 @@ namespace Hope {
              * Visit a viewport node.
              */
             virtual void visit(Viewport* node) = 0 ;
+
+            /**
+             * Perform the rendering of the framegraph tree branch that is
+             * currently processed.
+             */
+            virtual void makeRender() = 0 ;
     } ;
 }
 

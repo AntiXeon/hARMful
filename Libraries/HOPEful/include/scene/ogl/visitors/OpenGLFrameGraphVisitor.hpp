@@ -3,7 +3,8 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
-#include <scene/ogl/visitor/OpenGLRenderVisitor.hpp>
+#include <scene/Entity.hpp>
+#include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
 #include <algorithm>
 
 namespace Hope::GL {
@@ -85,6 +86,12 @@ namespace Hope::GL {
              * Visit a viewport node.
              */
             void visit(Viewport* node) override ;
+
+            /**
+             * Perform the rendering of the framegraph tree branch that is
+             * currently processed.
+             */
+            void makeRender() override ;
 
             /**
              * Prepare the next frame rendering.

@@ -1,4 +1,5 @@
 #include <scene/FrameGraphNode.hpp>
+#include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <algorithm>
 #include <cassert>
 
@@ -40,6 +41,20 @@ const FrameGraphNode* FrameGraphNode::parent() const {
 
 const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
     return m_children ;
+}
+
+void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
+    if (children().size() == 0) {
+        // If this is the last node in the tree branch, render the scene for the
+        // current branch.
+        visitor -> makeRender() ;
+    }
+    else {
+        // Otherwise continue parsing the tree.
+        for (FrameGraphNode* child : children()) {
+            child -> accept(visitor) ;
+        }
+    }
 }
 
 void FrameGraphNode::setSceneGraphRoot(Entity* root) {

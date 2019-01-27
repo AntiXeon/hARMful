@@ -23,11 +23,6 @@ namespace Hope {
                 : Hope::FrameGraphNode(parent) {}
 
             /**
-             * Accept the visitor.
-             */
-            void accept(IFrameGraphVisitor* visitor) override ;
-
-            /**
              * Set the camera that is used to render the scene.
              */
             void setCamera(Hope::CameraComponent* camera) {
@@ -40,6 +35,12 @@ namespace Hope {
             Hope::CameraComponent* camera() {
                 return m_camera ;
             }
+
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

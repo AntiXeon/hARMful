@@ -32,11 +32,6 @@ namespace Hope {
                 : Hope::FrameGraphNode(parent) {}
 
             /**
-             * Accept the visitor.
-             */
-            void accept(IFrameGraphVisitor* visitor) override ;
-
-            /**
              * Set the position of the top left corner of the viewport in
              * relative value (between 0 and 1).
              */
@@ -75,6 +70,12 @@ namespace Hope {
             Mind::Dimension2Df dimension() {
                 return m_dimension ;
             }
+
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

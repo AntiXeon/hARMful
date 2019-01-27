@@ -3,10 +3,6 @@
 
 using namespace Hope ;
 
-void Viewport::accept(IFrameGraphVisitor* visitor) {
+void Viewport::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
-
-    for (FrameGraphNode* child : children()) {
-        child -> accept(visitor) ;
-    }
 }

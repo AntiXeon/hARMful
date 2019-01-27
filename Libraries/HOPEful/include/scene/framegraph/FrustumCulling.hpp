@@ -22,10 +22,11 @@ namespace Hope {
             FrustumCulling(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
 
+        protected:
             /**
              * Accept the visitor.
              */
-            void accept(IFrameGraphVisitor* visitor) override ;
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 
