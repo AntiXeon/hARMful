@@ -10,11 +10,22 @@ namespace Mind {
     class Matrix3x3f final : public SquareMatrixf {
         public:
             /**
+             * Total size of the matrix.
+             */
+            static const int MatrixSize = 9 ;
+
+
+            /**
              * Create a square matrix of size equal to 3.
              * @param   value   Value of the matrix when created or cleared.
              *                  The default value is zero.
              */
             exported Matrix3x3f(const Scalar value = 0.f) ;
+
+            /**
+             * Extract the data of the matrix.
+             */
+            exported void data(float* output) override ;
 
             /**
              * Multiply the current Matrix3x3 by another one.
@@ -118,6 +129,12 @@ namespace Mind {
              */
             exported Matrix3x3f operator+(Matrix3x3f& other) ;
     } ;
+
+    inline void Matrix3x3f::data(float* output) {
+        for (int index = 0; index < MatrixSize ; ++index) {
+            output[index] = m_data[index / m_size][index % m_size] ;
+        }
+    }
 
     inline Matrix3x3f Matrix3x3f::operator*(const Scalar scalar) {
         Matrix3x3f mat(*this) ;

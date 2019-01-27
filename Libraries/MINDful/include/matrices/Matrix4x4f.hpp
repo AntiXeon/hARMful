@@ -13,11 +13,22 @@ namespace Mind {
     class Matrix4x4f final : public SquareMatrixf {
         public:
             /**
+             * Total size of the matrix.
+             */
+            static const int MatrixSize = 16 ;
+
+
+            /**
              * Create a square matrix of size equal to 4.
              * @param   value   Value of the matrix when created or cleared.
              *                  The default value is zero.
              */
             exported Matrix4x4f(const Scalar value = 0.f) ;
+
+            /**
+             * Extract the data of the matrix.
+             */
+            exported void data(float* output) override ;
 
             /**
              * Multiplay the current Matrix4x4 by another one.
@@ -224,6 +235,12 @@ namespace Mind {
                 const Vector3f& scale
             ) ;
     } ;
+
+    inline void Matrix4x4f::data(float* output) {
+        for (int index = 0; index < MatrixSize ; ++index) {
+            output[index] = m_data[index / m_size][index % m_size] ;
+        }
+    }
 
     inline void Matrix4x4f::decompose(
         Vector3f& translation,

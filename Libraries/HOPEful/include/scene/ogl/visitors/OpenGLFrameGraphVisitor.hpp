@@ -6,11 +6,17 @@
 #include <algorithm>
 
 namespace Hope::GL {
+
     /**
      * Visitor for processing frame graph nodes.
      */
     class OpenGLFrameGraphVisitor final : public IFrameGraphVisitor {
         private:
+            /**
+             * To know if the window has changed since the last run.
+             */
+            bool m_hasWindowChanged = true ;
+
             /**
              * Size of the window.
              */
@@ -26,6 +32,8 @@ namespace Hope::GL {
                 if (m_windowSize.height() < 1.f) {
                     m_windowSize.setHeight(1.f) ;
                 }
+
+                m_hasWindowChanged = true ;
             }
 
             /**
@@ -33,6 +41,14 @@ namespace Hope::GL {
              */
             Mind::Dimension2Df windowSize() const {
                 return m_windowSize ;
+            }
+
+            /**
+             * To know if the window has changed since the last frame.
+             * If false, many process of the frame graph may be avoided.
+             */
+            bool hasWindowChanged() const {
+                return m_hasWindowChanged ;
             }
 
             /**
@@ -49,6 +65,13 @@ namespace Hope::GL {
              * Visit a viewport node.
              */
             void visit(Viewport* node) override ;
+
+            /**
+             * Prepare the next frame rendering.
+             */
+            void nextFrame() {
+                m_hasWindowChanged = false ;
+            }
     } ;
 }
 

@@ -17,6 +17,7 @@ void Scene::render() {
     // Execute the frame graph processing for rendering the scene.
     FrameGraphNode* fgRoot = m_renderConfig -> root() ;
     fgRoot -> accept(&m_frameGraphVisitor) ;
+    m_frameGraphVisitor.nextFrame() ;
 }
 
 Entity* Scene::root() {

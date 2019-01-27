@@ -86,6 +86,7 @@ namespace Hope {
              * @return  The projection matrix, the same as the projection
              *          parameter.
              */
+            [[maybe_unused]]
             Mind::Matrix4x4f& lookAt(
                 Mind::Matrix4x4f& projection,
                 const Mind::Vector3f& position,
@@ -112,6 +113,11 @@ namespace Hope {
              * Get the up vector of the camera.
              */
             Mind::Vector3f up() ;
+
+            /**
+             * Get the projection matrix.
+             */
+            Mind::Matrix4x4f projectionMatrix() ;
 
             /**
              * Get the clear color of the camera.

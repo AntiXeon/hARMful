@@ -72,6 +72,11 @@ namespace Mind {
             exported virtual ~SquareMatrixf() = default ;
 
             /**
+             * Extract the data of the matrix.
+             */
+            exported virtual void data(float* output) = 0 ;
+
+            /**
              * Fill the SquareMatrix with its default value.
              */
             exported void clear() ;
