@@ -45,7 +45,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
     // Inverse as the world moves instead of the camera!
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
-    glTranslated(
+    glTranslatef(
         eyeView.get(Mind::Vector3f::X),
         eyeView.get(Mind::Vector3f::Y),
         eyeView.get(Mind::Vector3f::Z)
