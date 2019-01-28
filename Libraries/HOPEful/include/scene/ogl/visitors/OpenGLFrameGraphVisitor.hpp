@@ -126,6 +126,12 @@ namespace Hope::GL {
                 RenderConditionAggregator defaultAggregator ;
                 m_aggregators.push_back(defaultAggregator) ;
             }
+
+        private:
+            /**
+             * Render the provided entity. Recursive method.
+             */
+            void renderGraph(Entity* renderedEntity) ;
     } ;
 }
 

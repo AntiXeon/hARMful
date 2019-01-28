@@ -95,14 +95,14 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
+    assert(m_aggregators.size() > 0) ;
+
     // For each entity: check if all the conditions are OK otherwise, go back to
     // the parent entity and process the other ones.
     // The children of an invalid entity are discarded as well.
-
-    // ... To be done (soon)!
+    renderGraph(m_root) ;
 
     // Remove the last RenderConditionAggregator from the list!
-    assert(m_aggregators.size() > 0) ;
     m_aggregators.pop_back() ;
 }
 
@@ -112,4 +112,22 @@ void OpenGLFrameGraphVisitor::backupRenderConditions() {
     // other branch of the frame graph.
     RenderConditionAggregator copy = m_aggregators.back() ;
     m_aggregators.push_back(copy) ;
+}
+
+void OpenGLFrameGraphVisitor::renderGraph(Entity* renderedEntity) {
+    if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
+        // Process each component of the current entity.
+        // [!PERF] The components() method can slow the rendering.
+        std::vector<Component*> components = renderedEntity -> components() ;
+        for (Component* component : components) {
+            component -> accept(&m_renderVisitor) ;
+        }
+
+        // Process each child.
+        std::vector<Node*> children = renderedEntity -> children() ;
+        for (Node* child : children) {
+            Entity* childEntity = static_cast<Entity*>(child) ;
+            renderGraph(childEntity) ;
+        }
+    }
 }
