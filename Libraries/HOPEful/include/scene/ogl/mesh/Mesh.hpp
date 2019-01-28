@@ -27,11 +27,6 @@ namespace Hope::GL {
             }
 
             /**
-             * Destruction of the Mesh.
-             */
-            ~Mesh() ;
-
-            /**
              * Get the mesh parts that compose the current Mesh.
              */
             const std::vector<MeshPart>& parts() const {

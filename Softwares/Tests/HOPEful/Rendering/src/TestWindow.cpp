@@ -1,6 +1,7 @@
 #include <TestWindow.hpp>
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/Viewport.hpp>
+#include <scene/components/MeshComponent.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
@@ -11,6 +12,14 @@ TestWindow::TestWindow()
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
     cameraEntity -> addComponent(m_cameraComponent) ;
+    Hope::Transform& cameraTransform = cameraEntity -> transform() ;
+    cameraTransform.setTranslation(Mind::Vector3f(0.f, 0.f, -5.f)) ;
+
+    // Load a mesh.
+    Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.obj") ;
+    cubeEntity -> addComponent(meshComponent) ;
+
 
     // Set up the frame graph.
     // Set the viewport.
