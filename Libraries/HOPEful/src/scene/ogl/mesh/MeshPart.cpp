@@ -5,11 +5,11 @@
 using namespace Hope::GL ;
 
 MeshPart::~MeshPart() {
-    if (m_vertexBuffer != INVALID_VALUE) {
+    if (glIsBuffer(m_vertexBuffer)) {
         glDeleteBuffers(1, &m_vertexBuffer);
     }
 
-    if (m_indexBuffer != INVALID_VALUE) {
+    if (glIsBuffer(m_indexBuffer)) {
         glDeleteBuffers(1, &m_indexBuffer);
     }
 }

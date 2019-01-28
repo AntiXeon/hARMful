@@ -2,8 +2,6 @@
 #define __HOPE__GL_MESH__
 
 #include <vector>
-#include <GL/glew.h>
-#include <interfaces/IRenderable.hpp>
 #include <scene/ogl/mesh/MeshPart.hpp>
 
 namespace Hope::GL {
@@ -13,7 +11,7 @@ namespace Hope::GL {
     /**
      * A Mesh that contains all data to be displayed in an OpenGL scene.
      */
-    class Mesh final : public IRenderable {
+    class Mesh final {
         private:
             /**
              * List of mesh parts that compose the current Mesh.
@@ -24,7 +22,9 @@ namespace Hope::GL {
             /**
              * Create a new Mesh.
              */
-            Mesh(const std::vector<MeshPart>& parts) ;
+            Mesh(const std::vector<MeshPart>& parts) {
+                m_parts = parts ;
+            }
 
             /**
              * Destruction of the Mesh.
@@ -32,10 +32,11 @@ namespace Hope::GL {
             ~Mesh() ;
 
             /**
-             * Render the mesh in the 3D scene.
+             * Get the mesh parts that compose the current Mesh.
              */
-            void render() override ;
-
+            const std::vector<MeshPart>& parts() const {
+                return m_parts ;
+            }
 
             // Copy/move operations.
             Mesh(const Mesh& copied) = default ;

@@ -39,6 +39,13 @@ namespace Hope {
             void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
+             * Get the mesh.
+             */
+            std::shared_ptr<API::Mesh> mesh() const {
+                return m_mesh ;
+            }
+
+            /**
              * To know if the component can be shared by several entities.
              * @return  true, the MeshComponent can be shared.
              */

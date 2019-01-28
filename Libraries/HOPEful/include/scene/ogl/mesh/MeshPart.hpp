@@ -4,6 +4,7 @@
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
+#include <cstdint>
 
 namespace Hope::GL {
 
@@ -27,12 +28,12 @@ namespace Hope::GL {
             /**
              * Amount of indices of vertex in this part.
              */
-            unsigned int m_amountIndices = 0 ;
+            uint32_t m_amountIndices = 0 ;
 
             /**
              * Index of the material to draw this part.
              */
-            unsigned int m_materialIndex = INVALID_MATERIAL ;
+            uint32_t m_materialIndex = INVALID_MATERIAL ;
 
         public:
             /**
@@ -49,6 +50,33 @@ namespace Hope::GL {
                 const std::vector<uint32_t>& indices
             ) ;
 
+            /**
+             * Get the vertex buffer ID.
+             */
+            GLuint vertexBufferID() const {
+                return m_vertexBuffer ;
+            }
+
+            /**
+             * Get the index buffer ID.
+             */
+            GLuint indexBufferID() const {
+                return m_indexBuffer ;
+            }
+
+            /**
+             * Index of the material to draw this part.
+             */
+            uint32_t materialIndex() const {
+                return m_materialIndex ;
+            }
+
+            /**
+             * Amount of indices of vertex in this part.
+             */
+            uint32_t amountIndices() const {
+                return m_amountIndices ;
+            }
 
             // Copy/move operations.
             MeshPart() = default ;
