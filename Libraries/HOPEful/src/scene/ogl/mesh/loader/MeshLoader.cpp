@@ -56,7 +56,7 @@ void MeshLoader::initializeMeshPart(
 {
     const aiVector3D Zero(0.f, 0.f, 0.f) ;
 
-    std::vector<Vertex> vertices ;
+    std::vector<float> vertices ;
     std::vector<uint32_t> indices ;
 
     // Fill the vertex buffer.
@@ -74,13 +74,13 @@ void MeshLoader::initializeMeshPart(
             texCoord = Zero ;
         }
 
-        Vertex newVertex(
+        std::vector<float> vertexCoordinates = std::move(Vertex(
             Mind::Vector3f(pos.x, pos.y, pos.z),
             Mind::Vector2f(texCoord.x, texCoord.y),
             Mind::Vector3f(normal.x, normal.y, normal.z)
-        );
+        ).data()) ;
 
-        vertices.push_back(newVertex) ;
+        vertices.insert(vertexCoordinates.begin(), vertices.begin(), vertices.end()) ;
     }
 
     // Fill the index buffer.

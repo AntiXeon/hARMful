@@ -45,7 +45,7 @@ namespace Hope::GL {
              */
             bool initialize
             (
-                const std::vector<Vertex>& vertices,
+                const std::vector<float>& vertices,
                 const std::vector<uint32_t>& indices
             ) ;
 
