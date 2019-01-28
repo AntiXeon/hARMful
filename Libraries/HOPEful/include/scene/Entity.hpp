@@ -18,6 +18,12 @@ namespace Hope {
     class Entity: public Node {
         private:
             /**
+             * If true, the Entity is processed for rendering its content.
+             * Otherwise, it is just ignored and all its children as well.
+             */
+            bool m_isActive = true ;
+
+            /**
              * Transform of the entity.
              */
             Transform m_transform ;
@@ -68,6 +74,18 @@ namespace Hope {
                         otherwise.
              */
             Component* component(const ComponentType type) const ;
+
+            /**
+             * If true, the Entity is processed for rendering its content.
+             * Otherwise, it is just ignored and all its children as well.
+             */
+            void setActive(const bool isActive) ;
+
+            /**
+             * If true, the Entity is processed for rendering its content.
+             * Otherwise, it is just ignored and all its children as well.
+             */
+            bool isActive() const ;
 
             /**
              * Get the transform of the entity.

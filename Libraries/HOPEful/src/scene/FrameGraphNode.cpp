@@ -44,13 +44,18 @@ const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
 }
 
 void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
-    if (children().size() == 0) {
+    size_t amountChildren = children().size() ;
+    if (amountChildren == 0) {
         // If this is the last node in the tree branch, render the scene for the
         // current branch.
         visitor -> makeRender() ;
     }
     else {
         // Otherwise continue parsing the tree.
+        if (amountChildren > 1) {
+            visitor -> backupRenderConditions() ;
+        }
+
         for (FrameGraphNode* child : children()) {
             child -> accept(visitor) ;
         }

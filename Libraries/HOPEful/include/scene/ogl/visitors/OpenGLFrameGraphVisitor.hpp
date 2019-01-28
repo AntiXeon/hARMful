@@ -3,9 +3,12 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
-#include <scene/Entity.hpp>
 #include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
+#include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
+#include <scene/Entity.hpp>
 #include <algorithm>
+#include <list>
+#include <cassert>
 
 namespace Hope::GL {
 
@@ -14,6 +17,12 @@ namespace Hope::GL {
      */
     class OpenGLFrameGraphVisitor final : public IFrameGraphVisitor {
         private:
+            /**
+             * Root of the scene graph. May be used by some frame graph nodes
+             * to render the scene.
+             */
+            Hope::Entity* m_root = nullptr ;
+
             /**
              * To know if the window has changed since the last run.
              */
@@ -31,12 +40,17 @@ namespace Hope::GL {
             OpenGLRenderVisitor m_renderVisitor ;
 
             /**
-             * Root of the scene graph. May be used by some frame graph nodes
-             * to render the scene.
+             * List to store the render conditions of every branch in the frame
+             * graph.
              */
-            Hope::Entity* m_root = nullptr ;
+            std::list<Hope::RenderConditionAggregator> m_aggregators ;
 
         public:
+            /**
+             * Create an OpenGLFrameGraphVisitor instance.
+             */
+            OpenGLFrameGraphVisitor() ;
+
             /**
              * Set the root of the scene graph.
              */
@@ -94,11 +108,23 @@ namespace Hope::GL {
             void makeRender() override ;
 
             /**
+             * Save the render conditions when a there is a fork in the frame
+             * graph. This allows to apply parent conditions to every branch
+             * under the parent.
+             */
+            void backupRenderConditions() override ;
+
+            /**
              * Prepare the next frame rendering.
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
                 m_renderVisitor.startNewFrame() ;
+
+                // Create a new aggregator for the new frame rendering.
+                assert(m_aggregators.size() == 0) ;
+                RenderConditionAggregator defaultAggregator ;
+                m_aggregators.push_back(defaultAggregator) ;
             }
     } ;
 }

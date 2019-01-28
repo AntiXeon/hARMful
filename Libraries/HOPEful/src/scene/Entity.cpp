@@ -61,6 +61,14 @@ Component* Entity::component(const ComponentType type) const {
     return nullptr ;
 }
 
+void Entity::setActive(const bool isActive) {
+    m_isActive = isActive ;
+}
+
+bool Entity::isActive() const {
+    return m_isActive ;
+}
+
 Transform& Entity::transform() {
     return m_transform ;
 }

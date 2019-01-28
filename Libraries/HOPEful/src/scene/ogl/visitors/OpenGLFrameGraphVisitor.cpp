@@ -8,6 +8,12 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
+OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
+    : IFrameGraphVisitor() {
+    RenderConditionAggregator defaultAggregator ;
+    m_aggregators.push_back(defaultAggregator) ;
+}
+
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Hope::CameraComponent* camera = node -> camera() ;
 
@@ -89,5 +95,21 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
-    // To be done using RenderConditionAggregator when implemented!
+    // For each entity: check if all the conditions are OK otherwise, go back to
+    // the parent entity and process the other ones.
+    // The children of an invalid entity are discarded as well.
+
+    // ... To be done (soon)!
+
+    // Remove the last RenderConditionAggregator from the list!
+    assert(m_aggregators.size() > 0) ;
+    m_aggregators.pop_back() ;
+}
+
+void OpenGLFrameGraphVisitor::backupRenderConditions() {
+    // Copy and push back that copy in the list. So that, the copy can be
+    // modified while the original still the same and can be reused for the
+    // other branch of the frame graph.
+    RenderConditionAggregator copy = m_aggregators.back() ;
+    m_aggregators.push_back(copy) ;
 }

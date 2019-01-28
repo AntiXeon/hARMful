@@ -33,6 +33,13 @@ namespace Hope {
              * currently processed.
              */
             virtual void makeRender() = 0 ;
+
+            /**
+             * Save the render conditions when a there is a fork in the frame
+             * graph. This allows to apply parent conditions to every branch
+             * under the parent.
+             */
+            virtual void backupRenderConditions() = 0 ;
     } ;
 }
 

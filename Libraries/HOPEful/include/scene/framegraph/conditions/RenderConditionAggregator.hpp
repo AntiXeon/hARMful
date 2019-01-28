@@ -19,6 +19,16 @@ namespace Hope {
 
         public:
             /**
+             * Create a RenderConditionAggregator instance.
+             * By default, a RenderCondition (that checks if an entity is
+             * active) is pushed. No need to add it so!
+             */
+            RenderConditionAggregator() {
+                RenderCondition defaultCondition ;
+                m_conditions.push_back(defaultCondition) ;
+            }
+
+            /**
              * Add a condition.
              */
             void addCondition(const RenderCondition& condition) {
