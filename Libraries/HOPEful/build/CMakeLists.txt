@@ -20,6 +20,7 @@ file (
 include_directories (
     ${DOOM_INCLUDE_DIRS}
     ${MIND_INCLUDE_DIRS}
+    ${SPITE_INCLUDE_DIRS}
     ${CMAKE_HOME_DIRECTORY}/include
 )
 
@@ -33,7 +34,7 @@ add_library (
 # Linux dependencies
 include("./LinuxDependencies.cmake")
 
-target_link_libraries(${PROJECT_NAME} DOOM MIND)
+target_link_libraries(${PROJECT_NAME} DOOM MIND SPITE)
 
 # Windows dependencies
 include("./WindowsDependencies.cmake")

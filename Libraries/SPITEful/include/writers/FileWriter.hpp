@@ -28,6 +28,13 @@ namespace Spite {
             exported virtual ~FileWriter() = default ;
 
             /**
+             * Clear the stream.
+             */
+            exported void clear() {
+                m_stream -> clear() ;
+            }
+
+            /**
              * Set the stream of the FileWriter.
              * @param   stream  The stream to use.
              */

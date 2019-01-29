@@ -32,12 +32,6 @@ namespace Hope::GL {
             const std::vector<MeshPart>& parts() const {
                 return m_parts ;
             }
-
-            // Copy/move operations.
-            Mesh(const Mesh& copied) = default ;
-            Mesh(Mesh&& moved) = default ;
-            Mesh& operator=(const Mesh& copied) = default ;
-            Mesh& operator=(Mesh&& moved) = default ;
     } ;
 }
 

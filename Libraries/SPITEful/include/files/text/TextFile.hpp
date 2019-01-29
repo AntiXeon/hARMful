@@ -50,6 +50,23 @@ namespace Spite {
 
         protected:
             /**
+             * Save a data at a given place on disk.
+             * @param   filedata    Raw data to write on disk. They can be
+             *                      processed before saving.
+             * @param   path    Path to the location on filesystem.
+             */
+            exported bool saveSpecific(
+                IFileData* filedata,
+                const std::string& path
+            ) override ;
+
+            /**
+             * Load a data at a given place on disk.
+             * @param   filedata    File data to store data in.
+             */
+            exported bool loadSpecific(IFileData* filedata) override ;
+
+            /**
              * Specific mode to the type of File.
              * @param   mode    A specific openmode for a type of File.
              * @return  TRUE if the File has a specific openmode, FALSE else.

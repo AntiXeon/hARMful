@@ -3,8 +3,6 @@
 #include <algorithm>
 #include <cassert>
 
-#include <iostream>
-
 using namespace Hope ;
 
 Entity::Entity(Entity* parent) : Node(parent) {
