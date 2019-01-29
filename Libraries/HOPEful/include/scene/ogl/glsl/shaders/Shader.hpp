@@ -21,6 +21,11 @@ namespace Hope::GL {
              */
             GLuint m_shaderID = GL_INVALID_VALUE ;
 
+            /**
+             * To know if the shader has a source code.
+             */
+            bool m_hasCode = false ;
+
         public:
             /**
              * Create a new Shader.
@@ -66,10 +71,17 @@ namespace Hope::GL {
             }
 
             /**
+             * To know if the shader has a source code.
+             */
+            bool hasCode() const {
+                return m_hasCode ;
+            }
+
+            /**
              * Convert the shader directly to its ID for using it more easily in
              * the OpenGL API.
              */
-            explicit operator GLuint() {
+            operator GLuint() const {
                 return m_shaderID ;
             }
 

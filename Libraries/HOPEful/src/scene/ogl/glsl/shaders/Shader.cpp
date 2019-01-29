@@ -8,7 +8,7 @@ using namespace Hope::GL ;
 
 Shader::Shader(const GLenum shaderType)
     : m_shaderType(shaderType) {
-    m_shaderID = glCreateShader(m_shaderType) ;
+
 }
 
 Shader::~Shader() {
@@ -31,6 +31,9 @@ void Shader::setSourceCode(const std::string& code) {
 
     const char* codeStr = code.data() ;
 
+    // Initialize the shader.
+    m_shaderID = glCreateShader(m_shaderType) ;
+
     // Set the source code of the shader.
     glShaderSource(
         m_shaderID,
@@ -49,20 +52,25 @@ void Shader::setSourceCode(const std::string& code) {
         GLint logSize = 0 ;
         glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logSize) ;
 
-        std::string errorLog ;
-        errorLog.resize(logSize) ;
-        glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]) ;
+        if (logSize > 0) {
+            std::string errorLog ;
+            errorLog.resize(logSize) ;
+            glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]) ;
+
+            // Write the error in the log.
+            auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+            auto logSharedPtr = logWeakPtr.lock() ;
+            if (logSharedPtr) {
+                Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
+                logSharedPtr -> writeLine(level, errorLog) ;
+            }
+        }
 
         // Delete the shader as it failed.
         glDeleteShader(m_shaderID) ;
         m_shaderID = GL_INVALID_VALUE ;
-
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
-            logSharedPtr -> writeLine(level, errorLog) ;
-        }
+    }
+    else {
+        m_hasCode = true ;
     }
 }
