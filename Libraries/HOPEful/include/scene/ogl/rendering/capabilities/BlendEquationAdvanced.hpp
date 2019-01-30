@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_CAPABILITY_BLEND_EQUATION__
-#define __HOPE__GL_CAPABILITY_BLEND_EQUATION__
+#ifndef __HOPE__GL_CAPABILITY_BLEND_EQUATION_ADVANCED__
+#define __HOPE__GL_CAPABILITY_BLEND_EQUATION_ADVANCED__
 
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <scene/common/Color.hpp>
