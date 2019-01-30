@@ -1,15 +1,14 @@
 #ifndef __HOPE__GL_SHADER_PROGRAM__
 #define __HOPE__GL_SHADER_PROGRAM__
 
-#include <scene/ogl/glsl/shaders/VertexShader.hpp>
-#include <scene/ogl/glsl/shaders/FragmentShader.hpp>
-#include <scene/ogl/glsl/shaders/GeometryShader.hpp>
-#include <scene/ogl/glsl/shaders/TesselationControlShader.hpp>
-#include <scene/ogl/glsl/shaders/TesselationEvaluationShader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/VertexShader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/FragmentShader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/GeometryShader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/TesselationControlShader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/TesselationEvaluationShader.hpp>
 #include <GL/glew.h>
 
 namespace Hope::GL {
-
     /**
      * A shader program combines several types of shaders (vertex, fragment,
      * geometry, ...) to create a pipeline that is used to render objects,

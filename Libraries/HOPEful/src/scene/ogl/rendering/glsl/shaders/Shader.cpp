@@ -1,4 +1,4 @@
-#include <scene/ogl/glsl/shaders/Shader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 #include <files/text/TextFile.hpp>
 #include <files/text/TextData.hpp>
 #include <utils/LogSystem.hpp>

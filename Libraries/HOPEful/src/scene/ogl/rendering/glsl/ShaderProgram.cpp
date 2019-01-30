@@ -1,4 +1,4 @@
-#include <scene/ogl/glsl/ShaderProgram.hpp>
+#include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <utils/LogSystem.hpp>
 
 using namespace Hope::GL ;

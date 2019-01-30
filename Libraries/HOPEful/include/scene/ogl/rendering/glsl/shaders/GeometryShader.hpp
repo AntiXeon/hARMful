@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_GEOMETRYSHADER__
 #define __HOPE__GL_GEOMETRYSHADER__
 
-#include <scene/ogl/glsl/shaders/Shader.hpp>
+#include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
     /**

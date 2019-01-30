@@ -9,6 +9,18 @@ namespace Hope {
      * Represent a color in RGBA color space.
      */
     class Color final {
+        public:
+            /**
+             * Color channels (RGBA).
+             */
+            enum class Channels : char {
+                Red,
+                Green,
+                Blue,
+                Alpha,
+                AmountChannels
+            } ;
+
         private:
             /**
              * Red channel.
