@@ -48,10 +48,20 @@ namespace Hope::GL {
             std::array<BlendParameter, Color::Channels::AmountChannels> m_sourceParams{ One, One, One, One } ;
 
             /**
+             * Hold the old source parameters for restore.
+             */
+            std::array<BlendParameter, Color::Channels::AmountChannels> m_oldSourceParams ;
+
+            /**
              * To know how the red, green, blue, and alpha destination blending
              * factors are computed.
              */
             std::array<BlendParameter, Color::Channels::AmountChannels> m_destinationParams{ Zero, Zero, Zero, Zero } ;
+
+            /**
+             * Hold the old destination parameters for restore.
+             */
+            std::array<BlendParameter, Color::Channels::AmountChannels> m_oldDestinationParams ;
 
         public:
             /**
@@ -116,6 +126,9 @@ namespace Hope::GL {
             virtual void apply() {
                 glEnable(GL_BLEND) ;
 
+                storeOldSourceParameters() ;
+                storeOldDestinationParameters() ;
+
                 for (
                     Color::Channels channel = Color::Channels::Red;
                     channel < Color::Channels::AmountChannels;
@@ -133,7 +146,50 @@ namespace Hope::GL {
              * Remove the capability.
              */
             virtual void remove() {
+                for (
+                    Color::Channels channel = Color::Channels::Red;
+                    channel < Color::Channels::AmountChannels;
+                    ++channel
+                ) {
+                    glBlendFunc(
+                        m_bufferIndex,
+                        m_oldSourceParams[channel],
+                        m_oldDestinationParams[channel]
+                    ) ;
+                }
+
                 glDisable(GL_BLEND) ;
+            }
+
+        private:
+            /**
+             * Store the old source parameters.
+             */
+            void storeOldSourceParameters() {
+                GLint srcRGB ;
+                GLint srcAlpha ;
+                glGetIntegerv(GL_BLEND_SRC_RGB, &srcRGB) ;
+                glGetIntegerv(GL_BLEND_SRC_ALPHA, &srcAlpha) ;
+
+                m_oldSourceParams[Color::Channels::Red] = srcRGB ;
+                m_oldSourceParams[Color::Channels::Green] = srcRGB ;
+                m_oldSourceParams[Color::Channels::Blue] = srcRGB ;
+                m_oldSourceParams[Color::Channels::Alpha] = srcAlpha ;
+            }
+
+            /**
+             * Store the old source parameters.
+             */
+            void storeOldDestinationParameters() {
+                GLint dstRGB ;
+                GLint dstAlpha ;
+                glGetIntegerv(GL_BLEND_DST_RGB, &dstRGB) ;
+                glGetIntegerv(GL_BLEND_DST_ALPHA, &dstAlpha) ;
+
+                m_oldDestinationParams[Color::Channels::Red] = dstRGB ;
+                m_oldDestinationParams[Color::Channels::Green] = dstRGB ;
+                m_oldDestinationParams[Color::Channels::Blue] = dstRGB ;
+                m_oldDestinationParams[Color::Channels::Alpha] = dstAlpha ;
             }
     } ;
 }

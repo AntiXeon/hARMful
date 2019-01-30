@@ -26,6 +26,11 @@ namespace Hope::GL {
              */
             BlendMode m_mode = BlendMode::Add ;
 
+            /**
+             * Hold the old mode to restore it.
+             */
+            GLint m_oldMode ;
+
         public:
             /**
              * Set the blend mode that is used.
@@ -40,6 +45,7 @@ namespace Hope::GL {
              */
             virtual void apply() {
                 glEnable(GL_BLEND) ;
+                glGetIntegerv(GL_BLEND_EQUATION_RGB, &m_oldMode) ;
                 glBlendEquation(m_mode) ;
             }
 
@@ -47,6 +53,7 @@ namespace Hope::GL {
              * Remove the capability.
              */
             virtual void remove() {
+                glBlendEquation(m_oldMode) ;
                 glDisable(GL_BLEND) ;
             }
     } ;

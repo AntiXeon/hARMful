@@ -22,6 +22,11 @@ namespace Hope::GL {
              */
             double m_equation[4] ;
 
+            /**
+             * Store the old equation for restor.
+             */
+            double m_oldEquation[4] ;
+
         public:
             /**
              * Set the plane index. It must be a value in the range [0 - 7].
@@ -70,13 +75,15 @@ namespace Hope::GL {
              */
             virtual void apply() {
                 glEnable(m_index) ;
-                glClipPlane(PlaneIndex, m_equation) ;
+                glGetClipPlane(m_index, m_oldEquation) ;
+                glClipPlane(m_index, m_equation) ;
             }
 
             /**
              * Remove the capability.
              */
             virtual void remove() {
+                glClipPlane(m_index, m_oldEquation) ;
                 glDisable(m_index) ;
             }
     } ;

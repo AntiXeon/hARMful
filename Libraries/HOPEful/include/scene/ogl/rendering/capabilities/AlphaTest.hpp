@@ -30,9 +30,19 @@ namespace Hope::GL {
             AlphaFunction m_function = AlphaFunction::Always ;
 
             /**
+             * Hold the old function to restore it.
+             */
+            GLint m_oldFunction ;
+
+            /**
              * Reference value for the alpha test function.
              */
             GLclampf m_reference ;
+
+            /**
+             * Hold the old reference to restore it.
+             */
+            GLclampf m_oldReference ;
 
         public:
             /**
@@ -55,13 +65,16 @@ namespace Hope::GL {
              */
             void apply() override {
                 glEnable(GL_ALPHA_TEST) ;
-                glAlphaFunc(func, ref) ;
+                glGetIntegerv(GL_ALPHA_TEST_FUNC, &m_oldFunction) ;
+                glGetIntegerv(GL_ALPHA_TEST_REF, &m_oldReference) ;
+                glAlphaFunc(m_function, m_reference) ;
             }
 
             /**
              * Remove the capability.
              */
             void remove() override {
+                glAlphaFunc(m_oldFunction, m_oldReference) ;
                 glDisable(GL_ALPHA_TEST) ;
             }
     } ;
