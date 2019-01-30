@@ -74,7 +74,7 @@ namespace Hope::GL {
              * Apply the capability.
              */
             virtual void apply() {
-                glEnable(m_index) ;
+                enable(m_index) ;
                 glGetClipPlane(m_index, m_oldEquation) ;
                 glClipPlane(m_index, m_equation) ;
             }
@@ -84,7 +84,7 @@ namespace Hope::GL {
              */
             virtual void remove() {
                 glClipPlane(m_index, m_oldEquation) ;
-                glDisable(m_index) ;
+                disable(m_index) ;
             }
     } ;
 }

@@ -47,17 +47,23 @@ namespace Hope::GL {
               * Apply the capability.
               */
              void apply() override {
-                 glEnable(GL_DEPTH_TEST) ;
+                 enable(GL_DEPTH_TEST) ;
                  glGetIntegerv(GL_DEPTH_FUNC, &m_oldFunction) ;
-                 glDepthFunc(m_function) ;
+
+                 if (m_function != m_oldFunction) {
+                     glDepthFunc(m_function) ;
+                 }
              }
 
              /**
               * Remove the capability.
               */
              void remove() override {
-                 glDepthFunc(m_oldFunction) ;
-                 glDisable(GL_DEPTH_TEST) ;
+                 if (m_function != m_oldFunction) {
+                     glDepthFunc(m_oldFunction) ;
+                 }
+
+                 disable(GL_DEPTH_TEST) ;
              }
     } ;
 }

@@ -13,14 +13,14 @@ namespace Hope::GL {
              * Apply the capability.
              */
             void apply() override {
-                glEnable(GL_DITHER) ;
+                enable(GL_DITHER) ;
             }
 
             /**
              * Remove the capability.
              */
             void remove() override {
-                glDisable(GL_DITHER) ;
+                disable(GL_DITHER) ;
             }
     } ;
 }

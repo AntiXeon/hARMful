@@ -52,7 +52,7 @@ namespace Hope::GL {
                     }
                 }
                 else {
-                    glEnable(GL_CULL_FACE) ;
+                    enable(GL_CULL_FACE) ;
                     glCullFace(m_mode) ;
                 }
             }
@@ -67,7 +67,7 @@ namespace Hope::GL {
                     }
                 }
                 else {
-                    glDisable(GL_CULL_FACE) ;
+                    disable(GL_CULL_FACE) ;
                 }
             }
     } ;

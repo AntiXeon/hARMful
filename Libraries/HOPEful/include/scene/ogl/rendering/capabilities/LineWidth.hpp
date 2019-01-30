@@ -45,7 +45,7 @@ namespace Hope::GL {
              */
             virtual void apply() {
                 if (m_isAntialiased) {
-                    glEnable(GL_LINE_SMOOTH) ;
+                    enable(GL_LINE_SMOOTH) ;
                 }
 
                 glGetFloatv(GL_LINE_WIDTH, &m_oldWidth) ;
@@ -57,8 +57,11 @@ namespace Hope::GL {
              */
             virtual void remove() {
                 if (m_isAntialiased) {
-                    glLineWidth(m_oldWidth) ;
-                    glDisable(GL_LINE_SMOOTH) ;
+                    if (m_width != m_oldWidth) {
+                        glLineWidth(m_oldWidth) ;
+                    }
+
+                    disable(GL_LINE_SMOOTH) ;
                 }
             }
     } ;

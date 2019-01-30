@@ -124,7 +124,7 @@ namespace Hope::GL {
              * Apply the capability.
              */
             virtual void apply() {
-                glEnable(GL_BLEND) ;
+                enable(GL_BLEND) ;
 
                 storeOldSourceParameters() ;
                 storeOldDestinationParameters() ;
@@ -158,7 +158,7 @@ namespace Hope::GL {
                     ) ;
                 }
 
-                glDisable(GL_BLEND) ;
+                disable(GL_BLEND) ;
             }
 
         private:

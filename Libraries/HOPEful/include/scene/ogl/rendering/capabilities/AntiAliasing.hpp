@@ -1,26 +1,26 @@
-#ifndef __HOPE__GL_CAPABILITY_ALPHA_COVERAGE__
-#define __HOPE__GL_CAPABILITY_ALPHA_COVERAGE__
+#ifndef __HOPE__GL_CAPABILITY_ANTIALIASING__
+#define __HOPE__GL_CAPABILITY_ANTIALIASING__
 
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
     /**
-     * Enable alpha-to-coverage multisampling mode.
+     * Enable multisampling GL capability.
      */
-    class AlphaCoverage final : public Capability {
+    class AntiAliasing final : public Capability {
         protected:
             /**
              * Apply the capability.
              */
             void apply() override {
-                enable(GL_SAMPLE_ALPHA_TO_COVERAGE) ;
+                enable(GL_MULTISAMPLE) ;
             }
 
             /**
              * Remove the capability.
              */
             void remove() override {
-                disable(GL_SAMPLE_ALPHA_TO_COVERAGE) ;
+                disable(GL_MULTISAMPLE) ;
             }
     } ;
 }

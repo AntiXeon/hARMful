@@ -44,17 +44,23 @@ namespace Hope::GL {
              * Apply the capability.
              */
             virtual void apply() {
-                glEnable(GL_BLEND) ;
+                enable(GL_BLEND) ;
                 glGetIntegerv(GL_BLEND_EQUATION_RGB, &m_oldMode) ;
-                glBlendEquation(m_mode) ;
+
+                if (m_mode != m_oldMode) {
+                    glBlendEquation(m_mode) ;
+                }
             }
 
             /**
              * Remove the capability.
              */
             virtual void remove() {
-                glBlendEquation(m_oldMode) ;
-                glDisable(GL_BLEND) ;
+                if (m_mode != m_oldMode) {
+                    glBlendEquation(m_oldMode) ;
+                }
+
+                disable(GL_BLEND) ;
             }
     } ;
 }

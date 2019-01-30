@@ -44,14 +44,19 @@ namespace Hope::GL {
              */
             virtual void apply() {
                 glGetIntegerv(GL_FRONT_FACE, &m_oldOrientation) ;
-                glFrontFace(m_orientation) ;
+
+                if (m_orientation != m_oldOrientation) {
+                    glFrontFace(m_orientation) ;
+                }
             }
 
             /**
              * Remove the capability.
              */
             virtual void remove() {
-                glFrontFace(m_oldOrientation) ;
+                if (m_orientation != m_oldOrientation) {
+                    glFrontFace(m_oldOrientation) ;
+                }
             }
     } ;
 }

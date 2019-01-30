@@ -64,18 +64,24 @@ namespace Hope::GL {
              * Apply the capability.
              */
             void apply() override {
-                glEnable(GL_ALPHA_TEST) ;
+                enable(GL_ALPHA_TEST) ;
                 glGetIntegerv(GL_ALPHA_TEST_FUNC, &m_oldFunction) ;
                 glGetIntegerv(GL_ALPHA_TEST_REF, &m_oldReference) ;
-                glAlphaFunc(m_function, m_reference) ;
+
+                if ((m_function != m_oldFunction) && (m_reference != m_oldReference)) {
+                    glAlphaFunc(m_function, m_reference) ;
+                }
             }
 
             /**
              * Remove the capability.
              */
             void remove() override {
-                glAlphaFunc(m_oldFunction, m_oldReference) ;
-                glDisable(GL_ALPHA_TEST) ;
+                if ((m_function != m_oldFunction) && (m_reference != m_oldReference)) {
+                    glAlphaFunc(m_oldFunction, m_oldReference) ;
+                }
+
+                disable(GL_ALPHA_TEST) ;
             }
     } ;
 }
