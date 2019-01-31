@@ -56,8 +56,8 @@ namespace Hope::GL {
             void apply() override {
                 enable(GL_STENCIL_TEST) ;
 
-                glGetIntegerv( GL_STENCIL_WRITEMASK, &m_oldFront) ;
-                glGetIntegerv( GL_STENCIL_BACK_WRITEMASK, &m_oldBack) ;
+                glGetIntegerv(GL_STENCIL_WRITEMASK, &m_oldFront) ;
+                glGetIntegerv(GL_STENCIL_BACK_WRITEMASK, &m_oldBack) ;
 
                 if (m_front != m_oldFront) {
                     glStencilMaskSeparate(GL_FRONT, m_front) ;
