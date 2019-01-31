@@ -12,16 +12,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_DITHER) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                disable(GL_DITHER) ;
-            }
+            void remove() override ;
     } ;
 }
 

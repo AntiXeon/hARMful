@@ -18,15 +18,15 @@ namespace Hope::GL {
                  GLsizei width = 0 ;
                  GLsizei height = 0 ;
 
-                 bool operator==(const Rectangle& left, const Rectangle& right) {
-                    return (left.x == right.x) &&
-                            (left.y == right.y) &&
-                            (left.width == right.width) &&
-                            (left.height == right.height) ;
+                 bool operator==(const Rectangle& other) {
+                    return (x == other.x) &&
+                            (y == other.y) &&
+                            (width == other.width) &&
+                            (height == other.height) ;
                 }
 
-                bool operator!=(const Rectangle& left, const Rectangle& right) {
-                    return !(left == right) ;
+                bool operator!=(const Rectangle& other) {
+                    return !(*this == other) ;
                 }
              } ;
 
@@ -69,48 +69,19 @@ namespace Hope::GL {
               * Set the height of the scissor test rectangle.
               */
              void setHeight(const int height) {
-                 m_rectangle.m_height = height ;
+                 m_rectangle.height = height ;
              }
 
          protected:
              /**
               * Apply the capability.
               */
-             void apply() override {
-                 enable(GL_SCISSOR_TEST) ;
-
-                 GLint values[4] ;
-                 glGetIntegerv(GL_SCISSOR_BOX, values) ;
-                 m_oldRectangle.x = values[0] ;
-                 m_oldRectangle.y = values[1] ;
-                 m_oldRectangle.width = values[2] ;
-                 m_oldRectangle.height = values[3] ;
-
-                 if (m_rectangle != m_oldRectangle) {
-                     glScissor(
-                         m_rectangle.x,
-                         m_rectangle.y,
-                         m_rectangle.width,
-                         m_rectangle.height
-                     ) ;
-                 }
-             }
+             void apply() override ;
 
              /**
               * Remove the capability.
               */
-             void remove() override {
-                 if (m_rectangle != m_oldRectangle) {
-                     glScissor(
-                         m_oldRectangle.x,
-                         m_oldRectangle.y,
-                         m_oldRectangle.width,
-                         m_oldRectangle.height
-                     ) ;
-                 }
-
-                 disable(GL_SCISSOR_TEST) ;
-             }
+             void remove() override ;
     } ;
 }
 

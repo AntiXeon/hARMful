@@ -13,7 +13,7 @@ namespace Hope {
             /**
              * Color channels (RGBA).
              */
-            enum class Channels : char {
+            enum Channels : char {
                 Red,
                 Green,
                 Blue,

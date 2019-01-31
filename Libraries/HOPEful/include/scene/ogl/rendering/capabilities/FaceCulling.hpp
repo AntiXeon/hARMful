@@ -13,7 +13,7 @@ namespace Hope::GL {
             /**
              * Possible cull modes.
              */
-            enum class CullMode : GLenum {
+            enum CullMode : GLenum {
                 None = 0x0,
                 Front =  GL_FRONT,
                 Back = GL_BACK,
@@ -44,32 +44,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override {
-                if (m_mode == CullMode::None) {
-                    m_wasEnabled = glIsEnabled() ;
-                    if (m_wasEnabled) {
-                        glDisable(GL_CULL_FACE) ;
-                    }
-                }
-                else {
-                    enable(GL_CULL_FACE) ;
-                    glCullFace(m_mode) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                if (m_mode == CullMode::None) {
-                    if (m_wasEnabled) {
-                        glEnable(GL_CULL_FACE) ;
-                    }
-                }
-                else {
-                    disable(GL_CULL_FACE) ;
-                }
-            }
+            void remove() override ;
     } ;
 }
 

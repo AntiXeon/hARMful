@@ -12,7 +12,7 @@ namespace Hope::GL {
             /**
              * Possible alpha test function to apply.
              */
-            enum class AlphaFunction : GLenum {
+            enum AlphaFunction : GLenum {
                 Never = GL_NEVER,
                 Less = GL_LESS,
                 Equal = GL_EQUAL,
@@ -24,65 +24,62 @@ namespace Hope::GL {
             } ;
 
         private:
+            struct Parameters {
+                /**
+                 * Alpha test function to apply.
+                 */
+                AlphaFunction function ;
+
+                /**
+                 * Reference value for the alpha test function.
+                 */
+                GLclampf reference ;
+
+                bool operator==(const Parameters& other) {
+                   return (function == other.function) &&
+                           (reference == other.reference) ;
+               }
+
+               bool operator!=(const Parameters& other) {
+                   return !(*this == other) ;
+               }
+            } ;
+
             /**
              * Alpha test function to apply.
              */
-            AlphaFunction m_function = AlphaFunction::Always ;
+            Parameters m_current = { AlphaFunction::Always, 0.f } ;
 
             /**
-             * Hold the old function to restore it.
+             * Store old parameters for restore.
              */
-            GLint m_oldFunction ;
-
-            /**
-             * Reference value for the alpha test function.
-             */
-            GLclampf m_reference ;
-
-            /**
-             * Hold the old reference to restore it.
-             */
-            GLclampf m_oldReference ;
+            Parameters m_old ;
 
         public:
             /**
              * Set the applied alpha test function.
              */
             void setFunction(const AlphaFunction func) {
-                m_function = func ;
+                m_current.function = func ;
             }
 
             /**
              * Set the reference value for the alpha test function.
              */
             void setReference(const GLclampf ref) {
-                m_reference = ref ;
+                m_current.reference = ref ;
             }
 
         protected:
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_ALPHA_TEST) ;
-                glGetIntegerv(GL_ALPHA_TEST_FUNC, &m_oldFunction) ;
-                glGetIntegerv(GL_ALPHA_TEST_REF, &m_oldReference) ;
-
-                if ((m_function != m_oldFunction) && (m_reference != m_oldReference)) {
-                    glAlphaFunc(m_function, m_reference) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                if ((m_function != m_oldFunction) && (m_reference != m_oldReference)) {
-                    glAlphaFunc(m_oldFunction, m_oldReference) ;
-                }
-
-                disable(GL_ALPHA_TEST) ;
-            }
+            void remove() override ;
     } ;
 }
 

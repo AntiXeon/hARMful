@@ -38,22 +38,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override {
-                glGetBooleanv(GL_DEPTH_WRITEMASK, &m_oldIsEnabled) ;
-
-                if (m_isEnabled != m_oldIsEnabled) {
-                    glDepthMask(m_isEnabled) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                if (m_isEnabled != m_oldIsEnabled) {
-                    glDepthMask(m_oldIsEnabled) ;
-                }
-            }
+            void remove() override ;
     } ;
 }
 

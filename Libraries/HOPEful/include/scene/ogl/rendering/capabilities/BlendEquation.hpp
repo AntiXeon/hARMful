@@ -12,7 +12,7 @@ namespace Hope::GL {
             /**
              * Possible blend modes.
              */
-            enum class BlendMode : GLenum {
+            enum BlendMode : GLenum {
                 Add = GL_FUNC_ADD,
                 Substract = GL_FUNC_SUBTRACT,
                 ReverseSubstract = GL_FUNC_REVERSE_SUBTRACT,
@@ -29,7 +29,7 @@ namespace Hope::GL {
             /**
              * Hold the old mode to restore it.
              */
-            GLint m_oldMode ;
+            BlendMode m_oldMode ;
 
         public:
             /**
@@ -43,25 +43,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            virtual void apply() {
-                enable(GL_BLEND) ;
-                glGetIntegerv(GL_BLEND_EQUATION_RGB, &m_oldMode) ;
-
-                if (m_mode != m_oldMode) {
-                    glBlendEquation(m_mode) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() {
-                if (m_mode != m_oldMode) {
-                    glBlendEquation(m_oldMode) ;
-                }
-
-                disable(GL_BLEND) ;
-            }
+            void remove() override ;
     } ;
 }
 

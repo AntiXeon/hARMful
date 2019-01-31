@@ -12,7 +12,7 @@ namespace Hope::GL {
             /**
              * Possible depth test functions.
              */
-             enum class DepthFunction : GLenum {
+             enum DepthFunction : GLenum {
                  Never = GL_NEVER,
                  Less = GL_LESS,
                  Equal = GL_EQUAL,
@@ -46,25 +46,12 @@ namespace Hope::GL {
              /**
               * Apply the capability.
               */
-             void apply() override {
-                 enable(GL_DEPTH_TEST) ;
-                 glGetIntegerv(GL_DEPTH_FUNC, &m_oldFunction) ;
-
-                 if (m_function != m_oldFunction) {
-                     glDepthFunc(m_function) ;
-                 }
-             }
+             void apply() override ;
 
              /**
               * Remove the capability.
               */
-             void remove() override {
-                 if (m_function != m_oldFunction) {
-                     glDepthFunc(m_oldFunction) ;
-                 }
-
-                 disable(GL_DEPTH_TEST) ;
-             }
+             void remove() override ;
     } ;
 }
 

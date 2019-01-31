@@ -31,61 +31,33 @@ namespace Hope::GL {
             /**
              * Set the plane index. It must be a value in the range [0 - 7].
              */
-            void setPlaneIndex(const uint8_t index) {
-                if (index > 7) {
-                    index = 7 ;
-                }
-
-                m_index = GL_CLIP_PLANE0 + index ;
-            }
+            void setPlaneIndex(const uint8_t index) ;
 
             /**
              * Set the distance of the plane from the camera.
              */
-            void setDistance(const float distance) {
-                m_equation[0] = m_equation.get(Mind::Vector4f::X) ;
-                m_equation[1] = m_equation.get(Mind::Vector4f::Y) ;
-                m_equation[2] = m_equation.get(Mind::Vector4f::Z) ;
-                m_equation[3] = -distance ;
-            }
+            void setDistance(const float distance) ;
 
             /**
              * Set the normal of the plane.
              */
-            void setNormal(const Mind::Vector3f& normal) {
-                m_equation[0] = normal.get(Mind::Vector3f::X) ;
-                m_equation[1] = normal.get(Mind::Vector3f::Y) ;
-                m_equation[2] = normal.get(Mind::Vector3f::Z) ;
-                m_equation[3] = m_equation.get(Mind::Vector4f::W) ;
-            }
+            void setNormal(const Mind::Vector3f& normal) ;
 
             /**
              * Set the normal of the plane.
              */
-            void setNormal(const float x, const float y, const float z) {
-                m_equation[0] = x ;
-                m_equation[1] = y ;
-                m_equation[2] = z ;
-                m_equation[3] = m_equation.get(Mind::Vector4f::W) ;
-            }
+            void setNormal(const float x, const float y, const float z) ;
 
         protected:
             /**
              * Apply the capability.
              */
-            virtual void apply() {
-                enable(m_index) ;
-                glGetClipPlane(m_index, m_oldEquation) ;
-                glClipPlane(m_index, m_equation) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() {
-                glClipPlane(m_index, m_oldEquation) ;
-                disable(m_index) ;
-            }
+            void remove() override ;
     } ;
 }
 

@@ -25,56 +25,40 @@ namespace Hope::GL {
              * Specify whether red is to be written into the frame buffer.
              */
             void setRedMask(const bool masked) {
-                m_channels[Color::Channels::Red] ;
+                m_channels[Color::Channels::Red] = masked ;
             }
 
             /**
              * Specify whether green is to be written into the frame buffer.
              */
             void setGreenMask(const bool masked) {
-                m_channels[Color::Channels::Green] ;
+                m_channels[Color::Channels::Green] = masked ;
             }
 
             /**
              * Specify whether blue is to be written into the frame buffer.
              */
             void setBlueMask(const bool masked) {
-                m_channels[Color::Channels::Blue] ;
+                m_channels[Color::Channels::Blue] = masked ;
             }
 
             /**
              * Specify whether alpha is to be written into the frame buffer.
              */
             void setAlphaMask(const bool masked) {
-                m_channels[Color::Channels::Alpha] ;
+                m_channels[Color::Channels::Alpha] = masked ;
             }
 
         protected:
             /**
              * Apply the capability.
              */
-            void apply() override {
-                glGetBooleanv(GL_COLOR_WRITEMASK, m_oldChannels) ;
-
-                glColorMask(
-                    m_channels[Color::Channels::Red],
-                    m_channels[Color::Channels::Green],
-                    m_channels[Color::Channels::Blue],
-                    m_channels[Color::Channels::Alpha]
-                ) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                glColorMask(
-                    m_oldChannels[Color::Channels::Red],
-                    m_oldChannels[Color::Channels::Green],
-                    m_oldChannels[Color::Channels::Blue],
-                    m_oldChannels[Color::Channels::Alpha]
-                ) ;
-            }
+            void remove() override ;
     } ;
 }
 

@@ -14,16 +14,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_TEXTURE_CUBE_MAP_SEAMLESS) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                disable(GL_TEXTURE_CUBE_MAP_SEAMLESS) ;
-            }
+            void remove() override ;
     } ;
 }
 

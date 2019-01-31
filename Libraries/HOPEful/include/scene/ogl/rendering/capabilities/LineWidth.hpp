@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_LINE_WIDTH__
 #define __HOPE__GL_CAPABILITY_LINE_WIDTH__
 
+#include <scene/ogl/rendering/capabilities/Capability.hpp>
+
 namespace Hope::GL {
     /**
      * Encapsulate the line width GL capability.
@@ -28,7 +30,7 @@ namespace Hope::GL {
              * Set the antialising of the width.
              * Default value if true.
              */
-            void setAntialiasing(const boolean isEnabled) {
+            void setAntialiasing(const bool isEnabled) {
                 m_isAntialiased = isEnabled ;
             }
 
@@ -43,27 +45,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            virtual void apply() {
-                if (m_isAntialiased) {
-                    enable(GL_LINE_SMOOTH) ;
-                }
-
-                glGetFloatv(GL_LINE_WIDTH, &m_oldWidth) ;
-                glLineWidth(m_width) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() {
-                if (m_isAntialiased) {
-                    if (m_width != m_oldWidth) {
-                        glLineWidth(m_oldWidth) ;
-                    }
-
-                    disable(GL_LINE_SMOOTH) ;
-                }
-            }
+            void remove() override ;
     } ;
 }
 

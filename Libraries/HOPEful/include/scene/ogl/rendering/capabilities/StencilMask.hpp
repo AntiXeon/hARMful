@@ -10,27 +10,29 @@ namespace Hope::GL {
      */
     class StencilMask final : public Capability {
         private:
-            /**
-             * Bit mask to enable and disable writing of individual bits in the
-             * stencil planes.
-             */
-            GLuint m_front = 1 ;
+            struct Parameters {
+                /**
+                 * Bit mask to enable and disable writing of individual bits in
+                 * the stencil planes.
+                 */
+                GLuint front = 1 ;
+
+                /**
+                 * Bit mask to enable and disable writing of individual bits in
+                 * the stencil planes.
+                 */
+                GLuint back = 1 ;
+            } ;
 
             /**
-             * Store the old value for restore.
+             * Current parameters.
              */
-            GLuint m_oldFront ;
+            Parameters m_current ;
 
             /**
-             * Bit mask to enable and disable writing of individual bits in the
-             * stencil planes.
+             * Store old parameters for restore.
              */
-            GLuint m_back = 1 ;
-
-            /**
-             * Store the old value for restore.
-             */
-            GLuint m_oldBack ;
+            Parameters m_old ;
 
         public:
             /**
@@ -38,7 +40,7 @@ namespace Hope::GL {
              * in the stencil planes.
              */
             void setFrontMask(const uint32_t mask) {
-                m_front = mask ;
+                m_current.front = mask ;
             }
 
             /**
@@ -46,42 +48,19 @@ namespace Hope::GL {
              * in the stencil planes.
              */
             void setBackMask(const uint32_t mask) {
-                m_back = mask ;
+                m_current.back = mask ;
             }
 
         protected:
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_STENCIL_TEST) ;
-
-                glGetIntegerv(GL_STENCIL_WRITEMASK, &m_oldFront) ;
-                glGetIntegerv(GL_STENCIL_BACK_WRITEMASK, &m_oldBack) ;
-
-                if (m_front != m_oldFront) {
-                    glStencilMaskSeparate(GL_FRONT, m_front) ;
-                }
-
-                if (m_back != m_oldBack) {
-                    glStencilMaskSeparate(GL_BACK, m_back) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                if (m_front != m_oldFront) {
-                    glStencilMaskSeparate(GL_FRONT, m_oldFront) ;
-                }
-
-                if (m_back != m_oldBack) {
-                    glStencilMaskSeparate(GL_BACK, m_oldBack) ;
-                }
-
-                disable(GL_STENCIL_TEST) ;
-            }
+            void remove() override ;
     } ;
 }
 

@@ -13,7 +13,7 @@ namespace Hope::GL {
                 /**
                  * All possible face modes.
                  */
-                enum class FaceMode : GLenum {
+                enum FaceMode : GLenum {
                     Front =  GL_FRONT,
                     Back =  GL_BACK,
                     FrontAndBack =  GL_FRONT_AND_BACK
@@ -22,7 +22,7 @@ namespace Hope::GL {
                 /**
                  * All possible operations.
                  */
-                enum class Operation : GLenum {
+                enum Operation : GLenum {
                     Keep = GL_KEEP,
                     Zero = GL_ZERO,
                     Replace =  GL_REPLACE,
@@ -84,68 +84,28 @@ namespace Hope::GL {
              * Set parameters for front-facing faces.
              */
             void setFrontParameters(const Parameters& params) {
-                params.face = Parameters::FaceMode::Front ;
                 m_frontFaces = params ;
+                m_frontFaces.face = Parameters::FaceMode::Front ;
             }
 
             /**
              * Set parameters for back-facing faces.
              */
             void setBackParameters(const Parameters& params) {
-                params.face = Parameters::FaceMode::Back ;
                 m_backFaces = params ;
+                m_frontFaces.face = Parameters::FaceMode::Back ;
             }
 
         protected:
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_STENCIL_TEST) ;
-
-                glGetIntegerv(GL_STENCIL_FAIL, &(m_oldFrontFaces.stencilFail)) ;
-                glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, &(m_oldFrontFaces.depthFail)) ;
-                glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, &(m_oldFrontFaces.success)) ;
-
-                glGetIntegerv(GL_STENCIL_BACK_FAIL, &(m_oldBackFaces.stencilFail)) ;
-                glGetIntegerv(GL_STENCIL_BACK_PASS_DEPTH_FAIL, &(m_oldBackFaces.depthFail)) ;
-                glGetIntegerv( GL_STENCIL_BACK_PASS_DEPTH_PASS, &(m_oldBackFaces.success)) ;
-
-                glStencilOpSeparate(
-                    m_frontFaces.face,
-                    m_frontFaces.stencilFail,
-                    m_frontFaces.depthFail,
-                    m_frontFaces.success
-                ) ;
-
-                glStencilOpSeparate(
-                    m_backFaces.face,
-                    m_backFaces.stencilFail,
-                    m_backFaces.depthFail,
-                    m_backFaces.success
-                ) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                glStencilOpSeparate(
-                    m_oldFrontFaces.face,
-                    m_oldFrontFaces.stencilFail,
-                    m_oldFrontFaces.depthFail,
-                    m_oldFrontFaces.success
-                ) ;
-
-                glStencilOpSeparate(
-                    m_oldBackFaces.face,
-                    m_oldBackFaces.stencilFail,
-                    m_oldBackFaces.depthFail,
-                    m_oldBackFaces.success
-                ) ;
-
-                disable(GL_STENCIL_TEST) ;
-            }
+            void remove() override ;
     } ;
 }
 

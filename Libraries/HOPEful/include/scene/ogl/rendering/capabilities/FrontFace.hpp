@@ -13,7 +13,7 @@ namespace Hope::GL {
             /**
              * Possible face orientations.
              */
-            enum class Orientation : GLenum {
+            enum Orientation : GLenum {
                 ClockWise = GL_CW,
                 CounterClockWise = GL_CCW
             } ;
@@ -28,7 +28,7 @@ namespace Hope::GL {
              * Store the previous orientation before changing it. Allows
              * restoration when the capability is removed.
              */
-            GLint m_oldOrientation ;
+            Orientation m_oldOrientation ;
 
         public:
             /**
@@ -42,22 +42,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            virtual void apply() {
-                glGetIntegerv(GL_FRONT_FACE, &m_oldOrientation) ;
-
-                if (m_orientation != m_oldOrientation) {
-                    glFrontFace(m_orientation) ;
-                }
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() {
-                if (m_orientation != m_oldOrientation) {
-                    glFrontFace(m_oldOrientation) ;
-                }
-            }
+            void remove() override ;
     } ;
 }
 

@@ -13,23 +13,23 @@ namespace Hope::GL {
              * To know if the capability is active or not before activating it.
              * It is used to restore the state after the rendering.
              */
-            boolean m_wasEnabled = false ;
+            bool m_wasEnabled = false ;
 
         protected:
             /**
              * Apply the capability.
              */
-            virtual void apply() {}
+            virtual void apply() = 0 ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() {}
+            virtual void remove() = 0 ;
 
             /**
              * Enable the capability if needed.
              */
-            void enable(const GLEnum capability) {
+            void enable(const GLenum capability) {
                 m_wasEnabled = glIsEnabled(capability) ;
 
                 if (!m_wasEnabled) {
@@ -40,7 +40,7 @@ namespace Hope::GL {
             /**
              * Disable the capability if needed.
              */
-            void disable(const GLEnum capability) {
+            void disable(const GLenum capability) {
                 if (!m_wasEnabled) {
                     glDisable(capability) ;
                 }

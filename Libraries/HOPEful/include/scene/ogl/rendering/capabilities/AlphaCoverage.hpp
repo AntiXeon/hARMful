@@ -12,16 +12,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override {
-                enable(GL_SAMPLE_ALPHA_TO_COVERAGE) ;
-            }
+            void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override {
-                disable(GL_SAMPLE_ALPHA_TO_COVERAGE) ;
-            }
+            void remove() override ;
     } ;
 }
 
