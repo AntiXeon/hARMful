@@ -1,20 +1,53 @@
-#ifndef __HOPE__GL_RENDER_PASS__
-#define __HOPE__GL_RENDER_PASS__
+#ifndef __HOPE__RENDER_TECHNIQUE__
+#define __HOPE__RENDER_TECHNIQUE__
 
-#include <scene/framegraph/shading/FilterOption.hpp>
-#include <scene/framegraph/shading/ShaderParameter.hpp>
-#include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
-#include <scene/ogl/rendering/capabilities/Capability.hpp>
-#include <set>
-#include <memory>
+#include <HopeAPI.hpp>
 
-namespace Hope::GL {
+#ifdef OGL
+    #include <scene/ogl/rendering/RenderPass.hpp>
+    namespace API = Hope::GL ;
+#endif
 
+namespace Hope {
     /**
-     * Represents a shader program execution as a single render pass.
+     * Define the render technique that is used to render an object.
+     * Select the graphics API and its version to do so.
      */
-    class RenderPass final {
+    class RenderTechnique final {
+        public:
+            /**
+             * Available graphics API for rendering.
+             */
+            enum class GraphicsAPI : char {
+                OpenGL
+                // Vulkan,
+                // DirectX
+            } ;
+
         private:
+            struct GraphicsAPIParameters {
+                /**
+                 * The graphicsAPI that is used to render the scene.
+                 */
+                GraphicsAPI api = RenderTechnique::GraphicsAPI::OpenGL ;
+
+                /**
+                 * Major version number.
+                 */
+                int majorVersion ;
+
+                /**
+                 * Minor version number.
+                 */
+                int minorVersion ;
+
+            } ;
+
+            /**
+             * Parameter of the grahics API.
+             */
+            GraphicsAPIParameters m_apiParameters ;
+
             /**
              * List of the options.
              */
@@ -26,20 +59,19 @@ namespace Hope::GL {
             std::set<std::shared_ptr<Hope::ShaderParameter>> m_shaderParams ;
 
             /**
-             * List of graphics API capabilities.
+             * List of shader parameters.
              */
-            std::set<std::shared_ptr<Hope::GL::Capability>> m_capabilities ;
-
-            /**
-             * The shader program that is executed in the current render pass.
-             */
-            std::shared_ptr<ShaderProgram> m_shaderProgram ;
+            std::set<std::shared_ptr<API::RenderPass>> m_renderPasses ;
 
         public:
             /**
-             * Create a render pass.
+             * Set the graphics API.
              */
-            RenderPass() ;
+            void setAPI(
+                const GraphicsAPI api,
+                const int majorVersion,
+                const int minorVersion
+            ) ;
 
             /**
              * Add a filter option.
@@ -86,27 +118,20 @@ namespace Hope::GL {
             }
 
             /**
-             * Add a graphics API capability.
+             * Add a render pass.
              */
-            void addCapability(const std::shared_ptr<Hope::GL::Capability> capability) ;
+            void addRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
 
             /**
-             * Remove a graphics API capability.
+             * Remove a render pass.
              */
-            void removeCapability(const std::shared_ptr<Hope::GL::Capability> capability) ;
+            void removeRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
 
             /**
-             * Get the used capabilities.
+             * Get the render passes.
              */
-            std::set<std::shared_ptr<Hope::GL::Capability>> capabilities() const {
-                return m_capabilities ;
-            }
-
-            /**
-             * Get the shader program.
-             */
-            std::weak_ptr<ShaderProgram> shaderProgram() const {
-                return m_shaderProgram ;
+            std::set<std::shared_ptr<API::RenderPass>> renderPasses() const {
+                return m_renderPasses ;
             }
     } ;
 }

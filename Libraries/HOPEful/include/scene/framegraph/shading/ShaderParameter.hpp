@@ -1,5 +1,5 @@
-#ifndef __HOPE__SCENE_PARAMETER__
-#define __HOPE__SCENE_PARAMETER__
+#ifndef __HOPE__SHADER_PARAMETER__
+#define __HOPE__SHADER_PARAMETER__
 
 #include <array>
 #include <string>
