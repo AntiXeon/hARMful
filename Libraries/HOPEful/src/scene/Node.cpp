@@ -58,6 +58,8 @@ bool Node::addChild(Node* newChild) {
         return true ;
     }
 
+    onChildAdded(newChild) ;
+
     return false ;
 }
 
@@ -71,6 +73,8 @@ bool Node::removeChild(Node* child) {
         m_children.erase(posNode) ;
         return true ;
     }
+
+    onChildRemoved(child) ;
 
     return false ;
 }

@@ -68,6 +68,17 @@ namespace Hope {
              * @return  true on success; false otherwise.
              */
             bool removeChild(Node* child) ;
+
+        protected:
+            /**
+             * Additional action to perform when a child is added.
+             */
+            virtual void onChildAdded(Node* newChild) {}
+
+            /**
+             * Additional action to perform when a child is removed.
+             */
+            virtual void onChildRemoved(Node* child) {}
     } ;
 }
 

@@ -4,6 +4,7 @@
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
+#include <scene/SceneRenderData.hpp>
 #include <interfaces/IRenderable.hpp>
 
 namespace Hope {
@@ -27,6 +28,11 @@ namespace Hope {
              * Frame graph visitor for rendering the scene.
              */
             Hope::GL::OpenGLFrameGraphVisitor m_frameGraphVisitor ;
+
+            /**
+             * Scene render data.
+             */
+            SceneRenderData m_renderData ;
 
         public:
             /**

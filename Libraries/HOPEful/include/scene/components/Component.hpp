@@ -14,7 +14,7 @@ namespace Hope {
      * Base class for all components that can be linked to entities.
      */
     class Component : public ISceneGraphVisitant {
-        friend Entity ;
+        friend class Entity ;
 
         private:
             /**

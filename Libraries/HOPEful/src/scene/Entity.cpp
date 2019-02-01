@@ -59,6 +59,31 @@ Component* Entity::component(const ComponentType type) const {
     return nullptr ;
 }
 
+std::shared_ptr<SceneRenderData>& Entity::renderData() const {
+    return m_renderData ;
+}
+
+void Entity::setRenderData(const std::shared_ptr<SceneRenderData>& data) {
+    m_renderData = data ;
+
+    std::vector<Node*>& childrenNodes = children() ;
+    for (Node* childNode : childrenNodes) {
+        Entity* childEntity = static_cast<Entity*>(childNode) ;
+
+        if (childEntity) {
+            // Update scene render data by reattaching components.
+            for (auto const& entry : m_components) {
+                Component* component = entry.second ;
+                component -> detach(this) ;
+                component -> attach(this) ;
+            }
+
+            // Update every child of the current node.
+            childEntity -> setRenderData(m_renderData) ;
+        }
+    }
+}
+
 void Entity::setActive(const bool isActive) {
     m_isActive = isActive ;
 }
@@ -79,4 +104,14 @@ std::vector<Component*> Entity::components() const {
     }
 
     return output ;
+}
+
+void Entity::onChildAdded(Node* newChild) override {
+    Entity* childEntity = static_cast<Entity*>(newChild) ;
+    childEntity -> setRenderData(m_renderData) ;
+}
+
+void Entity::onChildRemoved(Node* child) override {
+    Entity* childEntity = static_cast<Entity*>(newChild) ;
+    childEntity -> setRenderData(nullptr) ;
 }

@@ -7,6 +7,7 @@ Scene::Scene() {
     m_root = new Entity() ;
     m_renderConfig = new RenderConfiguration() ;
     m_root -> addComponent(m_renderConfig) ;
+    m_root -> setRenderData(&m_renderData) ;
 }
 
 Scene::~Scene() {

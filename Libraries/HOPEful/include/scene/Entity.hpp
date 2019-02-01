@@ -4,6 +4,7 @@
 #include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
 #include <scene/Transform.hpp>
+#include <scene/SceneRenderData.hpp>
 #include <memory>
 #include <map>
 
@@ -16,6 +17,8 @@ namespace Hope {
      * sound, logic, etc.
      */
     class Entity: public Node {
+        friend class Scene ;
+
         private:
             /**
              * If true, the Entity is processed for rendering its content.
@@ -32,6 +35,11 @@ namespace Hope {
              * Components attached to the current entity.
              */
             std::map<ComponentType, Component*> m_components ;
+
+            /**
+             * Render data shared with the scene.
+             */
+            std::shared_ptr<SceneRenderData> m_renderData = nullptr ;
 
         public:
             /**
@@ -97,11 +105,33 @@ namespace Hope {
              */
             std::vector<Component*> components() const ;
 
+            /**
+             * Get the scene render data.
+             */
+            std::shared_ptr<SceneRenderData>& renderData() const ;
+
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;
             Entity(Entity&& moved) = delete;
             Entity& operator=(const Entity& copied) = delete;
             Entity& operator=(Entity&& moved) = delete;
+
+        private:
+            /**
+             * Set the scene render data.
+             */
+            void setRenderData(const std::shared_ptr<SceneRenderData>& data) ;
+
+        protected:
+            /**
+             * Additional action to perform when a child is added.
+             */
+            void onChildAdded(Node* newChild) override ;
+
+            /**
+             * Additional action to perform when a child is removed.
+             */
+            void onChildRemoved(Node* child) override ;
     } ;
 }
 
