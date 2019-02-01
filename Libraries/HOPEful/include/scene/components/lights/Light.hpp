@@ -99,7 +99,7 @@ namespace Hope {
              * @param   entity  Entity to detach the component from.
              */
             void onDetach(Entity* entity) override ;
-    }
+    } ;
 }
 
 #endif

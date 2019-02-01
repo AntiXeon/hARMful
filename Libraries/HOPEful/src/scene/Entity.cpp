@@ -59,14 +59,14 @@ Component* Entity::component(const ComponentType type) const {
     return nullptr ;
 }
 
-std::shared_ptr<SceneRenderData>& Entity::renderData() const {
+SceneRenderData* Entity::renderData() const {
     return m_renderData ;
 }
 
-void Entity::setRenderData(const std::shared_ptr<SceneRenderData>& data) {
+void Entity::setRenderData(SceneRenderData* data) {
     m_renderData = data ;
 
-    std::vector<Node*>& childrenNodes = children() ;
+    const std::vector<Node*>& childrenNodes = children() ;
     for (Node* childNode : childrenNodes) {
         Entity* childEntity = static_cast<Entity*>(childNode) ;
 
@@ -106,12 +106,12 @@ std::vector<Component*> Entity::components() const {
     return output ;
 }
 
-void Entity::onChildAdded(Node* newChild) override {
+void Entity::onChildAdded(Node* newChild) {
     Entity* childEntity = static_cast<Entity*>(newChild) ;
     childEntity -> setRenderData(m_renderData) ;
 }
 
-void Entity::onChildRemoved(Node* child) override {
-    Entity* childEntity = static_cast<Entity*>(newChild) ;
+void Entity::onChildRemoved(Node* child) {
+    Entity* childEntity = static_cast<Entity*>(child) ;
     childEntity -> setRenderData(nullptr) ;
 }

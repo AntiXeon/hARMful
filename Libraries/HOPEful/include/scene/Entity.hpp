@@ -39,7 +39,7 @@ namespace Hope {
             /**
              * Render data shared with the scene.
              */
-            std::shared_ptr<SceneRenderData> m_renderData = nullptr ;
+            SceneRenderData* m_renderData = nullptr ;
 
         public:
             /**
@@ -108,7 +108,7 @@ namespace Hope {
             /**
              * Get the scene render data.
              */
-            std::shared_ptr<SceneRenderData>& renderData() const ;
+            SceneRenderData* renderData() const ;
 
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;
@@ -120,7 +120,7 @@ namespace Hope {
             /**
              * Set the scene render data.
              */
-            void setRenderData(const std::shared_ptr<SceneRenderData>& data) ;
+            void setRenderData(SceneRenderData* data) ;
 
         protected:
             /**

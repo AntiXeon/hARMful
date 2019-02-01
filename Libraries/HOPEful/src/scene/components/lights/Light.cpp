@@ -1,11 +1,13 @@
 #include <scene/components/lights/Light.hpp>
+#include <utils/literals/NumberLiterals.hpp>
+#include <scene/Entity.hpp>
 
 using namespace Hope ;
 
 Light::Light(const Type type)
     : Component(LightType) {
     m_type = type ;
-    m_color = Color(0xFFFFFFFF) ;
+    m_color = Color(255_uchar, 255_uchar, 255_uchar) ; ;
     m_intensity = 1.f ;
 }
 
@@ -41,30 +43,26 @@ float Light::intensity() const {
     return m_intensity ;
 }
 
-Type Light::type() const {
+Light::Type Light::type() const {
     return m_type ;
 }
 
-void Light::onAttach(Entity* entity) override {
-    Entity* entity = firstEntity() ;
-
+void Light::onAttach(Entity* entity) {
     if (!entity) {
         return ;
     }
 
     if (entity -> renderData()) {
-        entity -> renderData() -> addLight(*this) ;
+        entity -> renderData() -> addLight(this) ;
     }
 }
 
-void Light::onDetach(Entity* entity) override {
-    Entity* entity = firstEntity() ;
-
+void Light::onDetach(Entity* entity) {
     if (!entity) {
         return ;
     }
 
     if (entity -> renderData()) {
-        entity -> renderData() -> removeLight(*this) ;
+        entity -> renderData() -> removeLight(this) ;
     }
 }

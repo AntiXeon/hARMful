@@ -33,7 +33,7 @@ namespace Hope {
              * Get the list of lights.
              */
             std::set<Light*> lights() const ;
-    }
+    } ;
 }
 
 #endif

@@ -78,3 +78,7 @@ bool Node::removeChild(Node* child) {
 
     return false ;
 }
+
+void Node::onChildAdded(Node* /*newChild*/) {}
+
+void Node::onChildRemoved(Node* /*child*/) {}
