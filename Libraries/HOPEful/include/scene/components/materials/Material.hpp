@@ -23,11 +23,21 @@ namespace Hope {
 
         public:
             /**
+             * Accept the visitor.
+             */
+            void accept(ISceneGraphVisitor* visitor) override ;
+
+            /**
+             * To know if the component can be shared by several entities.
+             * @return  true as it can be shared among several objects that are
+             *          rendered the same way.
+             */
+            bool isShareable() const override ;
+
+            /**
              * Get the effect of the material.
              */
-            const RenderEffect* effect() const {
-                return &m_effect ;
-            }
+            const RenderEffect* effect() const ;
 
             /**
              * Add a shader parameter.
@@ -46,15 +56,6 @@ namespace Hope {
              */
             std::set<std::shared_ptr<Hope::ShaderParameter>> shaderParameters() const {
                 return m_shaderParams ;
-            }
-
-            /**
-             * To know if the component can be shared by several entities.
-             * @return  true as it can be shared among several objects that are
-             *          rendered the same way.
-             */
-            bool isShareable() const override {
-                return true ;
             }
     } ;
 }

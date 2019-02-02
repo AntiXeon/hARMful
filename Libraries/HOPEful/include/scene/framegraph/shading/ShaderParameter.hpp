@@ -4,6 +4,8 @@
 #include <array>
 #include <string>
 #include <cstdlib>
+#include <set>
+#include <memory>
 
 namespace Hope {
     /**
@@ -19,6 +21,7 @@ namespace Hope {
 
                 Boolean,
                 Integer,
+                UInteger,
                 Floating,
 
                 BVec2,
@@ -29,6 +32,10 @@ namespace Hope {
                 IVec3,
                 IVec4,
 
+                UIVec2,
+                UIVec3,
+                UIVec4,
+
                 Vec2,
                 Vec3,
                 Vec4,
@@ -36,6 +43,13 @@ namespace Hope {
                 Mat2,
                 Mat3,
                 Mat4,
+
+                Mat2x3,
+                Mat3x2,
+                Mat2x4,
+                Mat4x2,
+                Mat3x4,
+                Mat4x3,
 
                 Sampler2D,
                 SamplerCube
@@ -49,6 +63,7 @@ namespace Hope {
                 // Base types
                 bool boolean ;
                 int integer ;
+                unsigned int uinteger ;
                 float floating ;
 
                 // Vectors
@@ -60,6 +75,10 @@ namespace Hope {
                 int ivec3[3] ;
                 int ivec4[4] ;
 
+                unsigned int uivec2[2] ;
+                unsigned int uivec3[3] ;
+                unsigned int uivec4[4] ;
+
                 float vec2[2] ;
                 float vec3[3] ;
                 float vec4[4] ;
@@ -68,6 +87,12 @@ namespace Hope {
                 float mat2[4] ;  // 2x2
                 float mat3[9] ;  // 3x3
                 float mat4[16] ; // 4x4
+                float mat2x3[6] ;
+                float mat3x2[6] ;
+                float mat2x4[8] ;
+                float mat4x2[8] ;
+                float mat3x4[12] ;
+                float mat4x3[12] ;
 
                 // Textures
                 int sampler2D ;  // 2D texture
@@ -91,6 +116,22 @@ namespace Hope {
 
         public:
             /**
+             * Merge two sets.
+             * Values from the first set are replaced by the ones in the second
+             * set.
+             */
+            static void merge(
+                std::set<std::shared_ptr<Hope::ShaderParameter>>& first,
+                const std::set<std::shared_ptr<Hope::ShaderParameter>>& second
+            ) ;
+
+            /**
+             * Check if two parameters describe the same value.
+             * Only compares name and type, the value is not evaluated here.
+             */
+            bool identical(const std::shared_ptr<Hope::ShaderParameter>& other) ;
+
+            /**
              * Set the parameter name.
              */
             void setName(const std::string& name) {
@@ -111,6 +152,14 @@ namespace Hope {
             void setInteger(const int integer) {
                 m_type = Integer ;
                 m_value.integer = integer ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setUInteger(const unsigned int uinteger) {
+                m_type = UInteger ;
+                m_value.uinteger = uinteger ;
             }
 
             /**
@@ -196,6 +245,42 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
+            void setUIVec2(const std::array<unsigned int, 2>& uivec2) {
+                m_type = UIVec2 ;
+                std::copy(
+                    std::begin(uivec2),
+                    std::end(uivec2),
+                    std::begin(m_value.uivec2)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setUIVec3(const std::array<unsigned int, 3>& uivec3) {
+                m_type = UIVec3 ;
+                std::copy(
+                    std::begin(uivec3),
+                    std::end(uivec3),
+                    std::begin(m_value.uivec3)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setUIVec4(const std::array<unsigned int, 4>& uivec4) {
+                m_type = UIVec4 ;
+                std::copy(
+                    std::begin(uivec4),
+                    std::end(uivec4),
+                    std::begin(m_value.uivec4)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
             void setVec2(const std::array<float, 2>& vec2) {
                 m_type = Vec2 ;
                 std::copy(
@@ -268,6 +353,78 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
+            void setMat2x3(const std::array<float, 6>& mat) {
+                m_type = Mat2x3 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat2x3)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setMat3x2(const std::array<float, 6>& mat) {
+                m_type = Mat3x2 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat3x2)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setMat2x4(const std::array<float, 8>& mat) {
+                m_type = Mat2x4 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat2x4)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setMat4x2(const std::array<float, 8>& mat) {
+                m_type = Mat4x2 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat4x2)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setMat3x4(const std::array<float, 12>& mat) {
+                m_type = Mat3x4 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat3x4)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
+            void setMat4x3(const std::array<float, 12>& mat) {
+                m_type = Mat4x3 ;
+                std::copy(
+                    std::begin(mat),
+                    std::end(mat),
+                    std::begin(m_value.mat4x3)
+                ) ;
+            }
+
+            /**
+             * Set the parameter value.
+             */
             void setSampler2D(const int sampler2D) {
                 m_type = Sampler2D ;
                 m_value.sampler2D = sampler2D ;
@@ -284,7 +441,7 @@ namespace Hope {
             /**
              * Get the name of the parameter.
              */
-            std::string name() const {
+            const std::string& name() const {
                 return m_name ;
             }
 

@@ -81,6 +81,20 @@ namespace Hope::GL {
             }
 
             /**
+             * Unuse the program.
+             */
+            void unuse() {
+                glUseProgram(0) ;
+            }
+
+            /**
+             * Get the ID of the shader program, attributed by the OpenGL API.
+             */
+            GLuint id() const {
+                return m_programID ;
+            }
+
+            /**
              * Set the vertex shader file that contains the source code.
              */
             void setVertexShaderFile(const std::string& filepath) {

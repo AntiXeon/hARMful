@@ -2,6 +2,8 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
+#include <scene/components/materials/Material.hpp>
+#include <scene/ogl/rendering/glsl/ShaderParameterApplicator.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
@@ -32,4 +34,59 @@ void OpenGLRenderVisitor::visit(MeshComponent* component) {
 
 void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
     // TODO
+}
+
+void OpenGLRenderVisitor::visit(Material* component) {
+    auto materialParameters = component -> shaderParameters() ;
+    const RenderEffect* effect = component -> effect() ;
+
+    auto effectParameters = effect -> shaderParameters() ;
+    ShaderParameter::merge(materialParameters, effectParameters) ;
+
+    auto effectTechniques = effect -> techniques() ;
+
+    for (const std::shared_ptr<RenderTechnique>& technique : effectTechniques) {
+        // TODO: Check API compatibility.
+        auto appliedParameters = effectParameters ;
+        auto techniqueParameters = technique -> shaderParameters() ;
+        ShaderParameter::merge(appliedParameters, techniqueParameters) ;
+
+        auto renderPasses = technique -> renderPasses() ;
+
+        for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
+            auto passParameters = pass -> shaderParameters() ;
+            ShaderParameter::merge(appliedParameters, passParameters) ;
+
+            auto capabilities = pass -> capabilities() ;
+
+            // Apply the capabilities.
+            for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
+                capability -> apply() ;
+            }
+
+            // Do material processing.
+            std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
+            std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
+
+            if (shaderProgram) {
+                shaderProgram -> link() ;
+
+                // Set uniform values from the parameters here.
+                for (const std::shared_ptr<Hope::ShaderParameter> param : appliedParameters) {
+                    ShaderParameterApplicator::ApplyParameter(
+                        shaderProgram -> id(),
+                        param
+                    ) ;
+                }
+
+                shaderProgram -> use() ;
+                shaderProgram -> unuse() ;
+            }
+
+            // Restore the OpenGL state machine for the next rendered object.
+            for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
+                capability -> remove() ;
+            }
+        }
+    }
 }

@@ -8,6 +8,8 @@ namespace Hope::GL {
      * Encapsulate a GL capability.
      */
     class Capability {
+        friend class OpenGLRenderVisitor ;
+
         private:
             /**
              * To know if the capability is active or not before activating it.

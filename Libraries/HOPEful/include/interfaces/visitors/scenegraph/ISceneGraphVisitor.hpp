@@ -7,6 +7,7 @@ namespace Hope {
     class CameraComponent ;
     class MeshComponent ;
     class RenderConfiguration ;
+    class Material ;
 
     /**
      * Interface for the Visitor design pattern for objects inside the scene
@@ -33,6 +34,11 @@ namespace Hope {
              * Visit a render configuration component.
              */
             virtual void visit(Hope::RenderConfiguration* component) = 0 ;
+
+            /**
+             * Visit a material component.
+             */
+            virtual void visit(Material* component) = 0 ;
     } ;
 }
 

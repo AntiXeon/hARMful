@@ -39,6 +39,11 @@ namespace Hope::GL {
              * Visit a render configuration component.
              */
             void visit(Hope::RenderConfiguration* component) override ;
+
+            /**
+             * Visit a material component.
+             */
+            void visit(Material* component) override ;
     } ;
 }
 
