@@ -2,8 +2,12 @@
 #define __HOPE__OPENGL_RENDER_VISITOR__
 
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
+#include <scene/framegraph/shading/RenderTechnique.hpp>
+#include <memory>
+#include <set>
 
 namespace Hope::GL {
+
     /**
      * Visitor for rendering objects using the OpenGL API.
      */
@@ -44,6 +48,15 @@ namespace Hope::GL {
              * Visit a material component.
              */
             void visit(Material* component) override ;
+
+        private:
+            /**
+             * Select the best material technique of a material. It depends on
+             * the GPU supported version of the graphical API.
+             */
+            std::shared_ptr<RenderTechnique> selectBestMaterialTechnique(
+                const std::set<std::shared_ptr<RenderTechnique>>& techniques
+            ) ;
     } ;
 }
 

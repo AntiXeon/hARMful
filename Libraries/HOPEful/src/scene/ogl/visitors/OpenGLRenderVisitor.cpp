@@ -43,50 +43,91 @@ void OpenGLRenderVisitor::visit(Material* component) {
     auto effectParameters = effect -> shaderParameters() ;
     ShaderParameter::merge(materialParameters, effectParameters) ;
 
-    auto effectTechniques = effect -> techniques() ;
+    // Select the technique that is used.
+    std::shared_ptr<RenderTechnique> selectedTechnique ;
+    selectedTechnique = selectBestMaterialTechnique(effect -> techniques()) ;
 
-    for (const std::shared_ptr<RenderTechnique>& technique : effectTechniques) {
-        // TODO: Check API compatibility.
-        auto appliedParameters = effectParameters ;
-        auto techniqueParameters = technique -> shaderParameters() ;
-        ShaderParameter::merge(appliedParameters, techniqueParameters) ;
+    if (!selectedTechnique) {
+        // Impossible to render the material with the defined techniques...
+        return ;
+    }
 
-        auto renderPasses = technique -> renderPasses() ;
+    auto appliedParameters = effectParameters ;
+    auto techniqueParameters = selectedTechnique -> shaderParameters() ;
+    ShaderParameter::merge(appliedParameters, techniqueParameters) ;
+    auto renderPasses = selectedTechnique -> renderPasses() ;
 
-        for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
-            auto passParameters = pass -> shaderParameters() ;
-            ShaderParameter::merge(appliedParameters, passParameters) ;
+    for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
+        // Maybe should check render passes (or it will work in FrameGraph
+        // visitor through the RenderConditionAggregator?).
 
-            auto capabilities = pass -> capabilities() ;
+        auto passParameters = pass -> shaderParameters() ;
+        ShaderParameter::merge(appliedParameters, passParameters) ;
 
-            // Apply the capabilities.
-            for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
-                capability -> apply() ;
+        auto capabilities = pass -> capabilities() ;
+
+        // Apply the capabilities.
+        for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
+            capability -> apply() ;
+        }
+
+        // Do material processing.
+        std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
+        std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
+
+        if (shaderProgram) {
+            shaderProgram -> link() ;
+
+            // Set uniform values from the parameters here.
+            for (const std::shared_ptr<Hope::ShaderParameter> param : appliedParameters) {
+                ShaderParameterApplicator::ApplyParameter(
+                    shaderProgram -> id(),
+                    param
+                ) ;
             }
 
-            // Do material processing.
-            std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
-            std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
+            shaderProgram -> use() ;
+            shaderProgram -> unuse() ;
+        }
 
-            if (shaderProgram) {
-                shaderProgram -> link() ;
+        // Restore the OpenGL state machine for the next rendered object.
+        for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
+            capability -> remove() ;
+        }
+    }
+}
 
-                // Set uniform values from the parameters here.
-                for (const std::shared_ptr<Hope::ShaderParameter> param : appliedParameters) {
-                    ShaderParameterApplicator::ApplyParameter(
-                        shaderProgram -> id(),
-                        param
-                    ) ;
-                }
+std::shared_ptr<RenderTechnique> OpenGLRenderVisitor::selectBestMaterialTechnique(
+    const std::set<std::shared_ptr<RenderTechnique>>& techniques
+) {
+    GLint glSupportedMajorVersion = 0 ;
+    GLint glSupportedMinorVersion = 0 ;
+    glGetIntegerv(GL_MAJOR_VERSION, &glSupportedMajorVersion) ;
+    glGetIntegerv(GL_MINOR_VERSION, &glSupportedMinorVersion) ;
 
-                shaderProgram -> use() ;
-                shaderProgram -> unuse() ;
+    std::shared_ptr<RenderTechnique> selectedTechnique ;
+    for (const std::shared_ptr<RenderTechnique>& technique : techniques) {
+        // Check API compatibility.
+        if (technique -> api() != RenderTechnique::GraphicsAPI::OpenGL) {
+            // Discard API other than OpenGL (as we are in an OpenGL
+            // implementation!).
+            continue ;
+        }
+
+        if ((technique -> apiMajorVersion() <= glSupportedMajorVersion)
+                && (technique -> apiMinorVersion() <= glSupportedMinorVersion)) {
+            if (!selectedTechnique) {
+                // Set as used technique since it is compatible.
+                selectedTechnique = technique ;
             }
-
-            // Restore the OpenGL state machine for the next rendered object.
-            for (const std::shared_ptr<Hope::GL::Capability>& capability : capabilities) {
-                capability -> remove() ;
+            else if ((selectedTechnique -> apiMajorVersion() <= technique -> apiMajorVersion())
+                        && (selectedTechnique -> apiMinorVersion() <= technique -> apiMinorVersion())) {
+                // Set as used technique since it is compatible and it offers
+                // the most advanced graphical features.
+                selectedTechnique = technique ;
             }
         }
     }
+
+    return selectedTechnique ;
 }

@@ -74,6 +74,27 @@ namespace Hope {
             ) ;
 
             /**
+             * Get the used API.
+             */
+            GraphicsAPI api() const {
+                return m_apiParameters.api ;
+            }
+
+            /**
+             * Get the major version of the used API.
+             */
+            int apiMajorVersion() const {
+                return m_apiParameters.majorVersion ;
+            }
+
+            /**
+             * Get the minor version of the used API.
+             */
+            int apiMinorVersion() const {
+                return m_apiParameters.minorVersion ;
+            }
+
+            /**
              * Add a filter option.
              * If a FilterOption is set in the framegraph branch and that at
              * least one of them matches in the current render pass, the entity
