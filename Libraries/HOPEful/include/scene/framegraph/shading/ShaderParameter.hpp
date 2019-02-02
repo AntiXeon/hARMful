@@ -469,6 +469,13 @@ namespace Hope {
             /**
              * Get the value.
              */
+            unsigned int uinteger() const {
+                return m_value.uinteger ;
+            }
+
+            /**
+             * Get the value.
+             */
             float floating() const {
                 return m_value.floating ;
             }
@@ -518,6 +525,27 @@ namespace Hope {
             /**
              * Get the value.
              */
+            const unsigned int* uivec2() const {
+                return m_value.uivec2 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const unsigned int* uivec3() const {
+                return m_value.uivec3 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const unsigned int* uivec4() const {
+                return m_value.uivec4 ;
+            }
+
+            /**
+             * Get the value.
+             */
             const float* vec2() const {
                 return m_value.vec2 ;
             }
@@ -555,6 +583,48 @@ namespace Hope {
              */
             const float* mat4() const {
                 return m_value.mat4 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat2x3() const {
+                return m_value.mat2x3 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat3x2() const {
+                return m_value.mat3x2 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat2x4() const {
+                return m_value.mat2x4 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat4x2() const {
+                return m_value.mat4x2 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat3x4() const {
+                return m_value.mat3x4 ;
+            }
+
+            /**
+             * Get the value.
+             */
+            const float* mat4x3() const {
+                return m_value.mat4x3 ;
             }
 
             /**

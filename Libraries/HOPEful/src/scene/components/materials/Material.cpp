@@ -3,6 +3,9 @@
 
 using namespace Hope ;
 
+Material::Material()
+    : Component(Hope::MaterialComponentType) {}
+
 void Material::accept(ISceneGraphVisitor* visitor) {
     visitor -> visit(this) ;
 }

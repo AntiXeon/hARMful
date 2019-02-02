@@ -23,6 +23,11 @@ namespace Hope {
 
         public:
             /**
+             * Create a Material.
+             */
+            Material() ;
+
+            /**
              * Accept the visitor.
              */
             void accept(ISceneGraphVisitor* visitor) override ;

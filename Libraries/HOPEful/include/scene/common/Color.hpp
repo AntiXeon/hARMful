@@ -93,28 +93,28 @@ namespace Hope {
             /**
              * Get the red channel value.
              */
-            float red() {
+            float red() const {
                 return m_red ;
             }
 
             /**
              * Get the red channel value.
              */
-            float green() {
+            float green() const {
                 return m_green ;
             }
 
             /**
              * Get the red channel value.
              */
-            float blue() {
+            float blue() const {
                 return m_blue ;
             }
 
             /**
              * Get the red channel value.
              */
-            float alpha() {
+            float alpha() const {
                 return m_alpha ;
             }
 
