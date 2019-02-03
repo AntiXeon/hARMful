@@ -2,10 +2,10 @@
 
 using namespace Hope ;
 
-const std::string PhongMaterial::AmbientParamName = "ambientColor" ;
-const std::string PhongMaterial::DiffuseParamName = "diffuseColor" ;
-const std::string PhongMaterial::SpecularParamName = "specularColor" ;
-const std::string PhongMaterial::ShininessParamName = "shininess" ;
+const std::string PhongMaterial::AmbientParamName = "material.ambientColor" ;
+const std::string PhongMaterial::DiffuseParamName = "material.diffuseColor" ;
+const std::string PhongMaterial::SpecularParamName = "material.specularColor" ;
+const std::string PhongMaterial::ShininessParamName = "material.shininess" ;
 
 PhongMaterial::PhongMaterial()
     : Material() {

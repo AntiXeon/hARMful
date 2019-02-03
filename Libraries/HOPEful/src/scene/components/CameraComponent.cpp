@@ -12,7 +12,7 @@ CameraComponent::CameraComponent()
     : Component(Hope::CameraComponentType),
       m_viewDirection(Mind::Vector3f(0.f, 0.f, -1.f)),
       m_clearColor(DefaultClearColor) {
-    m_projectionMatrix.identity() ;
+    m_viewMatrix.identity() ;
 }
 
 void CameraComponent::accept(ISceneGraphVisitor* visitor) {
@@ -59,7 +59,7 @@ Mind::Matrix4x4f& CameraComponent::lookAt(
     rotationMat.setRowValues(2, m_viewDirection) ;
 
     output = rotationMat * translationMat ;
-    m_projectionMatrix = output ;
+    m_viewMatrix = output ;
     return output ;
 }
 
@@ -79,8 +79,8 @@ Mind::Vector3f CameraComponent::up() {
     return m_up ;
 }
 
-Mind::Matrix4x4f CameraComponent::projectionMatrix() {
-    return m_projectionMatrix ;
+Mind::Matrix4x4f CameraComponent::viewMatrix() {
+    return m_viewMatrix ;
 }
 
 Color CameraComponent::clearColor() {

@@ -46,9 +46,9 @@ namespace Hope {
             Mind::Vector3f m_up ;
 
             /**
-             * Projection matrix.
+             * View matrix.
              */
-            Mind::Matrix4x4f m_projectionMatrix ;
+            Mind::Matrix4x4f m_viewMatrix ;
 
             /**
              * Clear color when using the current camera.
@@ -78,7 +78,7 @@ namespace Hope {
             void setClearColor(const Color& color) ;
 
             /**
-             * Generate the projection matrix.
+             * Generate the view matrix.
              * @param   projection  Output the projection matrix.
              * @param   position    Position of the camera.
              * @param   target      Center of the camera view.
@@ -115,9 +115,9 @@ namespace Hope {
             Mind::Vector3f up() ;
 
             /**
-             * Get the projection matrix.
+             * Get the view matrix.
              */
-            Mind::Matrix4x4f projectionMatrix() ;
+            Mind::Matrix4x4f viewMatrix() ;
 
             /**
              * Get the clear color of the camera.

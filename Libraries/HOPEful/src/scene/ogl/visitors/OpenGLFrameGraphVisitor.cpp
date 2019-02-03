@@ -41,10 +41,10 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
     // Update the model view matrix.
     glMatrixMode(GL_MODELVIEW) ;
-    Mind::Matrix4x4f projectionMatrix = camera -> projectionMatrix() ;
-    float projectionMatrixData[Mind::Matrix4x4f::MatrixSize] ;
-    projectionMatrix.data(projectionMatrixData) ;
-    glMultMatrixf(projectionMatrixData) ;
+    Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
+    float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
+    viewMatrix.data(viewMatrixData) ;
+    glMultMatrixf(viewMatrixData) ;
 
     Hope::Entity* cameraEntity = camera -> firstEntity() ;
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
