@@ -18,6 +18,11 @@ namespace Hope::GL {
              */
             FrameID m_currentFrameID = 0 ;
 
+            /**
+             * The entity that is currently processed.
+             */
+            Hope::Entity* m_processedEntity = nullptr ;
+
         public:
             /**
              * A new frame starts to be rendered.
@@ -28,6 +33,16 @@ namespace Hope::GL {
              * Get the current frame ID while visiting.
              */
             FrameID currentFrameID() const override ;
+
+            /**
+             * Set the entity that is processed.
+             */
+            void setProcessedEntity(Hope::Entity* entity) override ;
+
+            /**
+             * Get the entity that is processed.
+             */
+            Hope::Entity* processedEntity() const override ;
 
             /**
              * Visit a camera component.

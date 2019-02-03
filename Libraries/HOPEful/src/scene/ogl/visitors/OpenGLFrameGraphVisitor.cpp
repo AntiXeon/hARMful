@@ -116,6 +116,8 @@ void OpenGLFrameGraphVisitor::backupRenderConditions() {
 
 void OpenGLFrameGraphVisitor::renderGraph(Entity* renderedEntity) {
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
+        m_renderVisitor.setProcessedEntity(renderedEntity) ;
+
         // Process each component of the current entity.
         // [!PERF] The components() method can slow the rendering.
         std::vector<Component*> components = renderedEntity -> components() ;

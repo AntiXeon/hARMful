@@ -147,6 +147,8 @@ void Material::setupDefaultParameters() {
 }
 
 void Material::updateParameterValues(ISceneGraphVisitor* /*visitor*/) {
+    //Hope::Entity* entity = visitor -> processedEntity() ;
+
     // m_modelMatrix
     // m_viewMatrix
     // m_projectionMatrix
