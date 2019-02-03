@@ -2,7 +2,6 @@
 #include <scene/ogl/Window.hpp>
 #include <scene/ogl/Options.hpp>
 #include <utils/LogSystem.hpp>
-#include <iostream>
 #include <cstdlib>
 #include <functional>
 

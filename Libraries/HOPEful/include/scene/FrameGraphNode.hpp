@@ -83,6 +83,11 @@ namespace Hope {
              */
             virtual void specificAccept(IFrameGraphVisitor* /*visitor*/) {}
 
+            /**
+             * Root of the scene graph.
+             */
+            Entity* sceneRoot() ;
+
         private:
             /**
              * General method for accepting visitors.

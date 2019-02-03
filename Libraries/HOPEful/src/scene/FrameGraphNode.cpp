@@ -43,6 +43,10 @@ const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
     return m_children ;
 }
 
+Entity* FrameGraphNode::sceneRoot() {
+    return m_sceneGraphRoot ;
+}
+
 void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
     size_t amountChildren = children().size() ;
     if (amountChildren == 0) {

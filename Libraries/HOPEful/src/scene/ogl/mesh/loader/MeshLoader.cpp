@@ -1,5 +1,6 @@
 #include <scene/ogl/mesh/loader/MeshLoader.hpp>
 #include <scene/ogl/mesh/Vertex.hpp>
+#include <utils/LogSystem.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -8,6 +9,7 @@ using namespace Hope::GL ;
 
 MeshLoader::MeshLoader(const std::string& source) {
     m_source = source ;
+    load() ;
 }
 
 std::shared_ptr<Mesh>& MeshLoader::mesh() {
@@ -27,7 +29,15 @@ bool MeshLoader::load() {
         success = initializeFromScene(scene) ;
     }
     else {
-        // Log errors...
+        std::string errorLog = importer.GetErrorString() ;
+
+        // Write the error in the log.
+        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+        auto logSharedPtr = logWeakPtr.lock() ;
+        if (logSharedPtr) {
+            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+            logSharedPtr -> writeLine(level, errorLog) ;
+        }
     }
 
     return success ;

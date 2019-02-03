@@ -98,6 +98,7 @@ namespace Hope {
             /**
              * Get the transform of the entity.
              */
+            const Transform& transform() const ;
             Transform& transform() ;
 
             /**

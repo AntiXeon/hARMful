@@ -5,9 +5,11 @@
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
+#include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
 #include <list>
+#include <stack>
 #include <cassert>
 
 namespace Hope::GL {
@@ -44,6 +46,11 @@ namespace Hope::GL {
              * graph.
              */
             std::list<Hope::RenderConditionAggregator> m_aggregators ;
+
+            /**
+             * Stack of the nodes that are processed.
+             */
+            std::stack<Hope::ProcessedSceneNode> m_processedNodes ;
 
         public:
             /**
@@ -131,7 +138,7 @@ namespace Hope::GL {
             /**
              * Render the provided entity. Recursive method.
              */
-            void renderGraph(Entity* renderedEntity) ;
+            void renderGraph() ;
     } ;
 }
 

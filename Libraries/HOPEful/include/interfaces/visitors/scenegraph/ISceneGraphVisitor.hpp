@@ -8,7 +8,7 @@ namespace Hope {
     class MeshComponent ;
     class RenderConfiguration ;
     class Material ;
-    class Entity ;
+    class ProcessedSceneNode ;
 
     /**
      * Interface for the Visitor design pattern for objects inside the scene
@@ -22,14 +22,14 @@ namespace Hope {
             virtual FrameID currentFrameID() const = 0 ;
 
             /**
-             * Set the entity that is processed.
+             * Set the node that is processed.
              */
-            virtual void setProcessedEntity(Hope::Entity* entity) = 0 ;
+            virtual void setProcessedNode(const Hope::ProcessedSceneNode& node) = 0 ;
 
             /**
-             * Get the entity that is processed.
+             * Get the node that is processed.
              */
-            virtual Hope::Entity* processedEntity() const = 0 ;
+            virtual const Hope::ProcessedSceneNode& processedNode() const = 0 ;
 
             /**
              * Visit a camera component.

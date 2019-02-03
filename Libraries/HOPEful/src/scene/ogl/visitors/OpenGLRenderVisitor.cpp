@@ -16,12 +16,12 @@ FrameID OpenGLRenderVisitor::currentFrameID() const {
     return m_currentFrameID ;
 }
 
-void OpenGLRenderVisitor::setProcessedEntity(Hope::Entity* entity) {
-    m_processedEntity = entity ;
+void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node) {
+    m_processedNode = node ;
 }
 
-Hope::Entity* OpenGLRenderVisitor::processedEntity() const {
-    return m_processedEntity ;
+const Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() const {
+    return m_processedNode ;
 }
 
 void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {

@@ -48,6 +48,11 @@ namespace Hope {
              */
             const std::vector<Node*>& children() const ;
 
+            /**
+             * Amount of children.
+             */
+            size_t childrenCount() const ;
+
             // Remove copy/move operations.
             Node(const Node& copied) = delete;
             Node(Node&& moved) = delete;

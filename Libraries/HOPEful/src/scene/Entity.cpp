@@ -92,6 +92,10 @@ bool Entity::isActive() const {
     return m_isActive ;
 }
 
+const Transform& Entity::transform() const {
+    return m_transform ;
+}
+
 Transform& Entity::transform() {
     return m_transform ;
 }

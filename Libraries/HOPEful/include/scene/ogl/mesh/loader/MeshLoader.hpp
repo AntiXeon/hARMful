@@ -30,7 +30,7 @@ namespace Hope::GL {
             /**
              * Mesh that is loaded as a usable structure within HOPEful.
              */
-            std::shared_ptr<Mesh> m_mesh ;
+            std::shared_ptr<Mesh> m_mesh = nullptr ;
 
         public:
             /**

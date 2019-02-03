@@ -3,11 +3,13 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-Scene::Scene() {
-    m_root = new Entity() ;
-    m_renderConfig = new RenderConfiguration() ;
+Scene::Scene()
+    : m_root(new Entity()),
+      m_renderConfig(new RenderConfiguration()) {
     m_root -> addComponent(m_renderConfig) ;
     m_root -> setRenderData(&m_renderData) ;
+
+    m_frameGraphVisitor.setSceneRoot(m_root) ;
 }
 
 Scene::~Scene() {

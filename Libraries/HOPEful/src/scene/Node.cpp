@@ -42,6 +42,10 @@ const std::vector<Node*>& Node::children() const {
     return m_children ;
 }
 
+size_t Node::childrenCount() const {
+    return m_children.size() ;
+}
+
 bool Node::addChild(Node* newChild) {
     assert(newChild != nullptr) ;
 

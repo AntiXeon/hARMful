@@ -97,10 +97,17 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
 
-    // For each entity: check if all the conditions are OK otherwise, go back to
-    // the parent entity and process the other ones.
-    // The children of an invalid entity are discarded as well.
-    renderGraph(m_root) ;
+    Hope::ProcessedSceneNode rootNode ;
+    rootNode.node = m_root ;
+    rootNode.worldMatrix = (m_root -> transform()).matrix() ;
+    m_processedNodes.push(rootNode) ;
+
+    while (m_processedNodes.size() > 0) {
+        // For each entity: check if all the conditions are OK otherwise, go back to
+        // the parent entity and process the other ones.
+        // The children of an invalid entity are discarded as well.
+        renderGraph() ;
+    }
 
     // Remove the last RenderConditionAggregator from the list!
     m_aggregators.pop_back() ;
@@ -114,22 +121,38 @@ void OpenGLFrameGraphVisitor::backupRenderConditions() {
     m_aggregators.push_back(copy) ;
 }
 
-void OpenGLFrameGraphVisitor::renderGraph(Entity* renderedEntity) {
-    if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
-        m_renderVisitor.setProcessedEntity(renderedEntity) ;
+void OpenGLFrameGraphVisitor::renderGraph() {
+    Hope::Entity* renderedEntity = m_processedNodes.top().node ;
 
-        // Process each component of the current entity.
-        // [!PERF] The components() method can slow the rendering.
+    if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
+        // Process the components of the top node.
+        m_renderVisitor.setProcessedNode(m_processedNodes.top()) ;
         std::vector<Component*> components = renderedEntity -> components() ;
         for (Component* component : components) {
             component -> accept(&m_renderVisitor) ;
         }
 
-        // Process each child.
-        std::vector<Node*> children = renderedEntity -> children() ;
-        for (Node* child : children) {
-            Entity* childEntity = static_cast<Entity*>(child) ;
-            renderGraph(childEntity) ;
+        // Save the parent world matrix before pop.
+        Mind::Matrix4x4f parentMatrix = m_processedNodes.top().worldMatrix ;
+        // As the top node is processed, pop it from the stack.
+        m_processedNodes.pop() ;
+
+        // Avoid further processing if not necessary...
+        if (renderedEntity -> childrenCount() == 0) {
+            return ;
+        }
+
+        // If the node has children, push them in the stack.
+        const std::vector<Node*>& nodeChildren = renderedEntity -> children() ;
+        for (const Hope::Node* child : nodeChildren) {
+            const Hope::Entity* childEntityConst = static_cast<const Entity*>(child) ;
+            Hope::Entity* childEntity = const_cast<Entity*>(childEntityConst) ;
+            Mind::Matrix4x4f childMatrix = (childEntity -> transform()).matrix() ;
+
+            Hope::ProcessedSceneNode childNode ;
+            childNode.node = childEntity ;
+            childNode.worldMatrix = parentMatrix * childMatrix ;
+            m_processedNodes.push(childNode) ;
         }
     }
 }

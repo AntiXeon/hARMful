@@ -3,6 +3,7 @@
 
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/shading/RenderTechnique.hpp>
+#include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <memory>
 #include <set>
 
@@ -19,9 +20,9 @@ namespace Hope::GL {
             FrameID m_currentFrameID = 0 ;
 
             /**
-             * The entity that is currently processed.
+             * The node that is currently processed.
              */
-            Hope::Entity* m_processedEntity = nullptr ;
+            Hope::ProcessedSceneNode m_processedNode ;
 
         public:
             /**
@@ -35,14 +36,14 @@ namespace Hope::GL {
             FrameID currentFrameID() const override ;
 
             /**
-             * Set the entity that is processed.
+             * Set the node that is processed.
              */
-            void setProcessedEntity(Hope::Entity* entity) override ;
+            void setProcessedNode(const Hope::ProcessedSceneNode& node) override ;
 
             /**
-             * Get the entity that is processed.
+             * Get the node that is processed.
              */
-            Hope::Entity* processedEntity() const override ;
+            const Hope::ProcessedSceneNode& processedNode() const override ;
 
             /**
              * Visit a camera component.

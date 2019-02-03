@@ -1,27 +1,28 @@
 #include <scene/components/materials/Material.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
+#include <scene/framegraph/ProcessedSceneNode.hpp>
 
 using namespace Hope ;
 
-const std::string ModelMatrixParamName = u8"modelMatrix" ;
-const std::string ViewMatrixParamName = u8"viewMatrix" ;
-const std::string ProjectionMatrixParamName = u8"projectionMatrix" ;
-const std::string ModelViewMatrixParamName = u8"modelViewMatrix" ;
-const std::string ViewProjectionMatrixParamName = u8"viewProjectionMatrix" ;
-const std::string MVPMatrixParamName = u8"mvpMatrix" ;
-const std::string InverseModelMatrixParamName = u8"inverseModelMatrix" ;
-const std::string InverseViewMatrixParamName = u8"inverseViewMatrix" ;
-const std::string InverseProjectionMatrixParamName = u8"inverseProjectionMatrix" ;
-const std::string InverseModelViewMatrixParamName = u8"inverseModelViewMatrix" ;
-const std::string InverseViewProjectionMatrixParamName = u8"inverseViewProjectionMatrix" ;
-const std::string InverseMVPMatrixParamName = u8"inverseMVPMatrix" ;
-const std::string ModelNormalMatrixParamName = u8"modelNormalMatrix" ;
-const std::string ModelViewNormalMatrixParamName = u8"modelViewNormalMatrix" ;
-const std::string ViewportMatrixParamName = u8"viewportMatrix" ;
-const std::string InverseViewportMatrixParamName = u8"inverseViewportMatrix" ;
-const std::string AspectRatioParamName = u8"aspectRatio" ;
-const std::string TimeParamName = u8"time" ;
-const std::string EyePositionParamName = u8"eyePosition" ;
+const std::string Hope::Material::ModelMatrixParamName = u8"modelMatrix" ;
+const std::string Hope::Material::ViewMatrixParamName = u8"viewMatrix" ;
+const std::string Hope::Material::ProjectionMatrixParamName = u8"projectionMatrix" ;
+const std::string Hope::Material::ModelViewMatrixParamName = u8"modelViewMatrix" ;
+const std::string Hope::Material::ViewProjectionMatrixParamName = u8"viewProjectionMatrix" ;
+const std::string Hope::Material::MVPMatrixParamName = u8"mvpMatrix" ;
+const std::string Hope::Material::InverseModelMatrixParamName = u8"inverseModelMatrix" ;
+const std::string Hope::Material::InverseViewMatrixParamName = u8"inverseViewMatrix" ;
+const std::string Hope::Material::InverseProjectionMatrixParamName = u8"inverseProjectionMatrix" ;
+const std::string Hope::Material::InverseModelViewMatrixParamName = u8"inverseModelViewMatrix" ;
+const std::string Hope::Material::InverseViewProjectionMatrixParamName = u8"inverseViewProjectionMatrix" ;
+const std::string Hope::Material::InverseMVPMatrixParamName = u8"inverseMVPMatrix" ;
+const std::string Hope::Material::ModelNormalMatrixParamName = u8"modelNormalMatrix" ;
+const std::string Hope::Material::ModelViewNormalMatrixParamName = u8"modelViewNormalMatrix" ;
+const std::string Hope::Material::ViewportMatrixParamName = u8"viewportMatrix" ;
+const std::string Hope::Material::InverseViewportMatrixParamName = u8"inverseViewportMatrix" ;
+const std::string Hope::Material::AspectRatioParamName = u8"aspectRatio" ;
+const std::string Hope::Material::TimeParamName = u8"time" ;
+const std::string Hope::Material::EyePositionParamName = u8"eyePosition" ;
 
 Material::Material()
     : Component(Hope::MaterialComponentType) {
@@ -147,7 +148,7 @@ void Material::setupDefaultParameters() {
 }
 
 void Material::updateParameterValues(ISceneGraphVisitor* /*visitor*/) {
-    //Hope::Entity* entity = visitor -> processedEntity() ;
+    //Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
 
     // m_modelMatrix
     // m_viewMatrix
