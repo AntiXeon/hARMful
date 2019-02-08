@@ -114,7 +114,7 @@ namespace Mind {
                  * Cast the current Vector4 to its inner data type.
                  * @return  The inner data.
                  */
-                explicit operator __m128i() const ;
+                operator __m128i() const ;
         } ;
 
 

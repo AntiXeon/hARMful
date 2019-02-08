@@ -1,4 +1,5 @@
 #include <matrices/Matrix4x4f.hpp>
+#include <Math.hpp>
 #include <iomanip>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available

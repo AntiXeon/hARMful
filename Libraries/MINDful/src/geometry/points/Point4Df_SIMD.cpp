@@ -55,6 +55,10 @@ namespace Mind {
         return Point4Df(middle) ;
     }
 
+    Point4Df Point4Df::mul(const Point4Df& p, const Point4Df& other) {
+        return Point4Df(p.m_values * other.m_values) ;
+    }
+
     Scalar Point4Df::distanceX(const Point4Df& a, const Point4Df& b) {
         SIMD::Vector4f diff = a.m_values - b.m_values ;
         return std::fabs(diff[X]) ;
@@ -108,6 +112,10 @@ namespace Mind {
 
     void Point4Df::set(const Point4Df& position) {
         m_values = position.m_values ;
+    }
+
+    std::array<float, 4> Point4Df::toArray() {
+        return {m_values[0], m_values[1], m_values[2], m_values[3]} ;
     }
 
     Point4Df::operator Dimension2Df() {

@@ -79,6 +79,15 @@ namespace Mind {
         ) ;
     }
 
+    Point4Df Point4Df::mul(const Point4Df& p, const Point4Df& other) {
+        return Point4Df(
+            p.m_values[Point4Df::Axis::X] * other.m_values[Point4Df::Axis::X],
+            p.m_values[Point4Df::Axis::Y] * other.m_values[Point4Df::Axis::Y],
+            p.m_values[Point4Df::Axis::Z] * other.m_values[Point4Df::Axis::Z],
+            p.m_values[Point4Df::Axis::W] * other.m_values[Point4Df::Axis::W]
+        ) ;
+    }
+
     Scalar Point4Df::distanceX(const Point4Df& a, const Point4Df& b) {
         return a.m_values[Point4Df::Axis::X] - b.m_values[Point4Df::Axis::X] ;
     }
@@ -139,6 +148,10 @@ namespace Mind {
         m_values[Point4Df::Axis::Y] = position.m_values[Point4Df::Axis::Y] ;
         m_values[Point4Df::Axis::Z] = position.m_values[Point4Df::Axis::Z] ;
         m_values[Point4Df::Axis::W] = position.m_values[Point4Df::Axis::W] ;
+    }
+
+    std::array<float, 4> Point4Df::toArray() {
+        return m_values ;
     }
 
     Point4Df::operator Dimension2Df() {

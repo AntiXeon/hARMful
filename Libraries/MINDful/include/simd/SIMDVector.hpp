@@ -10,12 +10,14 @@
         #include <simd/intel_sse2/integers/SIMDVector4i.hpp>
         #include <simd/intel_sse2/integers/SIMDVector4ui.hpp>
         #include <simd/intel_sse2/floats/SIMDVector4f.hpp>
+        #include <simd/intel_sse2/floats/FloatUtils.hpp>
     #elif defined(USE_ARM_NEON)
         #define PARALLELIZATION_ENABLED
         #include <simd/arm_neon/integers/SIMDVector4.hpp>
         #include <simd/arm_neon/integers/SIMDVector4i.hpp>
         #include <simd/arm_neon/integers/SIMDVector4ui.hpp>
         #include <simd/arm_neon/floats/SIMDVector4f.hpp>
+        #include <simd/arm_neon/floats/FloatUtils.hpp>
     #endif
 
 #endif

@@ -44,6 +44,13 @@ namespace Mind {
         return Point2Df(xMiddle, yMiddle) ;
     }
 
+    Point2Df Point2Df::mul(const Point2Df& p, const Point2Df& other) {
+        return Point2Df(
+            p.m_values[Point2Df::Axis::X] * other.m_values[Point2Df::Axis::X],
+            p.m_values[Point2Df::Axis::Y] * other.m_values[Point2Df::Axis::Y]
+        ) ;
+    }
+
     Scalar Point2Df::distanceX(const Point2Df& a, const Point2Df& b) {
         return std::fabs(a.m_values[Point2Df::Axis::X] - b.m_values[Point2Df::Axis::X]) ;
     }
@@ -131,6 +138,10 @@ namespace Mind {
     void Point2Df::set(const Point2Df& position) {
         m_values[Point2Df::Axis::X] = position.m_values[Point2Df::Axis::X] ;
         m_values[Point2Df::Axis::Y] = position.m_values[Point2Df::Axis::Y] ;
+    }
+
+    std::array<float, 2> Point2Df::toArray() {
+        return m_values ;
     }
 
     Point2Df::operator Dimension2Df() {

@@ -217,6 +217,35 @@ namespace UTMind {
         check(compare(m5.at(3, 1), m4.at(3, 1))) ;
         check(compare(m5.at(3, 2), m4.at(3, 2))) ;
         check(compare(m5.at(3, 3), m4.at(3, 3))) ;
+
+        // Inverse.
+        Matrix4x4f m6 ;
+        Matrix4x4f m7 ;
+        m7.setRowValues(0, Point4Df( 0.f, 0.f, 1.f, 5.f)) ;
+        m7.setRowValues(1, Point4Df( 0.f, 3.f, 0.f, 3.f)) ;
+        m7.setRowValues(2, Point4Df(-1.f, 0.f, 0.f, 2.f)) ;
+        m7.setRowValues(3, Point4Df( 0.f, 0.f, 0.f, 1.f)) ;
+
+        m7.inverse(m6) ;
+        check(compare(m6.at(0, 0),  0.f)) ;
+        check(compare(m6.at(0, 1),  0.f)) ;
+        check(compare(m6.at(0, 2), -1.f)) ;
+        check(compare(m6.at(0, 3),  2.f)) ;
+        check(compare(m6.at(1, 0),  0.f)) ;
+        check(compare(m6.at(1, 1),  1.f/3.f)) ;
+        check(compare(m6.at(1, 2),  0.f)) ;
+        check(compare(m6.at(1, 3), -1.f)) ;
+        check(compare(m6.at(2, 0),  1.f)) ;
+        check(compare(m6.at(2, 1),  0.f)) ;
+        check(compare(m6.at(2, 2),  0.f)) ;
+        check(compare(m6.at(2, 3), -5.f)) ;
+        check(compare(m6.at(3, 0),  0.f)) ;
+        check(compare(m6.at(3, 1),  0.f)) ;
+        check(compare(m6.at(3, 2),  0.f)) ;
+        check(compare(m6.at(3, 3),  1.f)) ;
+
+        std::cout << m7 << std::endl ;
+        std::cout << m6 << std::endl ;
     }
 
     void UTMatrix4x4f::operators() {

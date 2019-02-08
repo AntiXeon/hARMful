@@ -6,6 +6,36 @@
 namespace Mind {
     const size_t SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
 
+
+    static SIMD::Vector4f subFactor(
+        SquareMatrixf& that,
+        const int shuffleA,
+        const int shuffleB,
+        const int shuffle0,
+        const int shuffle3
+    ) {
+        SIMD::Vector4f swp0a = VecShuffle1(that[3], that[2], shuffleA) ;
+        SIMD::Vector4f swp0b = VecShuffle1(that[3], that[2], shuffleB) ;
+
+        SIMD::Vector4f swp0 = VecShuffle1(that[2], that[1], shuffle0) ;
+        SIMD::Vector4f swp1 = VecShuffle(swp0a, swp0a, 2, 0, 0, 0) ;
+        SIMD::Vector4f swp2 = VecShuffle(swp0b, swp0b, 2, 0, 0, 0) ;
+        SIMD::Vector4f swp3 = VecShuffle1(that[2], that[1], shuffle3) ;
+
+        SIMD::Vector4f mul0 = swp0 * swp1 ;
+        SIMD::Vector4f mul1 = swp2 * swp3 ;
+        return mul0 - mul1 ;
+    }
+
+    static SIMD::Vector4f predefinedVecShuffle(
+        SquareMatrixf& that,
+        const int shuffle
+    ) {
+        SIMD::Vector4f Temp = VecShuffle1(that[1], that[0], shuffle) ;
+        return VecSwizzle(Temp, 2, 2, 2, 0) ;
+    }
+
+
     SquareMatrixf::SquareMatrixf(
         const size_t size,
         const Scalar value
@@ -40,6 +70,71 @@ namespace Mind {
             at(2,2),
             at(3,3)
         ).horizontalAdd() ;
+    }
+
+    void SquareMatrixf::inverse(SquareMatrixf& result) {
+        SIMD::Vector4f fac0 = subFactor(*this, 3, 2, 2, 3) ;
+        SIMD::Vector4f fac1 = subFactor(*this, 3, 1, 1, 3) ;
+        SIMD::Vector4f fac2 = subFactor(*this, 2, 1, 1, 2) ;
+        SIMD::Vector4f fac3 = subFactor(*this, 3, 0, 0, 3) ;
+        SIMD::Vector4f fac4 = subFactor(*this, 2, 0, 0, 2) ;
+        SIMD::Vector4f fac5 = subFactor(*this, 1, 0, 0, 1) ;
+
+        SIMD::Vector4f signA(+1, -1, +1, -1) ;
+        SIMD::Vector4f signB(-1, +1, -1, +1) ;
+
+        SIMD::Vector4f vec0  = predefinedVecShuffle(*this, 0) ;
+        SIMD::Vector4f vec1  = predefinedVecShuffle(*this, 1) ;
+        SIMD::Vector4f vec2  = predefinedVecShuffle(*this, 2) ;
+        SIMD::Vector4f vec3  = predefinedVecShuffle(*this, 3) ;
+
+        // Column 0.
+        SIMD::Vector4f mul0 = vec1 * fac0 ;
+    	SIMD::Vector4f mul1 = vec2 * fac1 ;
+    	SIMD::Vector4f mul2 = vec3 * fac2 ;
+    	SIMD::Vector4f sub0 = mul0 - mul1 ;
+    	SIMD::Vector4f add0 = sub0 + mul2 ;
+        SIMD::Vector4f inv0 = signB * add0 ;
+
+        // Column 1.
+        SIMD::Vector4f mul3 = vec0 * fac0 ;
+    	SIMD::Vector4f mul4 = vec2 * fac3 ;
+    	SIMD::Vector4f mul5 = vec3 * fac4 ;
+    	SIMD::Vector4f sub1 = mul3 - mul4 ;
+    	SIMD::Vector4f add1 = sub1 + mul5 ;
+        SIMD::Vector4f inv1 = signA * add1 ;
+
+        // Column 2.
+        SIMD::Vector4f mul6 = vec0 * fac1 ;
+    	SIMD::Vector4f mul7 = vec1 * fac3 ;
+    	SIMD::Vector4f mul8 = vec3 * fac5 ;
+    	SIMD::Vector4f sub2 = mul6 - mul7 ;
+    	SIMD::Vector4f add2 = sub2 + mul8 ;
+        SIMD::Vector4f inv2 = signB * add2 ;
+
+        // Column 3.
+        SIMD::Vector4f mul9 = vec0 * fac2 ;
+    	SIMD::Vector4f mul10 = vec1 * fac4 ;
+    	SIMD::Vector4f mul11 = vec2 * fac5 ;
+    	SIMD::Vector4f sub3 = mul9 - mul10 ;
+    	SIMD::Vector4f add3 = sub3 + mul11 ;
+        SIMD::Vector4f inv3 = signA * add3 ;
+
+        // Rows.
+        SIMD::Vector4f row0 = VecShuffle1(inv0, inv1, 0) ;
+        SIMD::Vector4f row1 = VecShuffle1(inv2, inv3, 0) ;
+        SIMD::Vector4f row2 = VecShuffle(row0, row1, 2, 0, 2, 0) ;
+
+        // Determinant.
+        const static SIMD::Vector4f One(1.f) ;
+        SIMD::Vector4f det0 = m_data[0].dot(row2) ;
+        SIMD::Vector4f rcp0 = One / det0 ;
+
+        //	Inverse /= Determinant;
+        result[0] = inv0 * rcp0 ;
+        result[1] = inv1 * rcp0 ;
+        result[2] = inv2 * rcp0 ;
+        result[3] = inv3 * rcp0 ;
     }
 
     size_t SquareMatrixf::size() const {

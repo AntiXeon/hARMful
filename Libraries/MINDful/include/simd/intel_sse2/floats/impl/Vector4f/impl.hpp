@@ -200,6 +200,18 @@ inline Vector4f Vector4f::fast_sqrt(const Vector4f& vec) {
     return _mm_rcp_ps(_mm_rsqrt_ps((__m128) vec)) ;
 }
 
+inline Vector4f Vector4f::blend(
+    const Vector4f& a,
+    const Vector4f& b,
+    const Vector4f::Mask& mask
+) {
+    #if defined(USE_INTEL_SSE4_1)
+        return _mm_blendv_ps(a, b, mask) ;
+    #else
+        return _mm_or_ps(_mm_and_ps(a, mask), _mm_andnot_ps(mask, b)) ;
+    #endif
+}
+
 
                                                         /** FUSED OPERATIONS **/
 inline Vector4f Vector4f::mul_add(

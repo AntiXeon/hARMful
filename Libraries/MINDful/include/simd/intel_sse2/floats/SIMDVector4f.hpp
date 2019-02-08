@@ -316,6 +316,15 @@ namespace Mind {
                  */
                 static Vector4f fast_sqrt(const Vector4f& vec) ;
 
+                /**
+                 * Blend two vectors applying a mask.
+                 */
+                static Vector4f blend(
+                    const Vector4f& a,
+                    const Vector4f& b,
+                    const Vector4f::Mask& mask
+                ) ;
+
 
                                                         /** FUSED OPERATIONS **/
                 /**
@@ -536,7 +545,7 @@ namespace Mind {
                  * Cast the current Vector4f to its inner data type.
                  * @return  The inner data.
                  */
-                explicit operator __m128() const ;
+                operator __m128() const ;
 
                 /**
                  * Cast the current Vector4f to an array of float values.
@@ -627,7 +636,7 @@ namespace Mind {
                         i2 < 0 ? -1 : j2 | (j2+1)<<8 | (j2+2)<<16 | (j2+3) << 24,
                         i3 < 0 ? -1 : j3 | (j3+1)<<8 | (j3+2)<<16 | (j3+3) << 24
                     > () ;
-                    m_inner.vec = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(a),mask2)) ;
+                    m_inner.vec = _mm_castsi128_ps(_mm_shuffle_epi8(_mm_castps_si128(m_inner.vec), MaskZeroPositions)) ;
                 #else
                     __m128 tmp = _mm_shuffle_ps(m_inner.vec, m_inner.vec, ((i0) | (i1 << 2) | (i2 << 4) | (i3 << 6))) ;
                     __m128i MaskZeroPositions = Vector4i::constant<

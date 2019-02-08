@@ -95,6 +95,13 @@ namespace Mind {
             exported Scalar trace() const ;
 
             /**
+             * Inverse the matrix.
+             * This source code is inspired from GLM library.
+             * https://github.com/g-truc/glm/blob/master/glm/simd/matrix.h
+             */
+            exported void inverse(SquareMatrixf& result) ;
+
+            /**
              * Set the values of a column from a Point2D.
              * @param   column  Index of the column in the SquareMatrix.
              * @param   values  Values to set.

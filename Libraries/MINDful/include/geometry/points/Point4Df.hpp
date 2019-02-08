@@ -114,6 +114,13 @@ namespace Mind {
             exported static Point4Df merge(const Point4Df& a, const Point4Df& b) ;
 
             /**
+             * Multiply a Point coordinates by another.
+             * @param   p       Point whose coordinates must be multiplied.
+             * @param   other   Another Point
+             */
+            exported static Point4Df mul(const Point4Df& p, const Point4Df& other) ;
+
+            /**
              * Get the distance between two points on X axis.
              * @param a First point.
              * @param b Second point.
@@ -184,6 +191,11 @@ namespace Mind {
              * @param   position    Position at which the point should be set.
              */
             exported void set(const Point4Df& position) ;
+
+            /**
+             * Convert the point to array.
+             */
+            exported std::array<float, 4> toArray() ;
 
             /** Conversion from Point3D to Dimension2D. */
             exported explicit operator Dimension2Df() ;

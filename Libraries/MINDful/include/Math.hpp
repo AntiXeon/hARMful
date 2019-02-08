@@ -14,6 +14,8 @@ namespace Mind {
      * Additional math operations for convenient use.
      */
     namespace Math {
+        /** Respresent very small values. Under epsilon, zero is considered. */
+        const Scalar Epsilon = 1.e-8f ;
         /** Perigon angle is a 360° angle. */
         const Scalar PerigonAngleDegrees     = 360.f ;
         /** Straight angle is a 180° angle. */

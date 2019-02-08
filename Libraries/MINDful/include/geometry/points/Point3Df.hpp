@@ -97,6 +97,13 @@ namespace Mind {
             exported static Point3Df merge(const Point3Df& a, const Point3Df& b) ;
 
             /**
+             * Multiply a Point coordinates by another.
+             * @param   p       Point whose coordinates must be multiplied.
+             * @param   other   Another Point
+             */
+            exported static Point3Df mul(const Point3Df& p, const Point3Df& other) ;
+
+            /**
              * Get the distance between two points on X axis.
              * @param a First point.
              * @param b Second point.
@@ -153,6 +160,11 @@ namespace Mind {
              * @param   position    Position at which the point should be set.
              */
             exported void set(const Point3Df& position) ;
+
+            /**
+             * Convert the point to array.
+             */
+            exported std::array<float, 3> toArray() ;
 
             /** Conversion from Point3D to Dimension3D. */
             exported explicit operator Dimension3Df() ;

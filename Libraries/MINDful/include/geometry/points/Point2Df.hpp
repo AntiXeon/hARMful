@@ -88,6 +88,13 @@ namespace Mind {
             exported static Point2Df merge(const Point2Df& a, const Point2Df& b) ;
 
             /**
+             * Multiply a Point coordinates by another.
+             * @param   p       Point whose coordinates must be multiplied.
+             * @param   other   Another Point
+             */
+            exported static Point2Df mul(const Point2Df& p, const Point2Df& other) ;
+
+            /**
              * Get the distance between two points on X axis.
              * @param a First point.
              * @param b Second point.
@@ -172,6 +179,11 @@ namespace Mind {
              * @param   position    Position at which the point should be set.
              */
             exported void set(const Point2Df& position) ;
+
+            /**
+             * Convert the point to array.
+             */
+            exported std::array<float, 2> toArray() ;
 
             /** Conversion from Point2D to Dimension2D. */
             exported explicit operator Dimension2Df() ;

@@ -64,6 +64,14 @@ namespace Mind {
         ) ;
     }
 
+    Point3Df Point3Df::mul(const Point3Df& p, const Point3Df& other) {
+        return Point3Df(
+            p.m_values[Point3Df::Axis::X] * other.m_values[Point3Df::Axis::X],
+            p.m_values[Point3Df::Axis::Y] * other.m_values[Point3Df::Axis::Y],
+            p.m_values[Point3Df::Axis::Z] * other.m_values[Point3Df::Axis::Z]
+        ) ;
+    }
+
     Scalar Point3Df::distanceX(const Point3Df& a, const Point3Df& b) {
         return a.m_values[Point3Df::Axis::X] - b.m_values[Point3Df::Axis::X] ;
     }
@@ -112,6 +120,10 @@ namespace Mind {
         m_values[Point3Df::Axis::X] = position.m_values[Point3Df::Axis::X] ;
         m_values[Point3Df::Axis::Y] = position.m_values[Point3Df::Axis::Y] ;
         m_values[Point3Df::Axis::Z] = position.m_values[Point3Df::Axis::Z] ;
+    }
+
+    std::array<float, 3> Point3Df::toArray() {
+        return m_values ;
     }
 
     Point3Df::operator Dimension3Df() {

@@ -149,7 +149,7 @@ class Mask {
          * Cast the current Mask to a __m128.
          * @return  The inner data of the Mask as a __m128 vector.
          */
-        explicit operator __m128() const ;
+        operator __m128() const ;
 
         /**
          * Cast the current Mask to a Vector4i::Mask.

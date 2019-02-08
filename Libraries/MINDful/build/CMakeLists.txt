@@ -34,9 +34,9 @@ target_link_libraries(${PROJECT_NAME} DOOM)
 # Versioning
 if (UNIX)
     if(DEBUG)
-        list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
+        list(APPEND CMAKE_CXX_FLAGS "-msse4 -O3 -W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
     else()
-        list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
+        list(APPEND CMAKE_CXX_FLAGS "-msse4 -O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
     endif()
 
     set(MIND_VERSION_MAJOR 0)
