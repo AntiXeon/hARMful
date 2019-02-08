@@ -42,12 +42,7 @@ Install the dependencies on your system.
 To compile on a GNU/Linux system, enter the `Library` folder and type `cmake .` then `make`. It will generate the `.so` files.
 
 ### Microsoft® Windows™
-Use the command line `git clone https://github.com/dcarlus/hARMful.git --recurse-submodules` to clone the repository and its dependencies.
-
-Enter the `Library` folder. To create a Microsoft® Visual Studio® solution, type `cmake .`. A `.sln` file is generated and can be opened with Microsoft® Visual Studio®. If you do not have this IDE, you can download [Microsoft® Visual Studio® Community](https://www.visualstudio.com/vs/visual-studio-express/) for free. **Visual Studio® 2017 15.9 or higher is supported, lower versions could not compile the code.**
-Once the IDE is launched, compile the project and a `.dll` file is generated with a `.lib` for the linker.
-
-PS: If you want to compile the DLLs using a 64-bit architecture, use the command `cmake -DCMAKE_GENERATOR_PLATFORM=x64 .`
+The compilation of **hARMful** on Microsoft® Windows™ is still work in progress.
 
 ### Mac™ OS
 Not officially supported.
