@@ -21,7 +21,9 @@ All the libraries require `cmake`.
 -   [Assimp 4.1.0](https://github.com/assimp/assimp) (for importing 3D file models)
 
 ### MINDful (mathematics tools)
--   Recommended hardware: a "modern" Intel/AMD CPU with, at least, SSE2 support
+-   A "modern" Intel/AMD CPU with, at least, SSE2 support is required
+-   SSE4 support is recommanded for improved performances
+-   ARM CPUs with NEON are not yet supported
 
 ### SPITEful (multimedia files management)
 -   [libpng 1.6.35](https://github.com/glennrp/libpng)
