@@ -45,7 +45,7 @@ namespace Mind {
     }
 
     Point3Df Point3Df::mul(const Point3Df& p, const Point3Df& other) {
-        return Point2Df(p.m_values * other.m_values) ;
+        return Point3Df(p.m_values * other.m_values) ;
     }
 
     Scalar Point3Df::distanceX(const Point3Df& a, const Point3Df& b) {
