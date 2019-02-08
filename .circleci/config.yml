@@ -19,7 +19,7 @@ jobs:
             - run: cd Softwares/Tests/MINDful && cmake . && make
             - run: cd Softwares/Tests/MINDful/Performances/bin && ./Performances.exe
             # Build unit tests and run it (using CPU SIMD if available)
-            - run: cd UnitTests && cmake -DWITH_EMULATED_SIMD=OFF . && make
+            - run: cd UnitTests && cmake . && make
             - run: cd UnitTests/DOOMful/bin && ./DOOMUnitTest.exe
             - run: cd UnitTests/MINDful/bin && ./MINDUnitTest.exe
             - run: cd UnitTests/HOPEful/bin && ./HOPEUnitTest.exe
