@@ -221,28 +221,28 @@ namespace UTMind {
         // Inverse.
         Matrix4x4f m6 ;
         Matrix4x4f m7 ;
-        m7.setRowValues(0, Point4Df( 0.f, 0.f, 1.f, 5.f)) ;
-        m7.setRowValues(1, Point4Df( 0.f, 3.f, 0.f, 3.f)) ;
-        m7.setRowValues(2, Point4Df(-1.f, 0.f, 0.f, 2.f)) ;
-        m7.setRowValues(3, Point4Df( 0.f, 0.f, 0.f, 1.f)) ;
+        m7.setRowValues(0, Point4Df( 5.f,-2.f,  -3.f, 2.5f)) ;
+        m7.setRowValues(1, Point4Df(-9.f, 0.5f, 0.7f, -3.f)) ;
+        m7.setRowValues(2, Point4Df( 4.f, 4.f, 0.f, 7.f)) ;
+        m7.setRowValues(3, Point4Df( 0.3f, -0.8f, 6.f, -0.5f)) ;
 
         m7.inverse(m6) ;
-        check(compare(m6.at(0, 0),  0.f)) ;
-        check(compare(m6.at(0, 1),  0.f)) ;
-        check(compare(m6.at(0, 2), -1.f)) ;
-        check(compare(m6.at(0, 3),  2.f)) ;
-        check(compare(m6.at(1, 0),  0.f)) ;
-        check(compare(m6.at(1, 1),  1.f/3.f)) ;
-        check(compare(m6.at(1, 2),  0.f)) ;
-        check(compare(m6.at(1, 3), -1.f)) ;
-        check(compare(m6.at(2, 0),  1.f)) ;
-        check(compare(m6.at(2, 1),  0.f)) ;
-        check(compare(m6.at(2, 2),  0.f)) ;
-        check(compare(m6.at(2, 3), -5.f)) ;
-        check(compare(m6.at(3, 0),  0.f)) ;
-        check(compare(m6.at(3, 1),  0.f)) ;
-        check(compare(m6.at(3, 2),  0.f)) ;
-        check(compare(m6.at(3, 3),  1.f)) ;
+        check(compare(m6.at(0, 0), -0.1241664f)) ;
+        check(compare(m6.at(0, 1), -0.2012245f)) ;
+        check(compare(m6.at(0, 2), -0.0446516f)) ;
+        check(compare(m6.at(0, 3), -0.0386070f)) ;
+        check(compare(m6.at(1, 0), -0.4015001f)) ;
+        check(compare(m6.at(1, 1), -0.2109738f)) ;
+        check(compare(m6.at(1, 2),  0.0403944f)) ;
+        check(compare(m6.at(1, 3), -0.1761364f)) ;
+        check(compare(m6.at(2, 0), -0.0222933f)) ;
+        check(compare(m6.at(2, 1),  0.0015599f)) ;
+        check(compare(m6.at(2, 2),  0.0197260f)) ;
+        check(compare(m6.at(2, 3),  0.1553380f)) ;
+        check(compare(m6.at(3, 0),  0.3003809f)) ;
+        check(compare(m6.at(3, 1),  0.2355419f)) ;
+        check(compare(m6.at(3, 2),  0.1452898f)) ;
+        check(compare(m6.at(3, 3),  0.1227106f)) ;
 
         std::cout << m7 << std::endl ;
         std::cout << m6 << std::endl ;

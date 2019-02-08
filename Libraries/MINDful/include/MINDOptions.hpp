@@ -67,7 +67,7 @@
         #define ALIGNMENT_ON_STACK  (1 << __ARM_ALIGN_MAX_PWR)
     // Other CPUs
     #else
-        #define USE_NO_SIMD
+        #error "Only SIMD CPUs are supported"
     #endif
 
     #define __STDC_FORMAT_MACROS
