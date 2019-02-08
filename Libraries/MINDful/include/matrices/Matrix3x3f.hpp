@@ -77,7 +77,7 @@ namespace Mind {
             /**
              * Export the matrix as an 1D-array of values.
              */
-            exported std::array<Scalar, 9> toArray() ;
+            exported std::array<Scalar, 9> toArray() const ;
 
             /**
              * Multiply the current matrix by a scalar value.

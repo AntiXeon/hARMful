@@ -135,14 +135,13 @@ namespace Mind {
         return tmp;
     }
 
-    std::array<Scalar, 16> Matrix4x4f::toArray() {
-        std::array<Scalar, 16> returned = {
+    std::array<Scalar, 16> Matrix4x4f::toArray() const {
+        return {
             m_data[0][0], m_data[0][1], m_data[0][2], m_data[0][3],
             m_data[1][0], m_data[1][1], m_data[1][2], m_data[1][3],
             m_data[2][0], m_data[2][1], m_data[2][2], m_data[2][3],
             m_data[3][0], m_data[3][1], m_data[3][2], m_data[3][3]
         } ;
-        return returned ;
     }
 
     Matrix4x4f& Matrix4x4f::operator*=(const Scalar scalar) {

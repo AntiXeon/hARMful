@@ -63,13 +63,12 @@ namespace Mind {
         m_data[row][2] = values.get(Vector3f::Axis::Z) ;
     }
 
-    std::array<Scalar, 9> Matrix3x3f::toArray() {
-        std::array<Scalar, 9> returned = {
+    std::array<Scalar, 9> Matrix3x3f::toArray() const {
+        return {
             m_data[0][0], m_data[0][1], m_data[0][2],
             m_data[1][0], m_data[1][1], m_data[1][2],
             m_data[2][0], m_data[2][1], m_data[2][2]
         } ;
-        return returned ;
     }
 
     Matrix3x3f& Matrix3x3f::operator*=(const Scalar scalar) {

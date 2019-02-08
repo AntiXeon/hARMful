@@ -3,6 +3,7 @@
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/ogl/Utils.hpp>
+#include <GLFW/glfw3.h>
 #include <GL/glew.h>
 
 using namespace Hope ;
@@ -15,6 +16,7 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
 }
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
+    RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
     Hope::CameraComponent* camera = node -> camera() ;
 
     // Set up the clear color.
@@ -27,20 +29,23 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     ) ;
 
     // Update the projection matrix if needed.
+    float aspectRatio = 0.f ;
     if (m_hasWindowChanged) {
         // Set up the projection matrix.
         const float CameraFOV = 45.f ;
         const float NearPlaneDistance = 1.f ;
         const float FarPlaneDistance = 1000.f ;
-        float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
-
-        glMatrixMode(GL_PROJECTION) ;
-        glLoadIdentity() ;
-        GLPerspective(CameraFOV, aspectRatio, NearPlaneDistance, FarPlaneDistance) ;
+        aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+        GLPerspective(
+            requiredData.projectionMatrix,
+            CameraFOV,
+            aspectRatio,
+            NearPlaneDistance,
+            FarPlaneDistance
+        ) ;
     }
 
     // Update the model view matrix.
-    glMatrixMode(GL_MODELVIEW) ;
     Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
     float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
     viewMatrix.data(viewMatrixData) ;
@@ -55,6 +60,12 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         eyeView.get(Mind::Vector3f::Y),
         eyeView.get(Mind::Vector3f::Z)
     ) ;
+
+    // Update the required data.
+    requiredData.eyePosition = eyeView ;
+    requiredData.viewMatrix = viewMatrix ;
+    requiredData.aspectRatio = aspectRatio ;
+    requiredData.time = glfwGetTime() ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
@@ -62,12 +73,14 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
+    {
+        RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
+        requiredData.viewport = node ;
+    }
+
     if (!m_hasWindowChanged) {
         return ;
     }
-
-    // Update the projection matrix.
-    glMatrixMode(GL_PROJECTION) ;
 
     Mind::Point2Df relativePosition = node -> position() ;
     Mind::Dimension2Df relativeDimension = node -> dimension() ;
@@ -89,9 +102,6 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
         absoluteDimension.width(),
         absoluteDimension.height()
     ) ;
-
-    // Switch back to the modelview matrix.
-    glMatrixMode(GL_MODELVIEW) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

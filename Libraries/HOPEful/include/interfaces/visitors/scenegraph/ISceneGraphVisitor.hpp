@@ -29,7 +29,7 @@ namespace Hope {
             /**
              * Get the node that is processed.
              */
-            virtual const Hope::ProcessedSceneNode& processedNode() const = 0 ;
+            virtual Hope::ProcessedSceneNode& processedNode() = 0 ;
 
             /**
              * Visit a camera component.

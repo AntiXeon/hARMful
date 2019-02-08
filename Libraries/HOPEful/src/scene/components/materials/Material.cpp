@@ -147,16 +147,19 @@ void Material::setupDefaultParameters() {
     addShaderParameter(m_eyePosition) ;
 }
 
-void Material::updateParameterValues(ISceneGraphVisitor* /*visitor*/) {
-    //Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
+void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
+    Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
 
-    // m_modelMatrix
+    m_modelMatrix -> setMat4(node.worldMatrix.toArray()) ;
     // m_viewMatrix
     // m_projectionMatrix
     // m_modelViewMatrix
     // m_viewProjectionMatrix
     // m_mvpMatrix
-    // m_inverseModelMatrix
+
+    Mind::Matrix4x4f inverseModelMatrix ;
+    node.worldMatrix.inverse(inverseModelMatrix) ;
+    m_inverseModelMatrix -> setMat4(inverseModelMatrix.toArray()) ;
     // m_inverseViewMatrix
     // m_inverseProjectionMatrix
     // m_inverseModelViewMatrix

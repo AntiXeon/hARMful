@@ -4,6 +4,7 @@
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/shading/RenderTechnique.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
+#include <scene/framegraph/RenderRequiredData.hpp>
 #include <memory>
 #include <set>
 
@@ -24,6 +25,11 @@ namespace Hope::GL {
              */
             Hope::ProcessedSceneNode m_processedNode ;
 
+            /**
+             * Required data for the rendering of the current frame.
+             */
+            RenderRequiredData m_requiredData ;
+
         public:
             /**
              * A new frame starts to be rendered.
@@ -36,6 +42,11 @@ namespace Hope::GL {
             FrameID currentFrameID() const override ;
 
             /**
+             * Get the require data for rendering.
+             */
+            RenderRequiredData& requiredData() ;
+
+            /**
              * Set the node that is processed.
              */
             void setProcessedNode(const Hope::ProcessedSceneNode& node) override ;
@@ -43,7 +54,7 @@ namespace Hope::GL {
             /**
              * Get the node that is processed.
              */
-            const Hope::ProcessedSceneNode& processedNode() const override ;
+            Hope::ProcessedSceneNode& processedNode() override ;
 
             /**
              * Visit a camera component.

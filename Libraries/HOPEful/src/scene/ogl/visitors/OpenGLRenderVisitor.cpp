@@ -20,7 +20,7 @@ void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node)
     m_processedNode = node ;
 }
 
-const Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() const {
+Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
     return m_processedNode ;
 }
 

@@ -1,12 +1,14 @@
 #ifndef __HOPE__GL_UTILS__
 #define __HOPE__GL_UTILS__
 
+#include <matrices/Matrix4x4f.hpp>
 #include <GL/glew.h>
 
 namespace Hope::GL {
     /**
      * Compute the perspective matrix.
      * Replaces the deprecated gluPerspective() function.
+     * @param   result  Projection matrix as output
      * @param   fovY    Specifies the field of view angle, in degrees, in the y
      *                  direction.
      * @param   aspect  Specifies the aspect ratio that determines the field of
@@ -19,6 +21,7 @@ namespace Hope::GL {
      *                  clipping plane (always positive).
      */
     void GLPerspective(
+        Mind::Matrix4x4f& result,
         const GLdouble fovY,
         const GLdouble aspect,
         const GLdouble zNear,
