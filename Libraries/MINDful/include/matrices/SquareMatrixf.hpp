@@ -35,17 +35,10 @@ namespace Mind {
              */
             Scalar m_defaultValue ;
 
-            #ifdef USE_NO_SIMD
-                /**
-                 * SquareMatrix content values.
-                 */
-                std::array<std::array<float, 4>, 4> m_data ;
-            #else
-                /**
-                 * SquareMatrix content values.
-                 */
-                SIMD::Vector4f m_data[4] ;
-            #endif
+            /**
+             * SquareMatrix content values.
+             */
+            SIMD::Vector4f m_data[4] ;
 
         public:
             /**

@@ -158,6 +158,11 @@ namespace Mind {
             exported Point4Df getRowValues(const unsigned int row) ;
 
             /**
+             * Export the matrix as an 1D-array of values.
+             */
+            exported std::array<Scalar, 16> toArray() ;
+
+            /**
              * Multiply the current matrix by a scalar value.
              * The result is put into the current matrix.
              * @param   scalar  The scalar value to multiply each component of
