@@ -1,6 +1,7 @@
 #include <scene/components/materials/Material.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
+#include <scene/framegraph/RenderRequiredData.hpp>
 
 using namespace Hope ;
 
@@ -149,27 +150,70 @@ void Material::setupDefaultParameters() {
 
 void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
+    Hope::RenderRequiredData& data = visitor -> requiredData() ;
 
+    // Model matrix.
     m_modelMatrix -> setMat4(node.worldMatrix.toArray()) ;
-    // m_viewMatrix
-    // m_projectionMatrix
-    // m_modelViewMatrix
-    // m_viewProjectionMatrix
-    // m_mvpMatrix
 
+    // View matrix.
+    m_viewMatrix -> setMat4(data.viewMatrix.toArray()) ;
+
+    // Projection matrix.
+    m_projectionMatrix -> setMat4(data.projectionMatrix.toArray()) ;
+
+    // Model view matrix.
+    Mind::Matrix4x4f modelViewMatrix = data.viewMatrix * node.worldMatrix ;
+    m_modelViewMatrix -> setMat4(modelViewMatrix.toArray()) ;
+
+    // View projection matrix.
+    Mind::Matrix4x4f viewProjectionMatrix = data.projectionMatrix * data.viewMatrix  ;
+    m_viewProjectionMatrix -> setMat4(viewProjectionMatrix.toArray()) ;
+
+    // Model view projection matrix.
+    Mind::Matrix4x4f modelViewProjectionMatrix = viewProjectionMatrix * node.worldMatrix ;
+    m_mvpMatrix -> setMat4(modelViewProjectionMatrix.toArray()) ;
+
+    // Inverse model matrix.
     Mind::Matrix4x4f inverseModelMatrix ;
     node.worldMatrix.inverse(inverseModelMatrix) ;
     m_inverseModelMatrix -> setMat4(inverseModelMatrix.toArray()) ;
-    // m_inverseViewMatrix
-    // m_inverseProjectionMatrix
-    // m_inverseModelViewMatrix
-    // m_inverseViewProjectionMatrix
-    // m_inverseMVPMatrix
+
+    // Inverse view matrix.
+    Mind::Matrix4x4f inverseViewMatrix ;
+    data.viewMatrix.inverse(inverseViewMatrix) ;
+    m_inverseViewMatrix -> setMat4(inverseViewMatrix.toArray()) ;
+
+    // Inverse projection matrix.
+    Mind::Matrix4x4f inverseProjectionMatrix ;
+    data.projectionMatrix.inverse(inverseProjectionMatrix) ;
+    m_inverseProjectionMatrix -> setMat4(inverseProjectionMatrix.toArray()) ;
+
+    // Inverse model view matrix.
+    Mind::Matrix4x4f inverseModelViewMatrix ;
+    modelViewMatrix.inverse(inverseModelViewMatrix) ;
+    m_inverseModelViewMatrix -> setMat4(inverseModelViewMatrix.toArray()) ;
+
+    // Inverse view projection matrix.
+    Mind::Matrix4x4f inverseViewProjectionMatrix ;
+    viewProjectionMatrix.inverse(inverseViewProjectionMatrix) ;
+    m_inverseViewProjectionMatrix -> setMat4(inverseViewProjectionMatrix.toArray()) ;
+
+    // Inverse model view projection matrix.
+    Mind::Matrix4x4f inverseModelViewProjectionMatrix ;
+    modelViewProjectionMatrix.inverse(inverseModelViewProjectionMatrix) ;
+    m_inverseMVPMatrix  -> setMat4(inverseModelViewProjectionMatrix.toArray()) ;
+
     // m_modelNormalMatrix
     // m_modelViewNormalMatrix
     // m_viewportMatrix
     // m_inverseViewportMatrix
-    // m_aspectRatio
-    // m_time
-    // m_eyePosition
+
+    // Aspect ratio.
+    m_aspectRatio -> setFloating(data.aspectRatio) ;
+
+    // Elapsed time.
+    m_time -> setFloating(data.time) ;
+
+    // Eye position.
+    m_eyePosition -> setVec3(data.eyePosition.toArray()) ;
 }

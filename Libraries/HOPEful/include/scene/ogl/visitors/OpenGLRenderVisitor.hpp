@@ -44,7 +44,7 @@ namespace Hope::GL {
             /**
              * Get the require data for rendering.
              */
-            RenderRequiredData& requiredData() ;
+            RenderRequiredData& requiredData() override ;
 
             /**
              * Set the node that is processed.
