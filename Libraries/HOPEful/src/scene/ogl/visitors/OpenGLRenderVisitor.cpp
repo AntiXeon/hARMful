@@ -16,6 +16,10 @@ FrameID OpenGLRenderVisitor::currentFrameID() const {
     return m_currentFrameID ;
 }
 
+RenderRequiredData& OpenGLRenderVisitor::requiredData() {
+    return m_requiredData ;
+}
+
 void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node) {
     m_processedNode = node ;
 }
