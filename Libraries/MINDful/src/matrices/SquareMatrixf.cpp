@@ -72,6 +72,28 @@ namespace Mind {
         ).horizontalAdd() ;
     }
 
+    void SquareMatrixf::transposed(SquareMatrixf& result) {
+        // Copy data from the other matrix.
+        SIMD::Vector4f transposed[] = {
+            m_data[0],
+            m_data[1],
+            m_data[2],
+            m_data[3]
+        } ;
+
+        SIMD::Vector4f::transposeMatrix(
+            transposed[0],
+            transposed[1],
+            transposed[2],
+            transposed[3]
+        ) ;
+
+        // Put transposed rows into the resulting matrix.
+        for (uint8_t row = 0 ; row < MaximalDataSize ; ++row) {
+            result.m_data[row] = transposed[row] ;
+        }
+    }
+
     void SquareMatrixf::inverse(SquareMatrixf& result) {
         SIMD::Vector4f fac0 = subFactor(*this, 3, 2, 2, 3) ;
         SIMD::Vector4f fac1 = subFactor(*this, 3, 1, 1, 3) ;

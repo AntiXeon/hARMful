@@ -203,10 +203,51 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     modelViewProjectionMatrix.inverse(inverseModelViewProjectionMatrix) ;
     m_inverseMVPMatrix  -> setMat4(inverseModelViewProjectionMatrix.toArray()) ;
 
-    // m_modelNormalMatrix
-    // m_modelViewNormalMatrix
-    // m_viewportMatrix
-    // m_inverseViewportMatrix
+    // Normal matrix.
+    Mind::Matrix4x4f normalMatrix ;
+    inverseModelViewMatrix.transposed(normalMatrix) ;
+
+    // Model normal matrix.
+    Mind::Matrix4x4f modelNormalMatrix = normalMatrix * node.worldMatrix ;
+    m_modelNormalMatrix -> setMat4(modelNormalMatrix.toArray()) ;
+
+    // Model view normal matrix.
+    Mind::Matrix4x4f modelViewNormalMatrix = normalMatrix * modelViewMatrix ;
+    m_modelViewNormalMatrix -> setMat4(modelViewNormalMatrix.toArray()) ;
+
+    // Viewport matrix.
+    Viewport* viewport = data.viewport ;
+    Mind::Matrix3x3f viewportMatrix ;
+
+    Mind::Scalar viewportX = (viewport -> position()).get(Mind::Point2Df::X) ;
+    Mind::Scalar viewportY = (viewport -> position()).get(Mind::Point2Df::Y) ;
+    Mind::Scalar viewportWidth = (viewport -> dimension()).width() ;
+    Mind::Scalar viewportHeight = (viewport -> dimension()).height() ;
+
+    Mind::Point3Df row0(
+        viewportWidth/ 2.f,
+        0.f,
+        viewportWidth / (2 + viewportX)
+    ) ;
+
+    Mind::Point3Df row1(
+        0.f,
+        viewportHeight/ 2.f,
+        viewportHeight / (2 + viewportY)
+    ) ;
+
+    Mind::Point3Df row2(0.f, 0.f, 1.f) ;
+
+    viewportMatrix.setRowValues(0, row0) ;
+    viewportMatrix.setRowValues(1, row1) ;
+    viewportMatrix.setRowValues(2, row2) ;
+
+    m_viewportMatrix -> setMat3(viewportMatrix.toArray()) ;
+
+    // Inverse viewport matrix.
+    Mind::Matrix3x3f inverseViewportMatrix ;
+    viewportMatrix.inverse(inverseViewportMatrix) ;
+    m_inverseViewportMatrix -> setMat3(inverseViewportMatrix.toArray()) ;
 
     // Aspect ratio.
     m_aspectRatio -> setFloating(data.aspectRatio) ;

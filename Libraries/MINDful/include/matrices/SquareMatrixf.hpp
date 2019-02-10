@@ -88,6 +88,11 @@ namespace Mind {
             exported Scalar trace() const ;
 
             /**
+             * Transpose the matrix.
+             */
+            exported void transposed(SquareMatrixf& result) ;
+
+            /**
              * Inverse the matrix.
              * This source code is inspired from GLM library.
              * https://github.com/g-truc/glm/blob/master/glm/simd/matrix.h
