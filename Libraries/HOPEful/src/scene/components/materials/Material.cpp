@@ -166,11 +166,10 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     m_modelViewMatrix -> setMat4(modelViewMatrix.toArray()) ;
 
     // View projection matrix.
-    Mind::Matrix4x4f viewProjectionMatrix = data.projectionMatrix * data.viewMatrix  ;
-    m_viewProjectionMatrix -> setMat4(viewProjectionMatrix.toArray()) ;
+    m_viewProjectionMatrix -> setMat4(data.viewProjectionMatrix.toArray()) ;
 
     // Model view projection matrix.
-    Mind::Matrix4x4f modelViewProjectionMatrix = viewProjectionMatrix * node.worldMatrix ;
+    Mind::Matrix4x4f modelViewProjectionMatrix = data.viewProjectionMatrix * node.worldMatrix ;
     m_mvpMatrix -> setMat4(modelViewProjectionMatrix.toArray()) ;
 
     // Inverse model matrix.
@@ -179,14 +178,10 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     m_inverseModelMatrix -> setMat4(inverseModelMatrix.toArray()) ;
 
     // Inverse view matrix.
-    Mind::Matrix4x4f inverseViewMatrix ;
-    data.viewMatrix.inverse(inverseViewMatrix) ;
-    m_inverseViewMatrix -> setMat4(inverseViewMatrix.toArray()) ;
+    m_inverseViewMatrix -> setMat4(data.inverseViewMatrix.toArray()) ;
 
     // Inverse projection matrix.
-    Mind::Matrix4x4f inverseProjectionMatrix ;
-    data.projectionMatrix.inverse(inverseProjectionMatrix) ;
-    m_inverseProjectionMatrix -> setMat4(inverseProjectionMatrix.toArray()) ;
+    m_inverseProjectionMatrix -> setMat4(data.inverseProjectionMatrix.toArray()) ;
 
     // Inverse model view matrix.
     Mind::Matrix4x4f inverseModelViewMatrix ;
@@ -194,9 +189,7 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     m_inverseModelViewMatrix -> setMat4(inverseModelViewMatrix.toArray()) ;
 
     // Inverse view projection matrix.
-    Mind::Matrix4x4f inverseViewProjectionMatrix ;
-    viewProjectionMatrix.inverse(inverseViewProjectionMatrix) ;
-    m_inverseViewProjectionMatrix -> setMat4(inverseViewProjectionMatrix.toArray()) ;
+    m_inverseViewProjectionMatrix -> setMat4(data.inverseViewProjectionMatrix.toArray()) ;
 
     // Inverse model view projection matrix.
     Mind::Matrix4x4f inverseModelViewProjectionMatrix ;
@@ -216,38 +209,10 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     m_modelViewNormalMatrix -> setMat4(modelViewNormalMatrix.toArray()) ;
 
     // Viewport matrix.
-    Viewport* viewport = data.viewport ;
-    Mind::Matrix3x3f viewportMatrix ;
-
-    Mind::Scalar viewportX = (viewport -> position()).get(Mind::Point2Df::X) ;
-    Mind::Scalar viewportY = (viewport -> position()).get(Mind::Point2Df::Y) ;
-    Mind::Scalar viewportWidth = (viewport -> dimension()).width() ;
-    Mind::Scalar viewportHeight = (viewport -> dimension()).height() ;
-
-    Mind::Point3Df row0(
-        viewportWidth/ 2.f,
-        0.f,
-        viewportWidth / (2 + viewportX)
-    ) ;
-
-    Mind::Point3Df row1(
-        0.f,
-        viewportHeight/ 2.f,
-        viewportHeight / (2 + viewportY)
-    ) ;
-
-    Mind::Point3Df row2(0.f, 0.f, 1.f) ;
-
-    viewportMatrix.setRowValues(0, row0) ;
-    viewportMatrix.setRowValues(1, row1) ;
-    viewportMatrix.setRowValues(2, row2) ;
-
-    m_viewportMatrix -> setMat3(viewportMatrix.toArray()) ;
+    m_viewportMatrix -> setMat3(data.viewportMatrix.toArray()) ;
 
     // Inverse viewport matrix.
-    Mind::Matrix3x3f inverseViewportMatrix ;
-    viewportMatrix.inverse(inverseViewportMatrix) ;
-    m_inverseViewportMatrix -> setMat3(inverseViewportMatrix.toArray()) ;
+    m_inverseViewportMatrix -> setMat3(data.inverseViewportMatrix.toArray()) ;
 
     // Aspect ratio.
     m_aspectRatio -> setFloating(data.aspectRatio) ;

@@ -139,6 +139,8 @@ namespace Hope::GL {
              * Render the provided entity. Recursive method.
              */
             void renderGraph() ;
+
+            void computeViewportMatrix() ;
     } ;
 }
 

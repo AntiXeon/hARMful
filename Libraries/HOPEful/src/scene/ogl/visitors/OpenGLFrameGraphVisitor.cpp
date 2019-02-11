@@ -43,6 +43,9 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
             NearPlaneDistance,
             FarPlaneDistance
         ) ;
+
+        requiredData.projectionMatrix.inverse(requiredData.inverseProjectionMatrix) ;
+        requiredData.aspectRatio = aspectRatio ;
     }
 
     // Update the model view matrix.
@@ -64,7 +67,9 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     // Update the required data.
     requiredData.eyePosition = eyeView ;
     requiredData.viewMatrix = viewMatrix ;
-    requiredData.aspectRatio = aspectRatio ;
+    requiredData.viewMatrix.inverse(requiredData.inverseViewMatrix) ;
+    requiredData.viewProjectionMatrix = requiredData.projectionMatrix * requiredData.viewMatrix ;
+    requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
     requiredData.time = glfwGetTime() ;
 }
 
@@ -73,10 +78,7 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
-    {
-        RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
-        requiredData.viewport = node ;
-    }
+    RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
 
     if (!m_hasWindowChanged) {
         return ;
@@ -102,6 +104,21 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
         absoluteDimension.width(),
         absoluteDimension.height()
     ) ;
+
+
+    // Compute the viewport matrices.
+    Mind::Scalar viewportX = relativePosition.get(Mind::Point2Df::X) ;
+    Mind::Scalar viewportY = relativePosition.get(Mind::Point2Df::Y) ;
+    Mind::Scalar viewportWidth = relativeDimension.width() ;
+    Mind::Scalar viewportHeight = relativeDimension.height() ;
+    Mind::Point3Df row0(viewportWidth / 2.f, 0.f, viewportWidth / (2 + viewportX)) ;
+    Mind::Point3Df row1(0.f, viewportHeight/ 2.f, viewportHeight / (2 + viewportY)) ;
+    Mind::Point3Df row2(0.f, 0.f, 1.f) ;
+    requiredData.viewportMatrix.setRowValues(0, row0) ;
+    requiredData.viewportMatrix.setRowValues(1, row1) ;
+    requiredData.viewportMatrix.setRowValues(2, row2) ;
+
+    requiredData.viewportMatrix.inverse(requiredData.inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

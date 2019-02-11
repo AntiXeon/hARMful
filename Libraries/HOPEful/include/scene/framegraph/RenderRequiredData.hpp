@@ -32,14 +32,39 @@ namespace Hope {
         Mind::Matrix4x4f viewMatrix ;
 
         /**
+         * Inverse view matrix.
+         */
+        Mind::Matrix4x4f inverseViewMatrix ;
+
+        /**
          * Projection matrix.
          */
         Mind::Matrix4x4f projectionMatrix ;
 
         /**
-         * Viewport in which the scene is rendered.
+         * Inverse projection matrix.
          */
-        Viewport* viewport ;
+        Mind::Matrix4x4f inverseProjectionMatrix ;
+
+        /**
+         * View projection matrix.
+         */
+        Mind::Matrix4x4f viewProjectionMatrix ;
+
+        /**
+         * Inverse view projection matrix.
+         */
+        Mind::Matrix4x4f inverseViewProjectionMatrix ;
+
+        /**
+         * Viewport matrix.
+         */
+        Mind::Matrix3x3f viewportMatrix ;
+
+        /**
+         * Inverse viewport matrix.
+         */
+        Mind::Matrix3x3f inverseViewportMatrix ;
     } ;
 }
 
