@@ -9,6 +9,7 @@
 #include <scene/Entity.hpp>
 #include <algorithm>
 #include <list>
+#include <map>
 #include <stack>
 #include <cassert>
 
@@ -23,7 +24,7 @@ namespace Hope::GL {
              * Root of the scene graph. May be used by some frame graph nodes
              * to render the scene.
              */
-            Hope::Entity* m_root = nullptr ;
+            Hope::Entity* m_sceneRoot = nullptr ;
 
             /**
              * To know if the window has changed since the last run.
@@ -39,7 +40,13 @@ namespace Hope::GL {
              * Visitor that can be used for some frame graph nodes when
              * rendering the scene.
              */
-            OpenGLRenderVisitor m_renderVisitor ;
+            std::map<Hope::FrameGraphNode*, OpenGLRenderVisitor> m_renderVisitors ;
+
+            /**
+             * The OpenGLRenderVisitor that is in use in the currently processed
+             - framegraph branch.
+             */
+            OpenGLRenderVisitor* m_activeOpenGLRenderVisitor = nullptr ;
 
             /**
              * List to store the render conditions of every branch in the frame
@@ -59,11 +66,14 @@ namespace Hope::GL {
             OpenGLFrameGraphVisitor() ;
 
             /**
+             * Create a new branch.
+             */
+            void createNewBranch(Hope::FrameGraphNode* fgNode) override ;
+
+            /**
              * Set the root of the scene graph.
              */
-            void setSceneRoot(Hope::Entity* root) {
-                m_root = root ;
-            }
+            void setSceneRoot(Hope::Entity* root) ;
 
             /**
              * Set the window size.
@@ -126,7 +136,7 @@ namespace Hope::GL {
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
-                m_renderVisitor.startNewFrame() ;
+                m_activeOpenGLRenderVisitor -> startNewFrame() ;
 
                 // Create a new aggregator for the new frame rendering.
                 assert(m_aggregators.size() == 0) ;
@@ -139,8 +149,6 @@ namespace Hope::GL {
              * Render the provided entity. Recursive method.
              */
             void renderGraph() ;
-
-            void computeViewportMatrix() ;
     } ;
 }
 

@@ -2,6 +2,7 @@
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
+#include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/Utils.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
@@ -15,8 +16,35 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
     m_aggregators.push_back(defaultAggregator) ;
 }
 
+void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
+    if (m_renderVisitors.count(fgNode) > 0) {
+        // Discard if the framegraph node is already registered.
+        // Just set the active render visitor.
+        m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
+        return ;
+    }
+
+    // Otherwise, create the render visitor of the new branch.
+    if (m_activeOpenGLRenderVisitor) {
+        m_renderVisitors[fgNode] = *m_activeOpenGLRenderVisitor ;
+    }
+    else {
+        m_renderVisitors[fgNode] = OpenGLRenderVisitor() ;
+    }
+
+    m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
+}
+
+void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
+    m_sceneRoot = root ;
+
+    m_renderVisitors.clear() ;
+    RenderConfiguration* config = dynamic_cast<RenderConfiguration*>(m_sceneRoot -> component(Hope::RenderConfigurationType)) ;
+    createNewBranch(config -> root()) ;
+}
+
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
-    RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
+    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
     Hope::CameraComponent* camera = node -> camera() ;
 
     // Set up the clear color.
@@ -78,7 +106,7 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
-    RenderRequiredData& requiredData = m_renderVisitor.requiredData() ;
+    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
 
     if (!m_hasWindowChanged) {
         return ;
@@ -125,8 +153,8 @@ void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
 
     Hope::ProcessedSceneNode rootNode ;
-    rootNode.node = m_root ;
-    rootNode.worldMatrix = (m_root -> transform()).matrix() ;
+    rootNode.node = m_sceneRoot ;
+    rootNode.worldMatrix = (m_sceneRoot -> transform()).matrix() ;
     m_processedNodes.push(rootNode) ;
 
     while (m_processedNodes.size() > 0) {
@@ -153,10 +181,10 @@ void OpenGLFrameGraphVisitor::renderGraph() {
 
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
         // Process the components of the top node.
-        m_renderVisitor.setProcessedNode(m_processedNodes.top()) ;
+        m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
         std::vector<Component*> components = renderedEntity -> components() ;
         for (Component* component : components) {
-            component -> accept(&m_renderVisitor) ;
+            component -> accept(m_activeOpenGLRenderVisitor) ;
         }
 
         // Save the parent world matrix before pop.

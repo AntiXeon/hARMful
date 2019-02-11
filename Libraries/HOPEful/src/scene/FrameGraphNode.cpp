@@ -61,6 +61,7 @@ void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
         }
 
         for (FrameGraphNode* child : children()) {
+            visitor -> createNewBranch(child) ;
             child -> accept(visitor) ;
         }
     }
