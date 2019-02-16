@@ -5,6 +5,8 @@
 #include <scene/components/materials/Material.hpp>
 #include <scene/ogl/rendering/glsl/ShaderParameterApplicator.hpp>
 
+#include <iostream>
+
 using namespace Hope ;
 using namespace Hope::GL ;
 
@@ -37,10 +39,10 @@ void OpenGLRenderVisitor::visit(MeshComponent* component) {
     const std::vector<MeshPart>& meshParts = mesh -> parts() ;
 
     for (const MeshPart& part : meshParts) {
+        part.bind() ;
         glBindBuffer(GL_ARRAY_BUFFER, part.vertexBufferID()) ;
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, part.indexBufferID()) ;
-        glDrawElements(GL_TRIANGLES, part.amountIndices(), GL_UNSIGNED_INT, 0) ;
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) ;
+        glDrawArrays(GL_TRIANGLES, 0, part.amountIndices()) ;
     }
 }
 

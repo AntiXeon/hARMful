@@ -30,7 +30,6 @@ TestWindow::TestWindow()
     material -> setAmbient(ambientColor) ;
     cubeEntity -> addComponent(material) ;
 
-
     // Set up the frame graph.
     // Set the viewport.
     Hope::Viewport* viewportNode = new Hope::Viewport() ;

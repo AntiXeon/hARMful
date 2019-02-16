@@ -5,6 +5,8 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
+#include <iostream>
+
 using namespace Hope::GL ;
 
 MeshLoader::MeshLoader(const std::string& source) {
@@ -90,7 +92,7 @@ void MeshLoader::initializeMeshPart(
             Mind::Vector3f(normal.x, normal.y, normal.z)
         ).data()) ;
 
-        vertices.insert(vertexCoordinates.begin(), vertices.begin(), vertices.end()) ;
+        vertices.insert(vertices.end(), vertexCoordinates.begin(), vertexCoordinates.end()) ;
     }
 
     // Fill the index buffer.

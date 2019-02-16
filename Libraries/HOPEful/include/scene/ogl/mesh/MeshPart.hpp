@@ -16,6 +16,11 @@ namespace Hope::GL {
     class MeshPart final {
         private:
             /**
+             * ID of the VAO.
+             */
+            GLuint m_vertexArray = INVALID_VALUE ;
+
+            /**
              * ID of the vertex buffer of this part.
              */
             GLuint m_vertexBuffer = INVALID_VALUE ;
@@ -26,14 +31,14 @@ namespace Hope::GL {
             GLuint m_indexBuffer = INVALID_VALUE ;
 
             /**
-             * Amount of indices of vertex in this part.
-             */
-            uint32_t m_amountIndices = 0 ;
-
-            /**
              * Index of the material to draw this part.
              */
             uint32_t m_materialIndex = INVALID_MATERIAL ;
+
+            /**
+             * Indices of the vertices.
+             */
+            std::vector<uint32_t> m_indices ;
 
         public:
             /**
@@ -44,8 +49,7 @@ namespace Hope::GL {
             /**
              * Initialize the MeshPart data.
              */
-            bool initialize
-            (
+            bool initialize(
                 const std::vector<float>& vertices,
                 const std::vector<uint32_t>& indices
             ) ;
@@ -75,7 +79,21 @@ namespace Hope::GL {
              * Amount of indices of vertex in this part.
              */
             uint32_t amountIndices() const {
-                return m_amountIndices ;
+                return m_indices.size() ;
+            }
+
+            /**
+             * Indices of the vertices.
+             */
+            const uint32_t* indices() const {
+                return m_indices.data() ;
+            }
+
+            /**
+             * Bind the VAO of the mesh part.
+             */
+            void bind() const {
+                glBindVertexArray(m_vertexArray) ;
             }
 
             // Copy/move operations.
