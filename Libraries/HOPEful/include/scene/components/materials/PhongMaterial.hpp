@@ -106,6 +106,17 @@ namespace Hope {
              * Get the shininess of the material.
              */
             float shininess() const ;
+
+        private:
+            /**
+             * Set up the parameters of the current material.
+             */
+            void setupParameters() ;
+
+            /**
+             * Set up the material rendering (techniques, shaders, ...).
+             */
+            void setupRendering() ;
     } ;
 } ;
 

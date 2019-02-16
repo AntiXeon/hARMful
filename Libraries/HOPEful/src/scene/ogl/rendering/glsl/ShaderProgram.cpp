@@ -3,9 +3,9 @@
 
 using namespace Hope::GL ;
 
-void ShaderProgram::log() {
+void ShaderProgram::log(GLenum reason) {
     GLint isLinked = 0 ;
-    glGetProgramiv(m_programID, GL_LINK_STATUS, &isLinked) ;
+    glGetProgramiv(m_programID, reason, &isLinked) ;
 
     if (isLinked == GL_FALSE) {
         GLint logSize = 0 ;

@@ -89,8 +89,16 @@ namespace Hope {
             /**
              * Get the effect of the material.
              */
-            const RenderEffect* effect() const ;
+            RenderEffect& effect() ;
 
+            /**
+             * Get the shader parameters.
+             */
+            std::set<std::shared_ptr<Hope::ShaderParameter>> shaderParameters() const {
+                return m_shaderParams ;
+            }
+
+        protected:
             /**
              * Add a shader parameter.
              * It is sent to the shader as a uniform value.
@@ -102,13 +110,6 @@ namespace Hope {
              * Remove a shader parameter.
              */
             void removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) ;
-
-            /**
-             * Get the shader parameters.
-             */
-            std::set<std::shared_ptr<Hope::ShaderParameter>> shaderParameters() const {
-                return m_shaderParams ;
-            }
 
         private:
             /**

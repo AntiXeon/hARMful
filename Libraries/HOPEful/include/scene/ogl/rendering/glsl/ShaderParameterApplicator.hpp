@@ -20,6 +20,16 @@ namespace Hope::GL {
 
         private:
             /**
+             * Get the location of a uniform value in the shader program.
+             * @return  false if no error occurred; true otherwise.
+             */
+            static bool LocateUniform(
+                GLuint programID,
+                const std::string& name,
+                int& location
+            ) ;
+
+            /**
              * Apply single Integer value.
              */
             static void Integer(

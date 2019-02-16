@@ -50,14 +50,14 @@ void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
 
 void OpenGLRenderVisitor::visit(Material* component) {
     auto materialParameters = component -> shaderParameters() ;
-    const RenderEffect* effect = component -> effect() ;
+    RenderEffect& effect = component -> effect() ;
 
-    auto effectParameters = effect -> shaderParameters() ;
+    auto effectParameters = effect.shaderParameters() ;
     ShaderParameter::merge(materialParameters, effectParameters) ;
 
     // Select the technique that is used.
     std::shared_ptr<RenderTechnique> selectedTechnique ;
-    selectedTechnique = selectBestMaterialTechnique(effect -> techniques()) ;
+    selectedTechnique = selectBestMaterialTechnique(effect.techniques()) ;
 
     if (!selectedTechnique) {
         // Impossible to render the material with the defined techniques...
@@ -88,7 +88,7 @@ void OpenGLRenderVisitor::visit(Material* component) {
         std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
 
         if (shaderProgram) {
-            shaderProgram -> link() ;
+            shaderProgram -> use() ;
 
             // Set uniform values from the parameters here.
             for (const std::shared_ptr<Hope::ShaderParameter> param : appliedParameters) {
@@ -97,9 +97,6 @@ void OpenGLRenderVisitor::visit(Material* component) {
                     param
                 ) ;
             }
-
-            shaderProgram -> use() ;
-            shaderProgram -> unuse() ;
         }
 
         // Restore the OpenGL state machine for the next rendered object.

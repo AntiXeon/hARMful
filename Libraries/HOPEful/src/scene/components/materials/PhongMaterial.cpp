@@ -1,4 +1,6 @@
 #include <scene/components/materials/PhongMaterial.hpp>
+#include <scene/components/materials/shaders/GL/3.1/Phong.hpp>
+#include <memory>
 
 using namespace Hope ;
 
@@ -9,23 +11,8 @@ const std::string PhongMaterial::ShininessParamName = "material.shininess" ;
 
 PhongMaterial::PhongMaterial()
     : Material() {
-    // Add the specific shader parameters here: diffuse, ambient, specular and
-    // shininess.
-    m_ambientParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_ambientParam -> setName(AmbientParamName) ;
-    addShaderParameter(m_ambientParam) ;
-
-    m_diffuseParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_diffuseParam -> setName(DiffuseParamName) ;
-    addShaderParameter(m_diffuseParam) ;
-
-    m_specularParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_specularParam -> setName(SpecularParamName) ;
-    addShaderParameter(m_specularParam) ;
-
-    m_shininessParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_shininessParam -> setName(ShininessParamName) ;
-    addShaderParameter(m_shininessParam) ;
+    setupRendering() ;
+    setupParameters() ;
 }
 
 void PhongMaterial::setAmbient(const Color& ambient) {
@@ -82,4 +69,35 @@ Color PhongMaterial::specular() const {
 
 float PhongMaterial::shininess() const {
     return m_shininessParam -> floating() ;
+}
+
+void PhongMaterial::setupParameters() {
+    m_ambientParam = std::make_shared<Hope::ShaderParameter>() ;
+    m_ambientParam -> setName(AmbientParamName) ;
+    addShaderParameter(m_ambientParam) ;
+
+    m_diffuseParam = std::make_shared<Hope::ShaderParameter>() ;
+    m_diffuseParam -> setName(DiffuseParamName) ;
+    addShaderParameter(m_diffuseParam) ;
+
+    m_specularParam = std::make_shared<Hope::ShaderParameter>() ;
+    m_specularParam -> setName(SpecularParamName) ;
+    addShaderParameter(m_specularParam) ;
+
+    m_shininessParam = std::make_shared<Hope::ShaderParameter>() ;
+    m_shininessParam -> setName(ShininessParamName) ;
+    addShaderParameter(m_shininessParam) ;
+}
+
+void PhongMaterial::setupRendering() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
+    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    shaderProgram -> setVertexShaderCode(PhongVertexCode) ;
+    shaderProgram -> setVertexShaderCode(PhongFragmentCode) ;
+    shaderProgram -> link() ;
+
+    std::shared_ptr<RenderTechnique> techniqueGL31 = std::make_shared<RenderTechnique>() ;
+    techniqueGL31 -> setAPI(RenderTechnique::GraphicsAPI::OpenGL, 3, 1) ;
+    techniqueGL31 -> addRenderPass(renderPass) ;
+    effect().addTechnique(techniqueGL31) ;
 }

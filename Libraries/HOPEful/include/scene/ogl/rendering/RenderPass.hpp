@@ -105,7 +105,7 @@ namespace Hope::GL {
             /**
              * Get the shader program.
              */
-            std::weak_ptr<ShaderProgram> shaderProgram() const {
+            std::shared_ptr<ShaderProgram> shaderProgram() const {
                 return m_shaderProgram ;
             }
     } ;

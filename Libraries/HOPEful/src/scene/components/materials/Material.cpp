@@ -39,8 +39,8 @@ bool Material::isShareable() const {
     return true ;
 }
 
-const RenderEffect* Material::effect() const {
-    return &m_effect ;
+RenderEffect& Material::effect() {
+    return m_effect ;
 }
 
 void Material::addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {

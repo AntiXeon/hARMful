@@ -70,7 +70,7 @@ namespace Hope::GL {
              */
             void link() {
                 glLinkProgram(m_programID) ;
-                log() ;
+                log(GL_LINK_STATUS) ;
             }
 
             /**
@@ -180,7 +180,7 @@ namespace Hope::GL {
             /**
              * Log any error in the shader program set up.
              */
-            void log() ;
+            void log(GLenum reason) ;
     } ;
 }
 

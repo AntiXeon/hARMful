@@ -9,3 +9,7 @@ struct MaterialParameters
 } ;
 
 uniform MaterialParameters material ;
+
+void main() {
+    FragColor = material.ambientColor ;
+}
