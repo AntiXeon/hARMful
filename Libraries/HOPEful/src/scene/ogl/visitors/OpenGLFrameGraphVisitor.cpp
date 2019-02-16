@@ -4,6 +4,7 @@
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/Utils.hpp>
+#include <Math.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
 
@@ -61,12 +62,12 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     if (m_hasWindowChanged) {
         // Set up the projection matrix.
         const float CameraFOV = 45.f ;
-        const float NearPlaneDistance = 1.f ;
+        const float NearPlaneDistance = 0.1f ;
         const float FarPlaneDistance = 1000.f ;
         aspectRatio = m_windowSize.width() / m_windowSize.height() ;
         GLPerspective(
             requiredData.projectionMatrix,
-            CameraFOV,
+            Mind::Math::toRadians(CameraFOV),
             aspectRatio,
             NearPlaneDistance,
             FarPlaneDistance
@@ -96,7 +97,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     requiredData.eyePosition = eyeView ;
     requiredData.viewMatrix = viewMatrix ;
     requiredData.viewMatrix.inverse(requiredData.inverseViewMatrix) ;
-    requiredData.viewProjectionMatrix = requiredData.projectionMatrix * requiredData.viewMatrix ;
+    requiredData.viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
     requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
     requiredData.time = glfwGetTime() ;
 }

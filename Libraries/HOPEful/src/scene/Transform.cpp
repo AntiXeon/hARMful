@@ -2,6 +2,10 @@
 
 using namespace Hope ;
 
+Transform::Transform() {
+    m_matrix.compose(m_translation, m_rotation, m_scale) ;
+}
+
 void Transform::setRotation(const Mind::Quaternion& rotation) {
     if (rotation == m_rotation) {
         return ;

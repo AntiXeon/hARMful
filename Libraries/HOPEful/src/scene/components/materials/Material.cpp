@@ -3,6 +3,8 @@
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
 
+#include <iostream>
+
 using namespace Hope ;
 
 const std::string Hope::Material::ModelMatrixParamName = u8"modelMatrix" ;
@@ -162,14 +164,14 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     m_projectionMatrix -> setMat4(data.projectionMatrix.toArray()) ;
 
     // Model view matrix.
-    Mind::Matrix4x4f modelViewMatrix = data.viewMatrix * node.worldMatrix ;
+    Mind::Matrix4x4f modelViewMatrix = node.worldMatrix * data.viewMatrix ;
     m_modelViewMatrix -> setMat4(modelViewMatrix.toArray()) ;
 
     // View projection matrix.
     m_viewProjectionMatrix -> setMat4(data.viewProjectionMatrix.toArray()) ;
 
     // Model view projection matrix.
-    Mind::Matrix4x4f modelViewProjectionMatrix = data.viewProjectionMatrix * node.worldMatrix ;
+    Mind::Matrix4x4f modelViewProjectionMatrix = node.worldMatrix * data.viewProjectionMatrix ;
     m_mvpMatrix -> setMat4(modelViewProjectionMatrix.toArray()) ;
 
     // Inverse model matrix.
@@ -201,11 +203,11 @@ void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
     inverseModelViewMatrix.transposed(normalMatrix) ;
 
     // Model normal matrix.
-    Mind::Matrix4x4f modelNormalMatrix = normalMatrix * node.worldMatrix ;
+    Mind::Matrix4x4f modelNormalMatrix = node.worldMatrix * normalMatrix ;
     m_modelNormalMatrix -> setMat4(modelNormalMatrix.toArray()) ;
 
     // Model view normal matrix.
-    Mind::Matrix4x4f modelViewNormalMatrix = normalMatrix * modelViewMatrix ;
+    Mind::Matrix4x4f modelViewNormalMatrix = modelViewMatrix * normalMatrix ;
     m_modelViewNormalMatrix -> setMat4(modelViewNormalMatrix.toArray()) ;
 
     // Viewport matrix.

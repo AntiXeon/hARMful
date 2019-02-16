@@ -2,6 +2,7 @@
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/MeshComponent.hpp>
+#include <scene/components/materials/PhongMaterial.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
@@ -12,13 +13,22 @@ TestWindow::TestWindow()
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
     cameraEntity -> addComponent(m_cameraComponent) ;
-    Hope::Transform& cameraTransform = cameraEntity -> transform() ;
-    cameraTransform.setTranslation(Mind::Vector3f(0.f, 0.f, -5.f)) ;
+
+    m_cameraComponent -> lookAt(
+        Mind::Vector3f(0.f, 0.f, -5.f),
+        Mind::Vector3f(0.f, 0.f, 0.f)
+    ) ;
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
     Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.obj") ;
     cubeEntity -> addComponent(meshComponent) ;
+
+    // Add a material.
+    Hope::PhongMaterial* material = new Hope::PhongMaterial() ;
+    Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
+    material -> setAmbient(ambientColor) ;
+    cubeEntity -> addComponent(material) ;
 
 
     // Set up the frame graph.

@@ -3,6 +3,8 @@
 #include <utils/literals/NumberLiterals.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 
+#include <iostream>
+
 using namespace Hope ;
 
 const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0.f) ;
@@ -32,8 +34,7 @@ void CameraComponent::setClearColor(const Color& color) {
     m_clearColor = color ;
 }
 
-Mind::Matrix4x4f& CameraComponent::lookAt(
-    Mind::Matrix4x4f& output,
+void CameraComponent::lookAt(
     const Mind::Vector3f& position,
     const Mind::Vector3f& target,
     const Mind::Vector3f& worldUp
@@ -58,9 +59,8 @@ Mind::Matrix4x4f& CameraComponent::lookAt(
     rotationMat.setRowValues(1, m_up) ;
     rotationMat.setRowValues(2, m_viewDirection) ;
 
-    output = rotationMat * translationMat ;
-    m_viewMatrix = output ;
-    return output ;
+    m_viewMatrix = rotationMat * translationMat ;
+    m_viewMatrix.transposed(m_viewMatrix) ;
 }
 
 Mind::Vector3f CameraComponent::target() {

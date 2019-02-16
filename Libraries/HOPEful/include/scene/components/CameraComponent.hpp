@@ -79,16 +79,13 @@ namespace Hope {
 
             /**
              * Generate the view matrix.
-             * @param   projection  Output the projection matrix.
              * @param   position    Position of the camera.
              * @param   target      Center of the camera view.
              * @param   worldUp     Up vector of the world.
              * @return  The projection matrix, the same as the projection
              *          parameter.
              */
-            [[maybe_unused]]
-            Mind::Matrix4x4f& lookAt(
-                Mind::Matrix4x4f& projection,
+            void lookAt(
                 const Mind::Vector3f& position,
                 const Mind::Vector3f& target,
                 const Mind::Vector3f& worldUp = CameraComponent::WorldUpVector

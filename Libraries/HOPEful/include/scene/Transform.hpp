@@ -50,6 +50,11 @@ namespace Hope {
 
         public:
             /**
+             * Create a new Transform.
+             */
+            Transform() ;
+
+            /**
              * Set the rotation of the object.
              * @param  rotation    Rotation to apply.
              */
