@@ -4,16 +4,18 @@
 #include <string>
 #include <locale>
 #include <map>
+#include <unistd.h>
 
 using namespace std ;
 namespace fs = filesystem ;
 
 const string PathSeparator = "/" ;
 const string LibName = "HOPE" ;
-const string ShadersDirectory = "shaders" ;
+const string LibDirName = LibName + "ful" ;
+const string ShadersDirectory = LibDirName + "/shaders" ;
 const string CppPath = "scene/components/materials/" ;
-const string HeaderCppDirectory = LibName + "/include/" + CppPath ;
-const string SourceCppDirectory = LibName + "/src/" + CppPath ;
+const string HeaderCppDirectory = LibDirName + "/include/" + CppPath ;
+const string SourceCppDirectory = LibDirName + "/src/" + CppPath ;
 
 const string CppHeaderExtension = ".hpp" ;
 const string CppSourceExtension = ".cpp" ;
@@ -75,7 +77,9 @@ void getShaderFiles(map<fs::path, ShaderProgramFiles>& shaderFiles) {
         string shaderPath = p.path().string() ;
 
         std::size_t posUselessDir = directory.rfind("/materials/") ;
-        shaderFiles[shaderName].directory = directory.substr(0, posUselessDir) ;
+        std::string directoryPath = directory.substr(0, posUselessDir) ;
+        directoryPath.erase(0, LibDirName.size() + 1) ;
+        shaderFiles[shaderName].directory = directoryPath ;
 
         if (shaderType == VertexShaderType) {
             shaderFiles[shaderName].vertex = shaderPath ;
@@ -89,6 +93,29 @@ void getShaderFiles(map<fs::path, ShaderProgramFiles>& shaderFiles) {
             exit(-1) ;
         }
     }
+}
+
+// Get the text content of a file.
+std::string getFileContent(const std::string& filepath) {
+  std::string result ;
+
+  ifstream input ;
+  input.open(filepath) ;
+
+  if (!input) {
+        // Fail.
+        std::cerr << "Unable to read the content of " << filepath << std::endl ;
+        return result ;
+  }
+
+  std::string readline ;
+  while (std::getline(input, readline)) {
+      result += readline + "\\\n" ;
+  }
+
+  input.close() ;
+
+  return result ;
 }
 
 // Write the CPP header file.
@@ -146,7 +173,7 @@ void writeSource(const fs::path& program, const ShaderProgramFiles& files) {
     if (!files.vertex.empty()) {
         output_file << "std::string " << SourceFilename << "VertexCode =" << endl ;
         output_file << "\"\\" << endl ;
-        // Put file content here!
+        output_file << getFileContent(files.vertex) ;
         output_file << "\" ;" << endl ;
         output_file << endl ;
     }
@@ -154,7 +181,7 @@ void writeSource(const fs::path& program, const ShaderProgramFiles& files) {
     if (!files.fragment.empty()) {
         output_file << "std::string " << SourceFilename << "FragmentCode =" << endl ;
         output_file << "\"\\" << endl ;
-        // Put file content here!
+        output_file << getFileContent(files.fragment) ;
         output_file << "\" ;" << endl ;
         output_file << endl ;
     }
@@ -170,6 +197,10 @@ void writeCppFiles(const fs::path& program, const ShaderProgramFiles& files) {
 
 // Main function.
 int main() {
+    const string LibDirectory = "../../Libraries/" + LibDirName + "/" ;
+    const string SimLinkDirectory = "./" + LibDirName ;
+    symlink(LibDirectory.c_str(), SimLinkDirectory.c_str()) ;
+
     // Map to associate a shader program to its related files.
     map<fs::path, ShaderProgramFiles> shaderFiles ;
     getShaderFiles(shaderFiles) ;
