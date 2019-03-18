@@ -7,7 +7,7 @@ jobs:
             - checkout
 
             # Build libraries
-            - run: cd Libraries && cmake . && make
+            - run: cd Libraries && ./build
             # Build functional tests and run it
             ## DOOM
             - run: cd Softwares/Tests/DOOMful && cmake . && make
