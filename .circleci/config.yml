@@ -7,7 +7,7 @@ jobs:
             - checkout
 
             # Build libraries
-            - run: cd Libraries && ./build
+            - run: cd Libraries && chmod a+x build.sh && ./build.sh
             # Build functional tests and run it
             ## DOOM
             - run: cd Softwares/Tests/DOOMful && cmake . && make
