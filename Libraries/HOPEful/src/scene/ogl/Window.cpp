@@ -15,6 +15,9 @@ Window::Window(
 ) : m_title(title) {
     Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Error) ;
 
+    // Set the error callback to print errors while GLFW is running.
+    glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
+
     createInternalWindow(width, height, m_title) ;
     useCurrentContext() ;
     initializeGLEW() ;
@@ -113,9 +116,6 @@ void Window::setInputMode() {
 }
 
 void Window::setCallbacks() {
-    // Set the error callback to print errors while GLFW is running.
-    glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
-
     // Callback for window resizing.
     auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
         Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;

@@ -21,7 +21,7 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.obj") ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.dae") ;
     cubeEntity -> addComponent(meshComponent) ;
 
     // Add a material.
