@@ -14,12 +14,12 @@ void RenderPass::removeFilterOption(const std::shared_ptr<Hope::FilterOption> op
     m_options.erase(option) ;
 }
 
-void RenderPass::addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.insert(param) ;
+void RenderPass::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.insert(attrib) ;
 }
 
-void RenderPass::removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.erase(param) ;
+void RenderPass::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.erase(attrib) ;
 }
 
 void RenderPass::addCapability(const std::shared_ptr<Hope::GL::Capability> capability) {

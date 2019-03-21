@@ -3,7 +3,8 @@
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/components/materials/Material.hpp>
-#include <scene/ogl/rendering/glsl/ShaderParameterApplicator.hpp>
+#include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
+#include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 
 #include <iostream>
 
@@ -51,11 +52,11 @@ void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
 }
 
 void OpenGLRenderVisitor::visit(Material* component) {
-    auto materialParameters = component -> shaderParameters() ;
+    auto materialAttributes = component -> shaderAttributes() ;
     RenderEffect& effect = component -> effect() ;
 
-    auto effectParameters = effect.shaderParameters() ;
-    ShaderParameter::merge(materialParameters, effectParameters) ;
+    auto effectAttributes = effect.shaderAttributes() ;
+    ShaderAttribute::merge(materialAttributes, effectAttributes) ;
 
     // Select the technique that is used.
     std::shared_ptr<RenderTechnique> selectedTechnique ;
@@ -66,17 +67,17 @@ void OpenGLRenderVisitor::visit(Material* component) {
         return ;
     }
 
-    auto appliedParameters = effectParameters ;
-    auto techniqueParameters = selectedTechnique -> shaderParameters() ;
-    ShaderParameter::merge(appliedParameters, techniqueParameters) ;
+    auto appliedAttributes = effectAttributes ;
+    auto techniqueAttributes = selectedTechnique -> shaderAttributes() ;
+    ShaderAttribute::merge(appliedAttributes, techniqueAttributes) ;
     auto renderPasses = selectedTechnique -> renderPasses() ;
 
     for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
         // Maybe should check render passes (or it will work in FrameGraph
         // visitor through the RenderConditionAggregator?).
 
-        auto passParameters = pass -> shaderParameters() ;
-        ShaderParameter::merge(appliedParameters, passParameters) ;
+        auto passAttrributes = pass -> shaderAttributes() ;
+        ShaderAttribute::merge(appliedAttributes, passAttrributes) ;
 
         auto capabilities = pass -> capabilities() ;
 
@@ -92,11 +93,20 @@ void OpenGLRenderVisitor::visit(Material* component) {
         if (shaderProgram) {
             shaderProgram -> use() ;
 
-            // Set uniform values from the parameters here.
-            for (const std::shared_ptr<Hope::ShaderParameter> param : appliedParameters) {
-                ShaderParameterApplicator::ApplyParameter(
+            // Apply shader uniforms.
+            auto materialUniforms = component -> shaderUniforms() ;
+            for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
+                ShaderUniformApplicator::ApplyUniform(
                     shaderProgram -> id(),
-                    param
+                    uniform
+                ) ;
+            }
+
+            // Set attribute values here.
+            for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
+                ShaderAttributeApplicator::ApplyAttribute(
+                    shaderProgram -> id(),
+                    attrib
                 ) ;
             }
         }

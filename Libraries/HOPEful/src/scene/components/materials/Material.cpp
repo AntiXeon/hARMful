@@ -29,11 +29,11 @@ const std::string Hope::Material::EyePositionParamName = u8"eyePosition" ;
 
 Material::Material()
     : Component(Hope::MaterialComponentType) {
-    setupDefaultParameters() ;
+    setupDefaultUniforms() ;
 }
 
 void Material::accept(ISceneGraphVisitor* visitor) {
-    updateParameterValues(visitor) ;
+    updateUniformValues(visitor) ;
     visitor -> visit(this) ;
 }
 
@@ -45,112 +45,120 @@ RenderEffect& Material::effect() {
     return m_effect ;
 }
 
-void Material::addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.insert(param) ;
+void Material::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.insert(attrib) ;
 }
 
-void Material::removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.erase(param) ;
+void Material::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.erase(attrib) ;
 }
 
-void Material::setupDefaultParameters() {
+void Material::addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+    m_shaderUniforms.insert(uniform) ;
+}
+
+void Material::removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+    m_shaderUniforms.erase(uniform) ;
+}
+
+void Material::setupDefaultUniforms() {
     // uniform mat4 modelMatrix ;
-    m_modelMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_modelMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_modelMatrix -> setName(ModelMatrixParamName) ;
-    addShaderParameter(m_modelMatrix) ;
+    addShaderUniform(m_modelMatrix) ;
 
     // uniform mat4 viewMatrix ;
-    m_viewMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_viewMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_viewMatrix -> setName(ViewMatrixParamName) ;
-    addShaderParameter(m_viewMatrix) ;
+    addShaderUniform(m_viewMatrix) ;
 
     // uniform mat4 projectionMatrix ;
-    m_projectionMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_projectionMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_projectionMatrix -> setName(ProjectionMatrixParamName) ;
-    addShaderParameter(m_projectionMatrix) ;
+    addShaderUniform(m_projectionMatrix) ;
 
     // uniform mat4 modelViewMatrix ;
-    m_modelViewMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_modelViewMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_modelViewMatrix -> setName(ModelViewMatrixParamName) ;
-    addShaderParameter(m_modelViewMatrix) ;
+    addShaderUniform(m_modelViewMatrix) ;
 
     // uniform mat4 viewProjectionMatrix ;
-    m_viewProjectionMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_viewProjectionMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_viewProjectionMatrix -> setName(ViewProjectionMatrixParamName) ;
-    addShaderParameter(m_viewProjectionMatrix) ;
+    addShaderUniform(m_viewProjectionMatrix) ;
 
     // uniform mat4 mvpMatrix ;
-    m_mvpMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_mvpMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_mvpMatrix -> setName(MVPMatrixParamName) ;
-    addShaderParameter(m_mvpMatrix) ;
+    addShaderUniform(m_mvpMatrix) ;
 
     // uniform mat4 inverseModelMatrix ;
-    m_inverseModelMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseModelMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseModelMatrix -> setName(InverseModelMatrixParamName) ;
-    addShaderParameter(m_inverseModelMatrix) ;
+    addShaderUniform(m_inverseModelMatrix) ;
 
     // uniform mat4 inverseViewMatrix ;
-    m_inverseViewMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseViewMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseViewMatrix -> setName(InverseViewMatrixParamName) ;
-    addShaderParameter(m_inverseViewMatrix) ;
+    addShaderUniform(m_inverseViewMatrix) ;
 
     // uniform mat4 inverseProjectionMatrix ;
-    m_inverseProjectionMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseProjectionMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseProjectionMatrix -> setName(InverseProjectionMatrixParamName) ;
-    addShaderParameter(m_inverseProjectionMatrix) ;
+    addShaderUniform(m_inverseProjectionMatrix) ;
 
     // uniform mat4 inverseModelViewMatrix ;
-    m_inverseModelViewMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseModelViewMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseModelViewMatrix -> setName(InverseModelViewMatrixParamName) ;
-    addShaderParameter(m_inverseModelViewMatrix) ;
+    addShaderUniform(m_inverseModelViewMatrix) ;
 
     // uniform mat4 inverseViewProjectionMatrix ;
-    m_inverseViewProjectionMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseViewProjectionMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseViewProjectionMatrix -> setName(InverseViewProjectionMatrixParamName) ;
-    addShaderParameter(m_inverseViewProjectionMatrix) ;
+    addShaderUniform(m_inverseViewProjectionMatrix) ;
 
     // uniform mat4 inverseMVPMatrix ;
-    m_inverseMVPMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseMVPMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseMVPMatrix -> setName(InverseMVPMatrixParamName) ;
-    addShaderParameter(m_inverseMVPMatrix) ;
+    addShaderUniform(m_inverseMVPMatrix) ;
 
     // uniform mat3 modelNormalMatrix ;
-    m_modelNormalMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_modelNormalMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_modelNormalMatrix -> setName(ModelNormalMatrixParamName) ;
-    addShaderParameter(m_modelNormalMatrix) ;
+    addShaderUniform(m_modelNormalMatrix) ;
 
     // uniform mat3 modelViewNormalMatrix ;
-    m_modelViewNormalMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_modelViewNormalMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_modelViewNormalMatrix -> setName(ModelViewNormalMatrixParamName) ;
-    addShaderParameter(m_modelViewNormalMatrix) ;
+    addShaderUniform(m_modelViewNormalMatrix) ;
 
     // uniform mat4 viewportMatrix ;
-    m_viewportMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_viewportMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_viewportMatrix -> setName(ViewportMatrixParamName) ;
-    addShaderParameter(m_viewportMatrix) ;
+    addShaderUniform(m_viewportMatrix) ;
 
     // uniform mat4 inverseViewportMatrix ;
-    m_inverseViewportMatrix = std::make_shared<Hope::ShaderParameter>() ;
+    m_inverseViewportMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_inverseViewportMatrix -> setName(InverseViewportMatrixParamName) ;
-    addShaderParameter(m_inverseViewportMatrix) ;
+    addShaderUniform(m_inverseViewportMatrix) ;
 
     // uniform float aspectRatio ;
-    m_aspectRatio = std::make_shared<Hope::ShaderParameter>() ;
+    m_aspectRatio = std::make_shared<Hope::ShaderUniform>() ;
     m_aspectRatio -> setName(AspectRatioParamName) ;
-    addShaderParameter(m_aspectRatio) ;
+    addShaderUniform(m_aspectRatio) ;
 
     // uniform float time ;
-    m_time = std::make_shared<Hope::ShaderParameter>() ;
+    m_time = std::make_shared<Hope::ShaderUniform>() ;
     m_time -> setName(TimeParamName) ;
-    addShaderParameter(m_time) ;
+    addShaderUniform(m_time) ;
 
     // uniform vec3 eyePosition ;
-    m_eyePosition = std::make_shared<Hope::ShaderParameter>() ;
+    m_eyePosition = std::make_shared<Hope::ShaderUniform>() ;
     m_eyePosition -> setName(EyePositionParamName) ;
-    addShaderParameter(m_eyePosition) ;
+    addShaderUniform(m_eyePosition) ;
 }
 
-void Material::updateParameterValues(ISceneGraphVisitor* visitor) {
+void Material::updateUniformValues(ISceneGraphVisitor* visitor) {
     Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
     Hope::RenderRequiredData& data = visitor -> requiredData() ;
 

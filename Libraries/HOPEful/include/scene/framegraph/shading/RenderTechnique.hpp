@@ -54,9 +54,9 @@ namespace Hope {
             std::set<std::shared_ptr<Hope::FilterOption>> m_options ;
 
             /**
-             * List of shader parameters.
+             * List of shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderParameter>> m_shaderParams ;
+            std::set<std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
 
             /**
              * List of shader parameters.
@@ -120,22 +120,22 @@ namespace Hope {
             }
 
             /**
-             * Add a shader parameter.
+             * Add a shader attribute.
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) ;
+            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
 
             /**
-             * Remove a shader parameter.
+             * Remove a shader attribute.
              */
-            void removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) ;
+            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
 
             /**
-             * Get the shader parameters.
+             * Get the shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderParameter>> shaderParameters() const {
-                return m_shaderParams ;
+            std::set<std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
+                return m_shaderAttribs ;
             }
 
             /**

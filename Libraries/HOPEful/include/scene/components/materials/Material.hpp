@@ -3,7 +3,7 @@
 
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
-#include <scene/framegraph/shading/ShaderParameter.hpp>
+#include <scene/framegraph/shading/ShaderValue.hpp>
 
 namespace Hope {
     /**
@@ -38,25 +38,25 @@ namespace Hope {
             /**
              * All the default parameters.
              */
-            std::shared_ptr<Hope::ShaderParameter> m_modelMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_viewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_projectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_modelViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_viewProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_mvpMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseModelMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseModelViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseViewProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseMVPMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_modelNormalMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_modelViewNormalMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_viewportMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_inverseViewportMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_aspectRatio = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_time = nullptr ;
-            std::shared_ptr<Hope::ShaderParameter> m_eyePosition = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_modelMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_viewMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_projectionMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_modelViewMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_viewProjectionMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_mvpMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseModelMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseViewMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseProjectionMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseModelViewMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseViewProjectionMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseMVPMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_modelNormalMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_modelViewNormalMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_viewportMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_inverseViewportMatrix = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_aspectRatio = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_time = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_eyePosition = nullptr ;
 
             /**
              * Effect of the material.
@@ -66,7 +66,12 @@ namespace Hope {
             /**
              * List of shader parameters.
              */
-            std::set<std::shared_ptr<Hope::ShaderParameter>> m_shaderParams ;
+            std::set<std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
+
+            /**
+             * List of shader uniforms.
+             */
+            std::set<std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
 
         public:
             /**
@@ -92,40 +97,57 @@ namespace Hope {
             RenderEffect& effect() ;
 
             /**
-             * Get the shader parameters.
+             * Get the shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderParameter>> shaderParameters() const {
-                return m_shaderParams ;
+            std::set<std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
+                return m_shaderAttribs ;
+            }
+
+            /**
+             * Get the shader uniforms.
+             */
+            std::set<std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
+                return m_shaderUniforms ;
             }
 
         protected:
             /**
-             * Add a shader parameter.
+             * Add a shader attribute.
+             */
+            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+
+            /**
+             * Remove a shader attribute.
+             */
+            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+
+            /**
+             * Add a shader uniform value.
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) ;
+            void addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) ;
 
             /**
-             * Remove a shader parameter.
+             * Remove a shader ubniform.
              */
-            void removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) ;
+            void removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) ;
 
         private:
             /**
-             * Set up the default parameters (for uniform values in shaders).
+             * Set up the default uniform values.
              * The values are updated just before the component accepts the
              * rendering visitor.
              * @see     accept(ISceneGraphVisitor* visitor)
              * @see     updateParameterValues()
              */
-            void setupDefaultParameters() ;
+            void setupDefaultUniforms() ;
 
             /**
-             * Update the parameter values before the processing of the material
+             * Update the uniform values before the processing of the material
              * component.
              */
-            void updateParameterValues(ISceneGraphVisitor* visitor) ;
+            void updateUniformValues(ISceneGraphVisitor* visitor) ;
     } ;
 }
 

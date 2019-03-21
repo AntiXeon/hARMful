@@ -1,5 +1,5 @@
-#ifndef __HOPE__SHADER_PARAMETER__
-#define __HOPE__SHADER_PARAMETER__
+#ifndef __HOPE__SHADER_VALUE__
+#define __HOPE__SHADER_VALUE__
 
 #include <array>
 #include <string>
@@ -8,13 +8,17 @@
 #include <memory>
 
 namespace Hope {
+    class ShaderValue ;
+    typedef ShaderValue ShaderUniform ;
+    typedef ShaderValue ShaderAttribute ;
+
     /**
-     * A class for parameters sended to shaders.
+     * A class for values sended to shaders.
      */
-    class ShaderParameter final {
+    class ShaderValue final {
         public:
             /**
-             * Type of the parameter value.
+             * Type of the values value.
              */
             enum ValueType : char {
                 None,
@@ -121,15 +125,15 @@ namespace Hope {
              * set.
              */
             static void merge(
-                std::set<std::shared_ptr<Hope::ShaderParameter>>& first,
-                const std::set<std::shared_ptr<Hope::ShaderParameter>>& second
+                std::set<std::shared_ptr<Hope::ShaderValue>>& first,
+                const std::set<std::shared_ptr<Hope::ShaderValue>>& second
             ) ;
 
             /**
              * Check if two parameters describe the same value.
              * Only compares name and type, the value is not evaluated here.
              */
-            bool identical(const std::shared_ptr<Hope::ShaderParameter>& other) ;
+            bool identical(const std::shared_ptr<Hope::ShaderValue>& other) ;
 
             /**
              * Set the parameter name.

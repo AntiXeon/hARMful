@@ -4,15 +4,15 @@
 
 using namespace Hope ;
 
-const std::string PhongMaterial::AmbientParamName = "material.ambientColor" ;
-const std::string PhongMaterial::DiffuseParamName = "material.diffuseColor" ;
-const std::string PhongMaterial::SpecularParamName = "material.specularColor" ;
-const std::string PhongMaterial::ShininessParamName = "material.shininess" ;
+const std::string PhongMaterial::AmbientAttribName = "material.ambientColor" ;
+const std::string PhongMaterial::DiffuseAttribName = "material.diffuseColor" ;
+const std::string PhongMaterial::SpecularAttribName = "material.specularColor" ;
+const std::string PhongMaterial::ShininessAttribName = "material.shininess" ;
 
 PhongMaterial::PhongMaterial()
     : Material() {
     setupRendering() ;
-    setupParameters() ;
+    setupAttributes() ;
 }
 
 void PhongMaterial::setAmbient(const Color& ambient) {
@@ -23,7 +23,7 @@ void PhongMaterial::setAmbient(const Color& ambient) {
         ambient.alpha()
     } ;
 
-    m_ambientParam -> setVec4(colorArray) ;
+    m_ambientAttrib -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setDiffuse(const Color& diffuse) {
@@ -34,7 +34,7 @@ void PhongMaterial::setDiffuse(const Color& diffuse) {
         diffuse.alpha()
     } ;
 
-    m_diffuseParam -> setVec4(colorArray) ;
+    m_diffuseAttrib -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setSpecular(const Color& specular) {
@@ -45,48 +45,48 @@ void PhongMaterial::setSpecular(const Color& specular) {
         specular.alpha()
     } ;
 
-    m_specularParam -> setVec4(colorArray) ;
+    m_specularAttrib -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setShininess(const float shininess) {
-    m_shininessParam -> setFloating(shininess) ;
+    m_shininessAttrib -> setFloating(shininess) ;
 }
 
 Color PhongMaterial::ambient() const {
-    const float* ambient = m_ambientParam -> vec4() ;
+    const float* ambient = m_ambientAttrib -> vec4() ;
     return Color(ambient[0], ambient[1], ambient[2], ambient[3]) ;
 }
 
 Color PhongMaterial::diffuse() const {
-    const float* diffuse = m_diffuseParam -> vec4() ;
+    const float* diffuse = m_diffuseAttrib -> vec4() ;
     return Color(diffuse[0], diffuse[1], diffuse[2], diffuse[3]) ;
 }
 
 Color PhongMaterial::specular() const {
-    const float* specular = m_specularParam -> vec4() ;
+    const float* specular = m_specularAttrib -> vec4() ;
     return Color(specular[0], specular[1], specular[2], specular[3]) ;
 }
 
 float PhongMaterial::shininess() const {
-    return m_shininessParam -> floating() ;
+    return m_shininessAttrib -> floating() ;
 }
 
-void PhongMaterial::setupParameters() {
-    m_ambientParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_ambientParam -> setName(AmbientParamName) ;
-    addShaderParameter(m_ambientParam) ;
+void PhongMaterial::setupAttributes() {
+    m_ambientAttrib = std::make_shared<Hope::ShaderAttribute>() ;
+    m_ambientAttrib -> setName(AmbientAttribName) ;
+    addShaderAttribute(m_ambientAttrib) ;
 
-    m_diffuseParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_diffuseParam -> setName(DiffuseParamName) ;
-    addShaderParameter(m_diffuseParam) ;
+    m_diffuseAttrib = std::make_shared<Hope::ShaderAttribute>() ;
+    m_diffuseAttrib -> setName(DiffuseAttribName) ;
+    addShaderAttribute(m_diffuseAttrib) ;
 
-    m_specularParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_specularParam -> setName(SpecularParamName) ;
-    addShaderParameter(m_specularParam) ;
+    m_specularAttrib = std::make_shared<Hope::ShaderAttribute>() ;
+    m_specularAttrib -> setName(SpecularAttribName) ;
+    addShaderAttribute(m_specularAttrib) ;
 
-    m_shininessParam = std::make_shared<Hope::ShaderParameter>() ;
-    m_shininessParam -> setName(ShininessParamName) ;
-    addShaderParameter(m_shininessParam) ;
+    m_shininessAttrib = std::make_shared<Hope::ShaderAttribute>() ;
+    m_shininessAttrib -> setName(ShininessAttribName) ;
+    addShaderAttribute(m_shininessAttrib) ;
 }
 
 void PhongMaterial::setupRendering() {

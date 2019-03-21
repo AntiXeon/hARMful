@@ -14,52 +14,52 @@ namespace Hope {
     class PhongMaterial : public Material {
         private:
             /**
-             * Name of the ambient color uniform variable in the shader.
+             * Name of the ambient color attribute in the shader.
              */
-            static const std::string AmbientParamName ;
+            static const std::string AmbientAttribName ;
 
             /**
-             * Name of the diffuse color uniform variable in the shader.
+             * Name of the diffuse color attribute in the shader.
              */
-            static const std::string DiffuseParamName ;
+            static const std::string DiffuseAttribName ;
 
             /**
-             * Name of the specular color uniform variable in the shader.
+             * Name of the specular color attribute in the shader.
              */
-            static const std::string SpecularParamName ;
+            static const std::string SpecularAttribName ;
 
             /**
-             * Name of the shininess uniform variable in the shader.
+             * Name of the shininess attribute in the shader.
              */
-            static const std::string ShininessParamName ;
+            static const std::string ShininessAttribName ;
 
             /**
-             * Parameter of the ambient color (vec4). The object can emit some
+             * Attribeter of the ambient color (vec4). The object can emit some
              * color even without light.
              */
-            std::shared_ptr<Hope::ShaderParameter> m_ambientParam = nullptr ;
+            std::shared_ptr<Hope::ShaderAttribute> m_ambientAttrib = nullptr ;
 
             /**
-             * Parameter of the diffuse color (vec4). The color the material
+             * Attribeter of the diffuse color (vec4). The color the material
              * does not absorb, that is the color we see when there is a light.
              */
-            std::shared_ptr<Hope::ShaderParameter> m_diffuseParam = nullptr ;
+            std::shared_ptr<Hope::ShaderAttribute> m_diffuseAttrib = nullptr ;
 
             /**
-             * Parameter of the specular color (vec4). The lights can produce a
+             * Attribeter of the specular color (vec4). The lights can produce a
              * shiny spot on the material.
              */
-            std::shared_ptr<Hope::ShaderParameter> m_specularParam = nullptr ;
+            std::shared_ptr<Hope::ShaderAttribute> m_specularAttrib = nullptr ;
 
             /**
-             * Parameter of the shininess (float). The more it is shiny, the
+             * Attribeter of the shininess (float). The more it is shiny, the
              * more the specular spot is little but intense as metal for
              * instance.
              * On the contrary, lower shininess values will provide a bigger
              * specular spot on the object surface but less intense, like a
              * rough surface.
              */
-            std::shared_ptr<Hope::ShaderParameter> m_shininessParam = nullptr ;
+            std::shared_ptr<Hope::ShaderAttribute> m_shininessAttrib = nullptr ;
 
         public:
             /**
@@ -109,9 +109,9 @@ namespace Hope {
 
         private:
             /**
-             * Set up the parameters of the current material.
+             * Set up the Attribeters of the current material.
              */
-            void setupParameters() ;
+            void setupAttributes() ;
 
             /**
              * Set up the material rendering (techniques, shaders, ...).

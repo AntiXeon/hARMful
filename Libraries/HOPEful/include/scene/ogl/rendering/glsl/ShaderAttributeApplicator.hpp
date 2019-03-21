@@ -1,29 +1,29 @@
-#ifndef __HOPE__GL_SHADER_PARAMETER_APPLICATOR__
-#define __HOPE__GL_SHADER_PARAMETER_APPLICATOR__
+#ifndef __HOPE__GL_SHADER_ATTRIBUTE_APPLICATOR__
+#define __HOPE__GL_SHADER_ATTRIBUTE_APPLICATOR__
 
-#include <scene/framegraph/shading/ShaderParameter.hpp>
+#include <scene/framegraph/shading/ShaderValue.hpp>
 #include <GL/glew.h>
 
 namespace Hope::GL {
     /**
-     * Apply shader parameter values to the bound shader program.
+     * Apply shader attribute values to the bound shader program.
      */
-    class ShaderParameterApplicator final {
+    class ShaderAttributeApplicator final {
         public :
             /**
-             * Apply the shader parameter.
+             * Apply the shader attribute.
              */
-            static void ApplyParameter(
+            static void ApplyAttribute(
                 const GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
         private:
             /**
-             * Get the location of a uniform value in the shader program.
+             * Get the location of an attribute value in the shader program.
              * @return  false if no error occurred; true otherwise.
              */
-            static bool LocateUniform(
+            static bool LocateAttribute(
                 GLuint programID,
                 const std::string& name,
                 int& location
@@ -34,7 +34,7 @@ namespace Hope::GL {
              */
             static void Integer(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -42,7 +42,7 @@ namespace Hope::GL {
              */
             static void IVec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -50,7 +50,7 @@ namespace Hope::GL {
              */
             static void IVec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -58,7 +58,7 @@ namespace Hope::GL {
              */
             static void IVec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -66,7 +66,7 @@ namespace Hope::GL {
              */
             static void UnsignedInteger(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -74,7 +74,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -82,7 +82,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -90,7 +90,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -98,7 +98,7 @@ namespace Hope::GL {
              */
             static void Floating(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -106,7 +106,7 @@ namespace Hope::GL {
              */
             static void Vec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -114,7 +114,7 @@ namespace Hope::GL {
              */
             static void Vec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -122,7 +122,7 @@ namespace Hope::GL {
              */
             static void Vec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -130,7 +130,7 @@ namespace Hope::GL {
              */
             static void Mat2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -138,7 +138,7 @@ namespace Hope::GL {
              */
             static void Mat3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -146,55 +146,7 @@ namespace Hope::GL {
              */
             static void Mat4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Mat2x3 value.
-             */
-            static void Mat2x3(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Mat3x2 value.
-             */
-            static void Mat3x2(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Vec2x4 value.
-             */
-            static void Mat2x4(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Vec4x2 value.
-             */
-            static void Mat4x2(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Vec3x4 value.
-             */
-            static void Mat3x4(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
-            ) ;
-
-            /**
-             * Apply Vec4x3 value.
-             */
-            static void Mat4x3(
-                GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -202,7 +154,7 @@ namespace Hope::GL {
              */
             static void Sampler2D(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**
@@ -210,7 +162,7 @@ namespace Hope::GL {
              */
             static void SamplerCube(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderParameter>& param
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
     } ;
 }

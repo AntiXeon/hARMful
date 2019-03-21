@@ -20,12 +20,12 @@ void RenderTechnique::removeFilterOption(const std::shared_ptr<Hope::FilterOptio
     m_options.erase(option) ;
 }
 
-void RenderTechnique::addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.insert(param) ;
+void RenderTechnique::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.insert(attrib) ;
 }
 
-void RenderTechnique::removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.erase(param) ;
+void RenderTechnique::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.erase(attrib) ;
 }
 
 void RenderTechnique::addRenderPass(const std::shared_ptr<API::RenderPass> pass) {

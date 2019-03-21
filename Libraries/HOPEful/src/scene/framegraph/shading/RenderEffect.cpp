@@ -2,12 +2,12 @@
 
 using namespace Hope ;
 
-void RenderEffect::addShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.insert(param) ;
+void RenderEffect::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.insert(attrib) ;
 }
 
-void RenderEffect::removeShaderParameter(const std::shared_ptr<Hope::ShaderParameter> param) {
-    m_shaderParams.erase(param) ;
+void RenderEffect::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+    m_shaderAttribs.erase(attrib) ;
 }
 
 void RenderEffect::addTechnique(const std::shared_ptr<RenderTechnique> technique) {
