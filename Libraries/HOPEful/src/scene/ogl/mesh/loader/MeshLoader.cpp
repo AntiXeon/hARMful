@@ -11,6 +11,8 @@ using namespace Hope::GL ;
 
 MeshLoader::MeshLoader(const std::string& source) {
     m_source = source ;
+    m_mesh = std::make_shared<Mesh>() ;
+
     load() ;
 }
 
@@ -47,29 +49,22 @@ bool MeshLoader::load() {
 
 bool MeshLoader::initializeFromScene(const aiScene* scene) {
     uint32_t amountParts = scene -> mNumMeshes ;
-    // Resize to be able to store all the mesh parts.
-    m_parts.resize(amountParts) ;
 
     // Initialize each mesh part.
     for (uint32_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
         const aiMesh* part = scene -> mMeshes[partIndex] ;
-        initializeMeshPart(partIndex, part) ;
+        initializeMeshPart(part) ;
     }
-
-    m_mesh = std::make_shared<Mesh>(m_parts) ;
 
     return true ;
 }
 
-void MeshLoader::initializeMeshPart(
-    const uint32_t partIndex,
-    const aiMesh* part
-)
+void MeshLoader::initializeMeshPart(const aiMesh* part)
 {
     const aiVector3D Zero(0.f, 0.f, 0.f) ;
 
     std::vector<float> vertices ;
-    std::vector<uint32_t> indices ;
+    std::vector<uint16_t> indices ;
 
     // Fill the vertex buffer.
     uint32_t amountVertices = part -> mNumVertices ;
@@ -107,5 +102,6 @@ void MeshLoader::initializeMeshPart(
         indices.push_back(face.mIndices[2]);
     }
 
-    m_parts[partIndex].initialize(vertices, indices) ;
+    MeshPart meshPart(vertices, indices) ;
+    m_mesh -> addPart(meshPart) ;
 }

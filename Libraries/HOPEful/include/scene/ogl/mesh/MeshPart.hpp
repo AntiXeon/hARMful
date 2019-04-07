@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
+#include <interfaces/IRenderable.hpp>
 #include <GL/glew.h>
 #include <cstdint>
 
@@ -13,13 +14,8 @@ namespace Hope::GL {
     /**
      * A MeshPart is a subpart of a Mesh. A complex Mesh can have several parts.
      */
-    class MeshPart final {
+    class MeshPart final : public Hope::IRenderable {
         private:
-            /**
-             * ID of the VAO.
-             */
-            GLuint m_vertexArray = INVALID_VALUE ;
-
             /**
              * ID of the vertex buffer of this part.
              */
@@ -36,23 +32,35 @@ namespace Hope::GL {
             uint32_t m_materialIndex = INVALID_MATERIAL ;
 
             /**
-             * Indices of the vertices.
+             * Amount of vertex indices.
              */
-            std::vector<uint32_t> m_indices ;
+            uint32_t m_amountIndices = 0 ;
 
         public:
             /**
-             * Destruction of the MeshPart.
+             * Create a new MeshPart.
              */
-            ~MeshPart() ;
+             MeshPart(
+                 const std::vector<float>& vertices,
+                 const std::vector<uint16_t>& indices
+             ) ;
 
             /**
-             * Initialize the MeshPart data.
+             * Destruction of the MeshPart.
              */
-            bool initialize(
-                const std::vector<float>& vertices,
-                const std::vector<uint32_t>& indices
-            ) ;
+            virtual ~MeshPart() ;
+
+            /**
+             * Render the mesh part on screen.
+             */
+            void render() override {
+                glDrawElements(
+                    GL_TRIANGLE_STRIP,
+                    m_amountIndices,
+                    GL_UNSIGNED_INT,
+                    nullptr
+                ) ;
+            }
 
             /**
              * Get the vertex buffer ID.
@@ -79,21 +87,7 @@ namespace Hope::GL {
              * Amount of indices of vertex in this part.
              */
             uint32_t amountIndices() const {
-                return m_indices.size() ;
-            }
-
-            /**
-             * Indices of the vertices.
-             */
-            const uint32_t* indices() const {
-                return m_indices.data() ;
-            }
-
-            /**
-             * Bind the VAO of the mesh part.
-             */
-            void bind() const {
-                glBindVertexArray(m_vertexArray) ;
+                return m_amountIndices ;
             }
 
             // Copy/move operations.

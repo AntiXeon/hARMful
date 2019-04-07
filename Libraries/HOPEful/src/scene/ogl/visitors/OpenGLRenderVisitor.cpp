@@ -37,14 +37,8 @@ void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
 
 void OpenGLRenderVisitor::visit(MeshComponent* component) {
     std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
-    const std::vector<MeshPart>& meshParts = mesh -> parts() ;
-
-    for (const MeshPart& part : meshParts) {
-        part.bind() ;
-        glBindBuffer(GL_ARRAY_BUFFER, part.vertexBufferID()) ;
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, part.indexBufferID()) ;
-        glDrawArrays(GL_TRIANGLES, 0, part.amountIndices()) ;
-    }
+    mesh -> bind() ;
+    mesh -> render() ;
 }
 
 void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {

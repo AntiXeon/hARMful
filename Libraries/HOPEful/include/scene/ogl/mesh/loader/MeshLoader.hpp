@@ -23,11 +23,6 @@ namespace Hope::GL {
             std::string m_source ;
 
             /**
-             * Loaded mesh parts that will be aggregated into the final Mesh.
-             */
-            std::vector<MeshPart> m_parts ;
-
-            /**
              * Mesh that is loaded as a usable structure within HOPEful.
              */
             std::shared_ptr<Mesh> m_mesh = nullptr ;
@@ -62,10 +57,7 @@ namespace Hope::GL {
              * @param   partIndex   Index of the part in the whole mesh.
              * @param   part        Data of the mesh part.
              */
-            void initializeMeshPart(
-                const uint32_t partIndex,
-                const aiMesh* part
-            ) ;
+            void initializeMeshPart(const aiMesh* part) ;
     } ;
 }
 
