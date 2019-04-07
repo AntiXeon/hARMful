@@ -93,7 +93,7 @@ void PhongMaterial::setupRendering() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     shaderProgram -> setVertexShaderCode(PhongVertexCode) ;
-    shaderProgram -> setVertexShaderCode(PhongFragmentCode) ;
+    shaderProgram -> setFragmentShaderCode(PhongFragmentCode) ;
     shaderProgram -> link() ;
 
     std::shared_ptr<RenderTechnique> techniqueGL31 = std::make_shared<RenderTechnique>() ;

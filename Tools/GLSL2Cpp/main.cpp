@@ -110,7 +110,7 @@ std::string getFileContent(const std::string& filepath) {
 
   std::string readline ;
   while (std::getline(input, readline)) {
-      result += readline + "\\\n" ;
+      result += readline + "\\n\\\n" ;
   }
 
   input.close() ;

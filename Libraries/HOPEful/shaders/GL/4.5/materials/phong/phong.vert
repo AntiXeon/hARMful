@@ -5,5 +5,5 @@ layout(location = 0) in vec4 vertexCoord ;
 uniform mat4 mvpMatrix ;
 
 void main() {
-    gl_Position = mvpMatrix * vertexCoord ;
+    gl_Position = vertexCoord ;
 }

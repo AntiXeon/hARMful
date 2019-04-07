@@ -33,7 +33,6 @@ namespace Hope::GL {
              */
             Mesh() {
                 glGenVertexArrays(1, &m_vertexArray) ;
-                std::cout << "VAO: " << m_vertexArray << std::endl ;
             }
 
             /**

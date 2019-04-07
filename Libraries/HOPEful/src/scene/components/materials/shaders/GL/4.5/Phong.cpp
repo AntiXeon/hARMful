@@ -2,30 +2,30 @@
 
 std::string PhongVertexCode =
 "\
-#version 450    // OpenGL 4.5\
-\
-layout(location = 0) in vec4 vertexCoord ;\
-\
-uniform mat4 mvpMatrix ;\
-\
-void main() {\
-    gl_Position = mvpMatrix * vertexCoord ;\
-}\
+#version 450    // OpenGL 4.5\n\
+\n\
+layout(location = 0) in vec4 vertexCoord ;\n\
+\n\
+uniform mat4 mvpMatrix ;\n\
+\n\
+void main() {\n\
+    gl_Position = vertexCoord ;\n\
+}\n\
 " ;
 
 std::string PhongFragmentCode =
 "\
-#version 450    // OpenGL 4.5\
-\
-uniform vec4 ambientColor ;\
-uniform vec4 diffuseColor ;\
-uniform vec4 specularColor ;\
-uniform float shininess ;\
-\
-layout (location = 0) out vec4 FragColor ;\
-\
-void main() {\
-    FragColor = ambientColor ;\
-}\
+#version 450    // OpenGL 4.5\n\
+\n\
+uniform vec4 ambientColor ;\n\
+uniform vec4 diffuseColor ;\n\
+uniform vec4 specularColor ;\n\
+uniform float shininess ;\n\
+\n\
+layout(location = 0) out vec4 fragColor ;\n\
+\n\
+void main() {\n\
+    fragColor = vec4(1.f, 1.f, 1.f, 1.f) ;\n\
+}\n\
 " ;
 

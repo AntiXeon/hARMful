@@ -5,8 +5,8 @@ uniform vec4 diffuseColor ;
 uniform vec4 specularColor ;
 uniform float shininess ;
 
-layout (location = 0) out vec4 FragColor ;
+layout(location = 0) out vec4 fragColor ;
 
 void main() {
-    FragColor = ambientColor ;
+    fragColor = vec4(1.f, 1.f, 1.f, 1.f) ;
 }
