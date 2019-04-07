@@ -81,17 +81,11 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
     float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
     viewMatrix.data(viewMatrixData) ;
-    glMultMatrixf(viewMatrixData) ;
 
     Hope::Entity* cameraEntity = camera -> firstEntity() ;
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
     // Inverse as the world moves instead of the camera!
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
-    glTranslatef(
-        eyeView.get(Mind::Vector3f::X),
-        eyeView.get(Mind::Vector3f::Y),
-        eyeView.get(Mind::Vector3f::Z)
-    ) ;
 
     // Update the required data.
     requiredData.eyePosition = eyeView ;

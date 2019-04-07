@@ -1,4 +1,4 @@
-#version 140    // OpenGL 3.1
+#version 450    // OpenGL 4.5
 
 layout(location = 0) in vec4 vertexCoord ;
 

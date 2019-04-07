@@ -1,18 +1,18 @@
 #include <scene/components/materials/PhongMaterial.hpp>
-#include <scene/components/materials/shaders/GL/3.1/Phong.hpp>
+#include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
 #include <memory>
 
 using namespace Hope ;
 
-const std::string PhongMaterial::AmbientAttribName = "material.ambientColor" ;
-const std::string PhongMaterial::DiffuseAttribName = "material.diffuseColor" ;
-const std::string PhongMaterial::SpecularAttribName = "material.specularColor" ;
-const std::string PhongMaterial::ShininessAttribName = "material.shininess" ;
+const std::string PhongMaterial::AmbientUniformName = "ambientColor" ;
+const std::string PhongMaterial::DiffuseUniformName = "diffuseColor" ;
+const std::string PhongMaterial::SpecularUniformName = "specularColor" ;
+const std::string PhongMaterial::ShininessUniformName = "shininess" ;
 
 PhongMaterial::PhongMaterial()
     : Material() {
     setupRendering() ;
-    setupAttributes() ;
+    setupUniforms() ;
 }
 
 void PhongMaterial::setAmbient(const Color& ambient) {
@@ -23,7 +23,7 @@ void PhongMaterial::setAmbient(const Color& ambient) {
         ambient.alpha()
     } ;
 
-    m_ambientAttrib -> setVec4(colorArray) ;
+    m_ambientUniform -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setDiffuse(const Color& diffuse) {
@@ -34,7 +34,7 @@ void PhongMaterial::setDiffuse(const Color& diffuse) {
         diffuse.alpha()
     } ;
 
-    m_diffuseAttrib -> setVec4(colorArray) ;
+    m_diffuseUniform -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setSpecular(const Color& specular) {
@@ -45,48 +45,48 @@ void PhongMaterial::setSpecular(const Color& specular) {
         specular.alpha()
     } ;
 
-    m_specularAttrib -> setVec4(colorArray) ;
+    m_specularUniform -> setVec4(colorArray) ;
 }
 
 void PhongMaterial::setShininess(const float shininess) {
-    m_shininessAttrib -> setFloating(shininess) ;
+    m_shininessUniform -> setFloating(shininess) ;
 }
 
 Color PhongMaterial::ambient() const {
-    const float* ambient = m_ambientAttrib -> vec4() ;
+    const float* ambient = m_ambientUniform -> vec4() ;
     return Color(ambient[0], ambient[1], ambient[2], ambient[3]) ;
 }
 
 Color PhongMaterial::diffuse() const {
-    const float* diffuse = m_diffuseAttrib -> vec4() ;
+    const float* diffuse = m_diffuseUniform -> vec4() ;
     return Color(diffuse[0], diffuse[1], diffuse[2], diffuse[3]) ;
 }
 
 Color PhongMaterial::specular() const {
-    const float* specular = m_specularAttrib -> vec4() ;
+    const float* specular = m_specularUniform -> vec4() ;
     return Color(specular[0], specular[1], specular[2], specular[3]) ;
 }
 
 float PhongMaterial::shininess() const {
-    return m_shininessAttrib -> floating() ;
+    return m_shininessUniform -> floating() ;
 }
 
-void PhongMaterial::setupAttributes() {
-    m_ambientAttrib = std::make_shared<Hope::ShaderAttribute>() ;
-    m_ambientAttrib -> setName(AmbientAttribName) ;
-    addShaderAttribute(m_ambientAttrib) ;
+void PhongMaterial::setupUniforms() {
+    m_ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_ambientUniform -> setName(AmbientUniformName) ;
+    addShaderUniform(m_ambientUniform) ;
 
-    m_diffuseAttrib = std::make_shared<Hope::ShaderAttribute>() ;
-    m_diffuseAttrib -> setName(DiffuseAttribName) ;
-    addShaderAttribute(m_diffuseAttrib) ;
+    m_diffuseUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_diffuseUniform -> setName(DiffuseUniformName) ;
+    addShaderUniform(m_diffuseUniform) ;
 
-    m_specularAttrib = std::make_shared<Hope::ShaderAttribute>() ;
-    m_specularAttrib -> setName(SpecularAttribName) ;
-    addShaderAttribute(m_specularAttrib) ;
+    m_specularUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_specularUniform -> setName(SpecularUniformName) ;
+    addShaderUniform(m_specularUniform) ;
 
-    m_shininessAttrib = std::make_shared<Hope::ShaderAttribute>() ;
-    m_shininessAttrib -> setName(ShininessAttribName) ;
-    addShaderAttribute(m_shininessAttrib) ;
+    m_shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_shininessUniform -> setName(ShininessUniformName) ;
+    addShaderUniform(m_shininessUniform) ;
 }
 
 void PhongMaterial::setupRendering() {
