@@ -15,7 +15,7 @@ namespace Hope::GL {
             /**
              * Amount of values in a Vertex.
              */
-            static const int AmountValues = 3 + 2 + 3 ;
+            static const int AmountValues = 3 ; //= 3 + 2 + 3 ;
 
             /**
              * Size of the vertex data in bytes.
@@ -33,9 +33,9 @@ namespace Hope::GL {
              * Create a new vertex.
              */
             Vertex(
-                const Mind::Vector3f& pos,
-                const Mind::Vector2f& tex,
-                const Mind::Vector3f& normal
+                const Mind::Vector3f& pos//,
+                // const Mind::Vector2f& tex,
+                // const Mind::Vector3f& normal
             ) ;
 
             /**

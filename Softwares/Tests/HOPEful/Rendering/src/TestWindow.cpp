@@ -21,14 +21,14 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.dae") ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.fbx") ;
     cubeEntity -> addComponent(meshComponent) ;
 
-    // Add a material.
-    Hope::PhongMaterial* material = new Hope::PhongMaterial() ;
-    Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
-    material -> setAmbient(ambientColor) ;
-    cubeEntity -> addComponent(material) ;
+    // // Add a material.
+    // Hope::PhongMaterial* material = new Hope::PhongMaterial() ;
+    // Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
+    // material -> setAmbient(ambientColor) ;
+    // cubeEntity -> addComponent(material) ;
 
     // Set up the frame graph.
     // Set the viewport.

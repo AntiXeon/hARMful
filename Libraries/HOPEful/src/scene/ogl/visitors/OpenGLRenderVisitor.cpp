@@ -38,7 +38,9 @@ void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
 void OpenGLRenderVisitor::visit(MeshComponent* component) {
     std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
     mesh -> bind() ;
+    std::cout << "Render mesh" << std::endl ;
     mesh -> render() ;
+    std::cout << "Mesh rendered" << std::endl ;
 }
 
 void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {

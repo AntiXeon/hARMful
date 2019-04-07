@@ -7,14 +7,19 @@
 #include <GL/glew.h>
 #include <cstdint>
 
+#include <iostream>
+
 namespace Hope::GL {
 
+    class Mesh ;
     class Vertex ;
 
     /**
      * A MeshPart is a subpart of a Mesh. A complex Mesh can have several parts.
      */
     class MeshPart final : public Hope::IRenderable {
+        friend class Mesh ;
+
         private:
             /**
              * ID of the vertex buffer of this part.
@@ -46,19 +51,13 @@ namespace Hope::GL {
              ) ;
 
             /**
-             * Destruction of the MeshPart.
-             */
-            virtual ~MeshPart() ;
-
-            /**
              * Render the mesh part on screen.
              */
             void render() override {
-                glDrawElements(
+                glDrawArrays(
                     GL_TRIANGLE_STRIP,
-                    m_amountIndices,
-                    GL_UNSIGNED_INT,
-                    nullptr
+                    0,
+                    m_amountIndices
                 ) ;
             }
 
@@ -90,12 +89,11 @@ namespace Hope::GL {
                 return m_amountIndices ;
             }
 
-            // Copy/move operations.
-            MeshPart() = default ;
-            MeshPart(const MeshPart& copied) = default ;
-            MeshPart(MeshPart&& moved) = default ;
-            MeshPart& operator=(const MeshPart& copied) = default ;
-            MeshPart& operator=(MeshPart&& moved) = default ;
+        private:
+            /**
+             * Delete the mesh part buffers.
+             */
+            void deleteBuffers() ;
     } ;
 }
 

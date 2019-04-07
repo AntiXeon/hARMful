@@ -33,9 +33,17 @@ namespace Hope::GL {
              */
             Mesh() {
                 glGenVertexArrays(1, &m_vertexArray) ;
+                std::cout << "VAO: " << m_vertexArray << std::endl ;
             }
 
+            /**
+             * Destruction of the Mesh.
+             */
             virtual ~Mesh() {
+                for (auto& part : m_parts) {
+                    part.deleteBuffers() ;
+                }
+
                 glDeleteVertexArrays(1, &m_vertexArray) ;
             }
 
