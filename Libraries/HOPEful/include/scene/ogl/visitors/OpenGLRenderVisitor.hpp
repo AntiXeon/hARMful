@@ -76,6 +76,11 @@ namespace Hope::GL {
              */
             void visit(Material* component) override ;
 
+            /**
+             * Visit a test component.
+             */
+            void visit(TriangleTestComponent* component) override ;
+
         private:
             /**
              * Select the best material technique of a material. It depends on

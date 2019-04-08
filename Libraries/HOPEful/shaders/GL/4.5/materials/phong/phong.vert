@@ -1,9 +1,7 @@
-#version 450    // OpenGL 4.5
+#version 450 core    // OpenGL 4.5
 
-layout(location = 0) in vec4 vertexCoord ;
-
-uniform mat4 mvpMatrix ;
+layout (location = 0) in vec3 position ;
 
 void main() {
-    gl_Position = vertexCoord ;
+    gl_Position = vec4(position, 1.f) ;
 }

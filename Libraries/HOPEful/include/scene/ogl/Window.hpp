@@ -109,6 +109,11 @@ namespace Hope { namespace GL {
              */
             void setCallbacks() ;
 
+            /**
+             * Set the version of the graphics API.
+             */
+            void setGraphicsAPIVersion() ;
+
         // Callbacks
         private:
             /**

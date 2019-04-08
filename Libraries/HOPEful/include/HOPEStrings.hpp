@@ -8,6 +8,8 @@ namespace Hope {
         extern std::string Init_Bad_GLFW ;
         extern std::string Init_Bad_GLEW ;
         extern std::string Init_GL_Window ;
+        extern std::string Init_GL_Version ;
+        extern std::string Init_GL_Vendor ;
 
         extern std::string Mesh_NotLoaded ;
     }

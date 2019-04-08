@@ -11,6 +11,12 @@ namespace Hope {
     extern ComponentType RenderConfigurationType ;
     extern ComponentType LightComponentType ;
     extern ComponentType MaterialComponentType ;
+
+    extern ComponentType TriangleTestType ;
+    
+    extern ComponentType LastComponentType ;
+
+    extern unsigned int AmountComponentTypes ;
 }
 
 #endif

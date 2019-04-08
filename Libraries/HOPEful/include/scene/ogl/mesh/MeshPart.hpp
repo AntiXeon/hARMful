@@ -54,11 +54,8 @@ namespace Hope::GL {
              * Render the mesh part on screen.
              */
             void render() override {
-                glDrawArrays(
-                    GL_TRIANGLE_STRIP,
-                    0,
-                    m_amountIndices
-                ) ;
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
+                glDrawElements(GL_TRIANGLES, m_amountIndices, GL_UNSIGNED_SHORT, nullptr) ;
             }
 
             /**

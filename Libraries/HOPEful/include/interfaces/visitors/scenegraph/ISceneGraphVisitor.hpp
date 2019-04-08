@@ -11,6 +11,8 @@ namespace Hope {
     class ProcessedSceneNode ;
     class RenderRequiredData ;
 
+    class TriangleTestComponent ;
+
     /**
      * Interface for the Visitor design pattern for objects inside the scene
      * graph.
@@ -56,6 +58,11 @@ namespace Hope {
              * Visit a material component.
              */
             virtual void visit(Material* component) = 0 ;
+
+            /**
+             * Visit a test component.
+             */
+            virtual void visit(TriangleTestComponent* component) = 0 ;
     } ;
 }
 

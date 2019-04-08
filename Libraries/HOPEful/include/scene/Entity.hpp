@@ -6,7 +6,7 @@
 #include <scene/Transform.hpp>
 #include <scene/SceneRenderData.hpp>
 #include <memory>
-#include <map>
+#include <vector>
 
 namespace Hope {
 
@@ -34,7 +34,7 @@ namespace Hope {
             /**
              * Components attached to the current entity.
              */
-            std::map<ComponentType, Component*> m_components ;
+            std::vector<Component*> m_components ;
 
             /**
              * Render data shared with the scene.

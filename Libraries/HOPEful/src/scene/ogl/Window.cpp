@@ -13,7 +13,7 @@ Window::Window(
     const int height,
     const std::string& title
 ) : m_title(title) {
-    Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Error) ;
+    Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Info) ;
 
     // Set the error callback to print errors while GLFW is running.
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
@@ -38,8 +38,10 @@ void Window::run() {
         preRender() ;
         m_scene.render() ;
         postRender() ;
-        glfwSwapBuffers(m_window) ;
         glfwPollEvents() ;
+
+        std::cout << "Swap buffers" << std::endl << std::endl ;
+        glfwSwapBuffers(m_window) ;
     }
 }
 
@@ -64,9 +66,7 @@ void Window::createInternalWindow(
         exit(EXIT_FAILURE);
     }
 
-    // Use GLFW 2.1.0
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2) ;
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1) ;
+    setGraphicsAPIVersion() ;
 
     m_window = glfwCreateWindow(
         width,
@@ -85,21 +85,22 @@ void Window::createInternalWindow(
 }
 
 void Window::useCurrentContext() {
-    glfwMakeContextCurrent(m_window);
+    glfwMakeContextCurrent(m_window) ;
 }
 
 void Window::initializeGLEW()    {
-    // Required for the core profile set in the main window.
-    glewExperimental = true;
+    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+    auto logSharedPtr = logWeakPtr.lock() ;
 
-    GLenum initEror = glewInit();
+    // Required for the core profile set in the main window.
+    glewExperimental = true ;
+
+    GLenum initEror = glewInit() ;
 
     if (initEror != GLEW_OK) {
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-
-        auto logSharedPtr = logWeakPtr.lock() ;
         if (logSharedPtr) {
+            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+
             logSharedPtr -> writeLine(
                 level,
                 Texts::Init_Bad_GLEW,
@@ -107,7 +108,29 @@ void Window::initializeGLEW()    {
             ) ;
         }
 
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE) ;
+    }
+
+    glEnable(GL_DEPTH_TEST) ;
+    glDepthFunc(GL_LESS) ;
+
+    // Get version info.
+    const GLubyte* renderer = glGetString(GL_RENDERER) ;
+    const GLubyte* version = glGetString(GL_VERSION) ;
+    if (logSharedPtr) {
+        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Info ;
+
+        logSharedPtr -> writeLine(
+            level,
+            Texts::Init_GL_Version,
+            renderer
+        ) ;
+
+        logSharedPtr -> writeLine(
+            level,
+            Texts::Init_GL_Vendor,
+            version
+        ) ;
     }
 }
 
@@ -122,6 +145,14 @@ void Window::setCallbacks() {
         that -> resizedWindow(window, width, height) ;
     } ;
     glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
+}
+
+void Window::setGraphicsAPIVersion() {
+    // Use OpenGL4.5.
+    Options::SetGLVersion(4, 5) ;
+    Options::SetSamplingFactor(Options::Sampling::X4) ;
+
+
 }
 
 void Window::GLFWErrorCallback(

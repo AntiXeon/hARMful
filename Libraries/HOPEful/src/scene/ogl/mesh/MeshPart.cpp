@@ -12,15 +12,16 @@ MeshPart::MeshPart(
 
     glGenBuffers(1, &m_vertexBuffer) ;
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer) ;
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), &(vertices[0]), GL_STATIC_DRAW) ;
-    glBindBuffer(GL_ARRAY_BUFFER, 0) ;
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW) ;
+
+    // Position attribute.
+    glEnableVertexAttribArray(0) ;
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr) ;
+
 
     glGenBuffers(1, &m_indexBuffer) ;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * m_amountIndices, &(indices[0]), GL_STATIC_DRAW) ;
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0) ;
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr) ;
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * m_amountIndices, indices.data(), GL_STATIC_DRAW) ;
 }
 
 void MeshPart::deleteBuffers() {
@@ -31,4 +32,6 @@ void MeshPart::deleteBuffers() {
     if (glIsBuffer(m_indexBuffer)) {
         glDeleteBuffers(1, &m_indexBuffer);
     }
+
+    std::cout << "Destroying mesh part" << std::endl ;
 }

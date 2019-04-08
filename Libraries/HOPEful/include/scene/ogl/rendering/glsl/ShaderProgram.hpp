@@ -8,6 +8,8 @@
 #include <scene/ogl/rendering/glsl/shaders/TesselationEvaluationShader.hpp>
 #include <GL/glew.h>
 
+#include <iostream>
+
 namespace Hope::GL {
     /**
      * A shader program combines several types of shaders (vertex, fragment,
@@ -56,12 +58,14 @@ namespace Hope::GL {
              */
             ShaderProgram() {
                 m_programID = glCreateProgram() ;
+                std::cout << "Create shader program #" << m_programID << std::endl ;
             }
 
             /**
              * Destroy a shader program.
              */
             ~ShaderProgram() {
+                std::cout << "Delete shader program #" << m_programID << std::endl ;
                 glDeleteProgram(m_programID) ;
             }
 

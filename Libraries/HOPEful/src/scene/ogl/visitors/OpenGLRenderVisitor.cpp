@@ -3,6 +3,7 @@
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/components/materials/Material.hpp>
+#include <scene/components/test/TriangleTestComponent.hpp>
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 
@@ -32,20 +33,25 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
 }
 
 void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
+    std::cout << "Visit CameraComponent" << std::endl ;
     // TODO
 }
 
 void OpenGLRenderVisitor::visit(MeshComponent* component) {
+    std::cout << "Visit MeshComponent" << std::endl ;
+
     std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
-    mesh -> bind() ;
     mesh -> render() ;
 }
 
 void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
+    std::cout << "Visit RenderConfiguration" << std::endl ;
     // TODO
 }
 
 void OpenGLRenderVisitor::visit(Material* component) {
+    std::cout << "Visit Material" << std::endl ;
+
     auto materialAttributes = component -> shaderAttributes() ;
     RenderEffect& effect = component -> effect() ;
 
@@ -85,24 +91,26 @@ void OpenGLRenderVisitor::visit(Material* component) {
         std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
 
         if (shaderProgram) {
+            // shaderProgram -> link() ;
+            //
+            // // Apply shader uniforms.
+            // auto materialUniforms = component -> shaderUniforms() ;
+            // for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
+            //     ShaderUniformApplicator::ApplyUniform(
+            //         shaderProgram -> id(),
+            //         uniform
+            //     ) ;
+            // }
+            //
+            // // Set attribute values here.
+            // for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
+            //     ShaderAttributeApplicator::ApplyAttribute(
+            //         shaderProgram -> id(),
+            //         attrib
+            //     ) ;
+            // }
             shaderProgram -> use() ;
-
-            // Apply shader uniforms.
-            auto materialUniforms = component -> shaderUniforms() ;
-            for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
-                ShaderUniformApplicator::ApplyUniform(
-                    shaderProgram -> id(),
-                    uniform
-                ) ;
-            }
-
-            // Set attribute values here.
-            for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
-                ShaderAttributeApplicator::ApplyAttribute(
-                    shaderProgram -> id(),
-                    attrib
-                ) ;
-            }
+            std::cout << "Shader program in use... " << std::endl ;
         }
 
         // Restore the OpenGL state machine for the next rendered object.
@@ -110,6 +118,10 @@ void OpenGLRenderVisitor::visit(Material* component) {
             capability -> remove() ;
         }
     }
+}
+
+void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
+    component -> render() ;
 }
 
 std::shared_ptr<RenderTechnique> OpenGLRenderVisitor::selectBestMaterialTechnique(

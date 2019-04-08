@@ -45,6 +45,8 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 }
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* /*node*/) {
+    std::cout << "Visit ActiveCamera" << std::endl ;
+
     // RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
     // Hope::CameraComponent* camera = node -> camera() ;
     //
@@ -97,10 +99,13 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
+    std::cout << "Visit FrustumCulling" << std::endl ;
     // TODO
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
+    std::cout << "Visit Viewport" << std::endl ;
+
     // RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
     //
     // if (!m_hasWindowChanged) {
@@ -145,6 +150,8 @@ void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
+    std::cout << "Make render..." << std::endl ;
+
     assert(m_aggregators.size() > 0) ;
 
     Hope::ProcessedSceneNode rootNode ;
@@ -153,8 +160,8 @@ void OpenGLFrameGraphVisitor::makeRender() {
     m_processedNodes.push(rootNode) ;
 
     while (m_processedNodes.size() > 0) {
-        // For each entity: check if all the conditions are OK otherwise, go back to
-        // the parent entity and process the other ones.
+        // For each entity: check if all the conditions are OK otherwise, go
+        // back to the parent entity and process the other ones.
         // The children of an invalid entity are discarded as well.
         renderGraph() ;
     }
@@ -179,7 +186,9 @@ void OpenGLFrameGraphVisitor::renderGraph() {
         m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
         std::vector<Component*> components = renderedEntity -> components() ;
         for (Component* component : components) {
-            component -> accept(m_activeOpenGLRenderVisitor) ;
+            if (component) {
+                component -> accept(m_activeOpenGLRenderVisitor) ;
+            }
         }
 
         // Save the parent world matrix before pop.

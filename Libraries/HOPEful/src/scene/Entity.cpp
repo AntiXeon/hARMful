@@ -6,12 +6,11 @@
 using namespace Hope ;
 
 Entity::Entity(Entity* parent) : Node(parent) {
-
+    m_components.resize(Hope::AmountComponentTypes) ;
 }
 
 Entity::~Entity() {
-    for (auto const& entry : m_components) {
-        Component* component = entry.second ;
+    for (Component* component : m_components) {
         component -> detach(this) ;
 
         if (component -> amountAttachedEntities() == 0) {
@@ -37,26 +36,19 @@ void Entity::removeComponent(Component* component) {
         return ;
     }
 
-    if (m_components.count(component -> type()) > 0) {
-        component -> detach(this) ;
-        m_components.erase(component -> type()) ;
-    }
+    removeComponent(component -> type()) ;
 }
 
 void Entity::removeComponent(const ComponentType type) {
-    if (m_components.count(type) > 0) {
+    if (m_components[type]) {
         Component* component = m_components[type] ;
         component -> detach(this) ;
-        m_components.erase(type) ;
+        m_components[type] = nullptr ;
     }
 }
 
 Component* Entity::component(const ComponentType type) const {
-    if (m_components.count(type) > 0) {
-        return m_components.at(type) ;
-    }
-
-    return nullptr ;
+    return m_components[type] ;
 }
 
 SceneRenderData* Entity::renderData() const {
@@ -72,8 +64,7 @@ void Entity::setRenderData(SceneRenderData* data) {
 
         if (childEntity) {
             // Update scene render data by reattaching components.
-            for (auto const& entry : m_components) {
-                Component* component = entry.second ;
+            for (Component* component : m_components) {
                 component -> detach(this) ;
                 component -> attach(this) ;
             }
@@ -101,13 +92,7 @@ Transform& Entity::transform() {
 }
 
 std::vector<Component*> Entity::components() const {
-    std::vector<Component*> output ;
-
-    for (auto const& entry : m_components) {
-        output.push_back(entry.second) ;
-    }
-
-    return output ;
+    return m_components ;
 }
 
 void Entity::onChildAdded(Node* newChild) {

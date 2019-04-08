@@ -3,25 +3,27 @@
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/materials/PhongMaterial.hpp>
+#include <scene/components/test/TriangleTestComponent.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
-    // Create a camera in the scene graph.
-    Hope::Entity* cameraEntity = new Hope::Entity(scene() -> root()) ;
+    // // Create a camera in the scene graph.
+    // Hope::Entity* cameraEntity = new Hope::Entity(scene() -> root()) ;
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
-    cameraEntity -> addComponent(m_cameraComponent) ;
-
-    m_cameraComponent -> lookAt(
-        Mind::Vector3f(0.f, 0.f, -5.f),
-        Mind::Vector3f(0.f, 0.f, 0.f)
-    ) ;
+    // cameraEntity -> addComponent(m_cameraComponent) ;
+    //
+    // m_cameraComponent -> lookAt(
+    //     Mind::Vector3f(0.f, 0.f, -5.f),
+    //     Mind::Vector3f(0.f, 0.f, 0.f)
+    // ) ;
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
     Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.fbx") ;
+    // Hope::TriangleTestComponent* meshComponent = new Hope::TriangleTestComponent() ;
     cubeEntity -> addComponent(meshComponent) ;
 
     // Add a material.
@@ -33,8 +35,8 @@ TestWindow::TestWindow()
     // Set up the frame graph.
     // Set the viewport.
     Hope::Viewport* viewportNode = new Hope::Viewport() ;
-    viewportNode -> setPosition(Mind::Point2Df(0.25f, 0.25f)) ;
-    viewportNode -> setDimension(Mind::Dimension2Df(0.5f, 0.5f)) ;
+    viewportNode -> setPosition(Mind::Point2Df(0.f, 0.f)) ;
+    viewportNode -> setDimension(Mind::Dimension2Df(1.f, 1.f)) ;
 
     // Set the camera in use.
     Hope::ActiveCamera* activeCameraNode = new Hope::ActiveCamera(viewportNode) ;

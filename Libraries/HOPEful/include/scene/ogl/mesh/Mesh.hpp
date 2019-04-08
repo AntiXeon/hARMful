@@ -33,6 +33,7 @@ namespace Hope::GL {
              */
             Mesh() {
                 glGenVertexArrays(1, &m_vertexArray) ;
+                std::cout << "Generate mesh VAO #" << m_vertexArray << std::endl ;
             }
 
             /**
@@ -42,6 +43,8 @@ namespace Hope::GL {
                 for (auto& part : m_parts) {
                     part.deleteBuffers() ;
                 }
+
+                std::cout << "Destroying mesh" << std::endl ;
 
                 glDeleteVertexArrays(1, &m_vertexArray) ;
             }
@@ -54,26 +57,17 @@ namespace Hope::GL {
             }
 
             /**
-             * Bind the mesh VAO to draw it.
-             */
-            void bind() {
-                glBindVertexArray(m_vertexArray) ;
-            }
-
-            /**
-             * Unbing the mesh VAO from the OpenGL state machine.
-             */
-            void unbind() {
-                glBindVertexArray(0) ;
-            }
-
-            /**
              * Render the mesh parts on screen.
              */
             void render() override {
+                glBindVertexArray(m_vertexArray) ;
+
                 for (auto& part : m_parts) {
+                    std::cout << "Rendering mesh part..." << std::endl ;
                     part.render() ;
                 }
+                
+                glBindVertexArray(0) ;
             }
 
             // Copy/move operations.
@@ -88,6 +82,22 @@ namespace Hope::GL {
              */
             void addPart(const MeshPart& part) {
                 m_parts.push_back(part) ;
+            }
+
+            /**
+             * Bind the mesh VAO to draw it.
+             */
+            void bind() {
+                std::cout << "Binding mesh" << std::endl ;
+                glBindVertexArray(m_vertexArray) ;
+            }
+
+            /**
+             * Unbing the mesh VAO from the OpenGL state machine.
+             */
+            void unbind() {
+                glBindVertexArray(0) ;
+                std::cout << "Unbinding mesh" << std::endl ;
             }
     } ;
 }
