@@ -120,7 +120,7 @@ void Window::initializeGLEW()    {
 
         logSharedPtr -> writeLine(
             level,
-            Texts::Init_GL_Version,
+            Texts::Init_GL_Renderer,
             renderer
         ) ;
 

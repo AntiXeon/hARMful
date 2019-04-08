@@ -10,19 +10,16 @@ const std::string TestWindow::AppName = "Rendering test" ;
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
     // // Create a camera in the scene graph.
-    Hope::Entity* cameraEntity = new Hope::Entity(scene() -> root()) ;
+    m_cameraEntity = new Hope::Entity(scene() -> root()) ;
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
-    cameraEntity -> addComponent(m_cameraComponent) ;
+    m_cameraEntity -> addComponent(m_cameraComponent) ;
 
-    m_cameraComponent -> lookAt(
-        Mind::Vector3f(5.f, 2.f, -5.f),
-        Mind::Vector3f(0.f, 0.f, 0.f)
-    ) ;
+    m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/cube.fbx") ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.fbx") ;
     // Hope::TriangleTestComponent* meshComponent = new Hope::TriangleTestComponent() ;
     cubeEntity -> addComponent(meshComponent) ;
 
@@ -47,7 +44,12 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    // Nothing to do for now!
+    float radius = 3.f ;
+    float camX = sin(glfwGetTime()) * radius ;
+    float camY = cos(glfwGetTime()) * radius ;
+
+    Mind::Vector3f camPos(camX, camY, 0.f) ;
+    (m_cameraEntity -> transform()).setTranslation(camPos) ;
 }
 
 void TestWindow::postRender() {

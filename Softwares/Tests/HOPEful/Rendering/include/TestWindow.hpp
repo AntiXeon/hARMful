@@ -25,9 +25,14 @@ class TestWindow final : public Hope::GL::Window {
         int m_frameCounter = 0 ;
 
         /**
+         * Camera entity.
+         */
+        Hope::Entity* m_cameraEntity = nullptr ;
+
+        /**
          * Camera component.
          */
-        Hope::CameraComponent* m_cameraComponent ;
+        Hope::CameraComponent* m_cameraComponent = nullptr ;
 
     public:
         /**

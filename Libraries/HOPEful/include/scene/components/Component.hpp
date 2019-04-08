@@ -30,7 +30,7 @@ namespace Hope {
             /**
              * Last frame ID at which the component has been processed.
              */
-            FrameID m_lastFrame ;
+            FrameID m_lastFrame = 0 ;
 
         public:
             /**
