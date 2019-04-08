@@ -13,12 +13,11 @@ The repository is structured in different parts:
 ## Dependencies
 All the libraries require `cmake`.
 
-**Important note:** Windows users do not have to install these dependencies. All of them are automatically downloaded and compiled within the hARMful project, you do not have to install them on your system.
-
 ### HOPEful (OpenGL rendering)
 -   [GLFW 3.2.1](https://github.com/glfw/glfw) (for window and inputs)
 -   [GLEW 2.1.0](https://github.com/nigels-com/glew) (for modern OpenGL functions)
 -   [Assimp 4.1.0](https://github.com/assimp/assimp) (for importing 3D file models)
+-   Hardware supporting OpenGL4.5 or higher is required.
 
 ### MINDful (mathematics tools)
 -   A "modern" Intel/AMD CPU with, at least, SSE2 support is required
