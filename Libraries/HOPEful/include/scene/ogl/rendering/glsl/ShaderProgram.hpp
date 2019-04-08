@@ -58,14 +58,12 @@ namespace Hope::GL {
              */
             ShaderProgram() {
                 m_programID = glCreateProgram() ;
-                std::cout << "Create shader program #" << m_programID << std::endl ;
             }
 
             /**
              * Destroy a shader program.
              */
             ~ShaderProgram() {
-                std::cout << "Delete shader program #" << m_programID << std::endl ;
                 glDeleteProgram(m_programID) ;
             }
 

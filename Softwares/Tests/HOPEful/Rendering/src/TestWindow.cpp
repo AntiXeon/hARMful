@@ -10,15 +10,15 @@ const std::string TestWindow::AppName = "Rendering test" ;
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
     // // Create a camera in the scene graph.
-    // Hope::Entity* cameraEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::Entity* cameraEntity = new Hope::Entity(scene() -> root()) ;
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
-    // cameraEntity -> addComponent(m_cameraComponent) ;
-    //
-    // m_cameraComponent -> lookAt(
-    //     Mind::Vector3f(0.f, 0.f, -5.f),
-    //     Mind::Vector3f(0.f, 0.f, 0.f)
-    // ) ;
+    cameraEntity -> addComponent(m_cameraComponent) ;
+
+    m_cameraComponent -> lookAt(
+        Mind::Vector3f(5.f, 2.f, -5.f),
+        Mind::Vector3f(0.f, 0.f, 0.f)
+    ) ;
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;

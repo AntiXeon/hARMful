@@ -33,25 +33,19 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
 }
 
 void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
-    std::cout << "Visit CameraComponent" << std::endl ;
     // TODO
 }
 
 void OpenGLRenderVisitor::visit(MeshComponent* component) {
-    std::cout << "Visit MeshComponent" << std::endl ;
-
     std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
     mesh -> render() ;
 }
 
 void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
-    std::cout << "Visit RenderConfiguration" << std::endl ;
     // TODO
 }
 
 void OpenGLRenderVisitor::visit(Material* component) {
-    std::cout << "Visit Material" << std::endl ;
-
     auto materialAttributes = component -> shaderAttributes() ;
     RenderEffect& effect = component -> effect() ;
 
@@ -91,26 +85,25 @@ void OpenGLRenderVisitor::visit(Material* component) {
         std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
 
         if (shaderProgram) {
-            // shaderProgram -> link() ;
-            //
-            // // Apply shader uniforms.
-            // auto materialUniforms = component -> shaderUniforms() ;
-            // for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
-            //     ShaderUniformApplicator::ApplyUniform(
-            //         shaderProgram -> id(),
-            //         uniform
-            //     ) ;
-            // }
-            //
-            // // Set attribute values here.
-            // for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
-            //     ShaderAttributeApplicator::ApplyAttribute(
-            //         shaderProgram -> id(),
-            //         attrib
-            //     ) ;
-            // }
+            shaderProgram -> link() ;
+
+            // Apply shader uniforms.
+            auto materialUniforms = component -> shaderUniforms() ;
+            for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
+                ShaderUniformApplicator::ApplyUniform(
+                    shaderProgram -> id(),
+                    uniform
+                ) ;
+            }
+
+            // Set attribute values here.
+            for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
+                ShaderAttributeApplicator::ApplyAttribute(
+                    shaderProgram -> id(),
+                    attrib
+                ) ;
+            }
             shaderProgram -> use() ;
-            std::cout << "Shader program in use... " << std::endl ;
         }
 
         // Restore the OpenGL state machine for the next rendered object.

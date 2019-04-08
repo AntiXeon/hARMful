@@ -1,5 +1,7 @@
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 
+#include <iostream>
+
 using namespace Hope ;
 using namespace Hope::GL ;
 
@@ -103,7 +105,7 @@ bool ShaderUniformApplicator::LocateUniform(
     location = glGetUniformLocation(programID, name.c_str()) ;
 
     GLenum error = glGetError() ;
-    return error != GL_NO_ERROR ;
+    return error == GL_NO_ERROR ;
 }
 
 void ShaderUniformApplicator::Integer(

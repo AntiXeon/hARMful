@@ -6,8 +6,10 @@ std::string PhongVertexCode =
 \n\
 layout (location = 0) in vec3 position ;\n\
 \n\
+uniform mat4 mvpMatrix ;\n\
+\n\
 void main() {\n\
-    gl_Position = vec4(position, 1.f) ;\n\
+    gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
 }\n\
 " ;
 

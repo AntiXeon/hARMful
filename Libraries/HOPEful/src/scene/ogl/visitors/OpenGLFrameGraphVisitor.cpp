@@ -44,68 +44,63 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
     createNewBranch(config -> root()) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(ActiveCamera* /*node*/) {
-    std::cout << "Visit ActiveCamera" << std::endl ;
+void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
+    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
+    Hope::CameraComponent* camera = node -> camera() ;
 
-    // RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
-    // Hope::CameraComponent* camera = node -> camera() ;
-    //
-    // // Set up the clear color.
-    // Color clearColor = camera -> clearColor() ;
-    // glClearColor(
-    //     clearColor.red(),
-    //     clearColor.green(),
-    //     clearColor.blue(),
-    //     clearColor.alpha()
-    // ) ;
+    // Set up the clear color.
+    Color clearColor = camera -> clearColor() ;
+    glClearColor(
+        clearColor.red(),
+        clearColor.green(),
+        clearColor.blue(),
+        clearColor.alpha()
+    ) ;
 
-    // // Update the projection matrix if needed.
-    // float aspectRatio = 0.f ;
-    // if (m_hasWindowChanged) {
-    //     // Set up the projection matrix.
-    //     const float CameraFOV = 45.f ;
-    //     const float NearPlaneDistance = 0.1f ;
-    //     const float FarPlaneDistance = 1000.f ;
-    //     aspectRatio = m_windowSize.width() / m_windowSize.height() ;
-    //     GLPerspective(
-    //         requiredData.projectionMatrix,
-    //         Mind::Math::toRadians(CameraFOV),
-    //         aspectRatio,
-    //         NearPlaneDistance,
-    //         FarPlaneDistance
-    //     ) ;
-    //
-    //     requiredData.projectionMatrix.inverse(requiredData.inverseProjectionMatrix) ;
-    //     requiredData.aspectRatio = aspectRatio ;
-    // }
-    //
-    // // Update the model view matrix.
-    // Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
-    // float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
-    // viewMatrix.data(viewMatrixData) ;
-    //
-    // Hope::Entity* cameraEntity = camera -> firstEntity() ;
-    // Hope::Transform& cameraTransform = cameraEntity -> transform() ;
-    // // Inverse as the world moves instead of the camera!
-    // Mind::Vector3f eyeView = -cameraTransform.translation() ;
-    //
-    // // Update the required data.
-    // requiredData.eyePosition = eyeView ;
-    // requiredData.viewMatrix = viewMatrix ;
-    // requiredData.viewMatrix.inverse(requiredData.inverseViewMatrix) ;
-    // requiredData.viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
-    // requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
-    // requiredData.time = glfwGetTime() ;
+    // Update the projection matrix if needed.
+    float aspectRatio = 0.f ;
+    if (m_hasWindowChanged) {
+        // Set up the projection matrix.
+        const float CameraFOV = 45.f ;
+        const float NearPlaneDistance = 0.1f ;
+        const float FarPlaneDistance = 1000.f ;
+        aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+        GLPerspective(
+            requiredData.projectionMatrix,
+            Mind::Math::toRadians(CameraFOV),
+            aspectRatio,
+            NearPlaneDistance,
+            FarPlaneDistance
+        ) ;
+
+        requiredData.projectionMatrix.inverse(requiredData.inverseProjectionMatrix) ;
+        requiredData.aspectRatio = aspectRatio ;
+    }
+
+    // Update the model view matrix.
+    Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
+    float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
+    viewMatrix.data(viewMatrixData) ;
+
+    Hope::Entity* cameraEntity = camera -> firstEntity() ;
+    Hope::Transform& cameraTransform = cameraEntity -> transform() ;
+    // Inverse as the world moves instead of the camera!
+    Mind::Vector3f eyeView = -cameraTransform.translation() ;
+
+    // Update the required data.
+    requiredData.eyePosition = eyeView ;
+    requiredData.viewMatrix = viewMatrix ;
+    requiredData.viewMatrix.inverse(requiredData.inverseViewMatrix) ;
+    requiredData.viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
+    requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
+    requiredData.time = glfwGetTime() ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
-    std::cout << "Visit FrustumCulling" << std::endl ;
     // TODO
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
-    std::cout << "Visit Viewport" << std::endl ;
-
     // RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
     //
     // if (!m_hasWindowChanged) {
@@ -150,8 +145,6 @@ void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
-    std::cout << "Make render..." << std::endl ;
-
     assert(m_aggregators.size() > 0) ;
 
     Hope::ProcessedSceneNode rootNode ;

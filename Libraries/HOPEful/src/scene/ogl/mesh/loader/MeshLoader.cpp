@@ -13,7 +13,6 @@ MeshLoader::MeshLoader(const std::string& source) {
     m_source = source ;
     m_mesh = std::make_shared<Mesh>() ;
 
-std::cout << "Load mesh " << source << std::endl ;
     load() ;
 }
 
@@ -34,7 +33,6 @@ bool MeshLoader::load() {
     ) ;
 
     if (scene) {
-        std::cout << "Success!" << std::endl ;
         success = initializeFromScene(scene) ;
     }
     else {
@@ -56,17 +54,14 @@ bool MeshLoader::initializeFromScene(const aiScene* scene) {
     uint32_t amountParts = scene -> mNumMeshes ;
 
     m_mesh -> bind() ;
-    std::cout << "Mesh bound" << std::endl ;
 
     // Initialize each mesh part.
     for (uint32_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
         const aiMesh* part = scene -> mMeshes[partIndex] ;
-        std::cout << "Initialize mesh part" << std::endl ;
         initializeMeshPart(part) ;
     }
 
     m_mesh -> unbind() ;
-    std::cout << "Mesh unbound" << std::endl ;
 
     return true ;
 }

@@ -32,6 +32,4 @@ void MeshPart::deleteBuffers() {
     if (glIsBuffer(m_indexBuffer)) {
         glDeleteBuffers(1, &m_indexBuffer);
     }
-
-    std::cout << "Destroying mesh part" << std::endl ;
 }

@@ -84,7 +84,7 @@ bool ShaderAttributeApplicator::LocateAttribute(
     location = glGetAttribLocation(programID, name.c_str()) ;
 
     GLenum error = glGetError() ;
-    return error != GL_NO_ERROR ;
+    return error == GL_NO_ERROR ;
 }
 
 void ShaderAttributeApplicator::Integer(

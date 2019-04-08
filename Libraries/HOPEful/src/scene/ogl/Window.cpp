@@ -39,8 +39,6 @@ void Window::run() {
         m_scene.render() ;
         postRender() ;
         glfwPollEvents() ;
-
-        std::cout << "Swap buffers" << std::endl << std::endl ;
         glfwSwapBuffers(m_window) ;
     }
 }

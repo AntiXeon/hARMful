@@ -45,8 +45,6 @@ void TriangleTestComponent::accept(ISceneGraphVisitor* visitor) {
 }
 
 void TriangleTestComponent::render() {
-    std::cout << "Render TriangleTestComponent" << std::endl ;
-
     glBindVertexArray(m_vertexArrayIndex) ;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, nullptr) ;
