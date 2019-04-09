@@ -78,6 +78,12 @@ namespace Hope {
             void setClearColor(const Color& color) ;
 
             /**
+             * Set the up vector of the camera. The up vector is normalized.
+             * Default is Y-up.
+             */
+            void setUpVector(const Mind::Vector3f& up) ;
+
+            /**
              * Generate the view matrix.
              * @param   target      Center of the camera view.
              */

@@ -32,17 +32,9 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
     return m_processedNode ;
 }
 
-void OpenGLRenderVisitor::visit(CameraComponent* /*component*/) {
-    // TODO
-}
-
 void OpenGLRenderVisitor::visit(MeshComponent* component) {
     std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
     mesh -> render() ;
-}
-
-void OpenGLRenderVisitor::visit(Hope::RenderConfiguration* /*component*/) {
-    // TODO
 }
 
 void OpenGLRenderVisitor::visit(Material* component) {

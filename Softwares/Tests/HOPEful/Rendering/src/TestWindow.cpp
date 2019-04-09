@@ -15,6 +15,7 @@ TestWindow::TestWindow()
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
 
+    m_cameraComponent -> setUpVector(Mind::Vector3f(0.f, 0.f, 1.f)) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
     // Load a mesh.
@@ -46,9 +47,9 @@ TestWindow::TestWindow()
 void TestWindow::preRender() {
     float radius = 3.f ;
     float camX = sin(glfwGetTime()) * radius ;
-    float camZ = cos(glfwGetTime()) * radius ;
+    float camY = cos(glfwGetTime()) * radius ;
 
-    Mind::Vector3f camPos(camX, 0.f, camZ) ;
+    Mind::Vector3f camPos(camX, camY, 0.f) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
 }
 

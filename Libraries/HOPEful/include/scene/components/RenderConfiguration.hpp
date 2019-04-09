@@ -26,9 +26,9 @@ namespace Hope {
             RenderConfiguration() ;
 
             /**
-             * Accept the visitor.
+             * No need to be visited!
              */
-            void accept(ISceneGraphVisitor* visitor) override ;
+            void accept(ISceneGraphVisitor*) override { /* Nothing. */ }
 
             /**
              * To know if the component can be shared by several entities.

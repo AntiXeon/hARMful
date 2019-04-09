@@ -29,13 +29,13 @@ size_t Component::amountAttachedEntities() const {
     return m_entities.size() ;
 }
 
-void Component::entities(std::vector<Entity*>& entities) {
+void Component::entities(std::vector<Entity*>& entities) const {
     if (m_entities.size() > 0) {
         std::copy(m_entities.begin(), m_entities.end(), entities.begin()) ;
     }
 }
 
-Entity* Component::firstEntity() {
+Entity* Component::firstEntity() const {
     if (m_entities.size() > 0) {
         return m_entities[0] ;
     }

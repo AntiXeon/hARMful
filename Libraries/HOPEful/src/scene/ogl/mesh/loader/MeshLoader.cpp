@@ -78,20 +78,20 @@ void MeshLoader::initializeMeshPart(const aiMesh* part)
 
     for (uint32_t vertexIndex = 0 ; vertexIndex < amountVertices ; ++vertexIndex) {
         aiVector3D pos = part -> mVertices[vertexIndex] ;
-        // aiVector3D normal = part -> mNormals[vertexIndex] ;
-        // aiVector3D texCoord ;
+        aiVector3D normal = part -> mNormals[vertexIndex] ;
+        aiVector3D texCoord ;
 
-        // if (part -> HasTextureCoords(0)) {
-        //     texCoord = part -> mTextureCoords[0][vertexIndex] ;
-        // }
-        // else {
-        //     texCoord = Zero ;
-        // }
+        if (part -> HasTextureCoords(0)) {
+            texCoord = part -> mTextureCoords[0][vertexIndex] ;
+        }
+        else {
+            texCoord = Zero ;
+        }
 
         std::vector<float> vertexCoordinates = std::move(Vertex(
-            Mind::Vector3f(pos.x, pos.y, pos.z)//,
-            // Mind::Vector2f(texCoord.x, texCoord.y),
-            // Mind::Vector3f(normal.x, normal.y, normal.z)
+            Mind::Vector3f(pos.x, pos.y, pos.z),
+            Mind::Vector2f(texCoord.x, texCoord.y),
+            Mind::Vector3f(normal.x, normal.y, normal.z)
         ).data()) ;
 
         vertices.insert(vertices.end(), vertexCoordinates.begin(), vertexCoordinates.end()) ;
@@ -102,7 +102,6 @@ void MeshLoader::initializeMeshPart(const aiMesh* part)
 
     for (uint32_t faceIndex = 0 ; faceIndex < amountFaces ; ++faceIndex) {
         const aiFace& face = part -> mFaces[faceIndex] ;
-        //assert(face.mNumIndices == 3) ;
 
         indices.push_back(face.mIndices[0]) ;
         indices.push_back(face.mIndices[1]) ;

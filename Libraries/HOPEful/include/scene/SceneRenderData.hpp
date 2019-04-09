@@ -4,35 +4,35 @@
 #include <set>
 
 namespace Hope {
-    class Light ;
+    class LightComponent ;
 
     /**
      * Shared data between scene and the scene graph.
      */
     class SceneRenderData final {
         friend class Scene ;
-        friend class Light ;
+        friend class LightComponent ;
 
         private:
             /**
              * List of the lights in the scene.
              */
-            std::set<Light*> m_lights ;
+            std::set<LightComponent*> m_lights ;
 
             /**
              * Add a light.
              */
-            void addLight(Light* light) ;
+            void addLight(LightComponent* light) ;
 
             /**
              * Remove a light.
              */
-            void removeLight(Light* light) ;
+            void removeLight(LightComponent* light) ;
 
             /**
              * Get the list of lights.
              */
-            std::set<Light*> lights() const ;
+            std::set<LightComponent*> lights() const ;
     } ;
 }
 

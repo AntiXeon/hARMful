@@ -9,18 +9,27 @@ namespace Hope::GL {
     /**
      * Vertex data.
      */
-    class Vertex final
-    {
+    class Vertex final {
         public:
+            /**
+             * Amount of values for position.
+             */
+            static const unsigned char PositionLength = 3 ;
+
+            /**
+             * Amount of values for texture coordinates.
+             */
+            static const unsigned char TexCoordLength = 2 ;
+
+            /**
+             * Amount of values for normal.
+             */
+            static const unsigned char NormalLength = 3 ;
+
             /**
              * Amount of values in a Vertex.
              */
-            static const int AmountValues = 3 ; //= 3 + 2 + 3 ;
-
-            /**
-             * Size of the vertex data in bytes.
-             */
-            static const int DataByteSize = AmountValues * sizeof(float);
+            static const unsigned char TotalLength = PositionLength + TexCoordLength + NormalLength ;
 
         private:
             /**
@@ -33,9 +42,9 @@ namespace Hope::GL {
              * Create a new vertex.
              */
             Vertex(
-                const Mind::Vector3f& pos//,
-                // const Mind::Vector2f& tex,
-                // const Mind::Vector3f& normal
+                const Mind::Vector3f& pos,
+                const Mind::Vector2f& tex,
+                const Mind::Vector3f& normal
             ) ;
 
             /**

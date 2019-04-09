@@ -15,6 +15,7 @@ CameraComponent::CameraComponent()
       m_viewDirection(Mind::Vector3f(0.f, 0.f, -1.f)),
       m_clearColor(DefaultClearColor) {
     m_viewMatrix.identity() ;
+    m_up = WorldUpVector ;
 }
 
 void CameraComponent::accept(ISceneGraphVisitor* visitor) {
@@ -22,9 +23,9 @@ void CameraComponent::accept(ISceneGraphVisitor* visitor) {
 
     if (lastFrame() < currentFrame) {
         lookAt(m_target) ;
-
-        visitor -> visit(this) ;
         updateLastFrame(currentFrame) ;
+
+        // No need to be visited!
     }
 }
 
@@ -36,6 +37,11 @@ void CameraComponent::setClearColor(const Color& color) {
     m_clearColor = color ;
 }
 
+void CameraComponent::setUpVector(const Mind::Vector3f& up) {
+    m_up = up ;
+    m_up.normalize() ;
+}
+
 void CameraComponent::lookAt(const Mind::Vector3f& target) {
     m_target = target ;
     Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
@@ -43,10 +49,10 @@ void CameraComponent::lookAt(const Mind::Vector3f& target) {
     m_viewDirection = position - m_target ;
     m_viewDirection.normalize() ;
 
-    m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
+    m_rightAxis = m_up.cross(m_viewDirection) ;
     m_rightAxis.normalize() ;
 
-    m_up = m_viewDirection.cross(m_rightAxis) ;
+    Mind::Vector3f up = m_viewDirection.cross(m_rightAxis) ;
 
     Mind::Matrix4x4f translationMat ;
     translationMat.identity() ;
@@ -55,7 +61,7 @@ void CameraComponent::lookAt(const Mind::Vector3f& target) {
     Mind::Matrix4x4f rotationMat ;
     rotationMat.identity() ;
     rotationMat.setRowValues(0, m_rightAxis) ;
-    rotationMat.setRowValues(1, m_up) ;
+    rotationMat.setRowValues(1, up) ;
     rotationMat.setRowValues(2, m_viewDirection) ;
 
     m_viewMatrix = rotationMat * translationMat ;
@@ -92,6 +98,4 @@ void CameraComponent::onAttach(Entity* entity) {
 
     m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
     m_rightAxis.normalize() ;
-
-    m_up = m_viewDirection.cross(m_rightAxis) ;
 }

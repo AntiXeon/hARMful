@@ -14,9 +14,21 @@ MeshPart::MeshPart(
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer) ;
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW) ;
 
+    unsigned char offset = 0 ;
+
     // Position attribute.
     glEnableVertexAttribArray(0) ;
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr) ;
+    glVertexAttribPointer(0, Vertex::PositionLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    offset += (Vertex::PositionLength * sizeof(float)) ;
+
+    // Normal attribute.
+    glEnableVertexAttribArray(1) ;
+    glVertexAttribPointer(1, Vertex::TexCoordLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    offset += (Vertex::TexCoordLength * sizeof(float)) ;
+
+    // Texture coordinates attribute.
+    glEnableVertexAttribArray(2) ;
+    glVertexAttribPointer(2, Vertex::NormalLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
 
 
     glGenBuffers(1, &m_indexBuffer) ;

@@ -1,16 +1,16 @@
 #include <scene/SceneRenderData.hpp>
-#include <scene/components/lights/Light.hpp>
+#include <scene/components/lights/LightComponent.hpp>
 
 using namespace Hope ;
 
-void SceneRenderData::addLight(Light* light) {
+void SceneRenderData::addLight(LightComponent* light) {
     m_lights.insert(light) ;
 }
 
-void SceneRenderData::removeLight(Light* light) {
+void SceneRenderData::removeLight(LightComponent* light) {
     m_lights.erase(light) ;
 }
 
-std::set<Light*> SceneRenderData::lights() const {
+std::set<LightComponent*> SceneRenderData::lights() const {
     return m_lights ;
 }
