@@ -101,11 +101,11 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
-    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
-
     if (!m_hasWindowChanged) {
         return ;
     }
+
+    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
 
     Mind::Point2Df relativePosition = node -> position() ;
     Mind::Dimension2Df relativeDimension = node -> dimension() ;
