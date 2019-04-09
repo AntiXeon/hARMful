@@ -11,10 +11,12 @@ Entity::Entity(Entity* parent) : Node(parent) {
 
 Entity::~Entity() {
     for (Component* component : m_components) {
-        component -> detach(this) ;
+        if (component) {
+            component -> detach(this) ;
 
-        if (component -> amountAttachedEntities() == 0) {
-            delete component ;
+            if (component -> amountAttachedEntities() == 0) {
+                delete component ;
+            }
         }
     }
 
