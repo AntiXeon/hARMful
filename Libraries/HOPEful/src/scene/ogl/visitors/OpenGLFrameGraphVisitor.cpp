@@ -100,48 +100,48 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
     // TODO
 }
 
-void OpenGLFrameGraphVisitor::visit(Viewport* /*node*/) {
-    // RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
-    //
-    // if (!m_hasWindowChanged) {
-    //     return ;
-    // }
-    //
-    // Mind::Point2Df relativePosition = node -> position() ;
-    // Mind::Dimension2Df relativeDimension = node -> dimension() ;
-    //
-    // Mind::Point2Df absolutePosition(
-    //     relativePosition.get(Mind::Point2Df::X) * m_windowSize.width(),
-    //     relativePosition.get(Mind::Point2Df::Y) * m_windowSize.height()
-    // ) ;
-    //
-    // Mind::Dimension2Df absoluteDimension(
-    //     relativeDimension.width() * m_windowSize.width(),
-    //     relativeDimension.height() * m_windowSize.height()
-    // ) ;
-    //
-    // // Apply the viewport parameters.
-    // glViewport(
-    //     absolutePosition.get(Mind::Point2Df::X),
-    //     absolutePosition.get(Mind::Point2Df::Y),
-    //     absoluteDimension.width(),
-    //     absoluteDimension.height()
-    // ) ;
-    //
-    //
-    // // Compute the viewport matrices.
-    // Mind::Scalar viewportX = relativePosition.get(Mind::Point2Df::X) ;
-    // Mind::Scalar viewportY = relativePosition.get(Mind::Point2Df::Y) ;
-    // Mind::Scalar viewportWidth = relativeDimension.width() ;
-    // Mind::Scalar viewportHeight = relativeDimension.height() ;
-    // Mind::Point3Df row0(viewportWidth / 2.f, 0.f, viewportWidth / (2 + viewportX)) ;
-    // Mind::Point3Df row1(0.f, viewportHeight/ 2.f, viewportHeight / (2 + viewportY)) ;
-    // Mind::Point3Df row2(0.f, 0.f, 1.f) ;
-    // requiredData.viewportMatrix.setRowValues(0, row0) ;
-    // requiredData.viewportMatrix.setRowValues(1, row1) ;
-    // requiredData.viewportMatrix.setRowValues(2, row2) ;
-    //
-    // requiredData.viewportMatrix.inverse(requiredData.inverseViewportMatrix) ;
+void OpenGLFrameGraphVisitor::visit(Viewport* node) {
+    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
+
+    if (!m_hasWindowChanged) {
+        return ;
+    }
+
+    Mind::Point2Df relativePosition = node -> position() ;
+    Mind::Dimension2Df relativeDimension = node -> dimension() ;
+
+    Mind::Point2Df absolutePosition(
+        relativePosition.get(Mind::Point2Df::X) * m_windowSize.width(),
+        relativePosition.get(Mind::Point2Df::Y) * m_windowSize.height()
+    ) ;
+
+    Mind::Dimension2Df absoluteDimension(
+        relativeDimension.width() * m_windowSize.width(),
+        relativeDimension.height() * m_windowSize.height()
+    ) ;
+
+    // Apply the viewport parameters.
+    glViewport(
+        absolutePosition.get(Mind::Point2Df::X),
+        absolutePosition.get(Mind::Point2Df::Y),
+        absoluteDimension.width(),
+        absoluteDimension.height()
+    ) ;
+
+
+    // Compute the viewport matrices.
+    Mind::Scalar viewportX = relativePosition.get(Mind::Point2Df::X) ;
+    Mind::Scalar viewportY = relativePosition.get(Mind::Point2Df::Y) ;
+    Mind::Scalar viewportWidth = relativeDimension.width() ;
+    Mind::Scalar viewportHeight = relativeDimension.height() ;
+    Mind::Point3Df row0(viewportWidth / 2.f, 0.f, viewportWidth / (2 + viewportX)) ;
+    Mind::Point3Df row1(0.f, viewportHeight/ 2.f, viewportHeight / (2 + viewportY)) ;
+    Mind::Point3Df row2(0.f, 0.f, 1.f) ;
+    requiredData.viewportMatrix.setRowValues(0, row0) ;
+    requiredData.viewportMatrix.setRowValues(1, row1) ;
+    requiredData.viewportMatrix.setRowValues(2, row2) ;
+
+    requiredData.viewportMatrix.inverse(requiredData.inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
