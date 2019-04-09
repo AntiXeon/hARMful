@@ -7,7 +7,7 @@
 
 using namespace Hope ;
 
-const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 0.f, 1.f) ;
+const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0.f) ;
 const Color CameraComponent::DefaultClearColor = Color(4_uchar, 90_uchar, 120_uchar) ;
 
 CameraComponent::CameraComponent()

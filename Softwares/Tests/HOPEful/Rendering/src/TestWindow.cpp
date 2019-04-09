@@ -19,7 +19,7 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.fbx") ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.obj") ;
     // Hope::TriangleTestComponent* meshComponent = new Hope::TriangleTestComponent() ;
     cubeEntity -> addComponent(meshComponent) ;
 
@@ -46,9 +46,9 @@ TestWindow::TestWindow()
 void TestWindow::preRender() {
     float radius = 3.f ;
     float camX = sin(glfwGetTime()) * radius ;
-    float camY = cos(glfwGetTime()) * radius ;
+    float camZ = cos(glfwGetTime()) * radius ;
 
-    Mind::Vector3f camPos(camX, camY, 0.f) ;
+    Mind::Vector3f camPos(camX, 0.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
 }
 
