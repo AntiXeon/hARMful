@@ -3,6 +3,7 @@
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
+#include <scene/SceneRenderData.hpp>
 
 #include <iostream>
 
@@ -41,6 +42,7 @@ const std::string Hope::MaterialComponent::LightDirectionParamName = "direction"
 
 
 const std::string Hope::MaterialComponent::UniformNames[] = {
+    // Generic matrix/value uniforms.
     Hope::MaterialComponent::ModelMatrixParamName,
     Hope::MaterialComponent::ViewMatrixParamName,
     Hope::MaterialComponent::ProjectionMatrixParamName,
@@ -59,7 +61,13 @@ const std::string Hope::MaterialComponent::UniformNames[] = {
     Hope::MaterialComponent::InverseViewportMatrixParamName,
     Hope::MaterialComponent::AspectRatioParamName,
     Hope::MaterialComponent::TimeParamName,
-    Hope::MaterialComponent::EyePositionParamName
+    Hope::MaterialComponent::EyePositionParamName,
+
+    // Lights.
+    Hope::MaterialComponent::DirectionalLightParamName + "." + Hope::MaterialComponent::LightAmbientParamName,
+    Hope::MaterialComponent::DirectionalLightParamName + "." + Hope::MaterialComponent::LightDiffuseParamName,
+    Hope::MaterialComponent::DirectionalLightParamName + "." + Hope::MaterialComponent::LightSpecularParamName,
+    Hope::MaterialComponent::DirectionalLightParamName + "." + Hope::MaterialComponent::LightDirectionParamName
 } ;
 
 MaterialComponent::MaterialComponent()
@@ -108,6 +116,7 @@ void MaterialComponent::setupDefaultUniforms() {
 void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
     Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
     Hope::RenderRequiredData& data = visitor -> requiredData() ;
+    Hope::SceneRenderData* sceneData = data.sceneData ;
 
     // Model matrix.
     m_shaderUniforms[ModelMatrixParamName] -> setMat4(node.worldMatrix.toArray()) ;
@@ -179,4 +188,14 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
 
     // Eye position.
     m_shaderUniforms[EyePositionParamName] -> setVec3(data.eyePosition.toArray()) ;
+
+
+    // Lights.
+    auto dirLights = sceneData -> directionalLights() ;
+    for (DirectionalLightComponent* light : dirLights) {
+        m_shaderUniforms[DirectionalLightParamName + "." + LightAmbientParamName] -> setVec3((light -> ambient()).toRGB()) ;
+        m_shaderUniforms[DirectionalLightParamName + "." + LightDiffuseParamName] -> setVec3((light -> diffuse()).toRGB()) ;
+        m_shaderUniforms[DirectionalLightParamName + "." + LightSpecularParamName] -> setVec3((light -> specular()).toRGB()) ;
+        m_shaderUniforms[DirectionalLightParamName + "." + LightDirectionParamName] -> setVec3((light -> direction()).toArray()) ;
+    }
 }

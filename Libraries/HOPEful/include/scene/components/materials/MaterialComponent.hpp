@@ -50,7 +50,7 @@ namespace Hope {
             static const std::string LightSpecularParamName ;
             static const std::string LightDirectionParamName ;
 
-            static const unsigned short AmountUniformNames = 19 ;
+            static const unsigned short AmountUniformNames = 23 ;
             static const std::string UniformNames[AmountUniformNames] ;
 
             /**
