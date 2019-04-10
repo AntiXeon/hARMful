@@ -1,10 +1,11 @@
 #ifndef __HOPE_SCENE_RENDER_DATA__
 #define __HOPE_SCENE_RENDER_DATA__
 
-#include <set>
+#include <vector>
 
 namespace Hope {
     class LightComponent ;
+    class DirectionalLightComponent ;
 
     /**
      * Shared data between scene and the scene graph.
@@ -15,9 +16,9 @@ namespace Hope {
 
         private:
             /**
-             * List of the lights in the scene.
+             * List of the directional lights in the scene.
              */
-            std::set<LightComponent*> m_lights ;
+            std::vector<DirectionalLightComponent*> m_directionalLights ;
 
             /**
              * Add a light.
@@ -29,10 +30,11 @@ namespace Hope {
              */
             void removeLight(LightComponent* light) ;
 
+        public:
             /**
              * Get the list of lights.
              */
-            std::set<LightComponent*> lights() const ;
+            std::vector<DirectionalLightComponent*> directionalLights() const ;
     } ;
 }
 

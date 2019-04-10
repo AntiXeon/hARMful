@@ -1,21 +1,21 @@
-#include <scene/components/materials/PhongMaterial.hpp>
+#include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
 #include <memory>
 
 using namespace Hope ;
 
-const std::string PhongMaterial::AmbientUniformName = "ambientColor" ;
-const std::string PhongMaterial::DiffuseUniformName = "diffuseColor" ;
-const std::string PhongMaterial::SpecularUniformName = "specularColor" ;
-const std::string PhongMaterial::ShininessUniformName = "shininess" ;
+const std::string PhongMaterialComponent::AmbientUniformName = "ambientColor" ;
+const std::string PhongMaterialComponent::DiffuseUniformName = "diffuseColor" ;
+const std::string PhongMaterialComponent::SpecularUniformName = "specularColor" ;
+const std::string PhongMaterialComponent::ShininessUniformName = "shininess" ;
 
-PhongMaterial::PhongMaterial()
-    : Material() {
+PhongMaterialComponent::PhongMaterialComponent()
+    : MaterialComponent() {
     setupRendering() ;
     setupUniforms() ;
 }
 
-void PhongMaterial::setAmbient(const Color& ambient) {
+void PhongMaterialComponent::setAmbient(const Color& ambient) {
     std::array<float, 4> colorArray = {
         ambient.red(),
         ambient.green(),
@@ -26,7 +26,7 @@ void PhongMaterial::setAmbient(const Color& ambient) {
     m_ambientUniform -> setVec4(colorArray) ;
 }
 
-void PhongMaterial::setDiffuse(const Color& diffuse) {
+void PhongMaterialComponent::setDiffuse(const Color& diffuse) {
     std::array<float, 4> colorArray = {
         diffuse.red(),
         diffuse.green(),
@@ -37,7 +37,7 @@ void PhongMaterial::setDiffuse(const Color& diffuse) {
     m_diffuseUniform -> setVec4(colorArray) ;
 }
 
-void PhongMaterial::setSpecular(const Color& specular) {
+void PhongMaterialComponent::setSpecular(const Color& specular) {
     std::array<float, 4> colorArray = {
         specular.red(),
         specular.green(),
@@ -48,30 +48,30 @@ void PhongMaterial::setSpecular(const Color& specular) {
     m_specularUniform -> setVec4(colorArray) ;
 }
 
-void PhongMaterial::setShininess(const float shininess) {
+void PhongMaterialComponent::setShininess(const float shininess) {
     m_shininessUniform -> setFloating(shininess) ;
 }
 
-Color PhongMaterial::ambient() const {
+Color PhongMaterialComponent::ambient() const {
     const float* ambient = m_ambientUniform -> vec4() ;
     return Color(ambient[0], ambient[1], ambient[2], ambient[3]) ;
 }
 
-Color PhongMaterial::diffuse() const {
+Color PhongMaterialComponent::diffuse() const {
     const float* diffuse = m_diffuseUniform -> vec4() ;
     return Color(diffuse[0], diffuse[1], diffuse[2], diffuse[3]) ;
 }
 
-Color PhongMaterial::specular() const {
+Color PhongMaterialComponent::specular() const {
     const float* specular = m_specularUniform -> vec4() ;
     return Color(specular[0], specular[1], specular[2], specular[3]) ;
 }
 
-float PhongMaterial::shininess() const {
+float PhongMaterialComponent::shininess() const {
     return m_shininessUniform -> floating() ;
 }
 
-void PhongMaterial::setupUniforms() {
+void PhongMaterialComponent::setupUniforms() {
     m_ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
     m_ambientUniform -> setName(AmbientUniformName) ;
     addShaderUniform(m_ambientUniform) ;
@@ -89,7 +89,7 @@ void PhongMaterial::setupUniforms() {
     addShaderUniform(m_shininessUniform) ;
 }
 
-void PhongMaterial::setupRendering() {
+void PhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     shaderProgram -> setVertexShaderCode(PhongVertexCode) ;

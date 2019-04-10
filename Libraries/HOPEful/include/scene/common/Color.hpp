@@ -2,6 +2,7 @@
 #define __HOPE__COLOR__
 
 #include <algorithm>
+#include <array>
 #include <cstdint>
 
 namespace Hope {
@@ -116,6 +117,20 @@ namespace Hope {
              */
             float alpha() const {
                 return m_alpha ;
+            }
+
+            /**
+             * Export the color to a RGB value array.
+             */
+            std::array<float, 3> toRGB() {
+                return { m_red, m_green, m_blue } ;
+            }
+
+            /**
+             * Export the color to a RGBA value array.
+             */
+            std::array<float, 4> toRGBA() {
+                return { m_red, m_green, m_blue, m_alpha } ;
             }
 
         private:

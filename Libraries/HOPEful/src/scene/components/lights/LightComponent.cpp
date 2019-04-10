@@ -12,26 +12,6 @@ LightComponent::LightComponent(const Type type)
     m_specular = Color(255_uchar, 255_uchar, 255_uchar) ;
 }
 
-void LightComponent::onAttach(Entity* entity) {
-    if (!entity) {
-        return ;
-    }
-
-    if (entity -> renderData()) {
-        entity -> renderData() -> addLight(this) ;
-    }
-}
-
-void LightComponent::onDetach(Entity* entity) {
-    if (!entity) {
-        return ;
-    }
-
-    if (entity -> renderData()) {
-        entity -> renderData() -> removeLight(this) ;
-    }
-}
-
 Mind::Vector3f LightComponent::position() const {
     return (firstEntity() -> transform()).translation() ;
 }

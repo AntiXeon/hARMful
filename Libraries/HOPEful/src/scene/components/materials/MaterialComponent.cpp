@@ -1,4 +1,5 @@
-#include <scene/components/materials/Material.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
+#include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
@@ -7,61 +8,72 @@
 
 using namespace Hope ;
 
-const std::string Hope::Material::ModelMatrixParamName = u8"modelMatrix" ;
-const std::string Hope::Material::ViewMatrixParamName = u8"viewMatrix" ;
-const std::string Hope::Material::ProjectionMatrixParamName = u8"projectionMatrix" ;
-const std::string Hope::Material::ModelViewMatrixParamName = u8"modelViewMatrix" ;
-const std::string Hope::Material::ViewProjectionMatrixParamName = u8"viewProjectionMatrix" ;
-const std::string Hope::Material::MVPMatrixParamName = u8"mvpMatrix" ;
-const std::string Hope::Material::InverseModelMatrixParamName = u8"inverseModelMatrix" ;
-const std::string Hope::Material::InverseViewMatrixParamName = u8"inverseViewMatrix" ;
-const std::string Hope::Material::InverseProjectionMatrixParamName = u8"inverseProjectionMatrix" ;
-const std::string Hope::Material::InverseModelViewMatrixParamName = u8"inverseModelViewMatrix" ;
-const std::string Hope::Material::InverseViewProjectionMatrixParamName = u8"inverseViewProjectionMatrix" ;
-const std::string Hope::Material::InverseMVPMatrixParamName = u8"inverseMVPMatrix" ;
-const std::string Hope::Material::ModelNormalMatrixParamName = u8"modelNormalMatrix" ;
-const std::string Hope::Material::ModelViewNormalMatrixParamName = u8"modelViewNormalMatrix" ;
-const std::string Hope::Material::ViewportMatrixParamName = u8"viewportMatrix" ;
-const std::string Hope::Material::InverseViewportMatrixParamName = u8"inverseViewportMatrix" ;
-const std::string Hope::Material::AspectRatioParamName = u8"aspectRatio" ;
-const std::string Hope::Material::TimeParamName = u8"time" ;
-const std::string Hope::Material::EyePositionParamName = u8"eyePosition" ;
+// Generic uniforms names.
+const std::string Hope::MaterialComponent::ModelMatrixParamName = u8"modelMatrix" ;
+const std::string Hope::MaterialComponent::ViewMatrixParamName = u8"viewMatrix" ;
+const std::string Hope::MaterialComponent::ProjectionMatrixParamName = u8"projectionMatrix" ;
+const std::string Hope::MaterialComponent::ModelViewMatrixParamName = u8"modelViewMatrix" ;
+const std::string Hope::MaterialComponent::ViewProjectionMatrixParamName = u8"viewProjectionMatrix" ;
+const std::string Hope::MaterialComponent::MVPMatrixParamName = u8"mvpMatrix" ;
+const std::string Hope::MaterialComponent::InverseModelMatrixParamName = u8"inverseModelMatrix" ;
+const std::string Hope::MaterialComponent::InverseViewMatrixParamName = u8"inverseViewMatrix" ;
+const std::string Hope::MaterialComponent::InverseProjectionMatrixParamName = u8"inverseProjectionMatrix" ;
+const std::string Hope::MaterialComponent::InverseModelViewMatrixParamName = u8"inverseModelViewMatrix" ;
+const std::string Hope::MaterialComponent::InverseViewProjectionMatrixParamName = u8"inverseViewProjectionMatrix" ;
+const std::string Hope::MaterialComponent::InverseMVPMatrixParamName = u8"inverseMVPMatrix" ;
+const std::string Hope::MaterialComponent::ModelNormalMatrixParamName = u8"modelNormalMatrix" ;
+const std::string Hope::MaterialComponent::ModelViewNormalMatrixParamName = u8"modelViewNormalMatrix" ;
+const std::string Hope::MaterialComponent::ViewportMatrixParamName = u8"viewportMatrix" ;
+const std::string Hope::MaterialComponent::InverseViewportMatrixParamName = u8"inverseViewportMatrix" ;
+const std::string Hope::MaterialComponent::AspectRatioParamName = u8"aspectRatio" ;
+const std::string Hope::MaterialComponent::TimeParamName = u8"time" ;
+const std::string Hope::MaterialComponent::EyePositionParamName = u8"eyePosition" ;
 
-Material::Material()
+// Lighting uniforms names.
+const std::string Hope::MaterialComponent::DirectionalLightParamName = "dirLight" ;
+const std::string Hope::MaterialComponent::PointLightParamName = "pointLight" ;
+const std::string Hope::MaterialComponent::SpotLightParamName = "spotLight" ;
+const std::string Hope::MaterialComponent::HemisphereLightParamName = "hemiLight" ;
+const std::string Hope::MaterialComponent::LightAmbientParamName = "ambient" ;
+const std::string Hope::MaterialComponent::LightDiffuseParamName = "diffuse" ;
+const std::string Hope::MaterialComponent::LightSpecularParamName = "specular" ;
+const std::string Hope::MaterialComponent::LightDirectionParamName = "direction" ;
+
+MaterialComponent::MaterialComponent()
     : Component(Hope::MaterialComponentType) {
     setupDefaultUniforms() ;
 }
 
-void Material::accept(ISceneGraphVisitor* visitor) {
+void MaterialComponent::accept(ISceneGraphVisitor* visitor) {
     updateUniformValues(visitor) ;
     visitor -> visit(this) ;
 }
 
-bool Material::isShareable() const {
+bool MaterialComponent::isShareable() const {
     return true ;
 }
 
-RenderEffect& Material::effect() {
+RenderEffect& MaterialComponent::effect() {
     return m_effect ;
 }
 
-void Material::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+void MaterialComponent::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
     m_shaderAttribs.insert(attrib) ;
 }
 
-void Material::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+void MaterialComponent::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
     m_shaderAttribs.erase(attrib) ;
 }
 
-void Material::addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+void MaterialComponent::addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
     m_shaderUniforms.insert(uniform) ;
 }
 
-void Material::removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+void MaterialComponent::removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
     m_shaderUniforms.erase(uniform) ;
 }
 
-void Material::setupDefaultUniforms() {
+void MaterialComponent::setupDefaultUniforms() {
     // uniform mat4 modelMatrix ;
     m_modelMatrix = std::make_shared<Hope::ShaderUniform>() ;
     m_modelMatrix -> setName(ModelMatrixParamName) ;
@@ -158,7 +170,7 @@ void Material::setupDefaultUniforms() {
     addShaderUniform(m_eyePosition) ;
 }
 
-void Material::updateUniformValues(ISceneGraphVisitor* visitor) {
+void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
     Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
     Hope::RenderRequiredData& data = visitor -> requiredData() ;
 

@@ -2,7 +2,7 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
-#include <scene/components/materials/Material.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
@@ -37,7 +37,7 @@ void OpenGLRenderVisitor::visit(MeshComponent* component) {
     mesh -> render() ;
 }
 
-void OpenGLRenderVisitor::visit(Material* component) {
+void OpenGLRenderVisitor::visit(MaterialComponent* component) {
     auto materialAttributes = component -> shaderAttributes() ;
     RenderEffect& effect = component -> effect() ;
 

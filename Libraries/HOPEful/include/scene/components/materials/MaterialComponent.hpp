@@ -9,7 +9,7 @@ namespace Hope {
     /**
      * A material is applied to a 3D object to define how it is rendered.
      */
-    class Material : public Component {
+    class MaterialComponent : public Component {
         private:
             /**
              * Name of the default parameters used for uniform values of the
@@ -36,7 +36,20 @@ namespace Hope {
             static const std::string EyePositionParamName ;
 
             /**
-             * All the default parameters.
+             * Name of the lighting related uniform values of the shaders.
+             */
+            static const std::string DirectionalLightParamName ;
+            static const std::string PointLightParamName ;
+            static const std::string SpotLightParamName ;
+            static const std::string HemisphereLightParamName ;
+
+            static const std::string LightAmbientParamName ;
+            static const std::string LightDiffuseParamName ;
+            static const std::string LightSpecularParamName ;
+            static const std::string LightDirectionParamName ;
+
+            /**
+             * All the default uniforms.
              */
             std::shared_ptr<Hope::ShaderUniform> m_modelMatrix = nullptr ;
             std::shared_ptr<Hope::ShaderUniform> m_viewMatrix = nullptr ;
@@ -75,9 +88,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a Material.
+             * Create a MaterialComponent.
              */
-            Material() ;
+            MaterialComponent() ;
 
             /**
              * Accept the visitor.

@@ -1,5 +1,14 @@
 #version 450 core    // OpenGL 4.5
 
+struct DirectionalLight {
+    vec3 direction ;
+    vec3 ambient ;
+    vec3 diffuse ;
+    vec3 specular ;
+} ;
+
+uniform DirectionalLight dirLight ;
+
 layout(location = 0) in vec2 outTexCoord ;
 layout(location = 1) in vec3 outNormal ;
 

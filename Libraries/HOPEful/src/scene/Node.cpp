@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <cassert>
 
+#include <iostream>
+
 using namespace Hope ;
 
 Node::Node(Node* parent) {
@@ -62,8 +64,6 @@ bool Node::addChild(Node* newChild) {
         return true ;
     }
 
-    onChildAdded(newChild) ;
-
     return false ;
 }
 
@@ -78,11 +78,5 @@ bool Node::removeChild(Node* child) {
         return true ;
     }
 
-    onChildRemoved(child) ;
-
     return false ;
 }
-
-void Node::onChildAdded(Node* /*newChild*/) {}
-
-void Node::onChildRemoved(Node* /*child*/) {}

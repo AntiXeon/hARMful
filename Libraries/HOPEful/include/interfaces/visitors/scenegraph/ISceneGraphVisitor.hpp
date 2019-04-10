@@ -5,7 +5,7 @@
 
 namespace Hope {
     class MeshComponent ;
-    class Material ;
+    class MaterialComponent ;
     class TriangleTestComponent ;
 
     class ProcessedSceneNode ;
@@ -45,7 +45,7 @@ namespace Hope {
             /**
              * Visit a material component.
              */
-            virtual void visit(Material* component) = 0 ;
+            virtual void visit(MaterialComponent* component) = 0 ;
 
             /**
              * Visit a test component.

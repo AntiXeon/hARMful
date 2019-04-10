@@ -1,7 +1,7 @@
 #ifndef __HOPE__PHONG_MATERIAL__
 #define __HOPE__PHONG_MATERIAL__
 
-#include <scene/components/materials/Material.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <string>
 
@@ -11,7 +11,7 @@ namespace Hope {
      * color and specular color + intensity.
      * It is a basic shader to put color on objects.
      */
-    class PhongMaterial : public Material {
+    class PhongMaterialComponent : public MaterialComponent {
         private:
             /**
              * Name of the ambient color uniform in the shader.
@@ -63,9 +63,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a PhongMaterial.
+             * Create a PhongMaterialComponent.
              */
-            PhongMaterial() ;
+            PhongMaterialComponent() ;
 
             /**
              * Set the ambient color.

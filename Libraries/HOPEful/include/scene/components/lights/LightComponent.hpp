@@ -173,19 +173,6 @@ namespace Hope {
              * Get the position of the light.
              */
             Mind::Vector3f position() const ;
-
-        protected:
-            /**
-             * Action to performed when the component is attached to an entity.
-             * @param   entity  Entity to attach the component to.
-             */
-            void onAttach(Entity* entity) override ;
-
-            /**
-             * Action to perform when the component is detached from its entity.
-             * @param   entity  Entity to detach the component from.
-             */
-            void onDetach(Entity* entity) override ;
     } ;
 }
 

@@ -64,7 +64,7 @@ namespace Hope::GL {
             /**
              * Visit a material component.
              */
-            void visit(Material* component) override ;
+            void visit(MaterialComponent* component) override ;
 
             /**
              * Visit a test component.

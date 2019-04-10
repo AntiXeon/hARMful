@@ -36,11 +36,6 @@ namespace Hope {
              */
             std::vector<Component*> m_components ;
 
-            /**
-             * Render data shared with the scene.
-             */
-            SceneRenderData* m_renderData = nullptr ;
-
         public:
             /**
              * Create a new entity instance.
@@ -106,33 +101,11 @@ namespace Hope {
              */
             std::vector<Component*> components() const ;
 
-            /**
-             * Get the scene render data.
-             */
-            SceneRenderData* renderData() const ;
-
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;
             Entity(Entity&& moved) = delete;
             Entity& operator=(const Entity& copied) = delete;
             Entity& operator=(Entity&& moved) = delete;
-
-        private:
-            /**
-             * Set the scene render data.
-             */
-            void setRenderData(SceneRenderData* data) ;
-
-        protected:
-            /**
-             * Additional action to perform when a child is added.
-             */
-            void onChildAdded(Node* newChild) override ;
-
-            /**
-             * Additional action to perform when a child is removed.
-             */
-            void onChildRemoved(Node* child) override ;
     } ;
 }
 

@@ -25,6 +25,15 @@ std::string PhongFragmentCode =
 "\
 #version 450 core    // OpenGL 4.5\n\
 \n\
+struct DirectionalLight {\n\
+    vec3 direction ;\n\
+    vec3 ambient ;\n\
+    vec3 diffuse ;\n\
+    vec3 specular ;\n\
+} ;\n\
+\n\
+uniform DirectionalLight dirLight ;\n\
+\n\
 layout(location = 0) in vec2 outTexCoord ;\n\
 layout(location = 1) in vec3 outNormal ;\n\
 \n\

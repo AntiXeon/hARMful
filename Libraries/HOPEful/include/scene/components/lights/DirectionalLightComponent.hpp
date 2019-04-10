@@ -25,7 +25,7 @@ namespace Hope {
              * Get the maximal amount of directional lights in shader programs.
              */
             uint8_t maxAmount() override {
-                return 3 ;
+                return 1 ;
             }
 
             /**

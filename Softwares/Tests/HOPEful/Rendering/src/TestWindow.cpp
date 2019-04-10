@@ -2,14 +2,16 @@
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/MeshComponent.hpp>
-#include <scene/components/materials/PhongMaterial.hpp>
+#include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
-    // // Create a camera in the scene graph.
+    /** SCENE GRAPH **/
+    // Create a camera in the scene graph.
     m_cameraEntity = new Hope::Entity(scene() -> root()) ;
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
@@ -18,6 +20,11 @@ TestWindow::TestWindow()
     m_cameraComponent -> setUpVector(Mind::Vector3f(0.f, 0.f, 1.f)) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
+    // Create a directional light.
+    Hope::Entity* lightEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
+    lightEntity -> addComponent(dirLightComponent) ;
+
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
     Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.dae") ;
@@ -25,12 +32,13 @@ TestWindow::TestWindow()
     cubeEntity -> addComponent(meshComponent) ;
 
     // Add a material.
-    Hope::PhongMaterial* material = new Hope::PhongMaterial() ;
+    Hope::PhongMaterialComponent* material = new Hope::PhongMaterialComponent() ;
     // Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
     // material -> setAmbient(ambientColor) ;
     cubeEntity -> addComponent(material) ;
 
-    // Set up the frame graph.
+
+    /** FRAME GRAPH **/
     // Set the viewport.
     Hope::Viewport* viewportNode = new Hope::Viewport() ;
     viewportNode -> setPosition(Mind::Point2Df(0.f, 0.f)) ;
