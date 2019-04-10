@@ -7,6 +7,7 @@
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/Entity.hpp>
+#include <scene/SceneCache.hpp>
 #include <algorithm>
 #include <list>
 #include <map>
@@ -30,6 +31,11 @@ namespace Hope::GL {
              * To know if the window has changed since the last run.
              */
             bool m_hasWindowChanged = true ;
+
+            /**
+             * Cache of some scene elements for a faster access.
+             */
+            SceneCache m_sceneCache ;
 
             /**
              * Size of the window.
@@ -86,6 +92,13 @@ namespace Hope::GL {
                 }
 
                 m_hasWindowChanged = true ;
+            }
+
+            /**
+             * Get the scene cache.
+             */
+            SceneCache& cache() {
+                return m_sceneCache ;
             }
 
             /**

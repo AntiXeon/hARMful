@@ -5,7 +5,7 @@
 #include <matrices/Matrix3x3f.hpp>
 #include <matrices/Matrix4x4f.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <scene/SceneRenderData.hpp>
+#include <scene/SceneCache.hpp>
 
 namespace Hope {
     /**
@@ -68,9 +68,9 @@ namespace Hope {
         Mind::Matrix3x3f inverseViewportMatrix ;
 
         /**
-         * Scene data.
+         * Scene cache.
          */
-        SceneRenderData* sceneData = nullptr ;
+        SceneCache* cache = nullptr ;
     } ;
 }
 

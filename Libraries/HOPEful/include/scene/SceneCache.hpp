@@ -1,5 +1,5 @@
-#ifndef __HOPE__SCENE_RENDER_DATA__
-#define __HOPE__SCENE_RENDER_DATA__
+#ifndef __HOPE__SCENE_CACHE__
+#define __HOPE__SCENE_CACHE__
 
 #include <set>
 
@@ -8,9 +8,9 @@ namespace Hope {
     class DirectionalLightComponent ;
 
     /**
-     * Shared data between scene and the scene graph.
+     * Cache some elements of the scene to access them faster while rendering.
      */
-    class SceneRenderData final {
+    class SceneCache final {
         friend class Scene ;
         friend class LightComponent ;
 
@@ -20,6 +20,7 @@ namespace Hope {
              */
             std::set<DirectionalLightComponent*> m_directionalLights ;
 
+        public:
             /**
              * Register a light.
              */
@@ -30,7 +31,6 @@ namespace Hope {
              */
             void deregisterLight(LightComponent* light) ;
 
-        public:
             /**
              * Get the list of lights.
              */

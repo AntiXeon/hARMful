@@ -21,10 +21,6 @@ void Scene::render() {
     m_frameGraphVisitor.nextFrame() ;
 }
 
-Entity* Scene::root() {
-    return m_root ;
-}
-
 void Scene::setFrameGraphRoot(FrameGraphNode* root) {
     root -> setSceneGraphRoot(m_root) ;
     m_renderConfig -> setFrameGraphRoot(root) ;

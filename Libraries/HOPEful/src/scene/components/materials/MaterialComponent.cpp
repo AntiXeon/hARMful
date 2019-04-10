@@ -3,7 +3,7 @@
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
-#include <scene/SceneRenderData.hpp>
+#include <scene/SceneCache.hpp>
 
 #include <iostream>
 
@@ -116,7 +116,7 @@ void MaterialComponent::setupDefaultUniforms() {
 void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
     Hope::ProcessedSceneNode& node = visitor -> processedNode() ;
     Hope::RenderRequiredData& data = visitor -> requiredData() ;
-    Hope::SceneRenderData* sceneData = data.sceneData ;
+    Hope::SceneCache* sceneCache = data.cache ;
 
     // Model matrix.
     m_shaderUniforms[ModelMatrixParamName] -> setMat4(node.worldMatrix.toArray()) ;
@@ -191,7 +191,7 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
 
 
     // Lights.
-    auto dirLights = sceneData -> directionalLights() ;
+    auto dirLights = sceneCache -> directionalLights() ;
     for (DirectionalLightComponent* light : dirLights) {
         m_shaderUniforms[DirectionalLightParamName + "." + LightAmbientParamName] -> setVec3((light -> ambient()).toRGB()) ;
         m_shaderUniforms[DirectionalLightParamName + "." + LightDiffuseParamName] -> setVec3((light -> diffuse()).toRGB()) ;

@@ -40,7 +40,8 @@ layout(location = 1) in vec3 outNormal ;\n\
 out vec4 color ;\n\
 \n\
 void main() {\n\
-    color = vec4(0.f, 1.f, 0.f, 1.f) * vec4(-outNormal, 1.f) ;\n\
+    //color = vec4(0.f, 1.f, 0.f, 1.f) * vec4(-outNormal, 1.f) ;\n\
+    color = vec4(dirLight.diffuse, 1.f) ;\n\
 }\n\
 " ;
 

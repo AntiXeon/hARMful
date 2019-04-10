@@ -20,11 +20,6 @@ TestWindow::TestWindow()
     m_cameraComponent -> setUpVector(Mind::Vector3f(0.f, 0.f, 1.f)) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
-    // Create a directional light.
-    Hope::Entity* lightEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-    lightEntity -> addComponent(dirLightComponent) ;
-
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
     Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.dae") ;
@@ -36,6 +31,14 @@ TestWindow::TestWindow()
     // Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
     // material -> setAmbient(ambientColor) ;
     cubeEntity -> addComponent(material) ;
+
+    // Create a directional light.
+    Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
+    dirLightComponent -> setAmbient(Hope::Color(0.5f, 0.1f, 0.3f, 1.f)) ;
+    dirLightComponent -> setDiffuse(Hope::Color(1.f, 0.2f, 0.7f, 1.f)) ;
+    dirLightEntity -> addComponent(dirLightComponent) ;
+    (scene() -> cache()).registerLight(dirLightComponent) ;
 
 
     /** FRAME GRAPH **/

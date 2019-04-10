@@ -34,6 +34,7 @@ void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
     }
 
     m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
+    (m_activeOpenGLRenderVisitor -> requiredData()).cache = &m_sceneCache ;
 }
 
 void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {

@@ -4,7 +4,7 @@
 #include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
 #include <scene/Transform.hpp>
-#include <scene/SceneRenderData.hpp>
+#include <scene/SceneCache.hpp>
 #include <memory>
 #include <vector>
 

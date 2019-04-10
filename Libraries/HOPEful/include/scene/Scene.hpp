@@ -4,7 +4,6 @@
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
-#include <scene/SceneRenderData.hpp>
 #include <interfaces/IRenderable.hpp>
 
 namespace Hope {
@@ -29,11 +28,6 @@ namespace Hope {
              */
             Hope::GL::OpenGLFrameGraphVisitor m_frameGraphVisitor ;
 
-            /**
-             * Scene render data.
-             */
-            SceneRenderData m_renderData ;
-
         public:
             /**
              * Create a new Scene instance.
@@ -53,7 +47,16 @@ namespace Hope {
             /**
              * Get the root entity of the scene.
              */
-            Entity* root() ;
+            Entity* root() {
+                return m_root ;
+            }
+
+            /**
+             * Get the scene cache.
+             */
+            SceneCache& cache() {
+                return m_frameGraphVisitor.cache() ;
+            }
 
             /**
              * Set the root of the framegraph.
