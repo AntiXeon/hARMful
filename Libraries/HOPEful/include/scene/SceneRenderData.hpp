@@ -1,7 +1,7 @@
-#ifndef __HOPE_SCENE_RENDER_DATA__
-#define __HOPE_SCENE_RENDER_DATA__
+#ifndef __HOPE__SCENE_RENDER_DATA__
+#define __HOPE__SCENE_RENDER_DATA__
 
-#include <vector>
+#include <set>
 
 namespace Hope {
     class LightComponent ;
@@ -18,23 +18,23 @@ namespace Hope {
             /**
              * List of the directional lights in the scene.
              */
-            std::vector<DirectionalLightComponent*> m_directionalLights ;
+            std::set<DirectionalLightComponent*> m_directionalLights ;
 
             /**
-             * Add a light.
+             * Register a light.
              */
-            void addLight(LightComponent* light) ;
+            void registerLight(LightComponent* light) ;
 
             /**
-             * Remove a light.
+             * Deregister a light.
              */
-            void removeLight(LightComponent* light) ;
+            void deregisterLight(LightComponent* light) ;
 
         public:
             /**
              * Get the list of lights.
              */
-            std::vector<DirectionalLightComponent*> directionalLights() const ;
+            std::set<DirectionalLightComponent*> directionalLights() const ;
     } ;
 }
 

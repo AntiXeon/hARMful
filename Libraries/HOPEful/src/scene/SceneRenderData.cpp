@@ -4,23 +4,32 @@
 
 using namespace Hope ;
 
-void SceneRenderData::addLight(LightComponent* light) {
-    //m_lights.insert(light) ;
+void SceneRenderData::registerLight(LightComponent* light) {
+    switch (light -> type()) {
+        case LightComponent::Type::Directional:
+        {
+            auto dirLight = reinterpret_cast<DirectionalLightComponent*>(light) ;
+            m_directionalLights.insert(dirLight) ;
+        }
 
-    if (light -> type() == LightComponent::Type::Directional) {
-        auto dirLight = reinterpret_cast<DirectionalLightComponent*>(light) ;
-        m_directionalLights.push_back(dirLight) ;
+        default:
+            break ;
     }
 }
 
-void SceneRenderData::removeLight(LightComponent* light) {
-    //m_lights.erase(light) ;
+void SceneRenderData::deregisterLight(LightComponent* light) {
+    switch (light -> type()) {
+        case LightComponent::Type::Directional:
+        {
+            auto dirLight = reinterpret_cast<DirectionalLightComponent*>(light) ;
+            m_directionalLights.erase(dirLight) ;
+        }
 
-    if (light -> type() == LightComponent::Type::Directional) {
-        m_directionalLights.pop_back() ;
+        default:
+            break ;
     }
 }
 
-std::vector<DirectionalLightComponent*> SceneRenderData::directionalLights() const {
+std::set<DirectionalLightComponent*> SceneRenderData::directionalLights() const {
     return m_directionalLights ;
 }
