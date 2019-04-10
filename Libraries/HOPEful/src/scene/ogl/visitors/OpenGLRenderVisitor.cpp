@@ -95,6 +95,7 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
                     attrib
                 ) ;
             }
+
             shaderProgram -> use() ;
         }
 

@@ -25,8 +25,7 @@ namespace Hope::GL {
              */
             static bool LocateUniform(
                 GLuint programID,
-                const std::string& name,
-                int& location
+                const std::shared_ptr<Hope::ShaderUniform>& uniform
             ) ;
 
             /**

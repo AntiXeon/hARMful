@@ -25,8 +25,7 @@ namespace Hope::GL {
              */
             static bool LocateAttribute(
                 GLuint programID,
-                const std::string& name,
-                int& location
+                const std::shared_ptr<Hope::ShaderAttribute>& attrib
             ) ;
 
             /**

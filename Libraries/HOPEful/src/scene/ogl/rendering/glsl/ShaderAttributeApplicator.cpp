@@ -78,10 +78,10 @@ void ShaderAttributeApplicator::ApplyAttribute(
 
 bool ShaderAttributeApplicator::LocateAttribute(
     GLuint programID,
-    const std::string& name,
-    int& location
+    const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    location = glGetAttribLocation(programID, name.c_str()) ;
+    const char* attribName = (attrib -> name()).c_str() ;
+    attrib -> setLocation(glGetAttribLocation(programID, attribName)) ;
 
     GLenum error = glGetError() ;
     return error == GL_NO_ERROR ;
@@ -91,11 +91,13 @@ void ShaderAttributeApplicator::Integer(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
-        glVertexAttribI1i(attribLocation, attrib -> integer()) ;
+        glVertexAttribI1i(attrib -> location(), attrib -> integer()) ;
     }
 }
 
@@ -103,12 +105,14 @@ void ShaderAttributeApplicator::IVec2(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const int* values = attrib -> ivec2() ;
-        glVertexAttribI2i(attribLocation, values[0], values[1]) ;
+        glVertexAttribI2i(attrib -> location(), values[0], values[1]) ;
     }
 }
 
@@ -116,12 +120,14 @@ void ShaderAttributeApplicator::IVec3(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const int* values = attrib -> ivec3() ;
-        glVertexAttribI3i(attribLocation, values[0], values[1], values[2]) ;
+        glVertexAttribI3i(attrib -> location(), values[0], values[1], values[2]) ;
     }
 }
 
@@ -129,12 +135,14 @@ void ShaderAttributeApplicator::IVec4(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const int* values = attrib -> ivec4() ;
-        glVertexAttribI4i(attribLocation, values[0], values[1], values[2], values[3]) ;
+        glVertexAttribI4i(attrib -> location(), values[0], values[1], values[2], values[3]) ;
     }
 }
 
@@ -142,11 +150,13 @@ void ShaderAttributeApplicator::UnsignedInteger(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
-        glVertexAttribI1ui(attribLocation, attrib -> uinteger()) ;
+        glVertexAttribI1ui(attrib -> location(), attrib -> uinteger()) ;
     }
 }
 
@@ -154,12 +164,14 @@ void ShaderAttributeApplicator::UnsignedIVec2(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const unsigned int* values = attrib -> uivec2() ;
-        glVertexAttribI2ui(attribLocation, values[0], values[1]) ;
+        glVertexAttribI2ui(attrib -> location(), values[0], values[1]) ;
     }
 }
 
@@ -167,12 +179,14 @@ void ShaderAttributeApplicator::UnsignedIVec3(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const unsigned int* values = attrib -> uivec3() ;
-        glVertexAttribI3ui(attribLocation, values[0], values[1], values[2]) ;
+        glVertexAttribI3ui(attrib -> location(), values[0], values[1], values[2]) ;
     }
 }
 
@@ -180,12 +194,14 @@ void ShaderAttributeApplicator::UnsignedIVec4(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const unsigned int* values = attrib -> uivec4() ;
-        glVertexAttribI4ui(attribLocation, values[0], values[1], values[2], values[3]) ;
+        glVertexAttribI4ui(attrib -> location(), values[0], values[1], values[2], values[3]) ;
     }
 }
 
@@ -193,11 +209,13 @@ void ShaderAttributeApplicator::Floating(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
-        glVertexAttrib1f(attribLocation, attrib -> floating()) ;
+        glVertexAttrib1f(attrib -> location(), attrib -> floating()) ;
     }
 }
 
@@ -205,12 +223,14 @@ void ShaderAttributeApplicator::Vec2(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> vec2() ;
-        glVertexAttrib2f(attribLocation, values[0], values[1]) ;
+        glVertexAttrib2f(attrib -> location(), values[0], values[1]) ;
     }
 }
 
@@ -218,12 +238,14 @@ void ShaderAttributeApplicator::Vec3(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> vec3() ;
-        glVertexAttrib3f(attribLocation, values[0], values[1], values[2]) ;
+        glVertexAttrib3f(attrib -> location(), values[0], values[1], values[2]) ;
     }
 }
 
@@ -231,12 +253,14 @@ void ShaderAttributeApplicator::Vec4(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> vec4() ;
-        glVertexAttrib4f(attribLocation, values[0], values[1], values[2], values[3]) ;
+        glVertexAttrib4f(attrib -> location(), values[0], values[1], values[2], values[3]) ;
     }
 }
 
@@ -244,12 +268,14 @@ void ShaderAttributeApplicator::Mat2(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> mat2() ;
-        glVertexAttrib2fv(attribLocation, values) ;
+        glVertexAttrib2fv(attrib -> location(), values) ;
     }
 }
 
@@ -257,12 +283,14 @@ void ShaderAttributeApplicator::Mat3(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> mat3() ;
-        glVertexAttrib3fv(attribLocation, values) ;
+        glVertexAttrib3fv(attrib -> location(), values) ;
     }
 }
 
@@ -270,12 +298,14 @@ void ShaderAttributeApplicator::Mat4(
     GLuint programID,
     const std::shared_ptr<Hope::ShaderAttribute>& attrib
 ) {
-    int attribLocation = -1 ;
-    bool success = LocateAttribute(programID, attrib -> name(), attribLocation) ;
+    bool success = true ;
+    if (attrib -> location() == -2) {
+        success = LocateAttribute(programID, attrib) ;
+    }
 
     if (success) {
         const float* values = attrib -> mat4() ;
-        glVertexAttrib4fv(attribLocation, values) ;
+        glVertexAttrib4fv(attrib -> location(), values) ;
     }
 }
 

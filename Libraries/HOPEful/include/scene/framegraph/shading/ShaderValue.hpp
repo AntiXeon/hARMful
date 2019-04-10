@@ -104,6 +104,13 @@ namespace Hope {
             } ;
 
             /**
+             * Location of the value.
+             * The default value of -2 is used to indicate that the ShaderValue
+             * has not yet be associated with a glGetUniformLocation() result.
+             */
+            int m_location = -2 ;
+
+            /**
              * Name of the parameter.
              */
             std::string m_name ;
@@ -134,6 +141,13 @@ namespace Hope {
              * Only compares name and type, the value is not evaluated here.
              */
             bool identical(const std::shared_ptr<Hope::ShaderValue>& other) ;
+
+            /**
+             * Set the location of the value.
+             */
+            void setLocation(const int location) {
+                m_location = location ;
+            }
 
             /**
              * Set the parameter name.
@@ -440,6 +454,13 @@ namespace Hope {
             void setSamplerCube(const int samplerCube) {
                 m_type = SamplerCube ;
                 m_value.samplerCube = samplerCube ;
+            }
+
+            /**
+             * Get the location of the value.
+             */
+            int location() const {
+                return m_location ;
             }
 
             /**
