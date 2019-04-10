@@ -23,7 +23,7 @@ namespace Hope::GL {
             /**
              * List of shader parameters.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
 
             /**
              * List of graphics API capabilities.
@@ -81,7 +81,7 @@ namespace Hope::GL {
             /**
              * Get the shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
                 return m_shaderAttribs ;
             }
 

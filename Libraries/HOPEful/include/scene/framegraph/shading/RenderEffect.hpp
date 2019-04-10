@@ -3,8 +3,10 @@
 
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/framegraph/shading/RenderTechnique.hpp>
+#include <map>
 #include <memory>
 #include <set>
+#include <string>
 
 namespace Hope {
     /**
@@ -15,7 +17,7 @@ namespace Hope {
             /**
              * List of shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
 
             /**
              * Available techniques in the effect.
@@ -38,7 +40,7 @@ namespace Hope {
             /**
              * Get the shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
                 return m_shaderAttribs ;
             }
 

@@ -81,7 +81,7 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
 
             // Apply shader uniforms.
             auto materialUniforms = component -> shaderUniforms() ;
-            for (const std::shared_ptr<Hope::ShaderUniform> uniform : materialUniforms) {
+            for (auto& [name, uniform] : materialUniforms) {
                 ShaderUniformApplicator::ApplyUniform(
                     shaderProgram -> id(),
                     uniform
@@ -89,7 +89,7 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
             }
 
             // Set attribute values here.
-            for (const std::shared_ptr<Hope::ShaderAttribute> attrib : appliedAttributes) {
+            for (auto& [name, attrib] : appliedAttributes) {
                 ShaderAttributeApplicator::ApplyAttribute(
                     shaderProgram -> id(),
                     attrib

@@ -4,23 +4,11 @@
 using namespace Hope ;
 
 void ShaderValue::merge(
-    std::set<std::shared_ptr<Hope::ShaderValue>>& first,
-    const std::set<std::shared_ptr<Hope::ShaderValue>>& second
+    std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& first,
+    const std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& second
 ) {
-    for (auto originalParam = first.begin() ; originalParam != first.end() ; ++originalParam) {
-        auto it = std::find_if(
-            second.begin(),
-            second.end(),
-            [originalParam]
-            (const std::shared_ptr<Hope::ShaderValue>& param) -> bool {
-                return (*originalParam) -> identical(param) ;
-            }
-        ) ;
-
-        if (it != second.end()) {
-            first.erase(originalParam) ;
-            first.insert(*it) ;
-        }
+    for (auto& [name, value] : second) {
+        first[name] = value;
     }
 }
 

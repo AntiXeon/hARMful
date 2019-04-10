@@ -4,7 +4,7 @@
 #include <array>
 #include <string>
 #include <cstdlib>
-#include <set>
+#include <map>
 #include <memory>
 
 namespace Hope {
@@ -132,8 +132,8 @@ namespace Hope {
              * set.
              */
             static void merge(
-                std::set<std::shared_ptr<Hope::ShaderValue>>& first,
-                const std::set<std::shared_ptr<Hope::ShaderValue>>& second
+                std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& first,
+                const std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& second
             ) ;
 
             /**

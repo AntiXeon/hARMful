@@ -4,6 +4,8 @@
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
+#include <map>
+#include <string>
 
 namespace Hope {
     /**
@@ -48,28 +50,31 @@ namespace Hope {
             static const std::string LightSpecularParamName ;
             static const std::string LightDirectionParamName ;
 
-            /**
-             * All the default uniforms.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_modelMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_viewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_projectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_modelViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_viewProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_mvpMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseModelMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseModelViewMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseViewProjectionMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseMVPMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_modelNormalMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_modelViewNormalMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_viewportMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_inverseViewportMatrix = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_aspectRatio = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_time = nullptr ;
-            std::shared_ptr<Hope::ShaderUniform> m_eyePosition = nullptr ;
+            static const unsigned short AmountUniformNames = 19 ;
+            static const std::string UniformNames[AmountUniformNames] ;
+
+            // /**
+            //  * All the default uniforms.
+            //  */
+            // std::shared_ptr<Hope::ShaderUniform> m_modelMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_viewMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_projectionMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_modelViewMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_viewProjectionMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_mvpMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseModelMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseViewMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseProjectionMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseModelViewMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseViewProjectionMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseMVPMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_modelNormalMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_modelViewNormalMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_viewportMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_inverseViewportMatrix = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_aspectRatio = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_time = nullptr ;
+            // std::shared_ptr<Hope::ShaderUniform> m_eyePosition = nullptr ;
 
             /**
              * Effect of the material.
@@ -79,12 +84,12 @@ namespace Hope {
             /**
              * List of shader parameters.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
 
             /**
              * List of shader uniforms.
              */
-            std::set<std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
+            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
 
         public:
             /**
@@ -112,14 +117,14 @@ namespace Hope {
             /**
              * Get the shader attributes.
              */
-            std::set<std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
+            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
                 return m_shaderAttribs ;
             }
 
             /**
              * Get the shader uniforms.
              */
-            std::set<std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
+            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
                 return m_shaderUniforms ;
             }
 

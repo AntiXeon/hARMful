@@ -21,11 +21,11 @@ void RenderTechnique::removeFilterOption(const std::shared_ptr<Hope::FilterOptio
 }
 
 void RenderTechnique::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-    m_shaderAttribs.insert(attrib) ;
+    m_shaderAttribs[attrib -> name()] = attrib ;
 }
 
 void RenderTechnique::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-    m_shaderAttribs.erase(attrib) ;
+    m_shaderAttribs.erase(attrib -> name()) ;
 }
 
 void RenderTechnique::addRenderPass(const std::shared_ptr<API::RenderPass> pass) {
