@@ -71,7 +71,7 @@ void MeshLoader::initializeMeshPart(const aiMesh* part)
     const aiVector3D Zero(0.f, 0.f, 0.f) ;
 
     std::vector<float> vertices ;
-    std::vector<uint16_t> indices ;
+    std::vector<uint32_t> indices ;
 
     // Fill the vertex buffer.
     uint32_t amountVertices = part -> mNumVertices ;

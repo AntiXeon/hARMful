@@ -6,7 +6,7 @@ using namespace Hope::GL ;
 
 MeshPart::MeshPart(
     const std::vector<float>& vertices,
-    const std::vector<uint16_t>& indices
+    const std::vector<uint32_t>& indices
 ) {
     m_amountIndices = static_cast<uint32_t>(indices.size()) ;
 
@@ -33,7 +33,7 @@ MeshPart::MeshPart(
 
     glGenBuffers(1, &m_indexBuffer) ;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint16_t) * m_amountIndices, indices.data(), GL_STATIC_DRAW) ;
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * m_amountIndices, indices.data(), GL_STATIC_DRAW) ;
 }
 
 void MeshPart::deleteBuffers() {

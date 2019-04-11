@@ -47,7 +47,7 @@ namespace Hope::GL {
              */
              MeshPart(
                  const std::vector<float>& vertices,
-                 const std::vector<uint16_t>& indices
+                 const std::vector<uint32_t>& indices
              ) ;
 
             /**
@@ -55,7 +55,7 @@ namespace Hope::GL {
              */
             void render() override {
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
-                glDrawElements(GL_TRIANGLES, m_amountIndices, GL_UNSIGNED_SHORT, nullptr) ;
+                glDrawElements(GL_TRIANGLES, m_amountIndices, GL_UNSIGNED_INT, nullptr) ;
             }
 
             /**
