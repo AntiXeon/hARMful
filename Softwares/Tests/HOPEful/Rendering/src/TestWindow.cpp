@@ -22,7 +22,7 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.dae") ;
+    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.fbx") ;
     // Hope::TriangleTestComponent* meshComponent = new Hope::TriangleTestComponent() ;
     cubeEntity -> addComponent(meshComponent) ;
 
@@ -35,8 +35,9 @@ TestWindow::TestWindow()
     // Create a directional light.
     Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
     Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-    dirLightComponent -> setAmbient(Hope::Color(0.5f, 0.1f, 0.3f, 1.f)) ;
-    dirLightComponent -> setDiffuse(Hope::Color(1.f, 0.2f, 0.7f, 1.f)) ;
+    dirLightComponent -> setAmbient(Hope::Color(0.0f, 0.1f, 0.2f, 1.f)) ;
+    dirLightComponent -> setDiffuse(Hope::Color(0.f, 0.2f, 0.7f, 1.f)) ;
+    dirLightComponent -> setSpecular(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
     dirLightEntity -> addComponent(dirLightComponent) ;
     (scene() -> cache()).registerLight(dirLightComponent) ;
 
