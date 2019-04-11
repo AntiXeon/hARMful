@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 #include <string>
+#include <vector>
 
 namespace Hope::GL {
     /**
@@ -22,9 +23,9 @@ namespace Hope::GL {
             GLuint m_shaderID = GL_INVALID_VALUE ;
 
             /**
-             * To know if the shader has a source code.
+             * Source codes.
              */
-            bool m_hasCode = false ;
+            std::vector<std::string> m_sources ;
 
         public:
             /**
@@ -38,22 +39,35 @@ namespace Hope::GL {
             virtual ~Shader() ;
 
             /**
-             * Set the source file of the shader.
-             * Launch the compilation of the shader.
+             * Add a source file of the shader.
              */
-            void setSourceFile(const std::string& filepath) ;
+            void addSourceFile(const std::string& filepath) ;
 
             /**
-             * Directly set the source code of the shader.
-             * Launch the compilation of the shader.
+             * Directly add the source code of the shader.
              */
-            void setSourceCode(const std::string& code) ;
+            void addSourceCode(const std::string& code) {
+                m_sources.push_back(code) ;
+            }
+
+            /**
+             * Compile the source codes of the shader.
+             * @return  true on success; false on failure.
+             */
+            bool compile() ;
 
             /**
              * Check if the shader is valid.
              */
             bool isValid() const {
                 return glIsShader(m_shaderID) ;
+            }
+
+            /**
+             * Return true if at least one source is set, false otherwise.
+             */
+            bool hasSource() const {
+                return m_sources.size() > 0 ;
             }
 
             /**
@@ -71,13 +85,6 @@ namespace Hope::GL {
             }
 
             /**
-             * To know if the shader has a source code.
-             */
-            bool hasCode() const {
-                return m_hasCode ;
-            }
-
-            /**
              * Convert the shader directly to its ID for using it more easily in
              * the OpenGL API.
              */
@@ -92,6 +99,20 @@ namespace Hope::GL {
             Shader(Shader&& moved) = delete ;
             Shader& operator=(const Shader& copied) = delete ;
             Shader& operator=(Shader&& moved) = delete ;
+
+        private:
+            /**
+             * Print compilation errors.
+             */
+            void printCompilationError() ;
+
+            /**
+             * Callback used to convert the vector<string> to a char** for the
+             * OpenGL API.
+             */
+            static const char* SourceToCStr(const std::string& source) {
+                return source.c_str() ;
+            }
     } ;
 }
 

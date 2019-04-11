@@ -68,11 +68,16 @@ namespace Hope::GL {
             }
 
             /**
+             * Build the shader program.
+             */
+            void build() ;
+
+            /**
              * Link the program.
              */
-            void link() {
+            bool link() {
                 glLinkProgram(m_programID) ;
-                log(GL_LINK_STATUS) ;
+                return isSuccessful(GL_LINK_STATUS) ;
             }
 
             /**
@@ -97,92 +102,83 @@ namespace Hope::GL {
             }
 
             /**
-             * Set the vertex shader file that contains the source code.
+             * Add the vertex shader file that contains the source code.
              */
-            void setVertexShaderFile(const std::string& filepath) {
-                m_vertex.setSourceFile(filepath) ;
-                glAttachShader(m_programID, m_vertex) ;
+            void addVertexShaderFile(const std::string& filepath) {
+                m_vertex.addSourceFile(filepath) ;
             }
 
             /**
-             * Set the vertex shader source code.
+             * Add the vertex shader source code.
              */
-            void setVertexShaderCode(const std::string& code) {
-                m_vertex.setSourceCode(code) ;
-                glAttachShader(m_programID, m_vertex) ;
+            void addVertexShaderCode(const std::string& code) {
+                m_vertex.addSourceCode(code) ;
             }
 
             /**
-             * Set the fragment shader file that contains the source code.
+             * Add the fragment shader file that contains the source code.
              */
-            void setFragmentShaderFile(const std::string& filepath) {
-                m_fragment.setSourceFile(filepath) ;
-                glAttachShader(m_programID, m_fragment) ;
+            void addFragmentShaderFile(const std::string& filepath) {
+                m_fragment.addSourceFile(filepath) ;
             }
 
             /**
-             * Set the fragment shader source code.
+             * Add the fragment shader source code.
              */
-            void setFragmentShaderCode(const std::string& code) {
-                m_fragment.setSourceCode(code) ;
-                glAttachShader(m_programID, m_fragment) ;
+            void addFragmentShaderCode(const std::string& code) {
+                m_fragment.addSourceCode(code) ;
             }
 
             /**
-             * Set the geometry shader file that contains the source code.
+             * Add the geometry shader file that contains the source code.
              */
-            void setGeometryShaderFile(const std::string& filepath) {
-                m_geometry.setSourceFile(filepath) ;
-                glAttachShader(m_programID, m_geometry) ;
+            void addGeometryShaderFile(const std::string& filepath) {
+                m_geometry.addSourceFile(filepath) ;
             }
 
             /**
-             * Set the geometry shader source code.
+             * Add the geometry shader source code.
              */
-            void setGeometryShaderCode(const std::string& code) {
-                m_geometry.setSourceCode(code) ;
-                glAttachShader(m_programID, m_geometry) ;
+            void addGeometryShaderCode(const std::string& code) {
+                m_geometry.addSourceCode(code) ;
             }
 
             /**
-             * Set the tesselation control shader file that contains the source
+             * Add the tesselation control shader file that contains the source
              * code.
              */
-            void setTesselationControlShaderFile(const std::string& filepath) {
-                m_tessControl.setSourceFile(filepath) ;
-                glAttachShader(m_programID, m_tessControl) ;
+            void addTesselationControlShaderFile(const std::string& filepath) {
+                m_tessControl.addSourceFile(filepath) ;
             }
 
             /**
              * Set the tesselation control shader source code.
              */
-            void setTesselationControlShaderCode(const std::string& code) {
-                m_tessControl.setSourceCode(code) ;
-                glAttachShader(m_programID, m_tessControl) ;
+            void addTesselationControlShaderCode(const std::string& code) {
+                m_tessControl.addSourceCode(code) ;
             }
 
             /**
-             * Set the tesselation evaluation shader file that contains the source
+             * Add the tesselation evaluation shader file that contains the source
              * code.
              */
-            void setTesselationEvaluationShaderFile(const std::string& filepath) {
-                m_tessEval.setSourceFile(filepath) ;
-                glAttachShader(m_programID, m_tessEval) ;
+            void addTesselationEvaluationShaderFile(const std::string& filepath) {
+                m_tessEval.addSourceFile(filepath) ;
             }
 
             /**
-             * Set the tesselation evaluation shader source code.
+             * Add the tesselation evaluation shader source code.
              */
-            void setTesselationEvaluationShaderCode(const std::string& code) {
-                m_tessEval.setSourceCode(code) ;
-                glAttachShader(m_programID, m_tessEval) ;
+            void addTesselationEvaluationShaderCode(const std::string& code) {
+                m_tessEval.addSourceCode(code) ;
             }
 
         private:
             /**
              * Log any error in the shader program set up.
+             * @return  true on success; false on failure.
              */
-            void log(GLenum reason) ;
+            bool isSuccessful(GLenum reason) ;
     } ;
 }
 

@@ -1,4 +1,6 @@
 #include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/Lights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
 #include <memory>
 
@@ -92,9 +94,11 @@ void PhongMaterialComponent::setupUniforms() {
 void PhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
-    shaderProgram -> setVertexShaderCode(PhongVertexCode) ;
-    shaderProgram -> setFragmentShaderCode(PhongFragmentCode) ;
-    shaderProgram -> link() ;
+    shaderProgram -> addVertexShaderCode(PhongVertexCode) ;
+    shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(LightsFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(PhongFragmentCode) ;
+    shaderProgram -> build() ;
 
     std::shared_ptr<RenderTechnique> techniqueGL31 = std::make_shared<RenderTechnique>() ;
     techniqueGL31 -> setAPI(RenderTechnique::GraphicsAPI::OpenGL, 3, 1) ;

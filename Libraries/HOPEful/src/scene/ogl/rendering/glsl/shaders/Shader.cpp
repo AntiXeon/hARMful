@@ -2,6 +2,7 @@
 #include <files/text/TextFile.hpp>
 #include <files/text/TextData.hpp>
 #include <utils/LogSystem.hpp>
+#include <algorithm>
 #include <array>
 
 using namespace Hope::GL ;
@@ -17,28 +18,37 @@ Shader::~Shader() {
     }
 }
 
-void Shader::setSourceFile(const std::string& filepath) {
+void Shader::addSourceFile(const std::string& filepath) {
     Spite::TextFile shaderFile(filepath) ;
     shaderFile.open(Spite::File::OpenMode::Open_ReadOnly) ;
 
     Spite::TextData textData ;
     shaderFile.load(&textData) ;
-    setSourceCode(textData.data()) ;
+    addSourceCode(textData.data()) ;
 }
 
-void Shader::setSourceCode(const std::string& code) {
-    static const int NumberOfStrings = 1 ;
-
-    const char* codeStr = code.data() ;
+bool Shader::compile() {
+    if (m_shaderID != GL_INVALID_VALUE) {
+        return false ;
+    }
 
     // Initialize the shader.
     m_shaderID = glCreateShader(m_shaderType) ;
 
+    // Convert std::string to C strings.
+    std::vector<const char*> sourceCodes ;
+    std::transform(
+        m_sources.begin(),
+        m_sources.end(),
+        std::back_inserter(sourceCodes),
+        SourceToCStr
+    ) ;
+
     // Set the source code of the shader.
     glShaderSource(
         m_shaderID,
-        NumberOfStrings,
-        &codeStr,
+        sourceCodes.size(),
+        &sourceCodes[0],
         nullptr
     ) ;
 
@@ -49,28 +59,34 @@ void Shader::setSourceCode(const std::string& code) {
     glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &isCompiled) ;
 
     if (isCompiled == GL_FALSE) {
-        GLint logSize = 0 ;
-        glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logSize) ;
+        printCompilationError() ;
+    }
 
-        if (logSize > 0) {
-            std::string errorLog ;
-            errorLog.resize(logSize) ;
-            glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]) ;
+    // Free the space used by the source code as it is not required anymore.
+    m_sources.clear() ;
 
-            // Write the error in the log.
-            auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-            auto logSharedPtr = logWeakPtr.lock() ;
-            if (logSharedPtr) {
-                Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
-                logSharedPtr -> writeLine(level, errorLog) ;
-            }
+    return (isCompiled == GL_TRUE) ;
+}
+
+void Shader::printCompilationError() {
+    GLint logSize = 0 ;
+    glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logSize) ;
+
+    if (logSize > 0) {
+        std::string errorLog ;
+        errorLog.resize(logSize) ;
+        glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]) ;
+
+        // Write the error in the log.
+        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+        auto logSharedPtr = logWeakPtr.lock() ;
+        if (logSharedPtr) {
+            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
+            logSharedPtr -> writeLine(level, errorLog) ;
         }
+    }
 
-        // Delete the shader as it failed.
-        glDeleteShader(m_shaderID) ;
-        m_shaderID = GL_INVALID_VALUE ;
-    }
-    else {
-        m_hasCode = true ;
-    }
+    // Delete the shader as it failed.
+    glDeleteShader(m_shaderID) ;
+    m_shaderID = GL_INVALID_VALUE ;
 }
