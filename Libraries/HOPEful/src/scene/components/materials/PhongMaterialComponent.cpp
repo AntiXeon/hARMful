@@ -1,5 +1,6 @@
 #include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Lights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
 #include <memory>
@@ -96,6 +97,7 @@ void PhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     shaderProgram -> addVertexShaderCode(PhongVertexCode) ;
     shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(LightsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(PhongFragmentCode) ;
     shaderProgram -> build() ;

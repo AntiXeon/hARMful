@@ -4,6 +4,7 @@
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
+#include <scene/components/materials/UniformNames.hpp>
 #include <map>
 #include <string>
 
@@ -14,44 +15,9 @@ namespace Hope {
     class MaterialComponent : public Component {
         private:
             /**
-             * Name of the default parameters used for uniform values of the
-             * shaders.
+             * Names of the uniform variables.
              */
-            static const std::string ModelMatrixParamName ;
-            static const std::string ViewMatrixParamName ;
-            static const std::string ProjectionMatrixParamName ;
-            static const std::string ModelViewMatrixParamName ;
-            static const std::string ViewProjectionMatrixParamName ;
-            static const std::string MVPMatrixParamName ;
-            static const std::string InverseModelMatrixParamName ;
-            static const std::string InverseViewMatrixParamName ;
-            static const std::string InverseProjectionMatrixParamName ;
-            static const std::string InverseModelViewMatrixParamName ;
-            static const std::string InverseViewProjectionMatrixParamName ;
-            static const std::string InverseMVPMatrixParamName ;
-            static const std::string ModelNormalMatrixParamName ;
-            static const std::string ModelViewNormalMatrixParamName ;
-            static const std::string ViewportMatrixParamName ;
-            static const std::string InverseViewportMatrixParamName ;
-            static const std::string AspectRatioParamName ;
-            static const std::string TimeParamName ;
-            static const std::string EyePositionParamName ;
-
-            /**
-             * Name of the lighting related uniform values of the shaders.
-             */
-            static const std::string DirectionalLightParamName ;
-            static const std::string PointLightParamName ;
-            static const std::string SpotLightParamName ;
-            static const std::string HemisphereLightParamName ;
-
-            static const std::string LightAmbientParamName ;
-            static const std::string LightDiffuseParamName ;
-            static const std::string LightSpecularParamName ;
-            static const std::string LightDirectionParamName ;
-
-            static const unsigned short AmountUniformNames = 23 ;
-            static const std::string UniformNames[AmountUniformNames] ;
+            static const UniformNames Uniforms ;
 
             /**
              * Effect of the material.

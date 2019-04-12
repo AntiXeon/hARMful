@@ -152,20 +152,28 @@ namespace Doom {
             unsigned short offset = BufferSize - 1 ;
             bool isNegative = value < 0 ;
             int32_t tmpValue = value ;
-            while ((tmpValue != 0) && (offset > 0)) {
-                int32_t tmp = tmpValue ;
-                tmpValue = tmpValue / base ;
-                buffer[offset] = std::abs(tmp - (tmpValue * base)) + ASCIINumberStart ;
-                if (buffer[offset] > '9') {
-                    // Add difference between 9 and A in the ASCII table.
-                    buffer[offset] += 8 ;
-                }
+
+            if (tmpValue == 0) {
+                buffer[offset] = '0' ;
                 offset-- ;
             }
+            else {
+                while ((tmpValue != 0) && (offset > 0)) {
+                    int32_t tmp = tmpValue ;
+                    tmpValue = tmpValue / base ;
+                    buffer[offset] = std::abs(tmp - (tmpValue * base)) + ASCIINumberStart ;
+                    if (buffer[offset] > '9') {
+                        // Add difference between 9 and A in the ASCII table.
+                        buffer[offset] += 8 ;
+                    }
+                    offset-- ;
+                }
 
-            if (isNegative) {
-                buffer[offset] = '-' ;
+                if (isNegative) {
+                    buffer[offset] = '-' ;
+                }
             }
+
             return buffer.substr(offset + 1, BufferSize - offset) ;
         }
 

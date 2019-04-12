@@ -5,7 +5,7 @@ struct DirectionalLight {
     vec3 specular ;
 } ;
 
-uniform DirectionalLight dirLight ;
+uniform DirectionalLight dirLights[MAX_DIRECTIONAL_LIGHTS] ;
 
 vec4 DirectionalLightContribution(
     DirectionalLight light,

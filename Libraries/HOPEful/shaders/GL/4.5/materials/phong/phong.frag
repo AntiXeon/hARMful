@@ -8,5 +8,5 @@ out vec4 color ;
 
 void main() {
     vec3 viewDirection = normalize(eyePosition - inFragmentPosition);
-    color = DirectionalLightContribution(dirLight, inNormal, viewDirection) ;
+    color = DirectionalLightContribution(dirLights[0], inNormal, viewDirection) ;
 }
