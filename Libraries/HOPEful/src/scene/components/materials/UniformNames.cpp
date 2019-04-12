@@ -7,6 +7,7 @@
 using namespace Hope ;
 
 UniformNames::UniformNames() {
+    // Generic matrices and values.
     m_names.push_back(ModelMatrixParamName()) ;
     m_names.push_back(ViewMatrixParamName()) ;
     m_names.push_back(ProjectionMatrixParamName()) ;
@@ -26,6 +27,9 @@ UniformNames::UniformNames() {
     m_names.push_back(AspectRatioParamName()) ;
     m_names.push_back(TimeParamName()) ;
     m_names.push_back(EyePositionParamName()) ;
+
+    // Lights.
+    m_names.push_back(AmountDirectionalLightsParamName()) ;
 
     for (int dirLampIndex = 0 ; dirLampIndex < MAX_DIRECTIONAL_LIGHTS ; ++dirLampIndex) {
         std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;

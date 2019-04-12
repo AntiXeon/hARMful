@@ -30,6 +30,7 @@ void main() {\n\
 std::string PhongFragmentCode =
 "\
 uniform vec3 eyePosition ;\n\
+uniform int amountDirectionalLights ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoord ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
@@ -38,8 +39,19 @@ layout(location = 2) in vec3 inFragmentPosition ;\n\
 out vec4 color ;\n\
 \n\
 void main() {\n\
-    vec3 viewDirection = normalize(eyePosition - inFragmentPosition);\n\
-    color = DirectionalLightContribution(dirLights[0], inNormal, viewDirection) ;\n\
+    int validAmountDirLights = min(amountDirectionalLights, MAX_DIRECTIONAL_LIGHTS) ;\n\
+    vec3 viewDirection = normalize(eyePosition - inFragmentPosition) ;\n\
+\n\
+    vec4 colorAcc = vec4(0) ;\n\
+    for (int dirLightIndex = 0 ; dirLightIndex < validAmountDirLights ; dirLightIndex++) {\n\
+        colorAcc += DirectionalLightContribution(\n\
+            dirLights[dirLightIndex],\n\
+            inNormal,\n\
+            viewDirection\n\
+        ) ;\n\
+    }\n\
+\n\
+    color = normalize(colorAcc) ;\n\
 }\n\
 " ;
 

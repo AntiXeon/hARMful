@@ -138,6 +138,10 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
     // Lights.
     int dirLampIndex = 0 ;
     auto dirLights = sceneCache -> directionalLights() ;
+
+    // Amount directional lights.
+    m_shaderUniforms[UniformNames::AmountDirectionalLightsParamName()] -> setInteger(dirLights.size()) ;
+
     for (DirectionalLightComponent* light : dirLights) {
         std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;
         m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightAmbientParamName()] -> setVec3((light -> ambient()).toRGB()) ;

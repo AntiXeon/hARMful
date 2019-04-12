@@ -51,6 +51,8 @@ namespace Hope {
             static std::string EyePositionParamName() { return "eyePosition" ; }
 
             // Lighting uniforms names.
+            static std::string AmountDirectionalLightsParamName() { return "amountDirectionalLights" ; }
+
             static std::string DirectionalLightParamName() { return "dirLights" ; }
             static std::string PointLightParamName() { return "pointLights" ; }
             static std::string SpotLightParamName() { return "spotLights" ; }

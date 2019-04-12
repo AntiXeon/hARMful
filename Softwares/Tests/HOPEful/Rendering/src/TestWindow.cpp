@@ -4,7 +4,6 @@
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
-#include <scene/components/test/TriangleTestComponent.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
@@ -23,7 +22,6 @@ TestWindow::TestWindow()
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
     Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.fbx") ;
-    // Hope::TriangleTestComponent* meshComponent = new Hope::TriangleTestComponent() ;
     cubeEntity -> addComponent(meshComponent) ;
 
     // Add a material.
@@ -40,6 +38,16 @@ TestWindow::TestWindow()
     dirLightComponent -> setSpecular(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
     dirLightEntity -> addComponent(dirLightComponent) ;
     (scene() -> cache()).registerLight(dirLightComponent) ;
+
+    // Create a directional light.
+    // Hope::Entity* dirLightEntity2 = new Hope::Entity(scene() -> root()) ;
+    // Hope::DirectionalLightComponent* dirLightComponent2 = new Hope::DirectionalLightComponent() ;
+    // dirLightComponent2 -> setDirection(Mind::Vector3f(0.2f, 0.8f, -0.5f)) ;
+    // dirLightComponent2 -> setAmbient(Hope::Color(0.1f, 0.0f, 0.0f, 1.f)) ;
+    // dirLightComponent2 -> setDiffuse(Hope::Color(0.3f, 0.1f, 0.1f, 1.f)) ;
+    // dirLightComponent2 -> setSpecular(Hope::Color(1.f, 1.f, 0.8f, 1.f)) ;
+    // dirLightEntity2 -> addComponent(dirLightComponent2) ;
+    // (scene() -> cache()).registerLight(dirLightComponent2) ;
 
 
     /** FRAME GRAPH **/
