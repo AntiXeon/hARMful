@@ -42,6 +42,7 @@ namespace Hope {
             static std::string InverseModelViewMatrixParamName() { return "inverseModelViewMatrix" ; }
             static std::string InverseViewProjectionMatrixParamName() { return "inverseViewProjectionMatrix" ; }
             static std::string InverseMVPMatrixParamName() { return "inverseMVPMatrix" ; }
+            static std::string NormalMatrixParamName() { return "normalMatrix" ; }
             static std::string ModelNormalMatrixParamName() { return "modelNormalMatrix" ; }
             static std::string ModelViewNormalMatrixParamName() { return "modelViewNormalMatrix" ; }
             static std::string ViewportMatrixParamName() { return "viewportMatrix" ; }
@@ -57,9 +58,9 @@ namespace Hope {
             static std::string PointLightParamName() { return "pointLights" ; }
             static std::string SpotLightParamName() { return "spotLights" ; }
             static std::string HemisphereLightParamName() { return "hemiLights" ; }
-            static std::string LightAmbientParamName() { return "ambient" ; }
-            static std::string LightDiffuseParamName() { return "diffuse" ; }
-            static std::string LightSpecularParamName() { return "specular" ; }
+            static std::string LightColorParamName() { return "color" ; }
+            static std::string LightPowerParamName() { return "power" ; }
+            static std::string LightGenerateSpecularParamName() { return "generateSpecular" ; }
             static std::string LightDirectionParamName() { return "direction" ; }
     } ;
 }

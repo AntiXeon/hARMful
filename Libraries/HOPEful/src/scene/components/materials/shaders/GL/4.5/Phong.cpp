@@ -11,47 +11,74 @@ layout(location = 2) in vec3 normal ;\n\
 \n\
 uniform mat4 mvpMatrix ;\n\
 uniform mat4 modelMatrix ;\n\
+uniform mat4 normalMatrix ;\n\
+uniform mat4 modelViewMatrix ;\n\
 \n\
-layout(location = 0) out vec2 outTexCoord ;\n\
+layout(location = 0) out vec3 outVertexPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
-layout(location = 2) out vec3 outFragmentPosition ;\n\
+layout(location = 2) out vec2 outTexCoord ;\n\
 \n\
 void main() {\n\
     vec4 position4D = vec4(position, 1.f) ;\n\
 \n\
-    outTexCoord = texCoord ;\n\
-    outNormal = normalize(mat3(transpose(inverse(modelMatrix))) * normal) ;\n\
-    outFragmentPosition = vec3(modelMatrix * position4D) ;\n\
-\n\
     gl_Position = mvpMatrix * position4D ;\n\
+\n\
+    vec4 vertexPosition4D = modelViewMatrix * vec4(position, 1.f) ;\n\
+    outVertexPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;\n\
+    outNormal = vec3(normalMatrix * vec4(normal, 0.f)) ;\n\
+    outTexCoord = texCoord ;\n\
 }\n\
 " ;
 
 std::string PhongFragmentCode =
 "\
+// Phong material shader.\n\
+\n\
+struct Material {\n\
+    vec3 ambientColor ;\n\
+    vec3 diffuseColor ;\n\
+    vec3 specularColor ;\n\
+    float shininess ;\n\
+} ;\n\
+\n\
+uniform Material phong ;\n\
 uniform vec3 eyePosition ;\n\
 uniform int amountDirectionalLights ;\n\
 \n\
-layout(location = 0) in vec2 inTexCoord ;\n\
-layout(location = 1) in vec3 inNormal ;\n\
-layout(location = 2) in vec3 inFragmentPosition ;\n\
+const float ScreenGamma = 2.2f ;\n\
 \n\
-out vec4 color ;\n\
+layout(location = 0) in vec3 inVertexPosition ;\n\
+layout(location = 1) in vec3 inNormal ;\n\
+layout(location = 2) in vec2 inTexCoord ;\n\
+\n\
+out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    int validAmountDirLights = min(amountDirectionalLights, MAX_DIRECTIONAL_LIGHTS) ;\n\
-    vec3 viewDirection = normalize(eyePosition - inFragmentPosition) ;\n\
+    int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;\n\
 \n\
-    vec4 colorAcc = vec4(0) ;\n\
-    for (int dirLightIndex = 0 ; dirLightIndex < validAmountDirLights ; dirLightIndex++) {\n\
-        colorAcc += DirectionalLightContribution(\n\
-            dirLights[dirLightIndex],\n\
-            inNormal,\n\
-            viewDirection\n\
-        ) ;\n\
+    vec3 normal = normalize(inNormal) ;\n\
+    vec3 viewDirection = normalize(-inVertexPosition) ;\n\
+\n\
+    vec3 colorLinear = phong.ambientColor ;\n\
+\n\
+    for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {\n\
+        vec3 lightDirection = normalize(dirLights[lightIndex].direction) ;\n\
+        float lambertian = max(dot(lightDirection, normal), 0.f) ;\n\
+        float specular = float(dirLights[lightIndex].generateSpecular == true) ;\n\
+\n\
+        if (lambertian > 0.f) {\n\
+            vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
+            float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
+            specular = pow(specularAngle, phong.shininess / 4.) ;\n\
+\n\
+            vec3 lightPowerColor = dirLights[lightIndex].color * dirLights[lightIndex].power ;\n\
+            colorLinear += (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
+            colorLinear += (phong.specularColor * specular * lightPowerColor) ;\n\
+        }\n\
     }\n\
 \n\
-    color = normalize(colorAcc) ;\n\
+    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;\n\
+    outColor = vec4(colorLinear, 1.f) ;\n\
 }\n\
 " ;
 

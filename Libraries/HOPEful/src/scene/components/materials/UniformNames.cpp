@@ -20,6 +20,7 @@ UniformNames::UniformNames() {
     m_names.push_back(InverseModelViewMatrixParamName()) ;
     m_names.push_back(InverseViewProjectionMatrixParamName()) ;
     m_names.push_back(InverseMVPMatrixParamName()) ;
+    m_names.push_back(NormalMatrixParamName()) ;
     m_names.push_back(ModelNormalMatrixParamName()) ;
     m_names.push_back(ModelViewNormalMatrixParamName()) ;
     m_names.push_back(ViewportMatrixParamName()) ;
@@ -33,9 +34,9 @@ UniformNames::UniformNames() {
 
     for (int dirLampIndex = 0 ; dirLampIndex < MAX_DIRECTIONAL_LIGHTS ; ++dirLampIndex) {
         std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;
-        m_names.push_back(DirectionalLightParamName() + indexString + LightAmbientParamName()) ;
-        m_names.push_back(DirectionalLightParamName() + indexString + LightDiffuseParamName()) ;
-        m_names.push_back(DirectionalLightParamName() + indexString + LightSpecularParamName()) ;
+        m_names.push_back(DirectionalLightParamName() + indexString + LightColorParamName()) ;
+        m_names.push_back(DirectionalLightParamName() + indexString + LightPowerParamName()) ;
+        m_names.push_back(DirectionalLightParamName() + indexString + LightGenerateSpecularParamName()) ;
         m_names.push_back(DirectionalLightParamName() + indexString + LightDirectionParamName()) ;
     }
 }

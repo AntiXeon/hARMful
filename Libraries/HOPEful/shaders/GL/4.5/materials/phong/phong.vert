@@ -6,17 +6,20 @@ layout(location = 2) in vec3 normal ;
 
 uniform mat4 mvpMatrix ;
 uniform mat4 modelMatrix ;
+uniform mat4 normalMatrix ;
+uniform mat4 modelViewMatrix ;
 
-layout(location = 0) out vec2 outTexCoord ;
+layout(location = 0) out vec3 outVertexPosition ;
 layout(location = 1) out vec3 outNormal ;
-layout(location = 2) out vec3 outFragmentPosition ;
+layout(location = 2) out vec2 outTexCoord ;
 
 void main() {
     vec4 position4D = vec4(position, 1.f) ;
 
-    outTexCoord = texCoord ;
-    outNormal = normalize(mat3(transpose(inverse(modelMatrix))) * normal) ;
-    outFragmentPosition = vec3(modelMatrix * position4D) ;
-
     gl_Position = mvpMatrix * position4D ;
+
+    vec4 vertexPosition4D = modelViewMatrix * vec4(position, 1.f) ;
+    outVertexPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;
+    outNormal = vec3(normalMatrix * vec4(normal, 0.f)) ;
+    outTexCoord = texCoord ;
 }

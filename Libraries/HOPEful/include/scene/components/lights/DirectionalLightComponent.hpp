@@ -22,13 +22,6 @@ namespace Hope {
             DirectionalLightComponent() ;
 
             /**
-             * Get the maximal amount of directional lights in shader programs.
-             */
-            uint8_t maxAmount() override {
-                return 1 ;
-            }
-
-            /**
              * Set the direction of the light.
              */
             void setDirection(const Mind::Vector3f& direction) {

@@ -110,6 +110,7 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
     // Normal matrix.
     Mind::Matrix4x4f normalMatrix ;
     inverseModelViewMatrix.transposed(normalMatrix) ;
+    m_shaderUniforms[UniformNames::NormalMatrixParamName()] -> setMat4(normalMatrix.toArray()) ;
 
     // Model normal matrix.
     Mind::Matrix4x4f modelNormalMatrix = node.worldMatrix * normalMatrix ;
@@ -144,10 +145,12 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
 
     for (DirectionalLightComponent* light : dirLights) {
         std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightAmbientParamName()] -> setVec3((light -> ambient()).toRGB()) ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightDiffuseParamName()] -> setVec3((light -> diffuse()).toRGB()) ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightSpecularParamName()] -> setVec3((light -> specular()).toRGB()) ;
+        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightColorParamName()] -> setVec3((light -> color()).toRGB()) ;
+        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightPowerParamName()] -> setFloating(light -> power()) ;
+        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightGenerateSpecularParamName()] -> setBoolean(light -> generateSpecular()) ;
         m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightDirectionParamName()] -> setVec3((light -> direction()).toArray()) ;
         dirLampIndex++ ;
     }
+
+    updateAdditionalUniformValues(visitor) ;
 }

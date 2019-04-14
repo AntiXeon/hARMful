@@ -83,6 +83,13 @@ namespace Hope {
             void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
 
             /**
+             * Get the attribute with the given name.
+             */
+            std::shared_ptr<Hope::ShaderAttribute> attribute(const std::string& name) {
+                return m_shaderAttribs[name] ;
+            }
+
+            /**
              * Add a shader uniform value.
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
@@ -93,6 +100,13 @@ namespace Hope {
              * Remove a shader ubniform.
              */
             void removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) ;
+
+            /**
+             * Get the uniform with the given name.
+             */
+            std::shared_ptr<Hope::ShaderUniform> uniform(const std::string& name) {
+                return m_shaderUniforms[name] ;
+            }
 
         private:
             /**
@@ -109,6 +123,12 @@ namespace Hope {
              * component.
              */
             void updateUniformValues(ISceneGraphVisitor* visitor) ;
+
+        protected:
+            /**
+             * Update the values of additional uniforms.
+             */
+            virtual void updateAdditionalUniformValues(ISceneGraphVisitor*) {}
     } ;
 }
 

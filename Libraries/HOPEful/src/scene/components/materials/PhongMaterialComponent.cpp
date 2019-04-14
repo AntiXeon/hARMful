@@ -7,10 +7,10 @@
 
 using namespace Hope ;
 
-const std::string PhongMaterialComponent::AmbientUniformName = "ambientColor" ;
-const std::string PhongMaterialComponent::DiffuseUniformName = "diffuseColor" ;
-const std::string PhongMaterialComponent::SpecularUniformName = "specularColor" ;
-const std::string PhongMaterialComponent::ShininessUniformName = "shininess" ;
+const std::string PhongMaterialComponent::AmbientUniformName = "phong.ambientColor" ;
+const std::string PhongMaterialComponent::DiffuseUniformName = "phong.diffuseColor" ;
+const std::string PhongMaterialComponent::SpecularUniformName = "phong.specularColor" ;
+const std::string PhongMaterialComponent::ShininessUniformName = "phong.shininess" ;
 
 PhongMaterialComponent::PhongMaterialComponent()
     : MaterialComponent() {
@@ -106,4 +106,11 @@ void PhongMaterialComponent::setupRendering() {
     techniqueGL31 -> setAPI(RenderTechnique::GraphicsAPI::OpenGL, 3, 1) ;
     techniqueGL31 -> addRenderPass(renderPass) ;
     effect().addTechnique(techniqueGL31) ;
+}
+
+void PhongMaterialComponent::updateAdditionalUniformValues(ISceneGraphVisitor*) {
+    uniform(AmbientUniformName) -> setVec3(ambient().toRGB()) ;
+    uniform(DiffuseUniformName) -> setVec3(diffuse().toRGB()) ;
+    uniform(SpecularUniformName) -> setVec3(specular().toRGB()) ;
+    uniform(ShininessUniformName) -> setFloating(shininess()) ;
 }

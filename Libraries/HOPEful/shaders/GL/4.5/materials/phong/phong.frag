@@ -1,24 +1,48 @@
+// Phong material shader.
+
+struct Material {
+    vec3 ambientColor ;
+    vec3 diffuseColor ;
+    vec3 specularColor ;
+    float shininess ;
+} ;
+
+uniform Material phong ;
 uniform vec3 eyePosition ;
 uniform int amountDirectionalLights ;
 
-layout(location = 0) in vec2 inTexCoord ;
-layout(location = 1) in vec3 inNormal ;
-layout(location = 2) in vec3 inFragmentPosition ;
+const float ScreenGamma = 2.2f ;
 
-out vec4 color ;
+layout(location = 0) in vec3 inVertexPosition ;
+layout(location = 1) in vec3 inNormal ;
+layout(location = 2) in vec2 inTexCoord ;
+
+out vec4 outColor ;
 
 void main() {
-    int validAmountDirLights = min(amountDirectionalLights, MAX_DIRECTIONAL_LIGHTS) ;
-    vec3 viewDirection = normalize(eyePosition - inFragmentPosition) ;
+    int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;
 
-    vec4 colorAcc = vec4(0) ;
-    for (int dirLightIndex = 0 ; dirLightIndex < validAmountDirLights ; dirLightIndex++) {
-        colorAcc += DirectionalLightContribution(
-            dirLights[dirLightIndex],
-            inNormal,
-            viewDirection
-        ) ;
+    vec3 normal = normalize(inNormal) ;
+    vec3 viewDirection = normalize(-inVertexPosition) ;
+
+    vec3 colorLinear = phong.ambientColor ;
+
+    for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {
+        vec3 lightDirection = normalize(dirLights[lightIndex].direction) ;
+        float lambertian = max(dot(lightDirection, normal), 0.f) ;
+        float specular = float(dirLights[lightIndex].generateSpecular == true) ;
+
+        if (lambertian > 0.f) {
+            vec3 reflectDirection = reflect(-lightDirection, normal) ;
+            float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
+            specular = pow(specularAngle, phong.shininess / 4.) ;
+
+            vec3 lightPowerColor = dirLights[lightIndex].color * dirLights[lightIndex].power ;
+            colorLinear += (phong.diffuseColor * lambertian * lightPowerColor) ;
+            colorLinear += (phong.specularColor * specular * lightPowerColor) ;
+        }
     }
 
-    color = normalize(colorAcc) ;
+    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;
+    outColor = vec4(colorLinear, 1.f) ;
 }

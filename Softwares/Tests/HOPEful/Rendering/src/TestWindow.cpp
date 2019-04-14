@@ -26,28 +26,23 @@ TestWindow::TestWindow()
 
     // Add a material.
     Hope::PhongMaterialComponent* material = new Hope::PhongMaterialComponent() ;
-    // Hope::Color ambientColor(1.f, 0.f, 0.f, 1.f) ;
-    // material -> setAmbient(ambientColor) ;
+    Hope::Color ambientColor(0.0f, 0.1f, 0.3f, 1.f) ;
+    material -> setAmbient(ambientColor) ;
+    Hope::Color diffuseColor(0.05f, 0.4f, 1.f, 1.f) ;
+    material -> setDiffuse(diffuseColor) ;
+    Hope::Color specularColor(0.f, 1.f, 1.f, 1.f) ;
+    material -> setSpecular(specularColor) ;
+    material -> setShininess(10.f) ;
     cubeEntity -> addComponent(material) ;
 
     // Create a directional light.
     Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
     Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-    dirLightComponent -> setAmbient(Hope::Color(0.0f, 0.1f, 0.2f, 1.f)) ;
-    dirLightComponent -> setDiffuse(Hope::Color(0.f, 0.2f, 0.7f, 1.f)) ;
-    dirLightComponent -> setSpecular(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
+    dirLightComponent -> setDirection(Mind::Vector3f(0.f, 0.5f, 0.5f)) ;
+    dirLightComponent -> setColor(Hope::Color(0.7f, 0.7f, 0.7f, 1.f)) ;
+    dirLightComponent -> setPower(1.f) ;
     dirLightEntity -> addComponent(dirLightComponent) ;
     (scene() -> cache()).registerLight(dirLightComponent) ;
-
-    // Create a directional light.
-    // Hope::Entity* dirLightEntity2 = new Hope::Entity(scene() -> root()) ;
-    // Hope::DirectionalLightComponent* dirLightComponent2 = new Hope::DirectionalLightComponent() ;
-    // dirLightComponent2 -> setDirection(Mind::Vector3f(0.2f, 0.8f, -0.5f)) ;
-    // dirLightComponent2 -> setAmbient(Hope::Color(0.1f, 0.0f, 0.0f, 1.f)) ;
-    // dirLightComponent2 -> setDiffuse(Hope::Color(0.3f, 0.1f, 0.1f, 1.f)) ;
-    // dirLightComponent2 -> setSpecular(Hope::Color(1.f, 1.f, 0.8f, 1.f)) ;
-    // dirLightEntity2 -> addComponent(dirLightComponent2) ;
-    // (scene() -> cache()).registerLight(dirLightComponent2) ;
 
 
     /** FRAME GRAPH **/

@@ -27,19 +27,19 @@ namespace Hope {
             Type m_type ;
 
             /**
-             * Ambient color of the light.
+             * Color of the light.
              */
-            Color m_ambient ;
+            Color m_color ;
 
             /**
-             * Diffuse color of the light.
+             * Power of the light.
              */
-            Color m_diffuse ;
+            float m_power ;
 
             /**
-             * Specular color of the light.
+             * To know if the light generates a specular.
              */
-            Color m_specular ;
+            bool m_generateSpecular ;
 
         public:
             /**
@@ -61,105 +61,63 @@ namespace Hope {
             }
 
             /**
-             * Get the maximal amount of light of the current type that can be
-             * handled by the shaders.
+             * Set the color.
              */
-            virtual uint8_t maxAmount() = 0 ;
-
-            /**
-             * Set the ambient color.
-             */
-            void setAmbient(const Color& color) {
-                m_ambient = color ;
+            void setColor(const Color& color) {
+                m_color = color ;
             }
 
             /**
-             * Set the ambient color.
+             * Set the color.
              */
-            void setAmbient(const int color) {
-                m_ambient = Color(color) ;
+            void setColor(const int color) {
+                m_color = Color(color) ;
             }
 
             /**
-             * Set the ambient color.
+             * Set the color.
              */
-            void setAmbient(
+            void setColor(
                 const uint8_t red,
                 const uint8_t green,
                 const uint8_t blue
             ) {
-                m_ambient = Color(red, green, blue, 255) ;
+                m_color = Color(red, green, blue, 255) ;
             }
 
             /**
-             * Set the diffuse color.
+             * Set the power.
              */
-            void setDiffuse(const Color& color) {
-                m_diffuse = color ;
+            void setPower(const float power) {
+                m_power = power ;
             }
 
             /**
-             * Set the diffuse color.
+             * Set the generation of specular on or off.
              */
-            void setDiffuse(const int color) {
-                m_diffuse = Color(color) ;
+            void setSpecularGenerated(const bool generated) {
+                m_generateSpecular = generated ;
             }
 
             /**
-             * Set the diffuse color.
+             * Get the color of the light.
              */
-            void setDiffuse(
-                const uint8_t red,
-                const uint8_t green,
-                const uint8_t blue
-            ) {
-                m_diffuse = Color(red, green, blue, 255) ;
+            Color color() const {
+                return m_color ;
             }
 
             /**
-             * Set the specular color.
+             * Get the power of the light.
              */
-            void setSpecular(const Color& color) {
-                m_specular = color ;
+            float power() const {
+                return m_power ;
             }
 
             /**
-             * Set the specular color.
+             * To know if the light generates a specular.
              */
-            void setSpecular(const int color) {
-                m_specular = Color(color) ;
-            }
-
-            /**
-             * Set the specular color.
-             */
-            void setSpecular(
-                const uint8_t red,
-                const uint8_t green,
-                const uint8_t blue
-            ) {
-                m_specular = Color(red, green, blue, 255) ;
-            }
-
-            /**
-             * Get the ambient color of the light.
-             */
-            Color ambient() const {
-                return m_ambient ;
-            }
-
-            /**
-             * Get the diffuse color of the light.
-             */
-            Color diffuse() const {
-                return m_diffuse ;
-            }
-
-            /**
-             * Get the specular color of the light.
-             */
-            Color specular() const {
-                return m_specular ;
+            bool generateSpecular() const {
+                return m_generateSpecular ;
             }
 
             /**

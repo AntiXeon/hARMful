@@ -117,6 +117,12 @@ namespace Hope {
              * Set up the material rendering (techniques, shaders, ...).
              */
             void setupRendering() ;
+
+        protected:
+            /**
+             * Update the values of additional uniforms.
+             */
+            void updateAdditionalUniformValues(ISceneGraphVisitor* visitor) override ;
     } ;
 } ;
 
