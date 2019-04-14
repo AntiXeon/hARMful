@@ -35,7 +35,7 @@ void main() {
         if (lambertian > 0.f) {
             vec3 reflectDirection = reflect(-lightDirection, normal) ;
             float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
-            specular = pow(specularAngle, phong.shininess / 4.) ;
+            specular *= pow(specularAngle, phong.shininess / 4.) ;
 
             vec3 lightPowerColor = dirLights[lightIndex].color * dirLights[lightIndex].power ;
             colorLinear += (phong.diffuseColor * lambertian * lightPowerColor) ;
