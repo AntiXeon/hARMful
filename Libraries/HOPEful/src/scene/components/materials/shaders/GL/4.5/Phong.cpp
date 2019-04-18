@@ -53,6 +53,31 @@ layout(location = 2) in vec2 inTexCoord ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
+vec3 ComputeLight(\n\
+    vec3 lightDirection,\n\
+    vec3 lightColor,\n\
+    float lightPower,\n\
+    bool generateSpecular,\n\
+    vec3 viewDirection,\n\
+    vec3 normal\n\
+) {\n\
+    vec3 returnedLighting ;\n\
+    float lambertian = max(dot(lightDirection, normal), 0.f) ;\n\
+    float specular = float(generateSpecular == true) ;\n\
+\n\
+    if (lambertian > 0.f) {\n\
+        vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
+        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
+        specular *= pow(specularAngle, phong.shininess / 4.) ;\n\
+\n\
+        vec3 lightPowerColor = lightColor * lightPower ;\n\
+        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
+        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;\n\
+    }\n\
+\n\
+    return returnedLighting ;\n\
+}\n\
+\n\
 void main() {\n\
     int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;\n\
 \n\
@@ -63,18 +88,15 @@ void main() {\n\
 \n\
     for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {\n\
         vec3 lightDirection = normalize(dirLights[lightIndex].direction) ;\n\
-        float lambertian = max(dot(lightDirection, normal), 0.f) ;\n\
-        float specular = float(dirLights[lightIndex].generateSpecular == true) ;\n\
 \n\
-        if (lambertian > 0.f) {\n\
-            vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
-            float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-            specular *= pow(specularAngle, phong.shininess / 4.) ;\n\
-\n\
-            vec3 lightPowerColor = dirLights[lightIndex].color * dirLights[lightIndex].power ;\n\
-            colorLinear += (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
-            colorLinear += (phong.specularColor * specular * lightPowerColor) ;\n\
-        }\n\
+        colorLinear += ComputeLight(\n\
+            lightDirection,\n\
+            dirLights[lightIndex].color,\n\
+            dirLights[lightIndex].power,\n\
+            dirLights[lightIndex].generateSpecular,\n\
+            viewDirection,\n\
+            normal\n\
+        ) ;\n\
     }\n\
 \n\
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;\n\

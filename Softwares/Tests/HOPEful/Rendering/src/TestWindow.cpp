@@ -41,7 +41,7 @@ TestWindow::TestWindow()
     dirLightComponent -> setDirection(Mind::Vector3f(0.f, 0.5f, 0.5f)) ;
     dirLightComponent -> setColor(Hope::Color(0.7f, 0.7f, 0.7f, 1.f)) ;
     dirLightComponent -> setPower(1.f) ;
-    dirLightComponent -> setSpecularGenerated(false) ;
+    dirLightComponent -> setSpecularGenerated(true) ;
     dirLightEntity -> addComponent(dirLightComponent) ;
     (scene() -> cache()).registerLight(dirLightComponent) ;
 

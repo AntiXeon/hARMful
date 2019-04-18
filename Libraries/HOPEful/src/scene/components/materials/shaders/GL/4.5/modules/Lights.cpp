@@ -18,5 +18,21 @@ struct DirectionalLight {\n\
 } ;\n\
 \n\
 uniform DirectionalLight dirLights[MAX_DIRECTIONAL_LIGHTS] ;\n\
+\n\
+struct PointLight {\n\
+    // Distance of the light effect.\n\
+    float falloffDistance ;\n\
+\n\
+    // Color of the light.\n\
+    vec3 color ;\n\
+\n\
+    // Power of the light.\n\
+    float power ;\n\
+\n\
+    // Does the light produce a specular?\n\
+    bool generateSpecular ;\n\
+} ;\n\
+\n\
+uniform PointLight pointLights[MAX_POINT_LIGHTS] ;\n\
 " ;
 
