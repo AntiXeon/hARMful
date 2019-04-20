@@ -82,7 +82,7 @@ vec3 ComputePointLight(\n\
     vec3 viewDirection,\n\
     vec3 normal\n\
 ) {\n\
-    vec3 returnedLighting ;\n\
+    vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
     vec3 lightDirection = normalize(inVertexPosition - light.position) ;\n\
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
@@ -119,11 +119,12 @@ void main() {\n\
         // Contribution of directional lights.\n\
         int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;\n\
         for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {\n\
-            colorLinear += ComputeDirectionalLight(\n\
-                dirLights[lightIndex],\n\
-                viewDirection,\n\
-                normal\n\
-            ) ;\n\
+            colorLinear = colorLinear +\n\
+                ComputeDirectionalLight(\n\
+                    dirLights[lightIndex],\n\
+                    viewDirection,\n\
+                    normal\n\
+                ) ;\n\
         }\n\
     }\n\
 \n\
@@ -131,16 +132,17 @@ void main() {\n\
         // Contribution of point lights.\n\
         int validAmountOfPointLights = min(MAX_POINT_LIGHTS, amountPointLights) ;\n\
         for (int lightIndex = 0 ; lightIndex < validAmountOfPointLights ; lightIndex++) {\n\
-            colorLinear += ComputePointLight(\n\
-                pointLights[lightIndex],\n\
-                viewDirection,\n\
-                normal\n\
-            ) ;\n\
+            colorLinear = colorLinear +\n\
+                ComputePointLight(\n\
+                    pointLights[lightIndex],\n\
+                    viewDirection,\n\
+                    normal\n\
+                ) ;\n\
         }\n\
     }\n\
 \n\
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;\n\
-    outColor = vec4(colorLinear, 1.f) ;\n\
+    outColor = vec4(colorGammaCorrected, 1.f) ;\n\
 }\n\
 " ;
 

@@ -25,7 +25,8 @@ vec3 ComputeDirectionalLight(
     vec3 viewDirection,
     vec3 normal
 ) {
-    vec3 returnedLighting ;
+    vec3 returnedLighting = vec3(0.f) ;
+
     vec3 lightDirection = normalize(light.direction) ;
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;
     float specular = float(light.generateSpecular == true) ;
@@ -48,7 +49,7 @@ vec3 ComputePointLight(
     vec3 viewDirection,
     vec3 normal
 ) {
-    vec3 returnedLighting ;
+    vec3 returnedLighting = vec3(0.f) ;
 
     vec3 lightDirection = normalize(inVertexPosition - light.position) ;
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;
@@ -85,11 +86,12 @@ void main() {
         // Contribution of directional lights.
         int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;
         for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {
-            colorLinear += ComputeDirectionalLight(
-                dirLights[lightIndex],
-                viewDirection,
-                normal
-            ) ;
+            colorLinear = colorLinear +
+                ComputeDirectionalLight(
+                    dirLights[lightIndex],
+                    viewDirection,
+                    normal
+                ) ;
         }
     }
 
@@ -97,14 +99,15 @@ void main() {
         // Contribution of point lights.
         int validAmountOfPointLights = min(MAX_POINT_LIGHTS, amountPointLights) ;
         for (int lightIndex = 0 ; lightIndex < validAmountOfPointLights ; lightIndex++) {
-            colorLinear += ComputePointLight(
-                pointLights[lightIndex],
-                viewDirection,
-                normal
-            ) ;
+            colorLinear = colorLinear +
+                ComputePointLight(
+                    pointLights[lightIndex],
+                    viewDirection,
+                    normal
+                ) ;
         }
     }
 
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;
-    outColor = vec4(colorLinear, 1.f) ;
+    outColor = vec4(colorGammaCorrected, 1.f) ;
 }

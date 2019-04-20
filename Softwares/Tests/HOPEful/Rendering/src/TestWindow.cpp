@@ -27,11 +27,11 @@ TestWindow::TestWindow()
 
     // Add a material.
     Hope::PhongMaterialComponent* material = new Hope::PhongMaterialComponent() ;
-    Hope::Color ambientColor(0.0f, 0.1f, 0.3f, 1.f) ;
+    Hope::Color ambientColor(0.1f, 0.1f, 0.1f, 1.f) ;
     material -> setAmbient(ambientColor) ;
-    Hope::Color diffuseColor(0.05f, 0.4f, 1.f, 1.f) ;
+    Hope::Color diffuseColor(0.8f, 0.8f, 0.8f, 1.f) ;
     material -> setDiffuse(diffuseColor) ;
-    Hope::Color specularColor(0.f, 1.f, 1.f, 1.f) ;
+    Hope::Color specularColor(1.f, 1.f, 1.f, 1.f) ;
     material -> setSpecular(specularColor) ;
     material -> setShininess(10.f) ;
     cubeEntity -> addComponent(material) ;
@@ -46,16 +46,44 @@ TestWindow::TestWindow()
     // dirLightEntity -> addComponent(dirLightComponent) ;
     // (scene() -> cache()).registerLight(dirLightComponent) ;
 
-    Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-    (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 50.f, 50.f)) ;
-    Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-    pointLightComponent -> setColor(Hope::Color(0.0f, 0.8f, 1.f, 1.f)) ;
-    pointLightComponent -> setPower(1.f) ;
-    pointLightComponent -> setSpecularGenerated(true) ;
-    pointLightComponent -> setQuadraticAttenuation(0.f) ;
-    pointLightComponent -> setLinearAttenuation(1.f) ;
-    pointLightEntity -> addComponent(pointLightComponent) ;
-    (scene() -> cache()).registerLight(pointLightComponent) ;
+    {
+        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 10.f, 10.f)) ;
+        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+        pointLightComponent -> setColor(Hope::Color(0.7f, 0.8f, 1.f, 1.f)) ;
+        pointLightComponent -> setPower(1.f) ;
+        pointLightComponent -> setSpecularGenerated(true) ;
+        pointLightComponent -> setQuadraticAttenuation(0.f) ;
+        pointLightComponent -> setLinearAttenuation(1.f) ;
+        pointLightEntity -> addComponent(pointLightComponent) ;
+        (scene() -> cache()).registerLight(pointLightComponent) ;
+    }
+
+    {
+        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-5.f, -10.f, 0.f)) ;
+        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+        pointLightComponent -> setColor(Hope::Color(1.f, 0.3f, 0.3f, 1.f)) ;
+        pointLightComponent -> setPower(0.5f) ;
+        pointLightComponent -> setSpecularGenerated(true) ;
+        pointLightComponent -> setQuadraticAttenuation(1.f) ;
+        pointLightComponent -> setLinearAttenuation(0.f) ;
+        pointLightEntity -> addComponent(pointLightComponent) ;
+        (scene() -> cache()).registerLight(pointLightComponent) ;
+    }
+
+    {
+        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(15.f, 0.f, -5.f)) ;
+        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+        pointLightComponent -> setColor(Hope::Color(0.1f, 0.5f, 1.f, 1.f)) ;
+        pointLightComponent -> setPower(0.7f) ;
+        pointLightComponent -> setSpecularGenerated(false) ;
+        pointLightComponent -> setQuadraticAttenuation(1.f) ;
+        pointLightComponent -> setLinearAttenuation(0.f) ;
+        pointLightEntity -> addComponent(pointLightComponent) ;
+        (scene() -> cache()).registerLight(pointLightComponent) ;
+    }
 
 
     /** FRAME GRAPH **/
