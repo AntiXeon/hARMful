@@ -53,6 +53,7 @@ namespace Hope {
 
             // Lighting uniforms names.
             static std::string AmountDirectionalLightsParamName() { return "amountDirectionalLights" ; }
+            static std::string AmountPointLightsParamName() { return "amountPointLights" ; }
 
             static std::string DirectionalLightParamName() { return "dirLights" ; }
             static std::string PointLightParamName() { return "pointLights" ; }
@@ -61,7 +62,11 @@ namespace Hope {
             static std::string LightColorParamName() { return "color" ; }
             static std::string LightPowerParamName() { return "power" ; }
             static std::string LightGenerateSpecularParamName() { return "generateSpecular" ; }
+            static std::string LightFalloffDistanceParamName() { return "falloffDistance" ; }
             static std::string LightDirectionParamName() { return "direction" ; }
+            static std::string LightPositionParamName() { return "position" ; }
+            static std::string LightLinearAttenuationParamName() { return "linearAttenuation" ; }
+            static std::string LightQuadraticAttenuationParamName() { return "quadraticAttenuation" ; }
     } ;
 }
 

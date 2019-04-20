@@ -4,6 +4,7 @@
 #include <scene/components/MeshComponent.hpp>
 #include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
+#include <scene/components/lights/PointLightComponent.hpp>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
@@ -35,15 +36,26 @@ TestWindow::TestWindow()
     material -> setShininess(10.f) ;
     cubeEntity -> addComponent(material) ;
 
-    // Create a directional light.
-    Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-    dirLightComponent -> setDirection(Mind::Vector3f(0.f, 0.5f, 0.5f)) ;
-    dirLightComponent -> setColor(Hope::Color(0.7f, 0.7f, 0.7f, 1.f)) ;
-    dirLightComponent -> setPower(1.f) ;
-    dirLightComponent -> setSpecularGenerated(true) ;
-    dirLightEntity -> addComponent(dirLightComponent) ;
-    (scene() -> cache()).registerLight(dirLightComponent) ;
+    // // Create a directional light.
+    // Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
+    // Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
+    // dirLightComponent -> setDirection(Mind::Vector3f(0.5f, -1.f, -0.5f)) ;
+    // dirLightComponent -> setColor(Hope::Color(0.7f, 0.7f, 0.7f, 1.f)) ;
+    // dirLightComponent -> setPower(1.f) ;
+    // dirLightComponent -> setSpecularGenerated(true) ;
+    // dirLightEntity -> addComponent(dirLightComponent) ;
+    // (scene() -> cache()).registerLight(dirLightComponent) ;
+
+    Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
+    (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 50.f, 50.f)) ;
+    Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+    pointLightComponent -> setColor(Hope::Color(0.0f, 0.8f, 1.f, 1.f)) ;
+    pointLightComponent -> setPower(1.f) ;
+    pointLightComponent -> setSpecularGenerated(true) ;
+    pointLightComponent -> setQuadraticAttenuation(0.f) ;
+    pointLightComponent -> setLinearAttenuation(1.f) ;
+    pointLightEntity -> addComponent(pointLightComponent) ;
+    (scene() -> cache()).registerLight(pointLightComponent) ;
 
 
     /** FRAME GRAPH **/

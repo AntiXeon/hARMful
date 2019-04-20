@@ -6,6 +6,7 @@
 namespace Hope {
     class LightComponent ;
     class DirectionalLightComponent ;
+    class PointLightComponent ;
 
     /**
      * Cache some elements of the scene to access them faster while rendering.
@@ -19,6 +20,11 @@ namespace Hope {
              * List of the directional lights in the scene.
              */
             std::set<DirectionalLightComponent*> m_directionalLights ;
+
+            /**
+             * List of the point lights in the scene.
+             */
+            std::set<PointLightComponent*> m_pointLights ;
 
         public:
             /**
@@ -35,6 +41,11 @@ namespace Hope {
              * Get the list of lights.
              */
             std::set<DirectionalLightComponent*> directionalLights() const ;
+
+            /**
+             * Get the list of lights.
+             */
+            std::set<PointLightComponent*> pointLights() const ;
     } ;
 }
 

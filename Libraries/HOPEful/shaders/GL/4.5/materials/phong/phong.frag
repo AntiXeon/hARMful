@@ -10,6 +10,7 @@ struct Material {
 uniform Material phong ;
 uniform vec3 eyePosition ;
 uniform int amountDirectionalLights ;
+uniform int amountPointLights ;
 
 const float ScreenGamma = 2.2f ;
 
@@ -19,24 +20,54 @@ layout(location = 2) in vec2 inTexCoord ;
 
 out vec4 outColor ;
 
-vec3 ComputeLight(
-    vec3 lightDirection,
-    vec3 lightColor,
-    float lightPower,
-    bool generateSpecular,
+vec3 ComputeDirectionalLight(
+    DirectionalLight light,
     vec3 viewDirection,
     vec3 normal
 ) {
     vec3 returnedLighting ;
-    float lambertian = max(dot(lightDirection, normal), 0.f) ;
-    float specular = float(generateSpecular == true) ;
+    vec3 lightDirection = normalize(light.direction) ;
+    float lambertian = max(dot(-lightDirection, normal), 0.f) ;
+    float specular = float(light.generateSpecular == true) ;
 
     if (lambertian > 0.f) {
-        vec3 reflectDirection = reflect(-lightDirection, normal) ;
+        vec3 reflectDirection = reflect(lightDirection, normal) ;
         float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
         specular *= pow(specularAngle, phong.shininess / 4.) ;
 
-        vec3 lightPowerColor = lightColor * lightPower ;
+        vec3 lightPowerColor = light.color * light.power ;
+        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
+        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;
+    }
+
+    return returnedLighting ;
+}
+
+vec3 ComputePointLight(
+    PointLight light,
+    vec3 viewDirection,
+    vec3 normal
+) {
+    vec3 returnedLighting ;
+
+    vec3 lightDirection = normalize(inVertexPosition - light.position) ;
+    float lambertian = max(dot(-lightDirection, normal), 0.f) ;
+    float specular = float(light.generateSpecular == true) ;
+
+    if (lambertian > 0.f) {
+        vec3 reflectDirection = reflect(lightDirection, normal) ;
+        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
+        specular *= pow(specularAngle, phong.shininess / 4.) ;
+
+        float lightDistance = length(inVertexPosition - light.position) ;
+        float sqrLightDistance = lightDistance * lightDistance ;
+        float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
+
+        float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;
+        float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;
+        float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
+
+        vec3 lightPowerColor = light.color * lightIntensity ;
         returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
         returnedLighting += (phong.specularColor * specular * lightPowerColor) ;
     }
@@ -45,24 +76,33 @@ vec3 ComputeLight(
 }
 
 void main() {
-    int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;
-
     vec3 normal = normalize(inNormal) ;
     vec3 viewDirection = normalize(-inVertexPosition) ;
 
     vec3 colorLinear = phong.ambientColor ;
 
-    for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {
-        vec3 lightDirection = normalize(dirLights[lightIndex].direction) ;
+    {
+        // Contribution of directional lights.
+        int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;
+        for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {
+            colorLinear += ComputeDirectionalLight(
+                dirLights[lightIndex],
+                viewDirection,
+                normal
+            ) ;
+        }
+    }
 
-        colorLinear += ComputeLight(
-            lightDirection,
-            dirLights[lightIndex].color,
-            dirLights[lightIndex].power,
-            dirLights[lightIndex].generateSpecular,
-            viewDirection,
-            normal
-        ) ;
+    {
+        // Contribution of point lights.
+        int validAmountOfPointLights = min(MAX_POINT_LIGHTS, amountPointLights) ;
+        for (int lightIndex = 0 ; lightIndex < validAmountOfPointLights ; lightIndex++) {
+            colorLinear += ComputePointLight(
+                pointLights[lightIndex],
+                viewDirection,
+                normal
+            ) ;
+        }
     }
 
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;

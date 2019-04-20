@@ -1,8 +1,10 @@
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
+#include <scene/components/lights/PointLightComponent.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
+#include <scene/Entity.hpp>
 #include <scene/SceneCache.hpp>
 #include <utils/StringExt.hpp>
 
@@ -137,19 +139,44 @@ void MaterialComponent::updateUniformValues(ISceneGraphVisitor* visitor) {
 
 
     // Lights.
-    int dirLampIndex = 0 ;
-    auto dirLights = sceneCache -> directionalLights() ;
+    {
+        int dirLampIndex = 0 ;
+        auto dirLights = sceneCache -> directionalLights() ;
 
-    // Amount directional lights.
-    m_shaderUniforms[UniformNames::AmountDirectionalLightsParamName()] -> setInteger(dirLights.size()) ;
+        // Amount directional lights.
+        m_shaderUniforms[UniformNames::AmountDirectionalLightsParamName()] -> setInteger(dirLights.size()) ;
 
-    for (DirectionalLightComponent* light : dirLights) {
-        std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightColorParamName()] -> setVec3((light -> color()).toRGB()) ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightPowerParamName()] -> setFloating(light -> power()) ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightGenerateSpecularParamName()] -> setBoolean(light -> generateSpecular()) ;
-        m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightDirectionParamName()] -> setVec3((light -> direction()).toArray()) ;
-        dirLampIndex++ ;
+        for (DirectionalLightComponent* light : dirLights) {
+            std::string indexString = "[" + Doom::StringExt::ToStringi(dirLampIndex) + "]." ;
+            m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightColorParamName()] -> setVec3((light -> color()).toRGB()) ;
+            m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightPowerParamName()] -> setFloating(light -> power()) ;
+            m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightGenerateSpecularParamName()] -> setBoolean(light -> generateSpecular()) ;
+            m_shaderUniforms[UniformNames::DirectionalLightParamName() + indexString + UniformNames::LightDirectionParamName()] -> setVec3((light -> direction()).toArray()) ;
+            dirLampIndex++ ;
+        }
+    }
+
+    {
+        int pointLampIndex = 0 ;
+        auto pointLights = sceneCache -> pointLights() ;
+
+        // Amount point lights.
+        m_shaderUniforms[UniformNames::AmountPointLightsParamName()] -> setInteger(pointLights.size()) ;
+
+        for (PointLightComponent* light : pointLights) {
+            Entity* lightEntity = light -> firstEntity() ;
+            Mind::Vector3f lightPosition = (lightEntity -> transform()).translation() ;
+
+            std::string indexString = "[" + Doom::StringExt::ToStringi(pointLampIndex) + "]." ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightColorParamName()] -> setVec3((light -> color()).toRGB()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightPowerParamName()] -> setFloating(light -> power()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightGenerateSpecularParamName()] -> setBoolean(light -> generateSpecular()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightPositionParamName()] -> setVec3(lightPosition.toArray()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightFalloffDistanceParamName()] -> setFloating(light -> distance()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightLinearAttenuationParamName()] -> setFloating(light -> linearAttenuation()) ;
+            m_shaderUniforms[UniformNames::PointLightParamName() + indexString + UniformNames::LightQuadraticAttenuationParamName()] -> setFloating(light -> quadraticAttenuation()) ;
+            pointLampIndex++ ;
+        }
     }
 
     updateAdditionalUniformValues(visitor) ;

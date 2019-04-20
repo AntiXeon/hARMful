@@ -39,4 +39,17 @@ UniformNames::UniformNames() {
         m_names.push_back(DirectionalLightParamName() + indexString + LightGenerateSpecularParamName()) ;
         m_names.push_back(DirectionalLightParamName() + indexString + LightDirectionParamName()) ;
     }
+
+    m_names.push_back(AmountPointLightsParamName()) ;
+
+    for (int pointLampIndex = 0 ; pointLampIndex < MAX_POINT_LIGHTS ; ++pointLampIndex) {
+        std::string indexString = "[" + Doom::StringExt::ToStringi(pointLampIndex) + "]." ;
+        m_names.push_back(PointLightParamName() + indexString + LightColorParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightPowerParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightGenerateSpecularParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightFalloffDistanceParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightPositionParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightLinearAttenuationParamName()) ;
+        m_names.push_back(PointLightParamName() + indexString + LightQuadraticAttenuationParamName()) ;
+    }
 }

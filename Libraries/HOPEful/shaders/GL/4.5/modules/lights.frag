@@ -15,8 +15,17 @@ struct DirectionalLight {
 uniform DirectionalLight dirLights[MAX_DIRECTIONAL_LIGHTS] ;
 
 struct PointLight {
+    // Position of the light in the 3D space.
+    vec3 position ;
+
     // Distance of the light effect.
     float falloffDistance ;
+
+    // Linear attenuation of the light.
+    float linearAttenuation ;
+
+    // Quadratic attenuation of the light.
+    float quadraticAttenuation ;
 
     // Color of the light.
     vec3 color ;
