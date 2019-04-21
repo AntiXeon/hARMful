@@ -57,9 +57,9 @@ namespace Hope::GL {
             Hope::ProcessedSceneNode& processedNode() override ;
 
             /**
-             * Visit a mesh component.
+             * Visit a mesh geometry component.
              */
-            void visit(MeshComponent* component) override ;
+            void visit(MeshGeometryComponent* component) override ;
 
             /**
              * Visit a material component.

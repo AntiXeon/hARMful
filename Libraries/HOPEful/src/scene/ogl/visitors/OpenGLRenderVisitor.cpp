@@ -1,9 +1,10 @@
 #include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
 #include <scene/components/CameraComponent.hpp>
-#include <scene/components/MeshComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
+#include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
+#include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 
@@ -32,9 +33,9 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
     return m_processedNode ;
 }
 
-void OpenGLRenderVisitor::visit(MeshComponent* component) {
-    std::shared_ptr<API::Mesh> mesh = component -> mesh() ;
-    mesh -> render() ;
+void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {
+    const API::MeshGeometry& geometry = component -> geometry() ;
+    geometry.render() ;
 }
 
 void OpenGLRenderVisitor::visit(MaterialComponent* component) {

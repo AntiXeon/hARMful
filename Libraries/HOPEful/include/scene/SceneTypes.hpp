@@ -6,14 +6,15 @@ namespace Hope {
 
     typedef unsigned int ComponentType ;
 
-    extern ComponentType MeshComponentType ;
+    extern ComponentType MeshTreeComponentType ;
+    extern ComponentType MeshGeometryComponentType ;
     extern ComponentType CameraComponentType ;
     extern ComponentType RenderConfigurationType ;
     extern ComponentType LightComponentType ;
     extern ComponentType MaterialComponentType ;
 
     extern ComponentType TriangleTestType ;
-    
+
     extern ComponentType LastComponentType ;
 
     extern unsigned int AmountComponentTypes ;

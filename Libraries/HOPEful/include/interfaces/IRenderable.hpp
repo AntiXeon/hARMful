@@ -10,7 +10,7 @@ namespace Hope {
             /**
              * Render the object on screen.
              */
-            virtual void render() = 0 ;
+            virtual void render() const = 0 ;
     } ;
 }
 

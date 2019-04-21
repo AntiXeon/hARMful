@@ -4,7 +4,7 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
-    class MeshComponent ;
+    class MeshGeometryComponent ;
     class MaterialComponent ;
     class TriangleTestComponent ;
 
@@ -38,9 +38,9 @@ namespace Hope {
             virtual RenderRequiredData& requiredData() = 0 ;
 
             /**
-             * Visit a mesh component.
+             * Visit a mesh geometry component.
              */
-            virtual void visit(Hope::MeshComponent* component) = 0 ;
+            virtual void visit(MeshGeometryComponent* component) = 0 ;
 
             /**
              * Visit a material component.

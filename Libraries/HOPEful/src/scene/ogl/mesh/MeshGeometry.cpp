@@ -1,14 +1,15 @@
-#include <scene/ogl/mesh/MeshPart.hpp>
+#include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/mesh/Vertex.hpp>
-#include <cstdint>
 
 using namespace Hope::GL ;
 
-MeshPart::MeshPart(
+MeshGeometry::MeshGeometry(
     const std::vector<float>& vertices,
     const std::vector<uint32_t>& indices
 ) {
     m_amountIndices = static_cast<uint32_t>(indices.size()) ;
+
+    glGenVertexArrays(1, &m_vertexArray) ;
 
     glGenBuffers(1, &m_vertexBuffer) ;
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer) ;
@@ -36,7 +37,7 @@ MeshPart::MeshPart(
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * m_amountIndices, indices.data(), GL_STATIC_DRAW) ;
 }
 
-void MeshPart::deleteBuffers() {
+MeshGeometry::~MeshGeometry() {
     if (glIsBuffer(m_vertexBuffer)) {
         glDeleteBuffers(1, &m_vertexBuffer);
     }
@@ -44,4 +45,6 @@ void MeshPart::deleteBuffers() {
     if (glIsBuffer(m_indexBuffer)) {
         glDeleteBuffers(1, &m_indexBuffer);
     }
+
+    glDeleteVertexArrays(1, &m_vertexArray) ;
 }
