@@ -16,6 +16,11 @@ PhongMaterialComponent::PhongMaterialComponent()
     : MaterialComponent() {
     setupRendering() ;
     setupUniforms() ;
+
+    setAmbient(Color(0.1f, 0.1f, 0.1f)) ;
+    setDiffuse(Color(0.5f, 0.5f, 0.5f)) ;
+    setSpecular(Color(1.f, 1.f, 1.f)) ;
+    setShininess(10.f) ;
 }
 
 void PhongMaterialComponent::setAmbient(const Color& ambient) {

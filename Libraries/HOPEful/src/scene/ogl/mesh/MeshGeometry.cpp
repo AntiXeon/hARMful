@@ -10,6 +10,7 @@ MeshGeometry::MeshGeometry(
     m_amountIndices = static_cast<uint32_t>(indices.size()) ;
 
     glGenVertexArrays(1, &m_vertexArray) ;
+    glBindVertexArray(m_vertexArray) ;
 
     glGenBuffers(1, &m_vertexBuffer) ;
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer) ;
@@ -35,15 +36,17 @@ MeshGeometry::MeshGeometry(
     glGenBuffers(1, &m_indexBuffer) ;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * m_amountIndices, indices.data(), GL_STATIC_DRAW) ;
+
+    glBindVertexArray(0) ;
 }
 
-MeshGeometry::~MeshGeometry() {
+void MeshGeometry::clearBuffers() {
     if (glIsBuffer(m_vertexBuffer)) {
-        glDeleteBuffers(1, &m_vertexBuffer);
+        glDeleteBuffers(1, &m_vertexBuffer) ;
     }
 
     if (glIsBuffer(m_indexBuffer)) {
-        glDeleteBuffers(1, &m_indexBuffer);
+        glDeleteBuffers(1, &m_indexBuffer) ;
     }
 
     glDeleteVertexArrays(1, &m_vertexArray) ;

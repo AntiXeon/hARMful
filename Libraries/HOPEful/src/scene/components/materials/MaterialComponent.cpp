@@ -8,8 +8,6 @@
 #include <scene/SceneCache.hpp>
 #include <utils/StringExt.hpp>
 
-#include <iostream>
-
 using namespace Hope ;
 
 const UniformNames MaterialComponent::Uniforms ;

@@ -8,8 +8,6 @@
 #include <scene/ogl/rendering/glsl/shaders/TesselationEvaluationShader.hpp>
 #include <GL/glew.h>
 
-#include <iostream>
-
 namespace Hope::GL {
     /**
      * A shader program combines several types of shaders (vertex, fragment,

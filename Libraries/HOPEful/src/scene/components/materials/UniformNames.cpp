@@ -2,8 +2,6 @@
 #include <scene/components/materials/AmountLights.hpp>
 #include <utils/StringExt.hpp>
 
-#include <iostream>
-
 using namespace Hope ;
 
 UniformNames::UniformNames() {

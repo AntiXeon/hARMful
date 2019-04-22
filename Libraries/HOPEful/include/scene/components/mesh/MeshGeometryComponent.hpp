@@ -37,6 +37,11 @@ namespace Hope {
             MeshGeometryComponent(const API::MeshGeometry& geometry) ;
 
             /**
+             * Destruction of the MeshGeometryComponent.
+             */
+            virtual ~MeshGeometryComponent() ;
+
+            /**
              * Get the geometry.
              */
             const API::MeshGeometry& geometry() const {

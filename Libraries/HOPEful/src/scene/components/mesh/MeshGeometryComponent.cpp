@@ -17,3 +17,7 @@ MeshGeometryComponent::MeshGeometryComponent(const API::MeshGeometry& geometry)
 void MeshGeometryComponent::accept(ISceneGraphVisitor* visitor) {
     visitor -> visit(this) ;
 }
+
+MeshGeometryComponent::~MeshGeometryComponent() {
+    m_geometry.clearBuffers() ;
+}

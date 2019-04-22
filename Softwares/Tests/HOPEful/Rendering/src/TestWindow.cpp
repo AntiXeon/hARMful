@@ -1,7 +1,7 @@
 #include <TestWindow.hpp>
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/Viewport.hpp>
-#include <scene/components/MeshComponent.hpp>
+#include <scene/components/mesh/MeshTreeComponent.hpp>
 #include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
@@ -22,19 +22,8 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshComponent* meshComponent = new Hope::MeshComponent("../data/meshes/suzanne.fbx") ;
+    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/suzanne.fbx") ;
     cubeEntity -> addComponent(meshComponent) ;
-
-    // Add a material.
-    Hope::PhongMaterialComponent* material = new Hope::PhongMaterialComponent() ;
-    Hope::Color ambientColor(0.1f, 0.1f, 0.1f, 1.f) ;
-    material -> setAmbient(ambientColor) ;
-    Hope::Color diffuseColor(0.8f, 0.8f, 0.8f, 1.f) ;
-    material -> setDiffuse(diffuseColor) ;
-    Hope::Color specularColor(1.f, 1.f, 1.f, 1.f) ;
-    material -> setSpecular(specularColor) ;
-    material -> setShininess(10.f) ;
-    cubeEntity -> addComponent(material) ;
 
     // // Create a directional light.
     // Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;

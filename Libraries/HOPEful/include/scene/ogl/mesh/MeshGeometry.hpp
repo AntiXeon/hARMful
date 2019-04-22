@@ -47,9 +47,9 @@ namespace Hope::GL {
             ) ;
 
             /**
-             * Destruction of the MeshGeometry.
+             * Destruction of the MeshGeometry by deleting the buffers.
              */
-            virtual ~MeshGeometry() ;
+            void clearBuffers() ;
 
             /**
              * Render the mesh parts on screen.

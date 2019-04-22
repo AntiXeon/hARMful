@@ -3,8 +3,6 @@
 #include <utils/literals/NumberLiterals.hpp>
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 
-#include <iostream>
-
 using namespace Hope ;
 
 const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0.f) ;

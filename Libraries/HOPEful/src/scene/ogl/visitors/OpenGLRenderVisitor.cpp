@@ -8,8 +8,6 @@
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 
-#include <iostream>
-
 using namespace Hope ;
 using namespace Hope::GL ;
 

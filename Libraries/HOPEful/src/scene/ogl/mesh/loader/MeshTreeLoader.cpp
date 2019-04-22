@@ -2,6 +2,7 @@
 #include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/mesh/Vertex.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
+#include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <utils/LogSystem.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -113,4 +114,7 @@ void MeshTreeLoader::loadMesh(
 
     Hope::MeshGeometryComponent* geometryComponent = new Hope::MeshGeometryComponent(vertices, indices) ;
     entity -> addComponent(geometryComponent) ;
+
+    Hope::PhongMaterialComponent* tmpMaterial = new Hope::PhongMaterialComponent() ;
+    entity -> addComponent(tmpMaterial) ;
 }
