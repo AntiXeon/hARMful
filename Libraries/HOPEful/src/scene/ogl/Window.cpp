@@ -34,8 +34,6 @@ Window::~Window() {
 }
 
 void Window::run() {
-    // float lastTime = glfwGetTime() ;
-
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
         preRender() ;
@@ -43,10 +41,6 @@ void Window::run() {
         postRender() ;
         glfwPollEvents() ;
         glfwSwapBuffers(m_window) ;
-
-        // float currentTime = glfwGetTime() ;
-        // std::cout << "FPS: " << Mind::FastMath::round(1.f / (currentTime - lastTime)) << std::endl ;
-        // lastTime = currentTime ;
     }
 }
 
