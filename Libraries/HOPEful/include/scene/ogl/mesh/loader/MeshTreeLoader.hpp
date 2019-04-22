@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 #include <scene/Entity.hpp>
+#include <scene/components/mesh/MeshGeometryComponent.hpp>
 
 class Importer ;
 struct aiScene ;
@@ -57,11 +58,11 @@ namespace Hope::GL {
             ) ;
 
             /**
-             * Load a mesh.
+             * Load a mesh part.
              */
-            void loadMesh(
-                Hope::Entity* entity,
-                const aiMesh* mesh
+            void loadMeshPart(
+            Hope::MeshGeometryComponent* geometryComponent,
+            const aiMesh* mesh
             ) ;
     } ;
 }

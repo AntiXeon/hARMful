@@ -51,13 +51,21 @@ void MeshTreeLoader::generateNode(
     const aiNode* node,
     Hope::Entity* entity
 ) {
-    // Load the different parts of the current node.
-    for (unsigned int index = 0 ; index < node -> mNumMeshes ; ++index) {
+    if (node -> mNumMeshes > 0) {
         Hope::Entity* meshEntity = new Hope::Entity(entity) ;
 
-        unsigned int meshIndex = node -> mMeshes[index] ;
-        aiMesh* meshToLoad = scene -> mMeshes[meshIndex] ;
-        loadMesh(meshEntity, meshToLoad) ;
+        Hope::MeshGeometryComponent* geometryComponent = new Hope::MeshGeometryComponent() ;
+        meshEntity -> addComponent(geometryComponent) ;
+
+        Hope::PhongMaterialComponent* tmpMaterial = new Hope::PhongMaterialComponent() ;
+        meshEntity -> addComponent(tmpMaterial) ;
+
+        // Load the different parts of the current node.
+        for (unsigned int index = 0 ; index < node -> mNumMeshes ; ++index) {
+            unsigned int meshIndex = node -> mMeshes[index] ;
+            aiMesh* meshToLoad = scene -> mMeshes[meshIndex] ;
+            loadMeshPart(geometryComponent, meshToLoad) ;
+        }
     }
 
     // Load the meshes of the children.
@@ -68,8 +76,8 @@ void MeshTreeLoader::generateNode(
     }
 }
 
-void MeshTreeLoader::loadMesh(
-    Hope::Entity* entity,
+void MeshTreeLoader::loadMeshPart(
+    Hope::MeshGeometryComponent* geometryComponent,
     const aiMesh* mesh
 ) {
     const aiVector3D Zero(0.f, 0.f, 0.f) ;
@@ -112,9 +120,5 @@ void MeshTreeLoader::loadMesh(
         indices.push_back(face.mIndices[2]) ;
     }
 
-    Hope::MeshGeometryComponent* geometryComponent = new Hope::MeshGeometryComponent(vertices, indices) ;
-    entity -> addComponent(geometryComponent) ;
-
-    Hope::PhongMaterialComponent* tmpMaterial = new Hope::PhongMaterialComponent() ;
-    entity -> addComponent(tmpMaterial) ;
+    geometryComponent -> addMeshPart(vertices, indices) ;
 }

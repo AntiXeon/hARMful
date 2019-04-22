@@ -3,12 +3,8 @@
 
 using namespace Hope ;
 
-MeshGeometryComponent::MeshGeometryComponent(
-    const std::vector<float>& vertices,
-    const std::vector<uint32_t>& indices
-) : Component(Hope::MeshGeometryComponentType) {
-    m_geometry = API::MeshGeometry(vertices, indices) ;
-}
+MeshGeometryComponent::MeshGeometryComponent()
+    : Component(Hope::MeshGeometryComponentType) {}
 
 MeshGeometryComponent::MeshGeometryComponent(const API::MeshGeometry& geometry)
     : Component(Hope::MeshGeometryComponentType),

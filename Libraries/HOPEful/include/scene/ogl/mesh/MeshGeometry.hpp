@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
+#include <scene/ogl/mesh/MeshPart.hpp>
 #include <interfaces/IRenderable.hpp>
 #include <GL/glew.h>
 
@@ -11,6 +12,8 @@ namespace Hope::GL {
      * A MeshGeometry contains the geometry data of a 3D object.
      */
     class MeshGeometry final : public Hope::IRenderable {
+        friend class MeshTreeComponent ;
+
         private:
             /**
              * ID of the VAO.
@@ -18,33 +21,27 @@ namespace Hope::GL {
             GLuint m_vertexArray = INVALID_VALUE ;
 
             /**
-             * ID of the vertex buffer of this mesh.
+             * Mesh parts composing the whole mesh.
              */
-            GLuint m_vertexBuffer = INVALID_VALUE ;
-
-            /**
-             * ID of the index buffer of this mesh.
-             */
-            GLuint m_indexBuffer = INVALID_VALUE ;
-
-            /**
-             * Amount of vertex indices.
-             */
-            uint32_t m_amountIndices = 0 ;
+            std::vector<MeshPart> m_parts ;
 
         public:
             /**
              * Create a new MeshGeometry.
              */
-            MeshGeometry() = default ;
+            MeshGeometry() ;
 
             /**
-             * Create a new MeshGeometry.
+             * Add a mesh part.
              */
-            MeshGeometry(
+            void addPart(
                 const std::vector<float>& vertices,
                 const std::vector<uint32_t>& indices
-            ) ;
+            ) {
+                glBindVertexArray(m_vertexArray) ;
+                m_parts.push_back(MeshPart(vertices, indices)) ;
+                glBindVertexArray(0) ;
+            }
 
             /**
              * Destruction of the MeshGeometry by deleting the buffers.
@@ -56,8 +53,11 @@ namespace Hope::GL {
              */
             void render() const override {
                 glBindVertexArray(m_vertexArray) ;
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
-                glDrawElements(GL_TRIANGLES, m_amountIndices, GL_UNSIGNED_INT, nullptr) ;
+
+                for (const MeshPart& part : m_parts) {
+                    part.render() ;
+                }
+
                 glBindVertexArray(0) ;
             }
 

@@ -26,10 +26,7 @@ namespace Hope {
             /**
              * Creation of a MeshGeometryComponent.
              */
-            MeshGeometryComponent(
-                const std::vector<float>& vertices,
-                const std::vector<uint32_t>& indices
-            ) ;
+            MeshGeometryComponent() ;
 
             /**
              * Creation of a MeshGeometryComponent.
@@ -40,6 +37,16 @@ namespace Hope {
              * Destruction of the MeshGeometryComponent.
              */
             virtual ~MeshGeometryComponent() ;
+
+            /**
+             * Add a mesh part to the geometry.
+             */
+            void addMeshPart(
+                const std::vector<float>& vertices,
+                const std::vector<uint32_t>& indices
+            ) {
+                m_geometry.addPart(vertices, indices) ;
+            }
 
             /**
              * Get the geometry.
