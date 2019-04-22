@@ -20,13 +20,10 @@ void MeshTreeLoader::load(
 ) {
     Assimp::Importer importer ;
 
+
     const aiScene* scene = importer.ReadFile(
         source.c_str(),
-        // aiProcessPreset_TargetRealtime_Fast
-        aiProcess_Triangulate |
-            aiProcess_GenSmoothNormals |
-            aiProcess_JoinIdenticalVertices |
-            aiProcess_CalcTangentSpace
+        aiProcessPreset_TargetRealtime_Fast
     ) ;
 
     if (scene) {
@@ -53,6 +50,7 @@ void MeshTreeLoader::generateNode(
 ) {
     if (node -> mNumMeshes > 0) {
         Hope::Entity* meshEntity = new Hope::Entity(entity) ;
+        setupTransform(node -> mTransformation, meshEntity) ;
 
         Hope::MeshGeometryComponent* geometryComponent = new Hope::MeshGeometryComponent() ;
         meshEntity -> addComponent(geometryComponent) ;
@@ -121,4 +119,25 @@ void MeshTreeLoader::loadMeshPart(
     }
 
     geometryComponent -> addMeshPart(vertices, indices) ;
+}
+
+void MeshTreeLoader::setupTransform(
+    const aiMatrix4x4& nodeMatrix,
+    Hope::Entity* entity
+) {
+    Mind::Matrix4x4f transformMatrix ;
+    const size_t MatrixSize = transformMatrix.size() ;
+
+    for (size_t col = 0 ; col < MatrixSize ; ++col) {
+        Mind::Point4Df transformColumn(
+            nodeMatrix[col][0],
+            nodeMatrix[col][1],
+            nodeMatrix[col][2],
+            nodeMatrix[col][3]
+        ) ;
+
+        transformMatrix.setColumnValues(col, transformColumn) ;
+    }
+
+    (entity -> transform()).setMatrix(transformMatrix) ;
 }

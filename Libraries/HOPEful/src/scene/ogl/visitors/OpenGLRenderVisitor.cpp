@@ -76,7 +76,7 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
         std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
 
         if (shaderProgram) {
-            shaderProgram -> link() ;
+            shaderProgram -> use() ;
 
             // Apply shader uniforms.
             auto materialUniforms = component -> shaderUniforms() ;
@@ -94,8 +94,6 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
                     attrib
                 ) ;
             }
-
-            shaderProgram -> use() ;
         }
 
         // Restore the OpenGL state machine for the next rendered object.

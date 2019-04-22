@@ -22,7 +22,7 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/suzanne.fbx") ;
+    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/mesh_set.fbx") ;
     cubeEntity -> addComponent(meshComponent) ;
 
     // // Create a directional light.

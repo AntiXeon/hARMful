@@ -38,10 +38,10 @@ MeshPart::MeshPart(
 
 void MeshPart::deleteBuffers() {
     if (glIsBuffer(m_vertexBuffer)) {
-        glDeleteBuffers(1, &m_vertexBuffer);
+        glDeleteBuffers(1, &m_vertexBuffer) ;
     }
 
     if (glIsBuffer(m_indexBuffer)) {
-        glDeleteBuffers(1, &m_indexBuffer);
+        glDeleteBuffers(1, &m_indexBuffer) ;
     }
 }

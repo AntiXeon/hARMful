@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <string>
+#include <assimp/matrix4x4.h>
 #include <scene/Entity.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 
@@ -61,8 +62,16 @@ namespace Hope::GL {
              * Load a mesh part.
              */
             void loadMeshPart(
-            Hope::MeshGeometryComponent* geometryComponent,
-            const aiMesh* mesh
+                Hope::MeshGeometryComponent* geometryComponent,
+                const aiMesh* mesh
+            ) ;
+
+            /**
+             * Set up the transform of a mesh.
+             */
+            void setupTransform(
+                const aiMatrix4x4& nodeMatrix,
+                Hope::Entity* entity
             ) ;
     } ;
 }
