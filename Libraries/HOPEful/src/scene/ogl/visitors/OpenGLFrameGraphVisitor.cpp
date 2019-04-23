@@ -178,10 +178,12 @@ void OpenGLFrameGraphVisitor::renderGraph() {
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
         // Process the components of the top node.
         m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
-        std::vector<Component*> components = renderedEntity -> components() ;
-        for (Component* component : components) {
-            if (component) {
-                component -> accept(m_activeOpenGLRenderVisitor) ;
+        std::vector<std::vector<Component*>> components = renderedEntity -> components() ;
+        for (std::vector<Component*> typeComponents : components) {
+            for (Component* component : typeComponents) {
+                if (component) {
+                    component -> accept(m_activeOpenGLRenderVisitor) ;
+                }
             }
         }
 

@@ -34,7 +34,7 @@ namespace Hope {
             /**
              * Components attached to the current entity.
              */
-            std::vector<Component*> m_components ;
+            std::vector<std::vector<Component*>> m_components ;
 
         public:
             /**
@@ -65,41 +65,69 @@ namespace Hope {
             void removeComponent(Component* component) ;
 
             /**
-             * Remove the component of the provided type.
-             * @param   type    Type of the component to remove.
+             * Remove the components of the provided type.
+             * @param   type    Type of the components to remove.
              */
-            void removeComponent(const ComponentType type) ;
+            void removeComponents(const ComponentType type) ;
 
             /**
-             * Get a component of the specified type.
-             * @param   type    Type of the component to remove.
-             * @return  The component of the wanted type if found; nullptr
-                        otherwise.
+             * Get a component of the wanted type.
+             * @param   type    Type of the component to get.
+             * @param   index   Index of the component in the list of components
+             *                  of the wanted type.
+             * @warning Check the index value with the amountComponents()
+             *          method!
              */
-            Component* component(const ComponentType type) const ;
+            Component* component(
+                const ComponentType type,
+                const uint8_t index = 0
+            ) const {
+                return m_components[type][index] ;
+            }
+
+            /**
+             * Get the amount of components for the wanted type.
+             * @param   type    Type of the components.
+             * @return  Amount of components of the wanted type that are
+             *          attached to the current entity.
+             */
+            size_t amountComponents(const ComponentType type) const {
+                return m_components[type].size() ;
+            }
 
             /**
              * If true, the Entity is processed for rendering its content.
              * Otherwise, it is just ignored and all its children as well.
              */
-            void setActive(const bool isActive) ;
+            void setActive(const bool isActive) {
+                m_isActive = isActive ;
+            }
 
             /**
              * If true, the Entity is processed for rendering its content.
              * Otherwise, it is just ignored and all its children as well.
              */
-            bool isActive() const ;
+            bool isActive() const {
+                return m_isActive ;
+            }
 
             /**
              * Get the transform of the entity.
              */
-            const Transform& transform() const ;
-            Transform& transform() ;
+            const Transform& transform() const {
+                return m_transform ;
+            }
+
+            Transform& transform() {
+                return m_transform ;
+            }
 
             /**
              * Get the list of the components attached to the current entity.
              */
-            std::vector<Component*> components() const ;
+            const std::vector<std::vector<Component*>>& components() const {
+                return m_components ;
+            }
 
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;

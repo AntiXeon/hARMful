@@ -11,12 +11,14 @@ Entity::Entity(Entity* parent)
 }
 
 Entity::~Entity() {
-    for (Component* component : m_components) {
-        if (component) {
-            component -> detach(this) ;
+    for (std::vector<Component*> componentList : m_components) {
+        for (Component* component : componentList) {
+            if (component) {
+                component -> detach(this) ;
 
-            if (component -> amountAttachedEntities() == 0) {
-                delete component ;
+                if (component -> amountAttachedEntities() == 0) {
+                    delete component ;
+                }
             }
         }
     }
@@ -29,9 +31,17 @@ void Entity::addComponent(Component* component) {
         return ;
     }
 
-    ComponentType newComponentType = component -> type() ;
     component -> attach(this) ;
-    m_components[newComponentType] = component ;
+    ComponentType newComponentType = component -> type() ;
+
+    if (component -> isStackable() || m_components[newComponentType].size() == 0) {
+        // Stack the components.
+        m_components[newComponentType].push_back(component) ;
+    }
+    else {
+        // Replace the lone component.
+        m_components[newComponentType][0] = component ;
+    }
 }
 
 void Entity::removeComponent(Component* component) {
@@ -39,37 +49,24 @@ void Entity::removeComponent(Component* component) {
         return ;
     }
 
-    removeComponent(component -> type()) ;
-}
-
-void Entity::removeComponent(const ComponentType type) {
-    if (m_components[type]) {
-        Component* component = m_components[type] ;
+    if (component -> isRemovable()) {
         component -> detach(this) ;
-        m_components[type] = nullptr ;
+
+        ComponentType componentType = component -> type() ;
+        std::vector<Component*>& components = m_components[componentType] ;
+        auto position = std::find(components.begin(), components.end(), component) ;
+        components.erase(position) ;
     }
 }
 
-Component* Entity::component(const ComponentType type) const {
-    return m_components[type] ;
-}
+void Entity::removeComponents(const ComponentType type) {
+    if (m_components[type].size() > 0) {
+        std::vector<Component*>& components = m_components[type] ;
 
-void Entity::setActive(const bool isActive) {
-    m_isActive = isActive ;
-}
+        for (Component* component : components) {
+            component -> detach(this) ;
+        }
 
-bool Entity::isActive() const {
-    return m_isActive ;
-}
-
-const Transform& Entity::transform() const {
-    return m_transform ;
-}
-
-Transform& Entity::transform() {
-    return m_transform ;
-}
-
-std::vector<Component*> Entity::components() const {
-    return m_components ;
+        components.clear() ;
+    }
 }
