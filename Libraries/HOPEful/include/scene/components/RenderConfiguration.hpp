@@ -34,7 +34,26 @@ namespace Hope {
              * To know if the component can be shared by several entities.
              * @return  false, the RenderConfiguration cannot be shared.
              */
-            bool isShareable() const override ;
+            bool isShareable() const override {
+                return false ;
+            }
+
+            /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  false, the component cannot be removed.
+             */
+            bool isRemovable() const override {
+                return false ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  false, an entity can only bear one RenderConfiguration.
+             */
+            bool isStackable() const override {
+                return false ;
+            }
 
             /**
              * Set the root node of the frame graph.

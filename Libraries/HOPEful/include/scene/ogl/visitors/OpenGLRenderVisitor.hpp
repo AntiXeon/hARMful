@@ -8,6 +8,10 @@
 #include <memory>
 #include <set>
 
+namespace Hope {
+    class MaterialComponent ;
+}
+
 namespace Hope::GL {
 
     /**
@@ -62,16 +66,16 @@ namespace Hope::GL {
             void visit(MeshGeometryComponent* component) override ;
 
             /**
-             * Visit a material component.
-             */
-            void visit(MaterialComponent* component) override ;
-
-            /**
              * Visit a test component.
              */
             void visit(TriangleTestComponent* component) override ;
 
         private:
+            /**
+             * Use a material component.
+             */
+            void useMaterial(Hope::MaterialComponent* component) ;
+
             /**
              * Select the best material technique of a material. It depends on
              * the GPU supported version of the graphical API.

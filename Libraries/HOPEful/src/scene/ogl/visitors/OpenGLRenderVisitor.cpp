@@ -31,12 +31,21 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
     return m_processedNode ;
 }
 
-void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {
-    const API::MeshGeometry& geometry = component -> geometry() ;
-    geometry.render() ;
+void OpenGLRenderVisitor::visit(MeshGeometryComponent* /*component*/) {
+    // const API::MeshGeometry& geometry = component -> geometry() ;
+    // geometry.render() ;
+
+    // for each geometry region:
+        // Ask the material to use.
+        // Use the material.
+        // Render the mesh with the current active material.
 }
 
-void OpenGLRenderVisitor::visit(MaterialComponent* component) {
+void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
+    component -> render() ;
+}
+
+void OpenGLRenderVisitor::useMaterial(MaterialComponent* component) {
     auto materialAttributes = component -> shaderAttributes() ;
     RenderEffect& effect = component -> effect() ;
 
@@ -101,10 +110,6 @@ void OpenGLRenderVisitor::visit(MaterialComponent* component) {
             capability -> remove() ;
         }
     }
-}
-
-void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
-    component -> render() ;
 }
 
 std::shared_ptr<RenderTechnique> OpenGLRenderVisitor::selectBestMaterialTechnique(

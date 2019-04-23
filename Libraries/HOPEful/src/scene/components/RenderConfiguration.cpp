@@ -6,7 +6,3 @@ using namespace Hope ;
 
 RenderConfiguration::RenderConfiguration()
     : Component(Hope::RenderConfigurationType) {}
-
-bool RenderConfiguration::isShareable() const {
-    return false ;
-}

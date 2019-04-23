@@ -67,6 +67,24 @@ namespace Hope {
             bool isShareable() const override {
                 return true ;
             }
+
+            /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  true, the component can be removed.
+             */
+            bool isRemovable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  false, an entity cannot bear several
+             *          MeshGeometryComponent.
+             */
+            bool isStackable() const override {
+                return false ;
+            }
     } ;
 }
 

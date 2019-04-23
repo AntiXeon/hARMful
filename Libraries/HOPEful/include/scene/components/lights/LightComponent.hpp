@@ -61,6 +61,23 @@ namespace Hope {
             }
 
             /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  true, the component can be removed.
+             */
+            bool isRemovable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  true, an entity can bear several LightComponent.
+             */
+            bool isStackable() const override {
+                return true ;
+            }
+
+            /**
              * Set the color.
              */
             void setColor(const Color& color) {

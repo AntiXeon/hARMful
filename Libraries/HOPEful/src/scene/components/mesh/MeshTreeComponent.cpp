@@ -9,10 +9,6 @@ MeshTreeComponent::MeshTreeComponent(const std::string& meshFile)
     : Component(Hope::MeshTreeComponentType),
       m_source(meshFile) {}
 
-bool MeshTreeComponent::isShareable() const {
-    return false ;
-}
-
 void MeshTreeComponent::onAttach(Entity* entity) {
     if (!m_loader.meshRoot()) {
         m_loader.load(m_source, entity) ;

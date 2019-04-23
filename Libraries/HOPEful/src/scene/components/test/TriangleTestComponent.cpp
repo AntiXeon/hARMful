@@ -50,7 +50,3 @@ void TriangleTestComponent::render() {
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, nullptr) ;
     glBindVertexArray(0) ;
 }
-
-bool TriangleTestComponent::isShareable() const {
-    return true ;
-}

@@ -56,7 +56,27 @@ namespace Hope {
              * To know if the component can be shared by several entities.
              * @return  true, the TriangleTestComponent can be shared.
              */
-            bool isShareable() const override ;
+            bool isShareable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  true, the component can be removed.
+             */
+            bool isRemovable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  false, an entity can only bear one
+             *          TriangleTestComponent.
+             */
+            bool isStackable() const override {
+                return false ;
+            }
     } ;
 }
 

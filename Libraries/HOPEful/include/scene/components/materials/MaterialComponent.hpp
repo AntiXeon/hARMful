@@ -41,16 +41,43 @@ namespace Hope {
             MaterialComponent() ;
 
             /**
+             * Update the uniform values before the processing of the material
+             * component.
+             */
+            void updateUniformValues(ISceneGraphVisitor* visitor) ;
+
+            /**
              * Accept the visitor.
              */
-            void accept(ISceneGraphVisitor* visitor) override ;
+            void accept(ISceneGraphVisitor* visitor) override {
+                updateUniformValues(visitor) ;
+            }
 
             /**
              * To know if the component can be shared by several entities.
              * @return  true as it can be shared among several objects that are
              *          rendered the same way.
              */
-            bool isShareable() const override ;
+            bool isShareable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  false, the component cannot be removed.
+             */
+            bool isRemovable() const override {
+                return false ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  true, an entity can bear several MaterialComponent.
+             */
+            bool isStackable() const override {
+                return true ;
+            }
 
             /**
              * Get the effect of the material.
@@ -117,12 +144,6 @@ namespace Hope {
              * @see     updateParameterValues()
              */
             void setupDefaultUniforms() ;
-
-            /**
-             * Update the uniform values before the processing of the material
-             * component.
-             */
-            void updateUniformValues(ISceneGraphVisitor* visitor) ;
 
         protected:
             /**

@@ -70,7 +70,26 @@ namespace Hope {
              * To know if the component can be shared by several entities.
              * @return  false, the CameraComponent cannot be shared.
              */
-            bool isShareable() const override ;
+            bool isShareable() const override {
+                return false ;
+            }
+
+            /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  true, the component can be removed.
+             */
+            bool isRemovable() const override {
+                return true ;
+            }
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  false, an entity can only bear one CameraComponent.
+             */
+            bool isStackable() const override {
+                return false ;
+            }
 
             /**
              * Set the clear color of the camera.

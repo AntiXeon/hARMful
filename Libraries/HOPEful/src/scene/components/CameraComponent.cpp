@@ -27,10 +27,6 @@ void CameraComponent::accept(ISceneGraphVisitor* visitor) {
     }
 }
 
-bool CameraComponent::isShareable() const {
-    return false ;
-}
-
 void CameraComponent::setClearColor(const Color& color) {
     m_clearColor = color ;
 }

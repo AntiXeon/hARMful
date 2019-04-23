@@ -17,15 +17,6 @@ MaterialComponent::MaterialComponent()
     setupDefaultUniforms() ;
 }
 
-void MaterialComponent::accept(ISceneGraphVisitor* visitor) {
-    updateUniformValues(visitor) ;
-    visitor -> visit(this) ;
-}
-
-bool MaterialComponent::isShareable() const {
-    return true ;
-}
-
 RenderEffect& MaterialComponent::effect() {
     return m_effect ;
 }

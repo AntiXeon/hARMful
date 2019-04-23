@@ -57,6 +57,20 @@ namespace Hope {
             virtual bool isShareable() const = 0 ;
 
             /**
+             * To know if the component can be removed from its entity(-ies).
+             * @return  true if the component can be removed; false otherwise.
+             */
+            virtual bool isRemovable() const = 0 ;
+
+            /**
+             * To know if several components of the current type can be beared
+             * by a single entity.
+             * @return  true if an entity can bear several component of the
+             *          current type; false otherwise.
+             */
+            virtual bool isStackable() const = 0 ;
+
+            /**
              * Get the type of the component.
              */
             ComponentType type() const ;
