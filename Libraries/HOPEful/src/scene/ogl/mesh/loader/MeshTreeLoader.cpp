@@ -63,6 +63,24 @@ void MeshTreeLoader::generateNode(
             unsigned int meshIndex = node -> mMeshes[index] ;
             aiMesh* meshToLoad = scene -> mMeshes[meshIndex] ;
             loadMeshPart(geometryComponent, meshToLoad) ;
+
+            // Default is Phong material for now (temporary code).
+            int materialIndex = meshToLoad -> mMaterialIndex ;
+            aiMaterial* material = scene -> mMaterials[materialIndex] ;
+            aiColor4D specularColor ;
+            aiColor4D diffuseColor ;
+            aiColor4D ambientColor ;
+            float shininess ;
+
+            aiGetMaterialColor(material, AI_MATKEY_COLOR_AMBIENT, &ambientColor) ;
+            aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor) ;
+            aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
+            aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
+
+            tmpMaterial -> setAmbient(Color(ambientColor.r, ambientColor.g, ambientColor.b)) ;
+            tmpMaterial -> setDiffuse(Color(diffuseColor.r, diffuseColor.g, diffuseColor.b)) ;
+            tmpMaterial -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
+            tmpMaterial -> setShininess(shininess) ;
         }
     }
 

@@ -14,6 +14,13 @@ namespace Hope {
     class PhongMaterialComponent : public MaterialComponent {
         private:
             /**
+             * Shininess values.
+             */
+            static const float MinimumShininessClamp ;
+            static const float MaximumShininessClamp ;
+
+
+            /**
              * Name of the ambient color uniform in the shader.
              */
             static const std::string AmbientUniformName ;

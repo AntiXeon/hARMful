@@ -3,9 +3,13 @@
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Lights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
+#include <algorithm>
 #include <memory>
 
 using namespace Hope ;
+
+const float PhongMaterialComponent::MinimumShininessClamp = 1.f ;
+const float PhongMaterialComponent::MaximumShininessClamp = 512.f ;
 
 const std::string PhongMaterialComponent::AmbientUniformName = "phong.ambientColor" ;
 const std::string PhongMaterialComponent::DiffuseUniformName = "phong.diffuseColor" ;
@@ -57,7 +61,8 @@ void PhongMaterialComponent::setSpecular(const Color& specular) {
 }
 
 void PhongMaterialComponent::setShininess(const float shininess) {
-    m_shininessUniform -> setFloating(shininess) ;
+    float shininessClamped = std::clamp(shininess, MinimumShininessClamp, MaximumShininessClamp) ;
+    m_shininessUniform -> setFloating(shininessClamped) ;
 }
 
 Color PhongMaterialComponent::ambient() const {
