@@ -38,7 +38,7 @@ A compliant compiler is required, g++ is advised.
 
 Install the dependencies on your system.
 
-To compile on a GNU/Linux system, enter the `Library` folder and type `cmake .` then `make`. It will generate the `.so` files.
+To compile on a GNU/Linux system, enter the `Library` folder and type `./build` in a command prompt. It will generate the `.so` files.
 
 ### Microsoft® Windows™
 The compilation of **hARMful** on Microsoft® Windows™ is still work in progress.
