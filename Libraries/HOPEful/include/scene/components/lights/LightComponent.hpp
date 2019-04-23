@@ -71,10 +71,10 @@ namespace Hope {
             /**
              * To know if several components of the current type can be beared
              * by a single entity.
-             * @return  true, an entity can bear several LightComponent.
+             * @return  false, an entity cannot bear several LightComponent.
              */
             bool isStackable() const override {
-                return true ;
+                return false ;
             }
 
             /**
