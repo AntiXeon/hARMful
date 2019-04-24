@@ -32,7 +32,7 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
 }
 
 void OpenGLRenderVisitor::visit(MeshGeometryComponent* /*component*/) {
-    // const API::MeshGeometry& geometry = component -> geometry() ;
+     //const API::MeshGeometry* geometry = component -> geometry() ;
     // geometry.render() ;
 
     // for each geometry region:

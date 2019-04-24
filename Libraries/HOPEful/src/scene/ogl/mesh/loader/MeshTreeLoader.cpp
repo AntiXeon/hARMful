@@ -91,7 +91,7 @@ void MeshTreeLoader::loadNodeData(
 
     // Store the index of the vertices for each mesh.
     std::vector<MeshPartData> partData ;
-    partData.reserve(node -> mNumMeshes) ;
+    partData.resize(node -> mNumMeshes) ;
 
     // Process the different meshes of the node.
     for (unsigned int index = 0 ; index < node -> mNumMeshes ; ++index) {
@@ -119,11 +119,11 @@ void MeshTreeLoader::loadNodeData(
         // Get the indices that compose the faces.
         const unsigned char AmountVerticesByFace = 3 ;
         uint32_t amountFaces = meshToLoad -> mNumFaces ;
-        partData[index].indices.reserve(amountFaces * AmountVerticesByFace) ;
 
         for (uint32_t faceIndex = 0 ; faceIndex < amountFaces ; ++faceIndex) {
             const aiFace& face = meshToLoad -> mFaces[faceIndex] ;
 
+            partData[index].indices.reserve(amountFaces * AmountVerticesByFace) ;
             partData[index].indices.push_back(face.mIndices[0]) ;
             partData[index].indices.push_back(face.mIndices[1]) ;
             partData[index].indices.push_back(face.mIndices[2]) ;
