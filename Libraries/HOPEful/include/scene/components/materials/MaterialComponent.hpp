@@ -5,6 +5,7 @@
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/UniformNames.hpp>
+#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <map>
 #include <string>
 
@@ -50,7 +51,12 @@ namespace Hope {
              * Accept the visitor.
              */
             void accept(ISceneGraphVisitor* visitor) override {
-                updateUniformValues(visitor) ;
+                FrameID currentFrameID = visitor -> currentFrameID() ;
+
+                if (currentFrameID != lastFrame()) {
+                    updateUniformValues(visitor) ;
+                    updateLastFrame(currentFrameID) ;
+                }
             }
 
             /**
