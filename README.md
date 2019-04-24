@@ -7,7 +7,7 @@ More informations on the project can be found [here](https://dcarlus.github.io/h
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected:
 - Architecture based on the [Entity-Component-System pattern](https://en.wikipedia.org/wiki/Entity_component_system)
 - Rendering process based on a [framegraph](https://www.ea.com/frostbite/news/framegraph-extensible-rendering-architecture-in-frostbite) to handle render passes
-- Simple Phong material [[Demo](https://www.youtube.com/watch?v=ZOrLaQ5DAD0)]
+- Simple Phong material [[Demo](https://www.youtube.com/watch?v=12xEEnEk020)]
 - Texture material (✗)
 - Normal and specular mapping (✗)
 - Alpha channel supporting materials (✗)
