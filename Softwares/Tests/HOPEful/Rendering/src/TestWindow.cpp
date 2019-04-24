@@ -45,7 +45,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()).registerLight(pointLightComponent) ;
+        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
     {
@@ -58,7 +58,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(1.f) ;
         pointLightComponent -> setLinearAttenuation(0.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()).registerLight(pointLightComponent) ;
+        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
     {
@@ -71,7 +71,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(1.f) ;
         pointLightComponent -> setLinearAttenuation(0.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()).registerLight(pointLightComponent) ;
+        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
 

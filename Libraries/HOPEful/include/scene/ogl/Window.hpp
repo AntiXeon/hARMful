@@ -25,7 +25,7 @@ namespace Hope { namespace GL {
             /**
              * Scene to be displayed in the window.
              */
-            Scene m_scene ;
+            Scene* m_scene = nullptr ;
 
         public:
             /**
@@ -53,7 +53,9 @@ namespace Hope { namespace GL {
             /**
              * Get the scene that is rendered in the current window.
              */
-            Scene* scene() ;
+            Scene* scene() const {
+                return m_scene ;
+            }
 
 
             // Remove copy/move operations.

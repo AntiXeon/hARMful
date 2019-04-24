@@ -13,8 +13,14 @@ using namespace Hope::GL ;
 
 OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
     : IFrameGraphVisitor() {
+    m_sceneCache = new SceneCache() ;
+
     RenderConditionAggregator defaultAggregator ;
     m_aggregators.push_back(defaultAggregator) ;
+}
+
+OpenGLFrameGraphVisitor::~OpenGLFrameGraphVisitor() {
+    delete m_sceneCache ;
 }
 
 void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
@@ -34,7 +40,7 @@ void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
     }
 
     m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
-    (m_activeOpenGLRenderVisitor -> requiredData()).cache = &m_sceneCache ;
+    (m_activeOpenGLRenderVisitor -> requiredData()).cache = m_sceneCache ;
 }
 
 void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {

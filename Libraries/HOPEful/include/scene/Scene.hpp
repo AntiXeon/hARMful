@@ -25,7 +25,7 @@ namespace Hope {
             /**
              * Frame graph visitor for rendering the scene.
              */
-            Hope::GL::OpenGLFrameGraphVisitor m_frameGraphVisitor ;
+            Hope::GL::OpenGLFrameGraphVisitor* m_frameGraphVisitor = nullptr ;
 
         public:
             /**
@@ -46,15 +46,15 @@ namespace Hope {
             /**
              * Get the root entity of the scene.
              */
-            Entity* root() {
+            Entity* root() const {
                 return m_root ;
             }
 
             /**
              * Get the scene cache.
              */
-            SceneCache& cache() {
-                return m_frameGraphVisitor.cache() ;
+            SceneCache* cache() const {
+                return m_frameGraphVisitor -> cache() ;
             }
 
             /**
@@ -66,7 +66,7 @@ namespace Hope {
              * Set the size of the window.
              */
             void setWindowSize(const Mind::Dimension2Df& size) {
-                m_frameGraphVisitor.setWindowSize(size) ;
+                m_frameGraphVisitor -> setWindowSize(size) ;
             }
 
             // Remove copy/move operations.

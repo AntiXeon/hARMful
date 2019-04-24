@@ -25,10 +25,12 @@ Window::Window(
     setInputMode() ;
     setCallbacks() ;
 
-    m_scene.setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_scene = new Scene() ;
+    m_scene -> setWindowSize(Mind::Dimension2Df(width, height)) ;
 }
 
 Window::~Window() {
+    delete m_scene ;
     glfwDestroyWindow(m_window) ;
     glfwTerminate() ;
 }
@@ -37,15 +39,11 @@ void Window::run() {
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
         preRender() ;
-        m_scene.render() ;
+        m_scene -> render() ;
         postRender() ;
         glfwPollEvents() ;
         glfwSwapBuffers(m_window) ;
     }
-}
-
-Scene* Window::scene() {
-    return &m_scene ;
 }
 
 void Window::createInternalWindow(
@@ -172,5 +170,5 @@ void Window::resizedWindow(
     int width,
     int height
 ) {
-    m_scene.setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_scene -> setWindowSize(Mind::Dimension2Df(width, height)) ;
 }

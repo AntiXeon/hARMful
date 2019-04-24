@@ -39,16 +39,25 @@ void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {
      geometry -> bind() ;
 
      for (size_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
-         const MeshPart& part = geometry -> part(partIndex) ;
+        const MeshPart& part = geometry -> part(partIndex) ;
 
-         // Retrieve the material to use to render the part.
-         Entity* entity = m_processedNode.node ;
-         uint32_t materialID = part.materialID() ;
-         MaterialComponent* material = static_cast<MaterialComponent*>(entity -> component(MaterialComponentType, materialID)) ;
-         useMaterial(material) ;
+        // Retrieve the material to use to render the part.
+        Entity* entity = m_processedNode.node ;
+        uint32_t materialID = part.materialID() ;
 
-         // Render the part.
-         part.render() ;
+        size_t amountMaterials = entity -> amountComponents(MaterialComponentType) ;
+        if (materialID < amountMaterials) {
+            Component* wantedComponent = entity -> component(MaterialComponentType, materialID) ;
+            MaterialComponent* material = static_cast<MaterialComponent*>(wantedComponent) ;
+            useMaterial(material) ;
+        }
+        else {
+            const MaterialComponent* defaultMaterial = (m_requiredData.cache) -> defaultMaterial() ;
+            useMaterial(defaultMaterial) ;
+        }
+
+        // Render the part.
+        part.render() ;
      }
 
      geometry -> unbind() ;
@@ -58,9 +67,9 @@ void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
     component -> render() ;
 }
 
-void OpenGLRenderVisitor::useMaterial(MaterialComponent* component) {
+void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
     auto materialAttributes = component -> shaderAttributes() ;
-    RenderEffect& effect = component -> effect() ;
+    const RenderEffect& effect = component -> effect() ;
 
     auto effectAttributes = effect.shaderAttributes() ;
     ShaderAttribute::merge(materialAttributes, effectAttributes) ;

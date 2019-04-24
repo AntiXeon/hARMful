@@ -16,26 +16,6 @@ MaterialComponent::MaterialComponent()
     setupDefaultUniforms() ;
 }
 
-RenderEffect& MaterialComponent::effect() {
-    return m_effect ;
-}
-
-void MaterialComponent::addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-    m_shaderAttribs[attrib -> name()] = attrib ;
-}
-
-void MaterialComponent::removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-    m_shaderAttribs.erase(attrib -> name()) ;
-}
-
-void MaterialComponent::addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
-    m_shaderUniforms[uniform -> name()] = uniform ;
-}
-
-void MaterialComponent::removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
-    m_shaderUniforms.erase(uniform -> name()) ;
-}
-
 void MaterialComponent::setupDefaultUniforms() {
     const std::vector<std::string>& names = Uniforms.names() ;
     size_t amountNames = names.size() ;

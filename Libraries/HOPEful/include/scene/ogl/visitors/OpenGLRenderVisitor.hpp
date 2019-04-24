@@ -74,7 +74,7 @@ namespace Hope::GL {
             /**
              * Use a material component.
              */
-            void useMaterial(Hope::MaterialComponent* component) ;
+            void useMaterial(const Hope::MaterialComponent* component) ;
 
             /**
              * Select the best material technique of a material. It depends on

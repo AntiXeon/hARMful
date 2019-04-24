@@ -35,7 +35,7 @@ namespace Hope::GL {
             /**
              * Cache of some scene elements for a faster access.
              */
-            SceneCache m_sceneCache ;
+            SceneCache* m_sceneCache = nullptr ;
 
             /**
              * Size of the window.
@@ -72,6 +72,11 @@ namespace Hope::GL {
             OpenGLFrameGraphVisitor() ;
 
             /**
+             * Destruction of the OpenGLFrameGraphVisitor instance.
+             */
+            virtual ~OpenGLFrameGraphVisitor() ;
+
+            /**
              * Create a new branch.
              */
             void createNewBranch(Hope::FrameGraphNode* fgNode) override ;
@@ -97,7 +102,7 @@ namespace Hope::GL {
             /**
              * Get the scene cache.
              */
-            SceneCache& cache() {
+            SceneCache* cache() {
                 return m_sceneCache ;
             }
 
@@ -156,6 +161,13 @@ namespace Hope::GL {
                 RenderConditionAggregator defaultAggregator ;
                 m_aggregators.push_back(defaultAggregator) ;
             }
+
+
+            // Remove copy/move operations.
+            OpenGLFrameGraphVisitor(const OpenGLFrameGraphVisitor& copied) = delete;
+            OpenGLFrameGraphVisitor(OpenGLFrameGraphVisitor&& moved) = delete;
+            OpenGLFrameGraphVisitor& operator=(const OpenGLFrameGraphVisitor& copied) = delete;
+            OpenGLFrameGraphVisitor& operator=(OpenGLFrameGraphVisitor&& moved) = delete;
 
         private:
             /**

@@ -88,7 +88,9 @@ namespace Hope {
             /**
              * Get the effect of the material.
              */
-            RenderEffect& effect() ;
+            const RenderEffect& effect() const {
+                return m_effect ;
+            }
 
             /**
              * Get the shader attributes.
@@ -106,14 +108,25 @@ namespace Hope {
 
         protected:
             /**
+             * Get the effect of the material.
+             */
+            RenderEffect& effect() {
+                return m_effect ;
+            }
+
+            /**
              * Add a shader attribute.
              */
-            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+                m_shaderAttribs[attrib -> name()] = attrib ;
+            }
 
             /**
              * Remove a shader attribute.
              */
-            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
+                m_shaderAttribs.erase(attrib -> name()) ;
+            }
 
             /**
              * Get the attribute with the given name.
@@ -127,12 +140,16 @@ namespace Hope {
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) ;
+            void addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+                m_shaderUniforms[uniform -> name()] = uniform ;
+            }
 
             /**
              * Remove a shader ubniform.
              */
-            void removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) ;
+            void removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
+                m_shaderUniforms.erase(uniform -> name()) ;
+            }
 
             /**
              * Get the uniform with the given name.
