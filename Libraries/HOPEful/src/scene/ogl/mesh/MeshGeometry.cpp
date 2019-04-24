@@ -11,6 +11,15 @@ MeshGeometry::MeshGeometry(const std::vector<float>& vertices) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW) ;
 }
 
+void MeshGeometry::addPart(
+    const uint32_t materialID,
+    const std::vector<uint32_t>& indices
+) {
+    glBindVertexArray(m_vertexArray) ;
+    m_parts.push_back(MeshPart(materialID, indices)) ;
+    glBindVertexArray(0) ;
+}
+
 void MeshGeometry::clearBuffers() {
     for (MeshPart& part : m_parts) {
         part.deleteBuffers() ;

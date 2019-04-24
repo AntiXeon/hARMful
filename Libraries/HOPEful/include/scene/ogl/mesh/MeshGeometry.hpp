@@ -4,14 +4,13 @@
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/mesh/MeshPart.hpp>
-#include <interfaces/IRenderable.hpp>
 #include <GL/glew.h>
 
 namespace Hope::GL {
     /**
      * A MeshGeometry contains the geometry data of a 3D object.
      */
-    class MeshGeometry final : public Hope::IRenderable {
+    class MeshGeometry final {
         friend class MeshTreeComponent ;
 
         private:
@@ -42,11 +41,7 @@ namespace Hope::GL {
             void addPart(
                 const uint32_t materialID,
                 const std::vector<uint32_t>& indices
-            ) {
-                glBindVertexArray(m_vertexArray) ;
-                m_parts.push_back(MeshPart(materialID, indices)) ;
-                glBindVertexArray(0) ;
-            }
+            ) ;
 
             /**
              * Destruction of the MeshGeometry by deleting the buffers.
@@ -54,23 +49,31 @@ namespace Hope::GL {
             void clearBuffers() ;
 
             /**
-             * Render the mesh parts on screen.
+             * Bind the mesh geometry for data management, rendering, etc.
              */
-            void render() const override {
+            void bind() const {
                 glBindVertexArray(m_vertexArray) ;
+            }
 
-                for (const MeshPart& part : m_parts) {
-                    part.render() ;
-                }
-
+            /**
+             * Unbind the mesh geometry after data management, rendering, etc.
+             */
+            void unbind() const {
                 glBindVertexArray(0) ;
             }
 
             /**
-             * Get the vertex buffer ID.
+             * Get a part.
              */
-            GLuint vertexBufferID() const {
-                return m_vertexBuffer ;
+            const MeshPart& part(const uint32_t index) const {
+                return m_parts[index] ;
+            }
+
+            /**
+             * Get the amount of parts composing the current mesh.
+             */
+            size_t amountParts() const {
+                return m_parts.size() ;
             }
 
             // Copy/move operations.

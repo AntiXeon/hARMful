@@ -7,6 +7,7 @@
 #include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
+#include <scene/Entity.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
@@ -31,14 +32,26 @@ Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
     return m_processedNode ;
 }
 
-void OpenGLRenderVisitor::visit(MeshGeometryComponent* /*component*/) {
-     //const API::MeshGeometry* geometry = component -> geometry() ;
-    // geometry.render() ;
+void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {
+     const API::MeshGeometry* geometry = component -> geometry() ;
+     size_t amountParts = geometry -> amountParts() ;
 
-    // for each geometry region:
-        // Ask the material to use.
-        // Use the material.
-        // Render the mesh with the current active material.
+     geometry -> bind() ;
+
+     for (size_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
+         const MeshPart& part = geometry -> part(partIndex) ;
+
+         // Retrieve the material to use to render the part.
+         Entity* entity = m_processedNode.node ;
+         uint32_t materialID = part.materialID() ;
+         MaterialComponent* material = static_cast<MaterialComponent*>(entity -> component(MaterialComponentType, materialID)) ;
+         useMaterial(material) ;
+
+         // Render the part.
+         part.render() ;
+     }
+
+     geometry -> unbind() ;
 }
 
 void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {

@@ -91,8 +91,8 @@ TestWindow::TestWindow()
 
 void TestWindow::preRender() {
     float radius = 3.f ;
-    float camX = sin(glfwGetTime()) * radius ;
-    float camY = cos(glfwGetTime()) * radius ;
+    float camX = sin(glfwGetTime() / 2.f) * radius ;
+    float camY = cos(glfwGetTime() / 2.f) * radius ;
 
     Mind::Vector3f camPos(camX, camY, 0.f) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
