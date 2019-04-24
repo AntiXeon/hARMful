@@ -73,7 +73,7 @@ namespace Hope {
              * @return  true, the component can be removed.
              */
             bool isRemovable() const override {
-                return true ;
+                return false ;
             }
 
             /**
