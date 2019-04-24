@@ -12,6 +12,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Normal and specular mapping (✗)
 - Alpha channel supporting materials (✗)
 - Physics based rendering materials (✗)
+- Shadow mapping (✗)
 - Support of deferred rendering (✗)
 - Post-rendering effects:
     - Anti-aliasing (✗)
@@ -21,6 +22,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
     - Many others...
 - Uniform Buffer Objects (✗)
 - Mesh instancing (✗)
+- Frustum culling (✗)
 - Animations (✗)
 - Input management (keyboard, mouse, joypad) (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
