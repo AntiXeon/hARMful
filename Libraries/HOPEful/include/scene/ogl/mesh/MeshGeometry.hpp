@@ -21,6 +21,11 @@ namespace Hope::GL {
             GLuint m_vertexArray = INVALID_VALUE ;
 
             /**
+             * ID of the vertex buffer of this part.
+             */
+            GLuint m_vertexBuffer = INVALID_VALUE ;
+
+            /**
              * Mesh parts composing the whole mesh.
              */
             std::vector<MeshPart> m_parts ;
@@ -29,17 +34,17 @@ namespace Hope::GL {
             /**
              * Create a new MeshGeometry.
              */
-            MeshGeometry() ;
+            MeshGeometry(const std::vector<float>& vertices) ;
 
             /**
              * Add a mesh part.
              */
             void addPart(
-                const std::vector<float>& vertices,
+                const uint32_t materialID,
                 const std::vector<uint32_t>& indices
             ) {
                 glBindVertexArray(m_vertexArray) ;
-                m_parts.push_back(MeshPart(vertices, indices)) ;
+                m_parts.push_back(MeshPart(materialID, indices)) ;
                 glBindVertexArray(0) ;
             }
 
@@ -59,6 +64,13 @@ namespace Hope::GL {
                 }
 
                 glBindVertexArray(0) ;
+            }
+
+            /**
+             * Get the vertex buffer ID.
+             */
+            GLuint vertexBufferID() const {
+                return m_vertexBuffer ;
             }
 
             // Copy/move operations.

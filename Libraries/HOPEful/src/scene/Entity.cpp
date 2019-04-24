@@ -26,9 +26,9 @@ Entity::~Entity() {
     m_components.clear() ;
 }
 
-void Entity::addComponent(Component* component) {
+uint32_t Entity::addComponent(Component* component) {
     if (!component) {
-        return ;
+        return -1 ;
     }
 
     component -> attach(this) ;
@@ -37,10 +37,15 @@ void Entity::addComponent(Component* component) {
     if (component -> isStackable() || m_components[newComponentType].size() == 0) {
         // Stack the components.
         m_components[newComponentType].push_back(component) ;
+        int lastComponentIndex = m_components[newComponentType].size() - 1 ;
+        return lastComponentIndex ;
     }
     else {
+        const int UniqueComponentIndex = 0 ;
+
         // Replace the lone component.
-        m_components[newComponentType][0] = component ;
+        m_components[newComponentType][UniqueComponentIndex] = component ;
+        return UniqueComponentIndex ;
     }
 }
 

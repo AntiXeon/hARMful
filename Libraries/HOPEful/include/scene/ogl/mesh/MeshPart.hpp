@@ -22,19 +22,14 @@ namespace Hope::GL {
 
         private:
             /**
-             * ID of the vertex buffer of this part.
-             */
-            GLuint m_vertexBuffer = INVALID_VALUE ;
-
-            /**
              * ID of the index buffer of this part.
              */
             GLuint m_indexBuffer = INVALID_VALUE ;
 
             /**
-             * Index of the material to draw this part.
+             * ID of the material to draw this part.
              */
-            uint32_t m_materialIndex = INVALID_MATERIAL ;
+            uint32_t m_materialID = INVALID_MATERIAL ;
 
             /**
              * Amount of vertex indices.
@@ -46,9 +41,9 @@ namespace Hope::GL {
              * Create a new MeshPart.
              */
              MeshPart(
-                 const std::vector<float>& vertices,
-                 const std::vector<uint32_t>& indices
-             ) ;
+                const uint32_t materialID,
+                const std::vector<uint32_t>& indices
+            ) ;
 
             /**
              * Render the mesh part on screen.
@@ -59,24 +54,10 @@ namespace Hope::GL {
             }
 
             /**
-             * Get the vertex buffer ID.
+             * ID of the material to draw this part.
              */
-            GLuint vertexBufferID() const {
-                return m_vertexBuffer ;
-            }
-
-            /**
-             * Get the index buffer ID.
-             */
-            GLuint indexBufferID() const {
-                return m_indexBuffer ;
-            }
-
-            /**
-             * Index of the material to draw this part.
-             */
-            uint32_t materialIndex() const {
-                return m_materialIndex ;
+            uint32_t materialID() const {
+                return m_materialID ;
             }
 
             /**

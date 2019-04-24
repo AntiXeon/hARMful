@@ -3,8 +3,12 @@
 
 using namespace Hope::GL ;
 
-MeshGeometry::MeshGeometry() {
+MeshGeometry::MeshGeometry(const std::vector<float>& vertices) {
     glGenVertexArrays(1, &m_vertexArray) ;
+
+    glGenBuffers(1, &m_vertexBuffer) ;
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer) ;
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW) ;
 }
 
 void MeshGeometry::clearBuffers() {
@@ -12,5 +16,6 @@ void MeshGeometry::clearBuffers() {
         part.deleteBuffers() ;
     }
 
+    glDeleteBuffers(1, &m_vertexBuffer) ;
     glDeleteVertexArrays(1, &m_vertexArray) ;
 }

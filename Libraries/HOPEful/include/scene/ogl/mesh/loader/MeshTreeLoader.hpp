@@ -3,9 +3,13 @@
 
 #include <cstdint>
 #include <string>
+#include <map>
 #include <assimp/matrix4x4.h>
 #include <scene/Entity.hpp>
-#include <scene/components/mesh/MeshGeometryComponent.hpp>
+
+namespace Hope {
+    class MaterialComponent ;
+}
 
 class Importer ;
 struct aiScene ;
@@ -19,6 +23,24 @@ namespace Hope::GL {
      */
     class MeshTreeLoader final {
         private:
+            /**
+             * Data used to build the mesh parts.
+             */
+            struct MeshPartData {
+                // Index of the material in the entity bearing the mesh and its
+                // mesh parts.
+                uint32_t material ;
+
+                // Indices of the vertices that compose the mesh part.
+                std::vector<uint32_t> indices ;
+            } ;
+
+            /**
+             * Link the materials from the input file to the material components
+             * used by entities and the rendering step.
+             */
+            std::map<unsigned int, MaterialComponent*> m_materialRelations ;
+
             /**
              * Root of the mesh that is created by the loader.
              */
@@ -59,11 +81,32 @@ namespace Hope::GL {
             ) ;
 
             /**
-             * Load a mesh part.
+             * Count the amount of vertices in all the meshes of the given node.
              */
-            void loadMeshPart(
-                Hope::MeshGeometryComponent* geometryComponent,
-                const aiMesh* mesh
+            size_t countMeshVertices(
+                const aiScene* scene,
+                const aiNode* node
+            ) ;
+
+            /**
+             * Load node data from the input file into a MeshGeometry.
+             * @return  The MeshGeometry filled with all the geometry data.
+             */
+            void loadNodeData(
+                const aiScene* scene,
+                const aiNode* node,
+                Hope::Entity* entity
+            ) ;
+
+            /**
+             * Parse the material from the importer and convert it to a usable
+             * MaterialComponent.
+             * @return  Get the index of the material in the entity.
+             */
+            uint32_t materialProcessing(
+                const aiScene* scene,
+                const aiMesh* mesh,
+                Hope::Entity* entity
             ) ;
 
             /**

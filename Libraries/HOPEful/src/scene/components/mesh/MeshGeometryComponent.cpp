@@ -3,10 +3,7 @@
 
 using namespace Hope ;
 
-MeshGeometryComponent::MeshGeometryComponent()
-    : Component(Hope::MeshGeometryComponentType) {}
-
-MeshGeometryComponent::MeshGeometryComponent(const API::MeshGeometry& geometry)
+MeshGeometryComponent::MeshGeometryComponent(API::MeshGeometry* geometry)
     : Component(Hope::MeshGeometryComponentType),
       m_geometry(geometry) {}
 
@@ -15,5 +12,6 @@ void MeshGeometryComponent::accept(ISceneGraphVisitor* visitor) {
 }
 
 MeshGeometryComponent::~MeshGeometryComponent() {
-    m_geometry.clearBuffers() ;
+    m_geometry -> clearBuffers() ;
+    delete m_geometry ;
 }

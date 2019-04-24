@@ -20,18 +20,13 @@ namespace Hope {
             /**
              * Geometry of the 3D object.
              */
-            API::MeshGeometry m_geometry ;
+            API::MeshGeometry* m_geometry ;
 
         public:
             /**
              * Creation of a MeshGeometryComponent.
              */
-            MeshGeometryComponent() ;
-
-            /**
-             * Creation of a MeshGeometryComponent.
-             */
-            MeshGeometryComponent(const API::MeshGeometry& geometry) ;
+            MeshGeometryComponent(API::MeshGeometry* geometry) ;
 
             /**
              * Destruction of the MeshGeometryComponent.
@@ -39,19 +34,9 @@ namespace Hope {
             virtual ~MeshGeometryComponent() ;
 
             /**
-             * Add a mesh part to the geometry.
-             */
-            void addMeshPart(
-                const std::vector<float>& vertices,
-                const std::vector<uint32_t>& indices
-            ) {
-                m_geometry.addPart(vertices, indices) ;
-            }
-
-            /**
              * Get the geometry.
              */
-            const API::MeshGeometry& geometry() const {
+            const API::MeshGeometry* geometry() const {
                 return m_geometry ;
             }
 

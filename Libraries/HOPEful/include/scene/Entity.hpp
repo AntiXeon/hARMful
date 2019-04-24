@@ -55,14 +55,26 @@ namespace Hope {
              * @warning Delete, if necessary, the previous component because it
              *          could lead to memory leaks!
              * @param   component   Component to add.
+             * @return  Index of component in the list of its type.
+             *          0xFFFFFFFF if the component has not been added.
              */
-            void addComponent(Component* component) ;
+            uint32_t addComponent(Component* component) ;
 
             /**
              * Remove a component from the current entity.
              * @param   component   Component to remove.
              */
             void removeComponent(Component* component) ;
+
+            /**
+             * Remove a component from the current entity.
+             * @param   type    Type of the component to remove.
+             * @param   index   Index of the component to remove.
+             */
+            void removeComponent(const ComponentType type, const uint32_t index) {
+                Component* toRemove = component(type, index) ;
+                removeComponent(toRemove) ;
+            }
 
             /**
              * Remove the components of the provided type.
@@ -80,7 +92,7 @@ namespace Hope {
              */
             Component* component(
                 const ComponentType type,
-                const uint8_t index = 0
+                const uint32_t index = 0
             ) const {
                 return m_components[type][index] ;
             }
