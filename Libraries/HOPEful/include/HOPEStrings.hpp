@@ -12,6 +12,8 @@ namespace Hope {
         extern std::string Init_GL_Vendor ;
 
         extern std::string Mesh_NotLoaded ;
+
+        extern std::string UBO_BadBindingIndex ;
     }
 } ;
 
