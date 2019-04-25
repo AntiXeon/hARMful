@@ -42,7 +42,7 @@ if (UNIX)
     target_link_libraries(${PROJECT_NAME} -lstdc++fs)
 
     if(DEBUG)
-        list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
+        list(APPEND CMAKE_CXX_FLAGS "-W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
     else()
         list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
     endif()
