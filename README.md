@@ -20,7 +20,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
     - Bloom (✗)
     - Depth of Field (✗)
     - Many others...
-- Uniform Buffer Objects (✗)
+- Uniform Buffer Objects (✓)
 - Mesh instancing (✗)
 - Frustum culling (✗)
 - Animations (✗)
