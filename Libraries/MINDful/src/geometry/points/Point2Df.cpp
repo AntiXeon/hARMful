@@ -141,7 +141,7 @@ namespace Mind {
         m_values = position.m_values ;
     }
 
-    std::array<float, 2> Point2Df::toArray() {
+    std::array<float, 2> Point2Df::toArray() const {
         return {m_values[0], m_values[1]} ;
     }
 

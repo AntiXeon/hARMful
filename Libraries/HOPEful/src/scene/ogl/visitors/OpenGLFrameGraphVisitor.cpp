@@ -3,7 +3,10 @@
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/RenderConfiguration.hpp>
+#include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/Utils.hpp>
+#include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
+#include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
@@ -17,10 +20,15 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
 
     RenderConditionAggregator defaultAggregator ;
     m_aggregators.push_back(defaultAggregator) ;
+
+    m_baseUBO = new BaseGLSLDataUBO(BASE_DATA_UBO_BINDING_INDEX) ;
+    m_modelUBO = new ModelGLSLDataUBO(MODEL_DATA_UBO_BINDING_INDEX) ;
 }
 
 OpenGLFrameGraphVisitor::~OpenGLFrameGraphVisitor() {
     delete m_sceneCache ;
+    delete m_baseUBO ;
+    delete m_modelUBO ;
 }
 
 void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
@@ -82,6 +90,10 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
         requiredData.projectionMatrix.inverse(requiredData.inverseProjectionMatrix) ;
         requiredData.aspectRatio = aspectRatio ;
+
+        m_baseUBO -> setProjectionMatrix(requiredData.projectionMatrix) ;
+        m_baseUBO -> setInverseProjectionMatrix(requiredData.inverseProjectionMatrix) ;
+        m_baseUBO -> setAspectRatio(requiredData.aspectRatio) ;
     }
 
     // Update the model view matrix.
@@ -101,6 +113,13 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     requiredData.viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
     requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
     requiredData.time = glfwGetTime() ;
+
+    m_baseUBO -> setEyePosition(eyeView) ;
+    m_baseUBO -> setViewMatrix(viewMatrix) ;
+    m_baseUBO -> setInverseViewMatrix(requiredData.inverseViewMatrix) ;
+    m_baseUBO -> setViewProjectionMatrix(requiredData.viewProjectionMatrix) ;
+    m_baseUBO -> setInverseViewProjectionMatrix(requiredData.inverseViewProjectionMatrix) ;
+    m_baseUBO -> setTime(requiredData.time) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
@@ -149,10 +168,17 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
     requiredData.viewportMatrix.setRowValues(2, row2) ;
 
     requiredData.viewportMatrix.inverse(requiredData.inverseViewportMatrix) ;
+
+    m_baseUBO -> setViewportMatrix(requiredData.viewportMatrix) ;
+    m_baseUBO -> setInverseViewportMatrix(requiredData.inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
+
+    // Send data of the base UBO to the GPU before rendering this part of the
+    // framegraph.
+    m_baseUBO -> update() ;
 
     Hope::ProcessedSceneNode rootNode ;
     rootNode.node = m_sceneRoot ;
@@ -184,6 +210,8 @@ void OpenGLFrameGraphVisitor::renderGraph() {
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
         // Process the components of the top node.
         m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
+        m_activeOpenGLRenderVisitor -> setUBOs(m_baseUBO, m_modelUBO) ;
+
         std::vector<std::vector<Component*>> components = renderedEntity -> components() ;
         for (std::vector<Component*> typeComponents : components) {
             for (Component* component : typeComponents) {

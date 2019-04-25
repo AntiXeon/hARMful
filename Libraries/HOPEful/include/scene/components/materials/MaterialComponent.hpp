@@ -26,11 +26,6 @@ namespace Hope {
             RenderEffect m_effect ;
 
             /**
-             * List of shader parameters.
-             */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
-
-            /**
              * List of shader uniforms.
              */
             std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
@@ -45,7 +40,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues(ISceneGraphVisitor* visitor) ;
+            virtual void updateUniformValues(ISceneGraphVisitor*) {}
 
             /**
              * Accept the visitor.
@@ -93,13 +88,6 @@ namespace Hope {
             }
 
             /**
-             * Get the shader attributes.
-             */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
-                return m_shaderAttribs ;
-            }
-
-            /**
              * Get the shader uniforms.
              */
             std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
@@ -112,27 +100,6 @@ namespace Hope {
              */
             RenderEffect& effect() {
                 return m_effect ;
-            }
-
-            /**
-             * Add a shader attribute.
-             */
-            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-                m_shaderAttribs[attrib -> name()] = attrib ;
-            }
-
-            /**
-             * Remove a shader attribute.
-             */
-            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) {
-                m_shaderAttribs.erase(attrib -> name()) ;
-            }
-
-            /**
-             * Get the attribute with the given name.
-             */
-            std::shared_ptr<Hope::ShaderAttribute> attribute(const std::string& name) {
-                return m_shaderAttribs[name] ;
             }
 
             /**
@@ -157,22 +124,6 @@ namespace Hope {
             std::shared_ptr<Hope::ShaderUniform> uniform(const std::string& name) {
                 return m_shaderUniforms[name] ;
             }
-
-        private:
-            /**
-             * Set up the default uniform values.
-             * The values are updated just before the component accepts the
-             * rendering visitor.
-             * @see     accept(ISceneGraphVisitor* visitor)
-             * @see     updateParameterValues()
-             */
-            void setupDefaultUniforms() ;
-
-        protected:
-            /**
-             * Update the values of additional uniforms.
-             */
-            virtual void updateAdditionalUniformValues(ISceneGraphVisitor*) {}
     } ;
 }
 

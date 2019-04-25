@@ -1,4 +1,4 @@
-#include <scene/ogl/rendering/glsl/UniformBufferObject.hpp>
+#include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 #include <cstring>

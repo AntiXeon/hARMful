@@ -1,13 +1,6 @@
-#version 450 core    // OpenGL 4.5
-
 layout(location = 0) in vec3 position ;
 layout(location = 1) in vec2 texCoord ;
 layout(location = 2) in vec3 normal ;
-
-uniform mat4 mvpMatrix ;
-uniform mat4 modelMatrix ;
-uniform mat4 normalMatrix ;
-uniform mat4 modelViewMatrix ;
 
 layout(location = 0) out vec3 outVertexPosition ;
 layout(location = 1) out vec3 outNormal ;

@@ -7,6 +7,8 @@
 #include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
+#include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
+#include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 #include <scene/Entity.hpp>
 
 using namespace Hope ;
@@ -16,20 +18,45 @@ void OpenGLRenderVisitor::startNewFrame() {
     m_currentFrameID++ ;
 }
 
-FrameID OpenGLRenderVisitor::currentFrameID() const {
-    return m_currentFrameID ;
-}
-
-RenderRequiredData& OpenGLRenderVisitor::requiredData() {
-    return m_requiredData ;
-}
-
 void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node) {
     m_processedNode = node ;
 }
 
-Hope::ProcessedSceneNode& OpenGLRenderVisitor::processedNode() {
-    return m_processedNode ;
+void OpenGLRenderVisitor::setUBOs(
+    BaseGLSLDataUBO* baseUBO,
+    ModelGLSLDataUBO* modelUBO
+) {
+    m_baseUBO = baseUBO ;
+    m_modelUBO = modelUBO ;
+
+    // Update the UBO matrices.
+    m_modelUBO -> setModelMatrix(m_processedNode.worldMatrix) ;
+
+    Mind::Matrix4x4f modelViewMatrix = m_processedNode.worldMatrix * m_requiredData.viewMatrix ;
+    m_modelUBO -> setModelViewMatrix(modelViewMatrix) ;
+
+    Mind::Matrix4x4f mvpMatrix = modelViewMatrix * m_requiredData.projectionMatrix ;
+    m_modelUBO -> setMVPMatrix(mvpMatrix) ;
+
+    Mind::Matrix4x4f resultMatrix ;
+    m_processedNode.worldMatrix.inverse(resultMatrix) ;
+    m_modelUBO -> setInverseModelMatrix(resultMatrix) ;
+
+    modelViewMatrix.inverse(resultMatrix) ;
+    m_modelUBO -> setInverseModelViewMatrix(resultMatrix) ;
+
+    Mind::Matrix4x4f normalMatrix ;
+    resultMatrix.transposed(normalMatrix) ; // Normal matrix = transposed of the inverse model view matrix.
+    m_modelUBO -> setNormalMatrix(normalMatrix) ;
+
+    mvpMatrix.inverse(resultMatrix) ;
+    m_modelUBO -> setInverseMVPMatrix(resultMatrix) ;
+
+    m_modelUBO -> setModelNormalMatrix(m_processedNode.worldMatrix * normalMatrix) ;
+    m_modelUBO -> setModelViewNormalMatrix(modelViewMatrix * normalMatrix) ;
+
+    // Send these new values to the GPU.
+    m_modelUBO -> update() ;
 }
 
 void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {
@@ -68,11 +95,7 @@ void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
 }
 
 void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
-    auto materialAttributes = component -> shaderAttributes() ;
     const RenderEffect& effect = component -> effect() ;
-
-    auto effectAttributes = effect.shaderAttributes() ;
-    ShaderAttribute::merge(materialAttributes, effectAttributes) ;
 
     // Select the technique that is used.
     std::shared_ptr<RenderTechnique> selectedTechnique ;
@@ -83,17 +106,12 @@ void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
         return ;
     }
 
-    auto appliedAttributes = effectAttributes ;
     auto techniqueAttributes = selectedTechnique -> shaderAttributes() ;
-    ShaderAttribute::merge(appliedAttributes, techniqueAttributes) ;
     auto renderPasses = selectedTechnique -> renderPasses() ;
 
     for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
         // Maybe should check render passes (or it will work in FrameGraph
         // visitor through the RenderConditionAggregator?).
-
-        auto passAttrributes = pass -> shaderAttributes() ;
-        ShaderAttribute::merge(appliedAttributes, passAttrributes) ;
 
         auto capabilities = pass -> capabilities() ;
 
@@ -109,20 +127,16 @@ void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
         if (shaderProgram) {
             shaderProgram -> use() ;
 
+            // Bind the UBOs.
+            m_baseUBO -> bindToProgram(shaderProgram -> id()) ;
+            m_modelUBO -> bindToProgram(shaderProgram -> id()) ;
+
             // Apply shader uniforms.
             auto materialUniforms = component -> shaderUniforms() ;
             for (auto& [name, uniform] : materialUniforms) {
                 ShaderUniformApplicator::ApplyUniform(
                     shaderProgram -> id(),
                     uniform
-                ) ;
-            }
-
-            // Set attribute values here.
-            for (auto& [name, attrib] : appliedAttributes) {
-                ShaderAttributeApplicator::ApplyAttribute(
-                    shaderProgram -> id(),
-                    attrib
                 ) ;
             }
         }

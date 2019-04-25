@@ -1,4 +1,6 @@
 #include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/BaseDataBlock.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Lights.hpp>
@@ -25,6 +27,13 @@ PhongMaterialComponent::PhongMaterialComponent()
     setDiffuse(Color(0.5f, 0.5f, 0.5f)) ;
     setSpecular(Color(1.f, 1.f, 1.f)) ;
     setShininess(10.f) ;
+}
+
+void PhongMaterialComponent::updateUniformValues(ISceneGraphVisitor*) {
+    uniform(AmbientUniformName) -> setVec3(ambient().toRGB()) ;
+    uniform(DiffuseUniformName) -> setVec3(diffuse().toRGB()) ;
+    uniform(SpecularUniformName) -> setVec3(specular().toRGB()) ;
+    uniform(ShininessUniformName) -> setFloating(shininess()) ;
 }
 
 void PhongMaterialComponent::setAmbient(const Color& ambient) {
@@ -105,8 +114,15 @@ void PhongMaterialComponent::setupUniforms() {
 void PhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    // Vertex shader code.
+    shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
+    shaderProgram -> addVertexShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addVertexShaderCode(PhongVertexCode) ;
+    // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
+    shaderProgram -> addFragmentShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(LightsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(PhongFragmentCode) ;
@@ -116,11 +132,4 @@ void PhongMaterialComponent::setupRendering() {
     techniqueGL31 -> setAPI(RenderTechnique::GraphicsAPI::OpenGL, 3, 1) ;
     techniqueGL31 -> addRenderPass(renderPass) ;
     effect().addTechnique(techniqueGL31) ;
-}
-
-void PhongMaterialComponent::updateAdditionalUniformValues(ISceneGraphVisitor*) {
-    uniform(AmbientUniformName) -> setVec3(ambient().toRGB()) ;
-    uniform(DiffuseUniformName) -> setVec3(diffuse().toRGB()) ;
-    uniform(SpecularUniformName) -> setVec3(specular().toRGB()) ;
-    uniform(ShininessUniformName) -> setFloating(shininess()) ;
 }

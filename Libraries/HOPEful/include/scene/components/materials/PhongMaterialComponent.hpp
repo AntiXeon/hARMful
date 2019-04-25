@@ -75,6 +75,12 @@ namespace Hope {
             PhongMaterialComponent() ;
 
             /**
+             * Update the uniform values before the processing of the material
+             * component.
+             */
+            void updateUniformValues(ISceneGraphVisitor* visitor) override ;
+
+            /**
              * Set the ambient color.
              */
             void setAmbient(const Color& ambient) ;
@@ -124,12 +130,6 @@ namespace Hope {
              * Set up the material rendering (techniques, shaders, ...).
              */
             void setupRendering() ;
-
-        protected:
-            /**
-             * Update the values of additional uniforms.
-             */
-            void updateAdditionalUniformValues(ISceneGraphVisitor* visitor) override ;
     } ;
 } ;
 

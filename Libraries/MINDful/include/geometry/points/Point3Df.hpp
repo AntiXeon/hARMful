@@ -164,7 +164,7 @@ namespace Mind {
             /**
              * Convert the point to array.
              */
-            exported std::array<float, 3> toArray() ;
+            exported std::array<float, 3> toArray() const ;
 
             /** Conversion from Point3D to Dimension3D. */
             exported explicit operator Dimension3Df() ;

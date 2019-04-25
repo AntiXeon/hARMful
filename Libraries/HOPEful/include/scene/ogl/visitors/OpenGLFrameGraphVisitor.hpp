@@ -15,6 +15,8 @@
 #include <cassert>
 
 namespace Hope::GL {
+    class BaseGLSLDataUBO ;
+    class ModelGLSLDataUBO ;
 
     /**
      * Visitor for processing frame graph nodes.
@@ -64,6 +66,18 @@ namespace Hope::GL {
              * Stack of the nodes that are processed.
              */
             std::stack<Hope::ProcessedSceneNode> m_processedNodes ;
+
+            /**
+             * UBO containing the base data for GLSL shaders.
+             * Its binding point index is set to 0.
+             */
+            BaseGLSLDataUBO* m_baseUBO = nullptr ;
+
+            /**
+             * UBO containing the base data of a model for GLSL shaders.
+             * Its binding point index is set to 1.
+             */
+            ModelGLSLDataUBO* m_modelUBO = nullptr ;
 
         public:
             /**

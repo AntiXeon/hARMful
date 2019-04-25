@@ -40,6 +40,14 @@ namespace Hope::GL {
              */
             void update() ;
 
+            /**
+             * Bind the UBO to a shader program.
+             */
+            void bindToProgram(const GLuint program) {
+                GLuint blockIndex = glGetUniformBlockIndex(program, name()) ;
+                glUniformBlockBinding(program, blockIndex, m_bindingPointIndex) ;
+            }
+
         protected:
             /**
              * Get the ID of the UBO.
@@ -51,12 +59,17 @@ namespace Hope::GL {
             /**
              * Get the data of the UBO.
              */
-            virtual void* data() const = 0 ;
+            virtual const void* data() const = 0 ;
 
             /**
              * Size of the data.
              */
             virtual size_t size() const = 0 ;
+
+            /**
+             * Name of the block in the GLSL shader.
+             */
+            virtual const char* name() const = 0 ;
 
         public:
             /**

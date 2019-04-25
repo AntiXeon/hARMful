@@ -8,9 +8,6 @@ struct Material {
 } ;
 
 uniform Material phong ;
-uniform vec3 eyePosition ;
-uniform int amountDirectionalLights ;
-uniform int amountPointLights ;
 
 const float ScreenGamma = 2.2f ;
 

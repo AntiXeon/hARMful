@@ -92,7 +92,7 @@ namespace Mind {
         m_values = position.m_values ;
     }
 
-    std::array<float, 3> Point3Df::toArray() {
+    std::array<float, 3> Point3Df::toArray() const {
         return {m_values[0], m_values[1], m_values[2]} ;
     }
 

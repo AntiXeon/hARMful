@@ -3,16 +3,9 @@
 
 std::string PhongVertexCode =
 "\
-#version 450 core    // OpenGL 4.5\n\
-\n\
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
-\n\
-uniform mat4 mvpMatrix ;\n\
-uniform mat4 modelMatrix ;\n\
-uniform mat4 normalMatrix ;\n\
-uniform mat4 modelViewMatrix ;\n\
 \n\
 layout(location = 0) out vec3 outVertexPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
@@ -42,9 +35,6 @@ struct Material {\n\
 } ;\n\
 \n\
 uniform Material phong ;\n\
-uniform vec3 eyePosition ;\n\
-uniform int amountDirectionalLights ;\n\
-uniform int amountPointLights ;\n\
 \n\
 const float ScreenGamma = 2.2f ;\n\
 \n\
