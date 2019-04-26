@@ -54,10 +54,10 @@ void UBOSharedData::updateModelUBO(
     // Update the UBO matrices.
     m_modelUBO -> setModelMatrix(modelMatrix) ;
 
-    Mind::Matrix4x4f modelViewMatrix = modelMatrix * viewMatrix ;
+    Mind::Matrix4x4f modelViewMatrix = viewMatrix * modelMatrix ;
     m_modelUBO -> setModelViewMatrix(modelViewMatrix) ;
 
-    Mind::Matrix4x4f mvpMatrix = modelViewMatrix * projectionMatrix ;
+    Mind::Matrix4x4f mvpMatrix = projectionMatrix * modelViewMatrix ;
     m_modelUBO -> setMVPMatrix(mvpMatrix) ;
 
     Mind::Matrix4x4f resultMatrix ;
@@ -74,8 +74,8 @@ void UBOSharedData::updateModelUBO(
     mvpMatrix.inverse(resultMatrix) ;
     m_modelUBO -> setInverseMVPMatrix(resultMatrix) ;
 
-    m_modelUBO -> setModelNormalMatrix(modelMatrix * normalMatrix) ;
-    m_modelUBO -> setModelViewNormalMatrix(modelViewMatrix * normalMatrix) ;
+    m_modelUBO -> setModelNormalMatrix(normalMatrix * modelMatrix) ;
+    m_modelUBO -> setModelViewNormalMatrix(normalMatrix * modelViewMatrix) ;
 
     // Send these new values to the GPU.
     m_modelUBO -> update() ;

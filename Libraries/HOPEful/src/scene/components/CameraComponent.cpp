@@ -59,7 +59,6 @@ void CameraComponent::lookAt(const Mind::Vector3f& target) {
     rotationMat.setRowValues(2, m_viewDirection) ;
 
     m_viewMatrix = rotationMat * translationMat ;
-    m_viewMatrix.transposed(m_viewMatrix) ;
 }
 
 Mind::Vector3f CameraComponent::target() {

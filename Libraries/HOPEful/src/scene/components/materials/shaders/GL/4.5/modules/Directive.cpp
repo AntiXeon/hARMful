@@ -4,5 +4,6 @@
 std::string DirectiveFragmentCode =
 "\
 #version 450 core    // OpenGL 4.5\n\
+ layout(row_major) uniform ;\n\
 " ;
 

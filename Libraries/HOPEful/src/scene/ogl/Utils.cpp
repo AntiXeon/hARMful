@@ -22,7 +22,7 @@ namespace Hope::GL {
         result[0][0] = 1.f / (aspect * TanHalfFovY) ;
 		result[1][1] = 1.f / (TanHalfFovY) ;
 		result[2][2] = -(zFar + zNear) / FarMinusNear ;
-        result[2][3] = -1.f ;
-        result[3][2] = -(2.f * zFar * zNear) / FarMinusNear ;
+        result[3][2] = -1.f ;
+        result[2][3] = -(2.f * zFar * zNear) / FarMinusNear ;
     }
 }

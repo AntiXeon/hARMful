@@ -112,7 +112,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     requiredData.viewMatrix.inverse(resultInverse) ;
     m_ubos -> base() -> setInverseViewMatrix(resultInverse) ;
 
-    Mind::Matrix4x4f viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
+    Mind::Matrix4x4f viewProjectionMatrix = requiredData.projectionMatrix * requiredData.viewMatrix ;
     m_ubos -> base() -> setViewProjectionMatrix(viewProjectionMatrix) ;
 
     viewProjectionMatrix.inverse(resultInverse) ;

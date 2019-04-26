@@ -190,17 +190,18 @@ void MeshTreeLoader::setupTransform(
     Hope::Entity* entity
 ) {
     Mind::Matrix4x4f transformMatrix ;
+
     const size_t MatrixSize = transformMatrix.size() ;
 
-    for (size_t col = 0 ; col < MatrixSize ; ++col) {
-        Mind::Point4Df transformColumn(
-            nodeMatrix[col][0],
-            nodeMatrix[col][1],
-            nodeMatrix[col][2],
-            nodeMatrix[col][3]
+    for (size_t row = 0 ; row < MatrixSize ; ++row) {
+        Mind::Point4Df transformRow(
+            nodeMatrix[row][0],
+            nodeMatrix[row][1],
+            nodeMatrix[row][2],
+            nodeMatrix[row][3]
         ) ;
 
-        transformMatrix.setColumnValues(col, transformColumn) ;
+        transformMatrix.setRowValues(row, transformRow) ;
     }
 
     (entity -> transform()).setMatrix(transformMatrix) ;
