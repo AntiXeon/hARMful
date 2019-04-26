@@ -58,7 +58,7 @@ namespace Hope::GL {
              * Set the amount of directional lights.
              */
             void setAmountDirectionalLights(const int count) {
-                m_data.amount_dir_point[2] = count ;
+                m_data.amount_dir_point[0] = count ;
             }
 
             /**
