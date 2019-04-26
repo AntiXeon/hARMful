@@ -1,8 +1,13 @@
 #ifndef __HOPE__RENDER_EFFECT__
 #define __HOPE__RENDER_EFFECT__
 
-#include <scene/framegraph/shading/ShaderValue.hpp>
-#include <scene/framegraph/shading/RenderTechnique.hpp>
+#include <HopeAPI.hpp>
+
+#ifdef OGL
+    #include <scene/ogl/rendering/RenderPass.hpp>
+    namespace API = Hope::GL ;
+#endif
+
 #include <map>
 #include <memory>
 #include <set>
@@ -15,50 +20,26 @@ namespace Hope {
     class RenderEffect final {
         private:
             /**
-             * List of shader attributes.
+             * List of shader parameters.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
-
-            /**
-             * Available techniques in the effect.
-             */
-            std::set<std::shared_ptr<RenderTechnique>> m_techniques ;
+            std::set<std::shared_ptr<API::RenderPass>> m_renderPasses ;
 
         public:
             /**
-             * Add a shader attribute.
-             * It is sent to the shader as a uniform value.
-             * Some usual values are already sent to the shaders.
+             * Add a render pass.
              */
-            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+            void addRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
 
             /**
-             * Remove a shader attribute.
+             * Remove a render pass.
              */
-            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
+            void removeRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
 
             /**
-             * Get the shader attributes.
+             * Get the render passes.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
-                return m_shaderAttribs ;
-            }
-
-            /**
-             * Add a render technique.
-             */
-            void addTechnique(const std::shared_ptr<RenderTechnique> technique) ;
-
-            /**
-             * Remove a render technique.
-             */
-            void removeTechnique(const std::shared_ptr<RenderTechnique> technique) ;
-
-            /**
-             * Get the render techniques.
-             */
-            std::set<std::shared_ptr<RenderTechnique>> techniques() const {
-                return m_techniques ;
+            std::set<std::shared_ptr<API::RenderPass>> renderPasses() const {
+                return m_renderPasses ;
             }
     } ;
 }

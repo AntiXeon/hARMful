@@ -2,7 +2,6 @@
 #define __HOPE__OPENGL_RENDER_VISITOR__
 
 #include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
-#include <scene/framegraph/shading/RenderTechnique.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/RenderRequiredData.hpp>
 #include <memory>
@@ -80,14 +79,6 @@ namespace Hope::GL {
              * Use a material component.
              */
             void useMaterial(const Hope::MaterialComponent* component) ;
-
-            /**
-             * Select the best material technique of a material. It depends on
-             * the GPU supported version of the graphical API.
-             */
-            std::shared_ptr<RenderTechnique> selectBestMaterialTechnique(
-                const std::set<std::shared_ptr<RenderTechnique>>& techniques
-            ) ;
     } ;
 }
 

@@ -2,7 +2,6 @@
 #define __HOPE__GL_RENDER_PASS__
 
 #include <scene/framegraph/shading/FilterOption.hpp>
-#include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <set>
@@ -19,11 +18,6 @@ namespace Hope::GL {
              * List of the options.
              */
             std::set<std::shared_ptr<Hope::FilterOption>> m_options ;
-
-            /**
-             * List of shader parameters.
-             */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> m_shaderAttribs ;
 
             /**
              * List of graphics API capabilities.
@@ -64,25 +58,6 @@ namespace Hope::GL {
              */
             std::set<std::shared_ptr<Hope::FilterOption>> filterOptions() const {
                 return m_options ;
-            }
-
-            /**
-             * Add a shader attribute.
-             * It is sent to the shader as a uniform value.
-             * Some usual values are already sent to the shaders.
-             */
-            void addShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
-
-            /**
-             * Remove a shader attribute.
-             */
-            void removeShaderAttribute(const std::shared_ptr<Hope::ShaderAttribute> attrib) ;
-
-            /**
-             * Get the shader attributes.
-             */
-            std::map<std::string, std::shared_ptr<Hope::ShaderAttribute>> shaderAttributes() const {
-                return m_shaderAttribs ;
             }
 
             /**

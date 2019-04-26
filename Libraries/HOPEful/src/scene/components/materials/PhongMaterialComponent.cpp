@@ -131,8 +131,5 @@ void PhongMaterialComponent::setupRendering() {
     shaderProgram -> addFragmentShaderCode(PhongFragmentCode) ;
     shaderProgram -> build() ;
 
-    std::shared_ptr<RenderTechnique> techniqueGL31 = std::make_shared<RenderTechnique>() ;
-    techniqueGL31 -> setAPI(RenderTechnique::GraphicsAPI::OpenGL, 3, 1) ;
-    techniqueGL31 -> addRenderPass(renderPass) ;
-    effect().addTechnique(techniqueGL31) ;
+    effect().addRenderPass(renderPass) ;
 }

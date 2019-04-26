@@ -22,9 +22,9 @@ TestWindow::TestWindow()
 
     // Load a mesh.
     Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/mesh_set.fbx") ;
+    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/Mesh_Set.fbx") ;
     cubeEntity -> addComponent(meshComponent) ;
-
+/*
     // Create a directional light.
 	{
 		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
@@ -36,7 +36,7 @@ TestWindow::TestWindow()
 		dirLightEntity -> addComponent(dirLightComponent) ;
 		(scene() -> cache()) -> registerLight(dirLightComponent) ;
 	}
-
+*/
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
         (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(1.f, 5.f, 2.f)) ;

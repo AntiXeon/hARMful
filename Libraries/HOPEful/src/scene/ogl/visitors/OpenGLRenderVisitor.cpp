@@ -5,8 +5,8 @@
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
-#include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
+#include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/Entity.hpp>
 
 using namespace Hope ;
@@ -57,18 +57,7 @@ void OpenGLRenderVisitor::visit(TriangleTestComponent* component) {
 
 void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
     const RenderEffect& effect = component -> effect() ;
-
-    // Select the technique that is used.
-    std::shared_ptr<RenderTechnique> selectedTechnique ;
-    selectedTechnique = selectBestMaterialTechnique(effect.techniques()) ;
-
-    if (!selectedTechnique) {
-        // Impossible to render the material with the defined techniques...
-        return ;
-    }
-
-    auto techniqueAttributes = selectedTechnique -> shaderAttributes() ;
-    auto renderPasses = selectedTechnique -> renderPasses() ;
+    auto renderPasses = effect.renderPasses() ;
 
     for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
         // Maybe should check render passes (or it will work in FrameGraph
@@ -104,39 +93,4 @@ void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
             capability -> remove() ;
         }
     }
-}
-
-std::shared_ptr<RenderTechnique> OpenGLRenderVisitor::selectBestMaterialTechnique(
-    const std::set<std::shared_ptr<RenderTechnique>>& techniques
-) {
-    GLint glSupportedMajorVersion = 0 ;
-    GLint glSupportedMinorVersion = 0 ;
-    glGetIntegerv(GL_MAJOR_VERSION, &glSupportedMajorVersion) ;
-    glGetIntegerv(GL_MINOR_VERSION, &glSupportedMinorVersion) ;
-
-    std::shared_ptr<RenderTechnique> selectedTechnique ;
-    for (const std::shared_ptr<RenderTechnique>& technique : techniques) {
-        // Check API compatibility.
-        if (technique -> api() != RenderTechnique::GraphicsAPI::OpenGL) {
-            // Discard API other than OpenGL (as we are in an OpenGL
-            // implementation!).
-            continue ;
-        }
-
-        if ((technique -> apiMajorVersion() <= glSupportedMajorVersion)
-                && (technique -> apiMinorVersion() <= glSupportedMinorVersion)) {
-            if (!selectedTechnique) {
-                // Set as used technique since it is compatible.
-                selectedTechnique = technique ;
-            }
-            else if ((selectedTechnique -> apiMajorVersion() <= technique -> apiMajorVersion())
-                        && (selectedTechnique -> apiMinorVersion() <= technique -> apiMinorVersion())) {
-                // Set as used technique since it is compatible and it offers
-                // the most advanced graphical features.
-                selectedTechnique = technique ;
-            }
-        }
-    }
-
-    return selectedTechnique ;
 }
