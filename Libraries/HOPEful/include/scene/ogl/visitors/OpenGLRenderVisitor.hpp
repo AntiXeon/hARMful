@@ -13,10 +13,6 @@ namespace Hope {
 }
 
 namespace Hope::GL {
-    class BaseGLSLDataUBO ;
-    class ModelGLSLDataUBO ;
-    class LightGLSLDataUBO ;
-
     /**
      * Visitor for rendering objects using the OpenGL API.
      */
@@ -36,22 +32,6 @@ namespace Hope::GL {
              * Required data for the rendering of the current frame.
              */
             RenderRequiredData m_requiredData ;
-
-            /**
-             * UBO containing the base data for GLSL shaders.
-             * Its binding point index is set to 0.
-             */
-            BaseGLSLDataUBO* m_baseUBO = nullptr ;
-
-            /**
-             * UBO containing the base data of a model for GLSL shaders.
-             */
-            ModelGLSLDataUBO* m_modelUBO = nullptr ;
-
-            /**
-             * UBO containing the light data for GLSL shaders.
-             */
-            LightGLSLDataUBO* m_lightUBO = nullptr ;
 
         public:
             /**
@@ -84,16 +64,6 @@ namespace Hope::GL {
             Hope::ProcessedSceneNode& processedNode() override {
                 return m_processedNode ;
             }
-
-            /**
-             * Set the UBOs to be used for rendering.
-             * @warning Call setProcessedNode() before!
-             */
-            void setUBOs(
-                BaseGLSLDataUBO* baseUBO,
-                ModelGLSLDataUBO* modelUBO,
-                LightGLSLDataUBO* lightUBO
-            ) ;
 
             /**
              * Visit a mesh geometry component.

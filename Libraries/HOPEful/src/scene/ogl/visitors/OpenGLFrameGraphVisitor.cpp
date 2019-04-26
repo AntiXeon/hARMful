@@ -1,13 +1,10 @@
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
+#include <scene/ogl/visitors/UBOSharedData.hpp>
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/RenderConfiguration.hpp>
-#include <scene/components/materials/BlockBindings.hpp>
 #include <scene/ogl/Utils.hpp>
-#include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
-#include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
-#include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
@@ -18,21 +15,15 @@ using namespace Hope::GL ;
 OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
     : IFrameGraphVisitor() {
     m_sceneCache = new SceneCache() ;
+    m_ubos = new UBOSharedData() ;
 
     RenderConditionAggregator defaultAggregator ;
     m_aggregators.push_back(defaultAggregator) ;
-
-    m_baseUBO = new BaseGLSLDataUBO(BASE_DATA_UBO_BINDING_INDEX) ;
-    m_modelUBO = new ModelGLSLDataUBO(MODEL_DATA_UBO_BINDING_INDEX) ;
-    m_lightUBO = new LightGLSLDataUBO(LIGHTS_DATA_UBO_BINDING_INDEX) ;
 }
 
 OpenGLFrameGraphVisitor::~OpenGLFrameGraphVisitor() {
     delete m_sceneCache ;
-
-    delete m_baseUBO ;
-    delete m_modelUBO ;
-    delete m_lightUBO ;
+    delete m_ubos ;
 }
 
 void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
@@ -97,9 +88,9 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         Mind::Matrix4x4f inverseProjectionMatrix ;
         requiredData.projectionMatrix.inverse(inverseProjectionMatrix) ;
 
-        m_baseUBO -> setProjectionMatrix(requiredData.projectionMatrix) ;
-        m_baseUBO -> setInverseProjectionMatrix(inverseProjectionMatrix) ;
-        m_baseUBO -> setAspectRatio(aspectRatio) ;
+        m_ubos -> base() -> setProjectionMatrix(requiredData.projectionMatrix) ;
+        m_ubos -> base() -> setInverseProjectionMatrix(inverseProjectionMatrix) ;
+        m_ubos -> base() -> setAspectRatio(aspectRatio) ;
     }
 
     // Update the model view matrix.
@@ -113,19 +104,19 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
 
     // Update the required data.
-    m_baseUBO -> setTime(glfwGetTime()) ;
-    m_baseUBO -> setEyePosition(eyeView) ;
-    m_baseUBO -> setViewMatrix(requiredData.viewMatrix) ;
+    m_ubos -> base() -> setTime(glfwGetTime()) ;
+    m_ubos -> base() -> setEyePosition(eyeView) ;
+    m_ubos -> base() -> setViewMatrix(requiredData.viewMatrix) ;
 
     Mind::Matrix4x4f resultInverse ;
     requiredData.viewMatrix.inverse(resultInverse) ;
-    m_baseUBO -> setInverseViewMatrix(resultInverse) ;
+    m_ubos -> base() -> setInverseViewMatrix(resultInverse) ;
 
     Mind::Matrix4x4f viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
-    m_baseUBO -> setViewProjectionMatrix(viewProjectionMatrix) ;
+    m_ubos -> base() -> setViewProjectionMatrix(viewProjectionMatrix) ;
 
     viewProjectionMatrix.inverse(resultInverse) ;
-    m_baseUBO -> setInverseViewProjectionMatrix(resultInverse) ;
+    m_ubos -> base() -> setInverseViewProjectionMatrix(resultInverse) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
@@ -176,47 +167,18 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
     Mind::Matrix4x4f inverseViewportMatrix ;
     viewportMatrix.inverse(inverseViewportMatrix) ;
 
-    m_baseUBO -> setViewportMatrix(viewportMatrix) ;
-    m_baseUBO -> setInverseViewportMatrix(inverseViewportMatrix) ;
+    m_ubos -> base() -> setViewportMatrix(viewportMatrix) ;
+    m_ubos -> base() -> setInverseViewportMatrix(inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
 
-    // Refresh light UBO if needed.
-    bool changedDirLights = m_sceneCache -> hasDirectionalLightsChanged() ;
-    if (changedDirLights) {
-        const auto& directionalLights = m_sceneCache -> directionalLights() ;
-        m_lightUBO -> setAmountDirectionalLights(directionalLights.size()) ;
-
-        uint16_t lightIndex = 0 ;
-        for (const DirectionalLightComponent* dirLight : directionalLights) {
-            m_lightUBO -> setDirectionalLight(lightIndex, dirLight) ;
-            lightIndex++ ;
-        }
-    }
-
-    bool changedPointLights = m_sceneCache -> hasPointLightsChanged() ;
-    if (changedPointLights) {
-        const auto& pointLights = m_sceneCache -> pointLights() ;
-        m_lightUBO -> setAmountPointLights(pointLights.size()) ;
-
-        uint16_t lightIndex = 0 ;
-        for (const PointLightComponent* pointLight : pointLights) {
-            m_lightUBO -> setPointLight(lightIndex, pointLight) ;
-            lightIndex++ ;
-        }
-    }
-
-    m_sceneCache -> clearChanges() ;
-
-    if (changedDirLights || changedPointLights) {
-        m_lightUBO -> update() ;
-    }
-
     // Send data of the base UBO to the GPU before rendering this part of the
     // framegraph.
-    m_baseUBO -> update() ;
+    m_ubos -> updateLightUBO(m_sceneCache) ;
+    m_ubos -> base() -> update() ;
+    m_sceneCache -> clearChanges() ;
 
     Hope::ProcessedSceneNode rootNode ;
     rootNode.node = m_sceneRoot ;
@@ -248,7 +210,14 @@ void OpenGLFrameGraphVisitor::renderGraph() {
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
         // Process the components of the top node.
         m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
-        m_activeOpenGLRenderVisitor -> setUBOs(m_baseUBO, m_modelUBO, m_lightUBO) ;
+
+        // Update the model UBO.
+        RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
+        m_ubos -> updateModelUBO(
+            m_processedNodes.top().worldMatrix,
+            requiredData.viewMatrix,
+            requiredData.projectionMatrix
+        ) ;
 
         std::vector<std::vector<Component*>> components = renderedEntity -> components() ;
         for (std::vector<Component*> typeComponents : components) {

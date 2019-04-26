@@ -1,15 +1,12 @@
 #include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
+#include <scene/ogl/visitors/UBOSharedData.hpp>
 #include <scene/components/CameraComponent.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
 #include <scene/ogl/mesh/MeshGeometry.hpp>
-#include <scene/ogl/rendering/glsl/ShaderAttributeApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
-#include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
-#include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
-#include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/Entity.hpp>
 
 using namespace Hope ;
@@ -21,45 +18,6 @@ void OpenGLRenderVisitor::startNewFrame() {
 
 void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node) {
     m_processedNode = node ;
-}
-
-void OpenGLRenderVisitor::setUBOs(
-    BaseGLSLDataUBO* baseUBO,
-    ModelGLSLDataUBO* modelUBO,
-    LightGLSLDataUBO* lightUBO
-) {
-    m_baseUBO = baseUBO ;
-    m_modelUBO = modelUBO ;
-    m_lightUBO = lightUBO ;
-
-    // Update the UBO matrices.
-    m_modelUBO -> setModelMatrix(m_processedNode.worldMatrix) ;
-
-    Mind::Matrix4x4f modelViewMatrix = m_processedNode.worldMatrix * m_requiredData.viewMatrix ;
-    m_modelUBO -> setModelViewMatrix(modelViewMatrix) ;
-
-    Mind::Matrix4x4f mvpMatrix = modelViewMatrix * m_requiredData.projectionMatrix ;
-    m_modelUBO -> setMVPMatrix(mvpMatrix) ;
-
-    Mind::Matrix4x4f resultMatrix ;
-    m_processedNode.worldMatrix.inverse(resultMatrix) ;
-    m_modelUBO -> setInverseModelMatrix(resultMatrix) ;
-
-    modelViewMatrix.inverse(resultMatrix) ;
-    m_modelUBO -> setInverseModelViewMatrix(resultMatrix) ;
-
-    Mind::Matrix4x4f normalMatrix ;
-    resultMatrix.transposed(normalMatrix) ; // Normal matrix = transposed of the inverse model view matrix.
-    m_modelUBO -> setNormalMatrix(normalMatrix) ;
-
-    mvpMatrix.inverse(resultMatrix) ;
-    m_modelUBO -> setInverseMVPMatrix(resultMatrix) ;
-
-    m_modelUBO -> setModelNormalMatrix(m_processedNode.worldMatrix * normalMatrix) ;
-    m_modelUBO -> setModelViewNormalMatrix(modelViewMatrix * normalMatrix) ;
-
-    // Send these new values to the GPU.
-    m_modelUBO -> update() ;
 }
 
 void OpenGLRenderVisitor::visit(MeshGeometryComponent* component) {

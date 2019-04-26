@@ -15,9 +15,7 @@
 #include <cassert>
 
 namespace Hope::GL {
-    class BaseGLSLDataUBO ;
-    class ModelGLSLDataUBO ;
-    class LightGLSLDataUBO ;
+    class UBOSharedData ;
 
     /**
      * Visitor for processing frame graph nodes.
@@ -39,6 +37,11 @@ namespace Hope::GL {
              * Cache of some scene elements for a faster access.
              */
             SceneCache* m_sceneCache = nullptr ;
+
+            /**
+             * UBOs required to send uniform values to the shaders.
+             */
+            UBOSharedData* m_ubos = nullptr ;
 
             /**
              * Size of the window.
@@ -67,21 +70,6 @@ namespace Hope::GL {
              * Stack of the nodes that are processed.
              */
             std::stack<Hope::ProcessedSceneNode> m_processedNodes ;
-
-            /**
-             * UBO containing the base data for GLSL shaders.
-             */
-            BaseGLSLDataUBO* m_baseUBO = nullptr ;
-
-            /**
-             * UBO containing the base data of a model for GLSL shaders.
-             */
-            ModelGLSLDataUBO* m_modelUBO = nullptr ;
-
-            /**
-             * UBO containing data for lighting for GLSL shaders.
-             */
-            LightGLSLDataUBO* m_lightUBO = nullptr ;
 
         public:
             /**
