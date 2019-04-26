@@ -37,7 +37,7 @@ TestWindow::TestWindow()
 
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 10.f, 10.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(1.f, 0.f, 0.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(0.7f, 0.8f, 1.f, 1.f)) ;
         pointLightComponent -> setPower(1.f) ;
@@ -50,7 +50,7 @@ TestWindow::TestWindow()
 
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-5.f, -10.f, 0.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 1.f, 0.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(1.f, 0.3f, 0.3f, 1.f)) ;
         pointLightComponent -> setPower(0.5f) ;
@@ -63,7 +63,7 @@ TestWindow::TestWindow()
 
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(15.f, 0.f, -5.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 1.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(0.1f, 0.5f, 1.f, 1.f)) ;
         pointLightComponent -> setPower(0.7f) ;

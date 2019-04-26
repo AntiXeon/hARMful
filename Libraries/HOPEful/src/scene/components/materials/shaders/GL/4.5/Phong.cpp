@@ -53,7 +53,7 @@ vec3 ComputeDirectionalLight(\n\
 \n\
     vec3 lightDirection = normalize(light.direction) ;\n\
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
-    float specular = float(light.generateSpecular == true) ;\n\
+    float specular = light.generateSpecular ;\n\
 \n\
     if (lambertian > 0.f) {\n\
         vec3 reflectDirection = reflect(lightDirection, normal) ;\n\
@@ -77,7 +77,7 @@ vec3 ComputePointLight(\n\
 \n\
     vec3 lightDirection = normalize(inVertexPosition - light.position) ;\n\
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
-    float specular = float(light.generateSpecular == true) ;\n\
+    float specular = light.generateSpecular ;\n\
 \n\
     if (lambertian > 0.f) {\n\
         vec3 reflectDirection = reflect(lightDirection, normal) ;\n\

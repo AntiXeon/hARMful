@@ -1,4 +1,5 @@
 #include <matrices/Matrix4x4f.hpp>
+#include <matrices/Matrix3x3f.hpp>
 #include <Math.hpp>
 #include <iomanip>
 
@@ -6,6 +7,12 @@
 
 namespace Mind {
     Matrix4x4f::Matrix4x4f(const Scalar value) : SquareMatrixf(4, value) {}
+
+    Matrix4x4f::Matrix4x4f(const Matrix3x3f& mat3x3) : SquareMatrixf(mat3x3) {
+        // Make sure the last row and column are zeroed.
+        setRowValues(3, Vector4f()) ;
+        setColumnValues(3, Vector4f()) ;
+    }
 
     void Matrix4x4f::multiply(const Matrix4x4f& other) {
         // Copy data from the other matrix.

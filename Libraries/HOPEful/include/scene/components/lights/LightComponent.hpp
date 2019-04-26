@@ -119,7 +119,7 @@ namespace Hope {
             /**
              * Get the color of the light.
              */
-            Color color() const {
+            const Color& color() const {
                 return m_color ;
             }
 

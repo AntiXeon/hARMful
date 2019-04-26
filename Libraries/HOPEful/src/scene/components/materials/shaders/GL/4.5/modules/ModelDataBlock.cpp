@@ -3,7 +3,7 @@
 
 std::string ModelDataBlockVertexCode =
 "\
-layout (std140) uniform ModelData\n\
+layout (std140, binding = MODEL_DATA_UBO_BINDING_INDEX) uniform ModelData\n\
 {\n\
     mat4 modelMatrix ;\n\
     mat4 modelViewMatrix ;\n\

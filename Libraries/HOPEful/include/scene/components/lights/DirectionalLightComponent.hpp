@@ -38,7 +38,7 @@ namespace Hope {
             /**
              * Get the direction of the light.
              */
-            Mind::Vector3f direction() {
+            const Mind::Vector3f& direction() const {
                 return m_direction ;
             }
     } ;

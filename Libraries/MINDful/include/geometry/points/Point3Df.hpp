@@ -20,6 +20,11 @@ namespace Mind {
     class Point3Df {
         public:
             /**
+             * Amount of coordinates.
+             */
+            static const int AmountCoords = 3 ;
+
+            /**
              * Axis to get coordinates of the Point3D.
              */
             enum Axis {
@@ -45,6 +50,9 @@ namespace Mind {
         public:
             /** Create a Point at the origin. */
             exported Point3Df() ;
+
+            /** Create a Point. */
+            exported Point3Df(const Point2Df& copy) ;
 
             /**
              * Create a Point at the given position.

@@ -24,6 +24,11 @@ namespace Mind {
     class Point4Df {
         public:
             /**
+             * Amount of coordinates.
+             */
+            static const int AmountCoords = 4 ;
+
+            /**
              * Axis to get coordinates of the Point4D.
              */
             enum Axis {
@@ -50,6 +55,12 @@ namespace Mind {
         public:
             /** Create a Point at the origin. */
             exported Point4Df() ;
+
+            /** Create a Point. */
+            exported Point4Df(const Point3Df& copy) ;
+
+            /** Create a Point. */
+            exported Point4Df(const Point2Df& copy) ;
 
             /**
              * Create a Point at the given position.

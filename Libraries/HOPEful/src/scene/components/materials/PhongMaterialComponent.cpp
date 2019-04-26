@@ -1,9 +1,10 @@
 #include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/BlockBindings.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/BaseDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/Lights.hpp>
+#include <scene/components/materials/shaders/GL/4.5/modules/LightsDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/Phong.hpp>
 #include <algorithm>
 #include <memory>
@@ -116,15 +117,17 @@ void PhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addVertexShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addVertexShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addVertexShaderCode(PhongVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(LightsFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(LightsDataBlockFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(PhongFragmentCode) ;
     shaderProgram -> build() ;
 

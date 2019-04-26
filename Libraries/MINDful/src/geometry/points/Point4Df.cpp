@@ -14,6 +14,24 @@ namespace Mind {
         m_values = SIMD::Vector4f(0.f, 0.f, 0.f, 0.f) ;
     }
 
+    Point4Df::Point4Df(const Point3Df& copy) {
+        m_values = SIMD::Vector4f(
+            copy.get(Point3Df::X),
+            copy.get(Point3Df::Y),
+            copy.get(Point3Df::Z),
+            0.f
+        ) ;
+    }
+
+    Point4Df::Point4Df(const Point2Df& copy) {
+        m_values = SIMD::Vector4f(
+            copy.get(Point2Df::X),
+            copy.get(Point2Df::Y),
+            0.f,
+            0.f
+        ) ;
+    }
+
     Point4Df::Point4Df(const SIMD::Vector4f& values) : m_values(values) {}
 
     Point4Df::Point4Df(

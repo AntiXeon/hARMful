@@ -4,6 +4,8 @@
 #include <matrices/SquareMatrixf.hpp>
 
 namespace Mind {
+    class Matrix4x4f ;
+
     /**
      * 3x3 square matrix.
      */
@@ -21,6 +23,12 @@ namespace Mind {
              *                  The default value is zero.
              */
             exported Matrix3x3f(const Scalar value = 0.f) ;
+
+            /**
+             * Create a square matrix of size equal to 3 from a Matrix4x4f.
+             * @param   mat4x4  The matrix to convert to a matrix 3x3.
+             */
+            exported Matrix3x3f(const Matrix4x4f& mat4x4) ;
 
             /**
              * Extract the data of the matrix.
@@ -77,7 +85,7 @@ namespace Mind {
             /**
              * Export the matrix as an 1D-array of values.
              */
-            exported std::array<Scalar, 9> toArray() const ;
+            exported std::array<Scalar, MatrixSize> toArray() const ;
 
             /**
              * Multiply the current matrix by a scalar value.

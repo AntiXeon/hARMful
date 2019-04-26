@@ -9,6 +9,7 @@
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
+#include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/Entity.hpp>
 
 using namespace Hope ;
@@ -24,10 +25,14 @@ void OpenGLRenderVisitor::setProcessedNode(const Hope::ProcessedSceneNode& node)
 
 void OpenGLRenderVisitor::setUBOs(
     BaseGLSLDataUBO* baseUBO,
-    ModelGLSLDataUBO* modelUBO
+    ModelGLSLDataUBO* modelUBO,
+    LightGLSLDataUBO* lightUBO
 ) {
     m_baseUBO = baseUBO ;
     m_modelUBO = modelUBO ;
+    m_lightUBO = lightUBO ;
+
+    // TODO: Only update the model UBO if the worldMatrix has changed.
 
     // Update the UBO matrices.
     m_modelUBO -> setModelMatrix(m_processedNode.worldMatrix) ;
@@ -126,10 +131,7 @@ void OpenGLRenderVisitor::useMaterial(const MaterialComponent* component) {
 
         if (shaderProgram) {
             shaderProgram -> use() ;
-
-            // Bind the UBOs.
-            m_baseUBO -> bindToProgram(shaderProgram -> id()) ;
-            m_modelUBO -> bindToProgram(shaderProgram -> id()) ;
+            //m_lightUBO -> getInfo(shaderProgram -> id()) ;
 
             // Apply shader uniforms.
             auto materialUniforms = component -> shaderUniforms() ;

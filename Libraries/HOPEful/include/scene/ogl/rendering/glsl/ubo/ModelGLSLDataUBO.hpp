@@ -16,15 +16,15 @@ namespace Hope::GL {
              * The structure of the data that are set in the UBO.
              */
             struct ShaderData {
-                std::array<float, 16> modelMatrix ;
-                std::array<float, 16> modelViewMatrix ;
-                std::array<float, 16> mvpMatrix ;
-                std::array<float, 16> inverseModelMatrix ;
-                std::array<float, 16> inverseModelViewMatrix ;
-                std::array<float, 16> inverseMVPMatrix ;
-                std::array<float, 16> normalMatrix ;
-                std::array<float, 16> modelNormalMatrix ;
-                std::array<float, 16> modelViewNormalMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> modelMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> modelViewMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> mvpMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseModelMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseModelViewMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseMVPMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> normalMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> modelNormalMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> modelViewNormalMatrix ;
             } m_data ;
 
         public:
@@ -109,13 +109,6 @@ namespace Hope::GL {
              */
             size_t size() const override {
                 return sizeof(m_data) ;
-            }
-
-            /**
-             * Name of the block in the GLSL shader.
-             */
-            const char* name() const override {
-                return MODEL_DATA_UBO_BLOCK_NAME ;
             }
     } ;
 }

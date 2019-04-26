@@ -3,10 +3,11 @@
 #include <scene/framegraph/FrustumCulling.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/RenderConfiguration.hpp>
-#include <scene/ogl/GLDefines.hpp>
+#include <scene/components/materials/BlockBindings.hpp>
 #include <scene/ogl/Utils.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
+#include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
@@ -23,12 +24,15 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
 
     m_baseUBO = new BaseGLSLDataUBO(BASE_DATA_UBO_BINDING_INDEX) ;
     m_modelUBO = new ModelGLSLDataUBO(MODEL_DATA_UBO_BINDING_INDEX) ;
+    m_lightUBO = new LightGLSLDataUBO(LIGHTS_DATA_UBO_BINDING_INDEX) ;
 }
 
 OpenGLFrameGraphVisitor::~OpenGLFrameGraphVisitor() {
     delete m_sceneCache ;
+
     delete m_baseUBO ;
     delete m_modelUBO ;
+    delete m_lightUBO ;
 }
 
 void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
@@ -176,6 +180,37 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
 
+    // Refresh light UBO if needed.
+    bool changedDirLights = m_sceneCache -> hasDirectionalLightsChanged() ;
+    if (changedDirLights) {
+        const auto& directionalLights = m_sceneCache -> directionalLights() ;
+        m_lightUBO -> setAmountDirectionalLights(directionalLights.size()) ;
+
+        uint16_t lightIndex = 0 ;
+        for (const DirectionalLightComponent* dirLight : directionalLights) {
+            m_lightUBO -> setDirectionalLight(lightIndex, dirLight) ;
+            lightIndex++ ;
+        }
+    }
+
+    bool changedPointLights = m_sceneCache -> hasPointLightsChanged() ;
+    if (changedPointLights) {
+        const auto& pointLights = m_sceneCache -> pointLights() ;
+        m_lightUBO -> setAmountPointLights(pointLights.size()) ;
+
+        uint16_t lightIndex = 0 ;
+        for (const PointLightComponent* pointLight : pointLights) {
+            m_lightUBO -> setPointLight(lightIndex, pointLight) ;
+            lightIndex++ ;
+        }
+    }
+
+    m_sceneCache -> clearChanges() ;
+
+    if (changedDirLights || changedPointLights) {
+        m_lightUBO -> update() ;
+    }
+
     // Send data of the base UBO to the GPU before rendering this part of the
     // framegraph.
     m_baseUBO -> update() ;
@@ -210,7 +245,7 @@ void OpenGLFrameGraphVisitor::renderGraph() {
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
         // Process the components of the top node.
         m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
-        m_activeOpenGLRenderVisitor -> setUBOs(m_baseUBO, m_modelUBO) ;
+        m_activeOpenGLRenderVisitor -> setUBOs(m_baseUBO, m_modelUBO, m_lightUBO) ;
 
         std::vector<std::vector<Component*>> components = renderedEntity -> components() ;
         for (std::vector<Component*> typeComponents : components) {

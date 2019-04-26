@@ -7,6 +7,8 @@
 #include <geometry/quaternions/Quaternion.hpp>
 
 namespace Mind {
+    class Matrix3x3f ;
+
     /**
      * 4x4 square matrix.
      */
@@ -24,6 +26,12 @@ namespace Mind {
              *                  The default value is zero.
              */
             exported Matrix4x4f(const Scalar value = 0.f) ;
+
+            /**
+             * Create a square matrix of size equal to 4 from a Matrix3x3f.
+             * @param   mat3x3  The matrix to convert to a matrix 4x4.
+             */
+            exported Matrix4x4f(const Matrix3x3f& mat3x3) ;
 
             /**
              * Extract the data of the matrix.
@@ -160,7 +168,7 @@ namespace Mind {
             /**
              * Export the matrix as an 1D-array of values.
              */
-            exported std::array<Scalar, 16> toArray() const ;
+            exported std::array<Scalar, MatrixSize> toArray() const ;
 
             /**
              * Multiply the current matrix by a scalar value.

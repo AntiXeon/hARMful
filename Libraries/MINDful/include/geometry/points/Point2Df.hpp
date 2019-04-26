@@ -20,6 +20,11 @@ namespace Mind {
     class Point2Df {
         public:
             /**
+             * Amount of coordinates.
+             */
+            static const int AmountCoords = 2 ;
+
+            /**
              * Axis to get coordinates of the Point3D.
              */
             enum Axis {

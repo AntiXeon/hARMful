@@ -21,9 +21,21 @@ namespace Hope {
             PhongMaterialComponent m_defaultMaterial ;
 
             /**
+             * To know if there is a change in the directional lights since the
+             * last render.
+             */
+            bool m_directionalLightsChanged = true ;
+
+            /**
              * List of the directional lights in the scene.
              */
             std::set<DirectionalLightComponent*> m_directionalLights ;
+
+            /**
+             * To know if there is a change in the point lights since the last
+             * render.
+             */
+            bool m_pointLightsChanged = true ;
 
             /**
              * List of the point lights in the scene.
@@ -51,12 +63,40 @@ namespace Hope {
             /**
              * Get the list of lights.
              */
-            std::set<DirectionalLightComponent*> directionalLights() const ;
+            const std::set<DirectionalLightComponent*>& directionalLights() const {
+                return m_directionalLights ;
+            }
 
             /**
              * Get the list of lights.
              */
-            std::set<PointLightComponent*> pointLights() const ;
+            const std::set<PointLightComponent*>& pointLights() const {
+                return m_pointLights ;
+            }
+
+            /**
+             * To know if there is a change in the directional lights since the
+             * last render.
+             */
+            bool hasDirectionalLightsChanged() const {
+                return m_directionalLightsChanged ;
+            }
+
+            /**
+             * To know if there is a change in the point lights since the last
+             * render.
+             */
+            bool hasPointLightsChanged() const {
+                return m_pointLightsChanged ;
+            }
+
+            /**
+             * Clear any change.
+             */
+            void clearChanges() {
+                m_directionalLightsChanged = false ;
+                m_pointLightsChanged = false ;
+            }
     } ;
 }
 

@@ -1,4 +1,4 @@
-layout (std140) uniform BaseData
+layout (std140, binding = BASE_DATA_UBO_BINDING_INDEX) uniform BaseData
 {
     mat4 viewMatrix ;
     mat4 projectionMatrix ;

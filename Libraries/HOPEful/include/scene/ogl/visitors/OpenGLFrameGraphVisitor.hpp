@@ -17,6 +17,7 @@
 namespace Hope::GL {
     class BaseGLSLDataUBO ;
     class ModelGLSLDataUBO ;
+    class LightGLSLDataUBO ;
 
     /**
      * Visitor for processing frame graph nodes.
@@ -69,15 +70,18 @@ namespace Hope::GL {
 
             /**
              * UBO containing the base data for GLSL shaders.
-             * Its binding point index is set to 0.
              */
             BaseGLSLDataUBO* m_baseUBO = nullptr ;
 
             /**
              * UBO containing the base data of a model for GLSL shaders.
-             * Its binding point index is set to 1.
              */
             ModelGLSLDataUBO* m_modelUBO = nullptr ;
+
+            /**
+             * UBO containing data for lighting for GLSL shaders.
+             */
+            LightGLSLDataUBO* m_lightUBO = nullptr ;
 
         public:
             /**

@@ -122,14 +122,14 @@ namespace Hope {
             /**
              * Export the color to a RGB value array.
              */
-            std::array<float, 3> toRGB() {
+            std::array<float, 3> toRGB() const {
                 return { m_red, m_green, m_blue } ;
             }
 
             /**
              * Export the color to a RGBA value array.
              */
-            std::array<float, 4> toRGBA() {
+            std::array<float, 4> toRGBA() const {
                 return { m_red, m_green, m_blue, m_alpha } ;
             }
 

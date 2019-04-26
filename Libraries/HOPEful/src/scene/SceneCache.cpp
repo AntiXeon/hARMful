@@ -11,6 +11,7 @@ void SceneCache::registerLight(LightComponent* light) {
         {
             auto dirLight = reinterpret_cast<DirectionalLightComponent*>(light) ;
             m_directionalLights.insert(dirLight) ;
+            m_directionalLightsChanged = true ;
             break ;
         }
 
@@ -18,6 +19,7 @@ void SceneCache::registerLight(LightComponent* light) {
         {
             auto pointLight = reinterpret_cast<PointLightComponent*>(light) ;
             m_pointLights.insert(pointLight) ;
+            m_pointLightsChanged = true ;
             break ;
         }
 
@@ -32,6 +34,7 @@ void SceneCache::deregisterLight(LightComponent* light) {
         {
             auto dirLight = reinterpret_cast<DirectionalLightComponent*>(light) ;
             m_directionalLights.erase(dirLight) ;
+            m_directionalLightsChanged = true ;
             break ;
         }
 
@@ -39,18 +42,11 @@ void SceneCache::deregisterLight(LightComponent* light) {
         {
             auto pointLight = reinterpret_cast<PointLightComponent*>(light) ;
             m_pointLights.erase(pointLight) ;
+            m_pointLightsChanged = true ;
             break ;
         }
 
         default:
             break ;
     }
-}
-
-std::set<DirectionalLightComponent*> SceneCache::directionalLights() const {
-    return m_directionalLights ;
-}
-
-std::set<PointLightComponent*> SceneCache::pointLights() const {
-    return m_pointLights ;
 }

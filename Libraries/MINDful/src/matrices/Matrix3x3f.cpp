@@ -1,9 +1,16 @@
 #include <matrices/Matrix3x3f.hpp>
+#include <matrices/Matrix4x4f.hpp>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
 
 namespace Mind {
     Matrix3x3f::Matrix3x3f(const Scalar value) : SquareMatrixf(3, value) {}
+
+    Matrix3x3f::Matrix3x3f(const Matrix4x4f& mat4x4) : SquareMatrixf(mat4x4) {
+        // Make sure the last row and column are zeroed.
+        setRowValues(3, Vector3f()) ;
+        setColumnValues(3, Vector3f()) ;
+    }
 
     void Matrix3x3f::multiply(const Matrix3x3f& other) {
         // Copy data from the other matrix.

@@ -15,6 +15,7 @@ namespace Hope {
 namespace Hope::GL {
     class BaseGLSLDataUBO ;
     class ModelGLSLDataUBO ;
+    class LightGLSLDataUBO ;
 
     /**
      * Visitor for rendering objects using the OpenGL API.
@@ -46,6 +47,8 @@ namespace Hope::GL {
              * UBO containing the base data of a model for GLSL shaders.
              */
             ModelGLSLDataUBO* m_modelUBO = nullptr ;
+
+            LightGLSLDataUBO* m_lightUBO = nullptr ;
 
         public:
             /**
@@ -85,7 +88,8 @@ namespace Hope::GL {
              */
             void setUBOs(
                 BaseGLSLDataUBO* baseUBO,
-                ModelGLSLDataUBO* modelUBO
+                ModelGLSLDataUBO* modelUBO,
+                LightGLSLDataUBO* lightUBO
             ) ;
 
             /**

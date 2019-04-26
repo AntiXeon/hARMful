@@ -3,7 +3,7 @@
 
 std::string BaseDataBlockVertexCode =
 "\
-layout (std140) uniform BaseData\n\
+layout (std140, binding = BASE_DATA_UBO_BINDING_INDEX) uniform BaseData\n\
 {\n\
     mat4 viewMatrix ;\n\
     mat4 projectionMatrix ;\n\

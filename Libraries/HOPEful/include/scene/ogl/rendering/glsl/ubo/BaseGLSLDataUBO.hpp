@@ -2,6 +2,7 @@
 #define __HOPE__GL_BASE_DATA_UNIFORM_BUFFER_OBJECT__
 
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
+#include <geometry/points/Point4Df.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix3x3f.hpp>
 #include <matrices/Matrix4x4f.hpp>
@@ -18,17 +19,17 @@ namespace Hope::GL {
              * The structure of the data that are set in the UBO.
              */
             struct ShaderData {
-                std::array<float, 16> viewMatrix ;
-                std::array<float, 16> projectionMatrix ;
-                std::array<float, 16> viewProjectionMatrix ;
-                std::array<float, 16> inverseViewMatrix ;
-                std::array<float, 16> inverseProjectionMatrix ;
-                std::array<float, 16> inverseViewProjectionMatrix ;
-                std::array<float, 9> viewportMatrix ;
-                std::array<float, 9> inverseViewportMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> viewMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> projectionMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> viewProjectionMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseProjectionMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewProjectionMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> viewportMatrix ;
+                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewportMatrix ;
                 float aspectRatio ;
                 float time ;
-                std::array<float, 3> eyePosition ;
+                std::array<float, Mind::Vector3f::AmountCoords> eyePosition ;
             } m_data ;
 
         public:
@@ -83,14 +84,16 @@ namespace Hope::GL {
              * Set the viewport matrix value.
              */
             void setViewportMatrix(const Mind::Matrix3x3f& mat) {
-                m_data.viewportMatrix = mat.toArray() ;
+                Mind::Matrix4x4f tmp(mat) ;
+                m_data.viewportMatrix = tmp.toArray() ;
             }
 
             /**
              * Set the inverse viewport matrix value.
              */
             void setInverseViewportMatrix(const Mind::Matrix3x3f& mat) {
-                m_data.inverseViewportMatrix = mat.toArray() ;
+                Mind::Matrix4x4f tmp(mat) ;
+                m_data.inverseViewportMatrix = tmp.toArray() ;
             }
 
             /**
@@ -127,13 +130,6 @@ namespace Hope::GL {
              */
             size_t size() const override {
                 return sizeof(m_data) ;
-            }
-
-            /**
-             * Name of the block in the GLSL shader.
-             */
-            const char* name() const override {
-                return BASE_DATA_UBO_BLOCK_NAME ;
             }
     } ;
 }

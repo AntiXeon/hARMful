@@ -1,4 +1,4 @@
-layout (std140) uniform ModelData
+layout (std140, binding = MODEL_DATA_UBO_BINDING_INDEX) uniform ModelData
 {
     mat4 modelMatrix ;
     mat4 modelViewMatrix ;
