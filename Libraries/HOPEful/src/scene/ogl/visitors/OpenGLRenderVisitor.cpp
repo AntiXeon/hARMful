@@ -32,8 +32,6 @@ void OpenGLRenderVisitor::setUBOs(
     m_modelUBO = modelUBO ;
     m_lightUBO = lightUBO ;
 
-    // TODO: Only update the model UBO if the worldMatrix has changed.
-
     // Update the UBO matrices.
     m_modelUBO -> setModelMatrix(m_processedNode.worldMatrix) ;
 

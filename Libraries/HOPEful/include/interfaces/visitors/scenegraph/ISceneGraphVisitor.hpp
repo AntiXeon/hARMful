@@ -8,7 +8,6 @@ namespace Hope {
     class TriangleTestComponent ;
 
     class ProcessedSceneNode ;
-    class RenderRequiredData ;
 
     /**
      * Interface for the Visitor design pattern for objects inside the scene
@@ -30,11 +29,6 @@ namespace Hope {
              * Get the node that is processed.
              */
             virtual Hope::ProcessedSceneNode& processedNode() = 0 ;
-
-            /**
-             * Get the require data for rendering.
-             */
-            virtual RenderRequiredData& requiredData() = 0 ;
 
             /**
              * Visit a mesh geometry component.

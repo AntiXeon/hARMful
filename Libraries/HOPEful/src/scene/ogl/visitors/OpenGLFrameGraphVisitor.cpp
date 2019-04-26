@@ -65,6 +65,7 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
+
     Hope::CameraComponent* camera = node -> camera() ;
 
     // Set up the clear color.
@@ -84,6 +85,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         const float NearPlaneDistance = 0.1f ;
         const float FarPlaneDistance = 1000.f ;
         aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+
         GLPerspective(
             requiredData.projectionMatrix,
             Mind::Math::toRadians(CameraFOV),
@@ -92,18 +94,18 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
             FarPlaneDistance
         ) ;
 
-        requiredData.projectionMatrix.inverse(requiredData.inverseProjectionMatrix) ;
-        requiredData.aspectRatio = aspectRatio ;
+        Mind::Matrix4x4f inverseProjectionMatrix ;
+        requiredData.projectionMatrix.inverse(inverseProjectionMatrix) ;
 
         m_baseUBO -> setProjectionMatrix(requiredData.projectionMatrix) ;
-        m_baseUBO -> setInverseProjectionMatrix(requiredData.inverseProjectionMatrix) ;
-        m_baseUBO -> setAspectRatio(requiredData.aspectRatio) ;
+        m_baseUBO -> setInverseProjectionMatrix(inverseProjectionMatrix) ;
+        m_baseUBO -> setAspectRatio(aspectRatio) ;
     }
 
     // Update the model view matrix.
-    Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
+    requiredData.viewMatrix = camera -> viewMatrix() ;
     float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
-    viewMatrix.data(viewMatrixData) ;
+    requiredData.viewMatrix.data(viewMatrixData) ;
 
     Hope::Entity* cameraEntity = camera -> firstEntity() ;
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
@@ -111,19 +113,19 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
 
     // Update the required data.
-    requiredData.eyePosition = eyeView ;
-    requiredData.viewMatrix = viewMatrix ;
-    requiredData.viewMatrix.inverse(requiredData.inverseViewMatrix) ;
-    requiredData.viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
-    requiredData.viewProjectionMatrix.inverse(requiredData.inverseViewProjectionMatrix) ;
-    requiredData.time = glfwGetTime() ;
-
+    m_baseUBO -> setTime(glfwGetTime()) ;
     m_baseUBO -> setEyePosition(eyeView) ;
-    m_baseUBO -> setViewMatrix(viewMatrix) ;
-    m_baseUBO -> setInverseViewMatrix(requiredData.inverseViewMatrix) ;
-    m_baseUBO -> setViewProjectionMatrix(requiredData.viewProjectionMatrix) ;
-    m_baseUBO -> setInverseViewProjectionMatrix(requiredData.inverseViewProjectionMatrix) ;
-    m_baseUBO -> setTime(requiredData.time) ;
+    m_baseUBO -> setViewMatrix(requiredData.viewMatrix) ;
+
+    Mind::Matrix4x4f resultInverse ;
+    requiredData.viewMatrix.inverse(resultInverse) ;
+    m_baseUBO -> setInverseViewMatrix(resultInverse) ;
+
+    Mind::Matrix4x4f viewProjectionMatrix = requiredData.viewMatrix * requiredData.projectionMatrix ;
+    m_baseUBO -> setViewProjectionMatrix(viewProjectionMatrix) ;
+
+    viewProjectionMatrix.inverse(resultInverse) ;
+    m_baseUBO -> setInverseViewProjectionMatrix(resultInverse) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
@@ -134,8 +136,6 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
     if (!m_hasWindowChanged) {
         return ;
     }
-
-    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
 
     Mind::Point2Df relativePosition = node -> position() ;
     Mind::Dimension2Df relativeDimension = node -> dimension() ;
@@ -167,14 +167,17 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
     Mind::Point3Df row0(viewportWidth / 2.f, 0.f, viewportWidth / (2 + viewportX)) ;
     Mind::Point3Df row1(0.f, viewportHeight/ 2.f, viewportHeight / (2 + viewportY)) ;
     Mind::Point3Df row2(0.f, 0.f, 1.f) ;
-    requiredData.viewportMatrix.setRowValues(0, row0) ;
-    requiredData.viewportMatrix.setRowValues(1, row1) ;
-    requiredData.viewportMatrix.setRowValues(2, row2) ;
 
-    requiredData.viewportMatrix.inverse(requiredData.inverseViewportMatrix) ;
+    Mind::Matrix4x4f viewportMatrix ;
+    viewportMatrix.setRowValues(0, row0) ;
+    viewportMatrix.setRowValues(1, row1) ;
+    viewportMatrix.setRowValues(2, row2) ;
 
-    m_baseUBO -> setViewportMatrix(requiredData.viewportMatrix) ;
-    m_baseUBO -> setInverseViewportMatrix(requiredData.inverseViewportMatrix) ;
+    Mind::Matrix4x4f inverseViewportMatrix ;
+    viewportMatrix.inverse(inverseViewportMatrix) ;
+
+    m_baseUBO -> setViewportMatrix(viewportMatrix) ;
+    m_baseUBO -> setInverseViewportMatrix(inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

@@ -48,6 +48,9 @@ namespace Hope::GL {
              */
             ModelGLSLDataUBO* m_modelUBO = nullptr ;
 
+            /**
+             * UBO containing the light data for GLSL shaders.
+             */
             LightGLSLDataUBO* m_lightUBO = nullptr ;
 
         public:
@@ -66,7 +69,7 @@ namespace Hope::GL {
             /**
              * Get the require data for rendering.
              */
-            RenderRequiredData& requiredData() override {
+            RenderRequiredData& requiredData() {
                 return m_requiredData ;
             }
 

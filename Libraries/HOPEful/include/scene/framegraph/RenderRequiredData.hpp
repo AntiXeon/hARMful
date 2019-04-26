@@ -13,59 +13,14 @@ namespace Hope {
      */
     struct RenderRequiredData final {
         /**
-         * Aspect ratio.
-         */
-        float aspectRatio ;
-
-        /**
-         * Time since the launch of the application.
-         */
-        double time ;
-
-        /**
-         * Position of the camera.
-         */
-        Mind::Vector3f eyePosition ;
-
-        /**
          * View matrix.
          */
         Mind::Matrix4x4f viewMatrix ;
 
         /**
-         * Inverse view matrix.
-         */
-        Mind::Matrix4x4f inverseViewMatrix ;
-
-        /**
          * Projection matrix.
          */
         Mind::Matrix4x4f projectionMatrix ;
-
-        /**
-         * Inverse projection matrix.
-         */
-        Mind::Matrix4x4f inverseProjectionMatrix ;
-
-        /**
-         * View projection matrix.
-         */
-        Mind::Matrix4x4f viewProjectionMatrix ;
-
-        /**
-         * Inverse view projection matrix.
-         */
-        Mind::Matrix4x4f inverseViewProjectionMatrix ;
-
-        /**
-         * Viewport matrix.
-         */
-        Mind::Matrix3x3f viewportMatrix ;
-
-        /**
-         * Inverse viewport matrix.
-         */
-        Mind::Matrix3x3f inverseViewportMatrix ;
 
         /**
          * Scene cache.
