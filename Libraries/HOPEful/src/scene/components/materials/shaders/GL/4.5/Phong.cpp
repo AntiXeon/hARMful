@@ -15,7 +15,7 @@ layout(location = 3) out vec3 outViewDirection ;\n\
 void main() {\n\
     vec4 position4D = vec4(position, 1.f) ;\n\
 \n\
-    gl_Position = position4D * mvpMatrix ;\n\
+    gl_Position = mvpMatrix * position4D ;\n\
 \n\
     vec4 vertexPosition4D = modelViewMatrix * vec4(position, 1.f) ;\n\
     outVertexWorldPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;\n\
