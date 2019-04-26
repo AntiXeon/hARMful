@@ -7,9 +7,10 @@ layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
 \n\
-layout(location = 0) out vec3 outVertexPosition ;\n\
+layout(location = 0) out vec3 outVertexWorldPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
 layout(location = 2) out vec2 outTexCoord ;\n\
+layout(location = 3) out vec3 outViewDirection ;\n\
 \n\
 void main() {\n\
     vec4 position4D = vec4(position, 1.f) ;\n\
@@ -17,9 +18,10 @@ void main() {\n\
     gl_Position = mvpMatrix * position4D ;\n\
 \n\
     vec4 vertexPosition4D = modelViewMatrix * vec4(position, 1.f) ;\n\
-    outVertexPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;\n\
-    outNormal = vec3(normalMatrix * vec4(normal, 0.f)) ;\n\
+    outVertexWorldPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;\n\
+    outNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;\n\
     outTexCoord = texCoord ;\n\
+    outViewDirection = normalize(-outVertexWorldPosition) ;\n\
 }\n\
 " ;
 
@@ -38,9 +40,10 @@ uniform Material phong ;\n\
 \n\
 const float ScreenGamma = 2.2f ;\n\
 \n\
-layout(location = 0) in vec3 inVertexPosition ;\n\
+layout(location = 0) in vec3 inVertexWorldPosition ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
 layout(location = 2) in vec2 inTexCoord ;\n\
+layout(location = 3) in vec3 inViewDirection ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
@@ -75,7 +78,7 @@ vec3 ComputePointLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec3 lightDirection = normalize(inVertexPosition - light.position) ;\n\
+    vec3 lightDirection = normalize(inVertexWorldPosition - light.position) ;\n\
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
     float specular = light.generateSpecular ;\n\
 \n\
@@ -84,7 +87,7 @@ vec3 ComputePointLight(\n\
         float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
         specular *= pow(specularAngle, phong.shininess / 4.) ;\n\
 \n\
-        float lightDistance = length(inVertexPosition - light.position) ;\n\
+        float lightDistance = length(inVertexWorldPosition - light.position) ;\n\
         float sqrLightDistance = lightDistance * lightDistance ;\n\
         float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;\n\
 \n\
@@ -101,9 +104,6 @@ vec3 ComputePointLight(\n\
 }\n\
 \n\
 void main() {\n\
-    vec3 normal = normalize(inNormal) ;\n\
-    vec3 viewDirection = normalize(-inVertexPosition) ;\n\
-\n\
     vec3 colorLinear = phong.ambientColor ;\n\
 \n\
     {\n\
@@ -113,8 +113,8 @@ void main() {\n\
             colorLinear = colorLinear +\n\
                 ComputeDirectionalLight(\n\
                     dirLights[lightIndex],\n\
-                    viewDirection,\n\
-                    normal\n\
+                    inViewDirection,\n\
+                    inNormal\n\
                 ) ;\n\
         }\n\
     }\n\
@@ -126,8 +126,8 @@ void main() {\n\
             colorLinear = colorLinear +\n\
                 ComputePointLight(\n\
                     pointLights[lightIndex],\n\
-                    viewDirection,\n\
-                    normal\n\
+                    inViewDirection,\n\
+                    inNormal\n\
                 ) ;\n\
         }\n\
     }\n\

@@ -11,9 +11,10 @@ uniform Material phong ;
 
 const float ScreenGamma = 2.2f ;
 
-layout(location = 0) in vec3 inVertexPosition ;
+layout(location = 0) in vec3 inVertexWorldPosition ;
 layout(location = 1) in vec3 inNormal ;
 layout(location = 2) in vec2 inTexCoord ;
+layout(location = 3) in vec3 inViewDirection ;
 
 out vec4 outColor ;
 
@@ -48,7 +49,7 @@ vec3 ComputePointLight(
 ) {
     vec3 returnedLighting = vec3(0.f) ;
 
-    vec3 lightDirection = normalize(inVertexPosition - light.position) ;
+    vec3 lightDirection = normalize(inVertexWorldPosition - light.position) ;
     float lambertian = max(dot(-lightDirection, normal), 0.f) ;
     float specular = light.generateSpecular ;
 
@@ -57,7 +58,7 @@ vec3 ComputePointLight(
         float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
         specular *= pow(specularAngle, phong.shininess / 4.) ;
 
-        float lightDistance = length(inVertexPosition - light.position) ;
+        float lightDistance = length(inVertexWorldPosition - light.position) ;
         float sqrLightDistance = lightDistance * lightDistance ;
         float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
 
@@ -74,9 +75,6 @@ vec3 ComputePointLight(
 }
 
 void main() {
-    vec3 normal = normalize(inNormal) ;
-    vec3 viewDirection = normalize(-inVertexPosition) ;
-
     vec3 colorLinear = phong.ambientColor ;
 
     {
@@ -86,8 +84,8 @@ void main() {
             colorLinear = colorLinear +
                 ComputeDirectionalLight(
                     dirLights[lightIndex],
-                    viewDirection,
-                    normal
+                    inViewDirection,
+                    inNormal
                 ) ;
         }
     }
@@ -99,8 +97,8 @@ void main() {
             colorLinear = colorLinear +
                 ComputePointLight(
                     pointLights[lightIndex],
-                    viewDirection,
-                    normal
+                    inViewDirection,
+                    inNormal
                 ) ;
         }
     }
