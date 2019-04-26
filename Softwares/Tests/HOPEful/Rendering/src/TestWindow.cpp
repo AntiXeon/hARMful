@@ -16,14 +16,29 @@ TestWindow::TestWindow()
     m_cameraComponent = new Hope::CameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
-
-    m_cameraComponent -> setUpVector(Mind::Vector3f(0.f, 0.f, 1.f)) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
+    Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Mesh_Set.fbx") ;
+    meshTreeEntity -> addComponent(meshTreeComponent) ;
+
+/*
+	// Test of matrices / parent relation.
     // Load a mesh.
-    Hope::Entity* cubeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshTreeComponent* meshComponent = new Hope::MeshTreeComponent("../data/meshes/Mesh_Set.fbx") ;
-    cubeEntity -> addComponent(meshComponent) ;
+    Hope::Entity* planeEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::MeshTreeComponent* meshPlaneComponent = new Hope::MeshTreeComponent("../data/meshes/Plane.fbx") ;
+    planeEntity -> addComponent(meshPlaneComponent) ;
+    (planeEntity -> transform()).setTranslation(Mind::Vector3f(0.f, -0.6f, 0.f)) ;
+    (planeEntity -> transform()).setScale(0.5f) ;
+    (planeEntity -> transform()).setRotation(Mind::Quaternion(0.f, 0.f, 25.f)) ;
+
+    Hope::Entity* suzanneEntity = new Hope::Entity(planeEntity) ;
+    Hope::MeshTreeComponent* meshSuzanneComponent = new Hope::MeshTreeComponent("../data/meshes/Suzanne.fbx") ;
+    suzanneEntity -> addComponent(meshSuzanneComponent) ;
+    (suzanneEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.7f, 0.f)) ;
+    (suzanneEntity -> transform()).setRotation(Mind::Quaternion(-30.f, 0.f, 0.f)) ;
+*/
+
 /*
     // Create a directional light.
 	{
@@ -93,9 +108,9 @@ TestWindow::TestWindow()
 void TestWindow::preRender() {
     float radius = 3.f ;
     float camX = sin(glfwGetTime() / 2.f) * radius ;
-    float camY = cos(glfwGetTime() / 2.f) * radius ;
+    float camZ = cos(glfwGetTime() / 2.f) * radius ;
 
-    Mind::Vector3f camPos(camX, camY, 0.f) ;
+    Mind::Vector3f camPos(camX, 0.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
 }
 

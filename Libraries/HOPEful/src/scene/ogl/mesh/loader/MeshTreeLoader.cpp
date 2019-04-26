@@ -47,10 +47,10 @@ void MeshTreeLoader::generateNode(
     const aiNode* node,
     Hope::Entity* entity
 ) {
+    setupTransform(node -> mTransformation, entity) ;
+
     if (node -> mNumMeshes > 0) {
-        Hope::Entity* meshEntity = new Hope::Entity(entity) ;
-        setupTransform(node -> mTransformation, meshEntity) ;
-        loadNodeData(scene, node, meshEntity) ;
+        loadNodeData(scene, node, entity) ;
     }
 
     // Load the meshes of the children.
@@ -203,6 +203,5 @@ void MeshTreeLoader::setupTransform(
 
         transformMatrix.setRowValues(row, transformRow) ;
     }
-
     (entity -> transform()).setMatrix(transformMatrix) ;
 }
