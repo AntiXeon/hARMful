@@ -317,7 +317,7 @@ namespace Mind {
 
         matrix.at(0,0, 1.f - (twiceValuesY[Axis::Y] + twiceValuesZ[Axis::Z])) ;
         matrix.at(0,1, twiceValuesX[Axis::Y] - twiceValuesW[Axis::Z]) ;
-        matrix.at(0,2, twiceValuesX[Axis::W] + twiceValuesW[Axis::Y]) ;
+        matrix.at(0,2, twiceValuesX[Axis::Z] + twiceValuesW[Axis::Y]) ;
 
         matrix.at(1,0, twiceValuesX[Axis::Y] + twiceValuesW[Axis::Z]) ;
         matrix.at(1,1, 1.f - (twiceValuesX[Axis::X] + twiceValuesZ[Axis::Z])) ;
