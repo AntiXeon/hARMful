@@ -183,7 +183,6 @@ void OpenGLFrameGraphVisitor::makeRender() {
     // Refresh light UBO if needed.
     bool changedDirLights = m_sceneCache -> hasDirectionalLightsChanged() ;
     if (changedDirLights) {
-        std::cout << "Detect light dir" << std::endl ;
         const auto& directionalLights = m_sceneCache -> directionalLights() ;
         m_lightUBO -> setAmountDirectionalLights(directionalLights.size()) ;
 
