@@ -93,7 +93,7 @@ namespace Mind {
         m_data[3][column] = values.get(Point4Df::Axis::W) ;
     }
 
-    Point4Df Matrix4x4f::getColumnValues(const unsigned int column) {
+    Point4Df Matrix4x4f::getColumnValues(const unsigned int column) const {
         Point4Df tmp ;
         tmp.set(
             m_data[0][column],
@@ -101,7 +101,7 @@ namespace Mind {
             m_data[2][column],
             m_data[3][column]
         );
-        return tmp;
+        return tmp ;
     }
 
     void Matrix4x4f::setRowValues(
@@ -131,7 +131,7 @@ namespace Mind {
         m_data[row][3] = values.get(Point4Df::Axis::W) ;
     }
 
-    Point4Df Matrix4x4f::getRowValues(const unsigned int row) {
+    Point4Df Matrix4x4f::getRowValues(const unsigned int row) const {
         Point4Df tmp ;
         tmp.set(
             m_data[row][0],
@@ -139,7 +139,7 @@ namespace Mind {
             m_data[row][2],
             m_data[row][3]
         );
-        return tmp;
+        return tmp ;
     }
 
     std::array<Scalar, 16> Matrix4x4f::toArray() const {
@@ -157,6 +157,22 @@ namespace Mind {
             m_data[rowIndex] *= scalar ;
         }
         return *this ;
+    }
+
+    Vector4f Matrix4x4f::operator*(const Vector4f& vec4) {
+        Vector4f result ;
+
+        unsigned int length = static_cast<unsigned int>(size()) ;
+        for (unsigned int colIndex = 0 ; colIndex < length ; colIndex++) {
+            Vector4f column = getColumnValues(colIndex) ;
+
+            Vector4f::Axis axis = static_cast<Vector4f::Axis>(colIndex) ;
+            Vector4f columnProduct = column * vec4.get(axis) ;
+
+            result += columnProduct ;
+        }
+
+        return result ;
     }
 
     Matrix4x4f& Matrix4x4f::operator*=(Matrix4x4f& other) {

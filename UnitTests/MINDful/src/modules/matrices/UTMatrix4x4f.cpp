@@ -243,9 +243,6 @@ namespace UTMind {
         check(compare(m6.at(3, 1),  0.2355419f)) ;
         check(compare(m6.at(3, 2),  0.1452898f)) ;
         check(compare(m6.at(3, 3),  0.1227106f)) ;
-
-        std::cout << m7 << std::endl ;
-        std::cout << m6 << std::endl ;
     }
 
     void UTMatrix4x4f::operators() {
@@ -321,7 +318,6 @@ namespace UTMind {
         check(m4.at(3,2) == 45.f) ;
         check(m4.at(3,3) == 45.f) ;
 
-
         Matrix4x4f m5 = m2 + m1;
         check(m5.at(0,0) == 6.f) ;
         check(m5.at(0,1) == 11.f) ;
@@ -339,7 +335,23 @@ namespace UTMind {
         check(m5.at(3,1) == 32.f) ;
         check(m5.at(3,2) == 45.f) ;
         check(m5.at(3,3) == 45.f) ;
-        check(m4 == m5);
-        check(m4 != m3);
+        check(m4 == m5) ;
+        check(m4 != m3) ;
+
+        Vector4f vec41 = Vector4f(-1.f, 0.5f, 6.f, 2.f) ;
+        Vector4f vec42 = m1 * vec41 ;
+        check(vec42[0] == 38.f) ;
+        check(vec42[1] == 56.5f) ;
+        check(vec42[2] == 75.f) ;
+        check(vec42[3] == 168.5f) ;
+
+        Vector4f vec43 = vec41 * m1 ;
+        check(vec43[0] == 83.f) ;
+        check(vec43[1] == 90.5f) ;
+        check(vec43[2] == 98.f) ;
+        check(vec43[3] == 113.5f) ;
+
+        vec41 = vec41 * m1 ;
+        check(vec43 == vec41) ;
     }
 }

@@ -126,7 +126,7 @@ namespace Mind {
              * @param   column  Index of the column in the SquareMatrix.
              * @return  Values of the column.
              */
-            exported Point4Df getColumnValues(const unsigned int column) ;
+            exported Point4Df getColumnValues(const unsigned int column) const ;
 
             /**
              * Set the values of a row from a Point2D.
@@ -163,7 +163,7 @@ namespace Mind {
              * @param   row     Index of the row in the SquareMatrix.
              * @return  Values of the row.
              */
-            exported Point4Df getRowValues(const unsigned int row) ;
+            exported Point4Df getRowValues(const unsigned int row) const ;
 
             /**
              * Export the matrix as an 1D-array of values.
@@ -207,6 +207,13 @@ namespace Mind {
              * @return  The result of the multiplication.
              */
             exported Matrix4x4f operator*(Matrix4x4f& other) ;
+
+            /**
+             * Multiply the current matrix by a vector.
+             * @param   vec4    The vector to multiply the current matrix with.
+             * @return  The result of the multiplication.
+             */
+            exported Vector4f operator*(const Vector4f& vec4) ;
 
             /**
              * Addition of the current matrix with another one.

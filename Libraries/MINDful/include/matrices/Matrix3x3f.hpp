@@ -63,6 +63,13 @@ namespace Mind {
             ) final ;
 
             /**
+             * Get the values of a column.
+             * @param   column  Index of the column in the SquareMatrix.
+             * @return  Values of the column.
+             */
+            exported Point3Df getColumnValues(const unsigned int column) const ;
+
+            /**
              * Set the values of a row from a Point2D.
              * @param   row     Index of the row in the SquareMatrix.
              * @param   values  Values to set.
@@ -81,6 +88,13 @@ namespace Mind {
                 const unsigned int row,
                 const Point3Df& values
             ) final ;
+
+            /**
+             * Get the values of a row.
+             * @param   row     Index of the row in the SquareMatrix.
+             * @return  Values of the row.
+             */
+            exported Point3Df getRowValues(const unsigned int row) const ;
 
             /**
              * Export the matrix as an 1D-array of values.
@@ -124,6 +138,13 @@ namespace Mind {
              * @return  The result of the multiplication.
              */
             exported Matrix3x3f operator*(Matrix3x3f& other) ;
+
+            /**
+             * Multiply the current matrix by a vector.
+             * @param   vec3    The vector to multiply the current matrix with.
+             * @return  The result of the multiplication.
+             */
+            exported Vector3f operator*(const Vector3f& vec3) ;
 
             /**
              * Addition of the current matrix with another one.

@@ -1,6 +1,9 @@
 #include <geometry/points/Point3Df.hpp>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
+#include <geometry/points/Point2Df.hpp>
+#include <geometry/dimensions/Dimension3Df.hpp>
+#include <matrices/Matrix3x3f.hpp>
 #include <FastMath.hpp>
 #include <Math.hpp>
 
@@ -128,6 +131,11 @@ namespace Mind {
         return *this ;
     }
 
+    Point3Df& Point3Df::operator*=(const Matrix3x3f& mat3) {
+        *this = *this * mat3 ;
+        return *this ;
+    }
+
     Point3Df& Point3Df::operator/=(const Scalar coeff) {
         m_values /= coeff ;
         return *this ;
@@ -172,6 +180,21 @@ namespace Mind {
 
     Scalar operator*(const Point3Df& a, const Point3Df& b) {
         return a.dot(b) ;
+    }
+
+    Point3Df operator*(const Point3Df& vec, const Matrix3x3f& mat) {
+        Point3Df result ;
+
+        unsigned int length = static_cast<unsigned int>(mat.size()) ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            Point3Df row = mat.getRowValues(rowIndex) ;
+
+            Point3Df::Axis axis = static_cast<Point3Df::Axis>(rowIndex) ;
+            Point3Df rowProduct = row * vec.get(axis) ;
+            result += rowProduct ;
+        }
+
+        return result ;
     }
 
     Point3Df operator*(const Point3Df& p, const Scalar coeff) {

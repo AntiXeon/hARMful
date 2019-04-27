@@ -53,6 +53,16 @@ namespace Mind {
         m_data[2][column] = values.get(Vector3f::Axis::Z) ;
     }
 
+    Point3Df Matrix3x3f::getColumnValues(const unsigned int column) const {
+        Point3Df tmp ;
+        tmp.set(
+            m_data[0][column],
+            m_data[1][column],
+            m_data[2][column]
+        );
+        return tmp ;
+    }
+
     void Matrix3x3f::setRowValues(
         const unsigned int row,
         const Point2Df& values
@@ -68,6 +78,16 @@ namespace Mind {
         m_data[row][0] = values.get(Vector3f::Axis::X) ;
         m_data[row][1] = values.get(Vector3f::Axis::Y) ;
         m_data[row][2] = values.get(Vector3f::Axis::Z) ;
+    }
+
+    Point3Df Matrix3x3f::getRowValues(const unsigned int row) const {
+        Point3Df tmp ;
+        tmp.set(
+            m_data[row][0],
+            m_data[row][1],
+            m_data[row][2]
+        );
+        return tmp ;
     }
 
     std::array<Scalar, 9> Matrix3x3f::toArray() const {
@@ -111,6 +131,22 @@ namespace Mind {
         }
 
         return *this ;
+    }
+
+    Vector3f Matrix3x3f::operator*(const Vector3f& vec3) {
+        Vector3f result ;
+
+        unsigned int length = static_cast<unsigned int>(size()) ;
+        for (unsigned int colIndex = 0 ; colIndex < length ; colIndex++) {
+            Vector3f column = getColumnValues(colIndex) ;
+
+            Vector3f::Axis axis = static_cast<Vector3f::Axis>(colIndex) ;
+            Vector3f columnProduct = column * vec3.get(axis) ;
+
+            result += columnProduct ;
+        }
+
+        return result ;
     }
 
     Matrix3x3f& Matrix3x3f::operator+=(Matrix3x3f& other) {

@@ -1,6 +1,7 @@
 #include <geometry/points/Point4Df.hpp>
 
 #ifdef USE_SIMD // for compilations where SSE or NEON are available
+#include <matrices/Matrix4x4f.hpp>
 #include <FastMath.hpp>
 #include <Math.hpp>
 
@@ -167,6 +168,11 @@ namespace Mind {
         return *this ;
     }
 
+    Point4Df& Point4Df::operator*=(const Matrix4x4f& mat4) {
+        *this = *this * mat4 ;
+        return *this ;
+    }
+
     Point4Df& Point4Df::operator/=(const Scalar coeff) {
         m_values /= coeff ;
         return *this ;
@@ -212,6 +218,21 @@ namespace Mind {
 
     Scalar operator*(const Point4Df& a, const Point4Df& b) {
         return a.dot(b) ;
+    }
+
+    Point4Df operator*(const Point4Df& vec, const Matrix4x4f& mat) {
+        Point4Df result ;
+
+        unsigned int length = static_cast<unsigned int>(mat.size()) ;
+        for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
+            Point4Df row = mat.getRowValues(rowIndex) ;
+
+            Point4Df::Axis axis = static_cast<Point4Df::Axis>(rowIndex) ;
+            Point4Df rowProduct = row * vec.get(axis) ;
+            result += rowProduct ;
+        }
+
+        return result ;
     }
 
     Point4Df operator*(const Point4Df& p, const Scalar coeff) {

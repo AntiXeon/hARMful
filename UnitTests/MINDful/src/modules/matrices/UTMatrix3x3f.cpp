@@ -193,5 +193,19 @@ namespace UTMind {
         check(m5.at(2,2) == 13.f) ;
         check(m4 == m5) ;
         check(m4 != m3) ;
+
+        Vector3f vec31(-6.f, 12.f, 0.02f) ;
+        Vector3f vec32 = m5 * vec31 ;
+        check(vec32[0] == 96.2f) ;
+        check(vec32[1] == 126.24f) ;
+        check(vec32[2] == 60.26f) ;
+
+        Vector3f vec33 = vec31 * m5 ;
+        check(vec33[0] == 24.2f) ;
+        check(vec33[1] == 90.2f) ;
+        check(vec33[2] == 84.26f) ;
+
+        vec31 *= m5 ;
+        check(vec31 == vec33) ;
     }
 }

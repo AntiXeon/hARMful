@@ -6,12 +6,11 @@
 
 #include <MINDTypes.hpp>
 #include <simd/SIMDVector.hpp>
-#include <geometry/points/Point2Df.hpp>
-#include <geometry/dimensions/Dimension3Df.hpp>
 
 namespace Mind {
     class Point2Df ;
     class Dimension3Df ;
+    class Matrix3x3f ;
 
     /**
      * A Point is a very simple element that can be used in a space to place
@@ -202,6 +201,13 @@ namespace Mind {
             exported Point3Df& operator*=(Scalar coeff) ;
 
             /**
+             * Multiply a Point by a matrix and affect the result.
+             * @param   mat3    The matrix to multiply the Point with.
+             * @return  The result of the multiplication.
+             */
+            exported Point3Df& operator*=(const Matrix3x3f& mat3) ;
+
+            /**
              * Divide a Point by a scalar value and affect the result.
              * @param   coeff   The coeff to divide the Point coordinates by.
              * @return  The result of the division.
@@ -267,6 +273,14 @@ namespace Mind {
              * @return  Result of the dot product A.B.
              */
             friend Scalar operator*(const Point3Df& a, const Point3Df& b) ;
+
+            /**
+             * Multiply a vector by a matrix.
+             * @param   vec Vector to multiply.
+             * @param   mat Matrix to multiply.
+             * @return  Result of the multiplication vec * mat.
+             */
+            friend Point3Df operator*(const Point3Df& vec, const Matrix3x3f& mat) ;
 
             /**
              * Multiply a Point coordinates by a scalar value (scale).
