@@ -6,7 +6,7 @@
 using namespace Hope ;
 
 MeshTreeComponent::MeshTreeComponent(const std::string& meshFile)
-    : Component(Hope::MeshTreeComponentType),
+    : Component(ClassType),
       m_source(meshFile) {}
 
 void MeshTreeComponent::onAttach(Entity* entity) {

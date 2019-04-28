@@ -90,14 +90,14 @@ namespace Mind {
             /**
              * Transpose the matrix.
              */
-            exported void transposed(SquareMatrixf& result) ;
+            exported void transposed(SquareMatrixf& result) const ;
 
             /**
              * Inverse the matrix.
              * This source code is inspired from GLM library.
              * https://github.com/g-truc/glm/blob/master/glm/simd/matrix.h
              */
-            exported void inverse(SquareMatrixf& result) ;
+            exported void inverse(SquareMatrixf& result) const ;
 
             /**
              * Set the values of a column from a Point2D.
@@ -175,19 +175,12 @@ namespace Mind {
                 const Scalar value
             ) ;
 
-            #ifdef USE_NO_SIMD
-                /**
-                 * Set or get the element a the specified position.
-                 * @param   index   Index of the wanted row.
-                 */
-                exported std::array<float, 4>& operator[](int index) ;
-            #else
-                /**
-                 * Set or get the element a the specified position.
-                 * @param   index   Index of the wanted row.
-                 */
-                exported SIMD::Vector4f& operator[](int index) ;
-            #endif
+            /**
+             * Set or get the element a the specified position.
+             * @param   index   Index of the wanted row.
+             */
+            exported SIMD::Vector4f& operator[](int index) ;
+            exported const SIMD::Vector4f& operator[](int index) const ;
 
             /**
              * Get the size of the SquareMatrix.
@@ -281,15 +274,13 @@ namespace Mind {
         m_data[row][col] = value ;
     }
 
-    #ifdef USE_NO_SIMD
-        inline std::array<float, 4>& SquareMatrixf::operator[](int index) {
-            return m_data[index] ;
-        }
-    #else
-        inline SIMD::Vector4f& SquareMatrixf::operator[](int index) {
-            return m_data[index] ;
-        }
-    #endif
+    inline SIMD::Vector4f& SquareMatrixf::operator[](int index) {
+        return m_data[index] ;
+    }
+
+    inline const SIMD::Vector4f& SquareMatrixf::operator[](int index) const {
+        return m_data[index] ;
+    }
 } ;
 
 #endif

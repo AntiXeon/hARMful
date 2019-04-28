@@ -2,7 +2,6 @@
 #define __HOPE__COMPONENT__
 
 #include <scene/SceneTypes.hpp>
-#include <interfaces/visitors/scenegraph/ISceneGraphVisitant.hpp>
 #include <cstddef>
 #include <vector>
 
@@ -13,7 +12,7 @@ namespace Hope {
     /**
      * Base class for all components that can be linked to entities.
      */
-    class Component : public ISceneGraphVisitant {
+    class Component {
         friend class Entity ;
 
         private:
@@ -27,11 +26,6 @@ namespace Hope {
              */
             ComponentType m_type ;
 
-            /**
-             * Last frame ID at which the component has been processed.
-             */
-            FrameID m_lastFrame = 0 ;
-
         public:
             /**
              * Create a new component instance.
@@ -43,11 +37,6 @@ namespace Hope {
              * Destruction of the component instance.
              */
             virtual ~Component() ;
-
-            /**
-             * Accept the visitor.
-             */
-            virtual void accept(ISceneGraphVisitor* visitor) = 0 ;
 
             /**
              * To know if the component can be shared by several entities.
@@ -74,11 +63,6 @@ namespace Hope {
              * Get the type of the component.
              */
             ComponentType type() const ;
-
-            /**
-             * Get the last frame ID at which the component has been processed.
-             */
-            FrameID lastFrame() const ;
 
             /**
              * To know how many entities are attached to the current component.
@@ -117,11 +101,6 @@ namespace Hope {
             void detach(Entity* entity) ;
 
         protected:
-            /**
-             * Update the frame ID of the last visit.
-             */
-            void updateLastFrame(const FrameID newID) ;
-
             /**
              * Action to performed when the component is attached to an
              * entity.

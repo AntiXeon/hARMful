@@ -19,6 +19,11 @@ namespace Hope {
      */
     class TriangleTestComponent final : public Component {
         public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = TriangleTestType ;
+
             static const unsigned int AmountVertices = 3 ;
             static const unsigned int AmountPositionData = 2 ;
             static const unsigned int AmountColorData = 3 ;
@@ -41,11 +46,6 @@ namespace Hope {
              * Create a new TriangleTestComponent.
              */
             TriangleTestComponent() ;
-
-            /**
-             * Accept the visitor.
-             */
-            void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
              * Render the TriangleTestComponent.

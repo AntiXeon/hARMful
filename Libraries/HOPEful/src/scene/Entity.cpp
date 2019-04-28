@@ -7,7 +7,7 @@ using namespace Hope ;
 
 Entity::Entity(Entity* parent)
     : Node(parent) {
-    m_components.resize(Hope::AmountComponentTypes) ;
+    m_components.resize(AmountComponentTypes) ;
 }
 
 Entity::~Entity() {

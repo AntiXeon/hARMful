@@ -4,7 +4,6 @@
 #include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
 #include <scene/Transform.hpp>
-#include <scene/SceneCache.hpp>
 #include <memory>
 #include <vector>
 
@@ -95,6 +94,18 @@ namespace Hope {
                 const uint32_t index = 0
             ) const {
                 return m_components[type][index] ;
+            }
+
+            /**
+             * Get a component of the wanted type.
+             * @param   index   Index of the component in the list of components
+             *                  of the wanted type.
+             * @warning Check the index value with the amountComponents()
+             *          method!
+             */
+            template<class T>
+            T* component(const uint32_t index = 0) const {
+                return static_cast<T*>(m_components[T::ClassType][index]) ;
             }
 
             /**

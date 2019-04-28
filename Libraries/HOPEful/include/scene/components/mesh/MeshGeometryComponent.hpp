@@ -16,6 +16,12 @@ namespace Hope {
      * Component to render a 3D object.
      */
     class MeshGeometryComponent final : public Component {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MeshGeometryComponentType ;
+
         private:
             /**
              * Geometry of the 3D object.
@@ -39,11 +45,6 @@ namespace Hope {
             const API::MeshGeometry* geometry() const {
                 return m_geometry ;
             }
-
-            /**
-             * Accept the visitor.
-             */
-            void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

@@ -21,10 +21,6 @@ ComponentType Component::type() const {
     return m_type ;
 }
 
-FrameID Component::lastFrame() const {
-    return m_lastFrame ;
-}
-
 size_t Component::amountAttachedEntities() const {
     return m_entities.size() ;
 }
@@ -61,10 +57,6 @@ void Component::detach(Entity* entity) {
         onDetach(entity) ;
         m_entities.erase(posEntity) ;
     }
-}
-
-void Component::updateLastFrame(const FrameID newID) {
-    m_lastFrame = newID ;
 }
 
 void Component::onAttach(Entity*) {}

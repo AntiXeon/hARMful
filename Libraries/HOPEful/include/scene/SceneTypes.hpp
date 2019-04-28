@@ -6,18 +6,31 @@ namespace Hope {
 
     typedef unsigned int ComponentType ;
 
-    extern ComponentType MeshTreeComponentType ;
-    extern ComponentType MeshGeometryComponentType ;
-    extern ComponentType CameraComponentType ;
-    extern ComponentType RenderConfigurationType ;
-    extern ComponentType LightComponentType ;
-    extern ComponentType MaterialComponentType ;
+    #define MaterialComponentType       0
+    #define MeshTreeComponentType       (MaterialComponentType + 1)
+    #define MeshGeometryComponentType   (MeshTreeComponentType + 1)
+    #define CameraComponentType         (MeshGeometryComponentType + 1)
+    #define RenderConfigurationType     (CameraComponentType + 1)
+    #define LightComponentType          (RenderConfigurationType + 1)
 
-    extern ComponentType TriangleTestType ;
+    #define TriangleTestType            (LightComponentType + 1)
 
-    extern ComponentType LastComponentType ;
+    #define LastComponentType           (TriangleTestType)
 
-    extern unsigned int AmountComponentTypes ;
+    #define AmountComponentTypes        (LastComponentType + 1)
+
+    // extern constexpr ComponentType MaterialComponentType ;
+    // extern constexpr ComponentType MeshTreeComponentType ;
+    // extern constexpr ComponentType MeshGeometryComponentType ;
+    // extern constexpr ComponentType CameraComponentType ;
+    // extern constexpr ComponentType RenderConfigurationType ;
+    // extern constexpr ComponentType LightComponentType ;
+    //
+    // extern constexpr ComponentType TriangleTestType ;
+    //
+    // extern constexpr ComponentType LastComponentType ;
+    //
+    // extern constexpr unsigned int AmountComponentTypes ;
 }
 
 #endif

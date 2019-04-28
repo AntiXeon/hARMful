@@ -196,17 +196,15 @@ namespace Mind {
              *                  one.
              * @return  The result of the multiplication.
              */
-            exported Matrix4x4f& operator*=(Matrix4x4f& other) ;
+            exported Matrix4x4f& operator*=(const Matrix4x4f& other) ;
 
             /**
-             * Multiply the current matrix by another value.
-             * The result is put into a new matrix.
-             * @param   mat     The matrix to multiply.
-             * @param   other   The other matrix to multiply with the current
-             *                  one.
-             * @return  The result of the multiplication.
+             * Multiplication of two matrices.
+             * @param   a   First matrix.
+             * @param   b   Second matrix.
+             * @return  Result of the multiplication.
              */
-            exported Matrix4x4f operator*(Matrix4x4f& other) ;
+            friend Matrix4x4f operator*(const Matrix4x4f& a, const Matrix4x4f& b) ;
 
             /**
              * Multiply the current matrix by a vector.
@@ -221,7 +219,7 @@ namespace Mind {
              * @param   other   The other matrix to add to the current one.
              * @return  The result of the addition.
              */
-            exported Matrix4x4f& operator+=(Matrix4x4f& other) ;
+            exported Matrix4x4f& operator+=(const Matrix4x4f& other) ;
 
             /**
              * Addition of the current matrix with another one.
@@ -230,7 +228,7 @@ namespace Mind {
              * @param   other   The other matrix to add to the current one.
              * @return  The result of the addition.
              */
-            exported Matrix4x4f operator+(Matrix4x4f& other) ;
+            exported Matrix4x4f operator+(const Matrix4x4f& other) ;
 
         private:
             /**
@@ -295,13 +293,7 @@ namespace Mind {
         return mat ;
     }
 
-    inline Matrix4x4f Matrix4x4f::operator*(Matrix4x4f& other) {
-        Matrix4x4f mat(*this) ;
-        mat *= other ;
-        return mat ;
-    }
-
-    inline Matrix4x4f Matrix4x4f::operator+(Matrix4x4f& other) {
+    inline Matrix4x4f Matrix4x4f::operator+(const Matrix4x4f& other) {
         Matrix4x4f mat(*this) ;
         mat += other ;
         return mat ;

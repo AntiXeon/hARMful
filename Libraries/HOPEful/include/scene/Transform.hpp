@@ -148,7 +148,7 @@ namespace Hope {
              * Get the transformation matrix of the object.
              * @return  Transformation matrix of the object.
              */
-            Mind::Matrix4x4f matrix() ;
+            const Mind::Matrix4x4f& matrix() ;
     } ;
 }
 

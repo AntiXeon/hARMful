@@ -106,31 +106,33 @@ namespace Mind {
         return *this ;
     }
 
-    Matrix3x3f& Matrix3x3f::operator*=(Matrix3x3f& other) {
+    Matrix3x3f& Matrix3x3f::operator*=(const Matrix3x3f& other) {
+        *this = *this * other ;
+        return *this ;
+    }
+
+    Matrix3x3f operator*(const Matrix3x3f& a, const Matrix3x3f& b) {
+        Matrix3x3f result ;
+
         // Transpose the matrix to easily compute the product of each line of
         // "this" by each column of "other".
-        Matrix3x3f otherCopy = other ;
-        SIMD::Vector4f::transposeMatrix(
-            otherCopy.m_data[0],
-            otherCopy.m_data[1],
-            otherCopy.m_data[2],
-            otherCopy.m_data[3]
-        ) ;
+        Matrix3x3f bTransposed ;
+        b.transposed(bTransposed) ;
 
         // Multiply each line of "this" by each column of "other".
         // Then add each element of the resulting row and store it in "this".
-        unsigned int length = static_cast<unsigned int>(size()) ;
-        for (unsigned int thisRowIndex = 0 ; thisRowIndex < length ; thisRowIndex++) {
+        unsigned int length = static_cast<unsigned int>(a.size()) ;
+        for (unsigned int aRowIndex = 0 ; aRowIndex < length ; aRowIndex++) {
             Array4f rowResult ;
-            for(unsigned int otherRowIndex = 0 ; otherRowIndex < length ; otherRowIndex++) {
-                SIMD::Vector4f mulRow = m_data[thisRowIndex] * otherCopy.m_data[otherRowIndex] ;
+            for(unsigned int bTransposedIndex = 0 ; bTransposedIndex < length ; bTransposedIndex++) {
+                SIMD::Vector4f mulRow = a.m_data[aRowIndex] * bTransposed.m_data[bTransposedIndex] ;
                 Scalar value = mulRow.horizontalAdd() ;
-                rowResult[otherRowIndex] = value ;
+                rowResult[bTransposedIndex] = value ;
             }
-            m_data[thisRowIndex].set(rowResult) ;
+            result.m_data[aRowIndex].set(rowResult) ;
         }
 
-        return *this ;
+        return result ;
     }
 
     Vector3f Matrix3x3f::operator*(const Vector3f& vec3) {
@@ -149,7 +151,7 @@ namespace Mind {
         return result ;
     }
 
-    Matrix3x3f& Matrix3x3f::operator+=(Matrix3x3f& other) {
+    Matrix3x3f& Matrix3x3f::operator+=(const Matrix3x3f& other) {
         unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] += other[rowIndex] ;

@@ -2,14 +2,13 @@
 #include <HOPEStrings.hpp>
 #include <scene/components/test/TriangleTestComponent.hpp>
 #include <scene/SceneTypes.hpp>
-#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <utils/LogSystem.hpp>
 #include <cassert>
 
 using namespace Hope ;
 
 TriangleTestComponent::TriangleTestComponent()
-    : Component(Hope::TriangleTestType) {
+    : Component(ClassType) {
         static const GLfloat Vertices[] = {
              0.5f, -0.5f, 0.0f,
             -0.5f, -0.5f, 0.0f,
@@ -38,10 +37,6 @@ TriangleTestComponent::TriangleTestComponent()
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW) ;
 
         glBindVertexArray(0) ;
-}
-
-void TriangleTestComponent::accept(ISceneGraphVisitor* visitor) {
-    visitor -> visit(this) ;
 }
 
 void TriangleTestComponent::render() {

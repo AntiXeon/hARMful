@@ -175,34 +175,36 @@ namespace Mind {
         return result ;
     }
 
-    Matrix4x4f& Matrix4x4f::operator*=(Matrix4x4f& other) {
-        // Transpose the matrix to easily compute the product of each line of
-        // "this" by each column of "other".
-        Matrix4x4f otherCopy = other ;
-        SIMD::Vector4f::transposeMatrix(
-            otherCopy.m_data[0],
-            otherCopy.m_data[1],
-            otherCopy.m_data[2],
-            otherCopy.m_data[3]
-        ) ;
-
-        // Multiply each line of "this" by each column of "other".
-        // Then add each element of the resulting row and store it in "this".
-        unsigned int length = static_cast<unsigned int>(size()) ;
-        for (unsigned int thisRowIndex = 0 ; thisRowIndex < length ; thisRowIndex++) {
-            Array4f rowResult ;
-            for(unsigned int otherRowIndex = 0 ; otherRowIndex < length ; otherRowIndex++) {
-                SIMD::Vector4f mulRow = m_data[thisRowIndex] * otherCopy.m_data[otherRowIndex] ;
-                Scalar value = mulRow.horizontalAdd() ;
-                rowResult[otherRowIndex] = value ;
-            }
-            m_data[thisRowIndex].set(rowResult) ;
-        }
-
+    Matrix4x4f& Matrix4x4f::operator*=(const Matrix4x4f& other) {
+        *this = *this * other ;
         return *this ;
     }
 
-    Matrix4x4f& Matrix4x4f::operator+=(Matrix4x4f& other) {
+    Matrix4x4f operator*(const Matrix4x4f& a, const Matrix4x4f& b) {
+        Matrix4x4f result ;
+
+        // Transpose the matrix to easily compute the product of each line of
+        // "this" by each column of "other".
+        Matrix4x4f bTransposed ;
+        b.transposed(bTransposed) ;
+
+        // Multiply each line of "this" by each column of "other".
+        // Then add each element of the resulting row and store it in "this".
+        unsigned int length = static_cast<unsigned int>(a.size()) ;
+        for (unsigned int aRowIndex = 0 ; aRowIndex < length ; aRowIndex++) {
+            Array4f rowResult ;
+            for(unsigned int bRowIndex = 0 ; bRowIndex < length ; bRowIndex++) {
+                SIMD::Vector4f mulRow = a.m_data[aRowIndex] * bTransposed.m_data[bRowIndex] ;
+                Scalar value = mulRow.horizontalAdd() ;
+                rowResult[bRowIndex] = value ;
+            }
+            result.m_data[aRowIndex].set(rowResult) ;
+        }
+
+        return result ;
+    }
+
+    Matrix4x4f& Matrix4x4f::operator+=(const Matrix4x4f& other) {
         unsigned int length = static_cast<unsigned int>(size()) ;
         for (unsigned int rowIndex = 0 ; rowIndex < length ; rowIndex++) {
             m_data[rowIndex] += other[rowIndex] ;

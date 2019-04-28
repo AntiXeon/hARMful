@@ -1,7 +1,6 @@
 #include <scene/components/CameraComponent.hpp>
 #include <scene/Entity.hpp>
 #include <utils/literals/NumberLiterals.hpp>
-#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 
 using namespace Hope ;
 
@@ -9,22 +8,11 @@ const Mind::Vector3f CameraComponent::WorldUpVector = Mind::Vector3f(0.f, 1.f, 0
 const Color CameraComponent::DefaultClearColor = Color(4_uchar, 90_uchar, 120_uchar) ;
 
 CameraComponent::CameraComponent()
-    : Component(Hope::CameraComponentType),
+    : Component(ClassType),
       m_viewDirection(Mind::Vector3f(0.f, 0.f, -1.f)),
       m_clearColor(DefaultClearColor) {
     m_viewMatrix.identity() ;
     m_up = WorldUpVector ;
-}
-
-void CameraComponent::accept(ISceneGraphVisitor* visitor) {
-    FrameID currentFrame = visitor -> currentFrameID() ;
-
-    if (lastFrame() < currentFrame) {
-        lookAt(m_target) ;
-        updateLastFrame(currentFrame) ;
-
-        // No need to be visited!
-    }
 }
 
 void CameraComponent::setClearColor(const Color& color) {

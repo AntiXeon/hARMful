@@ -30,7 +30,7 @@ PhongMaterialComponent::PhongMaterialComponent()
     setShininess(10.f) ;
 }
 
-void PhongMaterialComponent::updateUniformValues(ISceneGraphVisitor*) {
+void PhongMaterialComponent::updateUniformValues() {
     uniform(AmbientUniformName) -> setVec3(ambient().toRGB()) ;
     uniform(DiffuseUniformName) -> setVec3(diffuse().toRGB()) ;
     uniform(SpecularUniformName) -> setVec3(specular().toRGB()) ;

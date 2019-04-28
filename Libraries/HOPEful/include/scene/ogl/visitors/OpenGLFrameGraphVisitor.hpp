@@ -3,11 +3,11 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
-#include <scene/ogl/visitors/OpenGLRenderVisitor.hpp>
-#include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
+#include <scene/ogl/rendering/OpenGLRenderer.hpp>
+#include <scene/ogl/visitors/cache/FrameRenderCache.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
+#include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/Entity.hpp>
-#include <scene/SceneCache.hpp>
 #include <algorithm>
 #include <list>
 #include <map>
@@ -34,14 +34,14 @@ namespace Hope::GL {
             bool m_hasWindowChanged = true ;
 
             /**
-             * Cache of some scene elements for a faster access.
-             */
-            SceneCache* m_sceneCache = nullptr ;
-
-            /**
              * UBOs required to send uniform values to the shaders.
              */
             UBOSharedData* m_ubos = nullptr ;
+
+            /**
+             * Cache for rendering the current frame.
+             */
+            FrameRenderCache m_renderCache ;
 
             /**
              * Size of the window.
@@ -52,13 +52,13 @@ namespace Hope::GL {
              * Visitor that can be used for some frame graph nodes when
              * rendering the scene.
              */
-            std::map<Hope::FrameGraphNode*, OpenGLRenderVisitor> m_renderVisitors ;
+            std::map<Hope::FrameGraphNode*, OpenGLRenderer> m_renderers ;
 
             /**
-             * The OpenGLRenderVisitor that is in use in the currently processed
+             * The OpenGLRenderer that is in use in the currently processed
              - framegraph branch.
              */
-            OpenGLRenderVisitor* m_activeOpenGLRenderVisitor = nullptr ;
+            OpenGLRenderer* m_activeRenderer = nullptr ;
 
             /**
              * List to store the render conditions of every branch in the frame
@@ -103,13 +103,6 @@ namespace Hope::GL {
                 }
 
                 m_hasWindowChanged = true ;
-            }
-
-            /**
-             * Get the scene cache.
-             */
-            SceneCache* cache() {
-                return m_sceneCache ;
             }
 
             /**
@@ -160,7 +153,7 @@ namespace Hope::GL {
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
-                m_activeOpenGLRenderVisitor -> startNewFrame() ;
+                m_renderCache.clear() ;
 
                 // Create a new aggregator for the new frame rendering.
                 assert(m_aggregators.size() == 0) ;
@@ -177,9 +170,10 @@ namespace Hope::GL {
 
         private:
             /**
-             * Render the provided entity. Recursive method.
+             * Parse the render graph to get all the components of the scene
+             * that need to be parsed and processed as an all.
              */
-            void renderGraph() ;
+            void parseSceneGraph() ;
     } ;
 }
 

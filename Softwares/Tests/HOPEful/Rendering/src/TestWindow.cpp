@@ -49,7 +49,6 @@ TestWindow::TestWindow()
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(true) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
-		(scene() -> cache()) -> registerLight(dirLightComponent) ;
 	}
 */
     {
@@ -62,7 +61,6 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
     {
@@ -75,7 +73,6 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(1.f) ;
         pointLightComponent -> setLinearAttenuation(0.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
     {
@@ -88,7 +85,6 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(1.f) ;
         pointLightComponent -> setLinearAttenuation(0.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
-        (scene() -> cache()) -> registerLight(pointLightComponent) ;
     }
 
     /** FRAME GRAPH **/

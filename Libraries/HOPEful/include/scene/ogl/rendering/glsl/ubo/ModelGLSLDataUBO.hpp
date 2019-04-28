@@ -31,70 +31,16 @@ namespace Hope::GL {
             /**
              * Create a new ModelGLSLDataUBO instance.
              */
-            ModelGLSLDataUBO(const GLuint bindingPointIndex) ;
+            ModelGLSLDataUBO() ;
 
             /**
-             * Set the model matrix value.
+             * Fill the matrices of the UBO.
              */
-            void setModelMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.modelMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the model view matrix value.
-             */
-            void setModelViewMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.modelViewMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the model view projection matrix value.
-             */
-            void setMVPMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.mvpMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the inverse model matrix value.
-             */
-            void setInverseModelMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.inverseModelMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the inverse model view matrix value.
-             */
-            void setInverseModelViewMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.inverseModelViewMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the inverse model view projection matrix value.
-             */
-            void setInverseMVPMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.inverseMVPMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the normal matrix value.
-             */
-            void setNormalMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.normalMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the model normal matrix value.
-             */
-            void setModelNormalMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.modelNormalMatrix = mat.toArray() ;
-            }
-
-            /**
-             * Set the model view normal matrix value.
-             */
-            void setModelViewNormalMatrix(const Mind::Matrix4x4f& mat) {
-                m_data.modelViewNormalMatrix = mat.toArray() ;
-            }
+            void setMatrices(
+                const Mind::Matrix4x4f& modelMatrix,
+                const Mind::Matrix4x4f& viewMatrix,
+                const Mind::Matrix4x4f& projectionMatrix
+            ) ;
 
         protected:
             /**

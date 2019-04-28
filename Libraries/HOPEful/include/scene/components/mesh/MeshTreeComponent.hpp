@@ -17,6 +17,12 @@ namespace Hope {
      * Component to load a hierarchy composing a complex 3D object.
      */
     class MeshTreeComponent final : public Component {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MeshTreeComponentType ;
+
         private:
             /**
              * Source file.
@@ -35,11 +41,6 @@ namespace Hope {
              *                      component.
              */
             MeshTreeComponent(const std::string& meshFile) ;
-
-            /**
-             * Accept the visitor.
-             */
-            void accept(ISceneGraphVisitor*) override {}
 
             /**
              * To know if the component can be shared by several entities.

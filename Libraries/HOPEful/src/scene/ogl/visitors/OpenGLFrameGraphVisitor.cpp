@@ -14,7 +14,6 @@ using namespace Hope::GL ;
 
 OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
     : IFrameGraphVisitor() {
-    m_sceneCache = new SceneCache() ;
     m_ubos = new UBOSharedData() ;
 
     RenderConditionAggregator defaultAggregator ;
@@ -22,42 +21,39 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
 }
 
 OpenGLFrameGraphVisitor::~OpenGLFrameGraphVisitor() {
-    delete m_sceneCache ;
     delete m_ubos ;
 }
 
 void OpenGLFrameGraphVisitor::createNewBranch(Hope::FrameGraphNode* fgNode) {
-    if (m_renderVisitors.count(fgNode) > 0) {
+    if (m_renderers.count(fgNode) > 0) {
         // Discard if the framegraph node is already registered.
         // Just set the active render visitor.
-        m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
+        m_activeRenderer = &m_renderers[fgNode] ;
         return ;
     }
 
     // Otherwise, create the render visitor of the new branch.
-    if (m_activeOpenGLRenderVisitor) {
-        m_renderVisitors[fgNode] = *m_activeOpenGLRenderVisitor ;
+    if (m_activeRenderer) {
+        m_renderers[fgNode] = *m_activeRenderer ;
     }
     else {
-        m_renderVisitors[fgNode] = OpenGLRenderVisitor() ;
+        m_renderers[fgNode] = OpenGLRenderer() ;
     }
 
-    m_activeOpenGLRenderVisitor = &m_renderVisitors[fgNode] ;
-    (m_activeOpenGLRenderVisitor -> requiredData()).cache = m_sceneCache ;
+    m_activeRenderer = &m_renderers[fgNode] ;
 }
 
 void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
     m_sceneRoot = root ;
 
-    m_renderVisitors.clear() ;
-    RenderConfiguration* config = dynamic_cast<RenderConfiguration*>(m_sceneRoot -> component(Hope::RenderConfigurationType)) ;
+    m_renderers.clear() ;
+    RenderConfiguration* config = m_sceneRoot -> component<RenderConfiguration>() ;
     createNewBranch(config -> root()) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
-    RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
-
     Hope::CameraComponent* camera = node -> camera() ;
+    camera -> lookAt(camera -> target()) ;
 
     // Set up the clear color.
     Color clearColor = camera -> clearColor() ;
@@ -69,6 +65,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     ) ;
 
     // Update the projection matrix if needed.
+    Mind::Matrix4x4f projectionMatrix ;
     float aspectRatio = 0.f ;
     if (m_hasWindowChanged) {
         // Set up the projection matrix.
@@ -78,7 +75,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         aspectRatio = m_windowSize.width() / m_windowSize.height() ;
 
         GLPerspective(
-            requiredData.projectionMatrix,
+            projectionMatrix,
             Mind::Math::toRadians(CameraFOV),
             aspectRatio,
             NearPlaneDistance,
@@ -86,17 +83,18 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         ) ;
 
         Mind::Matrix4x4f inverseProjectionMatrix ;
-        requiredData.projectionMatrix.inverse(inverseProjectionMatrix) ;
+        projectionMatrix.inverse(inverseProjectionMatrix) ;
 
-        m_ubos -> base() -> setProjectionMatrix(requiredData.projectionMatrix) ;
-        m_ubos -> base() -> setInverseProjectionMatrix(inverseProjectionMatrix) ;
-        m_ubos -> base() -> setAspectRatio(aspectRatio) ;
+        (m_ubos -> base()).setProjectionMatrix(projectionMatrix) ;
+        (m_ubos -> base()).setInverseProjectionMatrix(inverseProjectionMatrix) ;
+        (m_ubos -> base()).setAspectRatio(aspectRatio) ;
+        m_renderCache.setProjectionMatrix(projectionMatrix) ;
     }
 
     // Update the model view matrix.
-    requiredData.viewMatrix = camera -> viewMatrix() ;
+    Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
     float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
-    requiredData.viewMatrix.data(viewMatrixData) ;
+    viewMatrix.data(viewMatrixData) ;
 
     Hope::Entity* cameraEntity = camera -> firstEntity() ;
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
@@ -104,19 +102,20 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
 
     // Update the required data.
-    m_ubos -> base() -> setTime(glfwGetTime()) ;
-    m_ubos -> base() -> setEyePosition(eyeView) ;
-    m_ubos -> base() -> setViewMatrix(requiredData.viewMatrix) ;
+    m_renderCache.setViewMatrix(viewMatrix) ;
+    (m_ubos -> base()).setTime(glfwGetTime()) ;
+    (m_ubos -> base()).setEyePosition(eyeView) ;
+    (m_ubos -> base()).setViewMatrix(viewMatrix) ;
 
     Mind::Matrix4x4f resultInverse ;
-    requiredData.viewMatrix.inverse(resultInverse) ;
-    m_ubos -> base() -> setInverseViewMatrix(resultInverse) ;
+    viewMatrix.inverse(resultInverse) ;
+    (m_ubos -> base()).setInverseViewMatrix(resultInverse) ;
 
-    Mind::Matrix4x4f viewProjectionMatrix = requiredData.projectionMatrix * requiredData.viewMatrix ;
-    m_ubos -> base() -> setViewProjectionMatrix(viewProjectionMatrix) ;
+    Mind::Matrix4x4f viewProjectionMatrix = projectionMatrix * viewMatrix ;
+    (m_ubos -> base()).setViewProjectionMatrix(viewProjectionMatrix) ;
 
     viewProjectionMatrix.inverse(resultInverse) ;
-    m_ubos -> base() -> setInverseViewProjectionMatrix(resultInverse) ;
+    (m_ubos -> base()).setInverseViewProjectionMatrix(resultInverse) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
@@ -149,7 +148,6 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
         absoluteDimension.height()
     ) ;
 
-
     // Compute the viewport matrices.
     Mind::Scalar viewportX = relativePosition.get(Mind::Point2Df::X) ;
     Mind::Scalar viewportY = relativePosition.get(Mind::Point2Df::Y) ;
@@ -167,8 +165,8 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
     Mind::Matrix4x4f inverseViewportMatrix ;
     viewportMatrix.inverse(inverseViewportMatrix) ;
 
-    m_ubos -> base() -> setViewportMatrix(viewportMatrix) ;
-    m_ubos -> base() -> setInverseViewportMatrix(inverseViewportMatrix) ;
+    (m_ubos -> base()).setViewportMatrix(viewportMatrix) ;
+    (m_ubos -> base()).setInverseViewportMatrix(inverseViewportMatrix) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
@@ -176,9 +174,8 @@ void OpenGLFrameGraphVisitor::makeRender() {
 
     // Send data of the base UBO to the GPU before rendering this part of the
     // framegraph.
-    m_ubos -> updateLightUBO(m_sceneCache) ;
-    m_ubos -> base() -> update() ;
-    m_sceneCache -> clearChanges() ;
+    m_ubos -> updateLightUBO(m_renderCache) ;
+    (m_ubos -> base()).update() ;
 
     Hope::ProcessedSceneNode rootNode ;
     rootNode.node = m_sceneRoot ;
@@ -189,8 +186,11 @@ void OpenGLFrameGraphVisitor::makeRender() {
         // For each entity: check if all the conditions are OK otherwise, go
         // back to the parent entity and process the other ones.
         // The children of an invalid entity are discarded as well.
-        renderGraph() ;
+        parseSceneGraph() ;
     }
+
+    // Render the frame.
+    m_activeRenderer -> render(m_renderCache.meshes()) ;
 
     // Remove the last RenderConditionAggregator from the list!
     m_aggregators.pop_back() ;
@@ -204,39 +204,21 @@ void OpenGLFrameGraphVisitor::backupRenderConditions() {
     m_aggregators.push_back(copy) ;
 }
 
-void OpenGLFrameGraphVisitor::renderGraph() {
+void OpenGLFrameGraphVisitor::parseSceneGraph() {
     Hope::Entity* renderedEntity = m_processedNodes.top().node ;
 
     if (renderedEntity && m_aggregators.back().check(renderedEntity)) {
-        // Process the components of the top node.
-        m_activeOpenGLRenderVisitor -> setProcessedNode(m_processedNodes.top()) ;
+        // Save the world matrix before pop.
+        Mind::Matrix4x4f currentWorldMatrix = m_processedNodes.top().worldMatrix ;
 
-        // Update the model UBO.
-        RenderRequiredData& requiredData = m_activeOpenGLRenderVisitor -> requiredData() ;
-        m_ubos -> updateModelUBO(
-            m_processedNodes.top().worldMatrix,
-            requiredData.viewMatrix,
-            requiredData.projectionMatrix
+        // Get components that need to be cached.
+        m_renderCache.cacheEntity(
+            renderedEntity,
+            currentWorldMatrix
         ) ;
 
-        std::vector<std::vector<Component*>> components = renderedEntity -> components() ;
-        for (std::vector<Component*> typeComponents : components) {
-            for (Component* component : typeComponents) {
-                if (component) {
-                    component -> accept(m_activeOpenGLRenderVisitor) ;
-                }
-            }
-        }
-
-        // Save the parent world matrix before pop.
-        Mind::Matrix4x4f parentMatrix = m_processedNodes.top().worldMatrix ;
         // As the top node is processed, pop it from the stack.
         m_processedNodes.pop() ;
-
-        // Avoid further processing if not necessary...
-        if (renderedEntity -> childrenCount() == 0) {
-            return ;
-        }
 
         // If the node has children, push them in the stack.
         const std::vector<Node*>& nodeChildren = renderedEntity -> children() ;
@@ -247,7 +229,7 @@ void OpenGLFrameGraphVisitor::renderGraph() {
 
             Hope::ProcessedSceneNode childNode ;
             childNode.node = childEntity ;
-            childNode.worldMatrix = parentMatrix * childMatrix ;
+            childNode.worldMatrix = currentWorldMatrix * childMatrix ;
             m_processedNodes.push(childNode) ;
         }
     }

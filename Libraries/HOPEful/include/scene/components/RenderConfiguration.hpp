@@ -13,6 +13,12 @@ namespace Hope {
      * related stuff.
      */
     class RenderConfiguration final : public Component {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = RenderConfigurationType ;
+
         private:
             /**
              * Root node of the frame graph.
@@ -24,11 +30,6 @@ namespace Hope {
              * Create a new RenderConfiguration.
              */
             RenderConfiguration() ;
-
-            /**
-             * No need to be visited!
-             */
-            void accept(ISceneGraphVisitor*) override { /* Nothing. */ }
 
             /**
              * To know if the component can be shared by several entities.

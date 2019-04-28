@@ -36,7 +36,7 @@ namespace Hope::GL {
             /**
              * Create a new BaseGLSLDataUBO instance.
              */
-            BaseGLSLDataUBO(const GLuint bindingPointIndex) ;
+            BaseGLSLDataUBO() ;
 
             /**
              * Set the view matrix value.

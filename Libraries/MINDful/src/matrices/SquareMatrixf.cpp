@@ -6,14 +6,8 @@
 namespace Mind {
     const size_t SquareMatrixf::MaximalDataSize = SIMD::Vector4f::size() ;
 
-
-    static SIMD::Vector4f subFactor(
-        SquareMatrixf& that,
-        const int shuffleA,
-        const int shuffleB,
-        const int shuffle0,
-        const int shuffle3
-    ) {
+    template<int shuffleA, int shuffleB, int shuffle0, int shuffle3>
+    static SIMD::Vector4f subFactor(const SquareMatrixf& that) {
         SIMD::Vector4f swp0a = VecShuffle1(that[3], that[2], shuffleA) ;
         SIMD::Vector4f swp0b = VecShuffle1(that[3], that[2], shuffleB) ;
 
@@ -27,10 +21,8 @@ namespace Mind {
         return mul0 - mul1 ;
     }
 
-    static SIMD::Vector4f predefinedVecShuffle(
-        SquareMatrixf& that,
-        const int shuffle
-    ) {
+    template<int shuffle>
+    static SIMD::Vector4f predefinedVecShuffle(const SquareMatrixf& that) {
         SIMD::Vector4f Temp = VecShuffle1(that[1], that[0], shuffle) ;
         return VecSwizzle(Temp, 2, 2, 2, 0) ;
     }
@@ -72,7 +64,7 @@ namespace Mind {
         ).horizontalAdd() ;
     }
 
-    void SquareMatrixf::transposed(SquareMatrixf& result) {
+    void SquareMatrixf::transposed(SquareMatrixf& result) const {
         // Copy data from the other matrix.
         SIMD::Vector4f transposed[] = {
             m_data[0],
@@ -94,21 +86,21 @@ namespace Mind {
         }
     }
 
-    void SquareMatrixf::inverse(SquareMatrixf& result) {
-        SIMD::Vector4f fac0 = subFactor(*this, 3, 2, 2, 3) ;
-        SIMD::Vector4f fac1 = subFactor(*this, 3, 1, 1, 3) ;
-        SIMD::Vector4f fac2 = subFactor(*this, 2, 1, 1, 2) ;
-        SIMD::Vector4f fac3 = subFactor(*this, 3, 0, 0, 3) ;
-        SIMD::Vector4f fac4 = subFactor(*this, 2, 0, 0, 2) ;
-        SIMD::Vector4f fac5 = subFactor(*this, 1, 0, 0, 1) ;
+    void SquareMatrixf::inverse(SquareMatrixf& result) const {
+        SIMD::Vector4f fac0 = subFactor<3, 2, 2, 3>(*this) ;
+        SIMD::Vector4f fac1 = subFactor<3, 1, 1, 3>(*this) ;
+        SIMD::Vector4f fac2 = subFactor<2, 1, 1, 2>(*this) ;
+        SIMD::Vector4f fac3 = subFactor<3, 0, 0, 3>(*this) ;
+        SIMD::Vector4f fac4 = subFactor<2, 0, 0, 2>(*this) ;
+        SIMD::Vector4f fac5 = subFactor<1, 0, 0, 1>(*this) ;
 
         SIMD::Vector4f signA(+1, -1, +1, -1) ;
         SIMD::Vector4f signB(-1, +1, -1, +1) ;
 
-        SIMD::Vector4f vec0  = predefinedVecShuffle(*this, 0) ;
-        SIMD::Vector4f vec1  = predefinedVecShuffle(*this, 1) ;
-        SIMD::Vector4f vec2  = predefinedVecShuffle(*this, 2) ;
-        SIMD::Vector4f vec3  = predefinedVecShuffle(*this, 3) ;
+        SIMD::Vector4f vec0  = predefinedVecShuffle<0>(*this) ;
+        SIMD::Vector4f vec1  = predefinedVecShuffle<1>(*this) ;
+        SIMD::Vector4f vec2  = predefinedVecShuffle<2>(*this) ;
+        SIMD::Vector4f vec3  = predefinedVecShuffle<3>(*this) ;
 
         // Column 0.
         SIMD::Vector4f mul0 = vec1 * fac0 ;

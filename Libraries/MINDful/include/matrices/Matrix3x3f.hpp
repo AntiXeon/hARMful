@@ -127,17 +127,15 @@ namespace Mind {
              *                  one.
              * @return  The result of the multiplication.
              */
-            exported Matrix3x3f& operator*=(Matrix3x3f& other) ;
+            exported Matrix3x3f& operator*=(const Matrix3x3f& other) ;
 
             /**
-             * Multiply the current matrix by another value.
-             * The result is put into a new matrix.
-             * @param   mat     The matrix to multiply.
-             * @param   other   The other matrix to multiply with the current
-             *                  one.
-             * @return  The result of the multiplication.
+             * Multiplication of two matrices.
+             * @param   a   First matrix.
+             * @param   b   Second matrix.
+             * @return  Result of the multiplication.
              */
-            exported Matrix3x3f operator*(Matrix3x3f& other) ;
+            friend Matrix3x3f operator*(const Matrix3x3f& a, const Matrix3x3f& b) ;
 
             /**
              * Multiply the current matrix by a vector.
@@ -152,7 +150,7 @@ namespace Mind {
              * @param   other   The other matrix to add to the current one.
              * @return  The result of the addition.
              */
-            exported Matrix3x3f& operator+=(Matrix3x3f& other) ;
+            exported Matrix3x3f& operator+=(const Matrix3x3f& other) ;
 
             /**
              * Addition of the current matrix with another one.
@@ -161,7 +159,7 @@ namespace Mind {
              * @param   other   The other matrix to add to the current one.
              * @return  The result of the addition.
              */
-            exported Matrix3x3f operator+(Matrix3x3f& other) ;
+            exported Matrix3x3f operator+(const Matrix3x3f& other) ;
     } ;
 
     inline void Matrix3x3f::data(float* output) {
@@ -176,13 +174,7 @@ namespace Mind {
         return mat ;
     }
 
-    inline Matrix3x3f Matrix3x3f::operator*(Matrix3x3f& other) {
-        Matrix3x3f mat(*this) ;
-        mat *= other ;
-        return mat ;
-    }
-
-    inline Matrix3x3f Matrix3x3f::operator+(Matrix3x3f& other) {
+    inline Matrix3x3f Matrix3x3f::operator+(const Matrix3x3f& other) {
         Matrix3x3f mat(*this) ;
         mat += other ;
         return mat ;

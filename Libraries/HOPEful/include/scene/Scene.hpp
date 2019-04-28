@@ -51,13 +51,6 @@ namespace Hope {
             }
 
             /**
-             * Get the scene cache.
-             */
-            SceneCache* cache() const {
-                return m_frameGraphVisitor -> cache() ;
-            }
-
-            /**
              * Set the root of the framegraph.
              */
             void setFrameGraphRoot(FrameGraphNode* root) ;

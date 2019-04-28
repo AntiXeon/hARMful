@@ -154,7 +154,7 @@ Mind::Vector3f Transform::scale3D() const {
     return m_scale ;
 }
 
-Mind::Matrix4x4f Transform::matrix() {
+const Mind::Matrix4x4f& Transform::matrix() {
     if (m_outdatedMatrix) {
         // Recompose the matrix from the different component values.
         m_matrix.compose(m_translation, m_rotation, m_scale) ;

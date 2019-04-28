@@ -5,7 +5,6 @@
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/UniformNames.hpp>
-#include <interfaces/visitors/scenegraph/ISceneGraphVisitor.hpp>
 #include <map>
 #include <string>
 
@@ -14,6 +13,12 @@ namespace Hope {
      * A material is applied to a 3D object to define how it is rendered.
      */
     class MaterialComponent : public Component {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MaterialComponentType ;
+
         private:
             /**
              * Names of the uniform variables.
@@ -40,19 +45,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            virtual void updateUniformValues(ISceneGraphVisitor*) {}
-
-            /**
-             * Accept the visitor.
-             */
-            void accept(ISceneGraphVisitor* visitor) override {
-                FrameID currentFrameID = visitor -> currentFrameID() ;
-
-                if (currentFrameID != lastFrame()) {
-                    updateUniformValues(visitor) ;
-                    updateLastFrame(currentFrameID) ;
-                }
-            }
+            virtual void updateUniformValues() {}
 
             /**
              * To know if the component can be shared by several entities.

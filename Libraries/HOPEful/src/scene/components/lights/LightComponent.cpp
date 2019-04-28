@@ -5,7 +5,7 @@
 using namespace Hope ;
 
 LightComponent::LightComponent(const Type type)
-    : Component(LightComponentType),
+    : Component(ClassType),
       m_type(type),
       m_color(Color(192_uchar, 192_uchar, 192_uchar)),
       m_power(1.f),

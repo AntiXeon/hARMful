@@ -2,6 +2,7 @@
 #define __HOPE__GL_LIGHT_DATA_UNIFORM_BUFFER_OBJECT__
 
 #include <scene/components/materials/AmountLights.hpp>
+#include <scene/components/materials/BlockBindings.hpp>
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
 #include <geometry/points/Point4Df.hpp>
 #include <array>
@@ -52,7 +53,7 @@ namespace Hope::GL {
             /**
              * Create a new BaseGLSLDataUBO instance.
              */
-            LightGLSLDataUBO(const GLuint bindingPointIndex) ;
+            LightGLSLDataUBO() ;
 
             /**
              * Set the amount of directional lights.

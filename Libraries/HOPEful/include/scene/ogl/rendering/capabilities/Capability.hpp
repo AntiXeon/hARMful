@@ -8,7 +8,7 @@ namespace Hope::GL {
      * Encapsulate a GL capability.
      */
     class Capability {
-        friend class OpenGLRenderVisitor ;
+        friend class OpenGLRenderer ;
 
         private:
             /**

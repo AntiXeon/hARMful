@@ -14,6 +14,12 @@ namespace Hope {
      * This is a perspective camera.
      */
     class CameraComponent final : public Component {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = CameraComponentType ;
+
         private:
             /**
              * Up vector of the world.
@@ -60,11 +66,6 @@ namespace Hope {
              * Create a new CameraComponent.
              */
             CameraComponent() ;
-
-            /**
-             * Accept the visitor.
-             */
-            void accept(ISceneGraphVisitor* visitor) override ;
 
             /**
              * To know if the component can be shared by several entities.

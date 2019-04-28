@@ -7,11 +7,11 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-LightGLSLDataUBO::LightGLSLDataUBO(const GLuint bindingPointIndex)
-    : UniformBufferObject(bindingPointIndex) {
+LightGLSLDataUBO::LightGLSLDataUBO()
+    : UniformBufferObject(LIGHTS_DATA_UBO_BINDING_INDEX) {
     glBindBuffer(GL_UNIFORM_BUFFER, bufferID()) ;
     glBufferData(GL_UNIFORM_BUFFER, size(), data(), GL_DYNAMIC_DRAW) ;
-    glBindBufferBase(GL_UNIFORM_BUFFER, bindingPointIndex, bufferID()) ;
+    glBindBufferBase(GL_UNIFORM_BUFFER, LIGHTS_DATA_UBO_BINDING_INDEX, bufferID()) ;
     glBindBuffer(GL_UNIFORM_BUFFER, 0) ;
 }
 

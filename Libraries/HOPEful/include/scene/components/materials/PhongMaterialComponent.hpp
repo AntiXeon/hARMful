@@ -78,7 +78,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues(ISceneGraphVisitor* visitor) override ;
+            void updateUniformValues() override ;
 
             /**
              * Set the ambient color.

@@ -12,6 +12,11 @@ namespace Hope {
     class LightComponent : public Component {
         public:
             /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = LightComponentType ;
+
+            /**
              * Possible light types.
              */
             enum class Type {
@@ -46,11 +51,6 @@ namespace Hope {
              * Create a new LightComponent.
              */
             LightComponent(const Type type) ;
-
-            /**
-             * No need to be visited!
-             */
-            void accept(ISceneGraphVisitor*) override { /* Do nothing! */ }
 
             /**
              * To know if the component can be shared by several entities.
@@ -140,7 +140,7 @@ namespace Hope {
             /**
              * Get the type of the light.
              */
-            Type type() const {
+            Type lightType() const {
                 return m_type ;
             }
 
