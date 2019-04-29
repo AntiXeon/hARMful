@@ -1,8 +1,8 @@
 #ifndef __HOPE__FRAME_RENDER_CACHE__
 #define __HOPE__FRAME_RENDER_CACHE__
 
+#include <scene/ogl/visitors/cache/DefaultObjects.hpp>
 #include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
-#include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/ogl/visitors/cache/LightData.hpp>
 #include <scene/ogl/visitors/cache/MeshData.hpp>
 #include <map>
@@ -22,9 +22,9 @@ namespace Hope::GL {
     class FrameRenderCache final {
         private:
             /**
-             * Default material when trying to render a mesh without material.
+             * Default objects.
              */
-            PhongMaterialComponent m_defaultMaterial ;
+            static const DefaultObjects DefaultSceneObjects ;
 
             /**
              * Shared data to render the current frame.

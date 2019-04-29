@@ -2,6 +2,7 @@
 #define __HOPE__GL_RENDERER__
 
 #include <scene/ogl/visitors/cache/MeshData.hpp>
+#include <scene/ogl/visitors/cache/FrameRenderCache.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 
 namespace Hope::GL {
@@ -15,11 +16,27 @@ namespace Hope::GL {
              */
             ModelGLSLDataUBO m_ubo ;
 
+            /**
+             * Cache for rendering the current frame.
+             */
+            FrameRenderCache m_renderCache ;
+
         public:
             /**
              * Render the scene.
              */
-            void render(std::vector<MeshData>& dataList) ;
+            void render() ;
+
+            /**
+             * Get the cache for rendering the current frame.
+             */
+            const FrameRenderCache& cache() const {
+                return m_renderCache ;
+            }
+
+            FrameRenderCache& cache() {
+                return m_renderCache ;
+            }
 
         private:
             /**

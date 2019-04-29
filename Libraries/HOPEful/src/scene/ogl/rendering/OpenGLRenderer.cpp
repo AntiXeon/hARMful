@@ -7,8 +7,8 @@
 
 using namespace Hope::GL ;
 
-void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
-    for (MeshData& meshData : dataList) {
+void OpenGLRenderer::render() {
+    for (MeshData& meshData : m_renderCache.meshes()) {
         m_ubo.setMatrices(
             meshData.worldTransformation,
             meshData.sharedData -> viewMatrix,
@@ -28,6 +28,8 @@ void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
             geometry -> unbind() ;
         }
     }
+
+    m_renderCache.clear() ;
 }
 
 void OpenGLRenderer::useMaterial(const MaterialComponent* component) {
