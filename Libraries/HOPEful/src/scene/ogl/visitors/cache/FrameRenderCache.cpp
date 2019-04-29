@@ -81,4 +81,6 @@ void FrameRenderCache::cacheMesh(
         MaterialComponent* material = entity -> component<MaterialComponent>(materialID) ;
         entityMeshData.parts[material].push_back(part) ;
     }
+
+    m_meshes.push_back(entityMeshData) ;
 }
