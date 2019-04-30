@@ -1,4 +1,4 @@
-// Phong material shader.
+// Blinn-Phong material shader.
 
 struct Material {
     vec3 ambientColor ;
