@@ -12,7 +12,18 @@ namespace Hope::GL {
             /**
              * Render the scene.
              */
-            void render(std::vector<MeshData>& dataList) ;
+            void render() ;
+
+            /**
+             * Get the cache for rendering the current frame.
+             */
+            const FrameRenderCache& cache() const {
+                return m_renderCache ;
+            }
+
+            FrameRenderCache& cache() {
+                return m_renderCache ;
+            }
 
         private:
             /**

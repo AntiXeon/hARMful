@@ -88,7 +88,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         (m_ubos -> base()).setProjectionMatrix(projectionMatrix) ;
         (m_ubos -> base()).setInverseProjectionMatrix(inverseProjectionMatrix) ;
         (m_ubos -> base()).setAspectRatio(aspectRatio) ;
-        m_renderCache.setProjectionMatrix(projectionMatrix) ;
+        (m_activeRenderer -> cache()).setProjectionMatrix(projectionMatrix) ;
     }
 
     // Update the model view matrix.
@@ -102,7 +102,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Mind::Vector3f eyeView = -cameraTransform.translation() ;
 
     // Update the required data.
-    m_renderCache.setViewMatrix(viewMatrix) ;
+    (m_activeRenderer -> cache()).setViewMatrix(viewMatrix) ;
     (m_ubos -> base()).setTime(glfwGetTime()) ;
     (m_ubos -> base()).setEyePosition(eyeView) ;
     (m_ubos -> base()).setViewMatrix(viewMatrix) ;
@@ -190,7 +190,7 @@ void OpenGLFrameGraphVisitor::makeRender() {
     (m_ubos -> base()).update() ;
 
     // Render the frame.
-    m_activeRenderer -> render(m_renderCache.meshes()) ;
+    m_activeRenderer -> render() ;
 
     // Remove the last RenderConditionAggregator from the list!
     m_aggregators.pop_back() ;
@@ -212,7 +212,7 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
         Mind::Matrix4x4f currentWorldMatrix = m_processedNodes.top().worldMatrix ;
 
         // Get components that need to be cached.
-        m_renderCache.cacheEntity(
+        (m_activeRenderer -> cache()).cacheEntity(
             renderedEntity,
             currentWorldMatrix
         ) ;

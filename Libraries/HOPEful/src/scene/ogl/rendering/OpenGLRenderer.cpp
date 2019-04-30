@@ -28,6 +28,8 @@ void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
             geometry -> unbind() ;
         }
     }
+
+    m_renderCache.clear() ;
 }
 
 void OpenGLRenderer::useMaterial(const MaterialComponent* component) {
