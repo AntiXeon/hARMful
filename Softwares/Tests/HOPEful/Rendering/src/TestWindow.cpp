@@ -39,25 +39,25 @@ TestWindow::TestWindow()
     (suzanneEntity -> transform()).setRotation(Mind::Quaternion(-30.f, 0.f, 0.f)) ;
 */
 
-/*
+
     // Create a directional light.
 	{
 		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
 		Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-		dirLightComponent -> setDirection(Mind::Vector3f(0.5f, -1.f, -0.5f)) ;
-		dirLightComponent -> setColor(Hope::Color(0.7f, 0.7f, 0.7f, 1.f)) ;
+		dirLightComponent -> setDirection(Mind::Vector3f(0.f, 1.f, -1.f)) ;
+		dirLightComponent -> setColor(Hope::Color(0.9f, 0.85f, 0.7f, 1.f)) ;
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(true) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
 	}
-*/
+
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(1.f, 5.f, 2.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 5.f, 5.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(0.7f, 0.8f, 1.f, 1.f)) ;
         pointLightComponent -> setPower(1.f) ;
-        pointLightComponent -> setSpecularGenerated(true) ;
+        pointLightComponent -> setSpecularGenerated(false) ;
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
@@ -65,7 +65,7 @@ TestWindow::TestWindow()
 
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-1.f, -2.f, 0.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-5.f, 0.f, 0.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(1.f, 0.3f, 0.3f, 1.f)) ;
         pointLightComponent -> setPower(0.5f) ;
@@ -77,7 +77,7 @@ TestWindow::TestWindow()
 
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, -5.f)) ;
+        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(5.f, -5.f, -5.f)) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(0.1f, 0.5f, 1.f, 1.f)) ;
         pointLightComponent -> setPower(0.7f) ;

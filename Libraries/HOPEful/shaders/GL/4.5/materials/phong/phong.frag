@@ -25,19 +25,19 @@ vec3 ComputeDirectionalLight(
 ) {
     vec3 returnedLighting = vec3(0.f) ;
 
-    vec3 lightDirection = normalize(light.direction) ;
-    float lambertian = max(dot(-lightDirection, normal), 0.f) ;
-    float specular = light.generateSpecular ;
+    vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;
+    vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;
+    float lambertian = max(dot(lightDirection, normal), 0.0) ;
+    vec3 reflectDirection = reflect(-lightDirection, normal) ;
 
-    if (lambertian > 0.f) {
-        vec3 reflectDirection = reflect(lightDirection, normal) ;
-        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
-        specular *= pow(specularAngle, phong.shininess / 4.) ;
+    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
+    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
+    specularAngle *= pow(specularAngle, phong.shininess) ;
+    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
-        vec3 lightPowerColor = light.color * light.power ;
-        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
-        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;
-    }
+    vec3 lightPowerColor = light.color * light.power ;
+    returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
+    returnedLighting += (phong.specularColor * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
 }
@@ -49,27 +49,27 @@ vec3 ComputePointLight(
 ) {
     vec3 returnedLighting = vec3(0.f) ;
 
-    vec3 lightDirection = normalize(inVertexWorldPosition - light.position) ;
-    float lambertian = max(dot(-lightDirection, normal), 0.f) ;
-    float specular = light.generateSpecular ;
+    vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;
+    vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;
+    float lambertian = max(dot(lightDirection, normal), 0.0) ;
+    vec3 reflectDirection = reflect(-lightDirection, normal) ;
 
-    if (lambertian > 0.f) {
-        vec3 reflectDirection = reflect(lightDirection, normal) ;
-        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
-        specular *= pow(specularAngle, phong.shininess / 4.) ;
+    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
+    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
+    specularAngle *= pow(specularAngle, phong.shininess) ;
+    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
-        float lightDistance = length(inVertexWorldPosition - light.position) ;
-        float sqrLightDistance = lightDistance * lightDistance ;
-        float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
+    float lightDistance = length(inVertexWorldPosition - light.position) ;
+    float sqrLightDistance = lightDistance * lightDistance ;
+    float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
 
-        float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;
-        float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;
-        float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
+    float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;
+    float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;
+    float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
-        vec3 lightPowerColor = light.color * lightIntensity ;
-        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
-        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;
-    }
+    vec3 lightPowerColor = light.color * lightIntensity ;
+    returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;
+    returnedLighting += (phong.specularColor * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
 }

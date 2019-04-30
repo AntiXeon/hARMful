@@ -54,19 +54,19 @@ vec3 ComputeDirectionalLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec3 lightDirection = normalize(light.direction) ;\n\
-    float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
-    float specular = light.generateSpecular ;\n\
+    vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;\n\
+    vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;\n\
+    float lambertian = max(dot(lightDirection, normal), 0.0) ;\n\
+    vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
 \n\
-    if (lambertian > 0.f) {\n\
-        vec3 reflectDirection = reflect(lightDirection, normal) ;\n\
-        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-        specular *= pow(specularAngle, phong.shininess / 4.) ;\n\
+    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
+    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
+    specularAngle *= pow(specularAngle, phong.shininess) ;\n\
+    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
-        vec3 lightPowerColor = light.color * light.power ;\n\
-        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
-        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;\n\
-    }\n\
+    vec3 lightPowerColor = light.color * light.power ;\n\
+    returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (phong.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
@@ -78,27 +78,27 @@ vec3 ComputePointLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec3 lightDirection = normalize(inVertexWorldPosition - light.position) ;\n\
-    float lambertian = max(dot(-lightDirection, normal), 0.f) ;\n\
-    float specular = light.generateSpecular ;\n\
+    vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;\n\
+    vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;\n\
+    float lambertian = max(dot(lightDirection, normal), 0.0) ;\n\
+    vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
 \n\
-    if (lambertian > 0.f) {\n\
-        vec3 reflectDirection = reflect(lightDirection, normal) ;\n\
-        float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-        specular *= pow(specularAngle, phong.shininess / 4.) ;\n\
+    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
+    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
+    specularAngle *= pow(specularAngle, phong.shininess) ;\n\
+    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
-        float lightDistance = length(inVertexWorldPosition - light.position) ;\n\
-        float sqrLightDistance = lightDistance * lightDistance ;\n\
-        float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;\n\
+    float lightDistance = length(inVertexWorldPosition - light.position) ;\n\
+    float sqrLightDistance = lightDistance * lightDistance ;\n\
+    float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;\n\
 \n\
-        float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;\n\
-        float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;\n\
-        float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
+    float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;\n\
+    float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;\n\
+    float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
-        vec3 lightPowerColor = light.color * lightIntensity ;\n\
-        returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
-        returnedLighting += (phong.specularColor * specular * lightPowerColor) ;\n\
-    }\n\
+    vec3 lightPowerColor = light.color * lightIntensity ;\n\
+    returnedLighting = (phong.diffuseColor * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (phong.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
