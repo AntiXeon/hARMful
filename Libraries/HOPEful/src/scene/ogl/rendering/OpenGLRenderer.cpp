@@ -7,6 +7,8 @@
 
 using namespace Hope::GL ;
 
+#define BufferOffset(offset) (static_cast<const char*>(nullptr) + (offset))
+
 void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
     for (MeshData& meshData : dataList) {
         (meshData.sharedData -> modelUBO).setMatrices(
@@ -22,9 +24,26 @@ void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
 
             const MeshGeometry* geometry = (meshData.mesh -> geometry()) ;
             geometry -> bind() ;
+
+            size_t amountParts = geometry -> amountParts() ;
+            std::vector<int32_t> counts(amountParts) ;
+            std::vector<const void*> indiceOffsets(amountParts) ;
+
+            size_t partIndex = 0 ;
             for (MeshPart& part : meshParts) {
-                part.render() ;
+                counts[partIndex] = static_cast<int32_t>(part.amountIndices()) ;
+                indiceOffsets[partIndex] = BufferOffset(sizeof(uint32_t) * part.offset()) ;
+                partIndex++ ;
             }
+
+            glMultiDrawElements(
+                GL_TRIANGLES,
+                counts.data(),
+                GL_UNSIGNED_INT,
+                indiceOffsets.data(),
+                amountParts
+            ) ;
+
             geometry -> unbind() ;
         }
     }

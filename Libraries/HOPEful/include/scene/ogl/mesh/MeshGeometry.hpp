@@ -25,6 +25,16 @@ namespace Hope::GL {
             GLuint m_vertexBuffer = INVALID_VALUE ;
 
             /**
+             * ID of the index buffer of this part.
+             */
+            GLuint m_indexBuffer = INVALID_VALUE ;
+
+            /**
+             * Indices of the vertices that compose the mesh and mesh parts.
+             */
+            std::vector<uint32_t> m_indices ;
+
+            /**
              * Mesh parts composing the whole mesh.
              */
             std::vector<MeshPart> m_parts ;
@@ -42,6 +52,11 @@ namespace Hope::GL {
                 const uint32_t materialID,
                 const std::vector<uint32_t>& indices
             ) ;
+
+            /**
+             * Generate all the buffers when the
+             */
+            void completed() ;
 
             /**
              * Destruction of the MeshGeometry by deleting the buffers.
@@ -67,6 +82,13 @@ namespace Hope::GL {
              */
             const MeshPart& part(const uint32_t index) const {
                 return m_parts[index] ;
+            }
+
+            /**
+             * Amount of indices in the total mesh.
+             */
+            size_t amountIndices() const {
+                return m_indices.size() ;
             }
 
             /**

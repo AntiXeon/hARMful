@@ -1,13 +1,9 @@
 #ifndef __HOPE__GL_MESHPART__
 #define __HOPE__GL_MESHPART__
 
-#include <vector>
 #include <scene/ogl/GLDefines.hpp>
-#include <interfaces/IRenderable.hpp>
 #include <GL/glew.h>
 #include <cstdint>
-
-#include <iostream>
 
 namespace Hope::GL {
 
@@ -17,19 +13,20 @@ namespace Hope::GL {
     /**
      * A MeshPart is a subpart of a Mesh. A complex Mesh can have several parts.
      */
-    class MeshPart final : public Hope::IRenderable {
+    class MeshPart final {
         friend class MeshGeometry ;
 
         private:
             /**
-             * ID of the index buffer of this part.
-             */
-            GLuint m_indexBuffer = INVALID_VALUE ;
-
-            /**
              * ID of the material to draw this part.
              */
             uint32_t m_materialID = INVALID_MATERIAL ;
+
+            /**
+             * Offset at which data of the current part are stored in the GPU
+             * buffer memory.
+             */
+            uint32_t m_offset = 0 ;
 
             /**
              * Amount of vertex indices.
@@ -41,17 +38,10 @@ namespace Hope::GL {
              * Create a new MeshPart.
              */
              MeshPart(
-                const uint32_t materialID,
-                const std::vector<uint32_t>& indices
+                uint32_t materialID,
+                uint32_t offset,
+                uint32_t amountIndices
             ) ;
-
-            /**
-             * Render the mesh part on screen.
-             */
-            void render() const override {
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
-                glDrawElements(GL_TRIANGLES, m_amountIndices, GL_UNSIGNED_INT, nullptr) ;
-            }
 
             /**
              * ID of the material to draw this part.
@@ -61,17 +51,19 @@ namespace Hope::GL {
             }
 
             /**
+             * Offset at which data of the current part are stored in the GPU
+             * buffer memory.
+             */
+            uint32_t offset() const {
+                return m_offset ;
+            }
+
+            /**
              * Amount of indices of vertex in this part.
              */
             uint32_t amountIndices() const {
                 return m_amountIndices ;
             }
-
-        private:
-            /**
-             * Delete the mesh part buffers.
-             */
-            void deleteBuffers() ;
     } ;
 }
 

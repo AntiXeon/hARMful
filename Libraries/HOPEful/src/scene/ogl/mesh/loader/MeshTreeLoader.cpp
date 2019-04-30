@@ -141,6 +141,7 @@ void MeshTreeLoader::loadNodeData(
     for (MeshPartData& part : partData) {
         geometry -> addPart(part.material, part.indices) ;
     }
+    geometry -> completed() ;
 
     // Add the components to the entity.
     MeshGeometryComponent* geometryComponent = new MeshGeometryComponent(geometry) ;
