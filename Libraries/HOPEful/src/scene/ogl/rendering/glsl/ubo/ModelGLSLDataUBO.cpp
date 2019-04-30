@@ -41,4 +41,6 @@ void ModelGLSLDataUBO::setMatrices(
 
     m_data.modelNormalMatrix = (normalMatrix * modelMatrix).toArray() ;
     m_data.modelViewNormalMatrix = (normalMatrix * modelViewMatrix).toArray() ;
+
+    askForAnUpdate() ;
 }

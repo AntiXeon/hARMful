@@ -3,7 +3,6 @@
 
 #include <scene/ogl/visitors/cache/DefaultObjects.hpp>
 #include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
-#include <scene/ogl/visitors/cache/LightData.hpp>
 #include <scene/ogl/visitors/cache/MeshData.hpp>
 #include <map>
 #include <set>
@@ -12,6 +11,8 @@
 namespace Hope {
     class Entity ;
     class LightComponent ;
+    class DirectionalLightComponent ;
+    class PointLightComponent ;
 }
 
 namespace Hope::GL {
@@ -39,12 +40,12 @@ namespace Hope::GL {
             /**
              * Cache of all directional lights to use for the render.
              */
-            std::vector<DirectionalLightData> m_directionalLights ;
+            std::vector<DirectionalLightComponent*> m_directionalLights ;
 
             /**
              * Cache of all points lights to use for the render.
              */
-            std::vector<PointLightData> m_pointLights ;
+            std::vector<PointLightComponent*> m_pointLights ;
 
         public:
             /**
@@ -102,14 +103,14 @@ namespace Hope::GL {
             /**
              * Gache of all directional lights to use for the render.
              */
-            const std::vector<DirectionalLightData>& directionalLights() const {
+            const std::vector<DirectionalLightComponent*>& directionalLights() const {
                 return m_directionalLights ;
             }
 
             /**
              * Get the cache of all points lights to use for the render.
              */
-            const std::vector<PointLightData>& pointLights() const {
+            const std::vector<PointLightComponent*>& pointLights() const {
                 return m_pointLights ;
             }
 
@@ -117,10 +118,7 @@ namespace Hope::GL {
             /**
              * Put a light in cache.
              */
-            void cacheLight(
-                LightComponent* light,
-                const Mind::Matrix4x4f& worldTransformation
-            ) ;
+            void cacheLight(LightComponent* light) ;
 
             /**
              * Put a mesh in cache.

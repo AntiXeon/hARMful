@@ -43,6 +43,7 @@ namespace Hope::GL {
              */
             void setViewMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.viewMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -50,6 +51,7 @@ namespace Hope::GL {
              */
             void setProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.projectionMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -57,6 +59,7 @@ namespace Hope::GL {
              */
             void setViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.viewProjectionMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -64,6 +67,7 @@ namespace Hope::GL {
              */
             void setInverseViewMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseViewMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -71,6 +75,7 @@ namespace Hope::GL {
              */
             void setInverseProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseProjectionMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -78,6 +83,7 @@ namespace Hope::GL {
              */
             void setInverseViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseViewProjectionMatrix = mat.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -86,6 +92,7 @@ namespace Hope::GL {
             void setViewportMatrix(const Mind::Matrix3x3f& mat) {
                 Mind::Matrix4x4f tmp(mat) ;
                 m_data.viewportMatrix = tmp.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -94,6 +101,7 @@ namespace Hope::GL {
             void setInverseViewportMatrix(const Mind::Matrix3x3f& mat) {
                 Mind::Matrix4x4f tmp(mat) ;
                 m_data.inverseViewportMatrix = tmp.toArray() ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -101,6 +109,7 @@ namespace Hope::GL {
              */
             void setAspectRatio(const float value) {
                 m_data.aspectRatio = value ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -108,6 +117,7 @@ namespace Hope::GL {
              */
             void setTime(const float value) {
                 m_data.time = value ;
+                askForAnUpdate() ;
             }
 
             /**
@@ -115,6 +125,14 @@ namespace Hope::GL {
              */
             void setEyePosition(const Mind::Vector3f& vec) {
                 m_data.eyePosition = vec.toArray() ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * To know if an update is required.
+             */
+            bool needUpdate() const {
+                return true ;
             }
 
         protected:

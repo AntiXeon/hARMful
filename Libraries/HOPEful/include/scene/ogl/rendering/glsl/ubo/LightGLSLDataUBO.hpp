@@ -59,14 +59,20 @@ namespace Hope::GL {
              * Set the amount of directional lights.
              */
             void setAmountDirectionalLights(const int count) {
-                m_data.amount_dir_point[0] = count ;
+                if (m_data.amount_dir_point[0] != count) {
+                    m_data.amount_dir_point[0] = count ;
+                    askForAnUpdate() ;
+                }
             }
 
             /**
              * Set the amount of point lights.
              */
             void setAmountPointLights(const int count) {
-                m_data.amount_dir_point[1] = count ;
+                if (m_data.amount_dir_point[1] != count) {
+                    m_data.amount_dir_point[1] = count ;
+                    askForAnUpdate() ;
+                }
             }
 
             /**
@@ -74,8 +80,7 @@ namespace Hope::GL {
              */
             void setDirectionalLight(
                 const uint16_t index,
-                const DirectionalLightComponent* light,
-                const Mind::Matrix4x4f& modelViewMatrix
+                DirectionalLightComponent* light
             ) ;
 
             /**
@@ -83,8 +88,7 @@ namespace Hope::GL {
              */
             void setPointLight(
                 const uint16_t index,
-                const PointLightComponent* light,
-                const Mind::Matrix4x4f& modelViewMatrix
+                PointLightComponent* light
             ) ;
 
         protected:

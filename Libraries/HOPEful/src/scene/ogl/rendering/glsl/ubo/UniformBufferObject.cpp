@@ -29,9 +29,11 @@ UniformBufferObject::~UniformBufferObject() {
 }
 
 void UniformBufferObject::update() {
-    glBindBuffer(GL_UNIFORM_BUFFER, m_uniformBuffer) ;
-    GLvoid* pointer = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY) ;
-    memcpy(pointer, data(), size()) ;
-    glUnmapBuffer(GL_UNIFORM_BUFFER) ;
-    glBindBuffer(GL_UNIFORM_BUFFER, 0) ;
+    if (needUpdate()) {
+        glBindBuffer(GL_UNIFORM_BUFFER, m_uniformBuffer) ;
+        GLvoid* pointer = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY) ;
+        memcpy(pointer, data(), size()) ;
+        glUnmapBuffer(GL_UNIFORM_BUFFER) ;
+        updated() ;
+    }
 }

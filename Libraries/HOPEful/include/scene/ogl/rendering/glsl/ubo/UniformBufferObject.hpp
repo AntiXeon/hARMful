@@ -24,6 +24,11 @@ namespace Hope::GL {
              */
             GLuint m_bindingPointIndex = 0 ;
 
+            /**
+             * To know if an update is needed.
+             */
+            bool m_needUpdate = true ;
+
         public:
             /**
              * Create a UniformBufferObject instance.
@@ -40,7 +45,28 @@ namespace Hope::GL {
              */
             void update() ;
 
+            /**
+             * To know if an update is required.
+             */
+            bool needUpdate() const {
+                return m_needUpdate ;
+            }
+
         protected:
+            /**
+             * The UBO ask for sending new values to the GPU memory.
+             */
+            void askForAnUpdate() {
+                m_needUpdate = true ;
+            }
+
+            /**
+             * The UBO has been updated.
+             */
+            void updated() {
+                m_needUpdate = false ;
+            }
+
             /**
              * Get the ID of the UBO.
              */

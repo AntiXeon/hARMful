@@ -36,6 +36,7 @@ namespace Hope {
              */
             void setDistance(const float distance) {
                 m_distance = distance ;
+                signalChange() ;
             }
 
             /**
@@ -44,6 +45,7 @@ namespace Hope {
              */
             void setLinearAttenuation(const float attenuation) {
                 m_linearAttenuation = std::clamp(attenuation, 0.f, 1.f) ;
+                signalChange() ;
             }
 
             /**
@@ -52,6 +54,7 @@ namespace Hope {
              */
             void setQuadraticAttenuation(const float attenuation) {
                 m_quadraticAttenuation = std::clamp(attenuation, 0.f, 1.f) ;
+                signalChange() ;
             }
 
             /**

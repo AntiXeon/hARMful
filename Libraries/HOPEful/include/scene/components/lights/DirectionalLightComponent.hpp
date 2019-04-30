@@ -26,6 +26,7 @@ namespace Hope {
              */
             void setDirection(const Mind::Vector3f& direction) {
                 m_direction = direction ;
+                signalChange() ;
             }
 
             /**
@@ -33,6 +34,7 @@ namespace Hope {
              */
             void setDirection(const float x, const float y, const float z) {
                 m_direction = Mind::Vector3f(x, y, z) ;
+                signalChange() ;
             }
 
             /**

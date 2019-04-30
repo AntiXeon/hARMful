@@ -46,6 +46,11 @@ namespace Hope {
              */
             bool m_generateSpecular ;
 
+            /**
+             * To know if the light parameters have changed.
+             */
+            bool m_hasChanged = true ;
+
         public:
             /**
              * Create a new LightComponent.
@@ -82,6 +87,7 @@ namespace Hope {
              */
             void setColor(const Color& color) {
                 m_color = color ;
+                signalChange() ;
             }
 
             /**
@@ -89,6 +95,7 @@ namespace Hope {
              */
             void setColor(const int color) {
                 m_color = Color(color) ;
+                signalChange() ;
             }
 
             /**
@@ -100,6 +107,7 @@ namespace Hope {
                 const uint8_t blue
             ) {
                 m_color = Color(red, green, blue, 255) ;
+                signalChange() ;
             }
 
             /**
@@ -107,6 +115,7 @@ namespace Hope {
              */
             void setPower(const float power) {
                 m_power = power ;
+                signalChange() ;
             }
 
             /**
@@ -114,6 +123,7 @@ namespace Hope {
              */
             void setSpecularGenerated(const bool generated) {
                 m_generateSpecular = generated ;
+                signalChange() ;
             }
 
             /**
@@ -148,6 +158,28 @@ namespace Hope {
              * Get the position of the light.
              */
             Mind::Vector3f position() const ;
+
+            /**
+             * To know if the lamp has changed.
+             */
+            bool hasChanged() const {
+                return m_hasChanged ;
+            }
+
+            /**
+             * Clear any change signal in the light.
+             */
+            void clearChange() {
+                m_hasChanged = false ;
+            }
+
+        protected:
+            /**
+             * Signal any change in light parameters.
+             */
+            void signalChange() {
+                m_hasChanged = true ;
+            }
     } ;
 }
 
