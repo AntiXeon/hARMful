@@ -135,7 +135,7 @@ namespace Mind {
         return result ;
     }
 
-    Vector3f Matrix3x3f::operator*(const Vector3f& vec3) {
+    Vector3f Matrix3x3f::operator*(const Vector3f& vec3) const {
         Vector3f result ;
 
         unsigned int length = static_cast<unsigned int>(size()) ;

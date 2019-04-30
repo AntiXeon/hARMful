@@ -74,7 +74,8 @@ namespace Hope::GL {
              */
             void setDirectionalLight(
                 const uint16_t index,
-                const DirectionalLightComponent* light
+                const DirectionalLightComponent* light,
+                const Mind::Matrix4x4f& modelViewMatrix
             ) ;
 
             /**
@@ -82,7 +83,8 @@ namespace Hope::GL {
              */
             void setPointLight(
                 const uint16_t index,
-                const PointLightComponent* light
+                const PointLightComponent* light,
+                const Mind::Matrix4x4f& modelViewMatrix
             ) ;
 
         protected:

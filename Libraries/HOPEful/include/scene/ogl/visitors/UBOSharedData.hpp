@@ -2,7 +2,6 @@
 #define __HOPE__OPENGL_UBO_SHARED_DATA__
 
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
-#include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 
 namespace Hope::GL {

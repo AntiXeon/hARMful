@@ -211,7 +211,7 @@ namespace Mind {
              * @param   vec4    The vector to multiply the current matrix with.
              * @return  The result of the multiplication.
              */
-            exported Vector4f operator*(const Vector4f& vec4) ;
+            exported Vector4f operator*(const Vector4f& vec4) const ;
 
             /**
              * Addition of the current matrix with another one.

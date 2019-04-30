@@ -9,12 +9,12 @@ using namespace Hope::GL ;
 
 void OpenGLRenderer::render(std::vector<MeshData>& dataList) {
     for (MeshData& meshData : dataList) {
-        m_ubo.setMatrices(
+        (meshData.sharedData -> modelUBO).setMatrices(
             meshData.worldTransformation,
             meshData.sharedData -> viewMatrix,
             meshData.sharedData -> projectionMatrix
         ) ;
-        m_ubo.update() ;
+        (meshData.sharedData -> modelUBO).update() ;
 
         for (auto& [material, meshParts] : meshData.parts) {
             material -> updateUniformValues() ;

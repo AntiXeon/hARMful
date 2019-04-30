@@ -142,7 +142,7 @@ namespace Mind {
              * @param   vec3    The vector to multiply the current matrix with.
              * @return  The result of the multiplication.
              */
-            exported Vector3f operator*(const Vector3f& vec3) ;
+            exported Vector3f operator*(const Vector3f& vec3) const ;
 
             /**
              * Addition of the current matrix with another one.

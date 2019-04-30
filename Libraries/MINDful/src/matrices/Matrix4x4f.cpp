@@ -159,7 +159,7 @@ namespace Mind {
         return *this ;
     }
 
-    Vector4f Matrix4x4f::operator*(const Vector4f& vec4) {
+    Vector4f Matrix4x4f::operator*(const Vector4f& vec4) const {
         Vector4f result ;
 
         unsigned int length = static_cast<unsigned int>(size()) ;

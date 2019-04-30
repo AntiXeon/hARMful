@@ -10,7 +10,11 @@ void UBOSharedData::updateLightUBO(const FrameRenderCache& cache) {
 
         uint16_t lightIndex = 0 ;
         for (const DirectionalLightData& dirLight : directionalLights) {
-            m_lightUBO.setDirectionalLight(lightIndex, dirLight.light) ;
+            m_lightUBO.setDirectionalLight(
+                lightIndex,
+                dirLight.light,
+                dirLight.worldTransformation
+            ) ;
             lightIndex++ ;
         }
     }
@@ -21,7 +25,11 @@ void UBOSharedData::updateLightUBO(const FrameRenderCache& cache) {
 
         uint16_t lightIndex = 0 ;
         for (const PointLightData& pointLight : pointLights) {
-            m_lightUBO.setPointLight(lightIndex, pointLight.light) ;
+            m_lightUBO.setPointLight(
+                lightIndex,
+                pointLight.light,
+                pointLight.worldTransformation
+            ) ;
             lightIndex++ ;
         }
     }

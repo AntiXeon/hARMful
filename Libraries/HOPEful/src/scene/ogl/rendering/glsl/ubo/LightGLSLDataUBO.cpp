@@ -3,6 +3,7 @@
 #include <scene/components/lights/PointLightComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <geometry/points/Point4Df.hpp>
+#include <matrices/Matrix4x4f.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
@@ -17,9 +18,11 @@ LightGLSLDataUBO::LightGLSLDataUBO()
 
 void LightGLSLDataUBO::setDirectionalLight(
     const uint16_t index,
-    const DirectionalLightComponent* light
+    const DirectionalLightComponent* light,
+    const Mind::Matrix4x4f& modelViewMatrix
 ) {
-    m_data.dirLights[index].direction = Mind::Vector4f(light -> direction()).toArray() ;
+    Mind::Vector4f fixedDirection = modelViewMatrix * Mind::Vector4f(light -> direction()) ;
+    m_data.dirLights[index].direction = fixedDirection.toArray() ;
     m_data.dirLights[index].color = (light -> color()).toRGBA() ;
     m_data.dirLights[index].power_specular[0] = light -> power() ;
     m_data.dirLights[index].power_specular[1] = light -> generateSpecular() ;
@@ -27,9 +30,11 @@ void LightGLSLDataUBO::setDirectionalLight(
 
 void LightGLSLDataUBO::setPointLight(
     const uint16_t index,
-    const PointLightComponent* light
+    const PointLightComponent* light,
+    const Mind::Matrix4x4f& modelViewMatrix
 ) {
-    m_data.pointLights[index].position = Mind::Vector4f(light -> position()).toArray() ;
+    Mind::Vector4f fixedPosition = modelViewMatrix * Mind::Vector4f(light -> position()) ;
+    m_data.pointLights[index].position = fixedPosition.toArray() ;
     m_data.pointLights[index].color_distance = (light -> color()).toRGBA() ;
     m_data.pointLights[index].color_distance[3] = light -> distance() ;
     m_data.pointLights[index].linAtt_quadAtt_power_specular[0] = light -> linearAttenuation() ;

@@ -172,11 +172,6 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 void OpenGLFrameGraphVisitor::makeRender() {
     assert(m_aggregators.size() > 0) ;
 
-    // Send data of the base UBO to the GPU before rendering this part of the
-    // framegraph.
-    m_ubos -> updateLightUBO(m_renderCache) ;
-    (m_ubos -> base()).update() ;
-
     Hope::ProcessedSceneNode rootNode ;
     rootNode.node = m_sceneRoot ;
     rootNode.worldMatrix = (m_sceneRoot -> transform()).matrix() ;
@@ -188,6 +183,11 @@ void OpenGLFrameGraphVisitor::makeRender() {
         // The children of an invalid entity are discarded as well.
         parseSceneGraph() ;
     }
+
+    // Send data of the base UBO to the GPU before rendering this part of the
+    // framegraph.
+    m_ubos -> updateLightUBO(m_renderCache) ;
+    (m_ubos -> base()).update() ;
 
     // Render the frame.
     m_activeRenderer -> render(m_renderCache.meshes()) ;
