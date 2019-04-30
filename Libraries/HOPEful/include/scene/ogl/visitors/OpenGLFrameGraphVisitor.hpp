@@ -3,6 +3,7 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
+#include <scene/ogl/visitors/cache/FrameRenderCache.hpp>
 #include <scene/ogl/rendering/OpenGLRenderer.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
@@ -36,6 +37,11 @@ namespace Hope::GL {
              * UBOs required to send uniform values to the shaders.
              */
             UBOSharedData* m_ubos = nullptr ;
+
+            /**
+             * Cache for rendering the current frame.
+             */
+            FrameRenderCache m_renderCache ;
 
             /**
              * Size of the window.
@@ -147,6 +153,7 @@ namespace Hope::GL {
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
+                m_renderCache.clear() ;
 
                 // Create a new aggregator for the new frame rendering.
                 assert(m_aggregators.size() == 0) ;

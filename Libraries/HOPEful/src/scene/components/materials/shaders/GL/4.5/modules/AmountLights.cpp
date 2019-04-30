@@ -7,7 +7,7 @@ std::string AmountLightsFragmentCode =
 #ifndef HOPE__SHADER_AMOUNT_LIGHTS\n\
 #define HOPE__SHADER_AMOUNT_LIGHTS\n\
 \n\
-#define MAX_DIRECTIONAL_LIGHTS  4\n\
+#define MAX_DIRECTIONAL_LIGHTS  1\n\
 #define MAX_POINT_LIGHTS        32\n\
 #define MAX_SPOT_LIGHTS         8\n\
 \n\

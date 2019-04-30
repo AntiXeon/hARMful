@@ -42,6 +42,7 @@
 *.exe
 *.out
 *.app
+*.log
 
 # Translations
 *.pot
