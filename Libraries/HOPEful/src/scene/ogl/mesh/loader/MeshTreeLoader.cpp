@@ -111,7 +111,11 @@ void MeshTreeLoader::loadNodeData(
         for (uint32_t vertexIndex = 0 ; vertexIndex < amountVertices ; ++vertexIndex) {
             aiVector3D pos = meshToLoad -> mVertices[vertexIndex] ;
             aiVector3D normal = meshToLoad -> mNormals[vertexIndex] ;
-            aiVector3D tangent = meshToLoad -> mTangents[vertexIndex] ;
+
+            aiVector3D tangent = Zero ;
+            if (meshToLoad -> HasTangentsAndBitangents()) {
+                tangent = meshToLoad -> mTangents[vertexIndex] ;
+            }
 
             aiVector3D texCoord = Zero ;
             const int TextureCoordSetIndex = 0 ;

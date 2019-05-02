@@ -6,7 +6,6 @@ std::string DiffuseMapVertexCode =
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
-layout(location = 3) in vec3 tangent ;\n\
 \n\
 layout(location = 0) out vec3 outVertexWorldPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
