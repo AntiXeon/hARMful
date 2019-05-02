@@ -111,6 +111,7 @@ void MeshTreeLoader::loadNodeData(
         for (uint32_t vertexIndex = 0 ; vertexIndex < amountVertices ; ++vertexIndex) {
             aiVector3D pos = meshToLoad -> mVertices[vertexIndex] ;
             aiVector3D normal = meshToLoad -> mNormals[vertexIndex] ;
+            aiVector3D tangent = meshToLoad -> mTangents[vertexIndex] ;
 
             aiVector3D texCoord = Zero ;
             const int TextureCoordSetIndex = 0 ;
@@ -121,7 +122,8 @@ void MeshTreeLoader::loadNodeData(
             std::vector<float> vertexCoordinates = std::move(Vertex(
                 Mind::Vector3f(pos.x, pos.y, pos.z),
                 Mind::Vector2f(texCoord.x, texCoord.y),
-                Mind::Vector3f(normal.x, normal.y, normal.z)
+                Mind::Vector3f(normal.x, normal.y, normal.z),
+                Mind::Vector3f(tangent.x, tangent.y, tangent.z)
             ).data()) ;
 
             vertices.insert(vertices.end(), vertexCoordinates.begin(), vertexCoordinates.end()) ;

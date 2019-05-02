@@ -17,14 +17,19 @@ MeshGeometry::MeshGeometry(const std::vector<float>& vertices) {
     glVertexAttribPointer(0, Vertex::PositionLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::PositionLength * sizeof(float)) ;
 
-    // Normal attribute.
+    // Texture coordinates attribute.
     glEnableVertexAttribArray(1) ;
     glVertexAttribPointer(1, Vertex::TexCoordLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::TexCoordLength * sizeof(float)) ;
 
-    // Texture coordinates attribute.
+    // Normal attribute.
     glEnableVertexAttribArray(2) ;
     glVertexAttribPointer(2, Vertex::NormalLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    offset += (Vertex::NormalLength * sizeof(float)) ;
+
+    // Tangent vector attribute.
+    glEnableVertexAttribArray(3) ;
+    glVertexAttribPointer(3, Vertex::TangentLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
 
     glGenBuffers(1, &m_indexBuffer) ;
     glBindVertexArray(0) ;
