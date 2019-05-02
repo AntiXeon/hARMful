@@ -9,7 +9,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Rendering process based on a [framegraph](https://www.ea.com/frostbite/news/framegraph-extensible-rendering-architecture-in-frostbite) to handle render passes
 - Simple Phong material [[Demo](https://www.youtube.com/watch?v=12xEEnEk020)]
 - Texture material [[Demo](https://www.youtube.com/watch?v=cw8zRw-JgJs)]
-- Normal and specular mapping (✗)
+- Normal and specular mapping [[Demo](https://www.youtube.com/watch?v=2gKXo8H37SM)]
 - Alpha channel supporting materials (✗)
 - Physics based rendering materials (✗)
 - Shadow mapping (✗)
