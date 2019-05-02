@@ -14,7 +14,7 @@ using namespace Hope ;
 const float DiffuseMaterialComponent::MinimumShininessClamp = 1.f ;
 const float DiffuseMaterialComponent::MaximumShininessClamp = 512.f ;
 
-const std::string DiffuseMaterialComponent::DiffuseUniformName = "diffuseMaterial.diffuseMap" ;
+const std::string DiffuseMaterialComponent::DiffuseMapUniformName = "diffuseMaterial.diffuseMap" ;
 const std::string DiffuseMaterialComponent::SpecularUniformName = "diffuseMaterial.specularColor" ;
 const std::string DiffuseMaterialComponent::ShininessUniformName = "diffuseMaterial.shininess" ;
 
@@ -23,7 +23,7 @@ DiffuseMaterialComponent::DiffuseMaterialComponent()
     setupRendering() ;
     setupUniforms() ;
 
-    setDiffuse(nullptr) ;
+    setDiffuseMap(nullptr) ;
     setSpecular(Color(1.f, 1.f, 1.f)) ;
     setShininess(10.f) ;
 }
@@ -35,14 +35,14 @@ DiffuseMaterialComponent::~DiffuseMaterialComponent() {
 void DiffuseMaterialComponent::updateUniformValues() {
     m_diffuseMap -> activate(DiffuseMapBinding) ;
     m_diffuseMap -> bind() ;
-    uniform(DiffuseUniformName) -> setInteger(DiffuseMapBinding) ;
+    uniform(DiffuseMapUniformName) -> setInteger(DiffuseMapBinding) ;
     uniform(SpecularUniformName) -> setVec3(specular().toRGB()) ;
     uniform(ShininessUniformName) -> setFloating(shininess()) ;
 }
 
-void DiffuseMaterialComponent::setDiffuse(const API::Texture2D* diffuse) {
+void DiffuseMaterialComponent::setDiffuseMap(const API::Texture2D* diffuse) {
     m_diffuseMap = diffuse ;
-    m_diffuseUniform -> setInteger(DiffuseMapBinding) ;
+    m_diffuseMapUniform -> setInteger(DiffuseMapBinding) ;
 }
 
 void DiffuseMaterialComponent::setSpecular(const Color& specular) {
@@ -61,7 +61,7 @@ void DiffuseMaterialComponent::setShininess(const float shininess) {
     m_shininessUniform -> setFloating(shininessClamped) ;
 }
 
-const API::Texture2D* DiffuseMaterialComponent::diffuse() const {
+const API::Texture2D* DiffuseMaterialComponent::diffuseMap() const {
     return m_diffuseMap ;
 }
 
@@ -75,9 +75,9 @@ float DiffuseMaterialComponent::shininess() const {
 }
 
 void DiffuseMaterialComponent::setupUniforms() {
-    m_diffuseUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_diffuseUniform -> setName(DiffuseUniformName) ;
-    addShaderUniform(m_diffuseUniform) ;
+    m_diffuseMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_diffuseMapUniform -> setName(DiffuseMapUniformName) ;
+    addShaderUniform(m_diffuseMapUniform) ;
 
     m_specularUniform = std::make_shared<Hope::ShaderUniform>() ;
     m_specularUniform -> setName(SpecularUniformName) ;

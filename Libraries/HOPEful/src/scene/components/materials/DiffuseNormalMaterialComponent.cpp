@@ -14,7 +14,7 @@ using namespace Hope ;
 const float DiffuseNormalMaterialComponent::MinimumShininessClamp = 1.f ;
 const float DiffuseNormalMaterialComponent::MaximumShininessClamp = 512.f ;
 
-const std::string DiffuseNormalMaterialComponent::DiffuseUniformName = "diffuseNormalMaterial.diffuseMap" ;
+const std::string DiffuseNormalMaterialComponent::DiffuseMapUniformName = "diffuseNormalMaterial.diffuseMap" ;
 const std::string DiffuseNormalMaterialComponent::NormalMapUniformName = "diffuseNormalMaterial.normalMap" ;
 const std::string DiffuseNormalMaterialComponent::SpecularUniformName = "diffuseNormalMaterial.specularColor" ;
 const std::string DiffuseNormalMaterialComponent::ShininessUniformName = "diffuseNormalMaterial.shininess" ;
@@ -24,8 +24,8 @@ DiffuseNormalMaterialComponent::DiffuseNormalMaterialComponent()
     setupRendering() ;
     setupUniforms() ;
 
-    setDiffuse(nullptr) ;
-    setNormal(nullptr) ;
+    setDiffuseMap(nullptr) ;
+    setNormalMap(nullptr) ;
     setSpecular(Color(1.f, 1.f, 1.f)) ;
     setShininess(10.f) ;
 }
@@ -37,7 +37,7 @@ DiffuseNormalMaterialComponent::~DiffuseNormalMaterialComponent() {
 void DiffuseNormalMaterialComponent::updateUniformValues() {
     m_diffuseMap -> activate(DiffuseMapBinding) ;
     m_diffuseMap -> bind() ;
-    uniform(DiffuseUniformName) -> setInteger(DiffuseMapBinding) ;
+    uniform(DiffuseMapUniformName) -> setInteger(DiffuseMapBinding) ;
     m_normalMap -> activate(NormalMapBinding) ;
     m_normalMap -> bind() ;
     uniform(NormalMapUniformName) -> setInteger(NormalMapBinding) ;
@@ -45,14 +45,14 @@ void DiffuseNormalMaterialComponent::updateUniformValues() {
     uniform(ShininessUniformName) -> setFloating(shininess()) ;
 }
 
-void DiffuseNormalMaterialComponent::setDiffuse(const API::Texture2D* diffuse) {
+void DiffuseNormalMaterialComponent::setDiffuseMap(const API::Texture2D* diffuse) {
     m_diffuseMap = diffuse ;
-    m_diffuseUniform -> setInteger(DiffuseMapBinding) ;
+    m_diffuseMapUniform -> setInteger(DiffuseMapBinding) ;
 }
 
-void DiffuseNormalMaterialComponent::setNormal(const API::Texture2D* normal) {
+void DiffuseNormalMaterialComponent::setNormalMap(const API::Texture2D* normal) {
     m_normalMap = normal ;
-    m_normalUniform -> setInteger(NormalMapBinding) ;
+    m_normalMapUniform -> setInteger(NormalMapBinding) ;
 }
 
 void DiffuseNormalMaterialComponent::setSpecular(const Color& specular) {
@@ -71,11 +71,11 @@ void DiffuseNormalMaterialComponent::setShininess(const float shininess) {
     m_shininessUniform -> setFloating(shininessClamped) ;
 }
 
-const API::Texture2D* DiffuseNormalMaterialComponent::diffuse() const {
+const API::Texture2D* DiffuseNormalMaterialComponent::diffuseMap() const {
     return m_diffuseMap ;
 }
 
-const API::Texture2D* DiffuseNormalMaterialComponent::normal() const {
+const API::Texture2D* DiffuseNormalMaterialComponent::normalMap() const {
     return m_normalMap ;
 }
 
@@ -89,13 +89,13 @@ float DiffuseNormalMaterialComponent::shininess() const {
 }
 
 void DiffuseNormalMaterialComponent::setupUniforms() {
-    m_diffuseUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_diffuseUniform -> setName(DiffuseUniformName) ;
-    addShaderUniform(m_diffuseUniform) ;
+    m_diffuseMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_diffuseMapUniform -> setName(DiffuseMapUniformName) ;
+    addShaderUniform(m_diffuseMapUniform) ;
 
-    m_normalUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_normalUniform -> setName(NormalMapUniformName) ;
-    addShaderUniform(m_normalUniform) ;
+    m_normalMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    m_normalMapUniform -> setName(NormalMapUniformName) ;
+    addShaderUniform(m_normalMapUniform) ;
 
     m_specularUniform = std::make_shared<Hope::ShaderUniform>() ;
     m_specularUniform -> setName(SpecularUniformName) ;

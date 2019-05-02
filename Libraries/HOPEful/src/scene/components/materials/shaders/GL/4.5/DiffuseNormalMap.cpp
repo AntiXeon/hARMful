@@ -45,7 +45,7 @@ std::string DiffuseNormalMapFragmentCode =
 \n\
 struct Material {\n\
     layout(binding = 0) sampler2D diffuseMap ;\n\
-    layout(binding = 2) sampler2D normalMap ;\n\
+    layout(binding = 1) sampler2D normalMap ;\n\
     vec3 specularColor ;\n\
     float shininess ;\n\
 } ;\n\

@@ -45,7 +45,7 @@ MaterialComponent* MaterialLoader::DiffuseMaterial(
     const aiMaterial* material
 ) {
     DiffuseMaterialComponent* materialComponent = new DiffuseMaterialComponent() ;
-    materialComponent -> setDiffuse(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
+    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
 
     // Get the other values of the material.
     aiColor4D specularColor ;
@@ -63,8 +63,8 @@ MaterialComponent* MaterialLoader::DiffuseNormalMaterial(
     const aiMaterial* material
 ) {
     DiffuseNormalMaterialComponent* materialComponent = new DiffuseNormalMaterialComponent() ;
-    materialComponent -> setDiffuse(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
-    materialComponent -> setNormal(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
+    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
+    materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
 
     // Get the other values of the material.
     aiColor4D specularColor ;

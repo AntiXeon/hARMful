@@ -31,7 +31,7 @@ namespace Hope {
             /**
              * Name of the diffuse color uniform in the shader.
              */
-            static const std::string DiffuseUniformName ;
+            static const std::string DiffuseMapUniformName ;
 
             /**
              * Name of the specular color uniform in the shader.
@@ -47,7 +47,7 @@ namespace Hope {
              * Uniform of the diffuse map (sampler2D). The color the material
              * does not absorb, that is the color we see when there is a light.
              */
-            std::shared_ptr<Hope::ShaderUniform> m_diffuseUniform = nullptr ;
+            std::shared_ptr<Hope::ShaderUniform> m_diffuseMapUniform = nullptr ;
 
             /**
              * Uniform of the specular color (vec4). The lights can produce a
@@ -90,7 +90,7 @@ namespace Hope {
             /**
              * Set the diffuse color.
              */
-            void setDiffuse(const API::Texture2D* diffuse) ;
+            void setDiffuseMap(const API::Texture2D* diffuse) ;
 
             /**
              * Set the specular color.
@@ -105,7 +105,7 @@ namespace Hope {
             /**
              * Get the diffuse texture.
              */
-            const API::Texture2D* diffuse() const ;
+            const API::Texture2D* diffuseMap() const ;
 
             /**
              * Get the specular color.
