@@ -73,6 +73,20 @@ namespace Hope::GL {
                 const aiMaterial* material
             ) ;
 
+            /**
+             * Create a Blinn-Phong material with a diffuse texture, a normal
+             * and a specular maps.
+             * @param   meshPath    Path of the mesh that is currently loaded.
+             *                      It is useful to retreive the absolute path
+             *                      to the textures in case it is relative to
+             *                      the file.
+             * @param   material    Material to convert as a component.
+             */
+            static MaterialComponent* DiffuseNormalSpecularMaterial(
+                const fs::path& meshPath,
+                const aiMaterial* material
+            ) ;
+
 
             /**
              * Get the texture from an Assimp material.

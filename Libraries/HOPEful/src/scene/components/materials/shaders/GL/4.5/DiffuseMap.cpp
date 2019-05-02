@@ -35,7 +35,7 @@ struct Material {\n\
     float shininess ;\n\
 } ;\n\
 \n\
-uniform Material diffuseMaterial ;\n\
+uniform Material material ;\n\
 \n\
 layout(location = 0) in vec3 inVertexWorldPosition ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
@@ -58,12 +58,12 @@ vec3 ComputeDirectionalLight(\n\
 \n\
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-    specularAngle *= pow(specularAngle, diffuseMaterial.shininess) ;\n\
+    specularAngle *= pow(specularAngle, material.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     vec3 lightPowerColor = light.color * light.power ;\n\
-    returnedLighting = (texture(diffuseMaterial.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (diffuseMaterial.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
@@ -82,7 +82,7 @@ vec3 ComputePointLight(\n\
 \n\
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-    specularAngle *= pow(specularAngle, diffuseMaterial.shininess) ;\n\
+    specularAngle *= pow(specularAngle, material.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     float lightDistance = length(inVertexWorldPosition - light.position) ;\n\
@@ -94,8 +94,8 @@ vec3 ComputePointLight(\n\
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
     vec3 lightPowerColor = light.color * lightIntensity ;\n\
-    returnedLighting = (texture(diffuseMaterial.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (diffuseMaterial.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\

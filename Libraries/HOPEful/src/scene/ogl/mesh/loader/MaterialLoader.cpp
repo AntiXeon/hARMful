@@ -2,6 +2,7 @@
 #include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/components/materials/DiffuseMaterialComponent.hpp>
 #include <scene/components/materials/DiffuseNormalMaterialComponent.hpp>
+#include <scene/components/materials/DiffuseNormalSpecularMaterialComponent.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
@@ -12,7 +13,12 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
 ) {
     if (material -> GetTextureCount(aiTextureType_DIFFUSE) > 0) {
         if (material -> GetTextureCount(aiTextureType_NORMALS) > 0) {
-            return DiffuseNormalMaterial(meshPath, material) ;
+            if (material -> GetTextureCount(aiTextureType_SPECULAR) > 0) {
+                return DiffuseNormalSpecularMaterial(meshPath, material) ;
+            }
+            else {
+                return DiffuseNormalMaterial(meshPath, material) ;
+            }
         }
         else {
             return DiffuseMaterial(meshPath, material) ;
@@ -72,6 +78,23 @@ MaterialComponent* MaterialLoader::DiffuseNormalMaterial(
     aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
+    materialComponent -> setShininess(shininess) ;
+
+    return materialComponent ;
+}
+
+MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
+    const fs::path& meshPath,
+    const aiMaterial* material
+) {
+    DiffuseNormalSpecularMaterialComponent* materialComponent = new DiffuseNormalSpecularMaterialComponent() ;
+    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
+    materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
+    materialComponent -> setSpecularMap(GetTexture(aiTextureType_SPECULAR, meshPath, material)) ;
+
+    // Get the other values of the material.
+    float shininess ;
+    aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setShininess(shininess) ;
 
     return materialComponent ;

@@ -14,9 +14,9 @@ using namespace Hope ;
 const float DiffuseMaterialComponent::MinimumShininessClamp = 1.f ;
 const float DiffuseMaterialComponent::MaximumShininessClamp = 512.f ;
 
-const std::string DiffuseMaterialComponent::DiffuseMapUniformName = "diffuseMaterial.diffuseMap" ;
-const std::string DiffuseMaterialComponent::SpecularUniformName = "diffuseMaterial.specularColor" ;
-const std::string DiffuseMaterialComponent::ShininessUniformName = "diffuseMaterial.shininess" ;
+const std::string DiffuseMaterialComponent::DiffuseMapUniformName = "material.diffuseMap" ;
+const std::string DiffuseMaterialComponent::SpecularUniformName = "material.specularColor" ;
+const std::string DiffuseMaterialComponent::ShininessUniformName = "material.shininess" ;
 
 DiffuseMaterialComponent::DiffuseMaterialComponent()
     : MaterialComponent() {

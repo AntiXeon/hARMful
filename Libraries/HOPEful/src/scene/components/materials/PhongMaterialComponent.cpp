@@ -14,10 +14,10 @@ using namespace Hope ;
 const float PhongMaterialComponent::MinimumShininessClamp = 1.f ;
 const float PhongMaterialComponent::MaximumShininessClamp = 512.f ;
 
-const std::string PhongMaterialComponent::AmbientUniformName = "phong.ambientColor" ;
-const std::string PhongMaterialComponent::DiffuseUniformName = "phong.diffuseColor" ;
-const std::string PhongMaterialComponent::SpecularUniformName = "phong.specularColor" ;
-const std::string PhongMaterialComponent::ShininessUniformName = "phong.shininess" ;
+const std::string PhongMaterialComponent::AmbientUniformName = "material.ambientColor" ;
+const std::string PhongMaterialComponent::DiffuseUniformName = "material.diffuseColor" ;
+const std::string PhongMaterialComponent::SpecularUniformName = "material.specularColor" ;
+const std::string PhongMaterialComponent::ShininessUniformName = "material.shininess" ;
 
 PhongMaterialComponent::PhongMaterialComponent()
     : MaterialComponent() {

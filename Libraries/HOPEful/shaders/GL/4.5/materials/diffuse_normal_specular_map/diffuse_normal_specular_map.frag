@@ -1,20 +1,19 @@
-// Blinn-Phong material shader.
+// Blinn-Phong material shader using diffuse and normal maps.
 
 struct Material {
-    vec3 ambientColor ;
-    vec3 diffuseColor ;
-    vec3 specularColor ;
+    layout(binding = 0) sampler2D diffuseMap ;
+    layout(binding = 1) sampler2D normalMap ;
+    layout(binding = 2) sampler2D specularMap ;
     float shininess ;
 } ;
 
 uniform Material material ;
 
-const float ScreenGamma = 2.2f ;
-
 layout(location = 0) in vec3 inVertexWorldPosition ;
 layout(location = 1) in vec3 inNormal ;
-layout(location = 2) in vec2 inTexCoord ;
-layout(location = 3) in vec3 inViewDirection ;
+layout(location = 2) in mat3 inTBNMatrix ;
+layout(location = 5) in vec2 inTexCoord ;
+layout(location = 6) in vec3 inViewDirection ;
 
 out vec4 outColor ;
 
@@ -24,6 +23,7 @@ vec3 ComputeDirectionalLight(
     vec3 normal
 ) {
     vec3 returnedLighting = vec3(0.f) ;
+    float specularValue = texture(material.specularMap, inTexCoord).r ;
 
     vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;
     vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;
@@ -36,8 +36,8 @@ vec3 ComputeDirectionalLight(
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
     vec3 lightPowerColor = light.color * light.power ;
-    returnedLighting = (material.diffuseColor * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
 }
@@ -48,6 +48,7 @@ vec3 ComputePointLight(
     vec3 normal
 ) {
     vec3 returnedLighting = vec3(0.f) ;
+    float specularValue = texture(material.specularMap, inTexCoord).r ;
 
     vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;
     vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;
@@ -68,14 +69,18 @@ vec3 ComputePointLight(
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
     vec3 lightPowerColor = light.color * lightIntensity ;
-    returnedLighting = (material.diffuseColor * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
 }
 
 void main() {
-    vec3 colorLinear = material.ambientColor ;
+    vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;
+
+    vec3 normalMapVector = texture(material.normalMap, inTexCoord).rgb ;
+    normalMapVector = normalize((normalMapVector * 2.f) - 1.f) ;
+    normalMapVector = normalize(inTBNMatrix * normalMapVector) ;
 
     {
         // Contribution of directional lights.
@@ -85,7 +90,7 @@ void main() {
                 ComputeDirectionalLight(
                     dirLights[lightIndex],
                     inViewDirection,
-                    inNormal
+                    normalMapVector
                 ) ;
         }
     }
@@ -98,11 +103,10 @@ void main() {
                 ComputePointLight(
                     pointLights[lightIndex],
                     inViewDirection,
-                    inNormal
+                    normalMapVector
                 ) ;
         }
     }
 
-    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;
-    outColor = vec4(colorGammaCorrected, 1.f) ;
+    outColor = vec4(colorLinear, 1.f) ;
 }

@@ -50,7 +50,7 @@ struct Material {\n\
     float shininess ;\n\
 } ;\n\
 \n\
-uniform Material diffuseNormalMaterial ;\n\
+uniform Material material ;\n\
 \n\
 layout(location = 0) in vec3 inVertexWorldPosition ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
@@ -74,12 +74,12 @@ vec3 ComputeDirectionalLight(\n\
 \n\
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-    specularAngle *= pow(specularAngle, diffuseNormalMaterial.shininess) ;\n\
+    specularAngle *= pow(specularAngle, material.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     vec3 lightPowerColor = light.color * light.power ;\n\
-    returnedLighting = (texture(diffuseNormalMaterial.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (diffuseNormalMaterial.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
@@ -98,7 +98,7 @@ vec3 ComputePointLight(\n\
 \n\
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
-    specularAngle *= pow(specularAngle, diffuseNormalMaterial.shininess) ;\n\
+    specularAngle *= pow(specularAngle, material.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     float lightDistance = length(inVertexWorldPosition - light.position) ;\n\
@@ -110,8 +110,8 @@ vec3 ComputePointLight(\n\
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
     vec3 lightPowerColor = light.color * lightIntensity ;\n\
-    returnedLighting = (texture(diffuseNormalMaterial.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (diffuseNormalMaterial.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
@@ -119,7 +119,7 @@ vec3 ComputePointLight(\n\
 void main() {\n\
     vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;\n\
 \n\
-    vec3 normalMapVector = texture(diffuseNormalMaterial.normalMap, inTexCoord).rgb ;\n\
+    vec3 normalMapVector = texture(material.normalMap, inTexCoord).rgb ;\n\
     normalMapVector = normalize((normalMapVector * 2.f) - 1.f) ;\n\
     normalMapVector = normalize(inTBNMatrix * normalMapVector) ;\n\
 \n\
