@@ -18,12 +18,22 @@ namespace Spite {
      * Load a JPEG file using libjpeg-turbo (using SIMD).
      */
     class JPEGTurboFile final : public BinaryFile {
+        private:
+            /**
+             * true to read the picture in bottom-up order; false otherwise.
+             */
+            bool m_bottomUp = false ;
+
         public:
             /**
              * Create a new JPEGTurboFile.
-             * @param   path    Path of the file to open.
+             * @param   path            Path of the file to open.
+             * @param   bottomUpLoad    Load the file in bottom-up order.
              */
-            exported JPEGTurboFile(const std::string& path) ;
+            exported JPEGTurboFile(
+                const std::string& path,
+                const bool bottomUpLoad = false
+            ) ;
 
             /**
              * Destruction of the JPEGTurboFile.

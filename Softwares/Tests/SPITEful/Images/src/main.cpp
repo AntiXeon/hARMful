@@ -35,7 +35,7 @@ static SDL_Texture* loadDices(SDL_Renderer* renderer) {
     Spite::PNGFile pic("../pictures/dices.png") ;
 
     pic.open(Spite::File::Open_ReadOnly) ;
-    pic.load(&raw) ;
+    pic.loadInUpBottomOrder(&raw) ;
     // Convert pictures to SDL structures.
     unsigned char* pixelData = nullptr ;
     unsigned int pixelDataSize = 0 ;
@@ -58,7 +58,7 @@ static SDL_Texture* loadPanda(SDL_Renderer* renderer) {
     Spite::RawImage raw(Spite::ColorFormat::RGB) ;
     Spite::JPEGFile pic("../pictures/red_panda.jpg") ;
     pic.open(Spite::File::Open_ReadOnly) ;
-    pic.load(&raw) ;
+    pic.loadInUpBottomOrder(&raw) ;
     // Convert pictures to SDL structures.
     unsigned char* pixelData = nullptr ;
     unsigned int pixelDataSize = 0 ;

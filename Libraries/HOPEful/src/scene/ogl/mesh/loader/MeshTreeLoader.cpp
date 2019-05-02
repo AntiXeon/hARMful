@@ -1,14 +1,17 @@
 #include <scene/ogl/mesh/loader/MeshTreeLoader.hpp>
+#include <scene/ogl/mesh/loader/MaterialLoader.hpp>
 #include <scene/ogl/mesh/Vertex.hpp>
 #include <scene/ogl/mesh/MeshGeometry.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
-#include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <utils/LogSystem.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
+#include <filesystem>
 
 using namespace Hope::GL ;
+namespace fs = std::filesystem ;
 
 MeshTreeLoader::~MeshTreeLoader() {
     delete m_meshRoot ;
@@ -18,10 +21,11 @@ void MeshTreeLoader::load(
     const std::string& source,
     Hope::Entity* meshRoot
 ) {
+    m_source = source ;
     Assimp::Importer importer ;
 
     const aiScene* scene = importer.ReadFile(
-        source.c_str(),
+        m_source.c_str(),
         aiProcessPreset_TargetRealtime_Fast
     ) ;
 
@@ -107,7 +111,12 @@ void MeshTreeLoader::loadNodeData(
         for (uint32_t vertexIndex = 0 ; vertexIndex < amountVertices ; ++vertexIndex) {
             aiVector3D pos = meshToLoad -> mVertices[vertexIndex] ;
             aiVector3D normal = meshToLoad -> mNormals[vertexIndex] ;
+
             aiVector3D texCoord = Zero ;
+            const int TextureCoordSetIndex = 0 ;
+            if (meshToLoad -> HasTextureCoords(TextureCoordSetIndex)) {
+                texCoord = meshToLoad -> mTextureCoords[TextureCoordSetIndex][vertexIndex] ;
+            }
 
             std::vector<float> vertexCoordinates = std::move(Vertex(
                 Mind::Vector3f(pos.x, pos.y, pos.z),
@@ -156,32 +165,16 @@ uint32_t MeshTreeLoader::materialProcessing(
     int aiMaterialIndex = mesh -> mMaterialIndex ;
     int partMaterialIndex = 0 ;
 
-    if (m_materialRelations.count(aiMaterialIndex) > 0) {
-        PhongMaterialComponent* materialComponent = static_cast<PhongMaterialComponent*>(m_materialRelations[aiMaterialIndex]) ;
-        partMaterialIndex = entity -> addComponent(materialComponent) ;
-    }
-    else {
-        PhongMaterialComponent* materialComponent = new PhongMaterialComponent() ;
-        m_materialRelations[aiMaterialIndex] = materialComponent ;
-        partMaterialIndex = entity -> addComponent(materialComponent) ;
-
-        // Default is Phong material for now (temporary code).
+    if (m_materialRelations.count(aiMaterialIndex) == 0) {
         aiMaterial* material = scene -> mMaterials[aiMaterialIndex] ;
-        aiColor4D specularColor ;
-        aiColor4D diffuseColor ;
-        aiColor4D ambientColor ;
-        float shininess ;
-
-        aiGetMaterialColor(material, AI_MATKEY_COLOR_AMBIENT, &ambientColor) ;
-        aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor) ;
-        aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
-        aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
-
-        materialComponent -> setAmbient(Color(ambientColor.r, ambientColor.g, ambientColor.b)) ;
-        materialComponent -> setDiffuse(Color(diffuseColor.r, diffuseColor.g, diffuseColor.b)) ;
-        materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
-        materialComponent -> setShininess(shininess) ;
+        m_materialRelations[aiMaterialIndex] = MaterialLoader::ConvertMaterial(
+            fs::path(m_source),
+            material
+        ) ;
     }
+
+    MaterialComponent* materialComponent = m_materialRelations[aiMaterialIndex] ;
+    partMaterialIndex = entity -> addComponent(materialComponent) ;
 
     return partMaterialIndex ;
 }

@@ -8,8 +8,11 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
-JPEGTurboFile::JPEGTurboFile(const std::string& path)
-    : BinaryFile(path, true) {
+JPEGTurboFile::JPEGTurboFile(
+    const std::string& path,
+    const bool bottomUpLoad
+) : BinaryFile(path, true),
+    m_bottomUp(bottomUpLoad) {
 }
 
 bool JPEGTurboFile::loadSpecific(IFileData* filedata) {
@@ -41,15 +44,21 @@ bool JPEGTurboFile::loadSpecific(IFileData* filedata) {
         &colorSpace
     ) ;
 
+    const int LoadingColorFormat = TJPF_RGB ;
     const int Pitch = 0 ;
     unsigned char* rawImageBytes = nullptr ;
     unsigned int rawImageSize = 0 ;
     raw -> setDimensions(width, height) ;
-    raw -> setFormat(convertColorFormat(colorSpace)) ;
+    raw -> setFormat(convertColorFormat(LoadingColorFormat)) ;
 
     // Get the allocated buffer from the raw image to directly get
     // uncompressed picture inside.
     raw -> data(rawImageBytes, rawImageSize) ;
+
+    int loadFlags = TJFLAG_FASTDCT ;
+    if (m_bottomUp) {
+        loadFlags |= TJFLAG_BOTTOMUP ;
+    }
 
     // Decompress the JPEG file data.
     tjDecompress2(
@@ -60,8 +69,8 @@ bool JPEGTurboFile::loadSpecific(IFileData* filedata) {
         width,
         Pitch,
         height,
-        TJPF_RGB,
-        TJFLAG_FASTDCT
+        LoadingColorFormat,
+        loadFlags
     ) ;
 
     // End of the decompression. Clear data.

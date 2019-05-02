@@ -65,8 +65,8 @@ void ImageFile::close() {
     m_file = nullptr ;
 }
 
-bool ImageFile::load(IFileData* output) {
-    RawImage* rawImage = dynamic_cast<RawImage*>(output) ;
+bool ImageFile::load(IFileData* filedata) {
+    RawImage* rawImage = dynamic_cast<RawImage*>(filedata) ;
     return parse(rawImage) ;
 }
 
@@ -76,8 +76,4 @@ bool ImageFile::save(
 ) {
     // Needs implementation!
     return false ;
-}
-
-FILE* ImageFile::descriptor() const {
-    return m_file ;
 }

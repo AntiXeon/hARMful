@@ -16,6 +16,12 @@ namespace Spite {
      * Load a JPEG file using libjpeg.
      */
     class JPEGFile final : public ImageFile {
+        private:
+            /**
+             * true to read the picture in bottom-up order; false otherwise.
+             */
+            bool m_bottomUp = false ;
+
         public:
             /**
              * Create a new JPEGFile.
@@ -39,7 +45,7 @@ namespace Spite {
              * Parse the JPEG file and store raw data in the RawImage.
              * @param   output  Output the raw data from the JPEG file.
              */
-            bool parse(RawImage* output) ;
+            bool parse(RawImage* output) override ;
 
             /**
              * Initialize the decompression data.

@@ -6,7 +6,6 @@
 #include <cstdint>
 
 namespace Hope::GL {
-
     class MeshGeometry ;
     class Vertex ;
 

@@ -19,6 +19,8 @@ namespace Hope {
 
         /* Keep the final whitespace. */
         std::string Mesh_NotLoaded =        i18n("The mesh could not be loaded at: ") ;
+        /* Keep the final whitespace. */
+        std::string Texture_UnknownFormat = i18n("Unknown file format: ") ;
 
         /* "binding index" is a technical expression. */
         std::string UBO_BadBindingIndex =   i18n("The provided binding index is too high for this GPU!") ;

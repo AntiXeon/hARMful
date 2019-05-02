@@ -19,6 +19,7 @@ namespace Spite {
                 RGB = 0,
                 BGR,
                 RGBA,
+                BGRA,
                 ARGB,
                 YUV,
                 YCbCr,

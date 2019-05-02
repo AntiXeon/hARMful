@@ -102,7 +102,7 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    float radius = 3.f ;
+    float radius = 5.f ;
     float camX = sin(glfwGetTime() / 2.f) * radius ;
     float camZ = cos(glfwGetTime() / 2.f) * radius ;
 

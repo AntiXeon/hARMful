@@ -111,12 +111,25 @@ bool JPEGFile::startDecompression(
 
     // Read lines in the picture while the end of image is not reached
     // (using the libjpeg states).
-    while (cinfo.output_scanline < cinfo.output_height) {
-        // Read one scanline at a time, even if it is possible to ask for
-        // more.
-        unsigned int offset = cinfo.output_scanline * rowStride ;
-        unsigned char* imageDataBufferOffset = imageDataBuffer + offset ;
-        jpeg_read_scanlines(&cinfo, &imageDataBufferOffset, 1) ;
+    if (isBottomUp()) {
+        unsigned char* imageDataBufferEnd = imageDataBuffer + imageDataSize ;
+
+        while (cinfo.output_scanline < cinfo.output_height) {
+            // Read one scanline at a time, even if it is possible to ask for
+            // more.
+            unsigned int offset = cinfo.output_scanline * rowStride ;
+            unsigned char* imageDataBufferOffset = imageDataBufferEnd - offset ;
+            jpeg_read_scanlines(&cinfo, &imageDataBufferOffset, 1) ;
+        }
+    }
+    else {
+        while (cinfo.output_scanline < cinfo.output_height) {
+            // Read one scanline at a time, even if it is possible to ask for
+            // more.
+            unsigned int offset = cinfo.output_scanline * rowStride ;
+            unsigned char* imageDataBufferOffset = imageDataBuffer + offset ;
+            jpeg_read_scanlines(&cinfo, &imageDataBufferOffset, 1) ;
+        }
     }
 
     return true ;

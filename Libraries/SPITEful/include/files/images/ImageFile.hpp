@@ -21,6 +21,11 @@ namespace Spite {
              */
             unsigned int m_dataPosition ;
 
+            /**
+             * To know if the picture is loaded in bottom-up order.
+             */
+            bool m_bottomUpLoad = false ;
+
         protected:
             /**
              * Create a new ImageFile.
@@ -48,10 +53,22 @@ namespace Spite {
             exported void close() ;
 
             /**
-             * Load a data at a given place on disk.
-             * @param   filedata    File data to store data in.
+             * Load the picture in bottom-up order.
+             * @param   filedata        File data to store data in.
              */
-            exported bool load(IFileData* filedata) ;
+            exported void loadInBottomUpOrder(IFileData* filedata) {
+                m_bottomUpLoad = true ;
+                load(filedata) ;
+            }
+
+            /**
+             * Load the picture in up-bottom order.
+             * @param   filedata        File data to store data in.
+             */
+            exported void loadInUpBottomOrder(IFileData* filedata) {
+                m_bottomUpLoad = false ;
+                load(filedata) ;
+            }
 
             /**
              * Save a data at a given place on disk.
@@ -72,6 +89,12 @@ namespace Spite {
 
         protected:
             /**
+             * Load a data at a given place on disk.
+             * @param   filedata        File data to store data in.
+             */
+            exported bool load(IFileData* filedata) ;
+
+            /**
              * Parse the image file and store raw data in the @a output data.
              * @param   output  Output the raw data from the image file.
              */
@@ -81,7 +104,16 @@ namespace Spite {
              * Get the file descriptor.
              * @return  The descriptor of the file.
              */
-            exported FILE* descriptor() const ;
+            exported FILE* descriptor() const {
+                return m_file ;
+            }
+
+            /**
+             * To know if the picture is loaded in bottom-up order.
+             */
+            exported bool isBottomUp() const {
+                return m_bottomUpLoad ;
+            }
     } ;
 }
 

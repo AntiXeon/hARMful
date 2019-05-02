@@ -24,6 +24,11 @@ namespace Spite {
              */
             static const unsigned char HeaderLength = 8 ;
 
+            /**
+             * true to read the picture in bottom-up order; false otherwise.
+             */
+            bool m_bottomUp = false ;
+
         public:
             /**
              * Create a new PNGFile.

@@ -129,6 +129,16 @@ void ColorFormat::SetDataForFormat(
             components[3] = 0xFF000000 ;
             componentSize = sizeof(unsigned int) ;
             break ;
+            
+        case BGRA:
+            name = "BGRA" ;
+            components.resize(4) ;
+            components[0] = 0x00FF0000 ;
+            components[1] = 0x0000FF00 ;
+            components[2] = 0x000000FF ;
+            components[3] = 0xFF000000 ;
+            componentSize = sizeof(unsigned int) ;
+            break ;
 
         case ARGB:
             name = "ARGB" ;

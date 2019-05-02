@@ -42,6 +42,11 @@ namespace Hope::GL {
             std::map<unsigned int, MaterialComponent*> m_materialRelations ;
 
             /**
+             * Path to the source file.
+             */
+            std::string m_source ;
+
+            /**
              * Root of the mesh that is created by the loader.
              */
             Hope::Entity* m_meshRoot = nullptr ;
