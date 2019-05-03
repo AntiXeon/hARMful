@@ -44,9 +44,10 @@ std::string DiffuseNormalSpecularMapFragmentCode =
 // Blinn-Phong material shader using diffuse and normal maps.\n\
 \n\
 struct Material {\n\
-    layout(binding = 0) sampler2D diffuseMap ;\n\
-    layout(binding = 1) sampler2D normalMap ;\n\
-    layout(binding = 2) sampler2D specularMap ;\n\
+    layout(binding = 0) sampler2D diffuse ;\n\
+    layout(binding = 1) sampler2D normal ;\n\
+    layout(binding = 2) sampler2D specular ;\n\
+    vec3 ambient ;\n\
     float shininess ;\n\
 } ;\n\
 \n\
@@ -66,7 +67,7 @@ vec3 ComputeDirectionalLight(\n\
     vec3 normal\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
-    float specularValue = texture(material.specularMap, inTexCoord).r ;\n\
+    float specularValue = texture(material.specular, inTexCoord).r ;\n\
 \n\
     vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;\n\
     vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;\n\
@@ -79,7 +80,7 @@ vec3 ComputeDirectionalLight(\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     vec3 lightPowerColor = light.color * light.power ;\n\
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
@@ -91,7 +92,7 @@ vec3 ComputePointLight(\n\
     vec3 normal\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
-    float specularValue = texture(material.specularMap, inTexCoord).r ;\n\
+    float specularValue = texture(material.specular, inTexCoord).r ;\n\
 \n\
     vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;\n\
     vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;\n\
@@ -112,16 +113,16 @@ vec3 ComputePointLight(\n\
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
     vec3 lightPowerColor = light.color * lightIntensity ;\n\
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
 \n\
 void main() {\n\
-    vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;\n\
+    vec3 colorLinear = material.ambient ;\n\
 \n\
-    vec3 normalMapVector = texture(material.normalMap, inTexCoord).rgb ;\n\
+    vec3 normalMapVector = texture(material.normal, inTexCoord).rgb ;\n\
     normalMapVector = normalize((normalMapVector * 2.f) - 1.f) ;\n\
     normalMapVector = normalize(inTBNMatrix * normalMapVector) ;\n\
 \n\

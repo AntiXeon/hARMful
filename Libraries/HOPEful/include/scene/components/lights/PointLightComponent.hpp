@@ -9,6 +9,12 @@ namespace Hope {
      * A point light sends light in a all directions but on a limited distance.
      */
     class PointLightComponent final : public LightComponent {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = LightComponentType ;
+
         private:
             /**
              * Distance of the light effect.

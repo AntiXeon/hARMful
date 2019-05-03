@@ -18,6 +18,12 @@ namespace Hope {
      * A diffuse material uses a diffuse texture to decorate the objets.
      */
     class DiffuseMaterialComponent : public MaterialComponent {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MaterialComponentType ;
+
         private:
             /**
              * Binding of the diffuse map.

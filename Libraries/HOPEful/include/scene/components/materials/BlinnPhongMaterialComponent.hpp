@@ -16,6 +16,11 @@ namespace Hope {
     class BlinnPhongMaterialComponent : public MaterialComponent {
         public:
             /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MaterialComponentType ;
+
+            /**
              * Shininess values.
              */
             static const float MinimumShininessClamp ;

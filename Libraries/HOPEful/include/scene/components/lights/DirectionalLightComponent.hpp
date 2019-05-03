@@ -9,6 +9,12 @@ namespace Hope {
      * representing the sun/moon light for example.
      */
     class DirectionalLightComponent final : public LightComponent {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = LightComponentType ;
+
         private:
             /**
              * Direction of the light.

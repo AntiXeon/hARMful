@@ -18,9 +18,9 @@ TestWindow::TestWindow()
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
-    //Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
-    //Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Test.fbx") ;
-    //meshTreeEntity -> addComponent(meshTreeComponent) ;
+    Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
+    Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Test.fbx") ;
+    meshTreeEntity -> addComponent(meshTreeComponent) ;
 
 /*
 	// Test of matrices / parent relation.
@@ -53,18 +53,19 @@ TestWindow::TestWindow()
 */
     {
     	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
-        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 10.f, 0.f)) ;
+        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
         Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
-        (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
+        (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 0.f)) ;
         Hope::MeshTreeComponent* meshLightComponent = new Hope::MeshTreeComponent("../data/meshes/Cube.fbx") ;
         lightReprensentationEntity -> addComponent(meshLightComponent) ;
-        Hope::BlinnPhongMaterialComponent* lightMaterialComponent = new Hope::BlinnPhongMaterialComponent() ;
-        lightMaterialComponent -> setAmbient(Hope::Color(1.f, 1.f, 1.f)) ;
-        lightMaterialComponent -> setDiffuse(Hope::Color(1.f, 1.f, 1.f)) ;
-        lightReprensentationEntity -> addComponent(lightMaterialComponent) ;
-        //
-        //
+        Hope::Entity* cubeEntity = meshLightComponent -> entity("Cube") ;
+
+        if (cubeEntity) {
+            Hope::BlinnPhongMaterialComponent* cubeMaterial = cubeEntity -> component<Hope::BlinnPhongMaterialComponent>() ;
+            cubeMaterial -> setAmbient(Hope::Color(1.f, 1.f, 1.f)) ;
+        }
+
         // Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
         // (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
         // Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;

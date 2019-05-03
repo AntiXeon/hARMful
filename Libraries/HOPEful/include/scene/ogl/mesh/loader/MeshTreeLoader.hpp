@@ -36,6 +36,12 @@ namespace Hope::GL {
             } ;
 
             /**
+             * Store the mesh entities by their name.
+             * Only entities having a name are stored here.
+             */
+            std::map<std::string, Hope::Entity*> m_meshEntities ;
+
+            /**
              * Link the materials from the input file to the material components
              * used by entities and the rendering step.
              */
@@ -72,6 +78,17 @@ namespace Hope::GL {
              */
             Hope::Entity* meshRoot() const {
                 return m_meshRoot ;
+            }
+
+            /**
+             * Get an entity generated on loading by its name.
+             * If the name is not found, nullptr is returned.
+             */
+            Hope::Entity* entity(const std::string& name) {
+                if (m_meshEntities.count(name) > 0) {
+                    return m_meshEntities[name] ;
+                }
+                return nullptr ;
             }
 
         private:

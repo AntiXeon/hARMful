@@ -1,9 +1,10 @@
 // Blinn-Phong material shader using diffuse and normal maps.
 
 struct Material {
-    layout(binding = 0) sampler2D diffuseMap ;
-    layout(binding = 1) sampler2D normalMap ;
-    layout(binding = 2) sampler2D specularMap ;
+    layout(binding = 0) sampler2D diffuse ;
+    layout(binding = 1) sampler2D normal ;
+    layout(binding = 2) sampler2D specular ;
+    vec3 ambient ;
     float shininess ;
 } ;
 
@@ -23,7 +24,7 @@ vec3 ComputeDirectionalLight(
     vec3 normal
 ) {
     vec3 returnedLighting = vec3(0.f) ;
-    float specularValue = texture(material.specularMap, inTexCoord).r ;
+    float specularValue = texture(material.specular, inTexCoord).r ;
 
     vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;
     vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;
@@ -36,7 +37,7 @@ vec3 ComputeDirectionalLight(
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
     vec3 lightPowerColor = light.color * light.power ;
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
@@ -48,7 +49,7 @@ vec3 ComputePointLight(
     vec3 normal
 ) {
     vec3 returnedLighting = vec3(0.f) ;
-    float specularValue = texture(material.specularMap, inTexCoord).r ;
+    float specularValue = texture(material.specular, inTexCoord).r ;
 
     vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;
     vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;
@@ -69,16 +70,16 @@ vec3 ComputePointLight(
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
     vec3 lightPowerColor = light.color * lightIntensity ;
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
 }
 
 void main() {
-    vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;
+    vec3 colorLinear = material.ambient ;
 
-    vec3 normalMapVector = texture(material.normalMap, inTexCoord).rgb ;
+    vec3 normalMapVector = texture(material.normal, inTexCoord).rgb ;
     normalMapVector = normalize((normalMapVector * 2.f) - 1.f) ;
     normalMapVector = normalize(inTBNMatrix * normalMapVector) ;
 

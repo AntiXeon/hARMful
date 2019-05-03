@@ -55,6 +55,11 @@ void MeshTreeLoader::generateNode(
 
     if (node -> mNumMeshes > 0) {
         loadNodeData(scene, node, entity) ;
+
+        std::string nodeName((node -> mName).C_Str()) ;
+        if (!nodeName.empty() && m_meshEntities.count(nodeName) == 0) {
+            m_meshEntities[nodeName] = entity ;
+        }
     }
 
     // Load the meshes of the children.

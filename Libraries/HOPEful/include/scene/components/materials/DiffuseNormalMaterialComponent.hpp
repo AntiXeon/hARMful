@@ -19,6 +19,12 @@ namespace Hope {
      * objets and a normal map to fake details with a lightweight geometry.
      */
     class DiffuseNormalMaterialComponent : public MaterialComponent {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MaterialComponentType ;
+
         private:
             /**
              * Binding of the diffuse map.

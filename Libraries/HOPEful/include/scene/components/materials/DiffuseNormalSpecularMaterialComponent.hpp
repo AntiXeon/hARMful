@@ -21,6 +21,13 @@ namespace Hope {
      * matter it represents.
      */
     class DiffuseNormalSpecularMaterialComponent : public MaterialComponent {
+        public:
+            /**
+             * Component class type.
+             */
+            static const ComponentType ClassType = MaterialComponentType ;
+
+
         private:
             /**
              * Binding of the diffuse map.

@@ -107,7 +107,7 @@ vec3 ComputePointLight(\n\
 void main() {\n\
     vec3 colorLinear = material.ambient ;\n\
 \n\
-    /*{\n\
+    {\n\
         // Contribution of directional lights.\n\
         int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;\n\
         for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {\n\
@@ -133,7 +133,7 @@ void main() {\n\
         }\n\
     }\n\
 \n\
-    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;*/\n\
+    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;\n\
     outColor = vec4(colorLinear, 1.f) ;\n\
 }\n\
 " ;

@@ -43,6 +43,14 @@ namespace Hope {
             MeshTreeComponent(const std::string& meshFile) ;
 
             /**
+             * Get an entity generated on loading by its name.
+             * If the name is not found, nullptr is returned.
+             */
+            Entity* entity(const std::string& name) {
+                return m_loader.entity(name) ;
+            }
+
+            /**
              * To know if the component can be shared by several entities.
              * @return  false, the MeshTreeComponent cannot be shared.
              */

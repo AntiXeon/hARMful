@@ -44,9 +44,10 @@ std::string DiffuseNormalMapFragmentCode =
 // Blinn-Phong material shader using diffuse and normal maps.\n\
 \n\
 struct Material {\n\
-    layout(binding = 0) sampler2D diffuseMap ;\n\
-    layout(binding = 1) sampler2D normalMap ;\n\
-    vec3 specularColor ;\n\
+    layout(binding = 0) sampler2D diffuse ;\n\
+    layout(binding = 1) sampler2D normal ;\n\
+    vec3 ambient ;\n\
+    vec3 specular ;\n\
     float shininess ;\n\
 } ;\n\
 \n\
@@ -78,8 +79,8 @@ vec3 ComputeDirectionalLight(\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
     vec3 lightPowerColor = light.color * light.power ;\n\
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specular * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
@@ -110,16 +111,16 @@ vec3 ComputePointLight(\n\
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
     vec3 lightPowerColor = light.color * lightIntensity ;\n\
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;\n\
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;\n\
+    returnedLighting += (material.specular * specularColor * lightPowerColor) ;\n\
 \n\
     return returnedLighting ;\n\
 }\n\
 \n\
 void main() {\n\
-    vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;\n\
+    vec3 colorLinear = material.ambient ;\n\
 \n\
-    vec3 normalMapVector = texture(material.normalMap, inTexCoord).rgb ;\n\
+    vec3 normalMapVector = texture(material.normal, inTexCoord).rgb ;\n\
     normalMapVector = normalize((normalMapVector * 2.f) - 1.f) ;\n\
     normalMapVector = normalize(inTBNMatrix * normalMapVector) ;\n\
 \n\
