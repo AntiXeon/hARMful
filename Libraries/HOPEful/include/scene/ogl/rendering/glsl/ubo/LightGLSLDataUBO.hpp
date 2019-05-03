@@ -88,7 +88,9 @@ namespace Hope::GL {
              */
             void setPointLight(
                 const uint16_t index,
-                PointLightComponent* light
+                PointLightComponent* light,
+                const Mind::Vector4f& worldPosition,
+                const Mind::Matrix4x4f& viewMatrix
             ) ;
 
         protected:

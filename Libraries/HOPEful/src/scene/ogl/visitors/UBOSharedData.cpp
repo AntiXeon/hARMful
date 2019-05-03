@@ -19,14 +19,16 @@ void UBOSharedData::updateLightUBO(const FrameRenderCache& cache) {
     }
 
     {
-        const auto& pointLights = cache.pointLights() ;
-        m_lightUBO.setAmountPointLights(pointLights.size()) ;
+        const auto& pointLightsData = cache.pointLights() ;
+        m_lightUBO.setAmountPointLights(pointLightsData.size()) ;
 
         uint16_t lightIndex = 0 ;
-        for (PointLightComponent* pointLight : pointLights) {
+        for (const PointLightData& lightData : pointLightsData) {
             m_lightUBO.setPointLight(
                 lightIndex,
-                pointLight
+                lightData.light,
+                lightData.worldPosition,
+                lightData.sharedData -> viewMatrix
             ) ;
             lightIndex++ ;
         }

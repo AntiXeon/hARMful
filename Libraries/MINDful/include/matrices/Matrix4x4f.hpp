@@ -77,19 +77,19 @@ namespace Mind {
              * @brief   Extract the translation from the current matrix.
              * @return  Translation vector contained in the matrix.
              */
-            exported Vector3f extractTranslation() ;
+            exported Vector3f extractTranslation() const ;
 
             /**
              * @brief   Extract the rotation from the current matrix.
              * @return  Quaternion contained in the matrix.
              */
-            exported Quaternion extractRotation() ;
+            exported Quaternion extractRotation() const ;
 
             /**
              * @brief   Extract the scale from the current matrix.
              * @return  Scale vector contained in the matrix.
              */
-            exported Vector3f extractScale() ;
+            exported Vector3f extractScale() const ;
 
             /**
              * Set the values of a column from a Point2D.
@@ -271,18 +271,18 @@ namespace Mind {
         rotation = extractRotation(copy, scale) ;
     }
 
-    inline Vector3f Matrix4x4f::extractTranslation() {
+    inline Vector3f Matrix4x4f::extractTranslation() const {
         Matrix4x4f copy(*this) ;
         return extractTranslation(copy) ;
     }
 
-    inline Quaternion Matrix4x4f::extractRotation() {
+    inline Quaternion Matrix4x4f::extractRotation() const {
         Matrix4x4f copy(*this) ;
         Vector3f scale = extractScale(copy) ;
         return extractRotation(copy, scale) ;
     }
 
-    inline Vector3f Matrix4x4f::extractScale() {
+    inline Vector3f Matrix4x4f::extractScale() const {
         Matrix4x4f copy(*this) ;
         return extractScale(copy) ;
     }

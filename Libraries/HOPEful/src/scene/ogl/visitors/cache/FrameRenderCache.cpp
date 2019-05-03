@@ -24,7 +24,7 @@ void FrameRenderCache::cacheEntity(
     // Get the light if available.
     if (entity -> amountComponents(LightComponentType) > 0) {
         LightComponent* light = entity -> component<LightComponent>() ;
-        cacheLight(light) ;
+        cacheLight(light, worldTransformation) ;
     }
 
     // Get the mesh info if available.
@@ -33,15 +33,25 @@ void FrameRenderCache::cacheEntity(
     }
 }
 
-void FrameRenderCache::cacheLight(LightComponent* light) {
+void FrameRenderCache::cacheLight(
+    LightComponent* light,
+    const Mind::Matrix4x4f& worldTransformation
+) {
     switch (light -> lightType()) {
         case LightComponent::Type::Directional:
             m_directionalLights.push_back(static_cast<DirectionalLightComponent*>(light)) ;
             break ;
 
         case LightComponent::Type::Point:
-            m_pointLights.push_back(static_cast<PointLightComponent*>(light)) ;
-            break ;
+            {
+                PointLightData data = {
+                    static_cast<PointLightComponent*>(light),
+                    worldTransformation.extractTranslation(),
+                    &m_sharedData
+                } ;
+                m_pointLights.push_back(data) ;
+                break ;
+            }
 
         default:
             break ;

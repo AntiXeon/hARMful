@@ -32,17 +32,18 @@ void LightGLSLDataUBO::setDirectionalLight(
 
 void LightGLSLDataUBO::setPointLight(
     const uint16_t index,
-    PointLightComponent* light
+    PointLightComponent* light,
+    const Mind::Vector4f& worldPosition,
+    const Mind::Matrix4x4f& viewMatrix
 ) {
-    if (light -> hasChanged()) {
-        m_data.pointLights[index].position = Mind::Vector4f(light -> position()).toArray() ;
-        m_data.pointLights[index].color_distance = (light -> color()).toRGBA() ;
-        m_data.pointLights[index].color_distance[3] = light -> distance() ;
-        m_data.pointLights[index].linAtt_quadAtt_power_specular[0] = light -> linearAttenuation() ;
-        m_data.pointLights[index].linAtt_quadAtt_power_specular[1] = light -> quadraticAttenuation() ;
-        m_data.pointLights[index].linAtt_quadAtt_power_specular[2] = light -> power() ;
-        m_data.pointLights[index].linAtt_quadAtt_power_specular[3] = light -> generateSpecular() ;
-        light -> clearChange() ;
-        askForAnUpdate() ;
-    }
+
+    m_data.pointLights[index].position = (viewMatrix * worldPosition).toArray() ;
+    m_data.pointLights[index].color_distance = (light -> color()).toRGBA() ;
+    m_data.pointLights[index].color_distance[3] = light -> distance() ;
+    m_data.pointLights[index].linAtt_quadAtt_power_specular[0] = light -> linearAttenuation() ;
+    m_data.pointLights[index].linAtt_quadAtt_power_specular[1] = light -> quadraticAttenuation() ;
+    m_data.pointLights[index].linAtt_quadAtt_power_specular[2] = light -> power() ;
+    m_data.pointLights[index].linAtt_quadAtt_power_specular[3] = light -> generateSpecular() ;
+    light -> clearChange() ;
+    askForAnUpdate() ;
 }

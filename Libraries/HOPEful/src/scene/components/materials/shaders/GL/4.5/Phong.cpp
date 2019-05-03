@@ -79,8 +79,7 @@ vec3 ComputePointLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec3 lightWorldPosition = vec3(modelViewMatrix * vec4(light.position, 1)) ;\n\
-    vec3 lightDirection = normalize(lightWorldPosition - inVertexWorldPosition) ;\n\
+    vec3 lightDirection = normalize(light.position - inVertexWorldPosition) ;\n\
     float lambertian = max(dot(lightDirection, normal), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
 \n\

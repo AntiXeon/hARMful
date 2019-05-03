@@ -20,7 +20,7 @@ namespace Mind {
             copy.get(Point3Df::X),
             copy.get(Point3Df::Y),
             copy.get(Point3Df::Z),
-            0.f
+            1.f
         ) ;
     }
 
@@ -29,7 +29,7 @@ namespace Mind {
             copy.get(Point2Df::X),
             copy.get(Point2Df::Y),
             0.f,
-            0.f
+            1.f
         ) ;
     }
 

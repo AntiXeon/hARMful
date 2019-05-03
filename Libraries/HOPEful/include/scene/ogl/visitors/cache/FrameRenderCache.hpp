@@ -3,6 +3,7 @@
 
 #include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
 #include <scene/ogl/visitors/cache/MeshData.hpp>
+#include <scene/ogl/visitors/cache/PointLightData.hpp>
 #include <map>
 #include <set>
 #include <vector>
@@ -39,7 +40,7 @@ namespace Hope::GL {
             /**
              * Cache of all points lights to use for the render.
              */
-            std::vector<PointLightComponent*> m_pointLights ;
+            std::vector<PointLightData> m_pointLights ;
 
         public:
             /**
@@ -104,7 +105,7 @@ namespace Hope::GL {
             /**
              * Get the cache of all points lights to use for the render.
              */
-            const std::vector<PointLightComponent*>& pointLights() const {
+            const std::vector<PointLightData>& pointLights() const {
                 return m_pointLights ;
             }
 
@@ -112,7 +113,10 @@ namespace Hope::GL {
             /**
              * Put a light in cache.
              */
-            void cacheLight(LightComponent* light) ;
+            void cacheLight(
+                LightComponent* light,
+                const Mind::Matrix4x4f& worldTransformation
+            ) ;
 
             /**
              * Put a mesh in cache.
