@@ -1,4 +1,4 @@
-#include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/BlockBindings.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/BaseDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
@@ -11,10 +11,10 @@
 
 using namespace Hope ;
 
-const float PhongMaterialComponent::MinimumShininessClamp = 1.f ;
-const float PhongMaterialComponent::MaximumShininessClamp = 512.f ;
+const float BlinnPhongMaterialComponent::MinimumShininessClamp = 1.f ;
+const float BlinnPhongMaterialComponent::MaximumShininessClamp = 512.f ;
 
-PhongMaterialComponent::PhongMaterialComponent()
+BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
     : MaterialComponent(),
       m_ambient(Color(0.1f, 0.1f, 0.1f)),
       m_diffuse(Color(0.5f, 0.5f, 0.5f)),
@@ -24,14 +24,14 @@ PhongMaterialComponent::PhongMaterialComponent()
     setupUniforms() ;
 }
 
-void PhongMaterialComponent::updateUniformValues() {
+void BlinnPhongMaterialComponent::updateUniformValues() {
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
     uniform(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
     uniform(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
     uniform(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
 }
 
-void PhongMaterialComponent::setupUniforms() {
+void BlinnPhongMaterialComponent::setupUniforms() {
     std::shared_ptr<Hope::ShaderUniform> ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
     addShaderUniform(ambientUniform) ;
@@ -49,7 +49,7 @@ void PhongMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void PhongMaterialComponent::setupRendering() {
+void BlinnPhongMaterialComponent::setupRendering() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.

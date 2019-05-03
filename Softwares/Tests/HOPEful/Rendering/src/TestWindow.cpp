@@ -2,7 +2,7 @@
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/mesh/MeshTreeComponent.hpp>
-#include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
 
@@ -59,7 +59,7 @@ TestWindow::TestWindow()
         (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
         Hope::MeshTreeComponent* meshLightComponent = new Hope::MeshTreeComponent("../data/meshes/Cube.fbx") ;
         lightReprensentationEntity -> addComponent(meshLightComponent) ;
-        Hope::PhongMaterialComponent* lightMaterialComponent = new Hope::PhongMaterialComponent() ;
+        Hope::BlinnPhongMaterialComponent* lightMaterialComponent = new Hope::BlinnPhongMaterialComponent() ;
         lightMaterialComponent -> setAmbient(Hope::Color(1.f, 1.f, 1.f)) ;
         lightMaterialComponent -> setDiffuse(Hope::Color(1.f, 1.f, 1.f)) ;
         lightReprensentationEntity -> addComponent(lightMaterialComponent) ;

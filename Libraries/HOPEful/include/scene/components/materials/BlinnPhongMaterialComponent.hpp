@@ -13,7 +13,7 @@ namespace Hope {
      * ambient color and specular color + intensity.
      * It is a basic shader to put color on objects.
      */
-    class PhongMaterialComponent : public MaterialComponent {
+    class BlinnPhongMaterialComponent : public MaterialComponent {
         public:
             /**
              * Shininess values.
@@ -44,9 +44,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a PhongMaterialComponent.
+             * Create a BlinnPhongMaterialComponent.
              */
-            PhongMaterialComponent() ;
+            BlinnPhongMaterialComponent() ;
 
             /**
              * Update the uniform values before the processing of the material

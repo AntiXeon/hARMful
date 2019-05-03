@@ -2,7 +2,7 @@
 #define __HOPE__DIFFUSE_NORMAL_MATERIAL__
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <algorithm>
 #include <string>
@@ -106,8 +106,8 @@ namespace Hope {
             void setShininess(const float shininess) {
                 m_shininess = std::clamp(
                     shininess,
-                    PhongMaterialComponent::MinimumShininessClamp,
-                    PhongMaterialComponent::MaximumShininessClamp
+                    BlinnPhongMaterialComponent::MinimumShininessClamp,
+                    BlinnPhongMaterialComponent::MaximumShininessClamp
                 ) ;
             }
 

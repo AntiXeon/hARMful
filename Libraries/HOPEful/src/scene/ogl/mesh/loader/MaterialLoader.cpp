@@ -1,5 +1,5 @@
 #include <scene/ogl/mesh/loader/MaterialLoader.hpp>
-#include <scene/components/materials/PhongMaterialComponent.hpp>
+#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/components/materials/DiffuseMaterialComponent.hpp>
 #include <scene/components/materials/DiffuseNormalMaterialComponent.hpp>
 #include <scene/components/materials/DiffuseNormalSpecularMaterialComponent.hpp>
@@ -31,7 +31,7 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
         material -> Get(AI_MATKEY_NAME, currentName) ;
 
         if (currentName == DefaultMaterialName) {
-            return new PhongMaterialComponent() ;
+            return new BlinnPhongMaterialComponent() ;
         }
         else {
             return BlinnPhongMaterial(material) ;
@@ -40,7 +40,7 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
 }
 
 MaterialComponent* MaterialLoader::BlinnPhongMaterial(const aiMaterial* material) {
-    PhongMaterialComponent* materialComponent = new PhongMaterialComponent() ;
+    BlinnPhongMaterialComponent* materialComponent = new BlinnPhongMaterialComponent() ;
     aiColor4D specularColor ;
     aiColor4D diffuseColor ;
     aiColor4D ambientColor ;
