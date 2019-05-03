@@ -6,101 +6,71 @@
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/LightsDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/DiffuseNormalSpecularMap.hpp>
-#include <algorithm>
+#include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
 using namespace Hope ;
 
-const float DiffuseNormalSpecularMaterialComponent::MinimumShininessClamp = 1.f ;
-const float DiffuseNormalSpecularMaterialComponent::MaximumShininessClamp = 512.f ;
-
-const std::string DiffuseNormalSpecularMaterialComponent::DiffuseMapUniformName = "material.diffuseMap" ;
-const std::string DiffuseNormalSpecularMaterialComponent::NormalMapUniformName = "material.normalMap" ;
-const std::string DiffuseNormalSpecularMaterialComponent::SpecularMapUniformName = "material.specularMap" ;
-const std::string DiffuseNormalSpecularMaterialComponent::ShininessUniformName = "material.shininess" ;
-
 DiffuseNormalSpecularMaterialComponent::DiffuseNormalSpecularMaterialComponent()
-    : MaterialComponent() {
+    : MaterialComponent(),
+      m_ambient(Color(0.f, 0.f, 0.f)),
+      m_diffuse(nullptr),
+      m_normal(nullptr),
+      m_specular(nullptr),
+      m_shininess(10.f) {
     setupRendering() ;
     setupUniforms() ;
-
-    setDiffuseMap(nullptr) ;
-    setNormalMap(nullptr) ;
-    setSpecularMap(nullptr) ;
-    setShininess(10.f) ;
 }
 
 DiffuseNormalSpecularMaterialComponent::~DiffuseNormalSpecularMaterialComponent() {
-    delete m_diffuseMap ;
-    delete m_normalMap ;
-    delete m_specularMap ;
+    delete m_diffuse ;
+    delete m_normal ;
+    delete m_specular ;
 }
 
 void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
-    m_diffuseMap -> activate(DiffuseMapBinding) ;
-    m_diffuseMap -> bind() ;
-    uniform(DiffuseMapUniformName) -> setInteger(DiffuseMapBinding) ;
-    m_normalMap -> activate(NormalMapBinding) ;
-    m_normalMap -> bind() ;
-    uniform(NormalMapUniformName) -> setInteger(NormalMapBinding) ;
-    m_specularMap -> activate(SpecularMapBinding) ;
-    m_specularMap -> bind() ;
-    uniform(SpecularMapUniformName) -> setInteger(SpecularMapBinding) ;
-    uniform(ShininessUniformName) -> setFloating(shininess()) ;
-}
+    if (m_diffuse) {
+        m_diffuse -> activate(DiffuseMapBinding) ;
+        m_diffuse -> bind() ;
+        uniform(UniformNames::MaterialDiffuseUniformName()) -> setInteger(DiffuseMapBinding) ;
+    }
 
-void DiffuseNormalSpecularMaterialComponent::setDiffuseMap(const API::Texture2D* diffuse) {
-    m_diffuseMap = diffuse ;
-    m_diffuseMapUniform -> setInteger(DiffuseMapBinding) ;
-}
+    if (m_normal) {
+        m_normal -> activate(NormalMapBinding) ;
+        m_normal -> bind() ;
+        uniform(UniformNames::MaterialNormalUniformName()) -> setInteger(NormalMapBinding) ;
+    }
 
-void DiffuseNormalSpecularMaterialComponent::setNormalMap(const API::Texture2D* normal) {
-    m_normalMap = normal ;
-    m_normalMapUniform -> setInteger(NormalMapBinding) ;
-}
+    if (m_specular) {
+        m_specular -> activate(SpecularMapBinding) ;
+        m_specular -> bind() ;
+        uniform(UniformNames::MaterialSpecularUniformName()) -> setInteger(SpecularMapBinding) ;
+    }
 
-void DiffuseNormalSpecularMaterialComponent::setSpecularMap(const API::Texture2D* specular) {
-    m_specularMap = specular ;
-    m_specularMapUniform -> setInteger(SpecularMapBinding) ;
-}
-
-void DiffuseNormalSpecularMaterialComponent::setShininess(const float shininess) {
-    float shininessClamped = std::clamp(shininess, MinimumShininessClamp, MaximumShininessClamp) ;
-    m_shininessUniform -> setFloating(shininessClamped) ;
-}
-
-const API::Texture2D* DiffuseNormalSpecularMaterialComponent::diffuseMap() const {
-    return m_diffuseMap ;
-}
-
-const API::Texture2D* DiffuseNormalSpecularMaterialComponent::normalMap() const {
-    return m_normalMap ;
-}
-
-const API::Texture2D* DiffuseNormalSpecularMaterialComponent::specularMap() const {
-    return m_specularMap ;
-}
-
-float DiffuseNormalSpecularMaterialComponent::shininess() const {
-    return m_shininessUniform -> floating() ;
+    uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
+    uniform(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
-    m_diffuseMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_diffuseMapUniform -> setName(DiffuseMapUniformName) ;
-    addShaderUniform(m_diffuseMapUniform) ;
+    std::shared_ptr<Hope::ShaderUniform> ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
+    ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
+    addShaderUniform(ambientUniform) ;
 
-    m_normalMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_normalMapUniform -> setName(NormalMapUniformName) ;
-    addShaderUniform(m_normalMapUniform) ;
+    std::shared_ptr<Hope::ShaderUniform> diffuseMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    diffuseMapUniform -> setName(UniformNames::MaterialDiffuseUniformName()) ;
+    addShaderUniform(diffuseMapUniform) ;
 
-    m_specularMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_specularMapUniform -> setName(SpecularMapUniformName) ;
-    addShaderUniform(m_specularMapUniform) ;
+    std::shared_ptr<Hope::ShaderUniform> normalMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    normalMapUniform -> setName(UniformNames::MaterialNormalUniformName()) ;
+    addShaderUniform(normalMapUniform) ;
 
-    m_shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
-    m_shininessUniform -> setName(ShininessUniformName) ;
-    addShaderUniform(m_shininessUniform) ;
+    std::shared_ptr<Hope::ShaderUniform> specularMapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    specularMapUniform -> setName(UniformNames::MaterialSpecularUniformName()) ;
+    addShaderUniform(specularMapUniform) ;
+
+    std::shared_ptr<Hope::ShaderUniform> shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
+    shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
+    addShaderUniform(shininessUniform) ;
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupRendering() {

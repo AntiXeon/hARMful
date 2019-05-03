@@ -46,7 +46,7 @@ namespace Hope {
              * transformation values (m_rotation, m_translation and m_scale).
              * false if the matrix corresponds to these values.
              */
-            bool m_outdatedMatrix = false ;
+            bool m_outdatedMatrix = true ;
 
         public:
             /**

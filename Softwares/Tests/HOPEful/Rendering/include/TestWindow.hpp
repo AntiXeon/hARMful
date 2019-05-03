@@ -17,7 +17,7 @@ class TestWindow final : public Hope::GL::Window {
         /**
          * Default color to clear screen at each frame.
          */
-        static const int DefaultClearColor = 0x996677FF ;
+        static const int DefaultClearColor = 0x222222FF ;
 
         /**
          * A frame counter.

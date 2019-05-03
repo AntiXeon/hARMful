@@ -2,7 +2,9 @@
 #define __HOPE__DIFFUSE_MATERIAL__
 
 #include <scene/components/materials/MaterialComponent.hpp>
+#include <scene/components/materials/PhongMaterialComponent.hpp>
 #include <scene/common/Color.hpp>
+#include <algorithm>
 #include <string>
 #include <HopeAPI.hpp>
 
@@ -23,52 +25,24 @@ namespace Hope {
             static const unsigned short DiffuseMapBinding = 0 ;
 
             /**
-             * Shininess values.
+             * Ambient color.
              */
-            static const float MinimumShininessClamp ;
-            static const float MaximumShininessClamp ;
+            Color m_ambient ;
 
             /**
-             * Name of the diffuse color uniform in the shader.
+             * Diffuse texture.
              */
-            static const std::string DiffuseMapUniformName ;
+            const API::Texture2D* m_diffuse ;
 
             /**
-             * Name of the specular color uniform in the shader.
+             * Specular color.
              */
-            static const std::string SpecularUniformName ;
+            Color m_specular ;
 
             /**
-             * Name of the shininess uniform in the shader.
+             * Shininess color.
              */
-            static const std::string ShininessUniformName ;
-
-            /**
-             * Uniform of the diffuse map (sampler2D). The color the material
-             * does not absorb, that is the color we see when there is a light.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_diffuseMapUniform = nullptr ;
-
-            /**
-             * Uniform of the specular color (vec4). The lights can produce a
-             * shiny spot on the material.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_specularUniform = nullptr ;
-
-            /**
-             * Uniform of the shininess (float). The more it is shiny, the
-             * more the specular spot is little but intense as metal for
-             * instance.
-             * On the contrary, lower shininess values will provide a bigger
-             * specular spot on the object surface but less intense, like a
-             * rough surface.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_shininessUniform = nullptr ;
-
-            /**
-             * Diffuse map.
-             */
-            const API::Texture2D* m_diffuseMap = nullptr ;
+            float m_shininess ;
 
         public:
             /**
@@ -88,34 +62,64 @@ namespace Hope {
             void updateUniformValues() override ;
 
             /**
-             * Set the diffuse color.
+             * Set the ambient color.
              */
-            void setDiffuseMap(const API::Texture2D* diffuse) ;
+            void setAmbient(const Color& ambient) {
+                m_ambient = ambient ;
+            }
+
+            /**
+             * Set the diffuse texture.
+             */
+            void setDiffuseMap(const API::Texture2D* diffuse) {
+                m_diffuse = diffuse ;
+            }
 
             /**
              * Set the specular color.
              */
-            void setSpecular(const Color& specular) ;
+            void setSpecular(const Color& specular) {
+                m_specular = specular ;
+            }
 
             /**
              * Set the shininess of the material.
              */
-            void setShininess(const float shininess) ;
+            void setShininess(const float shininess) {
+                m_shininess = std::clamp(
+                    shininess,
+                    PhongMaterialComponent::MinimumShininessClamp,
+                    PhongMaterialComponent::MaximumShininessClamp
+                ) ;
+            }
+
+            /**
+             * Get the ambient color.
+             */
+            Color ambient() const {
+                return m_ambient ;
+            }
 
             /**
              * Get the diffuse texture.
              */
-            const API::Texture2D* diffuseMap() const ;
+            const API::Texture2D* diffuseMap() const {
+                return m_diffuse ;
+            }
 
             /**
              * Get the specular color.
              */
-            Color specular() const ;
+            Color specular() const {
+                return m_specular ;
+            }
 
             /**
              * Get the shininess of the material.
              */
-            float shininess() const ;
+            float shininess() const {
+                return m_shininess ;
+            }
 
         private:
             /**

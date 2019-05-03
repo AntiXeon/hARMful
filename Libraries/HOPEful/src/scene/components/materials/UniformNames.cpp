@@ -50,4 +50,10 @@ UniformNames::UniformNames() {
         m_names.push_back(PointLightParamName() + indexString + LightLinearAttenuationParamName()) ;
         m_names.push_back(PointLightParamName() + indexString + LightQuadraticAttenuationParamName()) ;
     }
+
+    m_names.push_back(MaterialNormalUniformName()) ;
+    m_names.push_back(MaterialAmbientUniformName()) ;
+    m_names.push_back(MaterialDiffuseUniformName()) ;
+    m_names.push_back(MaterialSpecularUniformName()) ;
+    m_names.push_back(MaterialShininessUniformName()) ;
 }

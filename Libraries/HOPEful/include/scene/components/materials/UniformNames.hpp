@@ -67,6 +67,13 @@ namespace Hope {
             static std::string LightPositionParamName() { return "position" ; }
             static std::string LightLinearAttenuationParamName() { return "linearAttenuation" ; }
             static std::string LightQuadraticAttenuationParamName() { return "quadraticAttenuation" ; }
+
+            // Materials uniforms names.
+            static std::string MaterialNormalUniformName() { return "material.normal" ; }
+            static std::string MaterialAmbientUniformName() { return "material.ambient" ; }
+            static std::string MaterialDiffuseUniformName() { return "material.diffuse" ; }
+            static std::string MaterialSpecularUniformName() { return "material.specular" ; }
+            static std::string MaterialShininessUniformName() { return "material.shininess" ; }
     } ;
 }
 

@@ -1,72 +1,46 @@
-#ifndef __HOPE__PHONG_MATERIAL__
-#define __HOPE__PHONG_MATERIAL__
+#ifndef __HOPE__BLINN_PHONG_MATERIAL__
+#define __HOPE__BLINN_PHONG_MATERIAL__
 
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/common/Color.hpp>
+#include <algorithm>
 #include <string>
+#include <iostream>
 
 namespace Hope {
     /**
-     * A Phong material is composed of three main values: diffuse color, ambient
-     * color and specular color + intensity.
+     * A Blinn-Phong material is composed of three main values: diffuse color,
+     * ambient color and specular color + intensity.
      * It is a basic shader to put color on objects.
      */
     class PhongMaterialComponent : public MaterialComponent {
-        private:
+        public:
             /**
              * Shininess values.
              */
             static const float MinimumShininessClamp ;
             static const float MaximumShininessClamp ;
 
+        private:
+            /**
+             * Ambient color.
+             */
+            Color m_ambient ;
 
             /**
-             * Name of the ambient color uniform in the shader.
+             * Diffuse color.
              */
-            static const std::string AmbientUniformName ;
+            Color m_diffuse ;
 
             /**
-             * Name of the diffuse color uniform in the shader.
+             * Specular color.
              */
-            static const std::string DiffuseUniformName ;
+            Color m_specular ;
 
             /**
-             * Name of the specular color uniform in the shader.
+             * Shininess color.
              */
-            static const std::string SpecularUniformName ;
-
-            /**
-             * Name of the shininess uniform in the shader.
-             */
-            static const std::string ShininessUniformName ;
-
-            /**
-             * Uniform of the ambient color (vec4). The object can emit some
-             * color even without light.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_ambientUniform = nullptr ;
-
-            /**
-             * Uniform of the diffuse color (vec4). The color the material
-             * does not absorb, that is the color we see when there is a light.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_diffuseUniform = nullptr ;
-
-            /**
-             * Uniform of the specular color (vec4). The lights can produce a
-             * shiny spot on the material.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_specularUniform = nullptr ;
-
-            /**
-             * Uniform of the shininess (float). The more it is shiny, the
-             * more the specular spot is little but intense as metal for
-             * instance.
-             * On the contrary, lower shininess values will provide a bigger
-             * specular spot on the object surface but less intense, like a
-             * rough surface.
-             */
-            std::shared_ptr<Hope::ShaderUniform> m_shininessUniform = nullptr ;
+            float m_shininess ;
 
         public:
             /**
@@ -83,42 +57,62 @@ namespace Hope {
             /**
              * Set the ambient color.
              */
-            void setAmbient(const Color& ambient) ;
+            void setAmbient(const Color& ambient) {
+                m_ambient = ambient ;
+            }
 
             /**
              * Set the diffuse color.
              */
-            void setDiffuse(const Color& diffuse) ;
+            void setDiffuse(const Color& diffuse) {
+                m_diffuse = diffuse ;
+            }
 
             /**
              * Set the specular color.
              */
-            void setSpecular(const Color& specular) ;
+            void setSpecular(const Color& specular) {
+                m_specular = specular ;
+            }
 
             /**
              * Set the shininess of the material.
              */
-            void setShininess(const float shininess) ;
+            void setShininess(const float shininess) {
+                m_shininess = std::clamp(
+                    shininess,
+                    MinimumShininessClamp,
+                    MaximumShininessClamp
+                ) ;
+            }
 
             /**
              * Get the ambient color.
              */
-            Color ambient() const ;
+            Color ambient() const {
+                return m_ambient ;
+            }
 
             /**
              * Get the diffuse color.
              */
-            Color diffuse() const ;
+            Color diffuse() const {
+                return m_diffuse ;
+            }
 
             /**
              * Get the specular color.
              */
-            Color specular() const ;
+            Color specular() const {
+                return m_specular ;
+            }
 
             /**
              * Get the shininess of the material.
              */
-            float shininess() const ;
+            float shininess() const {
+                return m_shininess ;
+            }
 
         private:
             /**

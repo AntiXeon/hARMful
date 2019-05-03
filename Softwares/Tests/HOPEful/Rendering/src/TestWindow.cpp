@@ -18,9 +18,9 @@ TestWindow::TestWindow()
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
-    Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Mesh_Set.fbx") ;
-    meshTreeEntity -> addComponent(meshTreeComponent) ;
+    //Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
+    //Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Test.fbx") ;
+    //meshTreeEntity -> addComponent(meshTreeComponent) ;
 
 /*
 	// Test of matrices / parent relation.
@@ -39,30 +39,43 @@ TestWindow::TestWindow()
     (suzanneEntity -> transform()).setRotation(Mind::Quaternion(-30.f, 0.f, 0.f)) ;
 */
 
-
+/*
     // Create a directional light.
 	{
 		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
 		Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-		dirLightComponent -> setDirection(Mind::Vector3f(0.f, 1.f, -1.f)) ;
-		dirLightComponent -> setColor(Hope::Color(0.9f, 0.85f, 0.7f, 1.f)) ;
+		dirLightComponent -> setDirection(Mind::Vector3f(0.f, -1.f, 0.f)) ;
+		dirLightComponent -> setColor(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
 		dirLightComponent -> setPower(1.f) ;
-		dirLightComponent -> setSpecularGenerated(true) ;
+		dirLightComponent -> setSpecularGenerated(false) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
 	}
-
+*/
     {
-        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 5.f, 5.f)) ;
-        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        pointLightComponent -> setColor(Hope::Color(0.7f, 0.8f, 1.f, 1.f)) ;
-        pointLightComponent -> setPower(1.f) ;
-        pointLightComponent -> setSpecularGenerated(false) ;
-        pointLightComponent -> setQuadraticAttenuation(0.f) ;
-        pointLightComponent -> setLinearAttenuation(1.f) ;
-        pointLightEntity -> addComponent(pointLightComponent) ;
-    }
+    	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
+        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 10.f, 0.f)) ;
 
+        Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
+        (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
+        Hope::MeshTreeComponent* meshLightComponent = new Hope::MeshTreeComponent("../data/meshes/Cube.fbx") ;
+        lightReprensentationEntity -> addComponent(meshLightComponent) ;
+        Hope::PhongMaterialComponent* lightMaterialComponent = new Hope::PhongMaterialComponent() ;
+        lightMaterialComponent -> setAmbient(Hope::Color(1.f, 1.f, 1.f)) ;
+        lightMaterialComponent -> setDiffuse(Hope::Color(1.f, 1.f, 1.f)) ;
+        lightReprensentationEntity -> addComponent(lightMaterialComponent) ;
+        //
+        //
+        // Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
+        // (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
+        // Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+        // pointLightComponent -> setColor(Hope::Color(0.f, 1.f, 0.f)) ;
+        // pointLightComponent -> setPower(10.f) ;
+        // pointLightComponent -> setSpecularGenerated(false) ;
+        // pointLightComponent -> setQuadraticAttenuation(0.f) ;
+        // pointLightComponent -> setLinearAttenuation(1.f) ;
+        // pointLightEntity -> addComponent(pointLightComponent) ;
+    }
+/*
     {
         Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
         (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-5.f, 0.f, 0.f)) ;
@@ -81,11 +94,12 @@ TestWindow::TestWindow()
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(Hope::Color(0.1f, 0.5f, 1.f, 1.f)) ;
         pointLightComponent -> setPower(0.7f) ;
-        pointLightComponent -> setSpecularGenerated(false) ;
+        pointLightComponent -> setSpecularGenerated(true) ;
         pointLightComponent -> setQuadraticAttenuation(1.f) ;
         pointLightComponent -> setLinearAttenuation(0.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
     }
+*/
 
     /** FRAME GRAPH **/
     // Set the viewport.
@@ -102,11 +116,11 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    float radius = 5.f ;
+    float radius = 150.f ;
     float camX = sin(glfwGetTime() / 2.f) * radius ;
     float camZ = cos(glfwGetTime() / 2.f) * radius ;
 
-    Mind::Vector3f camPos(camX, 0.f, camZ) ;
+    Mind::Vector3f camPos(camX, 30.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
 }
 

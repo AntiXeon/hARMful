@@ -26,7 +26,7 @@ void MeshTreeLoader::load(
 
     const aiScene* scene = importer.ReadFile(
         m_source.c_str(),
-        aiProcessPreset_TargetRealtime_Fast
+        aiProcessPreset_TargetRealtime_MaxQuality
     ) ;
 
     if (scene) {

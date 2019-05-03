@@ -25,7 +25,17 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
         }
     }
     else {
-        return BlinnPhongMaterial(material) ;
+        // Override the default material from Assimp.
+        static const aiString DefaultMaterialName(AI_DEFAULT_MATERIAL_NAME) ;
+        aiString currentName ;
+        material -> Get(AI_MATKEY_NAME, currentName) ;
+
+        if (currentName == DefaultMaterialName) {
+            return new PhongMaterialComponent() ;
+        }
+        else {
+            return BlinnPhongMaterial(material) ;
+        }
     }
 }
 

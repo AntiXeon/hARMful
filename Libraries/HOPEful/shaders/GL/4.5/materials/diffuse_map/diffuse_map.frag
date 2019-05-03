@@ -1,8 +1,9 @@
 // Blinn-Phong material shader using a diffuse map.
 
 struct Material {
-    layout(binding = 0) sampler2D diffuseMap ;
-    vec3 specularColor ;
+    vec3 ambient ;
+    layout(binding = 0) sampler2D diffuse ;
+    vec3 specular ;
     float shininess ;
 } ;
 
@@ -30,11 +31,11 @@ vec3 ComputeDirectionalLight(
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, material.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
+    vec3 specular = light.generateSpecular * light.color * specularAngle ;
 
     vec3 lightPowerColor = light.color * light.power ;
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting += (material.specular * specular * lightPowerColor) ;
 
     return returnedLighting ;
 }
@@ -54,7 +55,7 @@ vec3 ComputePointLight(
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, material.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
+    vec3 specular = light.generateSpecular * light.color * specularAngle ;
 
     float lightDistance = length(inVertexWorldPosition - light.position) ;
     float sqrLightDistance = lightDistance * lightDistance ;
@@ -65,14 +66,14 @@ vec3 ComputePointLight(
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
     vec3 lightPowerColor = light.color * lightIntensity ;
-    returnedLighting = (texture(material.diffuseMap, inTexCoord).rgb * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    returnedLighting += (material.specular * specular * lightPowerColor) ;
 
     return returnedLighting ;
 }
 
 void main() {
-    vec3 colorLinear = vec3(0.f, 0.f, 0.f) ;
+    vec3 colorLinear = material.ambient ;
 
     {
         // Contribution of directional lights.

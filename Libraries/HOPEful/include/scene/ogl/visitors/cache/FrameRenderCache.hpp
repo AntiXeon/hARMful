@@ -1,7 +1,6 @@
 #ifndef __HOPE__FRAME_RENDER_CACHE__
 #define __HOPE__FRAME_RENDER_CACHE__
 
-#include <scene/ogl/visitors/cache/DefaultObjects.hpp>
 #include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
 #include <scene/ogl/visitors/cache/MeshData.hpp>
 #include <map>
@@ -22,11 +21,6 @@ namespace Hope::GL {
      */
     class FrameRenderCache final {
         private:
-            /**
-             * Default objects.
-             */
-            static const DefaultObjects DefaultSceneObjects ;
-
             /**
              * Shared data to render the current frame.
              */

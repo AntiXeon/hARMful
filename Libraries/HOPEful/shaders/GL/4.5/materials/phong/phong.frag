@@ -1,9 +1,9 @@
 // Blinn-Phong material shader.
 
 struct Material {
-    vec3 ambientColor ;
-    vec3 diffuseColor ;
-    vec3 specularColor ;
+    vec3 ambient ;
+    vec3 diffuse ;
+    vec3 specular ;
     float shininess ;
 } ;
 
@@ -33,11 +33,11 @@ vec3 ComputeDirectionalLight(
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, material.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
+    vec3 specular = light.generateSpecular * light.color * specularAngle ;
 
     vec3 lightPowerColor = light.color * light.power ;
-    returnedLighting = (material.diffuseColor * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (material.diffuse * lambertian * lightPowerColor) ;
+    returnedLighting += (material.specular * specular * lightPowerColor) ;
 
     return returnedLighting ;
 }
@@ -57,7 +57,7 @@ vec3 ComputePointLight(
     vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, material.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
+    vec3 specular = light.generateSpecular * light.color * specularAngle ;
 
     float lightDistance = length(inVertexWorldPosition - light.position) ;
     float sqrLightDistance = lightDistance * lightDistance ;
@@ -68,16 +68,16 @@ vec3 ComputePointLight(
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
     vec3 lightPowerColor = light.color * lightIntensity ;
-    returnedLighting = (material.diffuseColor * lambertian * lightPowerColor) ;
-    returnedLighting += (material.specularColor * specularColor * lightPowerColor) ;
+    returnedLighting = (material.diffuse * lambertian * lightPowerColor) ;
+    returnedLighting += (material.specular * specular * lightPowerColor) ;
 
     return returnedLighting ;
 }
 
 void main() {
-    vec3 colorLinear = material.ambientColor ;
+    vec3 colorLinear = material.ambient ;
 
-    {
+    /*{
         // Contribution of directional lights.
         int validAmountOfDirLights = min(MAX_DIRECTIONAL_LIGHTS, amountDirectionalLights) ;
         for (int lightIndex = 0 ; lightIndex < validAmountOfDirLights ; lightIndex++) {
@@ -103,6 +103,6 @@ void main() {
         }
     }
 
-    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;
-    outColor = vec4(colorGammaCorrected, 1.f) ;
+    vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;*/
+    outColor = vec4(colorLinear, 1.f) ;
 }
