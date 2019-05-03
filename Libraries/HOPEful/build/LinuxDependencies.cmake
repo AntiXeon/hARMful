@@ -18,4 +18,14 @@ if (UNIX)
         set(ASSIMP_LIBRARY "assimp")
         target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
     endif()
+    
+    
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/modules/")
+    
+    find_package(LibJpegTurbo REQUIRED)
+    if (JPEGTURBO_FOUND)
+        include_directories(${JPEGTURBO_INCLUDE_DIR})
+        target_link_libraries(${PROJECT_NAME} ${JPEGTURBO_LIBRARIES})
+        target_link_libraries(${PROJECT_NAME} ${JPEG_LIBRARIES})
+    endif()
 endif()
