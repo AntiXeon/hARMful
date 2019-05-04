@@ -7,6 +7,7 @@ layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
 layout(location = 3) in vec3 tangent ;\n\
+layout(location = 4) in vec3 bitangent ;\n\
 \n\
 layout(location = 0) out vec3 outVertexWorldPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
@@ -15,12 +16,9 @@ layout(location = 5) out vec2 outTexCoord ;\n\
 layout(location = 6) out vec3 outViewDirection ;\n\
 \n\
 void correctTBNMatrix() {\n\
-    vec3 correctedTangent = normalize(vec3(modelMatrix * vec4(tangent, 0.f))) ;\n\
-    vec3 correctedNormal = normalize(vec3(modelMatrix * vec4(normal, 0.f))) ;\n\
-    // Re-orthogonalize tangent with respect to normal.\n\
-    correctedTangent = normalize(correctedTangent - dot(correctedTangent, correctedNormal) * correctedNormal) ;\n\
-    // Then retrieve perpendicular vector bitangent with the cross product of tangent and normal.\n\
-    vec3 correctedBitangent = cross(correctedNormal, correctedTangent) ;\n\
+    vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;\n\
+    vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;\n\
+    vec3 correctedNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;\n\
     outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;\n\
 }\n\
 \n\

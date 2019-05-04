@@ -32,9 +32,14 @@ namespace Hope::GL {
             static const unsigned char TangentLength = 3 ;
 
             /**
+             * Amount of values for bitangent.
+             */
+            static const unsigned char BitangentLength = 3 ;
+
+            /**
              * Amount of values in a Vertex.
              */
-            static const unsigned char TotalLength = PositionLength + TexCoordLength + NormalLength + TangentLength ;
+            static const unsigned char TotalLength = PositionLength + TexCoordLength + NormalLength + TangentLength + BitangentLength ;
 
         private:
             /**
@@ -50,7 +55,8 @@ namespace Hope::GL {
                 const Mind::Vector3f& pos,
                 const Mind::Vector2f& tex,
                 const Mind::Vector3f& normal,
-                const Mind::Vector3f& tangent
+                const Mind::Vector3f& tangent,
+                const Mind::Vector3f& bitangent
             ) ;
 
             /**

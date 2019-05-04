@@ -6,7 +6,8 @@ Vertex::Vertex(
     const Mind::Vector3f& pos,
     const Mind::Vector2f& tex,
     const Mind::Vector3f& normal,
-    const Mind::Vector3f& tangent
+    const Mind::Vector3f& tangent,
+    const Mind::Vector3f& bitangent
 ) {
     m_data.resize(TotalLength) ;
 
@@ -24,4 +25,8 @@ Vertex::Vertex(
     m_data[8] = tangent.get(Mind::Vector3f::X) ;
     m_data[9] = tangent.get(Mind::Vector3f::Y) ;
     m_data[10] = tangent.get(Mind::Vector3f::Z) ;
+
+    m_data[11] = bitangent.get(Mind::Vector3f::X) ;
+    m_data[12] = bitangent.get(Mind::Vector3f::Y) ;
+    m_data[13] = bitangent.get(Mind::Vector3f::Z) ;
 }

@@ -44,16 +44,21 @@ TestWindow::TestWindow()
 	{
 		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
 		Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-		dirLightComponent -> setDirection(Mind::Vector3f(0.f, -1.f, 0.f)) ;
+		dirLightComponent -> setDirection(Mind::Vector3f(0.f, -1.f, -1.f)) ;
 		dirLightComponent -> setColor(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(false) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
 	}
 */
+
+
+	// Point light
     {
+        Hope::Color lightColor(1.f, 0.7f, 0.3f) ;
+
     	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
-        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 0.f)) ;
+        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(25.f, 25.f, -25.f)) ;
 
         Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
         (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 0.f)) ;
@@ -63,44 +68,47 @@ TestWindow::TestWindow()
 
         if (cubeEntity) {
             Hope::BlinnPhongMaterialComponent* cubeMaterial = cubeEntity -> component<Hope::BlinnPhongMaterialComponent>() ;
-            cubeMaterial -> setAmbient(Hope::Color(1.f, 1.f, 1.f)) ;
+            cubeMaterial -> setAmbient(lightColor) ;
         }
 
-        // Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
-        // (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.1f, 0.f)) ;
-        // Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        // pointLightComponent -> setColor(Hope::Color(0.f, 1.f, 0.f)) ;
-        // pointLightComponent -> setPower(10.f) ;
-        // pointLightComponent -> setSpecularGenerated(false) ;
-        // pointLightComponent -> setQuadraticAttenuation(0.f) ;
-        // pointLightComponent -> setLinearAttenuation(1.f) ;
-        // pointLightEntity -> addComponent(pointLightComponent) ;
-    }
-/*
-    {
-        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(-5.f, 0.f, 0.f)) ;
+        Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        pointLightComponent -> setColor(Hope::Color(1.f, 0.3f, 0.3f, 1.f)) ;
-        pointLightComponent -> setPower(0.5f) ;
+        pointLightComponent -> setColor(lightColor) ;
+        pointLightComponent -> setPower(5.f) ;
         pointLightComponent -> setSpecularGenerated(true) ;
-        pointLightComponent -> setQuadraticAttenuation(1.f) ;
-        pointLightComponent -> setLinearAttenuation(0.f) ;
+        pointLightComponent -> setQuadraticAttenuation(0.f) ;
+        pointLightComponent -> setLinearAttenuation(1.f) ;
+        pointLightEntity -> addComponent(pointLightComponent) ;
+    }
+    
+	// Point light
+    {
+        Hope::Color lightColor(0.3f, 0.7f, 1.f) ;
+
+    	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
+        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(-25.f, 25.f, 50.f)) ;
+
+        Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
+        (lightReprensentationEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 0.f, 0.f)) ;
+        Hope::MeshTreeComponent* meshLightComponent = new Hope::MeshTreeComponent("../data/meshes/Cube.fbx") ;
+        lightReprensentationEntity -> addComponent(meshLightComponent) ;
+        Hope::Entity* cubeEntity = meshLightComponent -> entity("Cube") ;
+
+        if (cubeEntity) {
+            Hope::BlinnPhongMaterialComponent* cubeMaterial = cubeEntity -> component<Hope::BlinnPhongMaterialComponent>() ;
+            cubeMaterial -> setAmbient(lightColor) ;
+        }
+
+        Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
+        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+        pointLightComponent -> setColor(lightColor) ;
+        pointLightComponent -> setPower(5.f) ;
+        pointLightComponent -> setSpecularGenerated(false) ;
+        pointLightComponent -> setQuadraticAttenuation(0.f) ;
+        pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
     }
 
-    {
-        Hope::Entity* pointLightEntity = new Hope::Entity(scene() -> root()) ;
-        (pointLightEntity -> transform()).setTranslation(Mind::Vector3f(5.f, -5.f, -5.f)) ;
-        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        pointLightComponent -> setColor(Hope::Color(0.1f, 0.5f, 1.f, 1.f)) ;
-        pointLightComponent -> setPower(0.7f) ;
-        pointLightComponent -> setSpecularGenerated(true) ;
-        pointLightComponent -> setQuadraticAttenuation(1.f) ;
-        pointLightComponent -> setLinearAttenuation(0.f) ;
-        pointLightEntity -> addComponent(pointLightComponent) ;
-    }
-*/
 
     /** FRAME GRAPH **/
     // Set the viewport.

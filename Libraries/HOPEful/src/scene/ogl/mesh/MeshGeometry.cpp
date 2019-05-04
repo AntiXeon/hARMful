@@ -30,6 +30,11 @@ MeshGeometry::MeshGeometry(const std::vector<float>& vertices) {
     // Tangent vector attribute.
     glEnableVertexAttribArray(3) ;
     glVertexAttribPointer(3, Vertex::TangentLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    offset += (Vertex::TangentLength * sizeof(float)) ;
+
+    // Bitangent vector attribute.
+    glEnableVertexAttribArray(4) ;
+    glVertexAttribPointer(4, Vertex::BitangentLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
 
     glGenBuffers(1, &m_indexBuffer) ;
     glBindVertexArray(0) ;

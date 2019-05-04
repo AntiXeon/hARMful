@@ -118,8 +118,10 @@ void MeshTreeLoader::loadNodeData(
             aiVector3D normal = meshToLoad -> mNormals[vertexIndex] ;
 
             aiVector3D tangent = Zero ;
+            aiVector3D bitangent = Zero ;
             if (meshToLoad -> HasTangentsAndBitangents()) {
                 tangent = meshToLoad -> mTangents[vertexIndex] ;
+                bitangent = meshToLoad -> mBitangents[vertexIndex] ;
             }
 
             aiVector3D texCoord = Zero ;
@@ -132,7 +134,8 @@ void MeshTreeLoader::loadNodeData(
                 Mind::Vector3f(pos.x, pos.y, pos.z),
                 Mind::Vector2f(texCoord.x, texCoord.y),
                 Mind::Vector3f(normal.x, normal.y, normal.z),
-                Mind::Vector3f(tangent.x, tangent.y, tangent.z)
+                Mind::Vector3f(tangent.x, tangent.y, tangent.z),
+                Mind::Vector3f(bitangent.x, bitangent.y, bitangent.z)
             ).data()) ;
 
             vertices.insert(vertices.end(), vertexCoordinates.begin(), vertexCoordinates.end()) ;
