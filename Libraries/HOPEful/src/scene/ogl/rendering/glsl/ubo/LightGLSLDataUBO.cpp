@@ -22,9 +22,9 @@ void LightGLSLDataUBO::setDirectionalLight(
 ) {
     if (light -> hasChanged()) {
         m_data.dirLights[index].direction = Mind::Vector4f(light -> direction()).toArray() ;
-        m_data.dirLights[index].color = (light -> color()).toRGBA() ;
-        m_data.dirLights[index].power_specular[0] = light -> power() ;
-        m_data.dirLights[index].power_specular[1] = light -> generateSpecular() ;
+        m_data.dirLights[index].color_power = (light -> color()).toRGBA() ;
+        m_data.dirLights[index].color_power[3] = light -> power() ;
+        m_data.dirLights[index].specular[0] = light -> generateSpecular() ;
         light -> clearChange() ;
         askForAnUpdate() ;
     }

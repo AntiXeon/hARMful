@@ -23,7 +23,6 @@ vec3 ComputeDirectionalLight(
     vec3 viewDirection,
     vec3 normal
 ) {
-    vec3 returnedLighting = vec3(0.f) ;
     float specularValue = texture(material.specular, inTexCoord).r ;
 
     vec3 lightDirection = -light.direction ;
@@ -37,7 +36,7 @@ vec3 ComputeDirectionalLight(
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
     vec3 lightPowerColor = light.color * light.power ;
-    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    vec3 returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;
@@ -48,7 +47,6 @@ vec3 ComputePointLight(
     vec3 viewDirection,
     vec3 normal
 ) {
-    vec3 returnedLighting = vec3(0.f) ;
     float specularValue = texture(material.specular, inTexCoord).r ;
 
     vec3 lightDirection = normalize(light.position - inVertexWorldPosition) ;
@@ -69,7 +67,7 @@ vec3 ComputePointLight(
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
 
     vec3 lightPowerColor = light.color * lightIntensity ;
-    returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
+    vec3 returnedLighting = (texture(material.diffuse, inTexCoord).rgb * lambertian * lightPowerColor) ;
     returnedLighting += (specularValue * specularColor * lightPowerColor) ;
 
     return returnedLighting ;

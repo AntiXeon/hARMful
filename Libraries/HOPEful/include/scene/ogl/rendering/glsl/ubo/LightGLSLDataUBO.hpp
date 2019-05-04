@@ -25,8 +25,8 @@ namespace Hope::GL {
              */
             struct DirectionalLightData {
                 std::array<float, Mind::Vector4f::AmountCoords> direction ;
-                std::array<float, Mind::Vector4f::AmountCoords> color ;
-                std::array<float, Mind::Vector4f::AmountCoords> power_specular ;
+                std::array<float, Mind::Vector4f::AmountCoords> color_power ;
+                std::array<float, Mind::Vector4f::AmountCoords> specular ;
             } ;
 
             /**
