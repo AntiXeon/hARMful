@@ -3,6 +3,8 @@
 
 More informations on the project can be found [here](https://dcarlus.github.io/hARMful/).
 
+![hARMful screenshot](./Documentation/images/hARMful.jpg)
+
 ## Features
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected:
 - Architecture based on the [Entity-Component-System pattern](https://en.wikipedia.org/wiki/Entity_component_system)

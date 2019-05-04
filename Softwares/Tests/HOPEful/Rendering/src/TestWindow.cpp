@@ -19,7 +19,7 @@ TestWindow::TestWindow()
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
     Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
-    Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Test.fbx") ;
+    Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Mesh_Set.fbx") ;
     meshTreeEntity -> addComponent(meshTreeComponent) ;
 
 /*
@@ -103,7 +103,7 @@ TestWindow::TestWindow()
         Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
         pointLightComponent -> setColor(lightColor) ;
         pointLightComponent -> setPower(5.f) ;
-        pointLightComponent -> setSpecularGenerated(false) ;
+        pointLightComponent -> setSpecularGenerated(true) ;
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
@@ -125,7 +125,7 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    float radius = 150.f ;
+    float radius = 100.f ;
     float camX = sin(glfwGetTime() / 2.f) * radius ;
     float camZ = cos(glfwGetTime() / 2.f) * radius ;
 
