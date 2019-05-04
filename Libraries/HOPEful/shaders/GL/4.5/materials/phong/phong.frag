@@ -25,7 +25,9 @@ vec3 ComputeDirectionalLight(
 ) {
     vec3 returnedLighting = vec3(0.f) ;
 
-    vec3 lightDirection = normalize(-light.direction) ;
+    vec3 lightDirection = -light.direction ;
+    lightDirection = normalize((viewMatrix * vec4(lightDirection, 0.f))).xyz ;
+
     float lambertian = max(dot(lightDirection, normal), 0.0) ;
     vec3 reflectDirection = reflect(-lightDirection, normal) ;
 

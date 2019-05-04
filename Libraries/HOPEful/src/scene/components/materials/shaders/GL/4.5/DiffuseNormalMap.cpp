@@ -66,8 +66,8 @@ vec3 ComputeDirectionalLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec4 lightWorldDirection = normalMatrix * vec4(light.direction,1) ;\n\
-    vec3 lightDirection = normalize(-vec3(lightWorldDirection)) ;\n\
+    vec3 lightDirection = -light.direction ;\n\
+    lightDirection = normalize((viewMatrix * vec4(lightDirection, 0.f))).xyz ;\n\
     float lambertian = max(dot(lightDirection, normal), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
 \n\

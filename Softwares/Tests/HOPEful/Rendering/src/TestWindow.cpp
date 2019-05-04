@@ -39,20 +39,20 @@ TestWindow::TestWindow()
     (suzanneEntity -> transform()).setRotation(Mind::Quaternion(-30.f, 0.f, 0.f)) ;
 */
 
-/*
+
     // Create a directional light.
 	{
 		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
 		Hope::DirectionalLightComponent* dirLightComponent = new Hope::DirectionalLightComponent() ;
-		dirLightComponent -> setDirection(Mind::Vector3f(0.f, -1.f, -1.f)) ;
+		dirLightComponent -> setDirection(Mind::Vector3f(0.3f, -1.f, 0.7f)) ;
 		dirLightComponent -> setColor(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(false) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
 	}
-*/
 
 
+/*
 	// Point light
     {
         Hope::Color lightColor(1.f, 0.7f, 0.3f) ;
@@ -108,7 +108,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
     }
-
+*/
 
     /** FRAME GRAPH **/
     // Set the viewport.

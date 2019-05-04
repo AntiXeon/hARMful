@@ -6,7 +6,6 @@ std::string PhongVertexCode =
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
-layout(location = 3) in vec3 tangent ;\n\
 \n\
 layout(location = 0) out vec3 outVertexWorldPosition ;\n\
 layout(location = 1) out vec3 outNormal ;\n\
@@ -55,7 +54,9 @@ vec3 ComputeDirectionalLight(\n\
 ) {\n\
     vec3 returnedLighting = vec3(0.f) ;\n\
 \n\
-    vec3 lightDirection = normalize(-light.direction) ;\n\
+    vec3 lightDirection = -light.direction ;\n\
+    lightDirection = normalize((viewMatrix * vec4(lightDirection, 0.f))).xyz ;\n\
+\n\
     float lambertian = max(dot(lightDirection, normal), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, normal) ;\n\
 \n\
