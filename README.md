@@ -11,8 +11,9 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Texture material [[Demo](https://www.youtube.com/watch?v=cw8zRw-JgJs)]
 - Normal and specular mapping [[Demo](https://www.youtube.com/watch?v=lG_GHQbIHv0)]
 - Alpha channel supporting materials (✗)
+- Order-independent transparency (✗)
 - Physics based rendering materials (✗)
-- Shadow mapping (✗)
+- Cascade shadow mapping (✗)
 - Forward rendering (✓)
 - Support of deferred rendering (✗)
 - Post-rendering effects:
