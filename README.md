@@ -13,6 +13,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Alpha channel supporting materials (✗)
 - Physics based rendering materials (✗)
 - Shadow mapping (✗)
+- Forward rendering (✓)
 - Support of deferred rendering (✗)
 - Post-rendering effects:
     - Anti-aliasing (✗)
