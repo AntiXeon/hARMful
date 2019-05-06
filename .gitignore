@@ -6,9 +6,6 @@
 # @License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
 
 
-./Libraries/HOPEful
-
-
 # Prerequisites
 *.d
 
@@ -55,3 +52,7 @@ CMakeScripts
 Makefile
 cmake_install.cmake
 install_manifest.txt
+
+# Generated files
+./Libraries/HOPEful/src/scene/components/materials/shaders/
+./Libraries/HOPEful/include/scene/components/materials/shaders/
