@@ -27,6 +27,33 @@ namespace Hope::GL {
         const GLdouble zNear,
         const GLdouble zFar
     ) ;
+
+    /**
+     * Compute the orthographic matrix.
+     * Replaces the deprecated glOrtho() function.
+     * @param   result  Projection matrix as output
+     * @param   top     Specify the coordinates for the top horizontal clipping
+     *                  plane.
+     * @param   bottom  Specify the coordinates for the bottom horizontal
+     *                  clipping plane.
+     * @param   left    Specify the coordinates for the left vertical clipping
+     *                  plane.
+     * @param   right   Specify the coordinates for the right vertical clipping
+     *                  plane.
+     * @param   zNear   Specifies the distance from the viewer to the near
+     *                  clipping plane (always positive).
+     * @param   zFar    Specifies the distance from the viewer to the far
+     *                  clipping plane (always positive).
+     */
+    void GLOrthographic(
+        Mind::Matrix4x4f& result,
+        const GLdouble left,
+        const GLdouble right,
+        const GLdouble bottom,
+        const GLdouble top,
+        const GLdouble zNear,
+        const GLdouble zFar
+    ) ;
 }
 
 #endif

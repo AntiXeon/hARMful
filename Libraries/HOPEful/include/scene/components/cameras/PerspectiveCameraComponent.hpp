@@ -3,11 +3,14 @@
 
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <scene/common/Color.hpp>
+#include <HopeAPI.hpp>
+
+#ifdef OGL
+    #include <scene/ogl/Utils.hpp>
+    namespace API = Hope::GL ;
+#endif
 
 namespace Hope {
-    class ISceneGraphVisitor ;
-
     /**
      * Component that represents a camera, a point of view of the 3D world.
      * This is a perspective camera.
@@ -19,31 +22,10 @@ namespace Hope {
              */
             static const ComponentType ClassType = CameraComponentType ;
 
-        private:
             /**
-             * Up vector of the world.
+             * Field of view of the camera.
              */
-            static const Mind::Vector3f WorldUpVector ;
-
-            /**
-             * Point in the 3D space the camera is targetting.
-             */
-            Mind::Vector3f m_target ;
-
-            /**
-             * Direction of the camera view.
-             */
-            Mind::Vector3f m_viewDirection ;
-
-            /**
-             * Right axis of the camera.
-             */
-            Mind::Vector3f m_rightAxis ;
-
-            /**
-             * up vector of the camera.
-             */
-            Mind::Vector3f m_up ;
+            float m_fov ;
 
         public:
             /**
@@ -52,59 +34,43 @@ namespace Hope {
             PerspectiveCameraComponent() ;
 
             /**
-             * Update the camera.
+             * Set the field of view of the camera.
              */
-            void update() override {
-                lookAt(m_target) ;
+            void setFOV(const float fov) {
+                if (m_fov != fov) {
+                    notifyProjectionChange() ;
+                    m_fov = fov ;
+                }
             }
 
             /**
-             * Set the up vector of the camera. The up vector is normalized.
-             * Default is Y-up.
+             * Get the field of view of the camera.
              */
-            void setUpVector(const Mind::Vector3f& up) ;
-
-            /**
-             * Generate the view matrix.
-             * @param   target      Center of the camera view.
-             */
-            void lookAt(const Mind::Vector3f& target) ;
-
-            /**
-             * Get the target of the camera.
-             */
-            const Mind::Vector3f& target() const {
-                return m_target ;
-            }
-
-            /**
-             * Get the view direction of the camera.
-             */
-            const Mind::Vector3f& viewDirection() const {
-                return m_viewDirection ;
-            }
-
-            /**
-             * Get the right axis of the camera.
-             */
-            const Mind::Vector3f& rightAxis() const {
-                return m_rightAxis ;
-            }
-
-            /**
-             * Get the up vector of the camera.
-             */
-            const Mind::Vector3f& up() const {
-                return m_up ;
+            float fov() const {
+                return m_fov ;
             }
 
         protected:
             /**
-             * Action to performed when the component is attached to an
-             * entity.
-             * @param   entity  Entity to attach the component to.
+             * Compute the projection matrix.
+             * @param   projection  Projection matrix to get back.
+             * @param   aspectRatio Aspect ratio of the window in which the
+             *                      camera is used to render the scene.
+             * @return  The computed projection, same result as the given
+             *          parameter value for a convenient use.
              */
-            void onAttach(Entity* entity) override ;
+            void computeProjectionMatrix(
+                Mind::Matrix4x4f& projection,
+                const float aspectRatio
+            ) const {
+                API::GLPerspective(
+                    projection,
+                    Mind::Math::toRadians(m_fov),
+                    aspectRatio,
+                    nearPlaneDistance(),
+                    farPlaneDistance()
+                ) ;
+            }
     } ;
 }
 

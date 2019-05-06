@@ -56,7 +56,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     camera -> update() ;
 
     // Set up the clear color.
-    Color clearColor = camera -> clearColor() ;
+    const Color& clearColor = camera -> clearColor() ;
     glClearColor(
         clearColor.red(),
         clearColor.green(),
@@ -66,21 +66,10 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
     // Update the projection matrix if needed.
     Mind::Matrix4x4f projectionMatrix ;
-    float aspectRatio = 0.f ;
-    if (m_hasWindowChanged) {
+    if (m_hasWindowChanged || camera -> projectionChanged()) {
         // Set up the projection matrix.
-        const float CameraFOV = 45.f ;
-        const float NearPlaneDistance = 0.1f ;
-        const float FarPlaneDistance = 1000.f ;
-        aspectRatio = m_windowSize.width() / m_windowSize.height() ;
-
-        GLPerspective(
-            projectionMatrix,
-            Mind::Math::toRadians(CameraFOV),
-            aspectRatio,
-            NearPlaneDistance,
-            FarPlaneDistance
-        ) ;
+        float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+        camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
 
         Mind::Matrix4x4f inverseProjectionMatrix ;
         projectionMatrix.inverse(inverseProjectionMatrix) ;
