@@ -4,8 +4,9 @@
 #include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/LightsDataBlock.hpp>
-#include <scene/components/materials/shaders/GL/4.5/DiffuseNormalSpecularMap.hpp>
+#include <scene/components/materials/shaders/GL/4.5/FunctionsLightCompute.hpp>
+#include <scene/components/materials/shaders/GL/4.5/FunctionsUtility.hpp>
+#include <scene/components/materials/shaders/GL/4.5/MaterialDiffuseNormalSpecularMap.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -81,15 +82,16 @@ void DiffuseNormalSpecularMaterialComponent::setupRendering() {
     shaderProgram -> addVertexShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addVertexShaderCode(ModelDataBlockVertexCode) ;
-    shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapVertexCode) ;
+    shaderProgram -> addVertexShaderCode(MaterialDiffuseNormalSpecularMapVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(LightsDataBlockFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(MaterialDiffuseNormalSpecularMapFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

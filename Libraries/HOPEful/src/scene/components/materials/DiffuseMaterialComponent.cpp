@@ -4,8 +4,9 @@
 #include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
 #include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/LightsDataBlock.hpp>
-#include <scene/components/materials/shaders/GL/4.5/DiffuseMap.hpp>
+#include <scene/components/materials/shaders/GL/4.5/FunctionsLightCompute.hpp>
+#include <scene/components/materials/shaders/GL/4.5/FunctionsUtility.hpp>
+#include <scene/components/materials/shaders/GL/4.5/MaterialDiffuseMap.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -63,15 +64,16 @@ void DiffuseMaterialComponent::setupRendering() {
     shaderProgram -> addVertexShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addVertexShaderCode(ModelDataBlockVertexCode) ;
-    shaderProgram -> addVertexShaderCode(DiffuseMapVertexCode) ;
+    shaderProgram -> addVertexShaderCode(MaterialDiffuseMapVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(BlockBindingsFragmentCode) ;
     shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(ModelDataBlockVertexCode) ;
     shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(LightsDataBlockFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(DiffuseMapFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(MaterialDiffuseMapFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;
