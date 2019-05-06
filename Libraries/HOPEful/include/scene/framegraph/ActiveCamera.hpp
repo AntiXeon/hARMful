@@ -2,7 +2,7 @@
 #define __HOPE__GL_ACTIVE_CAMERA__
 
 #include <scene/FrameGraphNode.hpp>
-#include <scene/components/CameraComponent.hpp>
+#include <scene/components/cameras/CameraComponent.hpp>
 
 namespace Hope {
     /**

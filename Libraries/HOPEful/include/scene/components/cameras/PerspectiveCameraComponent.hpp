@@ -1,9 +1,8 @@
-#ifndef __HOPE__CAMERA_COMPONENT__
-#define __HOPE__CAMERA_COMPONENT__
+#ifndef __HOPE__PERSPECTIVE_CAMERA_COMPONENT__
+#define __HOPE__PERSPECTIVE_CAMERA_COMPONENT__
 
-#include <scene/components/Component.hpp>
+#include <scene/components/cameras/CameraComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <matrices/Matrix4x4f.hpp>
 #include <scene/common/Color.hpp>
 
 namespace Hope {
@@ -13,7 +12,7 @@ namespace Hope {
      * Component that represents a camera, a point of view of the 3D world.
      * This is a perspective camera.
      */
-    class CameraComponent final : public Component {
+    class PerspectiveCameraComponent final : public CameraComponent {
         public:
             /**
              * Component class type.
@@ -25,11 +24,6 @@ namespace Hope {
              * Up vector of the world.
              */
             static const Mind::Vector3f WorldUpVector ;
-
-            /**
-             * Default clear color.
-             */
-            static const Color DefaultClearColor ;
 
             /**
              * Point in the 3D space the camera is targetting.
@@ -51,51 +45,18 @@ namespace Hope {
              */
             Mind::Vector3f m_up ;
 
-            /**
-             * View matrix.
-             */
-            Mind::Matrix4x4f m_viewMatrix ;
-
-            /**
-             * Clear color when using the current camera.
-             */
-            Color m_clearColor ;
-
         public:
             /**
-             * Create a new CameraComponent.
+             * Create a new PerspectiveCameraComponent.
              */
-            CameraComponent() ;
+            PerspectiveCameraComponent() ;
 
             /**
-             * To know if the component can be shared by several entities.
-             * @return  false, the CameraComponent cannot be shared.
+             * Update the camera.
              */
-            bool isShareable() const override {
-                return false ;
+            void update() override {
+                lookAt(m_target) ;
             }
-
-            /**
-             * To know if the component can be removed from its entity(-ies).
-             * @return  true, the component can be removed.
-             */
-            bool isRemovable() const override {
-                return true ;
-            }
-
-            /**
-             * To know if several components of the current type can be beared
-             * by a single entity.
-             * @return  false, an entity can only bear one CameraComponent.
-             */
-            bool isStackable() const override {
-                return false ;
-            }
-
-            /**
-             * Set the clear color of the camera.
-             */
-            void setClearColor(const Color& color) ;
 
             /**
              * Set the up vector of the camera. The up vector is normalized.
@@ -112,32 +73,30 @@ namespace Hope {
             /**
              * Get the target of the camera.
              */
-            Mind::Vector3f target() ;
+            const Mind::Vector3f& target() const {
+                return m_target ;
+            }
 
             /**
              * Get the view direction of the camera.
              */
-            Mind::Vector3f viewDirection() ;
+            const Mind::Vector3f& viewDirection() const {
+                return m_viewDirection ;
+            }
 
             /**
              * Get the right axis of the camera.
              */
-            Mind::Vector3f rightAxis() ;
+            const Mind::Vector3f& rightAxis() const {
+                return m_rightAxis ;
+            }
 
             /**
              * Get the up vector of the camera.
              */
-            Mind::Vector3f up() ;
-
-            /**
-             * Get the view matrix.
-             */
-            Mind::Matrix4x4f viewMatrix() ;
-
-            /**
-             * Get the clear color of the camera.
-             */
-            Color clearColor() ;
+            const Mind::Vector3f& up() const {
+                return m_up ;
+            }
 
         protected:
             /**

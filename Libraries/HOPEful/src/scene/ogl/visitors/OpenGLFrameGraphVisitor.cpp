@@ -53,7 +53,7 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     Hope::CameraComponent* camera = node -> camera() ;
-    camera -> lookAt(camera -> target()) ;
+    camera -> update() ;
 
     // Set up the clear color.
     Color clearColor = camera -> clearColor() ;
@@ -92,9 +92,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     }
 
     // Update the model view matrix.
-    Mind::Matrix4x4f viewMatrix = camera -> viewMatrix() ;
-    float viewMatrixData[Mind::Matrix4x4f::MatrixSize] ;
-    viewMatrix.data(viewMatrixData) ;
+    const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;
 
     Hope::Entity* cameraEntity = camera -> firstEntity() ;
     Hope::Transform& cameraTransform = cameraEntity -> transform() ;
