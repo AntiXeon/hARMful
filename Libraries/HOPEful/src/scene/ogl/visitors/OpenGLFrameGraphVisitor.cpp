@@ -94,6 +94,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
     // Update the required data.
     m_renderCache.setViewMatrix(viewMatrix) ;
+    (m_ubos -> base()).setFarPlaneDistance(camera -> farPlaneDistance()) ;
     (m_ubos -> base()).setTime(glfwGetTime()) ;
     (m_ubos -> base()).setEyePosition(eyeView) ;
     (m_ubos -> base()).setViewMatrix(viewMatrix) ;

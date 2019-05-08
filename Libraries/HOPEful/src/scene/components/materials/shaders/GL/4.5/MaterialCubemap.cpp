@@ -10,8 +10,7 @@ layout(location = 0) out vec3 outTexCoord ;\n\
 void main() {\n\
     outTexCoord = position ;\n\
 \n\
-    const float FarPlaneDistance = 1000.f ;\n\
-    vec4 position4D = viewProjectionMatrix * vec4(position * FarPlaneDistance, 1.f) ;\n\
+    vec4 position4D = viewProjectionMatrix * vec4(position * farPlaneDistance, 1.f) ;\n\
     gl_Position = position4D.xyww ;\n\
 }\n\
 " ;

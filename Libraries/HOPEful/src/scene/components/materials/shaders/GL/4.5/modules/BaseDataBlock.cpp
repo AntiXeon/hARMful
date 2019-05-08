@@ -13,9 +13,10 @@ layout (std140, binding = BASE_DATA_UBO_BINDING_INDEX) uniform BaseData\n\
     mat4 inverseViewProjectionMatrix ;\n\
     mat3 viewportMatrix ;\n\
     mat3 inverseViewportMatrix ;\n\
+    vec3 eyePosition ;\n\
+    float farPlaneDistance ;\n\
     float aspectRatio ;\n\
     float time ;\n\
-    vec3 eyePosition ;\n\
 } ;\n\
 " ;
 

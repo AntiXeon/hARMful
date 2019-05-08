@@ -7,6 +7,7 @@
 #include <matrices/Matrix3x3f.hpp>
 #include <matrices/Matrix4x4f.hpp>
 #include <array>
+#include <algorithm>
 
 namespace Hope::GL {
     /**
@@ -25,11 +26,10 @@ namespace Hope::GL {
                 std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewMatrix ;
                 std::array<float, Mind::Matrix4x4f::MatrixSize> inverseProjectionMatrix ;
                 std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewProjectionMatrix ;
-                std::array<float, Mind::Matrix4x4f::MatrixSize> viewportMatrix ;
-                std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewportMatrix ;
-                float aspectRatio ;
-                float time ;
-                std::array<float, Mind::Vector3f::AmountCoords> eyePosition ;
+                std::array<float, Mind::Vector4f::AmountCoords * 3> viewportMatrix ;
+                std::array<float, Mind::Vector4f::AmountCoords * 3> inverseViewportMatrix ;
+                std::array<float, Mind::Vector4f::AmountCoords> eye_far ;
+                std::array<float, Mind::Vector4f::AmountCoords> aspect_time ;
             } m_data ;
 
         public:
@@ -90,8 +90,12 @@ namespace Hope::GL {
              * Set the viewport matrix value.
              */
             void setViewportMatrix(const Mind::Matrix3x3f& mat) {
-                Mind::Matrix4x4f tmp(mat) ;
-                m_data.viewportMatrix = tmp.toArray() ;
+                static const uint32_t EndOffset = Mind::Matrix3x3f::MatrixSize - 1 ;
+                std::copy(
+                    m_data.viewportMatrix.begin(),
+                    m_data.viewportMatrix.begin() + EndOffset,
+                    mat.toArray().begin()
+                ) ;
                 askForAnUpdate() ;
             }
 
@@ -99,24 +103,12 @@ namespace Hope::GL {
              * Set the inverse viewport matrix value.
              */
             void setInverseViewportMatrix(const Mind::Matrix3x3f& mat) {
-                Mind::Matrix4x4f tmp(mat) ;
-                m_data.inverseViewportMatrix = tmp.toArray() ;
-                askForAnUpdate() ;
-            }
-
-            /**
-             * Set the aspect ratio value.
-             */
-            void setAspectRatio(const float value) {
-                m_data.aspectRatio = value ;
-                askForAnUpdate() ;
-            }
-
-            /**
-             * Set the time value.
-             */
-            void setTime(const float value) {
-                m_data.time = value ;
+                static const uint32_t EndOffset = Mind::Matrix3x3f::MatrixSize - 1 ;
+                std::copy(
+                    m_data.inverseViewportMatrix.begin(),
+                    m_data.inverseViewportMatrix.begin() + EndOffset,
+                    mat.toArray().begin()
+                ) ;
                 askForAnUpdate() ;
             }
 
@@ -124,7 +116,39 @@ namespace Hope::GL {
              * Set the eye position value.
              */
             void setEyePosition(const Mind::Vector3f& vec) {
-                m_data.eyePosition = vec.toArray() ;
+                static const uint32_t EndOffset = Mind::Vector3f::AmountCoords - 1 ;
+                std::copy(
+                    m_data.eye_far.begin(),
+                    m_data.eye_far.begin() + EndOffset,
+                    vec.toArray().begin()
+                ) ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the far plane distance value.
+             */
+            void setFarPlaneDistance(const float value) {
+                static const uint32_t Offset = 3 ;
+                m_data.eye_far[Offset] = value ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the aspect ratio value.
+             */
+            void setAspectRatio(const float value) {
+                static const uint32_t Offset = 0 ;
+                m_data.aspect_time[Offset] = value ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the time value.
+             */
+            void setTime(const float value) {
+                static const uint32_t Offset = 1 ;
+                m_data.aspect_time[Offset] = value ;
                 askForAnUpdate() ;
             }
 
