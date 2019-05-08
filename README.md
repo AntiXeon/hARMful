@@ -26,6 +26,7 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Mesh instancing (✗)
 - Frustum culling (✗)
 - Animations (✗)
+- Cube maps (✓)
 - Input management (keyboard, mouse, joypad) (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 - ...
