@@ -3,7 +3,7 @@
 using namespace Hope ;
 
 MeshGeometryComponent::MeshGeometryComponent(API::MeshGeometry* geometry)
-    : Component(ClassType),
+    : GeometryComponent(),
       m_geometry(geometry) {}
 
 MeshGeometryComponent::~MeshGeometryComponent() {

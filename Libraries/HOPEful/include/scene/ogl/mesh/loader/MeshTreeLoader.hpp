@@ -26,7 +26,7 @@ namespace Hope::GL {
             /**
              * Data used to build the mesh parts.
              */
-            struct MeshPartData {
+            struct GeometryPartData {
                 // Index of the material in the entity bearing the mesh and its
                 // mesh parts.
                 uint32_t material ;

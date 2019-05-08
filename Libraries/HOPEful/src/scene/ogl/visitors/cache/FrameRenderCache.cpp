@@ -28,8 +28,8 @@ void FrameRenderCache::cacheEntity(
     }
 
     // Get the mesh info if available.
-    if (entity -> amountComponents(MeshGeometryComponentType) > 0) {
-        cacheMesh(entity, worldTransformation) ;
+    if (entity -> amountComponents(GeometryComponentType) > 0) {
+        cacheGeometry(entity, worldTransformation) ;
     }
 }
 
@@ -58,26 +58,31 @@ void FrameRenderCache::cacheLight(
     }
 }
 
-void FrameRenderCache::cacheMesh(
+void FrameRenderCache::cacheGeometry(
     const Entity* entity,
     const Mind::Matrix4x4f& worldTransformation
 ) {
     // Group mesh parts by material.
-    MeshData entityMeshData ;
-    entityMeshData.mesh = entity -> component<MeshGeometryComponent>() ;
-    entityMeshData.worldTransformation = worldTransformation ;
-    entityMeshData.sharedData = &m_sharedData ;
+    GeometryData entityGeometryData ;
+    entityGeometryData.mesh = entity -> component<GeometryComponent>() ;
+    entityGeometryData.worldTransformation = worldTransformation ;
+    entityGeometryData.sharedData = &m_sharedData ;
 
-    const MeshGeometry* geometry = entityMeshData.mesh -> geometry() ;
+    const Geometry* geometry = entityGeometryData.mesh -> geometry() ;
     size_t amountParts = geometry -> amountParts() ;
 
     for (size_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
-        MeshPart& part = const_cast<MeshPart&>(geometry -> part(partIndex)) ;
+        GeometryPart& part = const_cast<GeometryPart&>(geometry -> part(partIndex)) ;
 
         uint32_t materialID = part.materialID() ;
         MaterialComponent* material = entity -> component<MaterialComponent>(materialID) ;
-        entityMeshData.parts[material].push_back(part) ;
+
+        if (!material) {
+            material = &m_defaultMaterial ;
+        }
+
+        entityGeometryData.parts[material].push_back(partIndex) ;
     }
 
-    m_meshes.push_back(entityMeshData) ;
+    m_meshes.push_back(entityGeometryData) ;
 }

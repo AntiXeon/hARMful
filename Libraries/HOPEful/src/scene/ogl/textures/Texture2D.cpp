@@ -1,17 +1,17 @@
 #include <scene/ogl/textures/Texture2D.hpp>
-#include <files/images/JPEGTurboFile.hpp>
-#include <files/images/PNGFile.hpp>
+#include <scene/ogl/textures/TextureLoader.hpp>
 #include <utils/LogSystem.hpp>
-#include <utils/StringExt.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
 
 Texture2D::Texture2D(const std::string& path) {
+    static const bool FlipVerticalAxis = true ;
+
     glGenTextures(1, &m_textureID) ;
     glBindTexture(GL_TEXTURE_2D, m_textureID) ;
-    loadFromFile(path) ;
+    TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
     setFiltering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR) ;
     glGenerateMipmap(GL_TEXTURE_2D) ;
 }
@@ -64,104 +64,4 @@ void Texture2D::setFiltering(
 ) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, downscaling) ;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, upscaling) ;
-}
-
-void Texture2D::loadFromFile(const std::string& path) {
-    Spite::RawImage rawData ;
-
-    // Test extension to load the right format.
-    ImageFileType fileType = type(path) ;
-    switch(fileType) {
-        case ImageFileType::JPEG:
-            loadJPEG(path, rawData) ;
-            break ;
-
-        case ImageFileType::PNG:
-            loadPNG(path, rawData) ;
-            break ;
-
-        default:
-            {
-                // Write the error in the log.
-                auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-                auto logSharedPtr = logWeakPtr.lock() ;
-                if (logSharedPtr) {
-                    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-                    logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
-                }
-            }
-            return ;
-    }
-
-    // Convert pictures to OpenGL structures.
-    unsigned char* pixelData = nullptr ;
-    unsigned int pixelDataSize = 0 ;
-    rawData.data(pixelData, pixelDataSize) ;
-
-    // Store the texture on GPU.
-    const GLint TextureLoD = 0 ;
-    const GLint Border = 0 ;
-
-    GLenum colorFormat = convertColorFormat(rawData.format()) ;
-    glTexImage2D(
-        GL_TEXTURE_2D,
-      	TextureLoD,
-      	colorFormat,
-      	rawData.width(),
-      	rawData.height(),
-      	Border,
-      	colorFormat,
-      	GL_UNSIGNED_BYTE,
-      	pixelData
-    ) ;
-}
-
-void Texture2D::loadJPEG(
-    const std::string& path,
-    Spite::RawImage& rawData
-) {
-    const bool LoadInBottomUpOrder = true ;
-    rawData.setFormat(Spite::ColorFormat::RGB) ;
-    Spite::JPEGTurboFile pic(path, LoadInBottomUpOrder) ;
-    pic.open(Spite::File::Open_ReadOnly) ;
-    pic.load(&rawData) ;
-}
-
-void Texture2D::loadPNG(
-    const std::string& path,
-    Spite::RawImage& rawData
-) {
-    rawData.setFormat(Spite::ColorFormat::RGBA) ;
-    Spite::PNGFile pic(path) ;
-    pic.open(Spite::File::Open_ReadOnly) ;
-    pic.loadInBottomUpOrder(&rawData) ;
-}
-
-Texture2D::ImageFileType Texture2D::type(const std::string& path) {
-    std::vector<std::string> results = Doom::StringExt::Split(path, ".") ;
-
-    if (results.back() == "jpeg" || results.back() == "jpg") {
-        return ImageFileType::JPEG ;
-    }
-    else if (results.back() == "png") {
-        return ImageFileType::PNG ;
-    }
-    else {
-        return ImageFileType::Unknown ;
-    }
-}
-
-GLenum Texture2D::convertColorFormat(const Spite::ColorFormat::ID format) {
-    switch(format) {
-        case Spite::ColorFormat::RGB:
-            return GL_RGB ;
-        case Spite::ColorFormat::BGR:
-            return GL_BGR ;
-        case Spite::ColorFormat::RGBA:
-            return GL_RGBA ;
-        case Spite::ColorFormat::BGRA:
-            return GL_BGRA ;
-        default:
-            return INVALID_VALUE ;
-    }
 }

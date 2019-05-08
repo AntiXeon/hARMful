@@ -93,6 +93,10 @@ namespace Hope {
                 const ComponentType type,
                 const uint32_t index = 0
             ) const {
+                if (m_components[type].empty()) {
+                    return nullptr ;
+                }
+
                 return m_components[type][index] ;
             }
 
@@ -105,6 +109,10 @@ namespace Hope {
              */
             template<class T>
             T* component(const uint32_t index = 0) const {
+                if (m_components[T::ClassType].empty()) {
+                    return nullptr ;
+                }
+
                 return static_cast<T*>(m_components[T::ClassType][index]) ;
             }
 

@@ -1,7 +1,7 @@
-#ifndef __HOPE__HL_MESH_GEOMETRY_COMPONENT__
-#define __HOPE__HL_MESH_GEOMETRY_COMPONENT__
+#ifndef __HOPE__MESH_GEOMETRY_COMPONENT__
+#define __HOPE__MESH_GEOMETRY_COMPONENT__
 
-#include <scene/components/Component.hpp>
+#include <scene/components/mesh/GeometryComponent.hpp>
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -15,12 +15,12 @@ namespace Hope {
     /**
      * Component to render a 3D object.
      */
-    class MeshGeometryComponent final : public Component {
+    class MeshGeometryComponent final : public GeometryComponent {
         public:
             /**
              * Component class type.
              */
-            static const ComponentType ClassType = MeshGeometryComponentType ;
+            static const ComponentType ClassType = GeometryComponentType ;
 
         private:
             /**
@@ -42,35 +42,15 @@ namespace Hope {
             /**
              * Get the geometry.
              */
-            const API::MeshGeometry* geometry() const {
+            const API::Geometry* geometry() const override {
                 return m_geometry ;
             }
 
-            /**
-             * To know if the component can be shared by several entities.
-             * @return  true, the MeshGeometryComponent can be shared.
-             */
-            bool isShareable() const override {
-                return true ;
-            }
-
-            /**
-             * To know if the component can be removed from its entity(-ies).
-             * @return  true, the component can be removed.
-             */
-            bool isRemovable() const override {
-                return false ;
-            }
-
-            /**
-             * To know if several components of the current type can be beared
-             * by a single entity.
-             * @return  false, an entity cannot bear several
-             *          MeshGeometryComponent.
-             */
-            bool isStackable() const override {
-                return false ;
-            }
+            // Copy/move operations.
+            MeshGeometryComponent(const MeshGeometryComponent& copied) = default ;
+            MeshGeometryComponent(MeshGeometryComponent&& moved) = default ;
+            MeshGeometryComponent& operator=(const MeshGeometryComponent& copied) = default ;
+            MeshGeometryComponent& operator=(MeshGeometryComponent&& moved) = default ;
     } ;
 }
 

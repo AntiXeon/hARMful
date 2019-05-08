@@ -99,7 +99,7 @@ void MeshTreeLoader::loadNodeData(
     vertices.reserve(countMeshVertices(scene, node)) ;
 
     // Store the index of the vertices for each mesh.
-    std::vector<MeshPartData> partData ;
+    std::vector<GeometryPartData> partData ;
     partData.resize(node -> mNumMeshes) ;
 
     size_t indexOffset = 0 ;
@@ -161,7 +161,7 @@ void MeshTreeLoader::loadNodeData(
 
     // Put data into the geometry.
     MeshGeometry* geometry = new MeshGeometry(vertices) ;
-    for (MeshPartData& part : partData) {
+    for (GeometryPartData& part : partData) {
         geometry -> addPart(part.material, part.indices) ;
     }
     geometry -> completed() ;

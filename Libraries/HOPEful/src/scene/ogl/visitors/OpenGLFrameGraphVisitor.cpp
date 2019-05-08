@@ -79,6 +79,10 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
         (m_ubos -> base()).setAspectRatio(aspectRatio) ;
         m_renderCache.setProjectionMatrix(projectionMatrix) ;
     }
+    else {
+        float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
+        camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
+    }
 
     // Update the model view matrix.
     const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;

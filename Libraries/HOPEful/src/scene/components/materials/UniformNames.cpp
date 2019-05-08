@@ -56,4 +56,5 @@ UniformNames::UniformNames() {
     m_names.push_back(MaterialDiffuseUniformName()) ;
     m_names.push_back(MaterialSpecularUniformName()) ;
     m_names.push_back(MaterialShininessUniformName()) ;
+    m_names.push_back(MaterialCubemapUniformName()) ;
 }

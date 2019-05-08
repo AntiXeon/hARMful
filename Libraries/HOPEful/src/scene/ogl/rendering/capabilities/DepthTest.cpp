@@ -1,8 +1,11 @@
 #include <scene/ogl/rendering/capabilities/DepthTest.hpp>
+#include <iostream>
 
 using namespace Hope::GL ;
 
 void DepthTest::apply() {
+    m_depthTestEnabled = glIsEnabled(GL_DEPTH_TEST) ;
+
     enable(GL_DEPTH_TEST) ;
     glGetIntegerv(GL_DEPTH_FUNC, reinterpret_cast<GLint*>(&m_oldFunction)) ;
 
@@ -16,5 +19,7 @@ void DepthTest::remove() {
         glDepthFunc(m_oldFunction) ;
     }
 
-    disable(GL_DEPTH_TEST) ;
+    if (m_depthTestEnabled == GL_FALSE) {
+        disable(GL_DEPTH_TEST) ;
+    }
 }

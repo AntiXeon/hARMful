@@ -1,8 +1,9 @@
 #ifndef __HOPE__FRAME_RENDER_CACHE__
 #define __HOPE__FRAME_RENDER_CACHE__
 
+#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
-#include <scene/ogl/visitors/cache/MeshData.hpp>
+#include <scene/ogl/visitors/cache/GeometryData.hpp>
 #include <scene/ogl/visitors/cache/PointLightData.hpp>
 #include <map>
 #include <set>
@@ -23,6 +24,11 @@ namespace Hope::GL {
     class FrameRenderCache final {
         private:
             /**
+             * Default material.
+             */
+            BlinnPhongMaterialComponent m_defaultMaterial ;
+
+            /**
              * Shared data to render the current frame.
              */
             FrameRenderSharedData m_sharedData ;
@@ -30,7 +36,7 @@ namespace Hope::GL {
             /**
              * Cache of all meshes to render.
              */
-            std::vector<MeshData> m_meshes ;
+            std::vector<GeometryData> m_meshes ;
 
             /**
              * Cache of all directional lights to use for the render.
@@ -91,7 +97,7 @@ namespace Hope::GL {
             /**
              * Get the cache of all meshes to render.
              */
-            std::vector<MeshData>& meshes() {
+            std::vector<GeometryData>& meshes() {
                 return m_meshes ;
             }
 
@@ -121,7 +127,7 @@ namespace Hope::GL {
             /**
              * Put a mesh in cache.
              */
-            void cacheMesh(
+            void cacheGeometry(
                 const Entity* entity,
                 const Mind::Matrix4x4f& worldTransformation
             ) ;

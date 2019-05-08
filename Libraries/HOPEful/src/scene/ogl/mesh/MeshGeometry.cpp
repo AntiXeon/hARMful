@@ -3,7 +3,8 @@
 
 using namespace Hope::GL ;
 
-MeshGeometry::MeshGeometry(const std::vector<float>& vertices) {
+MeshGeometry::MeshGeometry(const std::vector<float>& vertices)
+    : Geometry() {
     glGenVertexArrays(1, &m_vertexArray) ;
 
     glGenBuffers(1, &m_vertexBuffer) ;
@@ -46,7 +47,7 @@ void MeshGeometry::addPart(
 ) {
     uint32_t offset = m_indices.size() ;
     m_parts.push_back(
-        MeshPart(
+        GeometryPart(
             materialID,
             offset,
             indices.size()

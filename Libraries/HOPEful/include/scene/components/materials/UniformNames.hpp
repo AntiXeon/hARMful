@@ -74,6 +74,7 @@ namespace Hope {
             static std::string MaterialDiffuseUniformName() { return "material.diffuse" ; }
             static std::string MaterialSpecularUniformName() { return "material.specular" ; }
             static std::string MaterialShininessUniformName() { return "material.shininess" ; }
+            static std::string MaterialCubemapUniformName() { return "cubemap" ; }
     } ;
 }
 

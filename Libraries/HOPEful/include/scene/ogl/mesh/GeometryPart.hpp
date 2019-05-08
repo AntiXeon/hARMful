@@ -10,9 +10,9 @@ namespace Hope::GL {
     class Vertex ;
 
     /**
-     * A MeshPart is a subpart of a Mesh. A complex Mesh can have several parts.
+     * A GeometryPart is a subpart of a Mesh. A complex Mesh can have several parts.
      */
-    class MeshPart final {
+    class GeometryPart final {
         friend class MeshGeometry ;
 
         private:
@@ -34,9 +34,15 @@ namespace Hope::GL {
 
         public:
             /**
-             * Create a new MeshPart.
+             * Create a new GeometryPart.
+             * Values are not valid!
              */
-             MeshPart(
+            GeometryPart() = default ;
+
+            /**
+             * Create a new GeometryPart.
+             */
+             GeometryPart(
                 uint32_t materialID,
                 uint32_t offset,
                 uint32_t amountIndices

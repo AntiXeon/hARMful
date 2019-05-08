@@ -8,7 +8,6 @@
 #include <memory>
 
 namespace Hope::GL {
-
     /**
      * Represents a shader program execution as a single render pass.
      */

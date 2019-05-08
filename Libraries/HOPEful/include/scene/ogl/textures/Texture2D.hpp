@@ -3,7 +3,6 @@
 
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
-#include <files/images/data/RawImage.hpp>
 #include <GL/glew.h>
 #include <array>
 
@@ -19,15 +18,6 @@ namespace Hope::GL {
             static const int AmountCoordinates = 2 ;
 
         private:
-            /**
-             * Supported image file types.
-             */
-            enum ImageFileType {
-                JPEG,
-                PNG,
-                Unknown
-            } ;
-
             /**
              * ID of the texture on GPU side.
              */
@@ -107,41 +97,6 @@ namespace Hope::GL {
                 GLint downscaling,
                 GLint upscaling
             ) ;
-
-        private:
-            /**
-             * Load the texture from the provided file.
-             * @param   path    Path to the texture file.
-             */
-            void loadFromFile(const std::string& path) ;
-
-            /**
-             * Load a JPEG file.
-             * Pixel data are stored in the raw image data.
-             */
-            void loadJPEG(
-                const std::string& path,
-                Spite::RawImage& rawData
-            ) ;
-
-            /**
-             * Load a PNG file.
-             * Pixel data are stored in the raw image data.
-             */
-            void loadPNG(
-                const std::string& path,
-                Spite::RawImage& rawData
-            ) ;
-
-            /**
-             * Get the type of file.
-             */
-            ImageFileType type(const std::string& path) ;
-
-            /**
-             * Convert the SPITE color format to OpenGL one.
-             */
-            GLenum convertColorFormat(const Spite::ColorFormat::ID format) ;
     } ;
 }
 

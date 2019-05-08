@@ -25,6 +25,11 @@ namespace Hope::GL {
 
          private:
              /**
+              * To know if the depth test is to be enabled.
+              */
+             GLboolean m_depthTestEnabled = GL_TRUE ;
+
+             /**
               * Depth test function to apply.
               */
              DepthFunction m_function = DepthFunction::Less ;

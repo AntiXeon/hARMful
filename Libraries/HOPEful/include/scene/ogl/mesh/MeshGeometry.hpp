@@ -3,14 +3,15 @@
 
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
-#include <scene/ogl/mesh/MeshPart.hpp>
+#include <scene/ogl/mesh/Geometry.hpp>
+#include <scene/ogl/mesh/GeometryPart.hpp>
 #include <GL/glew.h>
 
 namespace Hope::GL {
     /**
      * A MeshGeometry contains the geometry data of a 3D object.
      */
-    class MeshGeometry final {
+    class MeshGeometry final : public Geometry {
         friend class MeshTreeComponent ;
 
         private:
@@ -37,7 +38,7 @@ namespace Hope::GL {
             /**
              * Mesh parts composing the whole mesh.
              */
-            std::vector<MeshPart> m_parts ;
+            std::vector<GeometryPart> m_parts ;
 
         public:
             /**
@@ -66,36 +67,43 @@ namespace Hope::GL {
             /**
              * Bind the mesh geometry for data management, rendering, etc.
              */
-            void bind() const {
+            void bind() const override {
                 glBindVertexArray(m_vertexArray) ;
             }
 
             /**
              * Unbind the mesh geometry after data management, rendering, etc.
              */
-            void unbind() const {
+            void unbind() const override {
                 glBindVertexArray(0) ;
             }
 
             /**
              * Get a part.
              */
-            const MeshPart& part(const uint32_t index) const {
+            const GeometryPart& part(const uint32_t index) const override {
                 return m_parts[index] ;
             }
 
             /**
              * Amount of indices in the total mesh.
              */
-            size_t amountIndices() const {
+            size_t amountIndices() const override {
                 return m_indices.size() ;
             }
 
             /**
              * Get the amount of parts composing the current mesh.
              */
-            size_t amountParts() const {
+            size_t amountParts() const override {
                 return m_parts.size() ;
+            }
+
+            /**
+             * Type of the indice values.
+             */
+            GLenum indiceType() const override {
+                return GL_UNSIGNED_INT ;
             }
 
             // Copy/move operations.
