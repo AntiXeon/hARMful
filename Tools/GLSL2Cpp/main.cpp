@@ -203,7 +203,6 @@ void writeSource(const fs::path& program, const ShaderProgramFiles& files) {
     fs::create_directories(FullDirPath) ;
 
     const string SourceFilename = removeUnderscoreChars(firstUpLetter(program.string())) ;
-    std::cout << "PIKA PIKA " << SourceFilename << std::endl ;
 
     // Open the output file.
     const string FullFilePath = FullDirPath + PathSeparator + SourceFilename + CppSourceExtension ;
