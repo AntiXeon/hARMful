@@ -1,4 +1,4 @@
-#include <scene/ogl/visitors/cache/FrameRenderCache.hpp>
+#include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
 #include <scene/components/materials/AmountLights.hpp>
@@ -8,7 +8,7 @@
 #include <scene/Entity.hpp>
 #include <map>
 
-using namespace Hope::GL ;
+using namespace Hope ;
 
 FrameRenderCache::FrameRenderCache() {
     const size_t EstimatedAmountMeshes = 256 ;
@@ -46,8 +46,7 @@ void FrameRenderCache::cacheLight(
             {
                 PointLightData data = {
                     static_cast<PointLightComponent*>(light),
-                    worldTransformation.extractTranslation(),
-                    &m_sharedData
+                    worldTransformation.extractTranslation()
                 } ;
                 m_pointLights.push_back(data) ;
                 break ;
@@ -66,13 +65,12 @@ void FrameRenderCache::cacheGeometry(
     GeometryData entityGeometryData ;
     entityGeometryData.mesh = entity -> component<GeometryComponent>() ;
     entityGeometryData.worldTransformation = worldTransformation ;
-    entityGeometryData.sharedData = &m_sharedData ;
 
-    const Geometry* geometry = entityGeometryData.mesh -> geometry() ;
+    const API::Geometry* geometry = entityGeometryData.mesh -> geometry() ;
     size_t amountParts = geometry -> amountParts() ;
 
     for (size_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
-        GeometryPart& part = const_cast<GeometryPart&>(geometry -> part(partIndex)) ;
+        API::GeometryPart& part = const_cast<API::GeometryPart&>(geometry -> part(partIndex)) ;
 
         uint32_t materialID = part.materialID() ;
         MaterialComponent* material = entity -> component<MaterialComponent>(materialID) ;

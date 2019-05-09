@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_FRUSTUM_CULLING__
-#define __HOPE__GL_FRUSTUM_CULLING__
+#ifndef __HOPE__FRUSTUM_CULLING__
+#define __HOPE__FRUSTUM_CULLING__
 
 #include <scene/FrameGraphNode.hpp>
 

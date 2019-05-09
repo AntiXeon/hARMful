@@ -39,7 +39,7 @@ namespace Hope {
              * Check if all the conditions are respected for the provided
              * entity of the scene graph.
              */
-            bool check(const Entity* entity) {
+            bool check(const Entity* entity) const {
                 bool isChecked = true ;
 
                 for (auto& condition : m_conditions) {

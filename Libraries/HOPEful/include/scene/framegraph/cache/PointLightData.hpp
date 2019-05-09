@@ -6,10 +6,6 @@
 
 namespace Hope {
     class PointLightComponent ;
-}
-
-namespace Hope::GL {
-    class FrameRenderSharedData ;
 
     /**
      * A point light and its world position.
@@ -17,7 +13,6 @@ namespace Hope::GL {
     struct PointLightData {
         PointLightComponent* light ;
         Mind::Vector4f worldPosition ;
-        FrameRenderSharedData* sharedData ;
     } ;
 }
 

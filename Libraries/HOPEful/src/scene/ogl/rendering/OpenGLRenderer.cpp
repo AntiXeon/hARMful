@@ -2,7 +2,7 @@
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
+#include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
 
 using namespace Hope::GL ;
@@ -11,12 +11,12 @@ using namespace Hope::GL ;
 
 void OpenGLRenderer::render(std::vector<GeometryData>& dataList) {
     for (GeometryData& meshData : dataList) {
-        (meshData.sharedData -> modelUBO).setMatrices(
+        m_modelUBO.setMatrices(
             meshData.worldTransformation,
-            meshData.sharedData -> viewMatrix,
-            meshData.sharedData -> projectionMatrix
+            m_viewMatrix,
+            m_projectionMatrix
         ) ;
-        (meshData.sharedData -> modelUBO).update() ;
+        m_modelUBO.update() ;
 
         const Geometry* geometry = (meshData.mesh -> geometry()) ;
         geometry -> bind() ;
@@ -81,4 +81,38 @@ std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(const MaterialCompo
     }
 
     return nullptr ;
+}
+
+void OpenGLRenderer::updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) {
+    {
+        const auto& directionalLights = cache -> directionalLights() ;
+        m_lightUBO.setAmountDirectionalLights(directionalLights.size()) ;
+
+        uint16_t lightIndex = 0 ;
+        for (DirectionalLightComponent* dirLight : directionalLights) {
+            m_lightUBO.setDirectionalLight(
+                lightIndex,
+                dirLight
+            ) ;
+            lightIndex++ ;
+        }
+    }
+
+    {
+        const auto& pointLightsData = cache -> pointLights() ;
+        m_lightUBO.setAmountPointLights(pointLightsData.size()) ;
+
+        uint16_t lightIndex = 0 ;
+        for (const PointLightData& lightData : pointLightsData) {
+            m_lightUBO.setPointLight(
+                lightIndex,
+                lightData.light,
+                lightData.worldPosition,
+                m_viewMatrix
+            ) ;
+            lightIndex++ ;
+        }
+    }
+
+    m_lightUBO.update() ;
 }

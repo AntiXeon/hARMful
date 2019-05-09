@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_VIEWPORT__
-#define __HOPE__GL_VIEWPORT__
+#ifndef __HOPE__VIEWPORT__
+#define __HOPE__VIEWPORT__
 
 #include <scene/FrameGraphNode.hpp>
 #include <geometry/points/Point2Df.hpp>

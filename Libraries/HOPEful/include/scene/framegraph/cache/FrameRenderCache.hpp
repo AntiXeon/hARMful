@@ -2,9 +2,8 @@
 #define __HOPE__FRAME_RENDER_CACHE__
 
 #include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
-#include <scene/ogl/visitors/cache/FrameRenderSharedData.hpp>
-#include <scene/ogl/visitors/cache/GeometryData.hpp>
-#include <scene/ogl/visitors/cache/PointLightData.hpp>
+#include <scene/framegraph/cache/GeometryData.hpp>
+#include <scene/framegraph/cache/PointLightData.hpp>
 #include <map>
 #include <set>
 #include <vector>
@@ -14,9 +13,7 @@ namespace Hope {
     class LightComponent ;
     class DirectionalLightComponent ;
     class PointLightComponent ;
-}
 
-namespace Hope::GL {
     /**
      * Cache some elements of the scene to access them faster while rendering
      * the current frame.
@@ -27,11 +24,6 @@ namespace Hope::GL {
              * Default material.
              */
             BlinnPhongMaterialComponent m_defaultMaterial ;
-
-            /**
-             * Shared data to render the current frame.
-             */
-            FrameRenderSharedData m_sharedData ;
 
             /**
              * Cache of all meshes to render.
@@ -50,7 +42,7 @@ namespace Hope::GL {
 
         public:
             /**
-             * Create a new FrameRenderCache iknstance.
+             * Create a new FrameRenderCache instance.
              */
             FrameRenderCache() ;
 
@@ -71,27 +63,6 @@ namespace Hope::GL {
                 m_meshes.clear() ;
                 m_directionalLights.clear() ;
                 m_pointLights.clear() ;
-            }
-
-            /**
-             * Set the view matrix.
-             */
-            void setViewMatrix(const Mind::Matrix4x4f& viewMatrix) {
-                m_sharedData.viewMatrix = viewMatrix ;
-            }
-
-            /**
-             * Set the projection matrix.
-             */
-            void setProjectionMatrix(const Mind::Matrix4x4f& projectionMatrix) {
-                m_sharedData.projectionMatrix = projectionMatrix ;
-            }
-
-            /**
-             * Get the shared data.
-             */
-            const FrameRenderSharedData& sharedData() const {
-                return m_sharedData ;
             }
 
             /**

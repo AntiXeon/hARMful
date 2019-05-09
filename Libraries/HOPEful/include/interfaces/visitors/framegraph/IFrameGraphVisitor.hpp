@@ -4,7 +4,6 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
-    class FrameGraphNode ;
     class ActiveCamera ;
     class FrustumCulling ;
     class Viewport ;
@@ -14,11 +13,6 @@ namespace Hope {
      */
     class IFrameGraphVisitor {
         public:
-            /**
-             * Create a new branch.
-             */
-            virtual void createNewBranch(FrameGraphNode* fgNode) = 0 ;
-
             /**
              * Visit a camera node.
              */

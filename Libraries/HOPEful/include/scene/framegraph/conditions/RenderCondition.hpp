@@ -13,7 +13,7 @@ namespace Hope {
              * Check if the condition is respected for the provided entity of
              * the scene graph.
              */
-            virtual bool check(const Entity* entity) {
+            virtual bool check(const Entity* entity) const {
                 return entity -> isActive() ;
             }
     } ;

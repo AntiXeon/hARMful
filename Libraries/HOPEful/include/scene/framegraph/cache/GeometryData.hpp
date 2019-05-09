@@ -9,10 +9,6 @@
 namespace Hope {
     class MaterialComponent ;
     class GeometryComponent ;
-}
-
-namespace Hope::GL {
-    class FrameRenderSharedData ;
 
     /**
      * Elements of a mesh to draw using the same material.
@@ -24,7 +20,6 @@ namespace Hope::GL {
         std::map<MaterialComponent*, std::vector<uint32_t>> parts ;
 
         Mind::Matrix4x4f worldTransformation ;
-        FrameRenderSharedData* sharedData ;
     } ;
 }
 

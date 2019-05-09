@@ -3,9 +3,9 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
-#include <scene/ogl/visitors/cache/FrameRenderCache.hpp>
 #include <scene/ogl/rendering/OpenGLRenderer.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
+#include <scene/framegraph/FrameGraphBranchState.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
@@ -34,37 +34,20 @@ namespace Hope::GL {
             bool m_hasWindowChanged = true ;
 
             /**
-             * UBOs required to send uniform values to the shaders.
-             */
-            UBOSharedData* m_ubos = nullptr ;
-
-            /**
-             * Cache for rendering the current frame.
-             */
-            FrameRenderCache m_renderCache ;
-
-            /**
              * Size of the window.
              */
             Mind::Dimension2Df m_windowSize ;
 
             /**
-             * Visitor that can be used for some frame graph nodes when
-             * rendering the scene.
+             * Renderer to render the scene.
              */
-            std::map<Hope::FrameGraphNode*, OpenGLRenderer> m_renderers ;
-
-            /**
-             * The OpenGLRenderer that is in use in the currently processed
-             - framegraph branch.
-             */
-            OpenGLRenderer* m_activeRenderer = nullptr ;
+            OpenGLRenderer m_renderer ;
 
             /**
              * List to store the render conditions of every branch in the frame
              * graph.
              */
-            std::list<Hope::RenderConditionAggregator> m_aggregators ;
+            std::list<FrameGraphBranchState> m_aggregators ;
 
             /**
              * Stack of the nodes that are processed.
@@ -76,16 +59,6 @@ namespace Hope::GL {
              * Create an OpenGLFrameGraphVisitor instance.
              */
             OpenGLFrameGraphVisitor() ;
-
-            /**
-             * Destruction of the OpenGLFrameGraphVisitor instance.
-             */
-            virtual ~OpenGLFrameGraphVisitor() ;
-
-            /**
-             * Create a new branch.
-             */
-            void createNewBranch(Hope::FrameGraphNode* fgNode) override ;
 
             /**
              * Set the root of the scene graph.
@@ -146,23 +119,27 @@ namespace Hope::GL {
              * graph. This allows to apply parent conditions to every branch
              * under the parent.
              */
-            void backupRenderConditions() override ;
+            void backupRenderConditions() override {
+                // Copy and push back that copy in the list. So that, the copy can be
+                // modified while the original still the same and can be reused for the
+                // other branch of the frame graph.
+                m_aggregators.push_back(m_aggregators.back()) ;
+            }
 
             /**
              * Prepare the next frame rendering.
              */
             void nextFrame() {
                 m_hasWindowChanged = false ;
-                m_renderCache.clear() ;
 
                 // Create a new aggregator for the new frame rendering.
                 assert(m_aggregators.size() == 0) ;
-                RenderConditionAggregator defaultAggregator ;
-                m_aggregators.push_back(defaultAggregator) ;
+                m_aggregators.push_back(FrameGraphBranchState()) ;
             }
 
 
             // Remove copy/move operations.
+            virtual ~OpenGLFrameGraphVisitor() = default ;
             OpenGLFrameGraphVisitor(const OpenGLFrameGraphVisitor& copied) = delete;
             OpenGLFrameGraphVisitor(OpenGLFrameGraphVisitor&& moved) = delete;
             OpenGLFrameGraphVisitor& operator=(const OpenGLFrameGraphVisitor& copied) = delete;
@@ -174,6 +151,11 @@ namespace Hope::GL {
              * that need to be parsed and processed as an all.
              */
             void parseSceneGraph() ;
+
+            /**
+             * Update the camera settings (clear color, uniforms, etc).
+             */
+            void updateCameraSettings(Hope::CameraComponent* camera) ;
     } ;
 }
 
