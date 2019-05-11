@@ -65,6 +65,13 @@ namespace Hope {
                 return m_camera ;
             }
 
+            /**
+             * Check if the cache is empty.
+             */
+            bool cacheEmpty() const {
+                return m_cache -> empty() ;
+            }
+
         protected:
             /**
              * Accept the visitor.

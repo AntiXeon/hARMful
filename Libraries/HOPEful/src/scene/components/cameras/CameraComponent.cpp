@@ -24,6 +24,11 @@ void CameraComponent::setUpVector(const Mind::Vector3f& up) {
 
 void CameraComponent::lookAt(const Mind::Vector3f& target) {
     m_target = target ;
+
+    if (!firstEntity()) {
+        return ;
+    }
+
     Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
 
     m_viewDirection = position - m_target ;
@@ -62,4 +67,6 @@ void CameraComponent::onAttach(Entity* entity) {
 
     m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
     m_rightAxis.normalize() ;
+
+    lookAt(m_target) ;
 }

@@ -66,6 +66,15 @@ namespace Hope {
             }
 
             /**
+             * To know if the cache is empty.
+             */
+            bool empty() const {
+                return m_meshes.empty() ||
+                        m_directionalLights.empty() ||
+                        m_pointLights.empty() ;
+            }
+
+            /**
              * Get the cache of all meshes to render.
              */
             std::vector<GeometryData>& meshes() {

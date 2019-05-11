@@ -23,18 +23,20 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     m_aggregators.back().setActiveCamera(node) ;
 
-    // Parse the scene graph.
-    assert(m_aggregators.size() > 0) ;
-    Hope::ProcessedSceneNode rootNode ;
-    rootNode.node = m_sceneRoot ;
-    rootNode.worldMatrix = (m_sceneRoot -> transform()).matrix() ;
-    m_processedNodes.push(rootNode) ;
+    if (node -> cacheEmpty()) {
+        // Parse the scene graph.
+        assert(m_aggregators.size() > 0) ;
+        Hope::ProcessedSceneNode rootNode ;
+        rootNode.node = m_sceneRoot ;
+        rootNode.worldMatrix = (m_sceneRoot -> transform()).matrix() ;
+        m_processedNodes.push(rootNode) ;
 
-    while (m_processedNodes.size() > 0) {
-        // For each entity: check if all the conditions are OK otherwise, go
-        // back to the parent entity and process the other ones.
-        // The children of an invalid entity are discarded as well.
-        parseSceneGraph() ;
+        while (m_processedNodes.size() > 0) {
+            // For each entity: check if all the conditions are OK otherwise, go
+            // back to the parent entity and process the other ones.
+            // The children of an invalid entity are discarded as well.
+            parseSceneGraph() ;
+        }
     }
 }
 
@@ -163,21 +165,16 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     float aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
 
     Mind::Matrix4x4f projectionMatrix ;
-    if (m_hasWindowChanged || camera -> projectionChanged()) {
-        // Set up the projection matrix.
-        camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
+    // Set up the projection matrix.
+    camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
 
-        Mind::Matrix4x4f inverseProjectionMatrix ;
-        projectionMatrix.inverse(inverseProjectionMatrix) ;
+    Mind::Matrix4x4f inverseProjectionMatrix ;
+    projectionMatrix.inverse(inverseProjectionMatrix) ;
 
-        m_renderer.baseUBO().setProjectionMatrix(projectionMatrix) ;
-        m_renderer.baseUBO().setInverseProjectionMatrix(inverseProjectionMatrix) ;
-        m_renderer.baseUBO().setAspectRatio(aspectRatio) ;
-        m_renderer.setProjectionMatrix(projectionMatrix) ;
-    }
-    else {
-        camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
-    }
+    m_renderer.baseUBO().setProjectionMatrix(projectionMatrix) ;
+    m_renderer.baseUBO().setInverseProjectionMatrix(inverseProjectionMatrix) ;
+    m_renderer.baseUBO().setAspectRatio(aspectRatio) ;
+    m_renderer.setProjectionMatrix(projectionMatrix) ;
 
     // Update the model view matrix.
     const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;
