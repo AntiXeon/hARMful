@@ -61,7 +61,7 @@ namespace Hope {
             /**
              * Get the camera that is used to render the scene.
              */
-            Hope::CameraComponent* camera() {
+            Hope::CameraComponent* camera() const {
                 return m_camera ;
             }
 

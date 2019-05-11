@@ -7,6 +7,7 @@
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/FrameGraphBranchState.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
+#include <scene/framegraph/cache/ProjectionData.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
 #include <list>
@@ -37,6 +38,11 @@ namespace Hope::GL {
              * Size of the window.
              */
             Mind::Dimension2Df m_windowSize ;
+
+            /**
+             * Data required to correctly compute projection on render step.
+             */
+            Hope::ProjectionData m_projectionData ;
 
             /**
              * Renderer to render the scene.
@@ -155,7 +161,7 @@ namespace Hope::GL {
             /**
              * Update the camera settings (clear color, uniforms, etc).
              */
-            void updateCameraSettings(Hope::CameraComponent* camera) ;
+            void updateCameraSettings() ;
     } ;
 }
 

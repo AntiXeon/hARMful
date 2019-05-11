@@ -3,7 +3,7 @@
 using namespace Hope ;
 
 Transform::Transform() {
-    m_matrix.compose(m_translation, m_rotation, m_scale) ;
+    m_matrix.identity() ;
 }
 
 void Transform::setRotation(const Mind::Quaternion& rotation) {

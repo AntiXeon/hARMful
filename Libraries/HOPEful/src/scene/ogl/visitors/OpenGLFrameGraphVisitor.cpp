@@ -23,9 +23,6 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     m_aggregators.back().setActiveCamera(node) ;
 
-    Hope::CameraComponent* camera = node -> camera() ;
-    updateCameraSettings(camera) ;
-
     // Parse the scene graph.
     assert(m_aggregators.size() > 0) ;
     Hope::ProcessedSceneNode rootNode ;
@@ -46,9 +43,11 @@ void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
-    if (!m_hasWindowChanged) {
+    if (!m_hasWindowChanged && (m_projectionData.lastViewport == node)) {
         return ;
     }
+
+    m_projectionData.lastViewport = node ;
 
     Mind::Point2Df relativePosition = node -> position() ;
     Mind::Dimension2Df relativeDimension = node -> dimension() ;
@@ -58,17 +57,15 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
         relativePosition.get(Mind::Point2Df::Y) * m_windowSize.height()
     ) ;
 
-    Mind::Dimension2Df absoluteDimension(
-        relativeDimension.width() * m_windowSize.width(),
-        relativeDimension.height() * m_windowSize.height()
-    ) ;
+    m_projectionData.absoluteAreaWidth = relativeDimension.width() * m_windowSize.width() ;
+    m_projectionData.absoluteAreaHeight = relativeDimension.height() * m_windowSize.height() ;
 
     // Apply the viewport parameters.
     glViewport(
         absolutePosition.get(Mind::Point2Df::X),
         absolutePosition.get(Mind::Point2Df::Y),
-        absoluteDimension.width(),
-        absoluteDimension.height()
+        m_projectionData.absoluteAreaWidth,
+        m_projectionData.absoluteAreaHeight
     ) ;
 
     // Compute the viewport matrices.
@@ -93,6 +90,8 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
+    updateCameraSettings() ;
+
     FrameGraphBranchState& state = m_aggregators.back() ;
     const std::shared_ptr<Hope::FrameRenderCache> cache = state.activeCameraCache() ;
 
@@ -146,7 +145,9 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
     }
 }
 
-void OpenGLFrameGraphVisitor::updateCameraSettings(Hope::CameraComponent* camera) {
+void OpenGLFrameGraphVisitor::updateCameraSettings() {
+    FrameGraphBranchState& state = m_aggregators.back() ;
+    Hope::CameraComponent* camera = state.activeCamera() -> camera() ;
     camera -> update() ;
 
     // Set up the clear color.
@@ -159,10 +160,11 @@ void OpenGLFrameGraphVisitor::updateCameraSettings(Hope::CameraComponent* camera
     ) ;
 
     // Update the projection matrix if needed.
+    float aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
+
     Mind::Matrix4x4f projectionMatrix ;
     if (m_hasWindowChanged || camera -> projectionChanged()) {
         // Set up the projection matrix.
-        float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
         camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
 
         Mind::Matrix4x4f inverseProjectionMatrix ;
@@ -174,7 +176,6 @@ void OpenGLFrameGraphVisitor::updateCameraSettings(Hope::CameraComponent* camera
         m_renderer.setProjectionMatrix(projectionMatrix) ;
     }
     else {
-        float aspectRatio = m_windowSize.width() / m_windowSize.height() ;
         camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
     }
 
