@@ -56,6 +56,13 @@ namespace Hope {
             }
 
             /**
+             * Get the active camera entity.
+             */
+            const Entity* activeCameraEntity() const {
+                return m_activeCamera -> camera() -> firstEntity() ;
+            }
+
+            /**
              * Conditions to render the branch.
              */
             const RenderConditionAggregator& conditions() const {

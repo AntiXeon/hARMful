@@ -116,11 +116,17 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
         // Save the world matrix before pop.
         Mind::Matrix4x4f currentWorldMatrix = m_processedNodes.top().worldMatrix ;
 
-        // Get components that need to be cached.
-        state.activeCameraCache() -> cacheEntity(
-            renderedEntity,
-            currentWorldMatrix
-        ) ;
+        if (renderedEntity == state.activeCameraEntity()) {
+            // Inverse as the world moves instead of the camera!
+            m_renderer.baseUBO().setEyePosition(-currentWorldMatrix.extractTranslation()) ;
+        }
+        else {
+            // Get components that need to be cached.
+            state.activeCameraCache() -> cacheEntity(
+                renderedEntity,
+                currentWorldMatrix
+            ) ;
+        }
 
         // As the top node is processed, pop it from the stack.
         m_processedNodes.pop() ;
@@ -175,16 +181,10 @@ void OpenGLFrameGraphVisitor::updateCameraSettings(Hope::CameraComponent* camera
     // Update the model view matrix.
     const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;
 
-    Hope::Entity* cameraEntity = camera -> firstEntity() ;
-    Hope::Transform& cameraTransform = cameraEntity -> transform() ;
-    // Inverse as the world moves instead of the camera!
-    Mind::Vector3f eyeView = -cameraTransform.translation() ;
-
     // Update the required data.
     m_renderer.setViewMatrix(viewMatrix) ;
     m_renderer.baseUBO().setFarPlaneDistance(camera -> farPlaneDistance()) ;
     m_renderer.baseUBO().setTime(glfwGetTime()) ;
-    m_renderer.baseUBO().setEyePosition(eyeView) ;
     m_renderer.baseUBO().setViewMatrix(viewMatrix) ;
 
     Mind::Matrix4x4f resultInverse ;
