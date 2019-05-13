@@ -49,8 +49,8 @@ void BlinnPhongMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void BlinnPhongMaterialComponent::setupRendering() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
+void BlinnPhongMaterialComponent::setupDefaultRenderPass() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
@@ -69,4 +69,13 @@ void BlinnPhongMaterialComponent::setupRendering() {
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;
+}
+
+void BlinnPhongMaterialComponent::setupDiffuseRenderPass() {
+}
+
+void BlinnPhongMaterialComponent::setupNormalRenderPass() {
+}
+
+void BlinnPhongMaterialComponent::setupSpecularRenderPass() {
 }

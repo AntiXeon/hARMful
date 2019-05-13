@@ -127,6 +127,28 @@ namespace Hope {
             std::shared_ptr<Hope::ShaderUniform> uniform(const std::string& name) {
                 return m_shaderUniforms[name] ;
             }
+
+            void setupRendering() ;
+
+            /**
+             * Setup the default render pass (used by forward rendering, ...).
+             */
+            virtual void setupDefaultRenderPass() = 0 ;
+
+            /**
+             * Setup the diffuse render pass (used by deferred rendering, ...).
+             */
+            virtual void setupDiffuseRenderPass() = 0 ;
+
+            /**
+             * Setup the normal render pass (used by deferred rendering, ...).
+             */
+            virtual void setupNormalRenderPass() = 0 ;
+
+            /**
+             * Setup the position render pass (used by deferred rendering, ...).
+             */
+            virtual void setupSpecularRenderPass() = 0 ;
     } ;
 }
 

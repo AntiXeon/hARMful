@@ -160,16 +160,32 @@ namespace Hope {
                 return m_shininess ;
             }
 
+        protected:
+            /**
+             * Setup the default render pass (used by forward rendering, ...).
+             */
+            void setupDefaultRenderPass() override ;
+
+            /**
+             * Setup the diffuse render pass (used by deferred rendering, ...).
+             */
+            void setupDiffuseRenderPass() override ;
+
+            /**
+             * Setup the normal render pass (used by deferred rendering, ...).
+             */
+            void setupNormalRenderPass() override ;
+
+            /**
+             * Setup the position render pass (used by deferred rendering, ...).
+             */
+            void setupSpecularRenderPass() override ;
+
         private:
             /**
              * Set up the Uniforms of the current material.
              */
             void setupUniforms() ;
-
-            /**
-             * Set up the material rendering (techniques, shaders, ...).
-             */
-            void setupRendering() ;
     } ;
 }
 

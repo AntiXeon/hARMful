@@ -68,8 +68,8 @@ void DiffuseNormalMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void DiffuseNormalMaterialComponent::setupRendering() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>() ;
+void DiffuseNormalMaterialComponent::setupDefaultRenderPass() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
@@ -89,4 +89,13 @@ void DiffuseNormalMaterialComponent::setupRendering() {
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;
+}
+
+void DiffuseNormalMaterialComponent::setupDiffuseRenderPass() {
+}
+
+void DiffuseNormalMaterialComponent::setupNormalRenderPass() {
+}
+
+void DiffuseNormalMaterialComponent::setupSpecularRenderPass() {
 }
