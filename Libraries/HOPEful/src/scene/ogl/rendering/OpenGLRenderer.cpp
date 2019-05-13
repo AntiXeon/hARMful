@@ -53,34 +53,30 @@ void OpenGLRenderer::render(std::vector<GeometryData>& dataList) {
 }
 
 std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(const MaterialComponent* component) {
-    const RenderEffect& effect = component -> effect() ;
-    auto renderPasses = effect.renderPasses() ;
+    std::shared_ptr<API::RenderPass> pass = component -> renderPass(RenderPass::DefaultID) ;
 
-    for (const std::shared_ptr<API::RenderPass>& pass : renderPasses) {
-        // Maybe should check render passes (or it will work in FrameGraph
-        // visitor through the RenderConditionAggregator?).
-
-        // Do material processing.
-        std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
-        std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
-
-        if (shaderProgram) {
-            shaderProgram -> use() ;
-
-            // Apply shader uniforms.
-            auto materialUniforms = component -> shaderUniforms() ;
-            for (auto& [name, uniform] : materialUniforms) {
-                ShaderUniformApplicator::ApplyUniform(
-                    shaderProgram -> id(),
-                    uniform
-                ) ;
-            }
-        }
-
-        return pass ;
+    if (!pass) {
+        return nullptr ;
     }
 
-    return nullptr ;
+    // Do material processing.
+    std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
+    std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
+
+    if (shaderProgram) {
+        shaderProgram -> use() ;
+
+        // Apply shader uniforms.
+        auto materialUniforms = component -> shaderUniforms() ;
+        for (auto& [name, uniform] : materialUniforms) {
+            ShaderUniformApplicator::ApplyUniform(
+                shaderProgram -> id(),
+                uniform
+            ) ;
+        }
+    }
+
+    return pass ;
 }
 
 void OpenGLRenderer::updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) {

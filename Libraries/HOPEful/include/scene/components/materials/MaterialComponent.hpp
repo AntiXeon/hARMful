@@ -74,10 +74,20 @@ namespace Hope {
             }
 
             /**
-             * Get the effect of the material.
+             * Check if the material has a render pass corresponding the
+             * provided ID.
              */
-            const RenderEffect& effect() const {
-                return m_effect ;
+            bool hasRenderPass(const RenderPassID passID) const {
+                return m_effect.hasRenderPass(passID) ;
+            }
+
+            /**
+             * Get a render pass.
+             * @return  The render pass having the provided ID if available;
+             *          nullptr otherwise.
+             */
+            std::shared_ptr<API::RenderPass> renderPass(const RenderPassID passID) const {
+                return m_effect.renderPass(passID) ;
             }
 
             /**

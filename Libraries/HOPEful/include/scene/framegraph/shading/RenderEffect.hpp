@@ -22,7 +22,7 @@ namespace Hope {
             /**
              * List of shader parameters.
              */
-            std::set<std::shared_ptr<API::RenderPass>> m_renderPasses ;
+            std::map<RenderPassID, std::shared_ptr<API::RenderPass>> m_renderPasses ;
 
         public:
             /**
@@ -36,10 +36,24 @@ namespace Hope {
             void removeRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
 
             /**
-             * Get the render passes.
+             * Check if the render effect has a render pass corresponding the
+             * provided ID.
              */
-            std::set<std::shared_ptr<API::RenderPass>> renderPasses() const {
-                return m_renderPasses ;
+            bool hasRenderPass(const RenderPassID passID) const {
+                return (m_renderPasses.count(passID) == 1) ;
+            }
+
+            /**
+             * Get a render pass.
+             * @return  The render pass having the provided ID if available;
+             *          nullptr otherwise.
+             */
+            std::shared_ptr<API::RenderPass> renderPass(const RenderPassID passID) const {
+                if (hasRenderPass(passID)) {
+                    return m_renderPasses.at(passID) ;
+                }
+
+                return nullptr ;
             }
     } ;
 }

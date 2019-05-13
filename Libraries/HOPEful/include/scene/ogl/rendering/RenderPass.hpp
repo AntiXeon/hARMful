@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_RENDER_PASS__
 #define __HOPE__GL_RENDER_PASS__
 
+#include <scene/SceneTypes.hpp>
 #include <scene/framegraph/shading/FilterOption.hpp>
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
@@ -12,7 +13,38 @@ namespace Hope::GL {
      * Represents a shader program execution as a single render pass.
      */
     class RenderPass final {
+        public:
+            /**
+             * Default render pass ID.
+             */
+            static const RenderPassID DefaultID = -1 ;
+
+            /**
+             * ID for a diffuse render pass (deferred rendering).
+             */
+            static const RenderPassID DiffuseID = 1 ;
+
+            /**
+             * ID for a normal render pass (deferred rendering).
+             */
+            static const RenderPassID NormalID = 2 ;
+
+            /**
+             * ID for a specular render pass (deferred rendering).
+             */
+            static const RenderPassID SpecularID = 3 ;
+
+            /**
+             * ID for a position render pass (deferred rendering).
+             */
+            static const RenderPassID PositionID = 4 ;
+
         private:
+            /**
+             * ID of the pass.
+             */
+            RenderPassID m_id = RenderPass::DefaultID ;
+
             /**
              * List of the options.
              */
@@ -21,7 +53,7 @@ namespace Hope::GL {
             /**
              * List of graphics API capabilities.
              */
-            std::set<std::shared_ptr<Hope::GL::Capability>> m_capabilities ;
+            std::set<std::shared_ptr<Capability>> m_capabilities ;
 
             /**
              * The shader program that is executed in the current render pass.
@@ -32,7 +64,7 @@ namespace Hope::GL {
             /**
              * Create a render pass.
              */
-            RenderPass() ;
+            RenderPass(const RenderPassID id = RenderPass::DefaultID) ;
 
             /**
              * Add a filter option.
@@ -62,17 +94,17 @@ namespace Hope::GL {
             /**
              * Add a graphics API capability.
              */
-            void addCapability(const std::shared_ptr<Hope::GL::Capability> capability) ;
+            void addCapability(const std::shared_ptr<Capability> capability) ;
 
             /**
              * Remove a graphics API capability.
              */
-            void removeCapability(const std::shared_ptr<Hope::GL::Capability> capability) ;
+            void removeCapability(const std::shared_ptr<Capability> capability) ;
 
             /**
              * Get the used capabilities.
              */
-            std::set<std::shared_ptr<Hope::GL::Capability>> capabilities() const {
+            std::set<std::shared_ptr<Capability>> capabilities() const {
                 return m_capabilities ;
             }
 
@@ -81,6 +113,13 @@ namespace Hope::GL {
              */
             std::shared_ptr<ShaderProgram> shaderProgram() const {
                 return m_shaderProgram ;
+            }
+
+            /**
+             * Get the render pass ID.
+             */
+            RenderPassID id() const {
+                return m_id ;
             }
     } ;
 }

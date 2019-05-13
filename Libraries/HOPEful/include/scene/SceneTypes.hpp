@@ -2,6 +2,7 @@
 #define __HOPE__SCENE_TYPES__
 
 namespace Hope {
+    typedef int RenderPassID ;
     typedef unsigned int FrameID ;
 
     typedef unsigned int ComponentType ;
