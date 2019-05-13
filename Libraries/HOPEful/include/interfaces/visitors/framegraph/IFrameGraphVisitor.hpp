@@ -6,6 +6,7 @@
 namespace Hope {
     class ActiveCamera ;
     class FrustumCulling ;
+    class RenderPassSelector ;
     class Viewport ;
 
     /**
@@ -22,6 +23,11 @@ namespace Hope {
              * Visit a frustum culling node.
              */
             virtual void visit(FrustumCulling* node) = 0 ;
+
+            /**
+             * Visit a render pass selector node.
+             */
+            virtual void visit(RenderPassSelector* node) = 0 ;
 
             /**
              * Visit a viewport node.

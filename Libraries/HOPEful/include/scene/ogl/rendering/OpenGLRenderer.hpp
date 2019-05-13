@@ -46,8 +46,16 @@ namespace Hope::GL {
         public:
             /**
              * Render the scene.
+             * @param   renderPassID    ID of the pass to use for rendering
+             *                          objects. The render pass uses its
+             *                          related shader program to render the
+             *                          objects.
+             * @param   dataList        Geometries to be rendered.
              */
-            void render(std::vector<GeometryData>& dataList) ;
+            void render(
+                const RenderPassID renderPassID,
+                std::vector<GeometryData>& dataList
+            ) ;
 
             /**
              * Run an update of the light UBO.
@@ -78,10 +86,18 @@ namespace Hope::GL {
         private:
             /**
              * Use a material component.
+             * @param   renderPassID    ID of the pass to use for rendering
+             *                          objects. The render pass uses its
+             *                          related shader program to render the
+             *                          objects.
+             * @param   component       Material component to use.
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
-            std::shared_ptr<API::RenderPass> useMaterial(const Hope::MaterialComponent* component) ;
+            std::shared_ptr<API::RenderPass> useMaterial(
+                const RenderPassID renderPassID,
+                const Hope::MaterialComponent* component
+            ) ;
 
             /**
              * Enable the capabilities of the render pass that is used.

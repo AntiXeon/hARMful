@@ -110,6 +110,11 @@ namespace Hope::GL {
             void visit(FrustumCulling* node) override ;
 
             /**
+             * Visit a render pass selector node.
+             */
+            void visit(RenderPassSelector* node) override ;
+
+            /**
              * Visit a viewport node.
              */
             void visit(Viewport* node) override ;

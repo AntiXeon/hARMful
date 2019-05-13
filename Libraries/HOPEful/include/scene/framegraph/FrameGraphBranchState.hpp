@@ -1,6 +1,7 @@
 #ifndef __HOPE__FRAMEGRAPH_BRANCH_STATE__
 #define __HOPE__FRAMEGRAPH_BRANCH_STATE__
 
+#include <scene/SceneTypes.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ActiveCamera.hpp>
 
@@ -10,6 +11,11 @@ namespace Hope {
      */
     class FrameGraphBranchState final {
         private:
+            /**
+             * Render pass ID to use for rendering the current branch.
+             */
+            RenderPassID m_renderPassID = DefaultPassID ;
+
             /**
              * Active camera for the current branch.
              */
@@ -33,6 +39,20 @@ namespace Hope {
                 ActiveCamera* activeCamera,
                 const RenderConditionAggregator& m_conditions
             ) ;
+
+            /**
+             * Set the render pass ID to use for rendering the current branch.
+             */
+            void setRenderPassID(const RenderPassID id) {
+                m_renderPassID = id ;
+            }
+
+            /**
+             * Get the render pass ID to use for rendering the current branch.
+             */
+            RenderPassID renderPassID() const {
+                return m_renderPassID ;
+            }
 
             /**
              * Set the active camera used to render the branch.

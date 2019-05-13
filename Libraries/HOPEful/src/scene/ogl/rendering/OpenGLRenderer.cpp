@@ -9,7 +9,10 @@ using namespace Hope::GL ;
 
 #define BufferOffset(offset) (static_cast<const char*>(nullptr) + (offset))
 
-void OpenGLRenderer::render(std::vector<GeometryData>& dataList) {
+void OpenGLRenderer::render(
+    const RenderPassID renderPassID,
+    std::vector<GeometryData>& dataList
+) {
     for (GeometryData& meshData : dataList) {
         m_modelUBO.setMatrices(
             meshData.worldTransformation,
@@ -23,7 +26,12 @@ void OpenGLRenderer::render(std::vector<GeometryData>& dataList) {
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
             material -> updateUniformValues() ;
-            auto renderPass = useMaterial(material) ;
+            std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
+
+            if (!renderPass) {
+                // Do not try to render as it is not possible!
+                continue ;
+            }
 
             size_t amountParts = geometry -> amountParts() ;
             std::vector<int32_t> counts(amountParts) ;
@@ -52,8 +60,11 @@ void OpenGLRenderer::render(std::vector<GeometryData>& dataList) {
     }
 }
 
-std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(const MaterialComponent* component) {
-    std::shared_ptr<API::RenderPass> pass = component -> renderPass(RenderPass::DefaultID) ;
+std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
+    const RenderPassID renderPassID,
+    const MaterialComponent* component
+) {
+    std::shared_ptr<API::RenderPass> pass = component -> renderPass(renderPassID) ;
 
     if (!pass) {
         return nullptr ;

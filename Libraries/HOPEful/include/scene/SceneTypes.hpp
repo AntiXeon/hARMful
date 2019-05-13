@@ -2,7 +2,22 @@
 #define __HOPE__SCENE_TYPES__
 
 namespace Hope {
-    typedef int RenderPassID ;
+    /**
+     * ID for render passes.
+     * An ID equal to 0 means the default render pass is to be used.
+     */
+    typedef unsigned int RenderPassID ;
+
+    #define DefaultPassID   0       // Default render pass ID.
+    #define DiffuseID       1       // ID for a diffuse render pass (deferred rendering).
+    #define NormalID        2       // ID for a normal render pass (deferred rendering).
+    #define SpecularID      3       // ID for a specular render pass (deferred rendering).
+    #define PositionID      4       // ID for a position render pass (deferred rendering).
+
+
+    /**
+     * ID for frames.
+     */
     typedef unsigned int FrameID ;
 
     typedef unsigned int ComponentType ;

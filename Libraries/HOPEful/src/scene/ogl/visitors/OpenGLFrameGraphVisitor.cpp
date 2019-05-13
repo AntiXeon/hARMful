@@ -1,6 +1,7 @@
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
 #include <scene/framegraph/ActiveCamera.hpp>
 #include <scene/framegraph/FrustumCulling.hpp>
+#include <scene/framegraph/RenderPassSelector.hpp>
 #include <scene/framegraph/Viewport.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/Utils.hpp>
@@ -42,6 +43,10 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
 
 void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
     // TODO
+}
+
+void OpenGLFrameGraphVisitor::visit(RenderPassSelector* node) {
+    m_aggregators.back().setRenderPassID(node -> passID()) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(Viewport* node) {
@@ -103,7 +108,10 @@ void OpenGLFrameGraphVisitor::makeRender() {
     m_renderer.baseUBO().update() ;
 
     // Render the frame.
-    m_renderer.render(cache -> meshes()) ;
+    m_renderer.render(
+        state.renderPassID(),
+        cache -> meshes()
+    ) ;
 
     // Remove the last RenderConditionAggregator from the list!
     m_aggregators.pop_back() ;

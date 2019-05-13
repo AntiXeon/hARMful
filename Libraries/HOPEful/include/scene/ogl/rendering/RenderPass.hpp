@@ -13,37 +13,11 @@ namespace Hope::GL {
      * Represents a shader program execution as a single render pass.
      */
     class RenderPass final {
-        public:
-            /**
-             * Default render pass ID.
-             */
-            static const RenderPassID DefaultID = -1 ;
-
-            /**
-             * ID for a diffuse render pass (deferred rendering).
-             */
-            static const RenderPassID DiffuseID = 1 ;
-
-            /**
-             * ID for a normal render pass (deferred rendering).
-             */
-            static const RenderPassID NormalID = 2 ;
-
-            /**
-             * ID for a specular render pass (deferred rendering).
-             */
-            static const RenderPassID SpecularID = 3 ;
-
-            /**
-             * ID for a position render pass (deferred rendering).
-             */
-            static const RenderPassID PositionID = 4 ;
-
         private:
             /**
              * ID of the pass.
              */
-            RenderPassID m_id = RenderPass::DefaultID ;
+            RenderPassID m_id = DefaultPassID ;
 
             /**
              * List of the options.
@@ -64,7 +38,7 @@ namespace Hope::GL {
             /**
              * Create a render pass.
              */
-            RenderPass(const RenderPassID id = RenderPass::DefaultID) ;
+            RenderPass(const RenderPassID id = DefaultPassID) ;
 
             /**
              * Add a filter option.
