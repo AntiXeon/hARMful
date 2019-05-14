@@ -1,7 +1,7 @@
 # hARMful [![CircleCI](https://circleci.com/gh/dcarlus/hARMful.svg?style=svg)](https://circleci.com/gh/dcarlus/hARMful) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5690dc89003b44f6b12456ca512a793d)](https://www.codacy.com/app/dcarlus/hARMful?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dcarlus/hARMful&amp;utm_campaign=Badge_Grade)
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
-![hARMful screenshot](./Documentation/images/hARMful.jpg)
+![hARMful screenshot](./docs/images/hARMful.jpg)
 
 ## Features
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected:
