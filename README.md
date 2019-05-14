@@ -1,11 +1,9 @@
-# ![hARMful screenshot](./docs/images/logo/hARMful_Logo_32.png) hARMful
+![hARMful screenshot](./docs/images/logo/hARMful_Preview.png)
 [![CircleCI](https://circleci.com/gh/dcarlus/hARMful.svg?style=svg)](https://circleci.com/gh/dcarlus/hARMful) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5690dc89003b44f6b12456ca512a793d)](https://www.codacy.com/app/dcarlus/hARMful?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dcarlus/hARMful&amp;utm_campaign=Badge_Grade)
 
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
 > Learn more and read the documentation on [https://dcarlus.github.io/hARMful/](https://dcarlus.github.io/hARMful/).
-
-![hARMful screenshot](./docs/images/hARMful.jpg)
 
 ## Features
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected:
@@ -35,6 +33,8 @@ hARMful is a young project, leaded by a single developer. It evolves slowly but 
 - Input management (keyboard, mouse, joypad) (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 - ...
+
+![hARMful screenshot](./docs/images/hARMful.jpg)
 
 ## Repository
 The repository is structured in different parts:
