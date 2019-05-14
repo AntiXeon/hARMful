@@ -5,37 +5,6 @@
 
 > Learn more and read the documentation on [https://dcarlus.github.io/hARMful/](https://dcarlus.github.io/hARMful/).
 
-## Features
-hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected:
-- Architecture based on the [Entity-Component-System pattern](https://en.wikipedia.org/wiki/Entity_component_system)
-- Rendering process based on a [framegraph](https://www.ea.com/frostbite/news/framegraph-extensible-rendering-architecture-in-frostbite) to handle render passes
-    - Render to several viewports [[Demo](https://www.youtube.com/watch?v=6DtnK6dwXX4)]
-- Simple Phong material [[Demo](https://www.youtube.com/watch?v=12xEEnEk020)]
-- Texture material [[Demo](https://www.youtube.com/watch?v=cw8zRw-JgJs)]
-- Normal and specular mapping [[Demo](https://www.youtube.com/watch?v=lG_GHQbIHv0)]
-- Alpha channel supporting materials (✗)
-- Order-independent transparency (✗)
-- Physics based rendering materials (✗)
-- Cascade shadow mapping (✗)
-- Forward rendering (✓)
-- Support of deferred rendering (✗)
-- Post-rendering effects:
-    - Anti-aliasing (✗)
-    - Ambient occlusion (✗)
-    - Bloom (✗)
-    - Depth of Field (✗)
-    - Many others...
-- Uniform Buffer Objects (✓)
-- Mesh instancing (✗)
-- Frustum culling (✗)
-- Animations (✗)
-- Cube maps [[Demo](https://www.youtube.com/watch?v=ySbokTOJKbk)]
-- Input management (keyboard, mouse, joypad) (✗)
-- [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
-- ...
-
-![hARMful screenshot](./docs/images/hARMful.jpg)
-
 ## Repository
 The repository is structured in different parts:
 -   **Libraries**: the source code of the libraries that compose the project;
