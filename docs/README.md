@@ -1,4 +1,5 @@
-# hARMful
+# ![hARMful Logo](./images/logo/hARMful_Logo_32.png) hARMful
+
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
 ![hARMful screenshot](./images/hARMful.jpg)
