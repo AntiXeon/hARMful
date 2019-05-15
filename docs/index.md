@@ -7,9 +7,6 @@ layout: default
 
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
-## Documentation
-- [Entity-Component-System](documentation/ECS.html)
-
 ![hARMful screenshot](./images/hARMful.jpg)
 
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
