@@ -1,12 +1,8 @@
 #include <scene/components/materials/DiffuseMaterialComponent.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/BlockBindings.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/BaseDataBlock.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/ModelDataBlock.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/AmountLights.hpp>
-#include <scene/components/materials/shaders/GL/4.5/FunctionsLightCompute.hpp>
-#include <scene/components/materials/shaders/GL/4.5/FunctionsUtility.hpp>
-#include <scene/components/materials/shaders/GL/4.5/MaterialDiffuseMap.hpp>
+#include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
+#include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
+#include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
+#include <scene/components/materials/shaders/GLSL/450/materials/DiffuseMap.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -60,20 +56,19 @@ void DiffuseMaterialComponent::setupDefaultRenderPass() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
-    shaderProgram -> addVertexShaderCode(BlockBindingsFragmentCode) ;
-    shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
-    shaderProgram -> addVertexShaderCode(ModelDataBlockVertexCode) ;
-    shaderProgram -> addVertexShaderCode(MaterialDiffuseMapVertexCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(DiffuseMapForwardVertexCode) ;
     // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(BlockBindingsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
-    shaderProgram -> addFragmentShaderCode(ModelDataBlockVertexCode) ;
-    shaderProgram -> addFragmentShaderCode(AmountLightsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsUtilityFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(MaterialDiffuseMapFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(DiffuseMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

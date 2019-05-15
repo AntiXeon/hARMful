@@ -1,8 +1,8 @@
 #include <scene/components/materials/CubemapMaterialComponent.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/BlockBindings.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/BaseDataBlock.hpp>
-#include <scene/components/materials/shaders/GL/4.5/modules/Directive.hpp>
-#include <scene/components/materials/shaders/GL/4.5/MaterialCubemap.hpp>
+#include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
+#include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
+#include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
+#include <scene/components/materials/shaders/GLSL/450/materials/Cubemap.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -43,15 +43,15 @@ void CubemapMaterialComponent::setupDefaultRenderPass() {
 
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(DirectiveFragmentCode) ;
-    shaderProgram -> addVertexShaderCode(BlockBindingsFragmentCode) ;
-    shaderProgram -> addVertexShaderCode(BaseDataBlockVertexCode) ;
-    shaderProgram -> addVertexShaderCode(MaterialCubemapVertexCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(CubemapForwardVertexCode) ;
     // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(DirectiveFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(BlockBindingsFragmentCode) ;
-    shaderProgram -> addFragmentShaderCode(BaseDataBlockVertexCode) ;
-    shaderProgram -> addFragmentShaderCode(MaterialCubemapFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(CubemapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

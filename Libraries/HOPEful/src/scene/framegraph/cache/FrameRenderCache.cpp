@@ -1,7 +1,7 @@
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
-#include <scene/components/materials/AmountLights.hpp>
+#include <scene/components/materials/shaders/GLSL/includes/AmountLights.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/SceneTypes.hpp>

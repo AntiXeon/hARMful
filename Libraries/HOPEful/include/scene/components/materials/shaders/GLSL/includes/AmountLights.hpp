@@ -1,0 +1,8 @@
+#ifndef HOPE__SHADER_AMOUNT_LIGHTS
+#define HOPE__SHADER_AMOUNT_LIGHTS
+
+#define MAX_DIRECTIONAL_LIGHTS  1
+#define MAX_POINT_LIGHTS        32
+#define MAX_SPOT_LIGHTS         8
+
+#endif

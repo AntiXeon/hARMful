@@ -1,5 +1,5 @@
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
-#include <scene/components/materials/BlockBindings.hpp>
+#include <scene/components/materials/shaders/GLSL/includes/BlockBindings.hpp>
 
 using namespace Hope::GL ;
 

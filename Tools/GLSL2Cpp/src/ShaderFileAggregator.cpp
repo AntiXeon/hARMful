@@ -63,7 +63,7 @@ void ShaderFileAggregator::writeHeaderFiles(
             const std::string FileNameVariable = StringUtils::RemoveUnderscoreChars(file.stem) ;
             const std::string VariableSuffix = getCppVariableSuffixFromExtension(file.extension) ;
 
-            output_file << "extern std::string " << FileNameVariable << VariableSuffix << " ;" << std::endl ;
+            output_file << "extern std::string " << m_shaderName << FileNameVariable << VariableSuffix << " ;" << std::endl ;
         }
 
         output_file << std::endl ;
@@ -108,7 +108,7 @@ void ShaderFileAggregator::writeSourceFiles(
             const std::string FileNameVariable = StringUtils::RemoveUnderscoreChars(file.stem) ;
             const std::string VariableSuffix = getCppVariableSuffixFromExtension(file.extension) ;
 
-            output_file << "std::string " << FileNameVariable << VariableSuffix << " =" << std::endl ;
+            output_file << "std::string " << m_shaderName << FileNameVariable << VariableSuffix << " =" << std::endl ;
             output_file << "\"\\" << std::endl ;
             output_file << FileUtils::GetFileContent(FilePath) ;
             output_file << "\" ;" << std::endl ;

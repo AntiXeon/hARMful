@@ -1,5 +1,5 @@
 #include <scene/components/materials/UniformNames.hpp>
-#include <scene/components/materials/AmountLights.hpp>
+#include <scene/components/materials/shaders/GLSL/includes/AmountLights.hpp>
 #include <utils/StringExt.hpp>
 
 using namespace Hope ;
