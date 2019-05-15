@@ -26,5 +26,6 @@
 
 /* Change the link color to #111 (black) on hover */
 #menubar li a:hover {
-  background-color: #999;
+  color: #fff;
+  background-color: #00a4fd;
 }
