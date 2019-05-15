@@ -1,10 +1,15 @@
 #menubar {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+#menubar ul {
   list-style-type: none;
   max-width: 64rem;
   margin: 0 auto;
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
 }
 
 #menubar li {
