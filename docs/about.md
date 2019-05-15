@@ -3,8 +3,6 @@ layout: default
 title: About
 ---
 
-![hARMful banner](assets/images/logo/hARMful_Preview.png)
-
 hARMful was - at its very beginning - an idea. It was the idea of a 3D video game I could never produce as it would be too complicated to create for a single developer. In this survival video game, the player was in danger in a very hostile environment.
 
 Later, this idea became a little bit more concrete for a project at the engineering school on a Raspberry Pi. I compiled the Irrlicht game engine on this platform to create a small 3D application in splitscreen with a classmate. The aim was to control two players on the same computer with two keyboards and mouses. Moreover, I began to develop a kind of character behavior during this project. This was what hARMful looked like at this time: a naive video game artificial intelligence.
@@ -24,3 +22,5 @@ The name of each library has a signification:
 The logo of the engine is inspired by the pun of its name. It represents a *box jellyfish*  that is know to be a dangerous cube-shaped medusae. As one knows, cubes are among the simpliest shapes in 3D worlds, so that is symbolize my wish to create an easy-to-use 3D engine as well. But the representation of the box jellyfish is intented to remind a microcontroller unit as well with its numerous pins.
 
 That's it, you know the secrets of the hARMful project!
+
+![hARMful banner](assets/images/logo/hARMful_Preview.png)

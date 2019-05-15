@@ -1,9 +1,7 @@
 ---
-title: hARMful engine
+title: hARMful
 layout: default
 ---
-
-# ![hARMful Logo](./assets/images/logo/hARMful_Logo_32.png) hARMful
 
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
