@@ -3,14 +3,14 @@ title: hARMful engine
 layout: default
 ---
 
-# ![hARMful Logo](./images/logo/hARMful_Logo_32.png) hARMful
+# ![hARMful Logo](./_posts/images/logo/hARMful_Logo_32.png) hARMful
 
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
 ## Documentation
 - [Entity-Component-System](documentation/ECS.html)
 
-![hARMful screenshot](./images/hARMful.jpg)
+![hARMful screenshot](./_posts/images/hARMful.jpg)
 
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
 Some of them are already implemented and a demonstration video is available. A "✗" symbol indicates that the feature is not yet implemented; a "✓" symbol is used to signal non-graphic features that are implemented.
