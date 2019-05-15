@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #777;
+  background-color: #CCC;
 }
 
 #menubar ul {
@@ -26,5 +26,5 @@
 
 /* Change the link color to #111 (black) on hover */
 #menubar li a:hover {
-  background-color: #555;
+  background-color: #999;
 }
