@@ -21,6 +21,6 @@ The name of each library has a signification:
 * **HOPE**: Handy OpenGL and Physics Engines
 * **SPITE**: Saving and Parsing Images, Texts and Extra
 
-The logo of the engine is inspired by the pun of its name. It represents a *box jellyfish*  that is know to be a cube-shaped medusae. As one knows, cubes are among the simpliest shapes in 3D worlds, so that is symbolize my wish to create an easy-to-use 3D engine as well. But the representation of the box jellyfish is intented to remind a microcontroller unit as well with its numerous pins.
+The logo of the engine is inspired by the pun of its name. It represents a *box jellyfish*  that is know to be a dangerous cube-shaped medusae. As one knows, cubes are among the simpliest shapes in 3D worlds, so that is symbolize my wish to create an easy-to-use 3D engine as well. But the representation of the box jellyfish is intented to remind a microcontroller unit as well with its numerous pins.
 
 That's it, you know the secrets of the hARMful project!
