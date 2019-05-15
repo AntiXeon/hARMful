@@ -1,6 +1,5 @@
 ---
 ---
-@import "main" ;
 @import "{{ site.theme }}" ;
 
 .current {
