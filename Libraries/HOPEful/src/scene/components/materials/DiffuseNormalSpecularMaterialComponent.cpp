@@ -86,6 +86,7 @@ void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 

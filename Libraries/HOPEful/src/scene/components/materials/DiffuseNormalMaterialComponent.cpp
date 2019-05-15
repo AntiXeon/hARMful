@@ -80,6 +80,7 @@ void DiffuseNormalMaterialComponent::setupDefaultRenderPass() {
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
