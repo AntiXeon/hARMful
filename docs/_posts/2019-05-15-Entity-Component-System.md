@@ -3,9 +3,7 @@ layout: post
 author: dcarlus
 ---
 
-# Entity-Component-System
 hARMful uses the ECS pattern to build a 3D scene. ECS uses composition instead of inheritance to bring a higher flexibility. For example, while the application is running and displays your 3D scene, you can replace a mesh by another one.
-If you do not know what is ECS, here is a quick explanation.
 
 ## Scene graph
 The scene is represented by a graph, called the scene graph. As it is a graph, there are nodes with a parenthood relation.
