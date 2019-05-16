@@ -46,6 +46,34 @@ void Window::run() {
     }
 }
 
+void Window::windowed() const {
+    int xpos, ypos ;
+    glfwGetWindowPos(m_window, &xpos, &ypos) ;
+
+    int width, height ;
+    glfwGetWindowSize(m_window, &width, &height) ;
+
+    glfwSetWindowMonitor(m_window, nullptr, xpos, ypos, width, height, 0) ;
+}
+
+void Window::fullscreen() const {
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor() ;
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor) ;
+    glfwSetWindowMonitor(m_window, monitor, 0, 0, mode -> width, mode -> height, mode -> refreshRate) ;
+}
+
+void Window::showMouseCursor() const {
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL) ;
+}
+
+void Window::hideMouseCursor() const {
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN) ;
+}
+
+void Window::disableMouseCursor() const {
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED) ;
+}
+
 void Window::createInternalWindow(
     const int width,
     const int height,

@@ -57,6 +57,30 @@ namespace Hope { namespace GL {
                 return m_scene ;
             }
 
+            /**
+             * Switch to windowed window.
+             */
+            void windowed() const ;
+
+            /**
+             * Switch to fullscreen.
+             */
+            void fullscreen() const ;
+
+            /**
+             * Show the mouse cursor.
+             */
+            void showMouseCursor() const ;
+
+            /**
+             * Hide the mouse cursor.
+             */
+            void hideMouseCursor() const ;
+
+            /**
+             * Hide and lock the mouse cursor inside the window.
+             */
+            void disableMouseCursor() const ;
 
             // Remove copy/move operations.
             Window(const Window& copied) = delete ;
