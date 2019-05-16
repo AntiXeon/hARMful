@@ -13,10 +13,9 @@ Some of them are already implemented and a demonstration video is available. A "
 ## Features of HOPEful
 - Architecture based on the [Entity-Component-System pattern](https://en.wikipedia.org/wiki/Entity_component_system)
 - Rendering process based on a [framegraph](https://www.ea.com/frostbite/news/framegraph-extensible-rendering-architecture-in-frostbite) to handle render passes
-    - Render to several viewports [[Demo](https://www.youtube.com/watch?v=6DtnK6dwXX4)]
-- Simple Phong material [[Demo](https://www.youtube.com/watch?v=12xEEnEk020)]
-- Texture material [[Demo](https://www.youtube.com/watch?v=cw8zRw-JgJs)]
-- Normal and specular mapping [[Demo](https://www.youtube.com/watch?v=lG_GHQbIHv0)]
+    - Render to several viewports [[Demo](https://www.youtube.com/watch?v=ElPDwyt3TtE)]
+- Blinn-Phong material [[Demo](https://www.youtube.com/watch?v=WdcBg3hA-xQ)]
+- Diffuse, normal and specular maps material [[Demo](https://www.youtube.com/watch?v=KRRrB-G3OOY)]
 - Alpha channel supporting materials (✗)
 - Order-independent transparency (✗)
 - Physics based rendering materials (✗)
@@ -34,7 +33,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Mesh instancing (✗)
 - Frustum culling (✗)
 - Animations (✗)
-- Cube maps [[Demo](https://www.youtube.com/watch?v=ySbokTOJKbk)]
+- Cube maps (✓)
 - Input management (keyboard, mouse, joypad) (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 
