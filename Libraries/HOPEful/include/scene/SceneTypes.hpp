@@ -9,10 +9,10 @@ namespace Hope {
     typedef unsigned int RenderPassID ;
 
     #define DefaultPassID   0       // Default render pass ID.
-    #define DiffuseID       1       // ID for a diffuse render pass (deferred rendering).
-    #define NormalID        2       // ID for a normal render pass (deferred rendering).
-    #define SpecularID      3       // ID for a specular render pass (deferred rendering).
-    #define PositionID      4       // ID for a position render pass (deferred rendering).
+    #define AlbedoPassID    1       // ID for a albedo (diffuse) render pass (deferred rendering).
+    #define NormalPassID    2       // ID for a normal render pass (deferred rendering).
+    #define SpecularPassID  3       // ID for a specular render pass (deferred rendering).
+    #define PositionPassID  4       // ID for a position render pass (deferred rendering).
 
 
     /**

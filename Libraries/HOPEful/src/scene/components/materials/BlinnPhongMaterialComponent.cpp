@@ -47,25 +47,100 @@ void BlinnPhongMaterialComponent::setupUniforms() {
 }
 
 void BlinnPhongMaterialComponent::setupDefaultRenderPass() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
-    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
-    // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(BlinnPhongForwardVertexCode) ;
-    // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
-    shaderProgram -> build() ;
+    // Forward render pass.
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongForwardVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
+        shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Albedo [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(AlbedoPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexPositionVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredAlbedoFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Position [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(PositionPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexPositionVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredPositionFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Normal [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(NormalPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexNormalVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredNormalFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Specular [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(SpecularPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexNormalVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredSpecularFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
 }
 
 void BlinnPhongMaterialComponent::setupDiffuseRenderPass() {

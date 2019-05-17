@@ -71,26 +71,100 @@ void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
-    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
-    // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapForwardVertexCode) ;
-    // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
-    shaderProgram -> build() ;
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapForwardVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
+        shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Albedo [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(AlbedoPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexPositionVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredAlbedoFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Position [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(PositionPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexPositionVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredPositionFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Normal [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(NormalPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexNormalVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredNormalFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
+
+    // Specular [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(SpecularPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexNormalVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredSpecularFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupDiffuseRenderPass() {

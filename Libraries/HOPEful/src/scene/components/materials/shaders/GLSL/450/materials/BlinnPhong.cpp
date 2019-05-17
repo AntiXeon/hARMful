@@ -65,7 +65,7 @@ layout(location = 0) out vec3 outNormal ;\n\
 \n\
 void main() {\n\
     gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
-    outNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;\n\
+    outNormal = (modelMatrix * vec4(normal, 0.f)).xyz ;\n\
 }\n\
 " ;
 
@@ -77,19 +77,19 @@ layout(location = 0) in vec3 normal ;\n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vec4(normal, 1.f) ;\n\
+    outColor = vec4(normalize(normal), 1.f) ;\n\
 }\n\
 " ;
 
 std::string BlinnPhongDeferredPositionFragmentCode =
 "\
 // Blinn-Phong material shader.\n\
-layout(location = 0) in vec4 vertexWorldPosition ;\n\
+layout(location = 0) in vec3 vertexWorldPosition ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vertexWorldPosition ;\n\
+    outColor = vec4(vertexWorldPosition, 1.f) ;\n\
 }\n\
 " ;
 
@@ -140,14 +140,13 @@ std::string BlinnPhongDeferredVertexPositionVertexCode =
 "\
 layout(location = 0) in vec3 position ;\n\
 \n\
-layout(location = 0) out vec4 vertexWorldPosition ;\n\
+layout(location = 0) out vec3 vertexWorldPosition ;\n\
 \n\
 void main() {\n\
     vec4 position4D = vec4(position, 1.f) ;\n\
     gl_Position = mvpMatrix * position4D ;\n\
 \n\
-    vec4 vertexPosition4D = modelViewMatrix * position4D ;\n\
-    vertexWorldPosition = vec4(vertexPosition4D) / vertexPosition4D.w ;\n\
+    vertexWorldPosition = (modelMatrix * position4D).xyz ;\n\
 }\n\
 " ;
 
