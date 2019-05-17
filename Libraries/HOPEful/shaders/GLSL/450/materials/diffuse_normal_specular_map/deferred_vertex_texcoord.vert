@@ -1,10 +1,10 @@
 // Diffuse/normal/specular material shader.
 layout(location = 0) in vec3 position ;
-layout(location = 2) in vec3 normal ;
+layout(location = 1) in vec2 texCoord ;
 
-layout(location = 0) out vec3 outNormal ;
+layout(location = 0) out vec2 outTexCoord ;
 
 void main() {
     gl_Position = mvpMatrix * vec4(position, 1.f) ;
-    outNormal = (modelMatrix * vec4(normal, 0.f)).xyz ;
+    outTexCoord = texCoord ;
 }

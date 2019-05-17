@@ -165,6 +165,24 @@ void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
 
         effect().addRenderPass(renderPass) ;
     }
+
+    // Texture coordinates [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(TexCoordPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexTexcoordVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredTexcoordFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupDiffuseRenderPass() {

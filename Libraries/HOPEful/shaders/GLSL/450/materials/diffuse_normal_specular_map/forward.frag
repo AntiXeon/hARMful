@@ -1,4 +1,4 @@
-// Blinn-Phong material shader using diffuse and normal maps.
+// Diffuse/normal/specular material shader using diffuse and normal maps.
 
 struct Material {
     layout(binding = 0) sampler2D diffuse ;

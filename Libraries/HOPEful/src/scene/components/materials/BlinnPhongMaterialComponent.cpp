@@ -141,6 +141,24 @@ void BlinnPhongMaterialComponent::setupDefaultRenderPass() {
 
         effect().addRenderPass(renderPass) ;
     }
+
+    // Texture coordinates [deferred rendering] render pass
+    {
+        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(TexCoordPassID) ;
+        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+        // Vertex shader code.
+        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexTexcoordVertexCode) ;
+        // Fragment shader code.
+        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredTexcoordFragmentCode) ;
+        shaderProgram -> build() ;
+
+        effect().addRenderPass(renderPass) ;
+    }
 }
 
 void BlinnPhongMaterialComponent::setupDiffuseRenderPass() {

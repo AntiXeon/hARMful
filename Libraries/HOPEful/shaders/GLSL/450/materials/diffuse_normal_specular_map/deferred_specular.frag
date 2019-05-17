@@ -1,4 +1,4 @@
-// Blinn-Phong material shader.
+// Diffuse/normal/specular material shader.
 
 struct Material {
     vec3 ambient ;

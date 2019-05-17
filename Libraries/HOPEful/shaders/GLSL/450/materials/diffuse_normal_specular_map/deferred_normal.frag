@@ -1,4 +1,4 @@
-// Blinn-Phong material shader.
+// Diffuse/normal/specular material shader.
 layout(location = 0) in vec3 normal ;
 
 out vec4 outColor ;

@@ -8,8 +8,10 @@ extern std::string DiffuseNormalSpecularMapDeferredVertexPositionVertexCode ;
 extern std::string DiffuseNormalSpecularMapDeferredAlbedoFragmentCode ;
 extern std::string DiffuseNormalSpecularMapDeferredVertexNormalVertexCode ;
 extern std::string DiffuseNormalSpecularMapDeferredSpecularFragmentCode ;
+extern std::string DiffuseNormalSpecularMapDeferredTexcoordFragmentCode ;
 extern std::string DiffuseNormalSpecularMapForwardVertexCode ;
 extern std::string DiffuseNormalSpecularMapForwardFragmentCode ;
+extern std::string DiffuseNormalSpecularMapDeferredVertexTexcoordVertexCode ;
 extern std::string DiffuseNormalSpecularMapDeferredNormalFragmentCode ;
 extern std::string DiffuseNormalSpecularMapDeferredPositionFragmentCode ;
 

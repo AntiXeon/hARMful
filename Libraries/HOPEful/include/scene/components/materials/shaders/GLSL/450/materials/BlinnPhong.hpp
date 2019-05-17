@@ -8,8 +8,10 @@ extern std::string BlinnPhongDeferredVertexPositionVertexCode ;
 extern std::string BlinnPhongDeferredAlbedoFragmentCode ;
 extern std::string BlinnPhongDeferredVertexNormalVertexCode ;
 extern std::string BlinnPhongDeferredSpecularFragmentCode ;
+extern std::string BlinnPhongDeferredTexcoordFragmentCode ;
 extern std::string BlinnPhongForwardVertexCode ;
 extern std::string BlinnPhongForwardFragmentCode ;
+extern std::string BlinnPhongDeferredVertexTexcoordVertexCode ;
 extern std::string BlinnPhongDeferredNormalFragmentCode ;
 extern std::string BlinnPhongDeferredPositionFragmentCode ;
 

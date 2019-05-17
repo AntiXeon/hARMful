@@ -1,3 +1,4 @@
+// Diffuse/normal/specular material shader.
 layout(location = 0) in vec3 position ;
 
 layout(location = 0) out vec3 vertexWorldPosition ;

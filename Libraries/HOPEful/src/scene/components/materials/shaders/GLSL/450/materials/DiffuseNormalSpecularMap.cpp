@@ -3,6 +3,7 @@
 
 std::string DiffuseNormalSpecularMapDeferredVertexPositionVertexCode =
 "\
+// Diffuse/normal/specular material shader.\n\
 layout(location = 0) in vec3 position ;\n\
 \n\
 layout(location = 0) out vec3 vertexWorldPosition ;\n\
@@ -17,7 +18,7 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapDeferredAlbedoFragmentCode =
 "\
-// Blinn-Phong material shader.\n\
+// Diffuse/normal/specular material shader.\n\
 \n\
 struct Material {\n\
     vec3 ambient ;\n\
@@ -36,6 +37,7 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapDeferredVertexNormalVertexCode =
 "\
+// Diffuse/normal/specular material shader.\n\
 layout(location = 0) in vec3 position ;\n\
 layout(location = 2) in vec3 normal ;\n\
 \n\
@@ -49,7 +51,7 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapDeferredSpecularFragmentCode =
 "\
-// Blinn-Phong material shader.\n\
+// Diffuse/normal/specular material shader.\n\
 \n\
 struct Material {\n\
     vec3 ambient ;\n\
@@ -67,8 +69,21 @@ void main() {\n\
 }\n\
 " ;
 
+std::string DiffuseNormalSpecularMapDeferredTexcoordFragmentCode =
+"\
+// Diffuse/normal/specular material shader.\n\
+layout(location = 0) in vec2 texCoord ;\n\
+\n\
+out vec4 outColor ;\n\
+\n\
+void main() {\n\
+    outColor = vec4(texCoord, 0.f, 1.f) ;\n\
+}\n\
+" ;
+
 std::string DiffuseNormalSpecularMapForwardVertexCode =
 "\
+// Diffuse/normal/specular material shader.\n\
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
@@ -105,7 +120,7 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapForwardFragmentCode =
 "\
-// Blinn-Phong material shader using diffuse and normal maps.\n\
+// Diffuse/normal/specular material shader using diffuse and normal maps.\n\
 \n\
 struct Material {\n\
     layout(binding = 0) sampler2D diffuse ;\n\
@@ -143,9 +158,23 @@ void main() {\n\
 }\n\
 " ;
 
+std::string DiffuseNormalSpecularMapDeferredVertexTexcoordVertexCode =
+"\
+// Diffuse/normal/specular material shader.\n\
+layout(location = 0) in vec3 position ;\n\
+layout(location = 1) in vec2 texCoord ;\n\
+\n\
+layout(location = 0) out vec2 outTexCoord ;\n\
+\n\
+void main() {\n\
+    gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
+    outTexCoord = texCoord ;\n\
+}\n\
+" ;
+
 std::string DiffuseNormalSpecularMapDeferredNormalFragmentCode =
 "\
-// Blinn-Phong material shader.\n\
+// Diffuse/normal/specular material shader.\n\
 layout(location = 0) in vec3 normal ;\n\
 \n\
 out vec4 outColor ;\n\
@@ -157,7 +186,7 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapDeferredPositionFragmentCode =
 "\
-// Blinn-Phong material shader.\n\
+// Diffuse/normal/specular material shader.\n\
 layout(location = 0) in vec3 vertexWorldPosition ;\n\
 \n\
 out vec4 outColor ;\n\
