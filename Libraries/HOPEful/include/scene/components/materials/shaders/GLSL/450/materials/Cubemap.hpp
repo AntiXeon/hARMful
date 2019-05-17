@@ -4,7 +4,7 @@
 
 #include <string>
 
-extern std::string CubemapForwardFragmentCode ;
 extern std::string CubemapForwardVertexCode ;
+extern std::string CubemapForwardFragmentCode ;
 
 #endif

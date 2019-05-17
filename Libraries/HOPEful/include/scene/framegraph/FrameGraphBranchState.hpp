@@ -14,7 +14,7 @@ namespace Hope {
             /**
              * Render pass ID to use for rendering the current branch.
              */
-            RenderPassID m_renderPassID = DefaultPassID ;
+            RenderPassID m_renderPassID = ForwardPassID ;
 
             /**
              * Active camera for the current branch.

@@ -65,7 +65,7 @@ void DiffuseNormalMaterialComponent::setupUniforms() {
 }
 
 void DiffuseNormalMaterialComponent::setupDefaultRenderPass() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;

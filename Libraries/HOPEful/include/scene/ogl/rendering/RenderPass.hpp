@@ -17,7 +17,7 @@ namespace Hope::GL {
             /**
              * ID of the pass.
              */
-            RenderPassID m_id = DefaultPassID ;
+            RenderPassID m_id = ForwardPassID ;
 
             /**
              * List of the options.
@@ -38,7 +38,7 @@ namespace Hope::GL {
             /**
              * Create a render pass.
              */
-            RenderPass(const RenderPassID id = DefaultPassID) ;
+            RenderPass(const RenderPassID id = ForwardPassID) ;
 
             /**
              * Add a filter option.

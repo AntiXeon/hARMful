@@ -36,7 +36,7 @@ void CubemapMaterialComponent::setupUniforms() {
 }
 
 void CubemapMaterialComponent::setupDefaultRenderPass() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DefaultPassID) ;
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(depthTest) ;
