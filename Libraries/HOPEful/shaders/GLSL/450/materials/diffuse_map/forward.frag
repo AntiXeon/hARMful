@@ -1,4 +1,4 @@
-// Blinn-Phong material shader using a diffuse map.
+// Diffuse material shader using a diffuse map.
 
 struct Material {
     vec3 ambient ;

@@ -3,6 +3,7 @@
 
 std::string DiffuseNormalMapForwardVertexCode =
 "\
+// Blinn-Phong material shader using diffuse and normal maps.\n\
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\

@@ -103,7 +103,7 @@ void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
         shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
         shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
         shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
-        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexPositionVertexCode) ;
+        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexTexcoordVertexCode) ;
         // Fragment shader code.
         shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
         shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredAlbedoFragmentCode) ;
@@ -142,6 +142,10 @@ void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
         shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexNormalVertexCode) ;
         // Fragment shader code.
         shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+        shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
         shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredNormalFragmentCode) ;
         shaderProgram -> build() ;
 
@@ -157,28 +161,10 @@ void DiffuseNormalSpecularMaterialComponent::setupDefaultRenderPass() {
         shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
         shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
         shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
-        shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexNormalVertexCode) ;
-        // Fragment shader code.
-        shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredSpecularFragmentCode) ;
-        shaderProgram -> build() ;
-
-        effect().addRenderPass(renderPass) ;
-    }
-
-    // Texture coordinates [deferred rendering] render pass
-    {
-        std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(TexCoordPassID) ;
-        std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
-        // Vertex shader code.
-        shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-        shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
-        shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
-        shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
         shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexTexcoordVertexCode) ;
         // Fragment shader code.
         shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredTexcoordFragmentCode) ;
+        shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredSpecularFragmentCode) ;
         shaderProgram -> build() ;
 
         effect().addRenderPass(renderPass) ;

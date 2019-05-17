@@ -67,18 +67,6 @@ void main() {\n\
 }\n\
 " ;
 
-std::string BlinnPhongDeferredTexcoordFragmentCode =
-"\
-// Blinn-Phong material shader.\n\
-layout(location = 0) in vec2 texCoord ;\n\
-\n\
-out vec4 outColor ;\n\
-\n\
-void main() {\n\
-    outColor = vec4(texCoord, 0.f, 1.f) ;\n\
-}\n\
-" ;
-
 std::string BlinnPhongForwardVertexCode =
 "\
 layout(location = 0) in vec3 position ;\n\
@@ -135,19 +123,6 @@ void main() {\n\
     vec3 colorLinear = material.ambient + ComputeLightsContribution(inViewDirection, currentFragment) ;\n\
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;\n\
     outColor = vec4(colorGammaCorrected, 1.f) ;\n\
-}\n\
-" ;
-
-std::string BlinnPhongDeferredVertexTexcoordVertexCode =
-"\
-layout(location = 0) in vec3 position ;\n\
-layout(location = 1) in vec2 texCoord ;\n\
-\n\
-layout(location = 0) out vec2 outTexCoord ;\n\
-\n\
-void main() {\n\
-    gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
-    outTexCoord = texCoord ;\n\
 }\n\
 " ;
 

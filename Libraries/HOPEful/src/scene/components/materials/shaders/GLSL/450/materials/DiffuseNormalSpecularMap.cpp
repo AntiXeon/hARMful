@@ -21,31 +21,48 @@ std::string DiffuseNormalSpecularMapDeferredAlbedoFragmentCode =
 // Diffuse/normal/specular material shader.\n\
 \n\
 struct Material {\n\
+    layout(binding = 0) sampler2D diffuse ;\n\
+    layout(binding = 1) sampler2D normal ;\n\
+    layout(binding = 2) sampler2D specular ;\n\
     vec3 ambient ;\n\
-    vec3 diffuse ;\n\
-    vec3 specular ;\n\
     float shininess ;\n\
 } ;\n\
 \n\
 uniform Material material ;\n\
+\n\
+layout(location = 0) in vec2 inTexCoord ;\n\
+\n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vec4(material.diffuse, 1.f) ;\n\
+    vec3 textureColor = texture(material.diffuse, inTexCoord).rgb ;\n\
+    outColor = vec4(textureColor, 1.f) ;\n\
 }\n\
 " ;
 
 std::string DiffuseNormalSpecularMapDeferredVertexNormalVertexCode =
 "\
-// Diffuse/normal/specular material shader.\n\
+// Diffuse/normal material shader.\n\
 layout(location = 0) in vec3 position ;\n\
+layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
+layout(location = 3) in vec3 tangent ;\n\
+layout(location = 4) in vec3 bitangent ;\n\
 \n\
-layout(location = 0) out vec3 outNormal ;\n\
+layout(location = 0) out vec2 outTexCoord ;\n\
+layout(location = 1) out mat3 outTBNMatrix ;\n\
+\n\
+void correctTBNMatrix() {\n\
+    vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;\n\
+    vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;\n\
+    vec3 correctedNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;\n\
+    outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;\n\
+}\n\
 \n\
 void main() {\n\
+    correctTBNMatrix() ;\n\
+    outTexCoord = texCoord ;\n\
     gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
-    outNormal = (modelMatrix * vec4(normal, 0.f)).xyz ;\n\
 }\n\
 " ;
 
@@ -54,18 +71,22 @@ std::string DiffuseNormalSpecularMapDeferredSpecularFragmentCode =
 // Diffuse/normal/specular material shader.\n\
 \n\
 struct Material {\n\
+    layout(binding = 0) sampler2D diffuse ;\n\
+    layout(binding = 1) sampler2D normal ;\n\
+    layout(binding = 2) sampler2D specular ;\n\
     vec3 ambient ;\n\
-    vec3 diffuse ;\n\
-    vec3 specular ;\n\
     float shininess ;\n\
 } ;\n\
 \n\
 uniform Material material ;\n\
 \n\
+layout(location = 0) in vec2 inTexCoord ;\n\
+\n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vec4(material.specular, material.shininess) ;\n\
+    vec3 specularValue = vec3(texture(material.specular, inTexCoord).r) ;\n\
+    outColor = vec4(specularValue, material.shininess) ;\n\
 }\n\
 " ;
 
@@ -174,13 +195,27 @@ void main() {\n\
 
 std::string DiffuseNormalSpecularMapDeferredNormalFragmentCode =
 "\
-// Diffuse/normal/specular material shader.\n\
-layout(location = 0) in vec3 normal ;\n\
+// Diffuse/normal material shader.\n\
+struct Material {\n\
+    layout(binding = 0) sampler2D diffuse ;\n\
+    layout(binding = 1) sampler2D normal ;\n\
+    vec3 ambient ;\n\
+    vec3 specular ;\n\
+    float shininess ;\n\
+} ;\n\
+\n\
+uniform Material material ;\n\
+\n\
+layout(location = 0) in vec2 inTexCoord ;\n\
+layout(location = 1) in mat3 inTBNMatrix ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vec4(normalize(normal), 1.f) ;\n\
+    vec3 normalVector = texture(material.normal, inTexCoord).rgb ;\n\
+    normalVector = AdjustNormalVector(inTBNMatrix, normalVector) ;\n\
+\n\
+    outColor = vec4(normalVector, 1.f) ;\n\
 }\n\
 " ;
 

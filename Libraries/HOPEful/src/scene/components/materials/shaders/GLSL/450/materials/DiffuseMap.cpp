@@ -3,6 +3,7 @@
 
 std::string DiffuseMapForwardVertexCode =
 "\
+// Diffuse material shader using a diffuse map.\n\
 layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
@@ -27,7 +28,7 @@ void main() {\n\
 
 std::string DiffuseMapForwardFragmentCode =
 "\
-// Blinn-Phong material shader using a diffuse map.\n\
+// Diffuse material shader using a diffuse map.\n\
 \n\
 struct Material {\n\
     vec3 ambient ;\n\
