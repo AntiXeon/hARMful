@@ -128,22 +128,23 @@ namespace Hope {
             /**
              * Setup the diffuse render pass (used by deferred rendering, ...).
              */
-            void setupAlbedoRenderPass() override ;
+            void setupAlbedoRenderPass() override {
+                useAlbedoColorPass() ;
+            }
 
             /**
              * Setup the normal render pass (used by deferred rendering, ...).
              */
-            void setupNormalRenderPass() override ;
+            void setupNormalRenderPass() override {
+                useGeometryNormalPass() ;
+            }
 
             /**
              * Setup the specular render pass (used by deferred rendering, ...).
              */
-            void setupSpecularRenderPass() override ;
-
-            /**
-             * Setup the position render pass (used by deferred rendering, ...).
-             */
-            void setupPositionRenderPass() override ;
+            void setupSpecularRenderPass() override {
+                useSpecularColorPass() ;
+            }
 
         private:
             /**

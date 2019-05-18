@@ -68,14 +68,24 @@ namespace Hope {
 
         protected:
             /**
+             * Generate the albedo render pass as it is the same for both
+             * forward and albedo render passes.
+             */
+            void generateAlbedoRenderPass(const RenderPassID target) ;
+
+            /**
              * Setup the forward render pass.
              */
-            void setupForwardRenderPass() override ;
+            void setupForwardRenderPass() override {
+                generateAlbedoRenderPass(ForwardPassID) ;
+            }
 
             /**
              * Setup the diffuse render pass (used by deferred rendering, ...).
              */
-            void setupAlbedoRenderPass() override {}
+            void setupAlbedoRenderPass() override {
+                generateAlbedoRenderPass(AlbedoPassID) ;
+            }
 
             /**
              * Setup the normal render pass (used by deferred rendering, ...).
@@ -86,11 +96,6 @@ namespace Hope {
              * Setup the specular render pass (used by deferred rendering, ...).
              */
             void setupSpecularRenderPass() override {}
-
-            /**
-             * Setup the position render pass (used by deferred rendering, ...).
-             */
-            void setupPositionRenderPass() override {}
 
         private:
             /**

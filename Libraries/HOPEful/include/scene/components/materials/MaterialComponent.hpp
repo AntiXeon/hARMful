@@ -128,7 +128,12 @@ namespace Hope {
                 return m_shaderUniforms[name] ;
             }
 
-            void setupRendering() ;
+            /**
+             * Setup the render passes of the material.
+             * @param   generatePosition    true to generate the position render
+             *                              pass; false to not use it.
+             */
+            void setupRendering(const bool generatePosition = true) ;
 
             /**
              * Setup the forward render pass.
@@ -153,7 +158,38 @@ namespace Hope {
             /**
              * Setup the position render pass (used by deferred rendering, ...).
              */
-            virtual void setupPositionRenderPass() = 0 ;
+            void setupPositionRenderPass() ;
+
+
+            /**
+             * Generate the render pass using the albedo color of the material.
+             */
+            void useAlbedoColorPass() ;
+
+            /**
+             * Generate the render pass using the albedo texture of the material.
+             */
+            void useAlbedoMapPass() ;
+
+            /**
+             * Generate the render pass using only the normal of the geometry.
+             */
+            void useGeometryNormalPass() ;
+
+            /**
+             * Generate the render pass using the normal map texture.
+             */
+            void useNormalMapPass() ;
+
+            /**
+             * Generate the render pass using the specular values of the material.
+             */
+            void useSpecularColorPass() ;
+
+            /**
+             * Generate the render pass using the specular map of the material.
+             */
+            void useSpecularMapPass() ;
     } ;
 }
 

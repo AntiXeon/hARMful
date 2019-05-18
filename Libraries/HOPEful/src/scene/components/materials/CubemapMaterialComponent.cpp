@@ -13,7 +13,8 @@ using namespace Hope ;
 CubemapMaterialComponent::CubemapMaterialComponent()
     : MaterialComponent(),
       m_map(nullptr) {
-    setupRendering() ;
+    static const bool GeneratePosition = false ;
+    setupRendering(GeneratePosition) ;
     setupUniforms() ;
 }
 
@@ -35,8 +36,8 @@ void CubemapMaterialComponent::setupUniforms() {
     addShaderUniform(cubemapUniform) ;
 }
 
-void CubemapMaterialComponent::setupForwardRenderPass() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
+void CubemapMaterialComponent::generateAlbedoRenderPass(const RenderPassID target) {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(target) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(depthTest) ;

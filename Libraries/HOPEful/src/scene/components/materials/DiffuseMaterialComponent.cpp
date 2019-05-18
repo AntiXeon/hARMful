@@ -74,15 +74,3 @@ void DiffuseMaterialComponent::setupForwardRenderPass() {
 
     effect().addRenderPass(renderPass) ;
 }
-
-void DiffuseMaterialComponent::setupAlbedoRenderPass() {
-}
-
-void DiffuseMaterialComponent::setupNormalRenderPass() {
-}
-
-void DiffuseMaterialComponent::setupSpecularRenderPass() {
-}
-
-void DiffuseMaterialComponent::setupPositionRenderPass() {
-}
