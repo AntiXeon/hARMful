@@ -45,7 +45,9 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            virtual void updateUniformValues() {}
+            virtual void updateUniformValues(const RenderPassID) {}
+
+            virtual void end(const RenderPassID) {}
 
             /**
              * To know if the component can be shared by several entities.

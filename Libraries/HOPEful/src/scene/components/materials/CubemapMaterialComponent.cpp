@@ -21,7 +21,7 @@ CubemapMaterialComponent::~CubemapMaterialComponent() {
     delete m_map ;
 }
 
-void CubemapMaterialComponent::updateUniformValues() {
+void CubemapMaterialComponent::updateUniformValues(const RenderPassID) {
     if (m_map) {
         m_map -> activate() ;
         m_map -> bind() ;

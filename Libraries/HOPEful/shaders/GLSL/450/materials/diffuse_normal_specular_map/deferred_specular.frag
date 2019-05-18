@@ -1,10 +1,7 @@
 // Diffuse/normal/specular material shader.
 
 struct Material {
-    layout(binding = 0) sampler2D diffuse ;
-    layout(binding = 1) sampler2D normal ;
-    layout(binding = 2) sampler2D specular ;
-    vec3 ambient ;
+    sampler2D specular ;
     float shininess ;
 } ;
 

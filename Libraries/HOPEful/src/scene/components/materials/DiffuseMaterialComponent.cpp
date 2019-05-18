@@ -22,7 +22,7 @@ DiffuseMaterialComponent::~DiffuseMaterialComponent() {
     delete m_diffuse ;
 }
 
-void DiffuseMaterialComponent::updateUniformValues() {
+void DiffuseMaterialComponent::updateUniformValues(const RenderPassID) {
     if (m_diffuse) {
         m_diffuse -> activate(DiffuseMapBinding) ;
         m_diffuse -> bind() ;

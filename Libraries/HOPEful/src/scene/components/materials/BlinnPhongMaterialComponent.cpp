@@ -21,7 +21,7 @@ BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
     setupUniforms() ;
 }
 
-void BlinnPhongMaterialComponent::updateUniformValues() {
+void BlinnPhongMaterialComponent::updateUniformValues(const RenderPassID) {
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
     uniform(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
     uniform(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;

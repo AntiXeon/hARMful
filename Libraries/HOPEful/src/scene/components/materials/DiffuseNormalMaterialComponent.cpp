@@ -24,7 +24,7 @@ DiffuseNormalMaterialComponent::~DiffuseNormalMaterialComponent() {
     delete m_normal ;
 }
 
-void DiffuseNormalMaterialComponent::updateUniformValues() {
+void DiffuseNormalMaterialComponent::updateUniformValues(const RenderPassID) {
     if (m_diffuse) {
         m_diffuse -> activate(DiffuseMapBinding) ;
         m_diffuse -> bind() ;

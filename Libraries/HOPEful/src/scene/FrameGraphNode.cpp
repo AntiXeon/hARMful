@@ -56,7 +56,8 @@ void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
     }
     else {
         // Otherwise continue parsing the tree.
-        if (amountChildren > 1) {
+        // Do a backup if there is more than one child. Backup for each of them!
+        for (size_t index = 1 ; index < amountChildren ; ++index) {
             visitor -> backupRenderConditions() ;
         }
 

@@ -25,7 +25,7 @@ void OpenGLRenderer::render(
         geometry -> bind() ;
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
-            material -> updateUniformValues() ;
+            material -> updateUniformValues(renderPassID) ;
             std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
 
             if (!renderPass) {
@@ -54,6 +54,8 @@ void OpenGLRenderer::render(
                 amountParts
             ) ;
             disableCapabilities(renderPass) ;
+
+            material -> end(renderPassID) ;
         }
 
         geometry -> unbind() ;

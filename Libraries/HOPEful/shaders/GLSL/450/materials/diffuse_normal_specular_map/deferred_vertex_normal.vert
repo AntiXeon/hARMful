@@ -9,9 +9,9 @@ layout(location = 0) out vec2 outTexCoord ;
 layout(location = 1) out mat3 outTBNMatrix ;
 
 void correctTBNMatrix() {
-    vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;
-    vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;
-    vec3 correctedNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;
+    vec3 correctedTangent = normalize(vec3(modelMatrix * vec4(tangent, 0.f))) ;
+    vec3 correctedBitangent = normalize(vec3(modelMatrix * vec4(bitangent, 0.f))) ;
+    vec3 correctedNormal = normalize(vec3(modelMatrix * vec4(normal, 0.f))) ;
     outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;
 }
 

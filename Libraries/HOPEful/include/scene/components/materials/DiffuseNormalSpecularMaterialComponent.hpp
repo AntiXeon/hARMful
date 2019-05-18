@@ -84,7 +84,17 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues() override ;
+            void updateUniformValues(const RenderPassID passID) override ;
+
+            void end(const RenderPassID) override {
+                // if (passID == AlbedoPassID) {
+                //     m_diffuse -> unbindUnit(DiffuseMapBinding) ;
+                // }
+                //
+                // if (passID == NormalPassID) {
+                //     m_normal -> unbindUnit(NormalMapBinding) ;
+                // }
+            }
 
             /**
              * Set the ambient color.

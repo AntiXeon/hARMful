@@ -4,7 +4,7 @@
 
 #include <string>
 
-extern std::string DiffuseNormalMapForwardVertexCode ;
 extern std::string DiffuseNormalMapForwardFragmentCode ;
+extern std::string DiffuseNormalMapForwardVertexCode ;
 
 #endif

@@ -25,23 +25,37 @@ DiffuseNormalSpecularMaterialComponent::~DiffuseNormalSpecularMaterialComponent(
     delete m_specular ;
 }
 
-void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
-    if (m_diffuse) {
-        m_diffuse -> activate(DiffuseMapBinding) ;
-        m_diffuse -> bind() ;
-        uniform(UniformNames::MaterialDiffuseUniformName()) -> setInteger(DiffuseMapBinding) ;
-    }
+void DiffuseNormalSpecularMaterialComponent::updateUniformValues(const RenderPassID passID) {
+    const bool ForwardRendering = passID == ForwardPassID ;
 
-    if (m_normal) {
-        m_normal -> activate(NormalMapBinding) ;
-        m_normal -> bind() ;
-        uniform(UniformNames::MaterialNormalUniformName()) -> setInteger(NormalMapBinding) ;
-    }
+    if (ForwardRendering) {
+        if (m_diffuse) {
+            m_diffuse -> bindUnit(DiffuseMapBinding) ;
+        }
 
-    if (m_specular) {
-        m_specular -> activate(SpecularMapBinding) ;
-        m_specular -> bind() ;
-        uniform(UniformNames::MaterialSpecularUniformName()) -> setInteger(SpecularMapBinding) ;
+        if (m_normal) {
+            m_normal -> bindUnit(NormalMapBinding) ;
+        }
+
+        if (m_specular) {
+            m_specular -> bindUnit(SpecularMapBinding) ;
+        }
+    }
+    else {
+        static const unsigned int TextureUnit0 = DiffuseMapBinding ;
+        switch (passID) {
+            case AlbedoPassID:
+                m_diffuse -> bindUnit(TextureUnit0) ;
+                break ;
+
+            case NormalPassID:
+                m_normal -> bindUnit(TextureUnit0) ;
+                break ;
+
+            case SpecularPassID:
+                m_specular -> bindUnit(TextureUnit0) ;
+                break ;
+        }
     }
 
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;

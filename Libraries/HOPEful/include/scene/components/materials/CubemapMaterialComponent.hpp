@@ -50,7 +50,9 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues() override ;
+            void updateUniformValues(const RenderPassID passID) override ;
+
+            void end(const RenderPassID) override {}
 
             /**
              * Set the cubemap texture.
