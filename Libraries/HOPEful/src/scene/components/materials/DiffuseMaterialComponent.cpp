@@ -3,6 +3,7 @@
 #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
 #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
 #include <scene/components/materials/shaders/GLSL/450/materials/DiffuseMap.hpp>
+#include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -52,7 +53,7 @@ void DiffuseMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void DiffuseMaterialComponent::setupDefaultRenderPass() {
+void DiffuseMaterialComponent::setupForwardRenderPass() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -74,11 +75,14 @@ void DiffuseMaterialComponent::setupDefaultRenderPass() {
     effect().addRenderPass(renderPass) ;
 }
 
-void DiffuseMaterialComponent::setupDiffuseRenderPass() {
+void DiffuseMaterialComponent::setupAlbedoRenderPass() {
 }
 
 void DiffuseMaterialComponent::setupNormalRenderPass() {
 }
 
 void DiffuseMaterialComponent::setupSpecularRenderPass() {
+}
+
+void DiffuseMaterialComponent::setupPositionRenderPass() {
 }

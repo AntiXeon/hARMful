@@ -35,7 +35,7 @@ void CubemapMaterialComponent::setupUniforms() {
     addShaderUniform(cubemapUniform) ;
 }
 
-void CubemapMaterialComponent::setupDefaultRenderPass() {
+void CubemapMaterialComponent::setupForwardRenderPass() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
@@ -55,13 +55,4 @@ void CubemapMaterialComponent::setupDefaultRenderPass() {
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;
-}
-
-void CubemapMaterialComponent::setupDiffuseRenderPass() {
-}
-
-void CubemapMaterialComponent::setupNormalRenderPass() {
-}
-
-void CubemapMaterialComponent::setupSpecularRenderPass() {
 }

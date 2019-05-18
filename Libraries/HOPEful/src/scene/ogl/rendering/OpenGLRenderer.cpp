@@ -54,8 +54,6 @@ void OpenGLRenderer::render(
                 amountParts
             ) ;
             disableCapabilities(renderPass) ;
-
-            material -> end(renderPassID) ;
         }
 
         geometry -> unbind() ;

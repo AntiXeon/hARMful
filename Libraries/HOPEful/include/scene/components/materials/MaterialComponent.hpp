@@ -47,8 +47,6 @@ namespace Hope {
              */
             virtual void updateUniformValues(const RenderPassID) {}
 
-            virtual void end(const RenderPassID) {}
-
             /**
              * To know if the component can be shared by several entities.
              * @return  true as it can be shared among several objects that are
@@ -133,14 +131,14 @@ namespace Hope {
             void setupRendering() ;
 
             /**
-             * Setup the default render pass (used by forward rendering, ...).
+             * Setup the forward render pass.
              */
-            virtual void setupDefaultRenderPass() = 0 ;
+            virtual void setupForwardRenderPass() = 0 ;
 
             /**
              * Setup the diffuse render pass (used by deferred rendering, ...).
              */
-            virtual void setupDiffuseRenderPass() = 0 ;
+            virtual void setupAlbedoRenderPass() = 0 ;
 
             /**
              * Setup the normal render pass (used by deferred rendering, ...).
@@ -148,9 +146,14 @@ namespace Hope {
             virtual void setupNormalRenderPass() = 0 ;
 
             /**
-             * Setup the position render pass (used by deferred rendering, ...).
+             * Setup the specular render pass (used by deferred rendering, ...).
              */
             virtual void setupSpecularRenderPass() = 0 ;
+
+            /**
+             * Setup the position render pass (used by deferred rendering, ...).
+             */
+            virtual void setupPositionRenderPass() = 0 ;
     } ;
 }
 

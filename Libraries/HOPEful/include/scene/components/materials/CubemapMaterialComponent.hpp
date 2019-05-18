@@ -52,8 +52,6 @@ namespace Hope {
              */
             void updateUniformValues(const RenderPassID passID) override ;
 
-            void end(const RenderPassID) override {}
-
             /**
              * Set the cubemap texture.
              */
@@ -70,24 +68,29 @@ namespace Hope {
 
         protected:
             /**
-             * Setup the default render pass (used by forward rendering, ...).
+             * Setup the forward render pass.
              */
-            void setupDefaultRenderPass() override ;
+            void setupForwardRenderPass() override ;
 
             /**
              * Setup the diffuse render pass (used by deferred rendering, ...).
              */
-            void setupDiffuseRenderPass() override ;
+            void setupAlbedoRenderPass() override {}
 
             /**
              * Setup the normal render pass (used by deferred rendering, ...).
              */
-            void setupNormalRenderPass() override ;
+            void setupNormalRenderPass() override {}
+
+            /**
+             * Setup the specular render pass (used by deferred rendering, ...).
+             */
+            void setupSpecularRenderPass() override {}
 
             /**
              * Setup the position render pass (used by deferred rendering, ...).
              */
-            void setupSpecularRenderPass() override ;
+            void setupPositionRenderPass() override {}
 
         private:
             /**

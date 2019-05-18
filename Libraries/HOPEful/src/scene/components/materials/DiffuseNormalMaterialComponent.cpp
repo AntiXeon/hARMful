@@ -3,6 +3,7 @@
 #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
 #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
 #include <scene/components/materials/shaders/GLSL/450/materials/DiffuseNormalMap.hpp>
+#include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -64,7 +65,7 @@ void DiffuseNormalMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void DiffuseNormalMaterialComponent::setupDefaultRenderPass() {
+void DiffuseNormalMaterialComponent::setupForwardRenderPass() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -87,11 +88,14 @@ void DiffuseNormalMaterialComponent::setupDefaultRenderPass() {
     effect().addRenderPass(renderPass) ;
 }
 
-void DiffuseNormalMaterialComponent::setupDiffuseRenderPass() {
+void DiffuseNormalMaterialComponent::setupAlbedoRenderPass() {
 }
 
 void DiffuseNormalMaterialComponent::setupNormalRenderPass() {
 }
 
 void DiffuseNormalMaterialComponent::setupSpecularRenderPass() {
+}
+
+void DiffuseNormalMaterialComponent::setupPositionRenderPass() {
 }

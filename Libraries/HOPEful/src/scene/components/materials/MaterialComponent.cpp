@@ -8,8 +8,12 @@ MaterialComponent::MaterialComponent()
     : Component(ClassType) {}
 
 void MaterialComponent::setupRendering() {
-    setupDefaultRenderPass() ;
-    setupDiffuseRenderPass() ;
+    // Forward rendering pass.
+    setupForwardRenderPass() ;
+
+    // Deferred rendering passes.
+    setupAlbedoRenderPass() ;
     setupNormalRenderPass() ;
     setupSpecularRenderPass() ;
+    setupPositionRenderPass() ;
 }
