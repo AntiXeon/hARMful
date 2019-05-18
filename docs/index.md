@@ -20,7 +20,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Order-independent transparency (✗)
 - Physics based rendering materials (✗)
 - Cascade shadow mapping (✗)
-- Forward rendering (✓)
+- Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
 - Support of deferred rendering (✗)
 - Post-rendering effects:
     - Anti-aliasing (✗)
@@ -35,6 +35,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Animations (✗)
 - Cube maps (✓)
 - Input management (keyboard, mouse, joypad) (✗)
+- Scripting (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 
 ## Features of MINDful
