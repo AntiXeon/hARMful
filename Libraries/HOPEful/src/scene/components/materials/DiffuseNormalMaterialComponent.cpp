@@ -1,11 +1,14 @@
 #include <scene/components/materials/DiffuseNormalMaterialComponent.hpp>
-#include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
-#include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
-#include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
-#include <scene/components/materials/shaders/GLSL/450/materials/DiffuseNormalMap.hpp>
-#include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
+
+#ifdef OGL
+    #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/materials/DiffuseNormalMap.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
+#endif
 
 using namespace Hope ;
 

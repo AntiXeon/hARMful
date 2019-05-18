@@ -8,6 +8,12 @@
 #include <map>
 #include <string>
 
+#include <HopeAPI.hpp>
+
+#ifdef OGL
+    namespace API = Hope::GL ;
+#endif
+
 namespace Hope {
     /**
      * A material is applied to a 3D object to define how it is rendered.

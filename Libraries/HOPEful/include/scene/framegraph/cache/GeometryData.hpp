@@ -1,7 +1,6 @@
 #ifndef __HOPE__SCENE_MESH_DATA__
 #define __HOPE__SCENE_MESH_DATA__
 
-#include <scene/ogl/mesh/GeometryPart.hpp>
 #include <matrices/Matrix4x4f.hpp>
 #include <map>
 #include <vector>

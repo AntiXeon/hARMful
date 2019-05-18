@@ -5,7 +5,6 @@
 #include <scene/common/Color.hpp>
 #include <algorithm>
 #include <string>
-#include <iostream>
 
 namespace Hope {
     /**

@@ -1,12 +1,13 @@
 #include <scene/components/materials/CubemapMaterialComponent.hpp>
-#include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
-#include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
-#include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
-#include <scene/components/materials/shaders/GLSL/450/materials/Cubemap.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
-#include <iostream>
+#ifdef OGL
+    #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/materials/Cubemap.hpp>
+#endif
 
 using namespace Hope ;
 
