@@ -9,7 +9,7 @@ namespace Hope {
      * Define which render pass to use to render the objects.
      * Any object that does not bear the RenderPass is not rendered.
      */
-    class RenderPassSelector final : public FrameGraphNode {
+    class RenderPassSelectorNode final : public FrameGraphNode {
         private:
             /**
              * ID of the render pass to use for rendering the framegraph branch
@@ -19,9 +19,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a new RenderPassSelector node.
+             * Create a new RenderPassSelectorNode node.
              */
-            RenderPassSelector(
+            RenderPassSelectorNode(
                 const RenderPassID passID,
                 Hope::FrameGraphNode* parent = nullptr
             ) : Hope::FrameGraphNode(parent),

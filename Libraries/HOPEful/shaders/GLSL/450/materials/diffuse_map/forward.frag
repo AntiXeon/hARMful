@@ -1,13 +1,9 @@
-// Diffuse material shader using a diffuse map.
+// Diffuse map material shader.
 
-struct Material {
-    vec3 ambient ;
-    layout(binding = 0) sampler2D diffuse ;
-    vec3 specular ;
-    float shininess ;
-} ;
-
-uniform Material material ;
+uniform vec3 ambient ;
+layout(binding = 0) uniform sampler2D diffuse ;
+uniform vec3 specular ;
+uniform float shininess ;
 
 layout(location = 0) in vec3 inVertexWorldPosition ;
 layout(location = 1) in vec3 inNormal ;
@@ -19,11 +15,11 @@ out vec4 outColor ;
 void main() {
     FragmentData currentFragment ;
     currentFragment.worldPosition = inVertexWorldPosition ;
-    currentFragment.diffuseValue = texture(material.diffuse, inTexCoord).rgb ;
-    currentFragment.specularValue = material.specular ;
+    currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;
+    currentFragment.specularValue = specular ;
     currentFragment.normalValue = inNormal ;
 
-    vec3 colorLinear = material.ambient ;
+    vec3 colorLinear = ambient ;
     colorLinear += ComputeLightsContribution(
         inViewDirection,
         currentFragment

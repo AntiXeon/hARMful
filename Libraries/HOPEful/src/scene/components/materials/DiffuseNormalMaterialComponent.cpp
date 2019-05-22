@@ -28,17 +28,13 @@ DiffuseNormalMaterialComponent::~DiffuseNormalMaterialComponent() {
     delete m_normal ;
 }
 
-void DiffuseNormalMaterialComponent::updateUniformValues(const RenderPassID) {
+void DiffuseNormalMaterialComponent::updateUniformValues() {
     if (m_diffuse) {
-        m_diffuse -> activate(DiffuseMapBinding) ;
-        m_diffuse -> bind() ;
-        uniform(UniformNames::MaterialDiffuseUniformName()) -> setInteger(DiffuseMapBinding) ;
+        m_diffuse -> bindUnit(DiffuseMapBinding) ;
     }
 
     if (m_normal) {
-        m_normal -> activate(NormalMapBinding) ;
-        m_normal -> bind() ;
-        uniform(UniformNames::MaterialNormalUniformName()) -> setInteger(NormalMapBinding) ;
+        m_normal -> bindUnit(NormalMapBinding) ;
     }
 
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
@@ -68,7 +64,7 @@ void DiffuseNormalMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void DiffuseNormalMaterialComponent::setupForwardRenderPass() {
+void DiffuseNormalMaterialComponent::setupForwardShader() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -86,6 +82,29 @@ void DiffuseNormalMaterialComponent::setupForwardRenderPass() {
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalMapForwardFragmentCode) ;
+    shaderProgram -> build() ;
+
+    effect().addRenderPass(renderPass) ;
+}
+
+void DiffuseNormalMaterialComponent::setupDeferredShader() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    // Vertex shader code.
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(DiffuseNormalMapDeferredVertexCode) ;
+    // Fragment shader code.
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(DiffuseNormalMapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

@@ -5,6 +5,8 @@ using namespace Hope::GL ;
 
 MeshGeometry::MeshGeometry(const std::vector<float>& vertices)
     : Geometry() {
+    static const size_t VertexByteSize = Vertex::TotalLength * sizeof(float) ;
+
     glGenVertexArrays(1, &m_vertexArray) ;
 
     glGenBuffers(1, &m_vertexBuffer) ;
@@ -15,27 +17,27 @@ MeshGeometry::MeshGeometry(const std::vector<float>& vertices)
     unsigned char offset = 0 ;
     // Position attribute.
     glEnableVertexAttribArray(0) ;
-    glVertexAttribPointer(0, Vertex::PositionLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    glVertexAttribPointer(0, Vertex::PositionLength, GL_FLOAT, GL_FALSE, VertexByteSize, reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::PositionLength * sizeof(float)) ;
 
     // Texture coordinates attribute.
     glEnableVertexAttribArray(1) ;
-    glVertexAttribPointer(1, Vertex::TexCoordLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    glVertexAttribPointer(1, Vertex::TexCoordLength, GL_FLOAT, GL_FALSE, VertexByteSize, reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::TexCoordLength * sizeof(float)) ;
 
     // Normal attribute.
     glEnableVertexAttribArray(2) ;
-    glVertexAttribPointer(2, Vertex::NormalLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    glVertexAttribPointer(2, Vertex::NormalLength, GL_FLOAT, GL_FALSE, VertexByteSize, reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::NormalLength * sizeof(float)) ;
 
     // Tangent vector attribute.
     glEnableVertexAttribArray(3) ;
-    glVertexAttribPointer(3, Vertex::TangentLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    glVertexAttribPointer(3, Vertex::TangentLength, GL_FLOAT, GL_FALSE, VertexByteSize, reinterpret_cast<void*>(offset)) ;
     offset += (Vertex::TangentLength * sizeof(float)) ;
 
     // Bitangent vector attribute.
     glEnableVertexAttribArray(4) ;
-    glVertexAttribPointer(4, Vertex::BitangentLength, GL_FLOAT, GL_FALSE, Vertex::TotalLength * sizeof(float), reinterpret_cast<void*>(offset)) ;
+    glVertexAttribPointer(4, Vertex::BitangentLength, GL_FLOAT, GL_FALSE, VertexByteSize, reinterpret_cast<void*>(offset)) ;
 
     glGenBuffers(1, &m_indexBuffer) ;
     glBindVertexArray(0) ;

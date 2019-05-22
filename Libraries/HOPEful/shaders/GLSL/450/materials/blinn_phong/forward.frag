@@ -1,13 +1,9 @@
 // Blinn-Phong material shader.
 
-struct Material {
-    vec3 ambient ;
-    vec3 diffuse ;
-    vec3 specular ;
-    float shininess ;
-} ;
-
-uniform Material material ;
+uniform vec3 ambient ;
+uniform vec3 diffuse ;
+uniform vec3 specular ;
+uniform float shininess ;
 
 const float ScreenGamma = 2.2f ;
 
@@ -21,11 +17,12 @@ out vec4 outColor ;
 void main() {
     FragmentData currentFragment ;
     currentFragment.worldPosition = inVertexWorldPosition ;
-    currentFragment.diffuseValue = material.diffuse ;
-    currentFragment.specularValue = material.specular ;
+    currentFragment.diffuseValue = diffuse ;
+    currentFragment.specularValue = specular ;
     currentFragment.normalValue = inNormal ;
+    currentFragment.shininess = shininess ;
 
-    vec3 colorLinear = material.ambient + ComputeLightsContribution(inViewDirection, currentFragment) ;
+    vec3 colorLinear = ambient + ComputeLightsContribution(inViewDirection, currentFragment) ;
     vec3 colorGammaCorrected = pow(colorLinear, vec3(1.f / ScreenGamma)) ;
     outColor = vec4(colorGammaCorrected, 1.f) ;
 }

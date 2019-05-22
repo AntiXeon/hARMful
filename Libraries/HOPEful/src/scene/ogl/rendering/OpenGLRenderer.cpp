@@ -4,6 +4,7 @@
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
+#include <iostream>
 
 using namespace Hope::GL ;
 
@@ -25,7 +26,7 @@ void OpenGLRenderer::render(
         geometry -> bind() ;
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
-            material -> updateUniformValues(renderPassID) ;
+            material -> updateUniformValues() ;
             std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
 
             if (!renderPass) {
@@ -58,6 +59,20 @@ void OpenGLRenderer::render(
 
         geometry -> unbind() ;
     }
+
+    // Turn back to the default framebuffer in case any other is bound.
+    glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
+}
+
+void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
+    m_deferredShadingQuad.bind() ;
+    material -> updateUniformValues() ;
+    std::shared_ptr<API::RenderPass> renderPass = useMaterial(ForwardPassID, material) ;
+
+    // Draw the quad.
+    size_t amountIndices = m_deferredShadingQuad.part(0).amountIndices() ;
+    glDrawElements(GL_TRIANGLE_STRIP, amountIndices, GL_UNSIGNED_BYTE, nullptr) ;
+    m_deferredShadingQuad.unbind() ;
 }
 
 std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(

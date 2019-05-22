@@ -29,37 +29,17 @@ DiffuseNormalSpecularMaterialComponent::~DiffuseNormalSpecularMaterialComponent(
     delete m_specular ;
 }
 
-void DiffuseNormalSpecularMaterialComponent::updateUniformValues(const RenderPassID passID) {
-    const bool ForwardRendering = passID == ForwardPassID ;
-
-    if (ForwardRendering) {
-        if (m_diffuse) {
-            m_diffuse -> bindUnit(DiffuseMapBinding) ;
-        }
-
-        if (m_normal) {
-            m_normal -> bindUnit(NormalMapBinding) ;
-        }
-
-        if (m_specular) {
-            m_specular -> bindUnit(SpecularMapBinding) ;
-        }
+void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
+    if (m_diffuse) {
+        m_diffuse -> bindUnit(DiffuseMapBinding) ;
     }
-    else {
-        static const unsigned int TextureUnit0 = DiffuseMapBinding ;
-        switch (passID) {
-            case AlbedoPassID:
-                m_diffuse -> bindUnit(TextureUnit0) ;
-                break ;
 
-            case NormalPassID:
-                m_normal -> bindUnit(TextureUnit0) ;
-                break ;
+    if (m_normal) {
+        m_normal -> bindUnit(NormalMapBinding) ;
+    }
 
-            case SpecularPassID:
-                m_specular -> bindUnit(TextureUnit0) ;
-                break ;
-        }
+    if (m_specular) {
+        m_specular -> bindUnit(SpecularMapBinding) ;
     }
 
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
@@ -88,7 +68,7 @@ void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void DiffuseNormalSpecularMaterialComponent::setupForwardRenderPass() {
+void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -106,6 +86,29 @@ void DiffuseNormalSpecularMaterialComponent::setupForwardRenderPass() {
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
+    shaderProgram -> build() ;
+
+    effect().addRenderPass(renderPass) ;
+}
+
+void DiffuseNormalSpecularMaterialComponent::setupDeferredShader() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    // Vertex shader code.
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapDeferredVertexCode) ;
+    // Fragment shader code.
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

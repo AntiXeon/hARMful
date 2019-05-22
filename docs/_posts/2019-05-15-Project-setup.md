@@ -39,7 +39,7 @@ MyWindow mainWindow ;
 Hope::Scene* scene = mainWindow.scene() ;
 
 // Stuff on viewport and framegraph...
-Hope::Viewport* viewportNode = new Hope::Viewport() ;
+Hope::ViewportNode* viewportNode = new Hope::ViewportNode() ;
 // ...
 scene -> setFrameGraphRoot(viewportNode) ;
 

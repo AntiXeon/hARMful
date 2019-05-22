@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_RENDERER__
 #define __HOPE__GL_RENDERER__
 
+#include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
@@ -10,6 +11,7 @@
 
 namespace Hope {
     class FrameRenderCache ;
+    class MaterialComponent ;
 }
 
 namespace Hope::GL {
@@ -43,9 +45,14 @@ namespace Hope::GL {
              */
             Mind::Matrix4x4f m_projectionMatrix ;
 
+            /**
+             * Quad used for deferred shading.
+             */
+            QuadGeometry m_deferredShadingQuad ;
+
         public:
             /**
-             * Render the scene.
+             * Render the scene in a frambuffer (the default one or not).
              * @param   renderPassID    ID of the pass to use for rendering
              *                          objects. The render pass uses its
              *                          related shader program to render the
@@ -56,6 +63,14 @@ namespace Hope::GL {
                 const RenderPassID renderPassID,
                 std::vector<GeometryData>& dataList
             ) ;
+
+            /**
+             * Render the content of a GBuffer for applying deferred shading.
+             * @param   material    Material applied on the screen quad to
+             *                      render the content of the GBuffer, applying
+             *                      deferred shading.
+             */
+            void deferredShading(Hope::MaterialComponent* material) ;
 
             /**
              * Run an update of the light UBO.

@@ -50,7 +50,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues(const RenderPassID passID) override ;
+            void updateUniformValues() override ;
 
             /**
              * Set the cubemap texture.
@@ -68,34 +68,14 @@ namespace Hope {
 
         protected:
             /**
-             * Generate the albedo render pass as it is the same for both
-             * forward and albedo render passes.
+             * Setup the shader for the forward rendering pass.
              */
-            void generateAlbedoRenderPass(const RenderPassID target) ;
+            void setupForwardShader() override ;
 
             /**
-             * Setup the forward render pass.
+             * Setup the shader for the deferred rendering pass.
              */
-            void setupForwardRenderPass() override {
-                generateAlbedoRenderPass(ForwardPassID) ;
-            }
-
-            /**
-             * Setup the diffuse render pass (used by deferred rendering, ...).
-             */
-            void setupAlbedoRenderPass() override {
-                generateAlbedoRenderPass(AlbedoPassID) ;
-            }
-
-            /**
-             * Setup the normal render pass (used by deferred rendering, ...).
-             */
-            void setupNormalRenderPass() override {}
-
-            /**
-             * Setup the specular render pass (used by deferred rendering, ...).
-             */
-            void setupSpecularRenderPass() override {}
+            void setupDeferredShader() override ;
 
         private:
             /**

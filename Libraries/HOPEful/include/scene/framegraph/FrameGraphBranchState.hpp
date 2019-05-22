@@ -3,7 +3,7 @@
 
 #include <scene/SceneTypes.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
-#include <scene/framegraph/ActiveCamera.hpp>
+#include <scene/framegraph/ActiveCameraNode.hpp>
 
 namespace Hope {
     /**
@@ -12,6 +12,14 @@ namespace Hope {
     class FrameGraphBranchState final {
         private:
             /**
+             * If true, the rendering step is performed when the current branch
+             * of the framegraph ends (the last node is visited).
+             * If false, the rendering step is not performed. This may be used
+             * in different situations.
+             */
+            bool m_renderAtEnd = true ;
+
+            /**
              * Render pass ID to use for rendering the current branch.
              */
             RenderPassID m_renderPassID = ForwardPassID ;
@@ -19,7 +27,12 @@ namespace Hope {
             /**
              * Active camera for the current branch.
              */
-            ActiveCamera* m_activeCamera = nullptr ;
+            ActiveCameraNode* m_activeCamera = nullptr ;
+
+            /**
+             * Offscreen framebuffer to be used.
+             */
+            OffScreenRenderNode* m_offscreen = nullptr ;
 
             /**
              * Conditions to render the current branch.
@@ -36,9 +49,29 @@ namespace Hope {
              * Create a new FrameGraphBranchState.
              */
             FrameGraphBranchState(
-                ActiveCamera* activeCamera,
+                ActiveCameraNode* activeCamera,
                 const RenderConditionAggregator& m_conditions
             ) ;
+
+            /**
+             * If true, the rendering step is performed when the current branch
+             * of the framegraph ends (the last node is visited).
+             * If false, the rendering step is not performed. This may be used
+             * in different situations.
+             */
+            void setRenderAtEnd(const bool renderAtEnd) {
+                m_renderAtEnd = renderAtEnd ;
+            }
+
+            /**
+             * If true, the rendering step is performed when the current branch
+             * of the framegraph ends (the last node is visited).
+             * If false, the rendering step is not performed. This may be used
+             * in different situations.
+             */
+            bool renderAtEnd() const {
+                return m_renderAtEnd ;
+            }
 
             /**
              * Set the render pass ID to use for rendering the current branch.
@@ -57,15 +90,29 @@ namespace Hope {
             /**
              * Set the active camera used to render the branch.
              */
-            void setActiveCamera(ActiveCamera* camera) {
+            void setActiveCameraNode(ActiveCameraNode* camera) {
                 m_activeCamera = camera ;
             }
 
             /**
              * Get the active camera used to render the branch.
              */
-            const ActiveCamera* activeCamera() const {
+            const ActiveCameraNode* activeCamera() const {
                 return m_activeCamera ;
+            }
+
+            /**
+             * Offscreen framebuffer to be used.
+             */
+            void setOffScreenRenderNode(OffScreenRenderNode* offscreen) {
+                m_offscreen = offscreen ;
+            }
+
+            /**
+             * Get the offscreen framebuffer to be used.
+             */
+            const OffScreenRenderNode* offScreenRender() const {
+                return m_offscreen ;
             }
 
             /**

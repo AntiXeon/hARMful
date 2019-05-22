@@ -1,8 +1,11 @@
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
-#include <scene/framegraph/ActiveCamera.hpp>
-#include <scene/framegraph/FrustumCulling.hpp>
-#include <scene/framegraph/RenderPassSelector.hpp>
-#include <scene/framegraph/Viewport.hpp>
+#include <scene/framegraph/ActiveCameraNode.hpp>
+#include <scene/framegraph/ClearBuffersNode.hpp>
+#include <scene/framegraph/FrustumCullingNode.hpp>
+#include <scene/framegraph/RenderPassSelectorNode.hpp>
+#include <scene/framegraph/ViewportNode.hpp>
+#include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <scene/ogl/Utils.hpp>
 #include <Math.hpp>
@@ -21,8 +24,8 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
     m_sceneRoot = root ;
 }
 
-void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
-    m_aggregators.back().setActiveCamera(node) ;
+void OpenGLFrameGraphVisitor::visit(ActiveCameraNode* node) {
+    m_aggregators.back().setActiveCameraNode(node) ;
 
     if (node -> cacheEmpty()) {
         // Parse the scene graph.
@@ -41,15 +44,35 @@ void OpenGLFrameGraphVisitor::visit(ActiveCamera* node) {
     }
 }
 
-void OpenGLFrameGraphVisitor::visit(FrustumCulling* /*node*/) {
+void OpenGLFrameGraphVisitor::visit(ClearBuffersNode* node) {
+    BufferClearer::Clear(node -> buffers()) ;
+}
+
+void OpenGLFrameGraphVisitor::visit(FrustumCullingNode* /*node*/) {
     // TODO
 }
 
-void OpenGLFrameGraphVisitor::visit(RenderPassSelector* node) {
+void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {
+    m_aggregators.back().setOffScreenRenderNode(node) ;
+
+    // Resize the framebuffer textures with the window if needed.
+    if (m_hasWindowChanged && node -> windowSize()) {
+        (node -> framebuffer()).resize(m_windowSize) ;
+    }
+
+    (node -> framebuffer()).bind() ;
+}
+
+void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
+    m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
+    m_renderer.deferredShading(node -> material()) ;
+}
+
+void OpenGLFrameGraphVisitor::visit(RenderPassSelectorNode* node) {
     m_aggregators.back().setRenderPassID(node -> passID()) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(Viewport* node) {
+void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
     if (!m_hasWindowChanged && (m_projectionData.lastViewport == node)) {
         return ;
     }
@@ -97,11 +120,19 @@ void OpenGLFrameGraphVisitor::visit(Viewport* node) {
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
+    FrameGraphBranchState& state = m_aggregators.back() ;
+
+    if (!state.renderAtEnd() || state.activeCamera() == nullptr) {
+        // Remove the last RenderConditionAggregator from the list!
+        m_aggregators.pop_back() ;
+
+        // Prevent rendering.
+        return ;
+    }
+
     updateCameraSettings() ;
 
-    FrameGraphBranchState& state = m_aggregators.back() ;
     const std::shared_ptr<Hope::FrameRenderCache> cache = state.activeCameraCache() ;
-
     // Send data of the base UBO to the GPU before rendering this part of the
     // framegraph.
     m_renderer.updateLightUBO(cache) ;
@@ -158,6 +189,7 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
 void OpenGLFrameGraphVisitor::updateCameraSettings() {
     FrameGraphBranchState& state = m_aggregators.back() ;
     Hope::CameraComponent* camera = state.activeCamera() -> camera() ;
+    const Hope::OffScreenRenderNode* offscreen = state.offScreenRender() ;
     camera -> update() ;
 
     // Set up the clear color.
@@ -169,13 +201,21 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
         clearColor.alpha()
     ) ;
 
-    // Update the projection matrix if needed.
-    float aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
+    float aspectRatio = 0.f ;
+    // Update the projection matrix.
+    if (!offscreen || offscreen -> windowSize()) {
+        aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
+    }
+    else {
+        Mind::Dimension2Di framebufferSize = (offscreen -> framebuffer()).size() ;
+        float width = framebufferSize.width() ;
+        float height = framebufferSize.height() ;
+        aspectRatio = width / height ;
+    }
 
     Mind::Matrix4x4f projectionMatrix ;
     // Set up the projection matrix.
     camera -> projectionMatrix(projectionMatrix, aspectRatio) ;
-
     Mind::Matrix4x4f inverseProjectionMatrix ;
     projectionMatrix.inverse(inverseProjectionMatrix) ;
 

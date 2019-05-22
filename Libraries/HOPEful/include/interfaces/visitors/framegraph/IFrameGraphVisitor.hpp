@@ -4,10 +4,13 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
-    class ActiveCamera ;
-    class FrustumCulling ;
-    class RenderPassSelector ;
-    class Viewport ;
+    class ActiveCameraNode ;
+    class ClearBuffersNode ;
+    class FrustumCullingNode ;
+    class OffScreenRenderNode ;
+    class DeferredRenderingNode ;
+    class RenderPassSelectorNode ;
+    class ViewportNode ;
 
     /**
      * Interface for the Visitor design pattern for nodes of the frame graph.
@@ -17,22 +20,37 @@ namespace Hope {
             /**
              * Visit a camera node.
              */
-            virtual void visit(ActiveCamera* node) = 0 ;
+            virtual void visit(ActiveCameraNode* node) = 0 ;
+
+            /**
+             * Visit a clear buffers node.
+             */
+            virtual void visit(ClearBuffersNode* node) = 0 ;
 
             /**
              * Visit a frustum culling node.
              */
-            virtual void visit(FrustumCulling* node) = 0 ;
+            virtual void visit(FrustumCullingNode* node) = 0 ;
+
+            /**
+             * Visit an off-screen render node.
+             */
+            virtual void visit(OffScreenRenderNode* node) = 0 ;
+
+            /**
+             * Visit a node to perform deferred rendering.
+             */
+            virtual void visit(DeferredRenderingNode* node) = 0 ;
 
             /**
              * Visit a render pass selector node.
              */
-            virtual void visit(RenderPassSelector* node) = 0 ;
+            virtual void visit(RenderPassSelectorNode* node) = 0 ;
 
             /**
              * Visit a viewport node.
              */
-            virtual void visit(Viewport* node) = 0 ;
+            virtual void visit(ViewportNode* node) = 0 ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

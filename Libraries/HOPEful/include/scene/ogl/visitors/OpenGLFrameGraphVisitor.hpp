@@ -102,22 +102,37 @@ namespace Hope::GL {
             /**
              * Visit a camera node.
              */
-            void visit(ActiveCamera* node) override ;
+            void visit(ActiveCameraNode* node) override ;
+
+            /**
+             * Visit a clear buffers node.
+             */
+            void visit(ClearBuffersNode* node) override ;
 
             /**
              * Visit a frustum culling node.
              */
-            void visit(FrustumCulling* node) override ;
+            void visit(FrustumCullingNode* node) override ;
+
+            /**
+             * Visit an off-screen render node.
+             */
+            void visit(OffScreenRenderNode* node) override ;
+
+            /**
+             * Visit a node to perform deferred rendering.
+             */
+            void visit(DeferredRenderingNode* node) override ;
 
             /**
              * Visit a render pass selector node.
              */
-            void visit(RenderPassSelector* node) override ;
+            void visit(RenderPassSelectorNode* node) override ;
 
             /**
              * Visit a viewport node.
              */
-            void visit(Viewport* node) override ;
+            void visit(ViewportNode* node) override ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

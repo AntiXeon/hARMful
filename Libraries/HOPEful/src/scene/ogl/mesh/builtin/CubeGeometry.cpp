@@ -28,7 +28,7 @@ void CubeGeometry::fillBuffers() {
     static const int VertexSize = 3 ;
     static const int VertexStride = sizeof(float) * 3 ;
 
-    static const float Vertices[AmountVertices] = {
+    static const float Vertices[AmountVertexCoords] = {
     	-1.f,  1.f, -1.f,
     	-1.f, -1.f, -1.f,
     	-1.f,  1.f,  1.f,
@@ -45,7 +45,7 @@ void CubeGeometry::fillBuffers() {
 
     	3, 1, 5, 5, 1, 7,
     	0, 2, 6, 6, 2, 4,
-        
+
         2, 3, 4, 4, 3, 5,
         6, 7, 0, 0, 7, 1,
     } ;
@@ -60,4 +60,7 @@ void CubeGeometry::fillBuffers() {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer) ;
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(IndiceArray), IndiceArray, GL_STATIC_DRAW) ;
+
+    glBindVertexArray(0) ;
+    glBindBuffer(GL_ARRAY_BUFFER, 0) ;
 }

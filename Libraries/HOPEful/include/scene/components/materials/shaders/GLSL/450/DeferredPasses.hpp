@@ -4,16 +4,16 @@
 
 #include <string>
 
-extern std::string DeferredPassesAlbedoMapFragmentCode ;
-extern std::string DeferredPassesTexCoordVertexCode ;
-extern std::string DeferredPassesNormalFragmentCode ;
-extern std::string DeferredPassesPositionVertexCode ;
-extern std::string DeferredPassesNormalVertexCode ;
-extern std::string DeferredPassesAlbedoFragmentCode ;
-extern std::string DeferredPassesNormalMapVertexCode ;
-extern std::string DeferredPassesNormalMapFragmentCode ;
-extern std::string DeferredPassesPositionFragmentCode ;
 extern std::string DeferredPassesSpecularFragmentCode ;
+extern std::string DeferredPassesPositionVertexCode ;
+extern std::string DeferredPassesNormalFragmentCode ;
+extern std::string DeferredPassesTexCoordVertexCode ;
+extern std::string DeferredPassesAlbedoFragmentCode ;
+extern std::string DeferredPassesNormalMapFragmentCode ;
+extern std::string DeferredPassesNormalVertexCode ;
+extern std::string DeferredPassesNormalMapVertexCode ;
 extern std::string DeferredPassesSpecularMapFragmentCode ;
+extern std::string DeferredPassesPositionFragmentCode ;
+extern std::string DeferredPassesAlbedoMapFragmentCode ;
 
 #endif

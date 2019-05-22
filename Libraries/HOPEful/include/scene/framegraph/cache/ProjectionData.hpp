@@ -2,7 +2,7 @@
 #define __HOPE__PROJECTION_DATA__
 
 namespace Hope {
-    class Viewport ;
+    class ViewportNode ;
 
     /**
      * Data thet are useful to correctly set up view/projection matrices.
@@ -11,7 +11,7 @@ namespace Hope {
         /**
          * Last viewport to be updated.
          */
-        Viewport* lastViewport = nullptr ;
+        ViewportNode* lastViewport = nullptr ;
 
         /**
          * Absolute width in pixels of the draw area.

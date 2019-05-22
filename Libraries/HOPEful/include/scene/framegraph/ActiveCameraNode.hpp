@@ -10,7 +10,7 @@ namespace Hope {
     /**
      * Set the active camera used for rendering the scene.
      */
-    class ActiveCamera final : public FrameGraphNode {
+    class ActiveCameraNode final : public FrameGraphNode {
         friend class FrameGraphBranchState ;
 
         private:
@@ -25,20 +25,20 @@ namespace Hope {
             std::shared_ptr<FrameRenderCache> m_cache = nullptr ;
 
             /**
-             * To know if the render cache is owned by the current ActiveCamera
+             * To know if the render cache is owned by the current ActiveCameraNode
              * or not.
              */
             bool m_isCacheOwner = true ;
 
         public:
             /**
-             * Create a new ActiveCamera node.
+             * Create a new ActiveCameraNode node.
              * @param   parent      Parent of the node.
              * @param   cacheOwner  Provide the owner of a cache to be shared
-             *                      with the current ActiveCamera node.
+             *                      with the current ActiveCameraNode node.
              *                      nullptr is a valid value, creating a new
              *                      render cache instead of using one from
-             *                      another ActiveCamera.
+             *                      another ActiveCameraNode.
              * @note    Sharing a render cache allows a camera to render exactly
              *          the same objects as another one. That is useful, for
              *          example, for VR applications where two cameras must
@@ -46,9 +46,9 @@ namespace Hope {
              * @warning Only the owner of the cache render can clear its
              *          content. Be aware to do things in the right order!
              */
-            ActiveCamera(
+            ActiveCameraNode(
                 FrameGraphNode* parent = nullptr,
-                ActiveCamera* cacheOwner = nullptr
+                ActiveCameraNode* cacheOwner = nullptr
             ) ;
 
             /**

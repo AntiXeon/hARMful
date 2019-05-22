@@ -36,6 +36,13 @@ namespace Hope {
              */
             Entity* m_sceneGraphRoot = nullptr ;
 
+            /**
+             * If true, the node allows the rendering of the framegraph branch
+             * in which it is. If false, it prevents the rendering step.
+             * The default value is true.
+             */
+            bool m_renderingStepEnabled = true ;
+
         public:
             /**
              * Create a new node instance.
@@ -71,6 +78,14 @@ namespace Hope {
              */
             const std::vector<FrameGraphNode*>& children() const ;
 
+            /**
+             * If true, the node allows the rendering of the framegraph branch
+             * in which it is. If false, it prevents the rendering step.
+             */
+            bool renderingStepEnabled() const {
+                return m_renderingStepEnabled ;
+            }
+
             // Remove copy/move operations.
             FrameGraphNode(const FrameGraphNode& copied) = delete;
             FrameGraphNode(FrameGraphNode&& moved) = delete;
@@ -78,6 +93,14 @@ namespace Hope {
             FrameGraphNode& operator=(FrameGraphNode&& moved) = delete;
 
         protected:
+            /**
+             * If true, the node allows the rendering of the framegraph branch
+             * in which it is. If false, it prevents the rendering step.
+             */
+            void setRenderingStepEnabled(const bool enabled) {
+                m_renderingStepEnabled = enabled ;
+            }
+
             /**
              * Specific implementation for visitors.
              */

@@ -1,14 +1,10 @@
-// Diffuse/normal/specular material shader using diffuse and normal maps.
+// Diffuse+normal+specular maps material shader.
 
-struct Material {
-    layout(binding = 0) sampler2D diffuse ;
-    layout(binding = 1) sampler2D normal ;
-    layout(binding = 2) sampler2D specular ;
-    vec3 ambient ;
-    float shininess ;
-} ;
-
-uniform Material material ;
+layout(binding = 0) uniform sampler2D diffuse ;
+layout(binding = 1) uniform sampler2D normal ;
+layout(binding = 2) uniform sampler2D specular ;
+uniform vec3 ambient ;
+uniform float shininess ;
 
 layout(location = 0) in vec3 inVertexWorldPosition ;
 layout(location = 1) in vec3 inNormal ;
@@ -21,12 +17,12 @@ out vec4 outColor ;
 void main() {
     FragmentData currentFragment ;
     currentFragment.worldPosition = inVertexWorldPosition ;
-    currentFragment.diffuseValue = texture(material.diffuse, inTexCoord).rgb ;
-    currentFragment.specularValue = vec3(texture(material.specular, inTexCoord).r) ;
-    vec3 normalVector = texture(material.normal, inTexCoord).rgb ;
+    currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;
+    currentFragment.specularValue = vec3(texture(specular, inTexCoord).r) ;
+    vec3 normalVector = texture(normal, inTexCoord).rgb ;
     currentFragment.normalValue = AdjustNormalVector(inTBNMatrix, normalVector) ;
 
-    vec3 colorLinear = material.ambient ;
+    vec3 colorLinear = ambient ;
     colorLinear += ComputeLightsContribution(
         inViewDirection,
         currentFragment

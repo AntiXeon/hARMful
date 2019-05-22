@@ -1,11 +1,11 @@
-#include <scene/framegraph/ActiveCamera.hpp>
+#include <scene/framegraph/ActiveCameraNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;
 
-ActiveCamera::ActiveCamera(
+ActiveCameraNode::ActiveCameraNode(
     Hope::FrameGraphNode* parent,
-    ActiveCamera* cacheOwner
+    ActiveCameraNode* cacheOwner
 ) : FrameGraphNode(parent) {
     if (cacheOwner) {
         m_isCacheOwner = false ;
@@ -17,7 +17,7 @@ ActiveCamera::ActiveCamera(
     }
 }
 
-void ActiveCamera::specificAccept(IFrameGraphVisitor* visitor) {
+void ActiveCameraNode::specificAccept(IFrameGraphVisitor* visitor) {
     if (m_isCacheOwner) {
         m_cache -> clear() ;
     }

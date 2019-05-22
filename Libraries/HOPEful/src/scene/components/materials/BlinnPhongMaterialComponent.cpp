@@ -25,7 +25,7 @@ BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
     setupUniforms() ;
 }
 
-void BlinnPhongMaterialComponent::updateUniformValues(const RenderPassID) {
+void BlinnPhongMaterialComponent::updateUniformValues() {
     uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
     uniform(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
     uniform(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
@@ -50,7 +50,7 @@ void BlinnPhongMaterialComponent::setupUniforms() {
     addShaderUniform(shininessUniform) ;
 }
 
-void BlinnPhongMaterialComponent::setupForwardRenderPass() {
+void BlinnPhongMaterialComponent::setupForwardShader() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -67,6 +67,28 @@ void BlinnPhongMaterialComponent::setupForwardRenderPass() {
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
+    shaderProgram -> build() ;
+
+    effect().addRenderPass(renderPass) ;
+}
+
+void BlinnPhongMaterialComponent::setupDeferredShader() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    // Vertex shader code.
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(BlinnPhongDeferredVertexCode) ;
+    // Fragment shader code.
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

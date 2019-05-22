@@ -11,15 +11,15 @@ namespace Hope {
      * This is very useful to save GPU time on rendering computations, improving
      * overall performances.
      *
-     * @warning An ActiveCamera node must be inserted in the same frame graph
-     *          than the current FrustumCulling node to work properly.
+     * @warning An ActiveCameraNode node must be inserted in the same frame graph
+     *          than the current FrustumCullingNode node to work properly.
      */
-    class FrustumCulling final : public FrameGraphNode {
+    class FrustumCullingNode final : public FrameGraphNode {
         public:
             /**
-             * Create a new FrustumCulling node.
+             * Create a new FrustumCullingNode node.
              */
-            FrustumCulling(Hope::FrameGraphNode* parent = nullptr)
+            FrustumCullingNode(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
 
         protected:

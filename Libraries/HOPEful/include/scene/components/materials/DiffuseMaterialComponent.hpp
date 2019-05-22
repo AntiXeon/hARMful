@@ -65,7 +65,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues(const RenderPassID passID) override ;
+            void updateUniformValues() override ;
 
             /**
              * Set the ambient color.
@@ -129,30 +129,14 @@ namespace Hope {
 
         protected:
             /**
-             * Setup the forward render pass.
+             * Setup the shader for the forward rendering pass.
              */
-            void setupForwardRenderPass() override ;
+            void setupForwardShader() override ;
 
             /**
-             * Setup the diffuse render pass (used by deferred rendering, ...).
+             * Setup the shader for the deferred rendering pass.
              */
-            void setupAlbedoRenderPass() override {
-                useAlbedoMapPass() ;
-            }
-
-            /**
-             * Setup the normal render pass (used by deferred rendering, ...).
-             */
-            void setupNormalRenderPass() override {
-                useGeometryNormalPass() ;
-            }
-
-            /**
-             * Setup the specular render pass (used by deferred rendering, ...).
-             */
-            void setupSpecularRenderPass() override {
-                useSpecularColorPass() ;
-            }
+            void setupDeferredShader() override ;
 
         private:
             /**

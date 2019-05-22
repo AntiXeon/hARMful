@@ -4,7 +4,9 @@
 
 #include <string>
 
-extern std::string DiffuseNormalSpecularMapForwardFragmentCode ;
+extern std::string DiffuseNormalSpecularMapDeferredVertexCode ;
+extern std::string DiffuseNormalSpecularMapDeferredFragmentCode ;
 extern std::string DiffuseNormalSpecularMapForwardVertexCode ;
+extern std::string DiffuseNormalSpecularMapForwardFragmentCode ;
 
 #endif

@@ -6,47 +6,72 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-Texture2D::Texture2D(const std::string& path) {
+Texture2D::Texture2D(
+    const std::string& path,
+    const bool mipmap
+) {
     static const bool FlipVerticalAxis = true ;
 
     glGenTextures(1, &m_textureID) ;
     glBindTexture(GL_TEXTURE_2D, m_textureID) ;
     TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
     setFiltering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR) ;
-    glGenerateMipmap(GL_TEXTURE_2D) ;
+
+    if (mipmap) {
+        glGenerateMipmap(GL_TEXTURE_2D) ;
+    }
+
+    glBindTexture(GL_TEXTURE_2D, 0) ;
 }
 
 Texture2D::Texture2D(
+    const Mind::Dimension2Di& size,
+    const PixelFormat internalFormat,
+    const PixelFormat pixelFormat,
+    const PixelDataType pixelDataType,
     const float* pixelData,
-    const uint32_t width,
-    const uint32_t height,
-    const GLint internalFormat,
-    const GLenum pixelFormat,
-    const GLenum pixelDataType
+    const bool mipmap
 ) {
+    // Store data.
+    m_internalFormat = internalFormat ;
+    m_pixelFormat = pixelFormat ;
+    m_pixelDataType = pixelDataType ;
+    m_mipmap = mipmap ;
+
     glGenTextures(1, &m_textureID) ;
+    resize(size, pixelData) ;
+}
+
+Texture2D::~Texture2D() {
+    glBindTexture(GL_TEXTURE_2D, 0) ;
+    glDeleteTextures(1, &m_textureID) ;
+}
+
+void Texture2D::resize(
+    const Mind::Dimension2Di& size,
+    const float* pixelData
+) {
     glBindTexture(GL_TEXTURE_2D, m_textureID) ;
 
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
     glTexImage2D(
         GL_TEXTURE_2D,
-      	TextureLoD,
-      	internalFormat,
-      	width,
-      	height,
-      	Border,
-      	pixelFormat,
-      	pixelDataType,
-      	pixelData
+        TextureLoD,
+        m_internalFormat,
+        size.width(),
+        size.height(),
+        Border,
+        m_pixelFormat,
+        m_pixelDataType,
+        pixelData
     ) ;
 
-    glGenerateMipmap(GL_TEXTURE_2D) ;
-}
+    if (m_mipmap) {
+        glGenerateMipmap(GL_TEXTURE_2D) ;
+    }
 
-Texture2D::~Texture2D() {
     glBindTexture(GL_TEXTURE_2D, 0) ;
-    glDeleteTextures(1, &m_textureID) ;
 }
 
 void Texture2D::setWrapModes(std::array<GLint, AmountCoordinates> modes) {

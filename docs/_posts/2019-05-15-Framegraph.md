@@ -20,17 +20,17 @@ The scene has a frame graph root node. All your `FramegraphNodes` must be connec
 
 ### Minimal frame graph
 The minimal frame graph is composed of two nodes:
-* `Viewport`: it defines the area inside the window that is used to display the scene. The position and the size defined into the `Viewport` are relative to the window size. So, if you want a `Viewport` using the half width of the window, enter a value of 0.5 for the width of the Viewport.
-* `ActiveCamera`: it defines the camera to use to render the scene. Your scene can contain several cameras and you can switch the used camera through this `FramegraphNodes`. As the frame graph is dynamic, the system will apply the change directly on the next frame render.
+* `ViewportNode`: it defines the area inside the window that is used to display the scene. The position and the size defined into the `ViewportNode` are relative to the window size. So, if you want a `ViewportNode` using the half width of the window, enter a value of 0.5 for the width of the Viewport.
+* `ActiveCameraNode`: it defines the camera to use to render the scene. Your scene can contain several cameras and you can switch the used camera through this `FramegraphNodes`. As the frame graph is dynamic, the system will apply the change directly on the next frame render.
 
 ```cpp
 // Set the viewport using the whole window area.
-Hope::Viewport* viewportNode = new Hope::Viewport() ;
+Hope::ViewportNode* viewportNode = new Hope::ViewportNode() ;
 viewportNode -> setPosition(Mind::Point2Df(0.f, 0.f)) ;
 viewportNode -> setDimension(Mind::Dimension2Df(1.f, 1.f)) ;
 
 // Set the camera to use.
-Hope::ActiveCamera* activeCameraNode = new Hope::ActiveCamera(viewportNode) ;
+Hope::ActiveCameraNode* activeCameraNode = new Hope::ActiveCameraNode(viewportNode) ;
 activeCameraNode -> setCamera(myCameraComponent) ;
 
 // Use the frame graph.
@@ -40,6 +40,6 @@ scene() -> setFrameGraphRoot(viewportNode) ;
 ### Going further
 Many other nodes can be used to change the way the render is processed. You can inherit from the `FramegraphNode` class to create your own nodes and implement the methods from the `Visitor` pattern.
 
-The `FramegraphNode` class is a concrete class and can be used as a root node for example. You can connect two `Viewport` objects to it, each `Viewport` having an `ActiveCamera` child node. This is how you can perform a splitscreen view for 2 players.
+The `FramegraphNode` class is a concrete class and can be used as a root node for example. You can connect two `ViewportNode` objects to it, each `ViewportNode` having an `ActiveCameraNode` child node. This is how you can perform a splitscreen view for 2 players.
 
 By connecting and modifying the `FramegraphNodes` while the application is running, you easily change how the scene is rendered with few manipulations.

@@ -7,8 +7,6 @@
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
 
-#include <iostream>
-
 namespace Hope::GL {
     /**
      * A CubeGeometry is dedicated to draw a simple cube.
@@ -16,7 +14,7 @@ namespace Hope::GL {
     class CubeGeometry final : public Geometry {
         private:
             static const size_t AmountParts = 1 ;
-            static const size_t AmountVertices = 8 * 3 ;
+            static const size_t AmountVertexCoords = 8 * 3 ;
             static const size_t AmountIndices = 3 * 2 * 6 ;
 
             /**

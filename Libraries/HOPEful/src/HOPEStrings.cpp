@@ -24,5 +24,15 @@ namespace Hope {
 
         /* "binding index" is a technical expression. */
         std::string UBO_BadBindingIndex =   i18n("The provided binding index is too high for this GPU!") ;
+
+        std::string FBO_Undefined =                 i18n("The specified framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist.") ;
+        std::string FBO_IncompleteAttachment =      i18n("Any of the framebuffer attachment points are framebuffer incomplete.") ;
+        std::string FBO_IncompleteMissingAttachment = i18n("The framebuffer does not have at least one image attached to it.") ;
+        std::string FBO_IncompleteDrawBuffer =      i18n("The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi.") ;
+        std::string FBO_IncompleteReadBuffer =      i18n("GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER.") ;
+        std::string FBO_Unsupported =               i18n("The combination of internal formats of the attached images violates an implementation-dependent set of restrictions.") ;
+        std::string FBO_IncompleteMultisample =     i18n("The value of GL_RENDERBUFFER_SAMPLES is not the same for all attached targets.") ;
+        std::string FBO_IncompleteLayerTargets =    i18n("Any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target.") ;
+        std::string FBO_UnknownError =              i18n("An unknown error occured in framebuffer construction.") ;
     }
 } ;

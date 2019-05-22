@@ -51,7 +51,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            virtual void updateUniformValues(const RenderPassID) {}
+            virtual void updateUniformValues() = 0 ;
 
             /**
              * To know if the component can be shared by several entities.
@@ -136,66 +136,18 @@ namespace Hope {
 
             /**
              * Setup the render passes of the material.
-             * @param   generatePosition    true to generate the position render
-             *                              pass; false to not use it.
              */
-            void setupRendering(const bool generatePosition = true) ;
+            void setupRendering() ;
 
             /**
-             * Setup the forward render pass.
+             * Setup the shader for the forward rendering pass.
              */
-            virtual void setupForwardRenderPass() = 0 ;
+            virtual void setupForwardShader() = 0 ;
 
             /**
-             * Setup the diffuse render pass (used by deferred rendering, ...).
+             * Setup the shader for the deferred rendering pass.
              */
-            virtual void setupAlbedoRenderPass() = 0 ;
-
-            /**
-             * Setup the normal render pass (used by deferred rendering, ...).
-             */
-            virtual void setupNormalRenderPass() = 0 ;
-
-            /**
-             * Setup the specular render pass (used by deferred rendering, ...).
-             */
-            virtual void setupSpecularRenderPass() = 0 ;
-
-            /**
-             * Setup the position render pass (used by deferred rendering, ...).
-             */
-            void setupPositionRenderPass() ;
-
-
-            /**
-             * Generate the render pass using the albedo color of the material.
-             */
-            void useAlbedoColorPass() ;
-
-            /**
-             * Generate the render pass using the albedo texture of the material.
-             */
-            void useAlbedoMapPass() ;
-
-            /**
-             * Generate the render pass using only the normal of the geometry.
-             */
-            void useGeometryNormalPass() ;
-
-            /**
-             * Generate the render pass using the normal map texture.
-             */
-            void useNormalMapPass() ;
-
-            /**
-             * Generate the render pass using the specular values of the material.
-             */
-            void useSpecularColorPass() ;
-
-            /**
-             * Generate the render pass using the specular map of the material.
-             */
-            void useSpecularMapPass() ;
+            virtual void setupDeferredShader() = 0 ;
     } ;
 }
 

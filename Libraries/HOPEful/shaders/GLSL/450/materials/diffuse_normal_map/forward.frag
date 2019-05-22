@@ -1,14 +1,10 @@
-// Blinn-Phong material shader using diffuse and normal maps.
+// Diffuse+normal maps material shader.
 
-struct Material {
-    layout(binding = 0) sampler2D diffuse ;
-    layout(binding = 1) sampler2D normal ;
-    vec3 ambient ;
-    vec3 specular ;
-    float shininess ;
-} ;
-
-uniform Material material ;
+layout(binding = 0) uniform sampler2D diffuse ;
+layout(binding = 1) uniform sampler2D normal ;
+uniform vec3 ambient ;
+uniform vec3 specular ;
+uniform float shininess ;
 
 layout(location = 0) in vec3 inVertexWorldPosition ;
 layout(location = 1) in vec3 inNormal ;
@@ -21,12 +17,12 @@ out vec4 outColor ;
 void main() {
     FragmentData currentFragment ;
     currentFragment.worldPosition = inVertexWorldPosition ;
-    currentFragment.diffuseValue = texture(material.diffuse, inTexCoord).rgb ;
-    currentFragment.specularValue = material.specular ;
-    vec3 normalVector = texture(material.normal, inTexCoord).rgb ;
+    currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;
+    currentFragment.specularValue = specular ;
+    vec3 normalVector = texture(normal, inTexCoord).rgb ;
     currentFragment.normalValue = AdjustNormalVector(inTBNMatrix, normalVector) ;
 
-    vec3 colorLinear = material.ambient ;
+    vec3 colorLinear = ambient ;
     colorLinear += ComputeLightsContribution(
         inViewDirection,
         currentFragment

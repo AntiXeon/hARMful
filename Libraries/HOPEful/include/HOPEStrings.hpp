@@ -15,6 +15,16 @@ namespace Hope {
         extern std::string Texture_UnknownFormat ;
 
         extern std::string UBO_BadBindingIndex ;
+
+        extern std::string FBO_Undefined ;
+        extern std::string FBO_IncompleteAttachment ;
+        extern std::string FBO_IncompleteMissingAttachment ;
+        extern std::string FBO_IncompleteDrawBuffer ;
+        extern std::string FBO_IncompleteReadBuffer ;
+        extern std::string FBO_Unsupported ;
+        extern std::string FBO_IncompleteMultisample ;
+        extern std::string FBO_IncompleteLayerTargets ;
+        extern std::string FBO_UnknownError ;
     }
 } ;
 

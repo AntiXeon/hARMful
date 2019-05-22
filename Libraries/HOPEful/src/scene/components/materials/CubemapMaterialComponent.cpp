@@ -14,8 +14,7 @@ using namespace Hope ;
 CubemapMaterialComponent::CubemapMaterialComponent()
     : MaterialComponent(),
       m_map(nullptr) {
-    static const bool GeneratePosition = false ;
-    setupRendering(GeneratePosition) ;
+    setupRendering() ;
     setupUniforms() ;
 }
 
@@ -23,7 +22,7 @@ CubemapMaterialComponent::~CubemapMaterialComponent() {
     delete m_map ;
 }
 
-void CubemapMaterialComponent::updateUniformValues(const RenderPassID) {
+void CubemapMaterialComponent::updateUniformValues() {
     if (m_map) {
         m_map -> activate() ;
         m_map -> bind() ;
@@ -37,8 +36,8 @@ void CubemapMaterialComponent::setupUniforms() {
     addShaderUniform(cubemapUniform) ;
 }
 
-void CubemapMaterialComponent::generateAlbedoRenderPass(const RenderPassID target) {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(target) ;
+void CubemapMaterialComponent::setupForwardShader() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(depthTest) ;
@@ -54,6 +53,28 @@ void CubemapMaterialComponent::generateAlbedoRenderPass(const RenderPassID targe
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(CubemapForwardFragmentCode) ;
+    shaderProgram -> build() ;
+
+    effect().addRenderPass(renderPass) ;
+}
+
+void CubemapMaterialComponent::setupDeferredShader() {
+    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
+    depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
+    renderPass -> addCapability(depthTest) ;
+
+    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    // Vertex shader code.
+    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(CubemapDeferredVertexCode) ;
+    // Fragment shader code.
+    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(CubemapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

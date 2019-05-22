@@ -51,7 +51,7 @@ void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
     size_t amountChildren = children().size() ;
     if (amountChildren == 0) {
         // If this is the last node in the tree branch, render the scene for the
-        // current branch.
+        // current branch, if allowed.
         visitor -> makeRender() ;
     }
     else {
