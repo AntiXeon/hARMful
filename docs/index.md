@@ -21,7 +21,9 @@ Some of them are already implemented and a demonstration video is available. A "
 - Physics based rendering materials (✗)
 - Cascade shadow mapping (✗)
 - Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
-- Support of deferred rendering (✗)
+- Support of deferred rendering (✓)
+    - Compute scene objects position from depth (✓)
+    - Compute normals in a spheremap transform (✓)
 - Post-rendering effects:
     - Anti-aliasing (✗)
     - Ambient occlusion (✗)
