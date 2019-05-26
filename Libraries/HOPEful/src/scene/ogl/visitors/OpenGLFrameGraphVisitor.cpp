@@ -229,6 +229,8 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
 
     // Update the required data.
     m_renderer.setViewMatrix(viewMatrix) ;
+    m_renderer.baseUBO().setFieldOfView(camera -> fov()) ;
+    m_renderer.baseUBO().setNearPlaneDistance(camera -> nearPlaneDistance()) ;
     m_renderer.baseUBO().setFarPlaneDistance(camera -> farPlaneDistance()) ;
     m_renderer.baseUBO().setTime(glfwGetTime()) ;
     m_renderer.baseUBO().setViewMatrix(viewMatrix) ;

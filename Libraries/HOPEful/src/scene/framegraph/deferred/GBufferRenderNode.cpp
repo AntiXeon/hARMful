@@ -26,20 +26,13 @@ void GBufferRenderNode::setup() {
     framebuffer().attachColor(
        NormalRenderTarget,
        API::Texture2D::PixelFormat::RedGreenBlueAlpha,
-       API::Texture2D::PixelDataType::UnsignedInt1010102
-   ) ;
-
-   framebuffer().attachColor(
-      PositionRenderTarget,
-      API::Texture2D::PixelFormat::RedGreenBlueAlpha,
-      API::Texture2D::PixelDataType::UnsignedInt1010102
+       API::Texture2D::PixelDataType::UnsignedByte
    ) ;
 
    framebuffer().setDrawBuffers({
        AlbedoRenderTarget,
        SpecularRenderTarget,
-       NormalRenderTarget,
-       PositionRenderTarget
+       NormalRenderTarget
    }) ;
 
    framebuffer().attachDepth() ;

@@ -3,10 +3,27 @@
 
 std::string FunctionsUtilityModuleCode =
 "\
+/**\n\
+ * Adjust a normal vector with a Tangent-Bitangent-Normal matrix.\n\
+ */\n\
 vec3 AdjustNormalVector(mat3 tbnMatrix, vec3 normalValue) {\n\
     vec3 adjustedNormalVector = normalize((normalValue * 2.f) - 1.f) ;\n\
     adjustedNormalVector = normalize(tbnMatrix * adjustedNormalVector) ;\n\
     return adjustedNormalVector ;\n\
+}\n\
+\n\
+/**\n\
+ * Retrieve a view space position from texture coordinates and depth.\n\
+ */\n\
+vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {\n\
+	float x = texCoords.x * 2.f - 1.f ;\n\
+	float y = texCoords.y * 2.f - 1.f ;\n\
+	float z = depth * 2.f - 1.f ;\n\
+\n\
+	vec4 positionProjection = vec4(x, y, z, 1.f) ;\n\
+	vec4 positionView = inverseProjectionMatrix * positionProjection ;\n\
+	positionView /= positionView.w ;\n\
+	return positionView ;\n\
 }\n\
 " ;
 
@@ -60,8 +77,8 @@ layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData\n\
 \n\
 \n\
 struct FragmentData {\n\
-    // Position of the fragment in the world.\n\
-    vec3 worldPosition ;\n\
+    // Position of the fragment.\n\
+    vec3 position ;\n\
 \n\
     // Diffuse color value.\n\
     vec3 diffuseValue ;\n\
@@ -94,7 +111,6 @@ vec3 ComputeDirectionalLight(\n\
     float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;\n\
 \n\
-    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
     specularAngle *= pow(specularAngle, fragment.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
@@ -118,16 +134,15 @@ vec3 ComputePointLight(\n\
     vec3 viewDirection,\n\
     FragmentData fragment\n\
 ) {\n\
-    vec3 lightDirection = normalize(light.position - fragment.worldPosition) ;\n\
+    vec3 lightDirection = normalize(light.position - fragment.position) ;\n\
     float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;\n\
 \n\
-    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;\n\
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;\n\
     specularAngle *= pow(specularAngle, fragment.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
-    float lightDistance = length(fragment.worldPosition - light.position) ;\n\
+    float lightDistance = length(fragment.position - light.position) ;\n\
     float sqrLightDistance = lightDistance * lightDistance ;\n\
     float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;\n\
 \n\

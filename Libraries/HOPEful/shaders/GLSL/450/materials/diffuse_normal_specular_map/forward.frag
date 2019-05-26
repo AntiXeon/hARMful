@@ -16,7 +16,7 @@ out vec4 outColor ;
 
 void main() {
     FragmentData currentFragment ;
-    currentFragment.worldPosition = inVertexWorldPosition ;
+    currentFragment.position = inVertexWorldPosition ;
     currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;
     currentFragment.specularValue = vec3(texture(specular, inTexCoord).r) ;
     vec3 normalVector = texture(normal, inTexCoord).rgb ;

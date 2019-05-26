@@ -106,6 +106,11 @@ void Framebuffer::attachDepth() {
         ) ;
     }
 
+    // Set the filtering modes.
+    m_depthAttachment -> bind() ;
+    m_depthAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
+    m_depthAttachment -> unbind() ;
+
     // Attach the texture to the framebuffer.
     bind() ;
     glFramebufferTexture2D(

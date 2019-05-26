@@ -104,6 +104,14 @@ namespace Hope {
                 return m_right ;
             }
 
+            /**
+             * Get the field of view of the camera.
+             * An orthographic camera does not have FOV...
+             */
+            float fov() const override {
+                return 0.f ;
+            }
+
         protected:
             /**
              * Compute the projection matrix.

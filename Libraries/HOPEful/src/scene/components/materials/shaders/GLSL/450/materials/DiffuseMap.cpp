@@ -9,17 +9,15 @@ layout(location = 0) in vec3 position ;\n\
 layout(location = 1) in vec2 texCoord ;\n\
 layout(location = 2) in vec3 normal ;\n\
 \n\
-layout(location = 0) out vec3 outVertexWorldPosition ;\n\
-layout(location = 1) out vec2 outTexCoord ;\n\
-layout(location = 2) out vec3 outNormal ;\n\
+layout(location = 0) out vec2 outTexCoord ;\n\
+layout(location = 1) out vec3 outNormal ;\n\
 \n\
 void main() {\n\
     vec4 position4D = vec4(position, 1.f) ;\n\
     gl_Position = mvpMatrix * position4D ;\n\
 \n\
-    outVertexWorldPosition = (modelMatrix * position4D).xyz ;\n\
     outTexCoord = texCoord ;\n\
-    outNormal = (modelMatrix * vec4(normal, 0.f)).xyz ;\n\
+    outNormal = (normalMatrix * vec4(normal, 0.f)).xyz ;\n\
 }\n\
 " ;
 
@@ -32,20 +30,17 @@ layout(binding = 0) uniform sampler2D diffuse ;\n\
 uniform vec3 specular ;\n\
 uniform float shininess ;\n\
 \n\
-layout(location = 0) in vec3 inVertexWorldPosition ;\n\
-layout(location = 1) in vec2 inTexCoord ;\n\
-layout(location = 2) in vec3 inNormal ;\n\
+layout(location = 0) in vec2 inTexCoord ;\n\
+layout(location = 1) in vec3 inNormal ;\n\
 \n\
 layout(location = 0) out vec4 gAlbedo ;\n\
 layout(location = 1) out vec4 gNormal ;\n\
 layout(location = 2) out vec4 gSpecular ;\n\
-layout(location = 3) out vec4 gPosition ;\n\
 \n\
 void main() {\n\
     gAlbedo = vec4(texture(diffuse, inTexCoord).rgb, 1.f) ;\n\
-    gNormal = vec4(normalize(inNormal), 1.f) ;\n\
+    gNormal = vec4(normalize(inNormal) * 0.5f + 0.5f, 0.f) ;\n\
     gSpecular = vec4(specular, shininess) ;\n\
-    gPosition = vec4(inVertexWorldPosition, 1.f) ;\n\
 }\n\
 " ;
 
@@ -93,7 +88,7 @@ out vec4 outColor ;\n\
 \n\
 void main() {\n\
     FragmentData currentFragment ;\n\
-    currentFragment.worldPosition = inVertexWorldPosition ;\n\
+    currentFragment.position = inVertexWorldPosition ;\n\
     currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;\n\
     currentFragment.specularValue = specular ;\n\
     currentFragment.normalValue = inNormal ;\n\

@@ -58,13 +58,15 @@ scene() -> setFrameGraphRoot(viewportNode) ;
 
 ## How to create materials that use deferred rendering?
 The first things to create are the shaders. You need at least a duet of vertex/fragment shaders for both modes: forward rendering and deferred rendering.
+Notice that the deferred rendering works with view-space values (normals, lights positions).
+That's why there is no G-Buffer dedicated to world position of the scene objects. Their view-space position is retrieved from the depth buffer.
+The C++ code and the shaders utility functions are common to both forward and deferred rendering by the way.
 
 A fragment dedicated to deferred rendering must output four values with the given locations:
 ```glsl
 layout(location = 0) out vec4 gAlbedo ;
 layout(location = 1) out vec4 gNormal ;
 layout(location = 2) out vec4 gSpecular ;
-layout(location = 3) out vec4 gPosition ;
 ```
 
 Once its done, you have to create the corresponding `MaterialComponent`. You should implement the `setupForwardShader()` method and of course the `setupDeferredShader()` method, using the right render pass IDs. Then you set up the uniforms as usually, the code is common to both rendering modes.

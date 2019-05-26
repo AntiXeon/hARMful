@@ -3,40 +3,22 @@
 
 std::string CubemapDeferredVertexCode =
 "\
-layout(location = 0) in vec3 position ;\n\
-\n\
-layout(location = 0) out vec4 outPosition ;\n\
-layout(location = 1) out vec3 outTexCoord ;\n\
-\n\
 void main() {\n\
-    outTexCoord = position ;\n\
-\n\
-    vec4 position4D = viewProjectionMatrix * vec4(position * farPlaneDistance, 1.f) ;\n\
-    outPosition = position4D.xyww ;\n\
-    gl_Position = outPosition ;\n\
 }\n\
 " ;
 
 std::string CubemapDeferredFragmentCode =
 "\
 // Cubemap material shader.\n\
-\n\
-uniform layout(binding = 0) samplerCube cubemap ;\n\
-\n\
-layout(location = 0) in vec4 inPosition ;\n\
-layout(location = 1) in vec3 inTexCoord ;\n\
-\n\
 layout(location = 0) out vec4 gAlbedo ;\n\
 layout(location = 1) out vec4 gNormal ;\n\
 layout(location = 2) out vec4 gSpecular ;\n\
-layout(location = 3) out vec4 gPosition ;\n\
 \n\
 void main() {\n\
     const vec4 NoColor = vec4(0.f, 0.f, 0.f, 1.f) ;\n\
-    gAlbedo = texture(cubemap, inTexCoord) ;\n\
+    gAlbedo = NoColor ;\n\
     gNormal = NoColor ;\n\
     gSpecular = NoColor ;\n\
-    gPosition = inPosition ;\n\
 }\n\
 " ;
 

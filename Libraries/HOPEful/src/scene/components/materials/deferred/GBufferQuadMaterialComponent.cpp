@@ -5,6 +5,8 @@
 
 #ifdef OGL
     #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredRendering.hpp>
 #endif
 
@@ -22,7 +24,7 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     framebuffer.bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer.bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer.bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
-    framebuffer.bindUnitColor(GBufferRenderNode::PositionRenderTarget) ;
+    framebuffer.bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
@@ -38,9 +40,9 @@ void GBufferQuadMaterialComponent::setupUniforms() {
     normalUniform -> setName(UniformNames::MaterialGBufferNormalUniformName()) ;
     addShaderUniform(normalUniform) ;
 
-    std::shared_ptr<Hope::ShaderUniform> positionUniform = std::make_shared<Hope::ShaderUniform>() ;
-    positionUniform -> setName(UniformNames::MaterialGBufferPositionUniformName()) ;
-    addShaderUniform(positionUniform) ;
+    std::shared_ptr<Hope::ShaderUniform> depthUniform = std::make_shared<Hope::ShaderUniform>() ;
+    depthUniform -> setName(UniformNames::MaterialGBufferDepthUniformName()) ;
+    addShaderUniform(depthUniform) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {
@@ -51,6 +53,11 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addVertexShaderCode(DeferredRenderingFinalVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
     shaderProgram -> build() ;
 

@@ -30,6 +30,8 @@ layout (std140, binding = BASE_DATA_UBO_BINDING_INDEX) uniform BaseData\n\
     mat3 viewportMatrix ;\n\
     mat3 inverseViewportMatrix ;\n\
     vec3 eyePosition ;\n\
+    float fieldOfView ;\n\
+    float nearPlaneDistance ;\n\
     float farPlaneDistance ;\n\
     float aspectRatio ;\n\
     float time ;\n\

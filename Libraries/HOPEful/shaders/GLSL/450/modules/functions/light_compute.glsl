@@ -46,8 +46,8 @@ layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData
 
 
 struct FragmentData {
-    // Position of the fragment in the world.
-    vec3 worldPosition ;
+    // Position of the fragment.
+    vec3 position ;
 
     // Diffuse color value.
     vec3 diffuseValue ;
@@ -80,7 +80,6 @@ vec3 ComputeDirectionalLight(
     float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;
     vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;
 
-    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, fragment.shininess) ;
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
@@ -104,16 +103,15 @@ vec3 ComputePointLight(
     vec3 viewDirection,
     FragmentData fragment
 ) {
-    vec3 lightDirection = normalize(light.position - fragment.worldPosition) ;
+    vec3 lightDirection = normalize(light.position - fragment.position) ;
     float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;
     vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;
 
-    vec3 halfwayDirection = normalize(lightDirection + viewDirection) ;
     float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
     specularAngle *= pow(specularAngle, fragment.shininess) ;
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
-    float lightDistance = length(fragment.worldPosition - light.position) ;
+    float lightDistance = length(fragment.position - light.position) ;
     float sqrLightDistance = lightDistance * lightDistance ;
     float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
 

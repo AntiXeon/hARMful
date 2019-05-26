@@ -11,11 +11,8 @@ layout(location = 2) in vec3 normal ;\n\
 layout(location = 3) in vec3 tangent ;\n\
 layout(location = 4) in vec3 bitangent ;\n\
 \n\
-layout(location = 0) out vec3 outVertexWorldPosition ;\n\
-layout(location = 1) out vec3 outNormal ;\n\
-layout(location = 2) out mat3 outTBNMatrix ;\n\
-layout(location = 5) out vec2 outTexCoord ;\n\
-layout(location = 6) out vec3 outViewDirection ;\n\
+layout(location = 0) out mat3 outTBNMatrix ;\n\
+layout(location = 3) out vec2 outTexCoord ;\n\
 \n\
 void correctTBNMatrix() {\n\
     vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;\n\
@@ -28,14 +25,8 @@ void main() {\n\
     correctTBNMatrix() ;\n\
 \n\
     vec4 position4D = vec4(position, 1.f) ;\n\
-\n\
     gl_Position = mvpMatrix * position4D ;\n\
-\n\
-    vec4 vertexPosition4D = modelViewMatrix * vec4(position, 1.f) ;\n\
-    outVertexWorldPosition = vec3(vertexPosition4D) / vertexPosition4D.w ;\n\
-    outNormal = normalize(vec3(normalMatrix * vec4(normal, 0.f))) ;\n\
     outTexCoord = texCoord ;\n\
-    outViewDirection = normalize(-outVertexWorldPosition) ;\n\
 }\n\
 " ;
 
@@ -49,26 +40,21 @@ layout(binding = 2) uniform sampler2D specular ;\n\
 uniform vec3 ambient ;\n\
 uniform float shininess ;\n\
 \n\
-layout(location = 0) in vec3 inVertexWorldPosition ;\n\
-layout(location = 1) in vec3 inNormal ;\n\
-layout(location = 2) in mat3 inTBNMatrix ;\n\
-layout(location = 5) in vec2 inTexCoord ;\n\
-layout(location = 6) in vec3 inViewDirection ;\n\
+layout(location = 0) in mat3 inTBNMatrix ;\n\
+layout(location = 3) in vec2 inTexCoord ;\n\
 \n\
 layout(location = 0) out vec4 gAlbedo ;\n\
 layout(location = 1) out vec4 gNormal ;\n\
 layout(location = 2) out vec4 gSpecular ;\n\
-layout(location = 3) out vec4 gPosition ;\n\
 \n\
 void main() {\n\
     gAlbedo = vec4(texture(diffuse, inTexCoord).rgb, 1.f) ;\n\
-    gPosition = vec4(inVertexWorldPosition, 1.f) ;\n\
 \n\
     vec3 specularValue = vec3(texture(specular, inTexCoord).r) ;\n\
     gSpecular = vec4(specularValue, shininess) ;\n\
 \n\
     vec3 normalVector = texture(normal, inTexCoord).rgb ;\n\
-    gNormal = vec4(AdjustNormalVector(inTBNMatrix, normalVector), 0.f) ;\n\
+    gNormal = vec4(AdjustNormalVector(inTBNMatrix, normalVector) * 0.5f + 0.5f, 0.f) ;\n\
 }\n\
 " ;
 
@@ -130,7 +116,7 @@ out vec4 outColor ;\n\
 \n\
 void main() {\n\
     FragmentData currentFragment ;\n\
-    currentFragment.worldPosition = inVertexWorldPosition ;\n\
+    currentFragment.position = inVertexWorldPosition ;\n\
     currentFragment.diffuseValue = texture(diffuse, inTexCoord).rgb ;\n\
     currentFragment.specularValue = vec3(texture(specular, inTexCoord).r) ;\n\
     vec3 normalVector = texture(normal, inTexCoord).rgb ;\n\

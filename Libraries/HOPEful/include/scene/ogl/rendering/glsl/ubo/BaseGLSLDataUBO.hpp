@@ -28,8 +28,8 @@ namespace Hope::GL {
                 std::array<float, Mind::Matrix4x4f::MatrixSize> inverseViewProjectionMatrix ;
                 std::array<float, Mind::Vector4f::AmountCoords * 3> viewportMatrix ;
                 std::array<float, Mind::Vector4f::AmountCoords * 3> inverseViewportMatrix ;
-                std::array<float, Mind::Vector4f::AmountCoords> eye_far ;
-                std::array<float, Mind::Vector4f::AmountCoords> aspect_time ;
+                std::array<float, Mind::Vector4f::AmountCoords> eye_fov ;
+                std::array<float, Mind::Vector4f::AmountCoords> near_far_aspect_time ;
             } m_data ;
 
         public:
@@ -118,10 +118,28 @@ namespace Hope::GL {
             void setEyePosition(const Mind::Vector3f& vec) {
                 static const uint32_t EndOffset = Mind::Vector3f::AmountCoords - 1 ;
                 std::copy(
-                    m_data.eye_far.begin(),
-                    m_data.eye_far.begin() + EndOffset,
+                    m_data.eye_fov.begin(),
+                    m_data.eye_fov.begin() + EndOffset,
                     vec.toArray().begin()
                 ) ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the camera field of view value.
+             */
+            void setFieldOfView(const float value) {
+                static const uint32_t Offset = 3 ;
+                m_data.eye_fov[Offset] = value ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the near plane distance value.
+             */
+            void setNearPlaneDistance(const float value) {
+                static const uint32_t Offset = 0 ;
+                m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
             }
 
@@ -129,8 +147,8 @@ namespace Hope::GL {
              * Set the far plane distance value.
              */
             void setFarPlaneDistance(const float value) {
-                static const uint32_t Offset = 3 ;
-                m_data.eye_far[Offset] = value ;
+                static const uint32_t Offset = 1 ;
+                m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
             }
 
@@ -138,8 +156,8 @@ namespace Hope::GL {
              * Set the aspect ratio value.
              */
             void setAspectRatio(const float value) {
-                static const uint32_t Offset = 0 ;
-                m_data.aspect_time[Offset] = value ;
+                static const uint32_t Offset = 2 ;
+                m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
             }
 
@@ -147,8 +165,8 @@ namespace Hope::GL {
              * Set the time value.
              */
             void setTime(const float value) {
-                static const uint32_t Offset = 1 ;
-                m_data.aspect_time[Offset] = value ;
+                static const uint32_t Offset = 3 ;
+                m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
             }
 

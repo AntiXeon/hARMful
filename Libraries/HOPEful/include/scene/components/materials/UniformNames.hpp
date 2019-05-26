@@ -79,7 +79,7 @@ namespace Hope {
             static std::string MaterialGBufferAlbedoUniformName() { return "albedo" ; }
             static std::string MaterialGBufferSpecularUniformName() { return "specular" ; }
             static std::string MaterialGBufferNormalUniformName() { return "normal" ; }
-            static std::string MaterialGBufferPositionUniformName() { return "position" ; }
+            static std::string MaterialGBufferDepthUniformName() { return "depth" ; }
     } ;
 }
 

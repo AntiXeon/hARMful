@@ -214,6 +214,11 @@ namespace Hope {
             }
 
             /**
+             * Get the field of view of the camera.
+             */
+            virtual float fov() const = 0 ;
+
+            /**
              * Get the projection matrix.
              * @param   projection  Projection matrix to get back.
              * @param   aspectRatio Aspect ratio of the window in which the

@@ -46,7 +46,7 @@ namespace Hope {
             /**
              * Get the field of view of the camera.
              */
-            float fov() const {
+            float fov() const override {
                 return m_fov ;
             }
 

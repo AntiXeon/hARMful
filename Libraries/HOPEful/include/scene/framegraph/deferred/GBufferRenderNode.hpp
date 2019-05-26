@@ -22,7 +22,7 @@ namespace Hope {
             static const unsigned char AlbedoRenderTarget = 0 ;
             static const unsigned char SpecularRenderTarget = 1 ;
             static const unsigned char NormalRenderTarget = 2 ;
-            static const unsigned char PositionRenderTarget = 3 ;
+            static const unsigned char DepthRenderTarget = 3 ;
 
         public:
             /**

@@ -166,13 +166,6 @@ namespace Hope::GL {
             /**
              * Bind the color attachment.
              */
-            void bindColor(const unsigned char attachmentIndex) const {
-                m_colorAttachments[attachmentIndex] -> bind() ;
-            }
-
-            /**
-             * Bind the color attachment.
-             */
             void bindUnitColor(const unsigned char attachmentIndex) const {
                 m_colorAttachments[attachmentIndex] -> bindUnit(attachmentIndex) ;
             }
@@ -180,29 +173,22 @@ namespace Hope::GL {
             /**
              * Bind the depth attachment.
              */
-            void bindDepth() const {
-                m_depthAttachment -> bind() ;
+            void bindUnitDepth(const unsigned char unit) const {
+                m_depthAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the stencil attachment.
              */
-            void bindStencil() const {
-                return m_stencilAttachment -> bind() ;
+            void bindUnitStencil(const unsigned char unit) const {
+                m_depthAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the depth+stencil attachment.
              */
-            void bindDepthStencil() const {
-                return m_depthStencilAttachment -> bind() ;
-            }
-
-            /**
-             * Unbind any attachment.
-             */
-            void unbindAttachment() const {
-                glBindTexture(GL_TEXTURE_2D, 0) ;
+            void bindUnitDepthStencil(const unsigned char unit) const {
+                return m_depthStencilAttachment -> bindUnit(unit) ;
             }
 
             /**

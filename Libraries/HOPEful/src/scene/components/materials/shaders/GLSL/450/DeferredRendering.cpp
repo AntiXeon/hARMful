@@ -9,8 +9,8 @@ layout(location = 1) in vec2 texCoords ;\n\
 layout(location = 0) out vec2 outTexCoords ;\n\
 \n\
 void main() {\n\
-    gl_Position = vec4(position, 1.f) ;\n\
     outTexCoords = texCoords ;\n\
+    gl_Position = vec4(position, 1.f) ;\n\
 }\n\
 " ;
 
@@ -22,14 +22,35 @@ std::string DeferredRenderingFinalFragmentCode =
 layout(binding = 0) uniform sampler2D albedo ;\n\
 layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D specular ;\n\
-layout(binding = 3) uniform sampler2D position ;\n\
+layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
-layout(location = 0) in vec2 texCoords ;\n\
+layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
 void main() {\n\
-    outColor = vec4(texture(albedo, texCoords).rgb, 1.f) ;\n\
+    // Note: The lighting computations are performed in view-space.\n\
+    // Get the view-space positions of the 3D objects from the pixel coordinates\n\
+    // and the depth buffer.\n\
+    float depthValue = texture(depth, inTexCoords).r ;\n\
+    vec4 viewSpacePosition = ComputeViewSpacePosition(inTexCoords, depthValue) ;\n\
+\n\
+    // Put values to perform the lighting pass for the current fragment.\n\
+    FragmentData currentFragment ;\n\
+    currentFragment.diffuseValue = texture(albedo, inTexCoords).rgb ;\n\
+    currentFragment.normalValue = texture(normal, inTexCoords).rgb * 2.f - 1.f ;\n\
+    currentFragment.specularValue = texture(specular, inTexCoords).rgb ;\n\
+    currentFragment.shininess = texture(specular, inTexCoords).a ;\n\
+    currentFragment.position = viewSpacePosition.xyz ;\n\
+\n\
+    // Compute ligh shading.\n\
+    vec3 viewDirection = normalize(-currentFragment.position) ;\n\
+    vec3 shadedColor = ComputeLightsContribution(\n\
+        viewDirection,\n\
+        currentFragment\n\
+    ) ;\n\
+\n\
+    outColor = vec4(shadedColor, 1.f) ;\n\
 }\n\
 " ;
 

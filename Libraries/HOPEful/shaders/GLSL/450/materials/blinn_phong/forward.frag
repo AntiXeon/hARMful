@@ -16,7 +16,7 @@ out vec4 outColor ;
 
 void main() {
     FragmentData currentFragment ;
-    currentFragment.worldPosition = inVertexWorldPosition ;
+    currentFragment.position = inVertexWorldPosition ;
     currentFragment.diffuseValue = diffuse ;
     currentFragment.specularValue = specular ;
     currentFragment.normalValue = inNormal ;
