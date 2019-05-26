@@ -13,20 +13,23 @@ GBufferRenderNode::GBufferRenderNode(
 void GBufferRenderNode::setup() {
     framebuffer().attachColor(
         AlbedoRenderTarget,
-        API::Texture2D::PixelFormat::RedGreenBlueAlpha,
-        API::Texture2D::PixelDataType::UnsignedByte
+        API::InternalFormat::RedGreenBlueAlpha,
+        API::PixelFormat::RedGreenBlueAlpha,
+        API::PixelDataType::UnsignedByte
     ) ;
 
     framebuffer().attachColor(
        SpecularRenderTarget,
-       API::Texture2D::PixelFormat::RedGreenBlueAlpha,
-       API::Texture2D::PixelDataType::UnsignedByte
+       API::InternalFormat::RedGreenBlueAlpha,
+       API::PixelFormat::RedGreenBlueAlpha,
+       API::PixelDataType::UnsignedByte
     ) ;
 
     framebuffer().attachColor(
        NormalRenderTarget,
-       API::Texture2D::PixelFormat::RedGreenBlueAlpha,
-       API::Texture2D::PixelDataType::UnsignedByte
+       API::InternalFormat::RedGreenBlueAlpha16f,
+       API::PixelFormat::RedGreenBlueAlpha,
+       API::PixelDataType::HalfFloat
    ) ;
 
    framebuffer().setDrawBuffers({

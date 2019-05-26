@@ -61,15 +61,16 @@ void Framebuffer::resize(const Mind::Dimension2Di& size) {
 
 void Framebuffer::attachColor(
     const unsigned char attachmentIndex,
-    const Texture2D::PixelFormat textureFormat,
-    const Texture2D::PixelDataType pixelDataType
+    const InternalFormat internalFormat,
+    const PixelFormat pixelDataFormat,
+    const PixelDataType pixelDataType
 ) {
     if (!m_colorAttachments[attachmentIndex]) {
         // Generate the texture.
         m_colorAttachments[attachmentIndex] = std::make_unique<Texture2D>(
             m_size,
-            textureFormat,
-            textureFormat,
+            internalFormat,
+            pixelDataFormat,
             pixelDataType,
             nullptr,
             GenerateMipmaps
@@ -98,9 +99,9 @@ void Framebuffer::attachDepth() {
         // Generate the texture.
         m_depthAttachment = std::make_unique<Texture2D>(
             m_size,
-            Texture2D::PixelFormat::DepthComponent,
-            Texture2D::PixelFormat::DepthComponent,
-            Texture2D::PixelDataType::UnsignedByte,
+            InternalFormat::DepthComponent,
+            PixelFormat::DepthComponent,
+            PixelDataType::UnsignedByte,
             nullptr,
             GenerateMipmaps
         ) ;
@@ -128,9 +129,9 @@ void Framebuffer::attachStencil() {
         // Generate the texture.
         m_stencilAttachment = std::make_unique<Texture2D>(
             m_size,
-            Texture2D::PixelFormat::StencilIndex,
-            Texture2D::PixelFormat::StencilIndex,
-            Texture2D::PixelDataType::UnsignedByte,
+            InternalFormat::StencilIndex,
+            PixelFormat::StencilIndex,
+            PixelDataType::UnsignedByte,
             nullptr,
             GenerateMipmaps
         ) ;
@@ -153,9 +154,9 @@ void Framebuffer::attachDepthStencil() {
         // Generate the texture.
         m_depthStencilAttachment = std::make_unique<Texture2D>(
             m_size,
-            Texture2D::PixelFormat::Depth24Stencil8,
-            Texture2D::PixelFormat::DepthStencil,
-            Texture2D::PixelDataType::UnsignedInt248,
+            InternalFormat::Depth24Stencil8,
+            PixelFormat::DepthStencil,
+            PixelDataType::UnsignedInt248,
             nullptr,
             GenerateMipmaps
         ) ;

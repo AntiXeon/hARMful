@@ -20,3 +20,28 @@ vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {
 	positionView /= positionView.w ;
 	return positionView ;
 }
+
+/**
+ * Encode normals using the Lambert azimuthal equal-area projection.
+ * See http://aras-p.info/texts/CompactNormalStorage.html
+ */
+vec2 EncodeSpheremapNormals(vec3 normal) {
+    vec3 normalizedNormal = normalize(normal) ;
+    float zEncoding = sqrt(normalizedNormal.z * 8.f + 8.f) ;
+    return (normalizedNormal.xy / zEncoding) + 0.5f ;
+}
+
+/**
+ * Decode normals using the Lambert azimuthal equal-area projection.
+ * See http://aras-p.info/texts/CompactNormalStorage.html
+ */
+vec3 DecodeSpheremapNormals(vec2 sphereNormal) {
+    vec2 adjustedSphereNormal = sphereNormal * 4.f - 2.f ;
+    float dotResult = dot(adjustedSphereNormal, adjustedSphereNormal) ;
+    float zInverseDecoding = sqrt(1.f - dotResult / 4.f) ;
+
+    vec3 decodedNormal = vec3(0.f) ;
+    decodedNormal.xy = adjustedSphereNormal * zInverseDecoding ;
+    decodedNormal.z = 1.f - dotResult / 2.f ;
+    return decodedNormal ;
+}

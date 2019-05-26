@@ -26,7 +26,7 @@ Texture2D::Texture2D(
 
 Texture2D::Texture2D(
     const Mind::Dimension2Di& size,
-    const PixelFormat internalFormat,
+    const InternalFormat internalFormat,
     const PixelFormat pixelFormat,
     const PixelDataType pixelDataType,
     const float* pixelData,
@@ -58,12 +58,12 @@ void Texture2D::resize(
     glTexImage2D(
         GL_TEXTURE_2D,
         TextureLoD,
-        m_internalFormat,
+        static_cast<GLint>(m_internalFormat),
         size.width(),
         size.height(),
         Border,
-        m_pixelFormat,
-        m_pixelDataType,
+        static_cast<GLenum>(m_pixelFormat),
+        static_cast<GLenum>(m_pixelDataType),
         pixelData
     ) ;
 

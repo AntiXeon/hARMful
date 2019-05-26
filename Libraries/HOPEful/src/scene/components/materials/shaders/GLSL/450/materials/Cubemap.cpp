@@ -11,13 +11,13 @@ std::string CubemapDeferredFragmentCode =
 "\
 // Cubemap material shader.\n\
 layout(location = 0) out vec4 gAlbedo ;\n\
-layout(location = 1) out vec4 gNormal ;\n\
+layout(location = 1) out vec2 gNormal ;\n\
 layout(location = 2) out vec4 gSpecular ;\n\
 \n\
 void main() {\n\
     const vec4 NoColor = vec4(0.f, 0.f, 0.f, 1.f) ;\n\
     gAlbedo = NoColor ;\n\
-    gNormal = NoColor ;\n\
+    gNormal = NoColor.xy ;\n\
     gSpecular = NoColor ;\n\
 }\n\
 " ;

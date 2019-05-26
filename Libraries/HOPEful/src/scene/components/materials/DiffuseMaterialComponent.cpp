@@ -92,6 +92,7 @@ void DiffuseMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseMapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 

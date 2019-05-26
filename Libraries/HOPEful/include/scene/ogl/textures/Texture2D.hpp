@@ -1,6 +1,9 @@
 #ifndef __HOPE__GL_TEXTURE2D__
 #define __HOPE__GL_TEXTURE2D__
 
+#include <scene/ogl/textures/formats/InternalFormats.hpp>
+#include <scene/ogl/textures/formats/PixelFormats.hpp>
+#include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <geometry/dimensions/Dimension2Di.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
@@ -18,55 +21,6 @@ namespace Hope::GL {
              */
             static const int AmountCoordinates = 2 ;
 
-            /**
-             * Pixel format of the texture.
-             */
-            enum PixelFormat {
-                Red = GL_RED,
-                RedGreen = GL_RG,
-                RedGreenBlue = GL_RGB,
-                BlueGreenRed = GL_BGR,
-                RedGreenBlueAlpha = GL_RGBA,
-                BlueGreenRedAlpha = GL_BGRA,
-                RedInteger = GL_RED_INTEGER,
-                RedGreenInteger = GL_RG_INTEGER,
-                RedGreenBlueInteger = GL_RGB_INTEGER,
-                BlueGreenRedInteger = GL_BGR_INTEGER,
-                RedGreenBlueAlphaInteger = GL_RGBA_INTEGER,
-                BlueGreenRedAlphaInteger = GL_BGRA_INTEGER,
-                StencilIndex = GL_STENCIL_INDEX,
-                DepthComponent = GL_DEPTH_COMPONENT,
-                DepthStencil = GL_DEPTH_STENCIL,
-                Depth24Stencil8 = GL_DEPTH24_STENCIL8
-            } ;
-
-            /**
-             * Indication on the way colors are encoded in memory.
-             */
-            enum PixelDataType {
-                UnsignedByte = GL_UNSIGNED_BYTE,
-                Byte = GL_BYTE,
-                UnsignedShort = GL_UNSIGNED_SHORT,
-                Short = GL_SHORT,
-                UnsignedInt = GL_UNSIGNED_INT,
-                Int = GL_INT,
-                HalfFloat = GL_HALF_FLOAT,
-                Float = GL_FLOAT,
-                UnsignedByte332 = GL_UNSIGNED_BYTE_3_3_2,
-                UnsignedByte233 = GL_UNSIGNED_BYTE_2_3_3_REV,
-                UnsignedShort565 = GL_UNSIGNED_SHORT_5_6_5,
-                UnsignedShort565Reversed = GL_UNSIGNED_SHORT_5_6_5_REV,
-                UnsignedShort4444 = GL_UNSIGNED_SHORT_4_4_4_4,
-                UnsignedShort4444Reversed = GL_UNSIGNED_SHORT_4_4_4_4_REV,
-                UnsignedShort5551 = GL_UNSIGNED_SHORT_5_5_5_1,
-                UnsignedShort1555 = GL_UNSIGNED_SHORT_1_5_5_5_REV,
-                UnsignedInt8888 = GL_UNSIGNED_INT_8_8_8_8,
-                UnsignedInt8888Reversed = GL_UNSIGNED_INT_8_8_8_8_REV,
-                UnsignedInt1010102 = GL_UNSIGNED_INT_10_10_10_2,
-                UnsignedInt2101010 = GL_UNSIGNED_INT_2_10_10_10_REV,
-                UnsignedInt248 = GL_UNSIGNED_INT_24_8
-            } ;
-
         private:
             /**
              * ID of the texture on GPU side.
@@ -76,7 +30,7 @@ namespace Hope::GL {
             /**
              * Internal format of the texture.
              */
-            PixelFormat m_internalFormat ;
+            InternalFormat m_internalFormat ;
 
             /**
              * Pixel format of the input data.
@@ -120,7 +74,7 @@ namespace Hope::GL {
              */
             Texture2D(
                 const Mind::Dimension2Di& size,
-                const PixelFormat internalFormat,
+                const InternalFormat internalFormat,
                 const PixelFormat pixelFormat,
                 const PixelDataType pixelDataType,
                 const float* pixelData = nullptr,

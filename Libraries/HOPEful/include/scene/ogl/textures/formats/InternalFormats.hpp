@@ -1,0 +1,83 @@
+#ifndef __HOPE__GL_TEXTURE_INTERNAL_FORMATS__
+#define __HOPE__GL_TEXTURE_INTERNAL_FORMATS__
+
+#include <GL/glew.h>
+
+namespace Hope::GL {
+    /**
+     * Internal format of the texture.
+     */
+    enum class InternalFormat {
+        Red = GL_RED,
+        RedGreen = GL_RG,
+        RedGreenBlue = GL_RGB,
+        RedGreenBlueAlpha = GL_RGBA,
+        DepthComponent = GL_DEPTH_COMPONENT,
+        DepthStencil = GL_DEPTH_STENCIL,
+        StencilIndex = GL_STENCIL_INDEX,
+        Depth24Stencil8 = GL_DEPTH24_STENCIL8,
+        Red8 = GL_R8,
+        Red8SNorm = GL_R8_SNORM,
+        Red16 = GL_R16,
+        Red16SNorm = GL_R16_SNORM,
+        RedGreen8 = GL_RG8,
+        RedGreen8SNorm = GL_RG8_SNORM,
+        RedGreen16 = GL_RG16,
+        RedGreen16SNorm = GL_RG16_SNORM,
+        RedGreenBlue332 = GL_R3_G3_B2,
+        RedGreenBlue4 = GL_RGB4,
+        RedGreenBlue5 = GL_RGB5,
+        RedGreenBlue8 = GL_RGB8,
+        RedGreenBlue8SNorm = GL_RGB8_SNORM,
+        RedGreenBlue10 = GL_RGB10,
+        RedGreenBlue12 = GL_RGB12,
+        RedGreenBlue16Norm = GL_RGB16_SNORM,
+        RedGreenBlueAlpha2 = GL_RGBA2,
+        RedGreenBlueAlpha4 = GL_RGBA4,
+        RedGreenBlue5Alpha1 = GL_RGB5_A1,
+        RedGreenBlueAlpha8 = GL_RGBA8,
+        RedGreenBlueAlpha8SNorm = GL_RGBA8_SNORM,
+        RedGreenBlue10Alpha2 =  GL_RGB10_A2,
+        RedGreenBlue10Alpha2UI =  GL_RGB10_A2UI,
+        RedGreenBlueAlpha12 = GL_RGBA12,
+        RedGreenBlueAlpha16 = GL_RGBA16,
+        StdRedGreenBlue8 = GL_SRGB8,
+        StdRedGreenBlueAlpha8 = GL_SRGB8_ALPHA8,
+        Red16f = GL_R16F,
+        RedGreen16f = GL_RG16F,
+        RedGreenBlue16f = GL_RGB16F,
+        RedGreenBlueAlpha16f = GL_RGBA16F,
+        Red32f = GL_R32F,
+        RedGreen32f = GL_RG32F,
+        RedGreenBlue32f = GL_RGB32F,
+        RedGreenBlueAlpha32f = GL_RGBA32F,
+        RedGreenBlue111110f = GL_R11F_G11F_B10F,
+        RedGreenBlue9E5 = GL_RGB9_E5,
+        Red8I = GL_R8I,
+        Red8UI = GL_R8UI,
+        Red16I = GL_R16I,
+        Red16UI = GL_R16UI,
+        Red32I = GL_R32I,
+        Red32UI = GL_R32UI,
+        RedGreen8I = GL_RG8I,
+        RedGreen8UI = GL_RG8UI,
+        RedGreen16I = GL_RG16I,
+        RedGreen16UI = GL_RG16UI,
+        RedGreen32I = GL_RG32I,
+        RedGreen32UI = GL_RG32UI,
+        RedGreenBlue8I = GL_RGB8I,
+        RedGreenBlue8UI = GL_RGB8UI,
+        RedGreenBlue16I = GL_RGB16I,
+        RedGreenBlue16UI = GL_RGB16UI,
+        RedGreenBlue32I = GL_RGB32I,
+        RedGreenBlue32UI = GL_RGB32UI,
+        RedGreenBlueAlpha8I = GL_RGBA8I,
+        RedGreenBlueAlpha8UI = GL_RGBA8UI,
+        RedGreenBlueAlpha16I = GL_RGBA16I,
+        RedGreenBlueAlpha16UI = GL_RGBA16UI,
+        RedGreenBlueAlpha32I = GL_RGBA32I,
+        RedGreenBlueAlpha32UI = GL_RGBA32UI
+    } ;
+}
+
+#endif

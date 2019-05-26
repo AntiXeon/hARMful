@@ -74,6 +74,7 @@ void CubemapMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(CubemapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 

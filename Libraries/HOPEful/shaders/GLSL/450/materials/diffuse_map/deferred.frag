@@ -14,6 +14,6 @@ layout(location = 2) out vec4 gSpecular ;
 
 void main() {
     gAlbedo = vec4(texture(diffuse, inTexCoord).rgb, 1.f) ;
-    gNormal = vec4(normalize(inNormal) * 0.5f + 0.5f, 0.f) ;
+    gNormal = vec4(EncodeSpheremapNormals(inNormal), 0.f, 0.f) ;
     gSpecular = vec4(specular, shininess) ;
 }

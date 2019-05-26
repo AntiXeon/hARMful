@@ -52,7 +52,8 @@ void main() {\n\
     gSpecular = vec4(specular, shininess) ;\n\
 \n\
     vec3 normalVector = texture(normal, inTexCoord).rgb ;\n\
-    gNormal = vec4(AdjustNormalVector(inTBNMatrix, normalVector) * 0.5f + 0.5f, 0.f) ;\n\
+    normalVector = AdjustNormalVector(inTBNMatrix, normalVector) ;\n\
+    gNormal = vec4(EncodeSpheremapNormals(normalVector), 0.f, 0.f) ;\n\
 }\n\
 " ;
 

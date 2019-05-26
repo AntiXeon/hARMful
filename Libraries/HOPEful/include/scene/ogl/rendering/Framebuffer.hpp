@@ -3,6 +3,9 @@
 
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/textures/Texture2D.hpp>
+#include <scene/ogl/textures/formats/InternalFormats.hpp>
+#include <scene/ogl/textures/formats/PixelFormats.hpp>
+#include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <geometry/dimensions/Dimension2Di.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <GL/glew.h>
@@ -118,13 +121,16 @@ namespace Hope::GL {
              *                          framebuffer. Starts at 0, you can get
              *                          the amount of color attachment with the
              *                          GetColorAttachmentCount() method.
-             * @param   textureFormat   Pixel format of the attached texture.
+             * @param   internalFormat  Number of color components in the
+             *                          texture.
+             * @param   pixelDataFormat Pixel format of the attached texture.
              * @param   pixelDataType   Type of the pixels data.
              */
             void attachColor(
                 const unsigned char attachmentIndex,
-                const Texture2D::PixelFormat textureFormat,
-                const Texture2D::PixelDataType pixelDataType
+                const InternalFormat internalFormat,
+                const PixelFormat pixelDataFormat,
+                const PixelDataType pixelDataType
             ) ;
 
             /**

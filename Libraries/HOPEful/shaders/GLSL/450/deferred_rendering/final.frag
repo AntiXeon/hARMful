@@ -20,7 +20,7 @@ void main() {
     // Put values to perform the lighting pass for the current fragment.
     FragmentData currentFragment ;
     currentFragment.diffuseValue = texture(albedo, inTexCoords).rgb ;
-    currentFragment.normalValue = texture(normal, inTexCoords).rgb * 2.f - 1.f ;
+    currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;
     currentFragment.shininess = texture(specular, inTexCoords).a ;
     currentFragment.position = viewSpacePosition.xyz ;

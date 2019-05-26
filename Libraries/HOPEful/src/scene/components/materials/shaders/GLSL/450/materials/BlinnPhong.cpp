@@ -35,7 +35,7 @@ layout(location = 2) out vec4 gSpecular ;\n\
 \n\
 void main() {\n\
     gAlbedo = vec4(diffuse, 1.f) ;\n\
-    gNormal = vec4(normalize(inNormal) * 0.5f + 0.5f, 0.f) ;\n\
+    gNormal = vec4(EncodeSpheremapNormals(inNormal), 0.f, 0.f) ;\n\
     gSpecular = vec4(specular, shininess) ;\n\
 }\n\
 " ;
