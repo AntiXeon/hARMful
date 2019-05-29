@@ -137,6 +137,11 @@ void Framebuffer::attachStencil() {
         ) ;
     }
 
+    // Set the filtering modes.
+    m_stencilAttachment -> bind() ;
+    m_stencilAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
+    m_stencilAttachment -> unbind() ;
+
     // Attach the texture to the framebuffer.
     bind() ;
     glFramebufferTexture2D(
@@ -161,6 +166,11 @@ void Framebuffer::attachDepthStencil() {
             GenerateMipmaps
         ) ;
     }
+
+    // Set the filtering modes.
+    m_depthStencilAttachment -> bind() ;
+    m_depthStencilAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
+    m_depthStencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
     bind() ;

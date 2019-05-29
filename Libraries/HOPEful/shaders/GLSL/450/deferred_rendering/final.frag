@@ -32,5 +32,15 @@ void main() {
         currentFragment
     ) ;
 
-    outColor = vec4(shadedColor, 1.f) ;
+    // Compute the skybox mask to include it in the final render.
+    // 1. Get the normal mask based on the length of the normal vector (the
+    //    skybox material gives [0,0,0,0] during the off-screen pass).
+    // 2. Revsere the values of the normal mask to get the sky mask.
+    // 3. Extract the diffuse color of the sky by multiplying by the mask.
+    // 4. Merge shading color and sky diffuse color.
+    float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1.f) ;
+    float skyMask = 1.f - normalMask ;
+    vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
+
+    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
 }
