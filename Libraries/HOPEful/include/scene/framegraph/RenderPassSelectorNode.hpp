@@ -5,6 +5,8 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+    
     /**
      * Define which render pass to use to render the objects.
      * Any object that does not bear the RenderPass is not rendered.
@@ -39,9 +41,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override {
-                visitor -> visit(this) ;
-            }
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

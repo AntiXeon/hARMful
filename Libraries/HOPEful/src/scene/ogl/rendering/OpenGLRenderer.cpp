@@ -2,6 +2,7 @@
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
+#include <scene/components/materials/shaders/GLSL/includes/TextureUnits.hpp>
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
 #include <iostream>
@@ -28,7 +29,6 @@ void OpenGLRenderer::render(
         for (auto& [material, meshPartIndices] : meshData.parts) {
             material -> updateUniformValues() ;
             std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
-
             if (!renderPass) {
                 // Do not try to render as it is not possible!
                 continue ;
@@ -67,6 +67,7 @@ void OpenGLRenderer::render(
 void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
     m_deferredShadingQuad.bind() ;
     material -> updateUniformValues() ;
+    m_shadowData.updateDirectionalShadowUniforms() ;
     std::shared_ptr<API::RenderPass> renderPass = useMaterial(ForwardPassID, material) ;
 
     // Draw the quad.

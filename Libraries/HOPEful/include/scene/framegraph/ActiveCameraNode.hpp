@@ -7,6 +7,8 @@
 #include <memory>
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+
     /**
      * Set the active camera used for rendering the scene.
      */

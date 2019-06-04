@@ -3,7 +3,7 @@
 
 std::string CubemapForwardFragmentCode =
 "\
-uniform layout(binding = 0) samplerCube cubemap ;\n\
+layout(binding = 0) uniform samplerCube cubemap ;\n\
 \n\
 layout(location = 0) in vec3 inTexCoord ;\n\
 out vec4 outColor ;\n\
@@ -17,7 +17,7 @@ std::string CubemapDeferredFragmentCode =
 "\
 // Cubemap material shader.\n\
 \n\
-uniform layout(binding = 0) samplerCube cubemap ;\n\
+layout(binding = 0) uniform samplerCube cubemap ;\n\
 \n\
 layout(location = 0) in vec3 inTexCoord ;\n\
 \n\

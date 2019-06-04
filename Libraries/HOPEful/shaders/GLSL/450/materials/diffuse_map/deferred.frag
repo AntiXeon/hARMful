@@ -1,9 +1,9 @@
 // Diffuse map material shader.
 
-uniform vec3 ambient ;
+layout(location = 0) uniform vec3 ambient ;
 layout(binding = 0) uniform sampler2D diffuse ;
-uniform vec3 specular ;
-uniform float shininess ;
+layout(location = 2) uniform vec3 specular ;
+layout(location = 3) uniform float shininess ;
 
 layout(location = 0) in vec2 inTexCoord ;
 layout(location = 1) in vec3 inNormal ;

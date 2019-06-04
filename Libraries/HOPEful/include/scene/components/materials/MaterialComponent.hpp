@@ -148,6 +148,13 @@ namespace Hope {
              * Setup the shader for the deferred rendering pass.
              */
             virtual void setupDeferredShader() = 0 ;
+
+        private:
+            /**
+             * Set up the shader for the depth map used to generate the shadow
+             * map of a directional light.
+             */
+            void setupDirectionalLightDepthMapShader() ;
     } ;
 }
 

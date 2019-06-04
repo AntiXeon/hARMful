@@ -1,9 +1,9 @@
 // Blinn-Phong material shader.
 
-uniform vec3 ambient ;
-uniform vec3 diffuse ;
-uniform vec3 specular ;
-uniform float shininess ;
+layout(location = 0) uniform vec3 ambient ;
+layout(location = 1) uniform vec3 diffuse ;
+layout(location = 2) uniform vec3 specular ;
+layout(location = 3) uniform float shininess ;
 
 layout(location = 0) in vec3 inNormal ;
 

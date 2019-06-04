@@ -7,6 +7,7 @@ namespace Hope {
     class ActiveCameraNode ;
     class ClearBuffersNode ;
     class FrustumCullingNode ;
+    class DirectionalLightShadowNode ;
     class OffScreenRenderNode ;
     class DeferredRenderingNode ;
     class RenderPassSelectorNode ;
@@ -31,6 +32,11 @@ namespace Hope {
              * Visit a frustum culling node.
              */
             virtual void visit(FrustumCullingNode* node) = 0 ;
+
+            /**
+             * Visit a light shadow render node.
+             */
+            virtual void visit(DirectionalLightShadowNode* node) = 0 ;
 
             /**
              * Visit an off-screen render node.

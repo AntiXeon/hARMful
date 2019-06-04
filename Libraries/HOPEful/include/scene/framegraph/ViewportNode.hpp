@@ -7,6 +7,8 @@
 #include <algorithm>
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+
     /**
      * The viewport defines the area of the screen / window in which a 3D scene
      * is rendered.

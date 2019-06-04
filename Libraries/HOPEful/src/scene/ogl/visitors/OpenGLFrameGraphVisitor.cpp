@@ -2,12 +2,12 @@
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/FrustumCullingNode.hpp>
+#include <scene/framegraph/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
 #include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
-#include <scene/ogl/Utils.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
 #include <GL/glew.h>
@@ -26,6 +26,10 @@ void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
 
 void OpenGLFrameGraphVisitor::visit(ActiveCameraNode* node) {
     m_aggregators.back().setActiveCameraNode(node) ;
+
+    // TODO: Compute eye position in world space on camera attach!
+    Mind::Vector3f position = (node -> camera() -> firstEntity() -> transform()).translation() ;
+    m_renderer.baseUBO().setEyePosition(position) ;
 
     if (node -> cacheEmpty()) {
         // Parse the scene graph.
@@ -50,6 +54,26 @@ void OpenGLFrameGraphVisitor::visit(ClearBuffersNode* node) {
 
 void OpenGLFrameGraphVisitor::visit(FrustumCullingNode* /*node*/) {
     // TODO
+}
+
+void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
+    if (!m_projectionData.initialized) {
+        return ;
+    }
+
+    // Compute the position of the ShadowCam to fit the rendering camera
+    // frustum.
+    const float AspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
+    node -> computeShadowCamFrustum(AspectRatio) ;
+
+    // Adjust the viewport size to fit the resolution of the shadow map.
+    const Mind::Dimension2Di& resolution = node -> resolution() ;
+    glViewport(0, 0, resolution.width(), resolution.height()) ;
+
+    // Notify that the viewport has been modified...
+    m_projectionData.lastViewport = nullptr ;
+
+    m_renderer.setDirectionalLightShadowData(node) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {
@@ -117,6 +141,8 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
 
     m_renderer.baseUBO().setViewportMatrix(viewportMatrix) ;
     m_renderer.baseUBO().setInverseViewportMatrix(inverseViewportMatrix) ;
+
+    m_projectionData.initialized = true ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
@@ -156,17 +182,10 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
         // Save the world matrix before pop.
         Mind::Matrix4x4f currentWorldMatrix = m_processedNodes.top().worldMatrix ;
 
-        if (renderedEntity == state.activeCameraEntity()) {
-            // Inverse as the world moves instead of the camera!
-            m_renderer.baseUBO().setEyePosition(-currentWorldMatrix.extractTranslation()) ;
-        }
-        else {
-            // Get components that need to be cached.
-            state.activeCameraCache() -> cacheEntity(
-                renderedEntity,
-                currentWorldMatrix
-            ) ;
-        }
+        state.activeCameraCache() -> cacheEntity(
+            renderedEntity,
+            currentWorldMatrix
+        ) ;
 
         // As the top node is processed, pop it from the stack.
         m_processedNodes.pop() ;
@@ -224,7 +243,7 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     m_renderer.baseUBO().setAspectRatio(aspectRatio) ;
     m_renderer.setProjectionMatrix(projectionMatrix) ;
 
-    // Update the model view matrix.
+    // Update the view matrix.
     const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;
 
     // Update the required data.

@@ -115,6 +115,11 @@ namespace Hope::GL {
             void visit(FrustumCullingNode* node) override ;
 
             /**
+             * Visit a light shadow render node.
+             */
+            void visit(DirectionalLightShadowNode* node) override ;
+
+            /**
              * Visit an off-screen render node.
              */
             void visit(OffScreenRenderNode* node) override ;

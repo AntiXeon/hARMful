@@ -8,8 +8,9 @@ namespace Hope {
      */
     typedef unsigned int RenderPassID ;
 
-    #define ForwardPassID   0       // Forward render pass ID.
-    #define DeferredPassID  1       // Deferred render pass ID.
+    #define ForwardPassID           0       // Forward render pass ID.
+    #define DeferredPassID          1       // Deferred render pass ID.
+    #define DirectionalShadowPassID 2       // Shadow depth map pass ID (directional lights).
 
 
     /**

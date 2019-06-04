@@ -7,6 +7,7 @@
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/materials/BlinnPhong.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
 #endif
 
@@ -35,18 +36,22 @@ void BlinnPhongMaterialComponent::updateUniformValues() {
 void BlinnPhongMaterialComponent::setupUniforms() {
     std::shared_ptr<Hope::ShaderUniform> ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
+    ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
     addShaderUniform(ambientUniform) ;
 
     std::shared_ptr<Hope::ShaderUniform> diffuseUniform = std::make_shared<Hope::ShaderUniform>() ;
     diffuseUniform -> setName(UniformNames::MaterialDiffuseUniformName()) ;
+    diffuseUniform -> setLocation(UniformNames::DiffuseLocation) ;
     addShaderUniform(diffuseUniform) ;
 
     std::shared_ptr<Hope::ShaderUniform> specularUniform = std::make_shared<Hope::ShaderUniform>() ;
     specularUniform -> setName(UniformNames::MaterialSpecularUniformName()) ;
+    specularUniform -> setLocation(UniformNames::SpecularLocation) ;
     addShaderUniform(specularUniform) ;
 
     std::shared_ptr<Hope::ShaderUniform> shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
+    shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
     addShaderUniform(shininessUniform) ;
 }
 
@@ -66,6 +71,8 @@ void BlinnPhongMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
     shaderProgram -> build() ;
 

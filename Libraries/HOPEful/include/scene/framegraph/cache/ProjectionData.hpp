@@ -9,6 +9,11 @@ namespace Hope {
      */
     struct ProjectionData {
         /**
+         * Are the data initialized?
+         */
+        bool initialized = false ;
+
+        /**
          * Last viewport to be updated.
          */
         ViewportNode* lastViewport = nullptr ;

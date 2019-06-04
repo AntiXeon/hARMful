@@ -8,8 +8,8 @@ std::string DiffuseNormalSpecularMapForwardFragmentCode =
 layout(binding = 0) uniform sampler2D diffuse ;\n\
 layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D specular ;\n\
-uniform vec3 ambient ;\n\
-uniform float shininess ;\n\
+layout(location = 0) uniform vec3 ambient ;\n\
+layout(location = 3) uniform float shininess ;\n\
 \n\
 layout(location = 0) in vec3 inVertexWorldPosition ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
@@ -44,8 +44,8 @@ std::string DiffuseNormalSpecularMapDeferredFragmentCode =
 layout(binding = 0) uniform sampler2D diffuse ;\n\
 layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D specular ;\n\
-uniform vec3 ambient ;\n\
-uniform float shininess ;\n\
+layout(location = 0) uniform vec3 ambient ;\n\
+layout(location = 3) uniform float shininess ;\n\
 \n\
 layout(location = 0) in mat3 inTBNMatrix ;\n\
 layout(location = 3) in vec2 inTexCoord ;\n\

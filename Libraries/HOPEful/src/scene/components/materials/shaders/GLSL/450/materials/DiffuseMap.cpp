@@ -5,10 +5,10 @@ std::string DiffuseMapForwardFragmentCode =
 "\
 // Diffuse map material shader.\n\
 \n\
-uniform vec3 ambient ;\n\
+layout(location = 0) uniform vec3 ambient ;\n\
 layout(binding = 0) uniform sampler2D diffuse ;\n\
-uniform vec3 specular ;\n\
-uniform float shininess ;\n\
+layout(location = 2) uniform vec3 specular ;\n\
+layout(location = 3) uniform float shininess ;\n\
 \n\
 layout(location = 0) in vec3 inVertexWorldPosition ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
@@ -38,10 +38,10 @@ std::string DiffuseMapDeferredFragmentCode =
 "\
 // Diffuse map material shader.\n\
 \n\
-uniform vec3 ambient ;\n\
+layout(location = 0) uniform vec3 ambient ;\n\
 layout(binding = 0) uniform sampler2D diffuse ;\n\
-uniform vec3 specular ;\n\
-uniform float shininess ;\n\
+layout(location = 2) uniform vec3 specular ;\n\
+layout(location = 3) uniform float shininess ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoord ;\n\
 layout(location = 1) in vec3 inNormal ;\n\

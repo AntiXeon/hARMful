@@ -7,6 +7,7 @@
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/materials/DiffuseNormalSpecularMap.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
 #endif
 
@@ -49,22 +50,12 @@ void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
 void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
     std::shared_ptr<Hope::ShaderUniform> ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
+    ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
     addShaderUniform(ambientUniform) ;
-
-    std::shared_ptr<Hope::ShaderUniform> diffuseMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    diffuseMapUniform -> setName(UniformNames::MaterialDiffuseUniformName()) ;
-    addShaderUniform(diffuseMapUniform) ;
-
-    std::shared_ptr<Hope::ShaderUniform> normalMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    normalMapUniform -> setName(UniformNames::MaterialNormalUniformName()) ;
-    addShaderUniform(normalMapUniform) ;
-
-    std::shared_ptr<Hope::ShaderUniform> specularMapUniform = std::make_shared<Hope::ShaderUniform>() ;
-    specularMapUniform -> setName(UniformNames::MaterialSpecularUniformName()) ;
-    addShaderUniform(specularMapUniform) ;
 
     std::shared_ptr<Hope::ShaderUniform> shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
+    shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
     addShaderUniform(shininessUniform) ;
 }
 
@@ -85,6 +76,8 @@ void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 

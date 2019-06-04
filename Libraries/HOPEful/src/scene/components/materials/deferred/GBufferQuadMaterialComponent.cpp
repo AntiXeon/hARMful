@@ -7,6 +7,7 @@
     #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredRendering.hpp>
 #endif
 
@@ -58,6 +59,8 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
     shaderProgram -> build() ;
 

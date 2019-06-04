@@ -3,6 +3,7 @@
 
 #include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
+#include <scene/ogl/rendering/ShadowData.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
@@ -50,6 +51,11 @@ namespace Hope::GL {
              */
             QuadGeometry m_deferredShadingQuad ;
 
+            /**
+             * Data for shadow calculation.
+             */
+            ShadowData m_shadowData ;
+
         public:
             /**
              * Render the scene in a frambuffer (the default one or not).
@@ -89,6 +95,14 @@ namespace Hope::GL {
              */
             void setProjectionMatrix(const Mind::Matrix4x4f& projectionMatrix) {
                 m_projectionMatrix = projectionMatrix ;
+            }
+
+            /**
+             * Set the frame graph node that contains all required data for
+             * computing directional light shadows.
+             */
+            void setDirectionalLightShadowData(Hope::DirectionalLightShadowNode* dirLightShadow) {
+                m_shadowData.setDirectionalLightShadow(dirLightShadow) ;
             }
 
             /**

@@ -1,6 +1,6 @@
 // Cubemap material shader.
 
-uniform layout(binding = 0) samplerCube cubemap ;
+layout(binding = 0) uniform samplerCube cubemap ;
 
 layout(location = 0) in vec3 inTexCoord ;
 

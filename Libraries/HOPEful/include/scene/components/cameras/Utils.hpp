@@ -2,13 +2,11 @@
 #define __HOPE__GL_UTILS__
 
 #include <matrices/Matrix4x4f.hpp>
-#include <GL/glew.h>
 
-namespace Hope::GL {
+namespace Hope {
     /**
      * Compute the perspective matrix.
-     * Replaces the deprecated gluPerspective() function.
-     * @param   result  Projection matrix as output
+     * @param   result  Projection matrix as output.
      * @param   fovY    Specifies the field of view angle, in degrees, in the y
      *                  direction.
      * @param   aspect  Specifies the aspect ratio that determines the field of
@@ -20,18 +18,17 @@ namespace Hope::GL {
      * @param   zFar    Specifies the distance from the viewer to the far
      *                  clipping plane (always positive).
      */
-    void GLPerspective(
+    void Perspective(
         Mind::Matrix4x4f& result,
-        const GLdouble fovY,
-        const GLdouble aspect,
-        const GLdouble zNear,
-        const GLdouble zFar
+        const double fovY,
+        const double aspect,
+        const double zNear,
+        const double zFar
     ) ;
 
     /**
      * Compute the orthographic matrix.
-     * Replaces the deprecated glOrtho() function.
-     * @param   result  Projection matrix as output
+     * @param   result  Projection matrix as output.
      * @param   top     Specify the coordinates for the top horizontal clipping
      *                  plane.
      * @param   bottom  Specify the coordinates for the bottom horizontal
@@ -45,14 +42,14 @@ namespace Hope::GL {
      * @param   zFar    Specifies the distance from the viewer to the far
      *                  clipping plane (always positive).
      */
-    void GLOrthographic(
+    void Orthographic(
         Mind::Matrix4x4f& result,
-        const GLdouble left,
-        const GLdouble right,
-        const GLdouble bottom,
-        const GLdouble top,
-        const GLdouble zNear,
-        const GLdouble zFar
+        const double left,
+        const double right,
+        const double bottom,
+        const double top,
+        const double zNear,
+        const double zFar
     ) ;
 }
 

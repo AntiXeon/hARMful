@@ -3,12 +3,7 @@
 
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <HopeAPI.hpp>
-
-#ifdef OGL
-    #include <scene/ogl/Utils.hpp>
-    namespace API = Hope::GL ;
-#endif
+#include <scene/components/cameras/Utils.hpp>
 
 namespace Hope {
     /**
@@ -63,7 +58,7 @@ namespace Hope {
                 Mind::Matrix4x4f& projection,
                 const float aspectRatio
             ) const {
-                API::GLPerspective(
+                Perspective(
                     projection,
                     Mind::Math::toRadians(m_fov),
                     aspectRatio,

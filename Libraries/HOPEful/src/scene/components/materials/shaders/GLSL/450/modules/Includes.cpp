@@ -13,6 +13,16 @@ std::string IncludesAmountLightsModuleCode =
 #endif\n\
 " ;
 
+std::string IncludesTextureUnitsModuleCode =
+"\
+#ifndef HOPE__TEXTURE_UNIT_BINDINGS\n\
+#define HOPE__TEXTURE_UNIT_BINDINGS\n\
+\n\
+#define SHADOW_DEPTH_MAP_BINDING_UNIT 9\n\
+\n\
+#endif\n\
+" ;
+
 std::string IncludesBlockBindingsModuleCode =
 "\
 #ifndef HOPE__SHADER_BLOCK_BINDINGS\n\

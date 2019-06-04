@@ -32,6 +32,13 @@ void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
     unbind() ;
 }
 
+void Framebuffer::useNoColorBuffers() {
+    bind() ;
+    glDrawBuffer(GL_NONE) ;
+    glReadBuffer(GL_NONE) ;
+    unbind() ;
+}
+
 void Framebuffer::resize(const Mind::Dimension2Di& size) {
     if (m_size == size) {
         return ;
@@ -245,7 +252,7 @@ GLint Framebuffer::GetMaxDrawBuffers() {
     return maxDrawBuffers ;
 }
 
-bool Framebuffer::isComplete() {
+bool Framebuffer::isComplete() const {
     const GLenum Status = glCheckFramebufferStatus(GL_FRAMEBUFFER) ;
     const bool IsComplete = Status == GL_FRAMEBUFFER_COMPLETE ;
 

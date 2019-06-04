@@ -2,9 +2,9 @@
 
 layout(binding = 0) uniform sampler2D diffuse ;
 layout(binding = 1) uniform sampler2D normal ;
-uniform vec3 ambient ;
-uniform vec3 specular ;
-uniform float shininess ;
+layout(location = 0) uniform vec3 ambient ;
+layout(location = 2) uniform vec3 specular ;
+layout(location = 3) uniform float shininess ;
 
 layout(location = 0) in mat3 inTBNMatrix ;
 layout(location = 3) in vec2 inTexCoord ;

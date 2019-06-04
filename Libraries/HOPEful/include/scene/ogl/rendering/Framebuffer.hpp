@@ -82,14 +82,14 @@ namespace Hope::GL {
             /**
              * Bind the framebuffer.
              */
-            void bind() {
+            void bind() const {
                 glBindFramebuffer(GL_FRAMEBUFFER, m_fboID) ;
             }
 
             /**
              * Unbind the framebuffer.
              */
-            void unbind() {
+            void unbind() const {
                 glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
             }
 
@@ -110,6 +110,11 @@ namespace Hope::GL {
              * @param   indices List of the attachment indices to use.
              */
             void setDrawBuffers(const std::list<unsigned char> indices) ;
+
+            /**
+             * Indicate that the framebuffer does not use any color attachment.
+             */
+            void useNoColorBuffers() ;
 
             /**
              * Attach a color texture to the framebuffer.
@@ -210,7 +215,7 @@ namespace Hope::GL {
              *          In case the framebuffer is not complete, a log message
              *          is registered.
              */
-            bool isComplete() ;
+            bool isComplete() const ;
 
             /**
              * Get the amount of color attachments.

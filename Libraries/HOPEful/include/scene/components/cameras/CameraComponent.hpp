@@ -19,6 +19,11 @@ namespace Hope {
              */
             static const ComponentType ClassType = CameraComponentType ;
 
+            /**
+             * Amount of corners defining the frustum of a camera.
+             */
+            static const uint8_t AmountFrustumCorners = 8 ;
+
         private:
             /**
              * Default clear color.
@@ -56,9 +61,14 @@ namespace Hope {
             Mind::Vector3f m_rightAxis ;
 
             /**
-             * up vector of the camera.
+             * Up vector of the camera.
              */
             Mind::Vector3f m_up ;
+
+            /**
+             * Eye position in the world.
+             */
+            Mind::Vector3f m_worldEyePosition ;
 
             /**
              * View matrix.

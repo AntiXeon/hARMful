@@ -5,6 +5,7 @@
 #include <string>
 
 extern std::string IncludesAmountLightsModuleCode ;
+extern std::string IncludesTextureUnitsModuleCode ;
 extern std::string IncludesBlockBindingsModuleCode ;
 
 #endif

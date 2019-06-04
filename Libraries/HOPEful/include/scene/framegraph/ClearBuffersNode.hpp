@@ -1,6 +1,7 @@
 #ifndef __HOPE__CLEAR_BUFFERS__
 #define __HOPE__CLEAR_BUFFERS__
 
+#include <scene/FrameGraphNode.hpp>
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -9,6 +10,8 @@
 #endif
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+
     /**
      * Clear one or several buffers.
      */
@@ -40,9 +43,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override {
-                visitor -> visit(this) ;
-            }
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 
