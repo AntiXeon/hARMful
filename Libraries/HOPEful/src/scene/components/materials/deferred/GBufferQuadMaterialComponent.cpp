@@ -21,11 +21,11 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const OffScreenRender
 }
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
-    const API::Framebuffer& framebuffer = m_gBuffer -> framebuffer() ;
-    framebuffer.bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
-    framebuffer.bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
-    framebuffer.bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
-    framebuffer.bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
+    const API::Framebuffer2D* framebuffer = m_gBuffer -> framebuffer() ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
+    framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
@@ -56,11 +56,11 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
     shaderProgram -> build() ;
 

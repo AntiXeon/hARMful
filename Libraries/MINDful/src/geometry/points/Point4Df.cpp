@@ -69,6 +69,18 @@ namespace Mind {
         m_values /= length() ;
     }
 
+    Point4Df Point4Df::round(const Point4Df& point) {
+        return Point4Df(SIMD::Vector4f::round(point.m_values)) ;
+    }
+
+    Point4Df Point4Df::floor(const Point4Df& point) {
+        return Point4Df(SIMD::Vector4f::floor(point.m_values)) ;
+    }
+
+    Point4Df Point4Df::ceil(const Point4Df& point) {
+        return Point4Df(SIMD::Vector4f::ceil(point.m_values)) ;
+    }
+
     Point4Df Point4Df::merge(const Point4Df& a, const Point4Df& b) {
         SIMD::Vector4f middle = (a.m_values + b.m_values) / 2.f ;
         return Point4Df(middle) ;

@@ -14,7 +14,9 @@ using namespace Hope ;
 CubemapMaterialComponent::CubemapMaterialComponent()
     : MaterialComponent(),
       m_map(nullptr) {
-    setupRendering() ;
+    setupForwardShader() ;
+    setupDeferredShader() ;
+    
     setupUniforms() ;
 }
 

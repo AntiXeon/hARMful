@@ -28,10 +28,11 @@ void main() {\n\
     currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;\n\
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;\n\
     currentFragment.shininess = texture(specular, inTexCoords).a ;\n\
-    currentFragment.position = viewSpacePosition.xyz ;\n\
+    currentFragment.position = viewSpacePosition ;\n\
+    currentFragment.depth = depthValue ;\n\
 \n\
     // Compute ligh shading.\n\
-    vec3 viewDirection = normalize(-currentFragment.position) ;\n\
+    vec3 viewDirection = normalize(-currentFragment.position.xyz) ;\n\
     vec3 shadedColor = ComputeLightsContribution(\n\
         viewDirection,\n\
         currentFragment\n\
@@ -43,11 +44,33 @@ void main() {\n\
     // 2. Revsere the values of the normal mask to get the sky mask.\n\
     // 3. Extract the diffuse color of the sky by multiplying by the mask.\n\
     // 4. Merge shading color and sky diffuse color.\n\
-    float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1.f) ;\n\
+    float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1f) ;\n\
     float skyMask = 1.f - normalMask ;\n\
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;\n\
 \n\
     outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
+\n\
+\n\
+    //#define DEBUG_CSM\n\
+    #ifdef DEBUG_CSM\n\
+        const vec3 CascadeColors[] = {\n\
+            vec3(1.f, 0.3f, 0.3f),\n\
+            vec3(0.3f, 1.f, 0.3f),\n\
+            vec3(0.3f, 0.3f, 1.f)\n\
+        } ;\n\
+\n\
+       float distanceCamera = length(abs(currentFragment.position.xyz - eyePosition)) / farPlaneDistance ;\n\
+       int selectedCascade = 0 ;\n\
+        for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {\n\
+            if (dist < cascadedSplits[cascadeIndex]) {\n\
+                selectedCascade = cascadeIndex ;\n\
+                break ;\n\
+            }\n\
+        }\n\
+\n\
+        outColor += vec4(CascadeColors[selectedCascade], 0.f) ;\n\
+        normalize(outColor) ;\n\
+    #endif\n\
 }\n\
 " ;
 

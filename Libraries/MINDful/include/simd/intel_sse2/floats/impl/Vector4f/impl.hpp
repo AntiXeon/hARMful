@@ -154,6 +154,20 @@ inline Vector4f Vector4f::abs(const Vector4f& vec) {
     return Vector4f(_mm_and_ps(vec.m_inner.vec, MASK)) ;
 }
 
+#if defined (USE_INTEL_SSE4_1)
+    inline Vector4f Vector4f::round(const Vector4f& vec) {
+        return Vector4f(_mm_round_ps(vec.m_inner.vec, (_MM_FROUND_TO_NEAREST_INT |_MM_FROUND_NO_EXC))) ;
+    }
+
+    inline Vector4f Vector4f::floor(const Vector4f& vec) {
+        return Vector4f(_mm_floor_ps(vec.m_inner.vec)) ;
+    }
+
+    inline Vector4f Vector4f::ceil(const Vector4f& vec) {
+        return Vector4f(_mm_ceil_ps(vec.m_inner.vec)) ;
+    }
+#endif
+
 inline Vector4f Vector4f::sqrt(const Vector4f& vec) {
     return _mm_sqrt_ps((__m128) vec) ;
 }

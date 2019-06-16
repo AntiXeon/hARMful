@@ -2,7 +2,6 @@
 #define __HOPE__GL_FRAMEBUFFER__
 
 #include <scene/ogl/GLDefines.hpp>
-#include <scene/ogl/textures/Texture2D.hpp>
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
@@ -10,7 +9,6 @@
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <GL/glew.h>
 #include <list>
-#include <memory>
 #include <vector>
 
 namespace Hope::GL {
@@ -19,8 +17,8 @@ namespace Hope::GL {
      * This allows off-screen rendering for several tasks: mirrors in a 3D
      * scene, deferred rendering, etc.
      */
-    class Framebuffer final {
-        private:
+    class Framebuffer {
+        protected:
             /**
              * To know if mipmaps are automatically generated. Here, no.
              */
@@ -31,36 +29,11 @@ namespace Hope::GL {
              */
             static const int MipmapLevel = 0 ;
 
+        private:
             /**
              * ID of the framebuffer object on GPU side.
              */
             GLuint m_fboID = INVALID_VALUE ;
-
-            /**
-             * Size of the framebuffer attachments.
-             */
-            Mind::Dimension2Di m_size ;
-
-            /**
-             * Color textures attached to the framebuffer.
-             * Stores the textures associated to their attachment point.
-             */
-            std::vector<std::unique_ptr<Texture2D>> m_colorAttachments ;
-
-            /**
-             * Depth buffer attachment.
-             */
-            std::unique_ptr<Texture2D> m_depthAttachment ;
-
-            /**
-             * Stencil buffer attachment.
-             */
-            std::unique_ptr<Texture2D> m_stencilAttachment ;
-
-            /**
-             * Depth + stencil buffer attachment.
-             */
-            std::unique_ptr<Texture2D> m_depthStencilAttachment ;
 
         public:
             /**
@@ -77,7 +50,7 @@ namespace Hope::GL {
             /**
              * Destruction of the Framebuffer.
              */
-            ~Framebuffer() ;
+            virtual ~Framebuffer() ;
 
             /**
              * Bind the framebuffer.
@@ -91,18 +64,6 @@ namespace Hope::GL {
              */
             void unbind() const {
                 glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
-            }
-
-            /**
-             * Resize the framebuffer.
-             */
-            void resize(const Mind::Dimension2Di& size) ;
-
-            /**
-             * Resize the framebuffer.
-             */
-            void resize(const Mind::Dimension2Df& size) {
-                resize(Mind::Dimension2Di(size.width(), size.height())) ;
             }
 
             /**
@@ -131,27 +92,47 @@ namespace Hope::GL {
              * @param   pixelDataFormat Pixel format of the attached texture.
              * @param   pixelDataType   Type of the pixels data.
              */
-            void attachColor(
+            virtual void attachColor(
                 const unsigned char attachmentIndex,
                 const InternalFormat internalFormat,
                 const PixelFormat pixelDataFormat,
                 const PixelDataType pixelDataType
-            ) ;
+            ) = 0 ;
 
             /**
              * Attach the depth buffer.
              */
-            void attachDepth() ;
+            virtual void attachDepth() = 0 ;
 
             /**
              * Attach the stencil buffer.
              */
-            void attachStencil() ;
+            virtual void attachStencil() = 0 ;
 
             /**
              * Attach the combination of depth+stencil buffer.
              */
-            void attachDepthStencil() ;
+            virtual void attachDepthStencil() = 0 ;
+
+            /**
+             * Bind the color attachment.
+             */
+            virtual void bindUnitColor(const unsigned char attachmentIndex) const = 0 ;
+
+            /**
+             * Bind the depth attachment.
+             */
+            virtual void bindUnitDepth(const unsigned char unit) const = 0 ;
+
+            /**
+             * Bind the stencil attachment.
+             */
+            virtual void bindUnitStencil(const unsigned char unit) const = 0 ;
+
+            /**
+             * Bind the depth+stencil attachment.
+             */
+            virtual void bindUnitDepthStencil(const unsigned char unit) const = 0 ;
 
             /**
              * Detach a texture from the framebuffer.
@@ -173,41 +154,6 @@ namespace Hope::GL {
              * Detach the combination of depth+stencil buffer.
              */
             void detachDepthStencil() ;
-
-            /**
-             * Bind the color attachment.
-             */
-            void bindUnitColor(const unsigned char attachmentIndex) const {
-                m_colorAttachments[attachmentIndex] -> bindUnit(attachmentIndex) ;
-            }
-
-            /**
-             * Bind the depth attachment.
-             */
-            void bindUnitDepth(const unsigned char unit) const {
-                m_depthAttachment -> bindUnit(unit) ;
-            }
-
-            /**
-             * Bind the stencil attachment.
-             */
-            void bindUnitStencil(const unsigned char unit) const {
-                m_depthAttachment -> bindUnit(unit) ;
-            }
-
-            /**
-             * Bind the depth+stencil attachment.
-             */
-            void bindUnitDepthStencil(const unsigned char unit) const {
-                return m_depthStencilAttachment -> bindUnit(unit) ;
-            }
-
-            /**
-             * Get the size of the framebuffer in pixels.
-             */
-            const Mind::Dimension2Di& size() const {
-                return m_size ;
-            }
 
             /**
              * Check the status of the framebuffer.
@@ -233,6 +179,6 @@ namespace Hope::GL {
             Framebuffer& operator=(const Framebuffer& copied) = delete ;
             Framebuffer& operator=(Framebuffer&& moved) = delete ;
     } ;
-} ;
+}
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
-#include <scene/framegraph/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
 
 namespace Hope {
     /**
@@ -37,10 +37,7 @@ namespace Hope {
              * Set the frame graph node that contains all required data for
              * computing directional light shadows.
              */
-            void setLightShadowNode(const Hope::DirectionalLightShadowNode* node) {
-                m_useShadow = node != nullptr ;
-                m_dirLightShadowNode = node ;
-            }
+            void setLightShadowNode(const Hope::DirectionalLightShadowNode* node) ;
     } ;
 }
 

@@ -4,7 +4,7 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    #include <scene/ogl/rendering/Framebuffer.hpp>
+    #include <scene/ogl/rendering/framebuffers/Framebuffer2D.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -22,7 +22,7 @@ namespace Hope {
             /**
              * The underlying framebuffer to perform off-screen rendering.
              */
-            API::Framebuffer m_framebuffer ;
+            API::Framebuffer2D* m_framebuffer = nullptr ;
 
             /**
              * If true, the size of the framebuffer follows the size of the
@@ -45,16 +45,21 @@ namespace Hope {
             ) ;
 
             /**
+             * Destruction of the OffScreenRenderNode.
+             */
+            virtual ~OffScreenRenderNode() ;
+
+            /**
              * Get the framebuffer.
              */
-            API::Framebuffer& framebuffer() {
+            API::Framebuffer2D* framebuffer() {
                 return m_framebuffer ;
             }
 
             /**
              * Get the framebuffer.
              */
-            const API::Framebuffer& framebuffer() const {
+            const API::Framebuffer2D* framebuffer() const {
                 return m_framebuffer ;
             }
 
@@ -65,6 +70,12 @@ namespace Hope {
             bool windowSize() const {
                 return m_windowSize ;
             }
+
+            // Avoid copy/move operations.
+            OffScreenRenderNode(const OffScreenRenderNode& copied) = delete ;
+            OffScreenRenderNode(OffScreenRenderNode&& moved) = delete ;
+            OffScreenRenderNode& operator=(const OffScreenRenderNode& copied) = delete ;
+            OffScreenRenderNode& operator=(OffScreenRenderNode&& moved) = delete ;
 
         protected:
             /**

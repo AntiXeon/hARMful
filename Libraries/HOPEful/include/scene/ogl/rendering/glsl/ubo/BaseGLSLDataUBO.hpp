@@ -30,6 +30,7 @@ namespace Hope::GL {
                 std::array<float, Mind::Vector4f::AmountCoords * 3> inverseViewportMatrix ;
                 std::array<float, Mind::Vector4f::AmountCoords> eye_fov ;
                 std::array<float, Mind::Vector4f::AmountCoords> near_far_aspect_time ;
+                std::array<float, Mind::Vector2f::AmountCoords> viewportSize ;
             } m_data ;
 
         public:
@@ -167,6 +168,19 @@ namespace Hope::GL {
             void setTime(const float value) {
                 static const uint32_t Offset = 3 ;
                 m_data.near_far_aspect_time[Offset] = value ;
+                askForAnUpdate() ;
+            }
+
+            /**
+             * Set the viewport size.
+             */
+            void setViewportSize(const Mind::Vector2f& vec) {
+                static const uint32_t EndOffset = Mind::Vector2f::AmountCoords ;
+                std::copy(
+                    m_data.viewportSize.begin(),
+                    m_data.viewportSize.begin() + EndOffset,
+                    vec.toArray().begin()
+                ) ;
                 askForAnUpdate() ;
             }
 

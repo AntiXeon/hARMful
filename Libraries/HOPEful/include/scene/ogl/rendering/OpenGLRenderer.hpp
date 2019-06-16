@@ -13,6 +13,7 @@
 namespace Hope {
     class FrameRenderCache ;
     class MaterialComponent ;
+    class ExternalUniformSetter ;
 }
 
 namespace Hope::GL {
@@ -120,12 +121,16 @@ namespace Hope::GL {
              *                          related shader program to render the
              *                          objects.
              * @param   component       Material component to use.
+             * @param   external        External uniforms to apply as well.
+             *                          nullptr is a valid value if no external
+             *                          uniforms are to be set.
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
             std::shared_ptr<API::RenderPass> useMaterial(
                 const RenderPassID renderPassID,
-                const Hope::MaterialComponent* component
+                const Hope::MaterialComponent* component,
+                const Hope::ExternalUniformSetter* externalUniforms = nullptr
             ) ;
 
             /**

@@ -11,13 +11,14 @@ vec3 AdjustNormalVector(mat3 tbnMatrix, vec3 normalValue) {
  * Retrieve a view space position from texture coordinates and depth.
  */
 vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {
-	float x = texCoords.x * 2.f - 1.f ;
-	float y = texCoords.y * 2.f - 1.f ;
+    vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;
+	float x = adjustedTexCoords.x ;
+	float y = adjustedTexCoords.y ;
 	float z = depth * 2.f - 1.f ;
 
 	vec4 positionProjection = vec4(x, y, z, 1.f) ;
 	vec4 positionView = inverseProjectionMatrix * positionProjection ;
-	positionView /= positionView.w ;
+    positionView /= positionView.w ;
 	return positionView ;
 }
 

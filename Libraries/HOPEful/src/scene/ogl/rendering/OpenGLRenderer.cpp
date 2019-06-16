@@ -2,7 +2,7 @@
 #include <scene/ogl/rendering/glsl/ShaderUniformApplicator.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/components/materials/shaders/GLSL/includes/TextureUnits.hpp>
+#include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
 #include <iostream>
@@ -29,6 +29,7 @@ void OpenGLRenderer::render(
         for (auto& [material, meshPartIndices] : meshData.parts) {
             material -> updateUniformValues() ;
             std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
+
             if (!renderPass) {
                 // Do not try to render as it is not possible!
                 continue ;
@@ -68,7 +69,11 @@ void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
     m_deferredShadingQuad.bind() ;
     material -> updateUniformValues() ;
     m_shadowData.updateDirectionalShadowUniforms() ;
-    std::shared_ptr<API::RenderPass> renderPass = useMaterial(ForwardPassID, material) ;
+    std::shared_ptr<API::RenderPass> renderPass = useMaterial(
+        ForwardPassID,
+        material,
+        m_shadowData.shadowSetter()
+    ) ;
 
     // Draw the quad.
     size_t amountIndices = m_deferredShadingQuad.part(0).amountIndices() ;
@@ -78,7 +83,8 @@ void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
 
 std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
     const RenderPassID renderPassID,
-    const MaterialComponent* component
+    const MaterialComponent* component,
+    const Hope::ExternalUniformSetter* externalUniforms
 ) {
     std::shared_ptr<API::RenderPass> pass = component -> renderPass(renderPassID) ;
 
@@ -100,6 +106,16 @@ std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
                 shaderProgram -> id(),
                 uniform
             ) ;
+        }
+
+        if (externalUniforms) {
+            auto additionalUniforms = externalUniforms -> shaderUniforms() ;
+            for (auto& [name, uniform] : additionalUniforms) {
+                ShaderUniformApplicator::ApplyUniform(
+                    shaderProgram -> id(),
+                    uniform
+                ) ;
+            }
         }
     }
 

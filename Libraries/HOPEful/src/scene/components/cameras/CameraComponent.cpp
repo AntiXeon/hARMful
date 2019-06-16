@@ -31,25 +31,44 @@ void CameraComponent::lookAt(const Mind::Vector3f& target) {
 
     Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
 
-    m_viewDirection = position - m_target ;
+    m_viewDirection = target - position ;
     m_viewDirection.normalize() ;
 
-    m_rightAxis = m_up.cross(m_viewDirection) ;
+    m_rightAxis = m_viewDirection.cross(m_up) ;
     m_rightAxis.normalize() ;
 
-    Mind::Vector3f up = m_viewDirection.cross(m_rightAxis) ;
+    Mind::Vector3f up = m_rightAxis.cross(m_viewDirection) ;
 
-    Mind::Matrix4x4f translationMat ;
-    translationMat.identity() ;
-    translationMat.setColumnValues(3, -position) ;
+    m_viewDirection = -m_viewDirection ;
 
-    Mind::Matrix4x4f rotationMat ;
-    rotationMat.identity() ;
-    rotationMat.setRowValues(0, m_rightAxis) ;
-    rotationMat.setRowValues(1, up) ;
-    rotationMat.setRowValues(2, m_viewDirection) ;
-
-    m_viewMatrix  = rotationMat * translationMat ;
+    m_viewMatrix.setRowValues(0, Mind::Vector4f(
+            m_rightAxis.get(Mind::Vector3f::X),
+            m_rightAxis.get(Mind::Vector3f::Y),
+            m_rightAxis.get(Mind::Vector3f::Z),
+           -m_rightAxis.dot(position)
+       )
+    ) ;
+    m_viewMatrix.setRowValues(1, Mind::Vector4f(
+            up.get(Mind::Vector3f::X),
+            up.get(Mind::Vector3f::Y),
+            up.get(Mind::Vector3f::Z),
+           -up.dot(position)
+        )
+    ) ;
+    m_viewMatrix.setRowValues(2, Mind::Vector4f(
+            m_viewDirection.get(Mind::Vector3f::X),
+            m_viewDirection.get(Mind::Vector3f::Y),
+            m_viewDirection.get(Mind::Vector3f::Z),
+           -m_viewDirection.dot(position)
+        )
+    ) ;
+    m_viewMatrix.setRowValues(3, Mind::Vector4f(
+            0.f,
+            0.f,
+            0.f,
+            1.f
+        )
+    ) ;
 }
 
 Mind::Matrix4x4f& CameraComponent::projectionMatrix(

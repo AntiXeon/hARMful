@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_UTILS__
-#define __HOPE__GL_UTILS__
+#ifndef __HOPE__GENERIC_CAMERA_UTILS__
+#define __HOPE__GENERIC_CAMERA_UTILS__
 
 #include <matrices/Matrix4x4f.hpp>
 

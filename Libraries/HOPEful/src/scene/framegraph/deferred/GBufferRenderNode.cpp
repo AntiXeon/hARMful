@@ -11,32 +11,32 @@ GBufferRenderNode::GBufferRenderNode(
 }
 
 void GBufferRenderNode::setup() {
-    framebuffer().attachColor(
+    framebuffer() -> attachColor(
         AlbedoRenderTarget,
         API::InternalFormat::RedGreenBlueAlpha,
         API::PixelFormat::RedGreenBlueAlpha,
         API::PixelDataType::UnsignedByte
     ) ;
 
-    framebuffer().attachColor(
+    framebuffer() -> attachColor(
        SpecularRenderTarget,
        API::InternalFormat::RedGreenBlueAlpha,
        API::PixelFormat::RedGreenBlueAlpha,
        API::PixelDataType::UnsignedByte
     ) ;
 
-    framebuffer().attachColor(
+    framebuffer() -> attachColor(
        NormalRenderTarget,
        API::InternalFormat::RedGreenBlueAlpha16f,
        API::PixelFormat::RedGreenBlueAlpha,
        API::PixelDataType::HalfFloat
    ) ;
 
-   framebuffer().setDrawBuffers({
+   framebuffer() -> setDrawBuffers({
        AlbedoRenderTarget,
        SpecularRenderTarget,
        NormalRenderTarget
    }) ;
 
-   framebuffer().attachDepth() ;
+   framebuffer() -> attachDepth() ;
 }

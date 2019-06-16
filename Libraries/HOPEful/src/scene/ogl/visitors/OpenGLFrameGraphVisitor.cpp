@@ -2,11 +2,12 @@
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/FrustumCullingNode.hpp>
-#include <scene/framegraph/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
 #include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/LayerOffScreenRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
+#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
@@ -64,15 +65,14 @@ void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
     // Compute the position of the ShadowCam to fit the rendering camera
     // frustum.
     const float AspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
-    node -> computeShadowCamFrustum(AspectRatio) ;
+    node -> computeCascadeShadowMaps(AspectRatio) ;
 
     // Adjust the viewport size to fit the resolution of the shadow map.
-    const Mind::Dimension2Di& resolution = node -> resolution() ;
-    glViewport(0, 0, resolution.width(), resolution.height()) ;
+    uint32_t resolution = node -> resolution() ;
+    glViewport(0, 0, resolution, resolution) ;
 
     // Notify that the viewport has been modified...
     m_projectionData.lastViewport = nullptr ;
-
     m_renderer.setDirectionalLightShadowData(node) ;
 }
 
@@ -81,10 +81,27 @@ void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {
 
     // Resize the framebuffer textures with the window if needed.
     if (m_hasWindowChanged && node -> windowSize()) {
-        (node -> framebuffer()).resize(m_windowSize) ;
+        (node -> framebuffer()) -> resize(m_windowSize) ;
     }
 
-    (node -> framebuffer()).bind() ;
+    (node -> framebuffer()) -> bind() ;
+}
+
+void OpenGLFrameGraphVisitor::visit(LayerOffScreenRenderNode* node) {
+    // Resize the framebuffer textures with the window if needed.
+    if (m_hasWindowChanged && node -> windowSize()) {
+        Framebuffer2DStack* framebuffer = node -> framebuffer() ;
+        Mind::Dimension3Di size = framebuffer -> size() ;
+        size.set(
+            m_windowSize.width(),
+            m_windowSize.height(),
+            size.depth()
+        ) ;
+        framebuffer -> resize(size) ;
+    }
+
+    (node -> framebuffer()) -> bind() ;
+    (node -> framebuffer()) -> bindDepthLayer(node -> layer()) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
@@ -139,6 +156,8 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
     Mind::Matrix4x4f inverseViewportMatrix ;
     viewportMatrix.inverse(inverseViewportMatrix) ;
 
+    Mind::Vector2f viewportSize(m_projectionData.absoluteAreaWidth, m_projectionData.absoluteAreaHeight) ;
+    m_renderer.baseUBO().setViewportSize(viewportSize) ;
     m_renderer.baseUBO().setViewportMatrix(viewportMatrix) ;
     m_renderer.baseUBO().setInverseViewportMatrix(inverseViewportMatrix) ;
 
@@ -208,6 +227,25 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
 void OpenGLFrameGraphVisitor::updateCameraSettings() {
     FrameGraphBranchState& state = m_aggregators.back() ;
     Hope::CameraComponent* camera = state.activeCamera() -> camera() ;
+
+    // For cameras that require minimal data, just update them.
+    if (!(camera -> requireFullDataUpdate())) {
+        // Set up the projection matrix.
+        static const float UnusedAspectRatio = 0.f ;
+        Mind::Matrix4x4f projectionMatrix ;
+        camera -> projectionMatrix(projectionMatrix, UnusedAspectRatio) ;
+        m_renderer.baseUBO().setProjectionMatrix(projectionMatrix) ;
+        m_renderer.setProjectionMatrix(projectionMatrix) ;
+
+        // Update the view matrix.
+        const Mind::Matrix4x4f& viewMatrix = camera -> viewMatrix() ;
+        m_renderer.baseUBO().setViewMatrix(viewMatrix) ;
+        m_renderer.setViewMatrix(viewMatrix) ;
+
+        return ;
+    }
+
+    // Otherwise, proceed to a full update.
     const Hope::OffScreenRenderNode* offscreen = state.offScreenRender() ;
     camera -> update() ;
 
@@ -226,7 +264,7 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
         aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
     }
     else {
-        Mind::Dimension2Di framebufferSize = (offscreen -> framebuffer()).size() ;
+        Mind::Dimension2Di framebufferSize = (offscreen -> framebuffer()) -> size() ;
         float width = framebufferSize.width() ;
         float height = framebufferSize.height() ;
         aspectRatio = width / height ;

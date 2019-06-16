@@ -68,10 +68,10 @@ void DiffuseMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
@@ -92,8 +92,6 @@ void DiffuseMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseMapDeferredFragmentCode) ;
     shaderProgram -> build() ;

@@ -23,10 +23,11 @@ void main() {
     currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;
     currentFragment.shininess = texture(specular, inTexCoords).a ;
-    currentFragment.position = viewSpacePosition.xyz ;
+    currentFragment.position = viewSpacePosition ;
+    currentFragment.depth = depthValue ;
 
     // Compute ligh shading.
-    vec3 viewDirection = normalize(-currentFragment.position) ;
+    vec3 viewDirection = normalize(-currentFragment.position.xyz) ;
     vec3 shadedColor = ComputeLightsContribution(
         viewDirection,
         currentFragment
@@ -38,9 +39,31 @@ void main() {
     // 2. Revsere the values of the normal mask to get the sky mask.
     // 3. Extract the diffuse color of the sky by multiplying by the mask.
     // 4. Merge shading color and sky diffuse color.
-    float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1.f) ;
+    float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1f) ;
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
     outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+
+
+    //#define DEBUG_CSM
+    #ifdef DEBUG_CSM
+        const vec3 CascadeColors[] = {
+            vec3(1.f, 0.3f, 0.3f),
+            vec3(0.3f, 1.f, 0.3f),
+            vec3(0.3f, 0.3f, 1.f)
+        } ;
+
+       float distanceCamera = length(abs(currentFragment.position.xyz - eyePosition)) / farPlaneDistance ;
+       int selectedCascade = 0 ;
+        for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {
+            if (dist < cascadedSplits[cascadeIndex]) {
+                selectedCascade = cascadeIndex ;
+                break ;
+            }
+        }
+
+        outColor += vec4(CascadeColors[selectedCascade], 0.f) ;
+        normalize(outColor) ;
+    #endif
 }

@@ -96,6 +96,27 @@ namespace Mind {
             exported void normalize() ;
 
             /**
+             * Round the values of the point.
+             * @param   point   Point to get rounded values of.
+             * @return  The point with rounded values.
+             */
+            exported static Point3Df round(const Point3Df& point) ;
+
+            /**
+             * Round the values of the point to lower.
+             * @param   point   Point to get rounded values of.
+             * @return  The point with rounded values.
+             */
+            exported static Point3Df floor(const Point3Df& point) ;
+
+            /**
+             * Round the values of the point to upper.
+             * @param   point   Point to get rounded values of.
+             * @return  The point with rounded values.
+             */
+            exported static Point3Df ceil(const Point3Df& point) ;
+
+            /**
              * Merge two points at a middle point.
              * @param a The first point to merge.
              * @param b The second point to merge.

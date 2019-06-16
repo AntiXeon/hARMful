@@ -246,10 +246,39 @@ namespace Mind {
                  * Get a copy of the given Vector4f in which all elements are
                  * absolute values.
                  * @param     vec     Vector4f to get its absolute values.
-                 * @return     Vector4f in which the values are absolute values
+                 * @return  Vector4f in which the values are absolute values
                  *          from @a vec.
                  */
                 static Vector4f abs(const Vector4f& vec) ;
+
+                #if defined (USE_INTEL_SSE4_1)
+                    /**
+                     * Get a copy of the given Vector4f in which all elements are
+                     * rounded values to closer integer.
+                     * @param     vec     Vector4f to get its absolute values.
+                     * @return  Vector4f in which the values are the closer integer
+                     *          value.
+                     */
+                    static Vector4f round(const Vector4f& vec) ;
+
+                    /**
+                     * Get a copy of the given Vector4f in which all elements are
+                     * nearest lower values.
+                     * @param     vec     Vector4f to get its absolute values.
+                     * @return  Vector4f in which the values are the closer lower
+                     *          integer value.
+                     */
+                    static Vector4f floor(const Vector4f& vec) ;
+
+                    /**
+                     * Get a copy of the given Vector4f in which all elements are
+                     * nearest upper values.
+                     * @param     vec     Vector4f to get its absolute values.
+                     * @return  Vector4f in which the values are the closer upper
+                     *          integer value.
+                     */
+                    static Vector4f ceil(const Vector4f& vec) ;
+                #endif
 
                 /**
                  * Compute squareroot for each element of @a vec.

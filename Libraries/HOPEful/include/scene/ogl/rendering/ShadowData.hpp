@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_SHADOW_DATA__
 #define __HOPE__GL_SHADOW_DATA__
 
-#include <scene/framegraph/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/materials/external/DirectionalShadowUniformSetter.hpp>
 
 namespace Hope::GL {
@@ -9,6 +9,8 @@ namespace Hope::GL {
      * Aggregation of data required for shadow calculation.
      */
     class ShadowData final {
+        friend class OpenGLRenderer ;
+
         private:
             /**
              * Send shadow data to shaders.
@@ -30,6 +32,14 @@ namespace Hope::GL {
              */
             void updateDirectionalShadowUniforms() {
                 m_dirShadowSetter.updateUniforms() ;
+            }
+
+        private:
+            /**
+             * Pointer to the shadow uniforms setter.
+             */
+            const DirectionalShadowUniformSetter* shadowSetter() const {
+                return &m_dirShadowSetter ;
             }
     } ;
 }

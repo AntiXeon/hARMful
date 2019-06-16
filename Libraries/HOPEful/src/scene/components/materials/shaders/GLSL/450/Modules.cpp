@@ -25,6 +25,7 @@ layout (std140, binding = BASE_DATA_UBO_BINDING_INDEX) uniform BaseData\n\
     float farPlaneDistance ;\n\
     float aspectRatio ;\n\
     float time ;\n\
+    vec2 viewportSize ;\n\
 } ;\n\
 " ;
 

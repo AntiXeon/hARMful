@@ -69,10 +69,10 @@ void BlinnPhongMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
     shaderProgram -> build() ;
 
@@ -93,8 +93,6 @@ void BlinnPhongMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredFragmentCode) ;
     shaderProgram -> build() ;

@@ -16,13 +16,14 @@ vec3 AdjustNormalVector(mat3 tbnMatrix, vec3 normalValue) {\n\
  * Retrieve a view space position from texture coordinates and depth.\n\
  */\n\
 vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {\n\
-	float x = texCoords.x * 2.f - 1.f ;\n\
-	float y = texCoords.y * 2.f - 1.f ;\n\
+    vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;\n\
+	float x = adjustedTexCoords.x ;\n\
+	float y = adjustedTexCoords.y ;\n\
 	float z = depth * 2.f - 1.f ;\n\
 \n\
 	vec4 positionProjection = vec4(x, y, z, 1.f) ;\n\
 	vec4 positionView = inverseProjectionMatrix * positionProjection ;\n\
-	positionView /= positionView.w ;\n\
+    positionView /= positionView.w ;\n\
 	return positionView ;\n\
 }\n\
 \n\
@@ -103,7 +104,7 @@ layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData\n\
 \n\
 struct FragmentData {\n\
     // Position of the fragment.\n\
-    vec3 position ;\n\
+    vec4 position ;\n\
 \n\
     // Diffuse color value.\n\
     vec3 diffuseValue ;\n\
@@ -116,6 +117,9 @@ struct FragmentData {\n\
 \n\
     // Shininess value.\n\
     float shininess ;\n\
+\n\
+    // Depth of the fragment.\n\
+    float depth ;\n\
 } ;\n\
 \n\
 /*** Functions ***/\n\
@@ -140,7 +144,14 @@ vec3 ComputeDirectionalLight(\n\
     specularAngle *= pow(specularAngle, fragment.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
-    vec3 lightPowerColor = light.color * light.power ;\n\
+    float litFragment = ShadowCompute(\n\
+        lightDirection,\n\
+        fragment.position,\n\
+        fragment.normalValue,\n\
+        fragment.depth\n\
+    ) ;\n\
+\n\
+    vec3 lightPowerColor = litFragment * light.color * light.power ;\n\
     vec3 returnedLighting = fragment.diffuseValue * lambertian * lightPowerColor ;\n\
     returnedLighting += fragment.specularValue * specularColor * lightPowerColor ;\n\
 \n\
@@ -159,7 +170,7 @@ vec3 ComputePointLight(\n\
     vec3 viewDirection,\n\
     FragmentData fragment\n\
 ) {\n\
-    vec3 lightDirection = normalize(light.position - fragment.position) ;\n\
+    vec3 lightDirection = normalize(light.position - fragment.position.xyz) ;\n\
     float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;\n\
     vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;\n\
 \n\
@@ -167,7 +178,7 @@ vec3 ComputePointLight(\n\
     specularAngle *= pow(specularAngle, fragment.shininess) ;\n\
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;\n\
 \n\
-    float lightDistance = length(fragment.position - light.position) ;\n\
+    float lightDistance = length(fragment.position.xyz - light.position) ;\n\
     float sqrLightDistance = lightDistance * lightDistance ;\n\
     float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;\n\
 \n\

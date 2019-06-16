@@ -7,20 +7,18 @@ std::string ShadowsDirLightShadowsVertexCode =
 \n\
 layout(location = 0) in vec3 position ;\n\
 \n\
-uniform mat4 modelLightSpaceMatrix ;\n\
-\n\
 void main() {\n\
-    gl_Position = modelLightSpaceMatrix * vec4(position, 1.f) ;\n\
+    gl_Position = mvpMatrix * vec4(position, 1.f) ;\n\
 }\n\
 " ;
 
 std::string ShadowsShadowCalculationModuleCode =
 "\
-uniform bool useShadow ;\n\
-layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2D shadowDepth ;\n\
-\n\
-const float NotInShadow = 0.f ;\n\
-const float InShadow = 1.f ;\n\
+layout(location = UNIFORM_SHADOW_USE_LOCATION) uniform int useShadow ;\n\
+layout(location = UNIFORM_SHADOW_AMOUNT_CASCADE_LOCATION) uniform int amountCascades ;\n\
+layout(location = UNIFORM_SHADOW_CASCADED_SPLITS_LOCATION) uniform float cascadedSplits[MAX_AMOUNT_SHADOW_CASCADES] ;\n\
+layout(location = UNIFORM_SHADOW_CASCADE_MATRICES_LOCATION) uniform mat4 lightViewProjectionMatrices[MAX_AMOUNT_SHADOW_CASCADES] ;\n\
+layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2DArray cascadedDepthTexture ;\n\
 \n\
 /**\n\
  * Compute the shadow for the current fragment.\n\
@@ -29,16 +27,49 @@ const float InShadow = 1.f ;\n\
  *                                  the depth in the shadow depth and the one of\n\
  *                                  the current fragment from the light point of\n\
  *                                  view.\n\
- * @return  0 if the fragment is lit (not shadowed); 1 if the fragment is in the\n\
+ * @return  1 if the fragment is lit (not shadowed); 0 if the fragment is in the\n\
  *          shadow. It is in the shadow of the light if its depth is higher than\n\
  *          the depth taken from the light depth map.\n\
  */\n\
-float ShadowCompute(vec3 lightSpaceFragPosition) {\n\
-    if (useShadow) {\n\
-        return NotInShadow ;\n\
+float ShadowCompute(\n\
+    vec3 lightDirection,\n\
+    vec4 position,\n\
+    vec3 normal,\n\
+    float depth\n\
+) {\n\
+    float shadow = 0.f ;\n\
+\n\
+    if (useShadow == 0) {\n\
+        return shadow ;\n\
+    }\n\
+\n\
+    const float bias = max(0.001f * (1.f - dot(normal, lightDirection)), 0.0001f) ;\n\
+    float distanceCamera = length(abs(position.xyz - eyePosition)) / farPlaneDistance ;\n\
+\n\
+    int selectedCascade = 0 ;\n\
+    for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {\n\
+        if (distanceCamera < cascadedSplits[cascadeIndex]) {\n\
+            selectedCascade = cascadeIndex ;\n\
+            break ;\n\
+        }\n\
+    }\n\
+\n\
+    //selectedCascade = 2 ;\n\
+\n\
+    vec3 projectionCoordinates ;\n\
+    vec4 worldPosition = inverseViewMatrix * position ;\n\
+    vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;\n\
+    projectionCoordinates = lightSpacePosition.xyz * 0.5f + 0.5f ;\n\
+    float shadowMapDepth = texture(cascadedDepthTexture, vec3(projectionCoordinates.xy, selectedCascade)).r ;\n\
+\n\
+\n\
+    float currentDepth = projectionCoordinates.z - bias ;\n\
+\n\
+    if(currentDepth > 1.f) {\n\
+        return 1.f ;\n\
     }\n\
     else {\n\
-        return NotInShadow ;\n\
+        return float(currentDepth < shadowMapDepth) ;\n\
     }\n\
 }\n\
 " ;
@@ -48,7 +79,7 @@ std::string ShadowsDirLightShadowsFragmentCode =
 // Depth map for directional light shadows.\n\
 \n\
 void main() {\n\
-    // gl_FragDepth = gl_FragCoord.z ;\n\
+    //gl_FragDepth = gl_FragCoord.z ;\n\
 }\n\
 " ;
 

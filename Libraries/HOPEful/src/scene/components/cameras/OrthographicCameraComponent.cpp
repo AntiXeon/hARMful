@@ -6,7 +6,7 @@ using namespace Hope ;
 
 OrthographicCameraComponent::OrthographicCameraComponent()
     : CameraComponent(),
-      m_top(0.f),
-      m_bottom(1.f),
+      m_top(1.f),
+      m_bottom(0.f),
       m_left(0.f),
       m_right(1.f) {}

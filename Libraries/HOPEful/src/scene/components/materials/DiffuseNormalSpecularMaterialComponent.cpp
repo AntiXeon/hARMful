@@ -73,11 +73,11 @@ void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
@@ -98,8 +98,6 @@ void DiffuseNormalSpecularMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapDeferredFragmentCode) ;
     shaderProgram -> build() ;

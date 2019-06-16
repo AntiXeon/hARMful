@@ -6,6 +6,8 @@
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
+
+    #include <scene/ogl/rendering/capabilities/FaceCulling.hpp>
 #endif
 
 using namespace Hope ;
@@ -25,8 +27,12 @@ void MaterialComponent::setupRendering() {
 void MaterialComponent::setupDirectionalLightDepthMapShader() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DirectionalShadowPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
+    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
+    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
     shaderProgram -> addVertexShaderCode(ShadowsDirLightShadowsVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;

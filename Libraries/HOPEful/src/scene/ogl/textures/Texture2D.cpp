@@ -74,7 +74,7 @@ void Texture2D::resize(
     glBindTexture(GL_TEXTURE_2D, 0) ;
 }
 
-void Texture2D::setWrapModes(std::array<GLint, AmountCoordinates> modes) {
+void Texture2D::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, modes[0]) ;
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, modes[1]) ;
 }

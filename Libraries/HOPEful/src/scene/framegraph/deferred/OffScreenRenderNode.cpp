@@ -9,7 +9,11 @@ OffScreenRenderNode::OffScreenRenderNode(
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_windowSize(windowSize) {
-    m_framebuffer.resize(size) ;
+    m_framebuffer = new API::Framebuffer2D(size) ;
+}
+
+OffScreenRenderNode::~OffScreenRenderNode() {
+    delete m_framebuffer ;
 }
 
 void OffScreenRenderNode::specificAccept(IFrameGraphVisitor* visitor) {

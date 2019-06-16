@@ -24,6 +24,22 @@ namespace Hope {
              */
             static const uint8_t AmountFrustumCorners = 8 ;
 
+            /**
+             * Name for the corners of a frustum.
+             */
+            enum class FrustumCornerName : uint8_t {
+                // Belonging to "near plane"
+                NegX_NegY_NegZ,
+                PosX_NegY_NegZ,
+                NegX_PosY_NegZ,
+                PosX_PosY_NegZ,
+                // Belonging to "far plane"
+                NegX_NegY_PosZ,
+                PosX_NegY_PosZ,
+                NegX_PosY_PosZ,
+                PosX_PosY_PosZ
+            } ;
+
         private:
             /**
              * Default clear color.
@@ -66,11 +82,6 @@ namespace Hope {
             Mind::Vector3f m_up ;
 
             /**
-             * Eye position in the world.
-             */
-            Mind::Vector3f m_worldEyePosition ;
-
-            /**
              * View matrix.
              */
             Mind::Matrix4x4f m_viewMatrix ;
@@ -99,7 +110,7 @@ namespace Hope {
             /**
              * Update the camera.
              */
-            void update() {
+            virtual void update() {
                 lookAt(m_target) ;
             }
 
@@ -126,6 +137,17 @@ namespace Hope {
              */
             bool isStackable() const override {
                 return false ;
+            }
+
+            /**
+             * To know if the camera data must be fully updated or if a limited
+             * amount of data are to update for shaders.
+             * @return  true if the camera data have to be fully sent to shaders
+             *          (and so computed on CPU side); false to limit the amount
+             *          of data to compute and to send to shaders.
+             */
+            virtual bool requireFullDataUpdate() const {
+                return true ;
             }
 
             /**
@@ -196,10 +218,17 @@ namespace Hope {
             }
 
             /**
-             * Get the up vector of the camera.
+             * Get the up vector of the camera as defined.
              */
             const Mind::Vector3f& up() const {
                 return m_up ;
+            }
+
+            /**
+             * Get the up vector of the camera as it is oriented with the camera.
+             */
+            Mind::Vector3f upOriented() {
+                return m_viewDirection.cross(m_rightAxis) ;
             }
 
             /**
@@ -250,6 +279,14 @@ namespace Hope {
             }
 
         protected:
+            /**
+             * Set the view matrix in an other way than computed from the
+             * lookAt() method.
+             */
+            void setViewMatrix(const Mind::Matrix4x4f& matrix) {
+                m_viewMatrix = matrix ;
+            }
+
             /**
              * Action to performed when the component is attached to an
              * entity.

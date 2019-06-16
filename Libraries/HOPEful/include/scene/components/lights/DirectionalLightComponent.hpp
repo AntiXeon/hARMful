@@ -32,6 +32,7 @@ namespace Hope {
              */
             void setDirection(const Mind::Vector3f& direction) {
                 m_direction = direction ;
+                m_direction.normalize() ;
                 signalChange() ;
             }
 

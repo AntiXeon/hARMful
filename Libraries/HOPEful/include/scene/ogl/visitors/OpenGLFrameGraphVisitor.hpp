@@ -3,6 +3,7 @@
 
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
+#include <geometry/dimensions/Dimension2Di.hpp>
 #include <scene/ogl/rendering/OpenGLRenderer.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/FrameGraphBranchState.hpp>
@@ -37,7 +38,7 @@ namespace Hope::GL {
             /**
              * Size of the window.
              */
-            Mind::Dimension2Df m_windowSize ;
+            Mind::Dimension2Di m_windowSize ;
 
             /**
              * Data required to correctly compute projection on render step.
@@ -75,10 +76,10 @@ namespace Hope::GL {
              * Set the window size.
              */
             void setWindowSize(const Mind::Dimension2Df& size) {
-                m_windowSize = size ;
+                m_windowSize = Mind::Dimension2Di(size.width(), size.height()) ;
 
-                if (m_windowSize.height() < 1.f) {
-                    m_windowSize.setHeight(1.f) ;
+                if (m_windowSize.height() < 1) {
+                    m_windowSize.setHeight(1) ;
                 }
 
                 m_hasWindowChanged = true ;
@@ -87,7 +88,7 @@ namespace Hope::GL {
             /**
              * Get the window size.
              */
-            Mind::Dimension2Df windowSize() const {
+            Mind::Dimension2Di windowSize() const {
                 return m_windowSize ;
             }
 
@@ -123,6 +124,11 @@ namespace Hope::GL {
              * Visit an off-screen render node.
              */
             void visit(OffScreenRenderNode* node) override ;
+
+            /**
+             * Visit a layer off-screen render node.
+             */
+            void visit(LayerOffScreenRenderNode* node) override ;
 
             /**
              * Visit a node to perform deferred rendering.

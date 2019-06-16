@@ -39,11 +39,11 @@ void Hope::Orthographic(
     const float TopMinusBottom = top - bottom ;
     const float FarMinusNear = zFar - zNear ;
 
-    result[0][0] = 2.f / RightMinusLeft ;
-    result[1][1] = -2.f / TopMinusBottom ;
+    result[0][0] = +2.f / RightMinusLeft ;
+    result[1][1] = +2.f / TopMinusBottom ;
     result[2][2] = -2.f / FarMinusNear ;
-    result[0][3] = -(right + left) / RightMinusLeft ;
-    result[1][3] = (top + bottom) / TopMinusBottom ;
-    result[2][3] = -(zFar + zNear) / FarMinusNear ;
-    result[3][3] = 1.f ;
+    result[0][3] = -((right + left) / RightMinusLeft) ;
+    result[1][3] = -((top + bottom) / TopMinusBottom) ;
+    result[2][3] = -((zFar + zNear) / FarMinusNear) ;
+    result[3][3] = +1.f ;
 }
