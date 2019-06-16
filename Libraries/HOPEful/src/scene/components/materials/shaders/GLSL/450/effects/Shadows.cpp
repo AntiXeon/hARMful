@@ -54,8 +54,6 @@ float ShadowCompute(\n\
         }\n\
     }\n\
 \n\
-    //selectedCascade = 2 ;\n\
-\n\
     vec3 projectionCoordinates ;\n\
     vec4 worldPosition = inverseViewMatrix * position ;\n\
     vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;\n\

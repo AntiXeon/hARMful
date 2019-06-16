@@ -95,6 +95,7 @@ void Framebuffer2DStack::attachDepth() {
     m_depthAttachment -> bind() ;
     m_depthAttachment -> setFiltering(GL_LINEAR, GL_LINEAR) ;
     m_depthAttachment -> setWrapModes({ ClampToBorder, ClampToBorder, ClampToBorder }) ;
+    m_depthAttachment -> setBorderColor(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
     m_depthAttachment -> setCompareRefToTexture(false) ;
     //m_depthAttachment -> setComparisonOperator(ComparisonOperator::LessOrEqual) ;
     m_depthAttachment -> unbind() ;
