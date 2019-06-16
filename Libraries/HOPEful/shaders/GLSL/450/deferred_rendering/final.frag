@@ -54,7 +54,7 @@ void main() {
             vec3(0.3f, 0.3f, 1.f)
         } ;
 
-       float distanceCamera = length(abs(currentFragment.position.xyz - eyePosition)) / farPlaneDistance ;
+       float distanceCamera = distanceFromCamera(currentFragment.position) ;
        int selectedCascade = 0 ;
         for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {
             if (distanceCamera < cascadedSplits[cascadeIndex]) {

@@ -49,11 +49,8 @@ void ShadowCascade::update(
     for (uint8_t sideIndex = 0 ; sideIndex < AmountFrustumSides ; ++sideIndex) {
 		cascadeCornersWorld[sideIndex] = renderCamPosition + frustumCornersWorld[sideIndex] * m_relativeCascadeNearPlane ;
         cascadeCornersWorld[sideIndex + AmountFrustumSides] = renderCamPosition + frustumCornersWorld[sideIndex] * m_relativeCascadeFarPlane ;
-
-        //m_center = cascadeCornersWorld[sideIndex] + cascadeCornersWorld[sideIndex + AmountFrustumSides] ;
         maxHeight = std::max(maxHeight, cascadeCornersWorld[sideIndex + AmountFrustumSides].get(Mind::Vector3f::Y)) ;
 	}
-    //m_center /= CameraComponent::AmountFrustumCorners ;
 
     Mind::Vector3f lightPosition ;// = m_center ;
     lightPosition.set(Mind::Vector3f::Y, maxHeight) ;

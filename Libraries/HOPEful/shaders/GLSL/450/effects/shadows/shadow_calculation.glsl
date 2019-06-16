@@ -5,6 +5,16 @@ layout(location = UNIFORM_SHADOW_CASCADE_MATRICES_LOCATION) uniform mat4 lightVi
 layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2DArrayShadow cascadedDepthTexture ;
 
 /**
+ * Compute the distance of the given point from the camera location.
+ * @param   Position to know the distance from the camera.
+ * @return  Distance between the given position and the camera location.
+ */
+float distanceFromCamera(vec4 position) {
+    vec4 projectedPosition = projectionMatrix * position ;
+    return projectedPosition.z / farPlaneDistance ;
+}
+
+/**
  * Compute the shadow for the current fragment.
  * @param   lightSpaceFragPosition  Position of the fragment in the light space
  *                                  coordinates system. It is used to compare
@@ -28,8 +38,10 @@ float ShadowCompute(
     }
 
     const float bias = max(0.005f * (1.f - dot(normal, lightDirection)), 0.0005f) ;
-    float distanceCamera = length(abs(position.xyz - eyePosition)) / farPlaneDistance ;
+    float distanceCamera = distanceFromCamera(position) ;
 
+    // Select the right cascade index based on the distance of the fragment to
+    // the camera.
     int selectedCascade = 0 ;
     for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {
         if (distanceCamera < cascadedSplits[cascadeIndex]) {

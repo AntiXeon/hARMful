@@ -51,7 +51,7 @@ void main() {\n\
     outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
 \n\
 \n\
-    //#define DEBUG_CSM\n\
+    #define DEBUG_CSM\n\
     #ifdef DEBUG_CSM\n\
         const vec3 CascadeColors[] = {\n\
             vec3(1.f, 0.3f, 0.3f),\n\
@@ -59,7 +59,7 @@ void main() {\n\
             vec3(0.3f, 0.3f, 1.f)\n\
         } ;\n\
 \n\
-       float distanceCamera = length(abs(currentFragment.position.xyz - eyePosition)) / farPlaneDistance ;\n\
+       float distanceCamera = distanceFromCamera(currentFragment.position) ;\n\
        int selectedCascade = 0 ;\n\
         for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {\n\
             if (distanceCamera < cascadedSplits[cascadeIndex]) {\n\
