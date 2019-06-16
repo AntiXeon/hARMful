@@ -19,7 +19,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Alpha channel supporting materials (✗)
 - Order-independent transparency (✗)
 - Physics based rendering materials (✗)
-- Cascade shadow mapping (✗)
+- Cascade shadow mapping [[Demo](https://www.youtube.com/watch?v=8Q3Ci3c_1Pg)]
 - Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
 - Support of deferred rendering (✓)
     - Compute scene objects position from depth (✓)
@@ -34,6 +34,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Mesh import using ASSIMP (✓)
 - Mesh instancing (✗)
 - Frustum culling (✗)
+- Quadtree (✗)
 - Animations (✗)
 - Cube maps (✓)
 - Input management (keyboard, mouse, joypad) (✗)
