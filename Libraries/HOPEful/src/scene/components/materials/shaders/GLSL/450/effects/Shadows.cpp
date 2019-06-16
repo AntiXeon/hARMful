@@ -18,7 +18,7 @@ layout(location = UNIFORM_SHADOW_USE_LOCATION) uniform int useShadow ;\n\
 layout(location = UNIFORM_SHADOW_AMOUNT_CASCADE_LOCATION) uniform int amountCascades ;\n\
 layout(location = UNIFORM_SHADOW_CASCADED_SPLITS_LOCATION) uniform float cascadedSplits[MAX_AMOUNT_SHADOW_CASCADES] ;\n\
 layout(location = UNIFORM_SHADOW_CASCADE_MATRICES_LOCATION) uniform mat4 lightViewProjectionMatrices[MAX_AMOUNT_SHADOW_CASCADES] ;\n\
-layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2DArray cascadedDepthTexture ;\n\
+layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2DArrayShadow cascadedDepthTexture ;\n\
 \n\
 /**\n\
  * Compute the shadow for the current fragment.\n\
@@ -37,13 +37,13 @@ float ShadowCompute(\n\
     vec3 normal,\n\
     float depth\n\
 ) {\n\
-    float shadow = 0.f ;\n\
+    float litFragment = 1.f ;\n\
 \n\
     if (useShadow == 0) {\n\
-        return shadow ;\n\
+        return litFragment ;\n\
     }\n\
 \n\
-    const float bias = max(0.001f * (1.f - dot(normal, lightDirection)), 0.0001f) ;\n\
+    const float bias = max(0.005f * (1.f - dot(normal, lightDirection)), 0.0005f) ;\n\
     float distanceCamera = length(abs(position.xyz - eyePosition)) / farPlaneDistance ;\n\
 \n\
     int selectedCascade = 0 ;\n\
@@ -54,21 +54,23 @@ float ShadowCompute(\n\
         }\n\
     }\n\
 \n\
-    vec3 projectionCoordinates ;\n\
+    // vec3 projectionCoordinates ;\n\
+    // vec4 worldPosition = inverseViewMatrix * position ;\n\
+    // vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;\n\
+    // projectionCoordinates = lightSpacePosition.xyz * 0.5f + 0.5f ;\n\
+    // float shadowMapDepth = texture(cascadedDepthTexture, vec3(projectionCoordinates.xy, selectedCascade)).r ;\n\
+\n\
+    vec4 projectionCoordinates ;\n\
     vec4 worldPosition = inverseViewMatrix * position ;\n\
     vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;\n\
-    projectionCoordinates = lightSpacePosition.xyz * 0.5f + 0.5f ;\n\
-    float shadowMapDepth = texture(cascadedDepthTexture, vec3(projectionCoordinates.xy, selectedCascade)).r ;\n\
+    projectionCoordinates.xyw = (lightSpacePosition.xyz / lightSpacePosition.w) * 0.5f + 0.5f ;\n\
+    projectionCoordinates.w = projectionCoordinates.w - bias ;\n\
+    projectionCoordinates.z = float(selectedCascade) ;\n\
+    float shadowMapDepth = texture(cascadedDepthTexture, projectionCoordinates).r ;\n\
 \n\
-\n\
-    float currentDepth = projectionCoordinates.z - bias ;\n\
-\n\
-    if(currentDepth > 1.f) {\n\
-        return 1.f ;\n\
-    }\n\
-    else {\n\
-        return float(currentDepth < shadowMapDepth) ;\n\
-    }\n\
+    float currentDepth = projectionCoordinates.w ;// - bias ;\n\
+    litFragment = float(currentDepth < shadowMapDepth) ;\n\
+    return litFragment ;\n\
 }\n\
 " ;
 

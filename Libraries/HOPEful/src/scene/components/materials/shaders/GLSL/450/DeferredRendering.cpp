@@ -62,7 +62,7 @@ void main() {\n\
        float distanceCamera = length(abs(currentFragment.position.xyz - eyePosition)) / farPlaneDistance ;\n\
        int selectedCascade = 0 ;\n\
         for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {\n\
-            if (dist < cascadedSplits[cascadeIndex]) {\n\
+            if (distanceCamera < cascadedSplits[cascadeIndex]) {\n\
                 selectedCascade = cascadeIndex ;\n\
                 break ;\n\
             }\n\
