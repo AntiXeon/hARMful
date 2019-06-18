@@ -3,12 +3,13 @@
 
 #include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
-#include <scene/ogl/rendering/ShadowData.hpp>
+#include <scene/ogl/rendering/effects/AdditionalEffectsContainer.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 #include <scene/framegraph/cache/GeometryData.hpp>
 #include <matrices/Matrix4x4f.hpp>
+#include <vector>
 
 namespace Hope {
     class FrameRenderCache ;
@@ -53,9 +54,9 @@ namespace Hope::GL {
             QuadGeometry m_deferredShadingQuad ;
 
             /**
-             * Data for shadow calculation.
+             * Container for the different effects that can be applied.
              */
-            ShadowData m_shadowData ;
+            AdditionalEffectsContainer m_effectsContainer ;
 
         public:
             /**
@@ -99,13 +100,11 @@ namespace Hope::GL {
             }
 
             /**
-             * Set the frame graph node that contains all required data for
-             * computing directional light shadows.
+             * Get the container for the different effects that can be applied.
              */
-            void setDirectionalLightShadowData(Hope::DirectionalLightShadowNode* dirLightShadow) {
-                m_shadowData.setDirectionalLightShadow(dirLightShadow) ;
+            AdditionalEffectsContainer& effectsContainer() {
+                return m_effectsContainer ;
             }
-
             /**
              * Get the base data UBO.
              */
@@ -120,17 +119,16 @@ namespace Hope::GL {
              *                          objects. The render pass uses its
              *                          related shader program to render the
              *                          objects.
+             * @param   applyEffects    true to apply additional effects; false
+             *                          otherwise.
              * @param   component       Material component to use.
-             * @param   external        External uniforms to apply as well.
-             *                          nullptr is a valid value if no external
-             *                          uniforms are to be set.
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
             std::shared_ptr<API::RenderPass> useMaterial(
                 const RenderPassID renderPassID,
                 const Hope::MaterialComponent* component,
-                const Hope::ExternalUniformSetter* externalUniforms = nullptr
+                const bool applyEffects = false
             ) ;
 
             /**

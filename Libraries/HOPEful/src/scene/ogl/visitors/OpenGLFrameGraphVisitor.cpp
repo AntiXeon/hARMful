@@ -73,7 +73,7 @@ void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
 
     // Notify that the viewport has been modified...
     m_projectionData.lastViewport = nullptr ;
-    m_renderer.setDirectionalLightShadowData(node) ;
+    m_renderer.effectsContainer().setDirectionalLightShadowData(node) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {

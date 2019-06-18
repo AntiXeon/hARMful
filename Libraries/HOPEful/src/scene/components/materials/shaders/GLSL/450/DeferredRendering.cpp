@@ -51,7 +51,7 @@ void main() {\n\
     outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
 \n\
 \n\
-    #define DEBUG_CSM\n\
+    //#define DEBUG_CSM\n\
     #ifdef DEBUG_CSM\n\
         const vec3 CascadeColors[] = {\n\
             vec3(1.f, 0.3f, 0.3f),\n\
