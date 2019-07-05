@@ -51,7 +51,7 @@ void Framebuffer2DStack::attachColor(
 ) {
     if (!m_colorAttachments[attachmentIndex]) {
         // Generate the texture.
-        m_colorAttachments[attachmentIndex] = std::make_unique<Texture2DArray>(
+        m_colorAttachments[attachmentIndex] = std::make_unique<TextureImage2DArray>(
             m_size,
             internalFormat,
             pixelDataFormat,
@@ -81,7 +81,7 @@ void Framebuffer2DStack::attachColor(
 void Framebuffer2DStack::attachDepth() {
     if (!m_depthAttachment) {
         // Generate the texture.
-        m_depthAttachment = std::make_unique<Texture2DArray>(
+        m_depthAttachment = std::make_unique<TextureImage2DArray>(
             m_size,
             InternalFormat::DepthComponent,
             PixelFormat::DepthComponent,
@@ -115,7 +115,7 @@ void Framebuffer2DStack::attachDepth() {
 void Framebuffer2DStack::attachStencil() {
     if (!m_stencilAttachment) {
         // Generate the texture.
-        m_stencilAttachment = std::make_unique<Texture2DArray>(
+        m_stencilAttachment = std::make_unique<TextureImage2DArray>(
             m_size,
             InternalFormat::StencilIndex,
             PixelFormat::StencilIndex,
@@ -145,7 +145,7 @@ void Framebuffer2DStack::attachStencil() {
 void Framebuffer2DStack::attachDepthStencil() {
     if (!m_depthStencilAttachment) {
         // Generate the texture.
-        m_depthStencilAttachment = std::make_unique<Texture2DArray>(
+        m_depthStencilAttachment = std::make_unique<TextureImage2DArray>(
             m_size,
             InternalFormat::Depth24Stencil8,
             PixelFormat::DepthStencil,

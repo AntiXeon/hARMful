@@ -110,7 +110,7 @@ MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
     return materialComponent ;
 }
 
-Texture2D* MaterialLoader::GetTexture(
+TextureImage2D* MaterialLoader::GetTexture(
     const aiTextureType type,
     const fs::path& meshPath,
     const aiMaterial* material
@@ -130,7 +130,7 @@ Texture2D* MaterialLoader::GetTexture(
         mapMode
     ) ;
 
-    return new Texture2D(GetFullTexturePath(meshPath, assimpPath)) ;
+    return new TextureImage2D(GetFullTexturePath(meshPath, assimpPath)) ;
 }
 
 std::string MaterialLoader::GetFullTexturePath(

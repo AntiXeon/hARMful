@@ -9,7 +9,7 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    #include <scene/ogl/textures/Texture2D.hpp>
+    #include <scene/ogl/textures/TextureImage2D.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -38,7 +38,7 @@ namespace Hope {
             /**
              * Diffuse texture.
              */
-            const API::Texture2D* m_diffuse ;
+            const API::TextureImage2D* m_diffuse ;
 
             /**
              * Specular color.
@@ -77,7 +77,7 @@ namespace Hope {
             /**
              * Set the diffuse texture.
              */
-            void setDiffuseMap(const API::Texture2D* diffuse) {
+            void setDiffuseMap(const API::TextureImage2D* diffuse) {
                 m_diffuse = diffuse ;
             }
 
@@ -109,7 +109,7 @@ namespace Hope {
             /**
              * Get the diffuse texture.
              */
-            const API::Texture2D* diffuseMap() const {
+            const API::TextureImage2D* diffuseMap() const {
                 return m_diffuse ;
             }
 

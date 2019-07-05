@@ -1,4 +1,4 @@
-#include <scene/ogl/textures/Texture2D.hpp>
+#include <scene/ogl/textures/TextureImage2D.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
@@ -6,14 +6,13 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-Texture2D::Texture2D(
+TextureImage2D::TextureImage2D(
     const std::string& path,
     const bool mipmap
-) {
+) : Texture(GL_TEXTURE_2D) {
     static const bool FlipVerticalAxis = true ;
 
-    glGenTextures(1, &m_textureID) ;
-    glBindTexture(GL_TEXTURE_2D, m_textureID) ;
+    glBindTexture(GL_TEXTURE_2D, id()) ;
     TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
     setFiltering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR) ;
 
@@ -24,41 +23,36 @@ Texture2D::Texture2D(
     glBindTexture(GL_TEXTURE_2D, 0) ;
 }
 
-Texture2D::Texture2D(
+TextureImage2D::TextureImage2D(
     const Mind::Dimension2Di& size,
     const InternalFormat internalFormat,
     const PixelFormat pixelFormat,
     const PixelDataType pixelDataType,
     const float* pixelData,
     const bool mipmap
-) {
-    // Store data.
-    m_internalFormat = internalFormat ;
-    m_pixelFormat = pixelFormat ;
-    m_pixelDataType = pixelDataType ;
-    m_mipmap = mipmap ;
-
-    glGenTextures(1, &m_textureID) ;
+) : Texture(
+        GL_TEXTURE_2D,
+        internalFormat
+    ),
+    m_size(size),
+    m_pixelFormat(pixelFormat),
+    m_pixelDataType(pixelDataType),
+    m_mipmap(mipmap) {
     resize(size, pixelData) ;
 }
 
-Texture2D::~Texture2D() {
-    glBindTexture(GL_TEXTURE_2D, 0) ;
-    glDeleteTextures(1, &m_textureID) ;
-}
-
-void Texture2D::resize(
+void TextureImage2D::resize(
     const Mind::Dimension2Di& size,
     const float* pixelData
 ) {
-    glBindTexture(GL_TEXTURE_2D, m_textureID) ;
+    glBindTexture(GL_TEXTURE_2D, id()) ;
 
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
     glTexImage2D(
         GL_TEXTURE_2D,
         TextureLoD,
-        static_cast<GLint>(m_internalFormat),
+        static_cast<GLint>(internalFormat()),
         size.width(),
         size.height(),
         Border,
@@ -74,19 +68,7 @@ void Texture2D::resize(
     glBindTexture(GL_TEXTURE_2D, 0) ;
 }
 
-void Texture2D::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, modes[0]) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, modes[1]) ;
-}
-
-void Texture2D::setBorderColor(const Color& color) {
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color.toRGBA().data()) ;
-}
-
-void Texture2D::setFiltering(
-    GLint downscaling,
-    GLint upscaling
-) {
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, downscaling) ;
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, upscaling) ;
+void TextureImage2D::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
+    glTexParameteri(target(), GL_TEXTURE_WRAP_S, modes[0]) ;
+    glTexParameteri(target(), GL_TEXTURE_WRAP_T, modes[1]) ;
 }

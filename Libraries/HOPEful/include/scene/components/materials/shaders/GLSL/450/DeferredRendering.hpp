@@ -4,7 +4,7 @@
 
 #include <string>
 
-extern std::string DeferredRenderingFinalFragmentCode ;
 extern std::string DeferredRenderingFinalVertexCode ;
+extern std::string DeferredRenderingFinalFragmentCode ;
 
 #endif

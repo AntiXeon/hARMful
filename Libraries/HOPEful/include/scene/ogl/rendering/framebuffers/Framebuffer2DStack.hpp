@@ -3,7 +3,7 @@
 
 #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <scene/ogl/GLDefines.hpp>
-#include <scene/ogl/textures/Texture2DArray.hpp>
+#include <scene/ogl/textures/TextureImage2DArray.hpp>
 #include <memory>
 
 namespace Hope::GL {
@@ -26,22 +26,22 @@ namespace Hope::GL {
              * Color textures attached to the framebuffer.
              * Stores the textures associated to their attachment point.
              */
-            std::vector<std::unique_ptr<Texture2DArray>> m_colorAttachments ;
+            std::vector<std::unique_ptr<TextureImage2DArray>> m_colorAttachments ;
 
             /**
              * Depth buffer attachment.
              */
-            std::unique_ptr<Texture2DArray> m_depthAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_depthAttachment ;
 
             /**
              * Stencil buffer attachment.
              */
-            std::unique_ptr<Texture2DArray> m_stencilAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_stencilAttachment ;
 
             /**
              * Depth + stencil buffer attachment.
              */
-            std::unique_ptr<Texture2DArray> m_depthStencilAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_depthStencilAttachment ;
 
         public:
             /**

@@ -15,7 +15,7 @@ CubemapTexture::CubemapTexture(std::array<std::string, AmountFaces> paths) {
     // Load all the faces.
     for (int face = CubemapTexture::Right ; face < AmountFaces ; ++face) {
         // Because OpenGL uses top left point as (0,0) for cube maps, instead of the
-        // lower left point as for Texture2Ds...
+        // lower left point as for TextureImage2Ds...
         static const bool FlipVerticalAxis = false ;
 
         TextureLoader::LoadFromFile(

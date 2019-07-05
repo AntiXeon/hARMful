@@ -11,7 +11,7 @@ namespace Hope {
 }
 
 namespace Hope::GL {
-    class Texture2D ;
+    class TextureImage2D ;
 
     /**
      * Load the right material from the Assimp data.
@@ -91,7 +91,7 @@ namespace Hope::GL {
             /**
              * Get the texture from an Assimp material.
              */
-            static Texture2D* GetTexture(
+            static TextureImage2D* GetTexture(
                 const aiTextureType type,
                 const fs::path& meshPath,
                 const aiMaterial* material

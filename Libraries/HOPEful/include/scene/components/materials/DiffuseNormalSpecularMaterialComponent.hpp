@@ -9,7 +9,7 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    #include <scene/ogl/textures/Texture2D.hpp>
+    #include <scene/ogl/textures/TextureImage2D.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -52,17 +52,17 @@ namespace Hope {
             /**
              * Diffuse map.
              */
-            const API::Texture2D* m_diffuse = nullptr ;
+            const API::TextureImage2D* m_diffuse = nullptr ;
 
             /**
              * Normal map.
              */
-            const API::Texture2D* m_normal = nullptr ;
+            const API::TextureImage2D* m_normal = nullptr ;
 
             /**
              * Normal map.
              */
-            const API::Texture2D* m_specular = nullptr ;
+            const API::TextureImage2D* m_specular = nullptr ;
 
             /**
              * Shininess color.
@@ -96,21 +96,21 @@ namespace Hope {
             /**
              * Set the diffuse map.
              */
-            void setDiffuseMap(const API::Texture2D* diffuse) {
+            void setDiffuseMap(const API::TextureImage2D* diffuse) {
                 m_diffuse = diffuse ;
             }
 
             /**
              * Set the normal map.
              */
-            void setNormalMap(const API::Texture2D* normal) {
+            void setNormalMap(const API::TextureImage2D* normal) {
                 m_normal = normal ;
             }
 
             /**
              * Set the specular map.
              */
-            void setSpecularMap(const API::Texture2D* specular) {
+            void setSpecularMap(const API::TextureImage2D* specular) {
                 m_specular = specular ;
             }
 
@@ -135,21 +135,21 @@ namespace Hope {
             /**
              * Get the diffuse texture.
              */
-            const API::Texture2D* diffuseMap() const {
+            const API::TextureImage2D* diffuseMap() const {
                 return m_diffuse ;
             }
 
             /**
              * Get the normal map.
              */
-            const API::Texture2D* normalMap() const {
+            const API::TextureImage2D* normalMap() const {
                 return m_normal ;
             }
 
             /**
              * Get the specular map.
              */
-            const API::Texture2D* specularMap() const {
+            const API::TextureImage2D* specularMap() const {
                 return m_specular ;
             }
 

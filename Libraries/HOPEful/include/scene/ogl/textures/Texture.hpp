@@ -1,5 +1,5 @@
-#ifndef __HOPE__GL_TEXTURE2D_ARRAY__
-#define __HOPE__GL_TEXTURE2D_ARRAY__
+#ifndef __HOPE__GL_TEXTURE__
+#define __HOPE__GL_TEXTURE__
 
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
@@ -10,20 +10,18 @@
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
-#include <vector>
 
 namespace Hope::GL {
     /**
-     * Buffer of a 3D texture.
+     * Base class for OpenGL textures.
      */
-    class Texture2DArray final {
-        public:
-            /**
-             * Amount of coordinates for the Texture2DArray class.
-             */
-            static const int AmountCoordinates = 3 ;
-
+    class Texture {
         private:
+            /**
+             * Target to which the texture is bound.
+             */
+            GLenum m_target ;
+
             /**
              * ID of the texture on GPU side.
              */
@@ -34,48 +32,28 @@ namespace Hope::GL {
              */
             InternalFormat m_internalFormat ;
 
-            /**
-             * Pixel format of the input data.
-             */
-            PixelFormat m_pixelFormat ;
-
-            /**
-             * The way colors are encoded in memory the texture.
-             */
-            PixelDataType m_pixelDataType ;
-
-            /**
-             * Automatic mipmap generation if true.
-             */
-            bool m_mipmap ;
-
         public:
             /**
-             * Create a new Texture2DArray instance.
-             * @param   size            Size of the texture in pixels.
+             * Create a new Texture instance.
+             * @param   target  Target to which the texture is bound.
+             */
+            Texture(const GLenum target) ;
+
+            /**
+             * Create a new Texture instance.
+             * @param   target          Target to which the texture is bound.
              * @param   internalFormat  Number of color components in the
              *                          texture.
-             * @param   pixelFormat     Format of the pixel data.
-             * @param   pixelDataType   Data type of the pixel data.
-             * @param   pixelData       Raw data of the texture.
-             *                          nullptr is a valid value, for example to
-             *                          use the texture as a framebuffer texture
-             *                          attachments.
-             * @param   mipmap          Generate the mipmaps if true.
              */
-            Texture2DArray(
-                const Mind::Dimension3Di& size,
-                const InternalFormat internalFormat,
-                const PixelFormat pixelFormat,
-                const PixelDataType pixelDataType,
-                const float* pixelData = nullptr,
-                const bool mipmap = true
+            Texture(
+                const GLenum target,
+                const InternalFormat internalFormat
             ) ;
 
             /**
-             * Destruction of the Texture2DArray.
+             * Destruction of the Texture.
              */
-            ~Texture2DArray() ;
+            ~Texture() ;
 
             /**
              * Set the current texture active.
@@ -95,14 +73,14 @@ namespace Hope::GL {
              * Bind the current texture.
              */
             void bind() const {
-                glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureID) ;
+                glBindTexture(m_target, m_textureID) ;
             }
 
             /**
              * Unbind the texture.
              */
             void unbind() const {
-                glBindTexture(GL_TEXTURE_2D_ARRAY, 0) ;
+                glBindTexture(m_target, 0) ;
             }
 
             /**
@@ -111,21 +89,6 @@ namespace Hope::GL {
             void unbindUnit(const unsigned int unit) const {
                 glBindTextureUnit(unit, 0) ;
             }
-
-            /**
-             * Resize the texture.
-             * @param   size        The new size to apply.
-             * @param   pixelData   Pixel data that fit the new size.
-             */
-            void resize(
-                const Mind::Dimension3Di& size,
-                const float* pixelData = nullptr
-            ) ;
-
-            /**
-             * Set the wrap mode for each dimension of the texture.
-             */
-            void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
 
             /**
              * Set the border color in case the texture does not fit the borders
@@ -156,29 +119,18 @@ namespace Hope::GL {
              *                      the appropriate value from the currently
              *                      bound depth texture.
              */
-            void setCompareRefToTexture(const bool compare) {
-                GLint comparison = GL_NONE ;
-
-                if (compare) {
-                    comparison = GL_COMPARE_REF_TO_TEXTURE ;
-                }
-
-                glTexParameteri(
-                    GL_TEXTURE_2D_ARRAY,
-                    GL_TEXTURE_COMPARE_MODE,
-                    comparison
-                ) ;
-            }
+            void setCompareRefToTexture(const bool compare) ;
 
             /**
              * Set the comparison operator.
              */
-            void setComparisonOperator(const ComparisonOperator op) {
-                glTexParameteri(
-                    GL_TEXTURE_2D_ARRAY,
-                    GL_TEXTURE_COMPARE_FUNC,
-                    op
-                ) ;
+            void setComparisonOperator(const ComparisonOperator op) ;
+
+            /**
+             * Get the target of the texture.
+             */
+            GLenum target() const {
+                return m_target ;
             }
 
             /**
@@ -186,6 +138,13 @@ namespace Hope::GL {
              */
             GLuint id() const {
                 return m_textureID ;
+            }
+
+            /**
+             * Get the internal format of the texture.
+             */
+            InternalFormat internalFormat() const {
+                return m_internalFormat ;
             }
     } ;
 }
