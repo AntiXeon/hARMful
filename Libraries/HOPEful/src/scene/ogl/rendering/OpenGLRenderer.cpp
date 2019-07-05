@@ -13,7 +13,8 @@ using namespace Hope::GL ;
 
 void OpenGLRenderer::render(
     const RenderPassID renderPassID,
-    std::vector<GeometryData>& dataList
+    std::vector<GeometryData>& dataList,
+    const uint32_t memoryBarrier
 ) {
     for (GeometryData& meshData : dataList) {
         m_modelUBO.setMatrices(
@@ -56,6 +57,11 @@ void OpenGLRenderer::render(
                 amountParts
             ) ;
             disableCapabilities(renderPass) ;
+
+            // Insert a memory barrier.
+            if (memoryBarrier != 0) {
+                glMemoryBarrier(memoryBarrier) ;
+            }
         }
 
         geometry -> unbind() ;
@@ -65,7 +71,10 @@ void OpenGLRenderer::render(
     glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
 }
 
-void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
+void OpenGLRenderer::deferredShading(
+    Hope::MaterialComponent* material,
+    const uint32_t memoryBarrier
+) {
     const bool ApplyEffects = true ;
 
     m_deferredShadingQuad.bind() ;
@@ -80,6 +89,12 @@ void OpenGLRenderer::deferredShading(Hope::MaterialComponent* material) {
     // Draw the quad.
     size_t amountIndices = m_deferredShadingQuad.part(0).amountIndices() ;
     glDrawElements(GL_TRIANGLE_STRIP, amountIndices, GL_UNSIGNED_BYTE, nullptr) ;
+
+    // Insert a memory barrier.
+    if (memoryBarrier != 0) {
+        glMemoryBarrier(memoryBarrier) ;
+    }
+
     m_deferredShadingQuad.unbind() ;
 }
 

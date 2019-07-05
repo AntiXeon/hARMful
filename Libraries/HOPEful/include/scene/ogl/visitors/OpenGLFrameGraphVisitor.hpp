@@ -146,6 +146,11 @@ namespace Hope::GL {
             void visit(ViewportNode* node) override ;
 
             /**
+             * Visit a memory barrier node.
+             */
+            void visit(MemoryBarrierNode* node) override;
+
+            /**
              * Perform the rendering of the framegraph tree branch that is
              * currently processed.
              */

@@ -66,10 +66,13 @@ namespace Hope::GL {
              *                          related shader program to render the
              *                          objects.
              * @param   dataList        Geometries to be rendered.
+             * @param   memoryBarrier   Memory barrier to apply while rendering
+             *                          the pass.
              */
             void render(
                 const RenderPassID renderPassID,
-                std::vector<GeometryData>& dataList
+                std::vector<GeometryData>& dataList,
+                const uint32_t memoryBarrier
             ) ;
 
             /**
@@ -77,8 +80,13 @@ namespace Hope::GL {
              * @param   material    Material applied on the screen quad to
              *                      render the content of the GBuffer, applying
              *                      deferred shading.
+             * @param   memoryBarrier   Memory barrier to apply while rendering
+             *                          the pass.
              */
-            void deferredShading(Hope::MaterialComponent* material) ;
+            void deferredShading(
+                Hope::MaterialComponent* material,
+                const uint32_t memoryBarrier
+            ) ;
 
             /**
              * Run an update of the light UBO.

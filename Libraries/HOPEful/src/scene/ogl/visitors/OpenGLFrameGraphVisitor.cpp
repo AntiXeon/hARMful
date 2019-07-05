@@ -4,6 +4,7 @@
 #include <scene/framegraph/FrustumCullingNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
+#include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
 #include <scene/framegraph/deferred/LayerOffScreenRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
@@ -106,7 +107,10 @@ void OpenGLFrameGraphVisitor::visit(LayerOffScreenRenderNode* node) {
 
 void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
     m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
-    m_renderer.deferredShading(node -> material()) ;
+    m_renderer.deferredShading(
+        node -> material(),
+        m_aggregators.back().memoryBarrier()
+    ) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(RenderPassSelectorNode* node) {
@@ -164,6 +168,10 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
     m_projectionData.initialized = true ;
 }
 
+void OpenGLFrameGraphVisitor::visit(MemoryBarrierNode* node) {
+    m_aggregators.back().setMemoryBarrier(node -> bits()) ;
+}
+
 void OpenGLFrameGraphVisitor::makeRender() {
     FrameGraphBranchState& state = m_aggregators.back() ;
 
@@ -186,7 +194,8 @@ void OpenGLFrameGraphVisitor::makeRender() {
     // Render the frame.
     m_renderer.render(
         state.renderPassID(),
-        cache -> meshes()
+        cache -> meshes(),
+        m_aggregators.back().memoryBarrier()
     ) ;
 
     // Remove the last RenderConditionAggregator from the list!

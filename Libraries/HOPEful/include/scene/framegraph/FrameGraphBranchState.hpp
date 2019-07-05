@@ -20,6 +20,11 @@ namespace Hope {
             bool m_renderAtEnd = true ;
 
             /**
+             * Memory barrier bits to apply on rendering.
+             */
+            uint32_t m_memoryBarrierBits = 0 ;
+
+            /**
              * Render pass ID to use for rendering the current branch.
              */
             RenderPassID m_renderPassID = ForwardPassID ;
@@ -52,6 +57,21 @@ namespace Hope {
                 ActiveCameraNode* activeCamera,
                 const RenderConditionAggregator& m_conditions
             ) ;
+
+            /**
+             * Set the memory barrier to apply when rendering the current
+             * branch.
+             */
+            void setMemoryBarrier(const uint32_t bits) {
+                m_memoryBarrierBits = bits ;
+            }
+
+            /**
+             * Memory barrier to apply on branch rendering.
+             */
+            uint32_t memoryBarrier() const {
+                return m_memoryBarrierBits ;
+            }
 
             /**
              * If true, the rendering step is performed when the current branch
