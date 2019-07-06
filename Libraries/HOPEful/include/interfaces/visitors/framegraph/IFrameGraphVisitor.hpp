@@ -14,6 +14,7 @@ namespace Hope {
     class RenderPassSelectorNode ;
     class ViewportNode ;
     class MemoryBarrierNode ;
+    class RenderCapabilityNode ;
 
     /**
      * Interface for the Visitor design pattern for nodes of the frame graph.
@@ -69,6 +70,11 @@ namespace Hope {
              * Visit a memory barrier node.
              */
             virtual void visit(MemoryBarrierNode* node) = 0 ;
+
+            /**
+             * Visit a capability node.
+             */
+            virtual void visit(RenderCapabilityNode* node) = 0 ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

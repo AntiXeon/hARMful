@@ -4,6 +4,14 @@
 #include <scene/SceneTypes.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
+#include <scene/framegraph/RenderCapabilityNode.hpp>
+#include <vector>
+#include <HopeAPI.hpp>
+
+#ifdef OGL
+    #include <scene/ogl/rendering/capabilities/Capability.hpp>
+    namespace API = Hope::GL ;
+#endif
 
 namespace Hope {
     /**
@@ -44,6 +52,12 @@ namespace Hope {
              */
             RenderConditionAggregator m_conditions ;
 
+            /**
+             * Capability to enaéble on rendering of the current framegraph
+             * branch.
+             */
+            std::vector<API::Capability*> m_capabilities ;
+
         public:
             /**
              * Create a new FrameGraphBranchState.
@@ -71,6 +85,35 @@ namespace Hope {
              */
             uint32_t memoryBarrier() const {
                 return m_memoryBarrierBits ;
+            }
+
+            /**
+             * Add render capabilties.
+             */
+            void addRenderCapabilities(RenderCapabilityNode* node) {
+                m_capabilities.insert(
+                    m_capabilities.begin(),
+                    (node -> capabilities()).begin(),
+                    (node -> capabilities()).end()
+                ) ;
+            }
+
+            /**
+             * Apply render capabilties.
+             */
+            void applyRenderCapabilities() {
+                for (auto* capability : m_capabilities) {
+                    capability -> apply() ;
+                }
+            }
+
+            /**
+             * Remove render capabilties.
+             */
+            void removeRenderCapabilities() {
+                for (auto* capability : m_capabilities) {
+                    capability -> remove() ;
+                }
             }
 
             /**

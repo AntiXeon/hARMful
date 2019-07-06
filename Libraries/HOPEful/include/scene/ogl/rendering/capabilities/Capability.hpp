@@ -3,11 +3,16 @@
 
 #include <GL/glew.h>
 
+namespace Hope {
+    class FrameGraphBranchState ;
+}
+
 namespace Hope::GL {
     /**
      * Encapsulate a GL capability.
      */
     class Capability {
+        friend class Hope::FrameGraphBranchState ;
         friend class OpenGLRenderer ;
 
         private:

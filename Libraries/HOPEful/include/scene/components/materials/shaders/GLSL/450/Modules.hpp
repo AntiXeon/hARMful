@@ -4,8 +4,8 @@
 
 #include <string>
 
-extern std::string ModulesModelDataBlockModuleCode ;
-extern std::string ModulesBaseDataBlockModuleCode ;
 extern std::string ModulesDirectiveModuleCode ;
+extern std::string ModulesBaseDataBlockModuleCode ;
+extern std::string ModulesModelDataBlockModuleCode ;
 
 #endif
