@@ -10,7 +10,8 @@ layout: default
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
 Some of them are already implemented and a demonstration video is available. A "✗" symbol indicates that the feature is not yet implemented; a "✓" symbol is used to signal non-graphic features that are implemented.
 
-## Features of HOPEful
+## Features
+### Features of HOPEful
 - Architecture based on the [Entity-Component-System pattern](https://en.wikipedia.org/wiki/Entity_component_system)
 - Rendering process based on a [framegraph](https://www.ea.com/frostbite/news/framegraph-extensible-rendering-architecture-in-frostbite) to handle render passes
     - Render to several viewports [[Demo](https://www.youtube.com/watch?v=ElPDwyt3TtE)]
@@ -41,7 +42,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Scripting (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 
-## Features of MINDful
+### Features of MINDful
 - SIMD implementations:
     - SSE (Intel/AMD) (✓)
     - NEON (ARM) (✗)
@@ -49,7 +50,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Quaternions with common operations (✓)
 - Matrices 3x3 and 4x4 with common operations for 3D graphics applications (✓)
 
-## Features of SPITEful
+### Features of SPITEful
 - Load text files (✓)
 - Load binary files (✓)
 - Load images:
@@ -57,10 +58,49 @@ Some of them are already implemented and a demonstration video is available. A "
     - JPEG (✓)
     - TGA (✗)
 
-## Features of HOPEful
+### Features of HOPEful
 - Log system (✓)
 - Profiling tool (✓)
 - Translation abstraction tool:
     - Linux (✓)
     - Windows (✗)
 - Random numbers (integer, floats) generation (✓)
+
+## Roadmap
+A version development lasts around 18 months (except the Puppy version, for which low-level tools have been developped as well).
+
+### Version 1.0 (Puppy)
+The first version of hARMful is waited for mid-2020. It is not yet well evolved and it still is a "baby" engine.
+* Support of GNU/Linux (only)
+* Intel SSE support for mathematics
+* Image loader (JPEG/PNG)
+* Support of OpenGL 4.5 (only) with basic 3D features:
+    - Mesh importer
+    - Hard shadows
+    - Screen-space ambient occlusion
+    - Transparent objects rendering
+    - Reflections / refractions
+    - Skymaps
+    - Animated meshes
+
+### Version 1.1 (Poodle)
+This version brings user interactions and physics engine. That reminds the pompom of a poodle one can love to touch!
+* Image saver (JPEG/PNG)
+* Integration of Bullet physics engine
+* User interactions (keyboard, mouse, controllers)
+* Increase of performances (instancing, octrees, multithreading)
+* Scripting language
+
+### Version 1.2 (Malteser)
+Mainly oriented towards an improvements of the rendering, as a Maltese dog with hair styled.
+* Physics-based rendering materials
+* Soft shadows
+* Global illumination
+* Ground-truth ambient occlusion (realistic ambient occlusion)
+* Support of sounds and musics (OGG)
+* Support of Microsoft Windows
+
+### Version 1.3 (Shiba-inu)
+Support of modern ARM processors (CPU and GPU).
+* Support of NEON
+* Support of Vulkan API
