@@ -12,7 +12,11 @@ namespace Hope {
     #define DeferredPassID          1       // Deferred render pass ID.
     #define DirectionalShadowPassID 2       // Shadow depth map pass ID (directional lights).
 
-
+    typedef unsigned int EffectNodeType ;
+    #define AmbientOcclusionEffectType  0
+    #define ShadowsEffectType           1
+    #define AmountEffectsTypes          (ShadowsEffectType + 1)
+    
     /**
      * ID for frames.
      */

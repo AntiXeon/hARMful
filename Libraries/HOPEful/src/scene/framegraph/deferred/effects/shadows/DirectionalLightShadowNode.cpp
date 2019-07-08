@@ -16,7 +16,7 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
     const float maxDistance,
     const uint8_t amountCascades,
     FrameGraphNode* parent
-) : FrameGraphNode(parent) {
+) : EffectFrameGraphNode(parent) {
     setRenderingStepEnabled(false) ;
 
     m_parameters.light = light ;

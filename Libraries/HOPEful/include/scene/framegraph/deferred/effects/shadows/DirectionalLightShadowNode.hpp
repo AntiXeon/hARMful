@@ -9,11 +9,11 @@
     namespace API = Hope::GL ;
 #endif
 
+#include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/framegraph/deferred/effects/shadows/cascade/CSMParameters.hpp>
 #include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
-#include <scene/FrameGraphNode.hpp>
 #include <scene/SceneTypes.hpp>
 #include <vector>
 
@@ -37,7 +37,7 @@ namespace Hope {
      * entity just below the root entity of the scene graph. All the required
      * cameras are stored below this "CSM root entity".
      */
-    class DirectionalLightShadowNode final : public FrameGraphNode {
+    class DirectionalLightShadowNode final : public EffectFrameGraphNode {
         private:
             /**
              * Steps for splitting the total render frustum.
@@ -149,6 +149,13 @@ namespace Hope {
              */
             int amountCascades() const {
                 return m_parameters.amountCascades ;
+            }
+
+            /**
+             * Get the type of the effect.
+             */
+            EffectNodeType effectType() const {
+                return ShadowsEffectType ;
             }
 
         protected:
