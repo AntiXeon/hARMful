@@ -1,4 +1,4 @@
-#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <scene/components/cameras/OrthographicCameraComponent.hpp>
 #include <scene/Entity.hpp>

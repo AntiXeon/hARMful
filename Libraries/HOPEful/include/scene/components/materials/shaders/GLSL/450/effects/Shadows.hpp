@@ -4,8 +4,8 @@
 
 #include <string>
 
-extern std::string ShadowsDirLightShadowsVertexCode ;
 extern std::string ShadowsShadowCalculationModuleCode ;
+extern std::string ShadowsDirLightShadowsVertexCode ;
 extern std::string ShadowsDirLightShadowsFragmentCode ;
 
 #endif

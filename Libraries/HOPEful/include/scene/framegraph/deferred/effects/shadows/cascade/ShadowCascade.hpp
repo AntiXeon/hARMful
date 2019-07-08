@@ -10,7 +10,7 @@
 #endif
 
 #include <scene/components/cameras/light/DirectionalLightCameraComponent.hpp>
-#include <scene/framegraph/shadows/cascade/CSMFramegraphSubtree.hpp>
+#include <scene/framegraph/deferred/effects/shadows/cascade/CSMFramegraphSubtree.hpp>
 #include <matrices/Matrix4x4f.hpp>
 
 namespace Hope {

@@ -9,7 +9,7 @@
 #include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
-#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>

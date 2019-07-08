@@ -4,9 +4,9 @@
 
 #include <string>
 
-extern std::string BlinnPhongForwardFragmentCode ;
+extern std::string BlinnPhongDeferredVertexCode ;
 extern std::string BlinnPhongDeferredFragmentCode ;
 extern std::string BlinnPhongForwardVertexCode ;
-extern std::string BlinnPhongDeferredVertexCode ;
+extern std::string BlinnPhongForwardFragmentCode ;
 
 #endif

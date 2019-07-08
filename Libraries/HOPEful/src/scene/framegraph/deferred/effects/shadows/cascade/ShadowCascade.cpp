@@ -1,4 +1,4 @@
-#include <scene/framegraph/shadows/cascade/ShadowCascade.hpp>
+#include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>

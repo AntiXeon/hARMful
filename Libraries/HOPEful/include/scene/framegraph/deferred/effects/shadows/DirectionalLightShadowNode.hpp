@@ -11,8 +11,8 @@
 
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
-#include <scene/framegraph/shadows/cascade/CSMParameters.hpp>
-#include <scene/framegraph/shadows/cascade/ShadowCascade.hpp>
+#include <scene/framegraph/deferred/effects/shadows/cascade/CSMParameters.hpp>
+#include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
 #include <scene/FrameGraphNode.hpp>
 #include <scene/SceneTypes.hpp>
 #include <vector>

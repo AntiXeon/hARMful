@@ -3,7 +3,7 @@
 
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
-#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 
 namespace Hope {
     /**

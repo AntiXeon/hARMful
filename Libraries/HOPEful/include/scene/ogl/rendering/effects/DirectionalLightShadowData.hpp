@@ -2,7 +2,7 @@
 #define __HOPE__GL_DIRECTIONAL_LIGHT_SHADOW_DATA__
 
 #include <scene/ogl/rendering/effects/AdditionalEffectsData.hpp>
-#include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/materials/external/DirectionalShadowUniformSetter.hpp>
 
 namespace Hope::GL {
