@@ -73,38 +73,5 @@ void SSAORenderNode::generateKernel() {
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {
-    const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
-    bool windowSized = m_gBuffer -> windowSize() ;
 
-    // This subtree renders the ambient occlusion into the dedicated temporary
-    // framebuffer.
-    {
-        // Buffer in which AO is written.
-        m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
-            dimension,
-            windowSized,
-            this
-        ) ;
-        m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
-            AlbedoRenderTarget + 1,
-            API::InternalFormat::Red,
-            API::PixelFormat::Red,
-            API::PixelDataType::UnsignedByte
-        ) ;
-        m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AlbedoRenderTarget }) ;
-        m_subtree.aoRendering.offscreen -> framebuffer() -> attachDepth() ;
-
-        // Render pass selection.
-        m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
-            ForwardPassID,
-            m_subtree.aoRendering.offscreen
-        ) ;
-
-        // Rendering of the ambient occlusion pass.
-        m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
-        m_subtree.aoRendering.deferredRendering = new DeferredRenderingNode(
-            m_ssaoMaterial,
-            m_subtree.aoRendering.passSelector
-        ) ;
-    }
 }

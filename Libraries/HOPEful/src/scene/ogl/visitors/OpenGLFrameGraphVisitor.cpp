@@ -10,6 +10,7 @@
 #include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
@@ -178,6 +179,10 @@ void OpenGLFrameGraphVisitor::visit(MemoryBarrierNode* node) {
 
 void OpenGLFrameGraphVisitor::visit(RenderCapabilityNode* node) {
     m_aggregators.back().addRenderCapabilities(node) ;
+}
+
+void OpenGLFrameGraphVisitor::visit(SSAORenderNode*) {
+
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

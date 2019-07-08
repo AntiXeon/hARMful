@@ -9,7 +9,7 @@ layout(binding = 3) uniform sampler2D depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
-layout(location = 1) out vec4 gAlbedoAO ;
+layout(location = 1) out float gAO ;
 
 // Texture coordinates of the noise texture for the current fragment.
 vec2 noiseTextureCoords() {
@@ -62,9 +62,9 @@ void main() {
         }
 
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;
-        gAlbedoAO = vec4(texture(albedo, inTexCoords.xy).rgb, occlusion) ;
+        gAO = occlusion ;
     }
     else {
-        gAlbedoAO = vec4(texture(albedo, inTexCoords.xy).rgb, 1.f) ;
+        gAO = 1.f ;
     }
 }
