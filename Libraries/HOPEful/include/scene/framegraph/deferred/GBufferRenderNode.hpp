@@ -1,7 +1,7 @@
 #ifndef __HOPE__GBUFFER_RENDER__
 #define __HOPE__GBUFFER_RENDER__
 
-#include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 
 namespace Hope {
     /**
@@ -17,7 +17,7 @@ namespace Hope {
      * - RT3: position  (ARGB2101010 [RGB: position], [A: unused])
      * - Depth buffer
      */
-    class GBufferRenderNode final : public OffScreenRenderNode {
+    class GBufferRenderNode final : public FramebufferRenderNode {
         public:
             static const unsigned char AlbedoRenderTarget = 0 ;
             static const unsigned char SpecularRenderTarget = 1 ;

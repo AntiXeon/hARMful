@@ -5,7 +5,7 @@ namespace Hope {
     class ActiveCameraNode ;
     class RenderPassSelectorNode ;
     class ClearBuffersNode ;
-    class LayerOffScreenRenderNode ;
+    class LayerFramebufferRenderNode ;
 
     /**
      * Structure grouping the nodes of the subtree that is generated
@@ -39,7 +39,7 @@ namespace Hope {
         /**
          * Contains the framebuffer to render the depth map in.
          */
-        LayerOffScreenRenderNode* offscreenBuffer = nullptr ;
+        LayerFramebufferRenderNode* offscreenBuffer = nullptr ;
     } ;
 }
 

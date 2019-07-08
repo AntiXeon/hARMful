@@ -2,7 +2,7 @@
 #define __HOPE__DEFERRED_RENDERING__
 
 #include <scene/FrameGraphNode.hpp>
-#include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 
 namespace Hope {
     class MaterialComponent ;

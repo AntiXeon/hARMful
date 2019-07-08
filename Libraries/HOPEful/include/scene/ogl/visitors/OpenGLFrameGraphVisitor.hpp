@@ -123,12 +123,12 @@ namespace Hope::GL {
             /**
              * Visit an off-screen render node.
              */
-            void visit(OffScreenRenderNode* node) override ;
+            void visit(FramebufferRenderNode* node) override ;
 
             /**
              * Visit a layer off-screen render node.
              */
-            void visit(LayerOffScreenRenderNode* node) override ;
+            void visit(LayerFramebufferRenderNode* node) override ;
 
             /**
              * Visit a node to perform deferred rendering.

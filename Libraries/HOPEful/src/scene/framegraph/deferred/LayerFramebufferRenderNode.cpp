@@ -1,9 +1,9 @@
-#include <scene/framegraph/deferred/LayerOffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;
 
-LayerOffScreenRenderNode::LayerOffScreenRenderNode(
+LayerFramebufferRenderNode::LayerFramebufferRenderNode(
     API::Framebuffer2DStack* framebuffer,
     int layer,
     const bool windowSize,
@@ -14,6 +14,6 @@ LayerOffScreenRenderNode::LayerOffScreenRenderNode(
     m_layer = layer ;
 }
 
-void LayerOffScreenRenderNode::specificAccept(IFrameGraphVisitor* visitor) {
+void LayerFramebufferRenderNode::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
 }

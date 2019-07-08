@@ -69,7 +69,7 @@ namespace Hope {
              *   light point-of-view with the previous orthographic camera.
              * - ClearBuffersNode to clear the depth map in between two frame
              *   renders.
-             * - LayerOffScreenRenderNode to render the depth map in a dedicated
+             * - LayerFramebufferRenderNode to render the depth map in a dedicated
              *   framebuffer.
              */
             CSMFramegraphSubtree m_fgSubtree ;

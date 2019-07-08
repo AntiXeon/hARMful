@@ -13,7 +13,7 @@
 
 using namespace Hope ;
 
-GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const OffScreenRenderNode* gBuffer)
+GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const FramebufferRenderNode* gBuffer)
     : MaterialComponent(),
       m_gBuffer(gBuffer) {
     setupForwardShader() ;

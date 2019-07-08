@@ -19,7 +19,7 @@
 
 namespace Hope {
     class ClearBuffersNode ;
-    class OffScreenRenderNode ;
+    class FramebufferRenderNode ;
     class RenderPassSelectorNode ;
     class OrthographicCameraComponent ;
 
@@ -62,7 +62,7 @@ namespace Hope {
 
             /**
              * Framebuffer that is shared among the different
-             * LayerOffScreenRenderNodes.
+             * LayerFramebufferRenderNodes.
              */
             API::Framebuffer2DStack* m_framebuffer = nullptr ;
 

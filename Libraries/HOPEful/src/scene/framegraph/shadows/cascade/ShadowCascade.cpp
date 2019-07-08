@@ -2,7 +2,7 @@
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
-#include <scene/framegraph/deferred/LayerOffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/components/cameras/OrthographicCameraComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/FrameGraphNode.hpp>
@@ -78,7 +78,7 @@ void ShadowCascade::setupFramegraph(
 
     // 3. Framebuffer to draw the depth map in.
     static const bool WindowSizedFramebuffer2D = false ;
-    m_fgSubtree.offscreenBuffer = new LayerOffScreenRenderNode(
+    m_fgSubtree.offscreenBuffer = new LayerFramebufferRenderNode(
         framebuffer,
         m_cascadeIndex,
         WindowSizedFramebuffer2D,

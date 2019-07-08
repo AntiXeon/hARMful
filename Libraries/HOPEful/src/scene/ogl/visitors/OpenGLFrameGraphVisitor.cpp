@@ -6,8 +6,8 @@
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
-#include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
-#include <scene/framegraph/deferred/LayerOffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/framegraph/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
@@ -78,8 +78,8 @@ void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
     m_renderer.effectsContainer().setDirectionalLightShadowData(node) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {
-    m_aggregators.back().setOffScreenRenderNode(node) ;
+void OpenGLFrameGraphVisitor::visit(FramebufferRenderNode* node) {
+    m_aggregators.back().setFramebufferRenderNode(node) ;
 
     // Resize the framebuffer textures with the window if needed.
     if (m_hasWindowChanged && node -> windowSize()) {
@@ -89,7 +89,7 @@ void OpenGLFrameGraphVisitor::visit(OffScreenRenderNode* node) {
     (node -> framebuffer()) -> bind() ;
 }
 
-void OpenGLFrameGraphVisitor::visit(LayerOffScreenRenderNode* node) {
+void OpenGLFrameGraphVisitor::visit(LayerFramebufferRenderNode* node) {
     // Resize the framebuffer textures with the window if needed.
     if (m_hasWindowChanged && node -> windowSize()) {
         Framebuffer2DStack* framebuffer = node -> framebuffer() ;
@@ -265,7 +265,7 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     }
 
     // Otherwise, proceed to a full update.
-    const Hope::OffScreenRenderNode* offscreen = state.offScreenRender() ;
+    const Hope::FramebufferRenderNode* offscreen = state.offScreenRender() ;
     camera -> update() ;
 
     // Set up the clear color.

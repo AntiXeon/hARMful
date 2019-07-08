@@ -1,10 +1,10 @@
-#ifndef __HOPE__LAYER_OFFSCREEN_RENDER__
-#define __HOPE__LAYER_OFFSCREEN_RENDER__
+#ifndef __HOPE__FRAMEBUFFER_RENDER__
+#define __HOPE__FRAMEBUFFER_RENDER__
 
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    #include <scene/ogl/rendering/framebuffers/Framebuffer2DStack.hpp>
+    #include <scene/ogl/rendering/framebuffers/Framebuffer2D.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -13,17 +13,16 @@
 
 namespace Hope {
     /**
-     * Perform an off-screen render pass using a framebuffer with layered
-     * textures.
+     * Perform an off-screen render pass using a framebuffer.
      */
-    class LayerOffScreenRenderNode : public FrameGraphNode {
+    class FramebufferRenderNode : public FrameGraphNode {
         friend class FrameGraphBranchState ;
 
         private:
             /**
              * The underlying framebuffer to perform off-screen rendering.
              */
-            API::Framebuffer2DStack* m_framebuffer = nullptr ;
+            API::Framebuffer2D* m_framebuffer = nullptr ;
 
             /**
              * If true, the size of the framebuffer follows the size of the
@@ -31,46 +30,37 @@ namespace Hope {
              */
             bool m_windowSize = true ;
 
-            /**
-             * Layer of the framebuffer to use.
-             */
-            int m_layer = -1 ;
-
         public:
             /**
-             * Create a new LayerOffScreenRenderNode instance.
-             * @param   framebuffer Framebuffer to use.
-             * @param   layer       Layer of the framebuffer to use.
+             * Create a new FramebufferRenderNode instance.
+             * @param   size        Size of the framebuffer.
              * @param   windowSize  If true, the size of the framebuffer follows
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            LayerOffScreenRenderNode(
-                API::Framebuffer2DStack* framebuffer,
-                int layer,
+            FramebufferRenderNode(
+                const Mind::Dimension2Di& size,
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
             ) ;
 
             /**
+             * Destruction of the FramebufferRenderNode.
+             */
+            virtual ~FramebufferRenderNode() ;
+
+            /**
              * Get the framebuffer.
              */
-            API::Framebuffer2DStack* framebuffer() {
+            API::Framebuffer2D* framebuffer() {
                 return m_framebuffer ;
             }
 
             /**
              * Get the framebuffer.
              */
-            const API::Framebuffer2DStack* framebuffer() const {
+            const API::Framebuffer2D* framebuffer() const {
                 return m_framebuffer ;
-            }
-
-            /**
-             * Layer of the framegraph to use.
-             */
-            int layer() const {
-                return m_layer ;
             }
 
             /**
@@ -81,7 +71,18 @@ namespace Hope {
                 return m_windowSize ;
             }
 
+            // Avoid copy/move operations.
+            FramebufferRenderNode(const FramebufferRenderNode& copied) = delete ;
+            FramebufferRenderNode(FramebufferRenderNode&& moved) = delete ;
+            FramebufferRenderNode& operator=(const FramebufferRenderNode& copied) = delete ;
+            FramebufferRenderNode& operator=(FramebufferRenderNode&& moved) = delete ;
+
         protected:
+            /**
+             * Set up the attachments to the framebuffer.
+             */
+            virtual void setup() {}
+
             /**
              * Accept the visitor.
              */

@@ -45,7 +45,7 @@ namespace Hope {
             /**
              * Offscreen framebuffer to be used.
              */
-            OffScreenRenderNode* m_offscreen = nullptr ;
+            FramebufferRenderNode* m_offscreen = nullptr ;
 
             /**
              * Conditions to render the current branch.
@@ -167,14 +167,14 @@ namespace Hope {
             /**
              * Offscreen framebuffer to be used.
              */
-            void setOffScreenRenderNode(OffScreenRenderNode* offscreen) {
+            void setFramebufferRenderNode(FramebufferRenderNode* offscreen) {
                 m_offscreen = offscreen ;
             }
 
             /**
              * Get the offscreen framebuffer to be used.
              */
-            const OffScreenRenderNode* offScreenRender() const {
+            const FramebufferRenderNode* offScreenRender() const {
                 return m_offscreen ;
             }
 

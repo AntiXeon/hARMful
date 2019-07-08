@@ -6,7 +6,7 @@ GBufferRenderNode::GBufferRenderNode(
     const Mind::Dimension2Di& size,
     const bool windowSize,
     FrameGraphNode* parent
-) : OffScreenRenderNode(size, windowSize, parent) {
+) : FramebufferRenderNode(size, windowSize, parent) {
     setup() ;
 }
 

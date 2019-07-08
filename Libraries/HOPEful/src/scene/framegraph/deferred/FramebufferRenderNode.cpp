@@ -1,9 +1,9 @@
-#include <scene/framegraph/deferred/OffScreenRenderNode.hpp>
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;
 
-OffScreenRenderNode::OffScreenRenderNode(
+FramebufferRenderNode::FramebufferRenderNode(
     const Mind::Dimension2Di& size,
     const bool windowSize,
     FrameGraphNode* parent
@@ -12,10 +12,10 @@ OffScreenRenderNode::OffScreenRenderNode(
     m_framebuffer = new API::Framebuffer2D(size) ;
 }
 
-OffScreenRenderNode::~OffScreenRenderNode() {
+FramebufferRenderNode::~FramebufferRenderNode() {
     delete m_framebuffer ;
 }
 
-void OffScreenRenderNode::specificAccept(IFrameGraphVisitor* visitor) {
+void FramebufferRenderNode::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
 }
