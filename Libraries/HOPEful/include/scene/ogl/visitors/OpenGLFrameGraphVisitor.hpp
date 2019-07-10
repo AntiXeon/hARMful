@@ -156,11 +156,6 @@ namespace Hope::GL {
             void visit(RenderCapabilityNode* node) override ;
 
             /**
-             * Visit a SSAO render node.
-             */
-            void visit(SSAORenderNode* node) override ;
-
-            /**
              * Perform the rendering of the framegraph tree branch that is
              * currently processed.
              */

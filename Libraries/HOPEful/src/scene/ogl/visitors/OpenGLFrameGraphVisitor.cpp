@@ -181,10 +181,6 @@ void OpenGLFrameGraphVisitor::visit(RenderCapabilityNode* node) {
     m_aggregators.back().addRenderCapabilities(node) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(SSAORenderNode*) {
-
-}
-
 void OpenGLFrameGraphVisitor::makeRender() {
     FrameGraphBranchState& state = m_aggregators.back() ;
 
