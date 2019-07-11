@@ -1,7 +1,7 @@
 // Material for deferred rendering. Applied on a simple quad on the whole
 // viewport area.
 
-layout(binding = 0) uniform sampler2D albedo ;
+layout(binding = 0) uniform sampler2D albedoAO ;
 layout(binding = 1) uniform sampler2D normal ;
 layout(binding = 2) uniform sampler2D specular ;
 layout(binding = 3) uniform sampler2D depth ;
@@ -19,7 +19,7 @@ void main() {
 
     // Put values to perform the lighting pass for the current fragment.
     FragmentData currentFragment ;
-    currentFragment.diffuseValue = texture(albedo, inTexCoords).rgb ;
+    currentFragment.diffuseValue = texture(albedoAO, inTexCoords).rgb ;
     currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;
     currentFragment.shininess = texture(specular, inTexCoords).a ;
@@ -43,7 +43,8 @@ void main() {
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+    // outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+    outColor = vec4(vec3(texture(albedoAO, inTexCoords).rgb), 1.f) ;
 
 
     //#define DEBUG_CSM

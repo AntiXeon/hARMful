@@ -80,6 +80,11 @@ namespace Hope {
             SSAOMaterialComponent* m_ssaoMaterial = nullptr ;
 
             /**
+             * Material used to blur (and copy) the ambient occlusion.
+             */
+            SSAOBlurMaterialComponent* m_ssaoBlurMaterial = nullptr ;
+
+            /**
              * Normal-oriented hemisphere kernel.
              */
             std::array<Mind::Vector3f, AO_KERNEL_SIZE> m_kernel ;

@@ -20,24 +20,14 @@ std::string AoRenderingBlurFragmentCode =
 "\
 // Screen-space ambient occlusion blur and copy.\n\
 \n\
-layout(binding = 0, rgba8ui) uniform coherent uimage2D gAlbedoAO ;\n\
-layout(binding = 1) uniform sampler2D ao ;\n\
+layout(binding = 0) uniform sampler2D ao ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
-layout(location = 0) out vec4 albedoAO ;\n\
+layout(location = 0) out vec4 gAlbedoAO ;\n\
 \n\
 void main() {\n\
-    ivec2 coordinates = ivec2(viewportSize * inTexCoords) ;\n\
-    uvec4 albedo = imageLoad(gAlbedoAO, coordinates) ;\n\
-\n\
-    //albedoAO = vec4((albedo / 255.f).rgb, texture(ao, inTexCoords).r) ;\n\
-\n\
-    albedoAO = vec4(1,0,0,1);\n\
-\n\
-    // memoryBarrier() ;\n\
-    // imageStore(gAlbedoAO, coordinates, uvec4(albedo.rrr, texture(ao, inTexCoords).r)) ;\n\
-    // memoryBarrier() ;\n\
+    gAlbedoAO = texture(ao, inTexCoords).rgba ;\n\
 }\n\
 " ;
 
@@ -54,7 +44,7 @@ layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
-layout(location = 1) out float gAO ;\n\
+layout(location = 0) out vec4 gAlbedoAO ;\n\
 \n\
 // Texture coordinates of the noise texture for the current fragment.\n\
 vec2 noiseTextureCoords() {\n\
@@ -107,10 +97,10 @@ void main() {\n\
         }\n\
 \n\
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
-        gAO = occlusion ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, cos(time)) ;\n\
     }\n\
     else {\n\
-        gAO = 1.f ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, sin(time)) ;\n\
     }\n\
 }\n\
 " ;

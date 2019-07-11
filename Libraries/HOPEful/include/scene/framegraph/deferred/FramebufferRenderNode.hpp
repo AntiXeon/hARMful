@@ -20,6 +20,12 @@ namespace Hope {
 
         private:
             /**
+             * To know if the framebuffer has been created internally or if it
+             * is taken from another node.
+             */
+            bool m_internalFramebuffer = false ;
+
+            /**
              * The underlying framebuffer to perform off-screen rendering.
              */
             API::Framebuffer2D* m_framebuffer = nullptr ;
@@ -42,6 +48,16 @@ namespace Hope {
                 const Mind::Dimension2Di& size,
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
+            ) ;
+
+            /**
+             * Create a new OffScreenRenderNode instance to edit the content of
+             * an existing framebuffer.
+             * @param   other   Other OffScreenRenderNode to edit framebuffer.
+             */
+            FramebufferRenderNode(
+                FramebufferRenderNode* other,
+                FrameGraphNode* parent
             ) ;
 
             /**

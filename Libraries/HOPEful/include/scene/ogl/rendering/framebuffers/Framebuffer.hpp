@@ -18,6 +18,16 @@ namespace Hope::GL {
      * scene, deferred rendering, etc.
      */
     class Framebuffer {
+        public:
+            /**
+             * Access mode to the framebuffer.
+             */
+            enum AccessMode : GLenum {
+                ReadOnly = GL_READ_FRAMEBUFFER,
+                WriteOnly = GL_DRAW_FRAMEBUFFER,
+                ReadWrite = GL_FRAMEBUFFER
+            } ;
+
         protected:
             /**
              * To know if mipmaps are automatically generated. Here, no.
@@ -55,15 +65,15 @@ namespace Hope::GL {
             /**
              * Bind the framebuffer.
              */
-            void bind() const {
-                glBindFramebuffer(GL_FRAMEBUFFER, m_fboID) ;
+            void bind(const AccessMode mode = AccessMode::ReadWrite) const {
+                glBindFramebuffer(mode, m_fboID) ;
             }
 
             /**
              * Unbind the framebuffer.
              */
-            void unbind() const {
-                glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
+            void unbind(const AccessMode mode = AccessMode::ReadWrite) const {
+                glBindFramebuffer(mode, 0) ;
             }
 
             /**

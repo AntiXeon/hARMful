@@ -20,9 +20,9 @@ void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
         attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
     }
 
-    bind() ;
-    glDrawBuffers(attachments.size(), attachments.data()) ;
-    unbind() ;
+    bind(AccessMode::WriteOnly) ;
+    glNamedFramebufferDrawBuffers(m_fboID, attachments.size(), attachments.data()) ;
+    unbind(AccessMode::WriteOnly) ;
 }
 
 void Framebuffer::useNoColorBuffers() {

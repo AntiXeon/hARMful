@@ -12,6 +12,14 @@ FramebufferRenderNode::FramebufferRenderNode(
     m_framebuffer = new API::Framebuffer2D(size) ;
 }
 
+FramebufferRenderNode::FramebufferRenderNode(
+    FramebufferRenderNode* other,
+    FrameGraphNode* parent
+) : FrameGraphNode(parent),
+    m_internalFramebuffer(false),
+    m_framebuffer(other -> framebuffer()),
+    m_windowSize(other -> windowSize()) {}
+
 FramebufferRenderNode::~FramebufferRenderNode() {
     delete m_framebuffer ;
 }

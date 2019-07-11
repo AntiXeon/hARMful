@@ -4,6 +4,7 @@
 #include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
+#include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
 #include <scene/SceneTypes.hpp>
 #include <utils/Random.hpp>
 
@@ -73,5 +74,63 @@ void SSAORenderNode::generateKernel() {
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {
+    const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
+    bool windowSized = m_gBuffer -> windowSize() ;
 
+    // This subtree renders the ambient occlusion into the dedicated
+    // framebuffer.
+    {
+        // Buffer in which AO is written with albedo.
+        m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
+            dimension,
+            windowSized,
+            this
+        ) ;
+        m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
+            AlbedoRenderTarget,
+            API::InternalFormat::RedGreenBlueAlpha,
+            API::PixelFormat::RedGreenBlueAlpha,
+            API::PixelDataType::UnsignedByte
+        ) ;
+        m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AlbedoRenderTarget }) ;
+
+        // Render pass selection.
+        m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
+            ForwardPassID,
+            m_subtree.aoRendering.offscreen
+        ) ;
+
+        // Rendering of the ambient occlusion pass.
+        m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
+        m_subtree.aoRendering.deferredRendering = new DeferredRenderingNode(
+            m_ssaoMaterial,
+            m_subtree.aoRendering.passSelector
+        ) ;
+    }
+
+    // In this subtree, the ambient occlusion is copied into the G-Buffer as the
+    // alpha channel of the albedo target. It is blurred at the same time.
+    {
+        // Buffer in which AO is written with albedo.
+        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
+            m_gBuffer,
+            this
+        ) ;
+
+        // Render pass selection.
+        m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(
+            ForwardPassID,
+            m_subtree.aoBlurCopy.offscreen
+        ) ;
+
+        // Rendering of the ambient occlusion pass.
+        m_ssaoBlurMaterial = new SSAOBlurMaterialComponent(
+            m_subtree.aoRendering.offscreen,
+            m_gBuffer
+        ) ;
+        m_subtree.aoBlurCopy.deferredRendering = new DeferredRenderingNode(
+            m_ssaoBlurMaterial,
+            m_subtree.aoBlurCopy.passSelector
+        ) ;
+    }
 }
