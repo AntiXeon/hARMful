@@ -87,6 +87,10 @@ namespace Hope {
             static std::string MaterialCascadedSplitsUniformName() { return "cascadedSplits" ; }
             static std::string MaterialLightViewProjectionMatricesUniformName() { return "lightViewProjectionMatrices" ; }
 
+            static std::string MaterialUseAOUniformName() { return "useSSAO" ; }
+            static std::string MaterialAONoiseUniformName() { return "noise" ; }
+            static std::string MaterialAOKernelUniformName() { return "kernel" ; }
+
             static std::string MaterialGBufferAlbedoUniformName() { return "albedo" ; }
             static std::string MaterialGBufferSpecularUniformName() { return "specular" ; }
             static std::string MaterialGBufferNormalUniformName() { return "normal" ; }
