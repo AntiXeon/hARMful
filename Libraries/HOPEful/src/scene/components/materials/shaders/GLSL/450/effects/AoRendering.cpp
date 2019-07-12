@@ -35,8 +35,8 @@ std::string AoRenderingSsaoFragmentCode =
 "\
 // Screen-space ambient occlusion.\n\
 \n\
-uniform int useSSAO ;\n\
-uniform vec3 kernel[AO_KERNEL_SIZE] ;\n\
+layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;\n\
+layout(location = UNIFORM_AO_KERNEL_LOCATION) uniform vec3 kernel[AO_KERNEL_SIZE] ;\n\
 layout(binding = 0) uniform sampler2D albedo ;\n\
 layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D noise ;\n\
@@ -93,14 +93,14 @@ void main() {\n\
 \n\
             // Range check and accumulate.\n\
             float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / abs(position.z - sampleDepth)) ;\n\
-            occlusion += float(sampleDepth >= kernelSample.z + AO_BIAS) * rangeCheck ;\n\
+            occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;\n\
         }\n\
 \n\
-        occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, cos(time)) ;\n\
+        //occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;\n\
     }\n\
     else {\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, sin(time)) ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\
     }\n\
 }\n\
 " ;

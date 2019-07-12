@@ -38,7 +38,7 @@ void SSAOUniformSetter::updateUniforms() {
 }
 
 void SSAOUniformSetter::setSSAONode(const Hope::SSAORenderNode* node) {
-    m_useAO = m_ssaoNode != nullptr ;
+    m_useAO = node != nullptr ;
 
     if (!m_useAO || (m_ssaoNode == node)) {
         return ;

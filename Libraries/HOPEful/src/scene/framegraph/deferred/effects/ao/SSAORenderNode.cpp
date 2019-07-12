@@ -5,6 +5,7 @@
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
 #include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
+#include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <scene/SceneTypes.hpp>
 #include <utils/Random.hpp>
 
@@ -24,6 +25,11 @@ SSAORenderNode::~SSAORenderNode() {
     delete m_noiseTexture ;
     delete m_ssaoMaterial ;
 }
+
+void SSAORenderNode::specificAccept(IFrameGraphVisitor* visitor) {
+    visitor -> visit(this) ;
+}
+
 
 void SSAORenderNode::generateNoiseTexture() {
     std::array<float, NoiseTextureDataSize> noiseData ;

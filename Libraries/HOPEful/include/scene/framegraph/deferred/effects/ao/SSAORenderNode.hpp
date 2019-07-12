@@ -172,6 +172,12 @@ namespace Hope {
             SSAORenderNode& operator=(const SSAORenderNode& copied) = delete ;
             SSAORenderNode& operator=(SSAORenderNode&& moved) = delete ;
 
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            void specificAccept(IFrameGraphVisitor* visitor) override ;
+
         private:
             /**
              * Generate the noise texture.

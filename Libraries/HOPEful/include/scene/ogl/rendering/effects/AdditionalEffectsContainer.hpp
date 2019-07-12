@@ -61,6 +61,13 @@ namespace Hope::GL {
                 m_directionalShadow.setDirectionalLightShadow(dirLightShadow) ;
             }
 
+            /**
+             * Set the frame graph node for computing SSAO.
+             */
+            void setSSAOData(Hope::SSAORenderNode* ssaoNode) {
+                m_ssao.setSSAO(ssaoNode) ;
+            }
+
         private:
             /**
              * Get shadow data.
