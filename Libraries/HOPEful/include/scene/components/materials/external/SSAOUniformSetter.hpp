@@ -2,10 +2,11 @@
 #define __HOPE__SSAO_UNIFORM_SETTER__
 
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
-#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 
 namespace Hope {
+    class SSAORenderNode ;
+
     /**
      * Setter of uniform values for screen-space ambient occlusion related
      * stuff.

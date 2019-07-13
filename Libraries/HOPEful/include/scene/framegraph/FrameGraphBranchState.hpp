@@ -2,6 +2,7 @@
 #define __HOPE__FRAMEGRAPH_BRANCH_STATE__
 
 #include <scene/SceneTypes.hpp>
+#include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/RenderCapabilityNode.hpp>
@@ -57,6 +58,11 @@ namespace Hope {
              * branch.
              */
             std::vector<API::Capability*> m_capabilities ;
+
+            /**
+             * List of effects to apply when rendering the current branch.
+             */
+            std::vector<EffectData*> m_effects ;
 
         public:
             /**
@@ -114,6 +120,25 @@ namespace Hope {
                 for (auto* capability : m_capabilities) {
                     capability -> remove() ;
                 }
+            }
+
+            /**
+             * Add effect data to the current branch. They are applied on the
+             * deferred rendering steps.
+             */
+            void addEffectData(const std::vector<EffectData*> data) {
+                m_effects.insert(
+                    m_effects.begin(),
+                    data.begin(),
+                    data.end()
+                ) ;
+            }
+
+            /**
+             * Get the effect data to apply on rendering.
+             */
+            std::vector<EffectData*>& effectData() {
+                return m_effects ;
             }
 
             /**

@@ -9,6 +9,7 @@
 #include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
+#include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
@@ -76,7 +77,7 @@ void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
 
     // Notify that the viewport has been modified...
     m_projectionData.lastViewport = nullptr ;
-    m_renderer.effectsContainer().setDirectionalLightShadowData(node) ;
+    m_globalEffects.push_back(node -> data()) ;
 }
 
 void OpenGLFrameGraphVisitor::visit(FramebufferRenderNode* node) {
@@ -113,7 +114,23 @@ void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
     m_aggregators.back().applyRenderCapabilities() ;
     m_renderer.deferredShading(
         node -> material(),
-        m_aggregators.back().memoryBarrier()
+        m_aggregators.back().memoryBarrier(),
+        m_aggregators.back().effectData()
+    ) ;
+    m_aggregators.back().removeRenderCapabilities() ;
+}
+
+void OpenGLFrameGraphVisitor::visit(FinalStepRenderingNode* node) {
+    m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
+
+    // Merge global effects.
+    m_aggregators.back().addEffectData(m_globalEffects) ;
+
+    m_aggregators.back().applyRenderCapabilities() ;
+    m_renderer.deferredShading(
+        node -> material(),
+        m_aggregators.back().memoryBarrier(),
+        m_aggregators.back().effectData()
     ) ;
     m_aggregators.back().removeRenderCapabilities() ;
 }
@@ -182,7 +199,7 @@ void OpenGLFrameGraphVisitor::visit(RenderCapabilityNode* node) {
 }
 
 void OpenGLFrameGraphVisitor::visit(SSAORenderNode* node) {
-    m_renderer.effectsContainer().setSSAOData(node) ;
+    m_aggregators.back().addEffectData({ node -> data() }) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

@@ -1,4 +1,5 @@
 #include <scene/components/materials/external/DirectionalShadowUniformSetter.hpp>
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <utils/StringExt.hpp>
 
@@ -46,11 +47,11 @@ void DirectionalShadowUniformSetter::updateUniforms() {
 }
 
 void DirectionalShadowUniformSetter::setLightShadowNode(const Hope::DirectionalLightShadowNode* node) {
-    m_useShadow = node != nullptr ;
-
-    if (!m_useShadow || (m_dirLightShadowNode == node)) {
+    if ((node == nullptr) || (m_dirLightShadowNode == node)) {
         return ;
     }
+
+    m_useShadow = node != nullptr ;
 
     m_dirLightShadowNode = node ;
     std::shared_ptr<Hope::ShaderUniform> amountCascadesUniform = std::make_shared<Hope::ShaderUniform>() ;

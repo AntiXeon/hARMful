@@ -41,6 +41,7 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
     }
 
     generateSubtree() ;
+    m_effectData.setDirectionalLightShadow(this) ;
 }
 
 void DirectionalLightShadowNode::computeCascadeShadowMaps(const float aspectRatio) {

@@ -3,11 +3,11 @@
 
 #include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
-#include <scene/ogl/rendering/effects/AdditionalEffectsContainer.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
 #include <scene/framegraph/cache/GeometryData.hpp>
+#include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <matrices/Matrix4x4f.hpp>
 #include <vector>
 
@@ -53,11 +53,6 @@ namespace Hope::GL {
              */
             QuadGeometry m_deferredShadingQuad ;
 
-            /**
-             * Container for the different effects that can be applied.
-             */
-            AdditionalEffectsContainer m_effectsContainer ;
-
         public:
             /**
              * Render the scene in a frambuffer (the default one or not).
@@ -82,10 +77,12 @@ namespace Hope::GL {
              *                      deferred shading.
              * @param   memoryBarrier   Memory barrier to apply while rendering
              *                          the pass.
+             * @param   effects     Effects to apply on rendering.
              */
             void deferredShading(
                 Hope::MaterialComponent* material,
-                const uint32_t memoryBarrier
+                const uint32_t memoryBarrier,
+                std::vector<Hope::EffectData*>& effects
             ) ;
 
             /**
@@ -107,12 +104,6 @@ namespace Hope::GL {
                 m_projectionMatrix = projectionMatrix ;
             }
 
-            /**
-             * Get the container for the different effects that can be applied.
-             */
-            AdditionalEffectsContainer& effectsContainer() {
-                return m_effectsContainer ;
-            }
             /**
              * Get the base data UBO.
              */
@@ -136,7 +127,7 @@ namespace Hope::GL {
             std::shared_ptr<API::RenderPass> useMaterial(
                 const RenderPassID renderPassID,
                 const Hope::MaterialComponent* component,
-                const bool applyEffects = false
+                const std::vector<Hope::EffectData*>& effects = {}
             ) ;
 
             /**

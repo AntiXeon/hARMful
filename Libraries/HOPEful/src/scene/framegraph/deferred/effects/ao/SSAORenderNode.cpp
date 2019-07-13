@@ -19,6 +19,8 @@ SSAORenderNode::SSAORenderNode(
     generateNoiseTexture() ;
     generateKernel() ;
     generateFramegraphSubtree() ;
+    
+    m_effectData.setSSAO(this) ;
 }
 
 SSAORenderNode::~SSAORenderNode() {
@@ -37,7 +39,7 @@ void SSAORenderNode::generateNoiseTexture() {
     for (int index = 0 ; index < NoiseTextureDataSize ; index += Mind::Vector3f::AmountCoords) {
         noiseData[index] = Doom::Random::GetNormalizedFloat() * 2.f - 1.f ;       // X
         noiseData[index + 1] = Doom::Random::GetNormalizedFloat() * 2.f - 1.f ;   // Y
-        noiseData[index + 2] = Doom::Random::GetNormalizedFloat() ;               // Z
+        noiseData[index + 2] = 0.f ;                                              // Z
     }
 
     const static bool GenerateMipmap = false ;

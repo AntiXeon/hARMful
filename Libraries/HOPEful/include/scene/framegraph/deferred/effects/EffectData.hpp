@@ -1,22 +1,21 @@
-#ifndef __HOPE__GL_ADDITIONAL_EFFECTS_DATA__
-#define __HOPE__GL_ADDITIONAL_EFFECTS_DATA__
+#ifndef __HOPE__EFFECT_DATA__
+#define __HOPE__EFFECT_DATA__
 
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
-     * Aggregation of data required for applying a render effect.
+     * Data required for applying a render effect.
      */
-    class AdditionalEffectsData {
+    class EffectData {
         friend class OpenGLRenderer ;
-        
+
         public:
             /**
              * Update the uniform values.
              */
-            virtual void updateUniforms() = 0 ;
+            virtual void updateUniformValues() = 0 ;
 
-        protected:
             /**
              * Get the shader uniforms.
              */

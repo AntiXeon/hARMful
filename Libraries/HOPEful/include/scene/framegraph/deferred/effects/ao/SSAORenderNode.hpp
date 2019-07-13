@@ -9,6 +9,7 @@
     namespace API = Hope::GL ;
 #endif
 
+#include <scene/framegraph/deferred/effects/ao/SSAOData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
 #include <scene/framegraph/deferred/GBufferRenderNode.hpp>
@@ -59,6 +60,11 @@ namespace Hope {
              * Amount of data in the RGB noise texture.
              */
             const static int NoiseTextureDataSize = NoiseTexturePixelAmount * Mind::Vector3f::AmountCoords ;
+
+            /**
+             * The effect data that are applied on rendering.
+             */
+            SSAOData m_effectData ;
 
             /**
              * Random texture that is used to sample ambient occlusion all over
@@ -132,38 +138,17 @@ namespace Hope {
             }
 
             /**
-             * Get the albedo render target.
-             */
-            int albedoRenderTarget() const {
-                return AlbedoRenderTarget ;
-            }
-
-            /**
-             * Get the normal render target.
-             */
-            int normalRenderTarget() const {
-                return NormalRenderTarget ;
-            }
-
-            /**
-             * Get the noise render target.
-             */
-            int noiseRenderTarget() const {
-                return NoiseRenderTarget ;
-            }
-
-            /**
-             * Get the depth render target.
-             */
-            int depthRenderTarget() const {
-                return DepthRenderTarget ;
-            }
-
-            /**
              * Get the type of the effect.
              */
             EffectNodeType effectType() const override {
                 return AmbientOcclusionEffectType ;
+            }
+
+            /**
+             * Get the effect data of the node.
+             */
+            EffectData* data() override {
+                return &m_effectData ;
             }
 
             // Avoid copy/move operations.

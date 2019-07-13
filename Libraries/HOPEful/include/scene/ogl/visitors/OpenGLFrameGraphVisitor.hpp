@@ -9,12 +9,14 @@
 #include <scene/framegraph/FrameGraphBranchState.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/cache/ProjectionData.hpp>
+#include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
+#include <cassert>
 #include <list>
 #include <map>
 #include <stack>
-#include <cassert>
+#include <vector>
 
 namespace Hope::GL {
     class UBOSharedData ;
@@ -60,6 +62,14 @@ namespace Hope::GL {
              * Stack of the nodes that are processed.
              */
             std::stack<Hope::ProcessedSceneNode> m_processedNodes ;
+
+            /**
+             * List of effects to apply when rendering the final step of
+             * deferred rendering. Some effects are processed in a previous
+             * render step and are finally applied to the final render (shadows,
+             * ...).
+             */
+            std::vector<Hope::EffectData*> m_globalEffects ;
 
         public:
             /**
@@ -136,6 +146,11 @@ namespace Hope::GL {
             void visit(DeferredRenderingNode* node) override ;
 
             /**
+             * Visit a node to perform deferred rendering for the final step.
+             */
+            void visit(FinalStepRenderingNode* node) override ;
+
+            /**
              * Visit a render pass selector node.
              */
             void visit(RenderPassSelectorNode* node) override ;
@@ -187,6 +202,9 @@ namespace Hope::GL {
                 // Create a new aggregator for the new frame rendering.
                 assert(m_aggregators.size() == 0) ;
                 m_aggregators.push_back(FrameGraphBranchState()) ;
+
+                // Clear the global effects for the next frame.
+                m_globalEffects.clear() ;
             }
 
 

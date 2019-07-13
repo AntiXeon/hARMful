@@ -96,8 +96,8 @@ void main() {\n\
             occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;\n\
         }\n\
 \n\
-        //occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;\n\
+        occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, texture(noise, inTexCoords).r) ;\n\
     }\n\
     else {\n\
         gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\

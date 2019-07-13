@@ -6,6 +6,8 @@
 #include <string>
 
 namespace Hope {
+    class EffectData ;
+
     /**
      * Base class for nodes dedicated to rendering effects.
      */
@@ -22,6 +24,11 @@ namespace Hope {
              * Get the type of the effect.
              */
             virtual EffectNodeType effectType() const = 0 ;
+
+            /**
+             * Get the effect data of the node.
+             */
+            virtual EffectData* data() = 0 ;
     } ;
 }
 

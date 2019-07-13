@@ -76,17 +76,21 @@ void OpenGLRenderer::render(
 
 void OpenGLRenderer::deferredShading(
     Hope::MaterialComponent* material,
-    const uint32_t memoryBarrier
+    const uint32_t memoryBarrier,
+    std::vector<Hope::EffectData*>& effects
 ) {
-    const bool ApplyEffects = true ;
-
     m_deferredShadingQuad.bind() ;
     material -> updateUniformValues() ;
-    m_effectsContainer.updateUniforms() ;
+
+    // Apply effects.
+    for (Hope::EffectData* effect : effects) {
+        effect -> updateUniformValues() ;
+    }
+
     std::shared_ptr<API::RenderPass> renderPass = useMaterial(
         ForwardPassID,
         material,
-        ApplyEffects
+        effects
     ) ;
 
     // Draw the quad.
@@ -110,7 +114,7 @@ void OpenGLRenderer::deferredShading(
 std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
     const RenderPassID renderPassID,
     const MaterialComponent* component,
-    const bool applyEffects
+    const std::vector<Hope::EffectData*>& effects
 ) {
     std::shared_ptr<API::RenderPass> pass = component -> renderPass(renderPassID) ;
 
@@ -134,18 +138,14 @@ std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
             ) ;
         }
 
-        if (applyEffects) {
-            auto effects = m_effectsContainer.toArray() ;
+        for (const Hope::EffectData* effect: effects) {
+            auto additionalUniforms = effect -> uniforms() ;
 
-            for (AdditionalEffectsData* effectData: effects) {
-                auto additionalUniforms = effectData -> uniforms() ;
-
-                for (auto& [name, uniform] : additionalUniforms) {
-                    ShaderUniformApplicator::ApplyUniform(
-                        shaderProgram -> id(),
-                        uniform
-                    ) ;
-                }
+            for (auto& [name, uniform] : additionalUniforms) {
+                ShaderUniformApplicator::ApplyUniform(
+                    shaderProgram -> id(),
+                    uniform
+                ) ;
             }
         }
     }

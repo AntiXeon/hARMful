@@ -1,4 +1,5 @@
 #include <scene/components/materials/external/SSAOUniformSetter.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 
 #ifdef OGL
@@ -22,7 +23,7 @@ void SSAOUniformSetter::updateUniforms() {
 
     if (m_useAO) {
         // Noise texture.
-        m_ssaoNode -> noiseTexture() -> bindUnit(m_ssaoNode -> noiseRenderTarget()) ;
+        m_ssaoNode -> noiseTexture() -> bindUnit(SSAORenderNode::NoiseRenderTarget) ;
 
         // Kernel.
         uint8_t sampleIndex = 0 ;

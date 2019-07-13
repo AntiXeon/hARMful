@@ -9,6 +9,7 @@
     namespace API = Hope::GL ;
 #endif
 
+#include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
@@ -22,6 +23,7 @@ namespace Hope {
     class FramebufferRenderNode ;
     class RenderPassSelectorNode ;
     class OrthographicCameraComponent ;
+    class DirectionalLightShadowData ;
 
     /**
      * Perform an off-screen render pass using a framebuffer to display light
@@ -43,6 +45,11 @@ namespace Hope {
              * Steps for splitting the total render frustum.
              */
             static const float CascadeSplitStep ;
+
+            /**
+             * The effect data that are applied on rendering.
+             */
+            DirectionalLightShadowData m_effectData ;
 
             /**
              * Parameters of the cascade shadow mapping.
@@ -154,8 +161,15 @@ namespace Hope {
             /**
              * Get the type of the effect.
              */
-            EffectNodeType effectType() const {
+            EffectNodeType effectType() const override {
                 return ShadowsEffectType ;
+            }
+
+            /**
+             * Get the effect data of the node.
+             */
+            EffectData* data() override {
+                return &m_effectData ;
             }
 
         protected:

@@ -1,18 +1,15 @@
-#ifndef __HOPE__GL_DIRECTIONAL_LIGHT_SHADOW_DATA__
-#define __HOPE__GL_DIRECTIONAL_LIGHT_SHADOW_DATA__
+#ifndef __HOPE__DIRECTIONAL_LIGHT_SHADOW_DATA__
+#define __HOPE__DIRECTIONAL_LIGHT_SHADOW_DATA__
 
-#include <scene/ogl/rendering/effects/AdditionalEffectsData.hpp>
+#include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/materials/external/DirectionalShadowUniformSetter.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
-     * Aggregation of data required for shadow calculation of a directional
-     * light.
+     * Data required for shadow calculation of a directional light.
      */
-    class DirectionalLightShadowData final : public AdditionalEffectsData {
-        friend class OpenGLRenderer ;
-
+    class DirectionalLightShadowData final : public EffectData {
         private:
             /**
              * Send shadow data to shaders.
@@ -30,11 +27,10 @@ namespace Hope::GL {
             /**
              * Update the uniform values for directional light shadow mapping.
              */
-            void updateUniforms() override {
+            void updateUniformValues() override {
                 m_dirShadowSetter.updateUniforms() ;
             }
 
-        protected:
             /**
              * Get the shader uniforms.
              */

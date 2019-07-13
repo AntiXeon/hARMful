@@ -1,17 +1,15 @@
-#ifndef __HOPE__GL_SSAO_DATA__
-#define __HOPE__GL_SSAO_DATA__
+#ifndef __HOPE__SSAO_DATA__
+#define __HOPE__SSAO_DATA__
 
-#include <scene/ogl/rendering/effects/AdditionalEffectsData.hpp>
+#include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/materials/external/SSAOUniformSetter.hpp>
 
-namespace Hope::GL {
+namespace Hope {
     /**
-     * Aggregation of data required for screen-space ambient occlusion.
+     * Data required for screen-space ambient occlusion.
      */
-    class SSAOData final : public AdditionalEffectsData {
-        friend class OpenGLRenderer ;
-
+    class SSAOData final : public EffectData {
         private:
             /**
              * Send SSAO data to shaders.
@@ -29,11 +27,10 @@ namespace Hope::GL {
             /**
              * Update the uniform values for directional light shadow mapping.
              */
-            void updateUniforms() override {
+            void updateUniformValues() override {
                 m_ssaoSetter.updateUniforms() ;
             }
 
-        protected:
             /**
              * Get the shader uniforms.
              */
