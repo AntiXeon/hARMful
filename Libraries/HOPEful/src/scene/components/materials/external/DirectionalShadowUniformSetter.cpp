@@ -19,6 +19,7 @@ DirectionalShadowUniformSetter::DirectionalShadowUniformSetter() {
 }
 
 void DirectionalShadowUniformSetter::updateUniforms() {
+    std::cout << "Update shadows uniforms" << std::endl ;
     uniform(UniformNames::MaterialUseShadowUniformName()) -> setInteger(m_useShadow) ;
 
     if (m_useShadow) {

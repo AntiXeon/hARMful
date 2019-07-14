@@ -171,9 +171,10 @@ namespace Hope::GL {
             void visit(RenderCapabilityNode* node) override ;
 
             /**
-             * Visit a screen-space ambient occlusion render node.
+             * Visit a node for applying render effect in the framegraph
+             * branch(es).
              */
-            void visit(SSAORenderNode* node) override ;
+            void visit(EffectApplierNode* node) override ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

@@ -16,7 +16,7 @@ namespace Hope {
     class ViewportNode ;
     class MemoryBarrierNode ;
     class RenderCapabilityNode ;
-    class SSAORenderNode ;
+    class EffectApplierNode ;
 
     /**
      * Interface for the Visitor design pattern for nodes of the frame graph.
@@ -84,9 +84,10 @@ namespace Hope {
             virtual void visit(RenderCapabilityNode* node) = 0 ;
 
             /**
-             * Visit a screen-space ambient occlusion render node.
+             * Visit a node for applying render effect in the framegraph
+             * branch(es).
              */
-            virtual void visit(SSAORenderNode* node) = 0 ;
+            virtual void visit(EffectApplierNode* node) = 0 ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

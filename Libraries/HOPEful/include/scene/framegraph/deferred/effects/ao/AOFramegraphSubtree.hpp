@@ -6,7 +6,7 @@ namespace Hope {
     class ClearBuffersNode ;
     class DeferredRenderingNode ;
     class FramebufferRenderNode ;
-    class MemoryBarrierNode ;
+    class EffectApplierNode ;
 
     /**
      * Structure grouping the nodes of the subtree that is generated
@@ -18,6 +18,11 @@ namespace Hope {
          * framebuffer.
          */
         struct {
+            /**
+             * Node to enable the SSAO computations.
+             */
+            EffectApplierNode* ssaoApplier = nullptr ;
+
             /**
              * Node bearing the framebuffer in which the ambient occlusion
              * contribution is written.

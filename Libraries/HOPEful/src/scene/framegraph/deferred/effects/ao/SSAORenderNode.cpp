@@ -2,6 +2,7 @@
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
+#include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
 #include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
@@ -19,7 +20,7 @@ SSAORenderNode::SSAORenderNode(
     generateNoiseTexture() ;
     generateKernel() ;
     generateFramegraphSubtree() ;
-    
+
     m_effectData.setSSAO(this) ;
 }
 
@@ -27,11 +28,6 @@ SSAORenderNode::~SSAORenderNode() {
     delete m_noiseTexture ;
     delete m_ssaoMaterial ;
 }
-
-void SSAORenderNode::specificAccept(IFrameGraphVisitor* visitor) {
-    visitor -> visit(this) ;
-}
-
 
 void SSAORenderNode::generateNoiseTexture() {
     std::array<float, NoiseTextureDataSize> noiseData ;
@@ -88,11 +84,16 @@ void SSAORenderNode::generateFramegraphSubtree() {
     // This subtree renders the ambient occlusion into the dedicated
     // framebuffer.
     {
+        m_subtree.aoRendering.ssaoApplier = new EffectApplierNode(
+            &m_effectData,
+            this
+        ) ;
+
         // Buffer in which AO is written with albedo.
         m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
             dimension,
             windowSized,
-            this
+            m_subtree.aoRendering.ssaoApplier
         ) ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
             AlbedoRenderTarget,

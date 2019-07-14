@@ -11,7 +11,7 @@
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
-#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
+#include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
@@ -123,6 +123,8 @@ void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
 void OpenGLFrameGraphVisitor::visit(FinalStepRenderingNode* node) {
     m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
 
+std::cout << "Visit FinalStepRenderingNode" << std::endl ;
+
     // Merge global effects.
     m_aggregators.back().addEffectData(m_globalEffects) ;
 
@@ -198,8 +200,8 @@ void OpenGLFrameGraphVisitor::visit(RenderCapabilityNode* node) {
     m_aggregators.back().addRenderCapabilities(node) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(SSAORenderNode* node) {
-    m_aggregators.back().addEffectData({ node -> data() }) ;
+void OpenGLFrameGraphVisitor::visit(EffectApplierNode* node) {
+    m_aggregators.back().addEffectData({ node -> effect() }) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {
