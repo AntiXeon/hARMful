@@ -19,7 +19,6 @@ SSAOUniformSetter::SSAOUniformSetter() {
 }
 
 void SSAOUniformSetter::updateUniforms() {
-    std::cout << "Update SSAO uniforms" << std::endl ;
     uniform(UniformNames::MaterialUseAOUniformName()) -> setInteger(m_useAO) ;
 
     if (m_useAO) {

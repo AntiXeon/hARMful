@@ -123,8 +123,6 @@ void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
 void OpenGLFrameGraphVisitor::visit(FinalStepRenderingNode* node) {
     m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
 
-std::cout << "Visit FinalStepRenderingNode" << std::endl ;
-
     // Merge global effects.
     m_aggregators.back().addEffectData(m_globalEffects) ;
 

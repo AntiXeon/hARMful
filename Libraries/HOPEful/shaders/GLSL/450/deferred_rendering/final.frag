@@ -43,8 +43,8 @@ void main() {
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
-    //outColor = vec4(vec3(texture(albedoAO, inTexCoords).rgb), 1.f) ;
+    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+    outColor = vec4(vec3(texture(albedoAO, inTexCoords).rgb), 1.f) ;
 
 
     //#define DEBUG_CSM
