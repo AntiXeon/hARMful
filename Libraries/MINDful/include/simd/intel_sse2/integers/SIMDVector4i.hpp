@@ -51,11 +51,6 @@ namespace Mind {
                  */
                 Vector4i(const __m128 vec) ;
 
-                /**
-                 * Destruction of the Vector4i.
-                 */
-                virtual ~Vector4i() ;
-
 
                                                         /** STATIC FUNCTIONS **/
                 /**

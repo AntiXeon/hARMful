@@ -341,10 +341,6 @@ namespace Mind {
 
         if (squaredLength > 0.) {
             // A unique solution exists.
-            radAngle = 2.f * std::acos(m_values[Axis::W]) ;
-            SIMD::Vector4f squaredLengthVec(squaredLength) ;
-            auto invLength = SIMD::Vector4f::fast_rsqrt(squaredLengthVec) ;
-            auto vectorValues = tmp * invLength ;
             vector.set(
                 m_values[Axis::X],
                 m_values[Axis::Y],

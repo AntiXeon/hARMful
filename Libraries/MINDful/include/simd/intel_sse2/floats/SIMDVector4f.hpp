@@ -80,11 +80,6 @@ namespace Mind {
                  */
                 Vector4f(const __m128 vec) ;
 
-                /**
-                 * Destruction of the Vector4f.
-                 */
-                virtual ~Vector4f() ;
-
 
                                                               /*** UTILITIES ***/
                 /**
@@ -511,15 +506,6 @@ namespace Mind {
                                                              /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
                 /**
-                 * Get the values from another Vector4f and put it in inner
-                 * data.
-                 * @param   vec4    The Vector4f to copy.
-                 * @return  The current Vector4f once the vec4 is affected to
-                 *          its inner data.
-                 */
-                Vector4f& operator=(const Vector4f& vec4) ;
-
-                /**
                  * Affect the inner value of the Vector4f to the broadcasted one
                  * given as parameter.
                  * @param   value   The value to put in the Vector4f, to all its
@@ -683,7 +669,7 @@ namespace Mind {
         void Vector4f::changeSign() {
             if ((i0 | i1 | i2 | i3) == true) {
                 // Mask to set flip the bit for negative sign (on Scalar values).
-                const __m128i MaskNegative = Vector4i::constant<
+                const __m128i MaskNegative = Vector4ui::constant<
                     i0 ? 0x80000000 : 0,
                     i1 ? 0x80000000 : 0,
                     i2 ? 0x80000000 : 0,

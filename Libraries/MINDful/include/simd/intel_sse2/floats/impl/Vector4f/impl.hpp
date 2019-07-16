@@ -34,8 +34,6 @@ inline Vector4f::Vector4f(const __m128 vec) {
     m_inner = Float32x4(vec) ;
 }
 
-inline Vector4f::~Vector4f() {}
-
 
                                                               /*** UTILITIES ***/
 inline Scalar Vector4f::horizontalAdd() {
@@ -395,11 +393,6 @@ inline void Vector4f::resetControlWord() {
 
                                                      /*** OPERATORS ***/
                                                 /** AFFECT OPERATORS **/
-inline Vector4f& Vector4f::operator=(const Vector4f& vec4) {
-    m_inner.vec = vec4.m_inner.vec ;
-    return *this ;
-}
-
 inline Vector4f& Vector4f::operator=(const Scalar value) {
     m_inner.vec = _mm_set1_ps(value) ;
     return *this ;

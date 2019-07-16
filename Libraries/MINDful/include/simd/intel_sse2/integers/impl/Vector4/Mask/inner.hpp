@@ -6,18 +6,6 @@ class Mask {
         /** Inner vector of booleans. */
         Int32x4 m_inner ;
 
-
-                                                /** CONSTRUCTION / DESTRUCTION **/
-        /** Prevent construction from integers. */
-        Mask(const int& value) = delete ;
-
-        /**
-         * Prevent affecting integer values.
-         * @return  Nothing to use.
-         */
-        Mask& operator=(const int&) = delete ;
-
-
     public:
         /**
          * Create an empty Mask.
@@ -49,12 +37,6 @@ class Mask {
          * @param   vec     The inner data to copy.
          */
         Mask(const __m128i vec) ;
-
-
-        /**
-         *     Destruction of the Mask.
-         */
-        virtual ~Mask() ;
 
 
                                                               /*** UTILITIES ***/
@@ -89,13 +71,6 @@ class Mask {
 
                                                               /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
-        /**
-         * Get the values from another Mask and put it in inner data.
-         * @param   mask    The mask to copy.
-         * @return  The current Mask once the vec is affected to its inner data.
-         */
-        Mask& operator=(const Mask& mask) ;
-
         /**
          * Affect the inner value of the Mask to the broadcasted one given as
          * parameter.

@@ -51,11 +51,6 @@ namespace Mind {
                  */
                 Vector4ui(const __m128 vec) ;
 
-                /**
-                 * Destruction of the Vector4ui.
-                 */
-                virtual ~Vector4ui() ;
-
 
                                                         /** STATIC FUNCTIONS **/
                 /**
@@ -103,7 +98,7 @@ namespace Mind {
         template <uint32_t i0, uint32_t i1, uint32_t i2, uint32_t i3>
         inline __m128i Vector4ui::constant() {
             static const union {
-                int integer[4] ;
+                unsigned int integer[4] ;
                 __m128i vector ;
             } u = {{i0, i1, i2, i3}} ;
             return u.vector ;
