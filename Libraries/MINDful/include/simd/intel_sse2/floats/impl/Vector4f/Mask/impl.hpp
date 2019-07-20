@@ -31,8 +31,6 @@ inline Vector4f::Mask::Mask(const Vector4ui::Mask& mask) {
     m_inner.vec = _mm_castsi128_ps(mask) ;
 }
 
-inline Vector4f::Mask::~Mask() {}
-
 
                                                               /*** UTILITIES ***/
 inline bool Vector4f::Mask::get(const unsigned int index) {
@@ -62,11 +60,6 @@ inline void Vector4f::Mask::print() {
 
                                                               /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
-inline Vector4f::Mask& Vector4f::Mask::operator=(const Mask& mask) {
-    m_inner.vec = mask.m_inner.vec ;
-    return *this ;
-}
-
 inline Vector4f::Mask& Vector4f::Mask::operator=(const bool value) {
     m_inner.vec = _mm_castsi128_ps(_mm_set1_epi32(-int32_t(value))) ;
     return *this ;

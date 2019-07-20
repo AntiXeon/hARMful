@@ -14,8 +14,6 @@ inline Vector4ui::Vector4ui(const __m128i vec) : Vector4uint32(vec) {}
 
 inline Vector4ui::Vector4ui(const __m128 vec) : Vector4uint32(vec) {}
 
-inline Vector4ui::~Vector4ui() {}
-
 
                                                         /** STATIC FUNCTIONS **/
 template <uint32_t i0, uint32_t i1, uint32_t i2, uint32_t i3>

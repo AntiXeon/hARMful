@@ -38,9 +38,6 @@ inline Vector4<Type>::Vector4(const __m128 vec) {
     m_inner = Int32x4(_mm_castps_si128(vec)) ;
 }
 
-template <typename Type>
-inline Vector4<Type>::~Vector4() {}
-
 
                                                               /*** UTILITIES ***/
 template <typename Type>

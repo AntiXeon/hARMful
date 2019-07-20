@@ -83,11 +83,6 @@ namespace Mind {
                  */
                 Vector4(const __m128 vec) ;
 
-                /**
-                 * Destruction of the Vector4.
-                 */
-                virtual ~Vector4() ;
-
 
                                                               /*** UTILITIES ***/
                 /**

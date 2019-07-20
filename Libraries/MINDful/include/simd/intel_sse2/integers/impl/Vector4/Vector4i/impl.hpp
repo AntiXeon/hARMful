@@ -14,8 +14,6 @@ inline Vector4i::Vector4i(const __m128i vec) : Vector4int32(vec) {}
 
 inline Vector4i::Vector4i(const __m128 vec) : Vector4int32(vec) {}
 
-inline Vector4i::~Vector4i() {}
-
 
                                                         /** STATIC FUNCTIONS **/
 template <int32_t i0, int32_t i1, int32_t i2, int32_t i3>

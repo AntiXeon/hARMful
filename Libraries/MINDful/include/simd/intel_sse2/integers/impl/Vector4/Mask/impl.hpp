@@ -22,9 +22,6 @@ Vector4<Type>::Mask::Mask(const __m128i vec) {
     m_inner.vec = vec ;
 }
 
-template <typename Type>
-Vector4<Type>::Mask::~Mask() {}
-
 
                                                               /*** UTILITIES ***/
 #ifdef ALIGNED_ARRAY
@@ -61,12 +58,6 @@ inline size_t Vector4<Type>::Mask::size() {
 
                                                               /*** OPERATORS ***/
                                                         /** AFFECT OPERATORS **/
-template <typename Type>
-inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const Mask& mask) {
-    m_inner.vec = mask.m_inner.vec ;
-    return *this ;
-}
-
 template <typename Type>
 inline typename Vector4<Type>::Mask& Vector4<Type>::Mask::operator=(const bool& value) {
     m_inner.vec = _mm_set1_epi32(-int32_t(value)) ;
