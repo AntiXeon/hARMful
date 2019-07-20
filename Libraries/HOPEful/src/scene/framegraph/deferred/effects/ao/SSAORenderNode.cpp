@@ -78,12 +78,12 @@ void SSAORenderNode::generateKernel() {
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {
-    const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
-    bool windowSized = m_gBuffer -> windowSize() ;
-
     // This subtree renders the ambient occlusion into the dedicated
     // framebuffer.
     {
+        const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
+        bool windowSized = m_gBuffer -> windowSize() ;
+
         m_subtree.aoRendering.ssaoApplier = new EffectApplierNode(
             &m_effectData,
             this

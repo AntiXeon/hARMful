@@ -27,9 +27,9 @@ void GBufferRenderNode::setup() {
 
     framebuffer() -> attachColor(
        NormalRenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha16f,
+       API::InternalFormat::RedGreenBlueAlpha,
        API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::HalfFloat
+       API::PixelDataType::UnsignedByte
    ) ;
 
    framebuffer() -> setDrawBuffers({

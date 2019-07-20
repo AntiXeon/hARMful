@@ -10,6 +10,7 @@
 
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/GBufferRenderNode.hpp>
 
 namespace Hope {
     /**
@@ -33,7 +34,7 @@ namespace Hope {
              * occlusion is copied into it as the Alpha channel of the RGBA
              * color.
              */
-            const FramebufferRenderNode* m_gBuffer = nullptr ;
+            GBufferRenderNode* m_gBuffer = nullptr ;
 
         public:
             /**
@@ -44,7 +45,7 @@ namespace Hope {
              */
             SSAOBlurMaterialComponent(
                 const FramebufferRenderNode* aoBuffer,
-                const FramebufferRenderNode* gBuffer
+                GBufferRenderNode* gBuffer
             ) ;
 
             /**

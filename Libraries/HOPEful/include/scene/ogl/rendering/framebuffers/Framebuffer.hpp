@@ -144,6 +144,28 @@ namespace Hope::GL {
              */
             virtual void bindUnitDepthStencil(const unsigned char unit) const = 0 ;
 
+
+            /**
+             * Unbind the color attachment.
+             */
+            virtual void unbindUnitColor(const unsigned char attachmentIndex) const = 0 ;
+
+            /**
+             * Unbind the depth attachment.
+             */
+            virtual void unbindUnitDepth(const unsigned char unit) const = 0 ;
+
+            /**
+             * Unbind the stencil attachment.
+             */
+            virtual void unbindUnitStencil(const unsigned char unit) const = 0 ;
+
+            /**
+             * Unbind the depth+stencil attachment.
+             */
+            virtual void unbindUnitDepthStencil(const unsigned char unit) const = 0 ;
+
+
             /**
              * Detach a texture from the framebuffer.
              * @param   attachment      Attachment point to the framebuffer.

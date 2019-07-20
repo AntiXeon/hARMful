@@ -62,7 +62,7 @@ void main() {
         }
 
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, texture(noise, inTexCoords).r) ;
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;
     }
     else {
         gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;

@@ -43,9 +43,7 @@ void main() {
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
-    outColor = vec4(vec3(texture(albedoAO, inTexCoords).rgb), 1.f) ;
-
+    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
 
     //#define DEBUG_CSM
     #ifdef DEBUG_CSM
@@ -56,6 +54,7 @@ void main() {
         } ;
 
        float distanceCamera = distanceFromCamera(currentFragment.position) ;
+
        int selectedCascade = 0 ;
         for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {
             if (distanceCamera < cascadedSplits[cascadeIndex]) {
@@ -64,7 +63,7 @@ void main() {
             }
         }
 
-        outColor += vec4(CascadeColors[selectedCascade], 0.f) ;
-        normalize(outColor) ;
+        // outColor += vec4(CascadeColors[selectedCascade], 0.f) ;
+        // normalize(outColor) ;
     #endif
 }

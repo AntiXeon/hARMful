@@ -133,7 +133,7 @@ namespace Hope {
              * Get the G-Buffer containing the normal and depth buffers,
              * required to compute ambient occlusion.
              */
-            const GBufferRenderNode* gBuffer() const {
+            GBufferRenderNode* gBuffer() {
                 return m_gBuffer ;
             }
 

@@ -111,14 +111,42 @@ namespace Hope::GL {
              * Bind the stencil attachment.
              */
             void bindUnitStencil(const unsigned char unit) const override {
-                m_depthAttachment -> bindUnit(unit) ;
+                m_stencilAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the depth+stencil attachment.
              */
             void bindUnitDepthStencil(const unsigned char unit) const override {
-                return m_depthStencilAttachment -> bindUnit(unit) ;
+                m_depthStencilAttachment -> bindUnit(unit) ;
+            }
+
+            /**
+             * Unbind the color attachment.
+             */
+            void unbindUnitColor(const unsigned char attachmentIndex) const override {
+                m_colorAttachments[attachmentIndex] -> unbindUnit(attachmentIndex) ;
+            }
+
+            /**
+             * Unbind the depth attachment.
+             */
+            void unbindUnitDepth(const unsigned char unit) const override {
+                m_depthAttachment -> unbindUnit(unit) ;
+            }
+
+            /**
+             * Unbind the stencil attachment.
+             */
+            void unbindUnitStencil(const unsigned char unit) const override {
+                m_stencilAttachment -> unbindUnit(unit) ;
+            }
+
+            /**
+             * Unbind the depth+stencil attachment.
+             */
+            void unbindUnitDepthStencil(const unsigned char unit) const override {
+                m_depthStencilAttachment -> unbindUnit(unit) ;
             }
 
             /**

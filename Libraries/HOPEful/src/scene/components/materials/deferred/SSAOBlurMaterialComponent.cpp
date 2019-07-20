@@ -4,6 +4,7 @@
 #include <memory>
 
 #ifdef OGL
+    #define NoTarget    GL_NONE
     #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
@@ -14,7 +15,7 @@ using namespace Hope ;
 
 SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
     const FramebufferRenderNode* aoBuffer,
-    const FramebufferRenderNode* gBuffer
+    GBufferRenderNode* gBuffer
 )
     : MaterialComponent(),
       m_aoBuffer(aoBuffer),

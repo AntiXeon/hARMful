@@ -15,14 +15,24 @@ Framebuffer::~Framebuffer() {
 }
 
 void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
-    std::vector<unsigned int> attachments ;
-    for (unsigned char index: indices) {
-        attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
-    }
+    if (indices.size() > 0) {
+        std::vector<unsigned int> attachments ;
+        for (unsigned char index: indices) {
+            attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
+        }
 
-    bind(AccessMode::WriteOnly) ;
-    glNamedFramebufferDrawBuffers(m_fboID, attachments.size(), attachments.data()) ;
-    unbind(AccessMode::WriteOnly) ;
+        bind(AccessMode::WriteOnly) ;
+        glNamedFramebufferDrawBuffers(m_fboID, attachments.size(), attachments.data()) ;
+        unbind(AccessMode::WriteOnly) ;
+    }
+    else {
+        const static GLsizei Size = 1 ;
+        const static GLenum None[Size] = { GL_NONE } ;
+
+        bind(AccessMode::WriteOnly) ;
+        glNamedFramebufferDrawBuffers(m_fboID, Size, None) ;
+        unbind(AccessMode::WriteOnly) ;
+    }
 }
 
 void Framebuffer::useNoColorBuffers() {

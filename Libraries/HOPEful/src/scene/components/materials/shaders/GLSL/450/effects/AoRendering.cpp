@@ -21,13 +21,21 @@ std::string AoRenderingBlurFragmentCode =
 // Screen-space ambient occlusion blur and copy.\n\
 \n\
 layout(binding = 0) uniform sampler2D ao ;\n\
+layout(binding = 1) uniform sampler2D normal ;\n\
+layout(binding = 2) uniform sampler2D specular ;\n\
+layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
 layout(location = 0) out vec4 gAlbedoAO ;\n\
+layout(location = 1) out vec4 gNormal ;\n\
+layout(location = 3) out vec4 gSpecular ;\n\
 \n\
 void main() {\n\
     gAlbedoAO = texture(ao, inTexCoords).rgba ;\n\
+    gNormal = texture(normal, inTexCoords).rgba ;\n\
+    gSpecular = texture(specular, inTexCoords).rgba ;\n\
+    gl_FragDepth = texture(depth, inTexCoords).r ;\n\
 }\n\
 " ;
 
@@ -97,7 +105,7 @@ void main() {\n\
         }\n\
 \n\
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, texture(noise, inTexCoords).r) ;\n\
+        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\
     }\n\
     else {\n\
         gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\
