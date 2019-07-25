@@ -16,29 +16,6 @@ void main() {\n\
 }\n\
 " ;
 
-std::string AoRenderingBlurFragmentCode =
-"\
-// Screen-space ambient occlusion blur and copy.\n\
-\n\
-layout(binding = 0) uniform sampler2D ao ;\n\
-layout(binding = 1) uniform sampler2D normal ;\n\
-layout(binding = 2) uniform sampler2D specular ;\n\
-layout(binding = 3) uniform sampler2D depth ;\n\
-\n\
-layout(location = 0) in vec2 inTexCoords ;\n\
-\n\
-layout(location = 0) out vec4 gAlbedoAO ;\n\
-layout(location = 1) out vec4 gNormal ;\n\
-layout(location = 3) out vec4 gSpecular ;\n\
-\n\
-void main() {\n\
-    gAlbedoAO = texture(ao, inTexCoords).rgba ;\n\
-    gNormal = texture(normal, inTexCoords).rgba ;\n\
-    gSpecular = texture(specular, inTexCoords).rgba ;\n\
-    gl_FragDepth = texture(depth, inTexCoords).r ;\n\
-}\n\
-" ;
-
 std::string AoRenderingSsaoFragmentCode =
 "\
 // Screen-space ambient occlusion.\n\
@@ -52,64 +29,67 @@ layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
-layout(location = 0) out vec4 gAlbedoAO ;\n\
+layout(location = AO_MAP_BINDING_UNIT) out vec4 ao ;\n\
 \n\
-// Texture coordinates of the noise texture for the current fragment.\n\
-vec2 noiseTextureCoords() {\n\
-    vec2 noiseTextureSize = textureSize(noise, 0) ;\n\
-    vec2 coordScaling = viewportSize / noiseTextureSize.x ;\n\
-    return inTexCoords * coordScaling ;\n\
-}\n\
-\n\
-// Compute a TBN matrix with a random orientation.\n\
-mat3 computeTBNMatrix() {\n\
-    vec2 noiseTexCoords = noiseTextureCoords() ;\n\
-    vec3 random = normalize(texture(noise, noiseTexCoords).xyz) ;\n\
-    vec3 normal = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;\n\
-\n\
-    vec3 tangent = normalize(random - normal * dot(random, normal)) ;\n\
-    vec3 bitangent = cross(normal, tangent) ;\n\
-    return mat3(tangent, bitangent, normal) ;\n\
-}\n\
-\n\
-// Compute the view-space position of the current fragment.\n\
-vec3 computePosition() {\n\
-    float depthValue = texture(depth, inTexCoords).r ;\n\
-    return ComputeViewSpacePosition(inTexCoords, depthValue).xyz ;\n\
-}\n\
+// // Texture coordinates of the noise texture for the current fragment.\n\
+// vec2 noiseTextureCoords() {\n\
+//     vec2 noiseTextureSize = textureSize(noise, 0) ;\n\
+//     vec2 coordScaling = viewportSize / noiseTextureSize.x ;\n\
+//     return inTexCoords * coordScaling ;\n\
+// }\n\
+//\n\
+// // Compute a TBN matrix with a random orientation.\n\
+// mat3 computeTBNMatrix() {\n\
+//     vec2 noiseTexCoords = noiseTextureCoords() ;\n\
+//     vec3 random = normalize(texture(noise, noiseTexCoords).xyz) ;\n\
+//     vec3 normal = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;\n\
+//\n\
+//     vec3 tangent = normalize(random - normal * dot(random, normal)) ;\n\
+//     vec3 bitangent = cross(normal, tangent) ;\n\
+//     return mat3(tangent, bitangent, normal) ;\n\
+// }\n\
+//\n\
+// // Compute the view-space position of the current fragment.\n\
+// vec3 computePosition() {\n\
+//     float depthValue = texture(depth, inTexCoords).r ;\n\
+//     return ComputeViewSpacePosition(inTexCoords, depthValue).xyz ;\n\
+// }\n\
 \n\
 void main() {\n\
-    if (useSSAO == 1) {\n\
-        vec3 position = computePosition() ;\n\
-        mat3 tbnMatrix = computeTBNMatrix() ;\n\
+    ao = vec4(0.5f) ;\n\
 \n\
-        float occlusion = 0.f ;\n\
-        for (int sampleIndex = 0 ; sampleIndex < AO_KERNEL_SIZE ; ++sampleIndex) {\n\
-            // Sample position.\n\
-            vec3 kernelSample = tbnMatrix * kernel[sampleIndex] ;\n\
-            kernelSample = position + (kernelSample * AO_RADIUS) ;\n\
 \n\
-            // Project the sample onto the texture (screen-space position).\n\
-            vec4 offset = vec4(kernelSample, 1.f) ;\n\
-            offset = projectionMatrix * offset ;\n\
-            offset /= offset.w ;\n\
-            offset.xyz = offset.xyz * 0.5f + 0.5f ;\n\
-\n\
-            // Kernel sample depth.\n\
-            float depthValue = texture(depth, offset.xy).r ;\n\
-            float sampleDepth = ComputeViewSpacePosition(offset.xy, depthValue).z ;\n\
-\n\
-            // Range check and accumulate.\n\
-            float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / abs(position.z - sampleDepth)) ;\n\
-            occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;\n\
-        }\n\
-\n\
-        occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\
-    }\n\
-    else {\n\
-        gAlbedoAO = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;\n\
-    }\n\
+    // if (useSSAO == 1) {\n\
+    //     vec3 position = computePosition() ;\n\
+    //     mat3 tbnMatrix = computeTBNMatrix() ;\n\
+    //\n\
+    //     float occlusion = 0.f ;\n\
+    //     for (int sampleIndex = 0 ; sampleIndex < AO_KERNEL_SIZE ; ++sampleIndex) {\n\
+    //         // Sample position.\n\
+    //         vec3 kernelSample = tbnMatrix * kernel[sampleIndex] ;\n\
+    //         kernelSample = position + (kernelSample * AO_RADIUS) ;\n\
+    //\n\
+    //         // Project the sample onto the texture (screen-space position).\n\
+    //         vec4 offset = vec4(kernelSample, 1.f) ;\n\
+    //         offset = projectionMatrix * offset ;\n\
+    //         offset /= offset.w ;\n\
+    //         offset.xyz = offset.xyz * 0.5f + 0.5f ;\n\
+    //\n\
+    //         // Kernel sample depth.\n\
+    //         float depthValue = texture(depth, offset.xy).r ;\n\
+    //         float sampleDepth = ComputeViewSpacePosition(offset.xy, depthValue).z ;\n\
+    //\n\
+    //         // Range check and accumulate.\n\
+    //         float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / abs(position.z - sampleDepth)) ;\n\
+    //         occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;\n\
+    //     }\n\
+    //\n\
+    //     occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
+    //     ao = vec4(0.7f) ;\n\
+    // }\n\
+    // else {\n\
+    //     ao = vec4(0.2f) ;\n\
+    // }\n\
 }\n\
 " ;
 

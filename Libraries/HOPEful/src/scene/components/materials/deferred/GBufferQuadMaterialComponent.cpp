@@ -9,6 +9,7 @@
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredRendering.hpp>
+    #include <scene/components/materials/shaders/GLSL/450/effects/AoRendering.hpp>
 #endif
 
 using namespace Hope ;
@@ -22,6 +23,7 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const FramebufferRend
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
     const API::Framebuffer2D* framebuffer = m_gBuffer -> framebuffer() ;
+    framebuffer -> bind(API::Framebuffer2D::ReadOnly) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
@@ -61,6 +63,7 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesAoModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
     shaderProgram -> build() ;
 

@@ -5,7 +5,6 @@
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
-#include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <scene/SceneTypes.hpp>
 #include <utils/Random.hpp>
@@ -21,7 +20,8 @@ SSAORenderNode::SSAORenderNode(
     generateKernel() ;
     generateFramegraphSubtree() ;
 
-    m_effectData.setSSAO(this) ;
+    m_effectComputeData.setSSAO(this) ;
+    m_effectApplyData.setSSAO(this) ;
 }
 
 SSAORenderNode::~SSAORenderNode() {
@@ -84,8 +84,9 @@ void SSAORenderNode::generateFramegraphSubtree() {
         const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
         bool windowSized = m_gBuffer -> windowSize() ;
 
+        // To compute SSAO in the current framegraph branch.
         m_subtree.aoRendering.ssaoApplier = new EffectApplierNode(
-            &m_effectData,
+            &m_effectComputeData,
             this
         ) ;
 
@@ -96,17 +97,23 @@ void SSAORenderNode::generateFramegraphSubtree() {
             m_subtree.aoRendering.ssaoApplier
         ) ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
-            AlbedoRenderTarget,
+            AORenderTarget,
             API::InternalFormat::RedGreenBlueAlpha,
             API::PixelFormat::RedGreenBlueAlpha,
             API::PixelDataType::UnsignedByte
         ) ;
-        m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AlbedoRenderTarget }) ;
+        m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
+
+        // Clear buffers.
+        m_subtree.aoRendering.clearBuffer = new ClearBuffersNode(
+            API::BufferClearer::Buffer::ColorDepthStencil,
+            m_subtree.aoRendering.offscreen
+        ) ;
 
         // Render pass selection.
         m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
             ForwardPassID,
-            m_subtree.aoRendering.offscreen
+            m_subtree.aoRendering.clearBuffer
         ) ;
 
         // Rendering of the ambient occlusion pass.
@@ -116,30 +123,8 @@ void SSAORenderNode::generateFramegraphSubtree() {
             m_subtree.aoRendering.passSelector
         ) ;
     }
+}
 
-    // In this subtree, the ambient occlusion is copied into the G-Buffer as the
-    // alpha channel of the albedo target. It is blurred at the same time.
-    {
-        // Buffer in which AO is written with albedo.
-        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
-            m_gBuffer,
-            this
-        ) ;
-
-        // Render pass selection.
-        m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(
-            ForwardPassID,
-            m_subtree.aoBlurCopy.offscreen
-        ) ;
-
-        // Rendering of the ambient occlusion pass.
-        m_ssaoBlurMaterial = new SSAOBlurMaterialComponent(
-            m_subtree.aoRendering.offscreen,
-            m_gBuffer
-        ) ;
-        m_subtree.aoBlurCopy.deferredRendering = new DeferredRenderingNode(
-            m_ssaoBlurMaterial,
-            m_subtree.aoBlurCopy.passSelector
-        ) ;
-    }
+void SSAORenderNode::specificAccept(IFrameGraphVisitor* visitor) {
+    visitor -> visit(this) ;
 }

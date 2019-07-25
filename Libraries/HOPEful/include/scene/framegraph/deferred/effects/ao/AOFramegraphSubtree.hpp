@@ -30,6 +30,11 @@ namespace Hope {
             FramebufferRenderNode* offscreen = nullptr ;
 
             /**
+             * Clear previous buffer.
+             */
+            ClearBuffersNode* clearBuffer = nullptr ;
+
+            /**
              * Selector of the right render pass.
              */
             RenderPassSelectorNode* passSelector = nullptr ;
@@ -39,29 +44,6 @@ namespace Hope {
              */
             DeferredRenderingNode* deferredRendering = nullptr ;
         } aoRendering ;
-
-        /**
-         * Subtree to blur and copy the ambient occlusion (rendered with the
-         * previous subtree) into the G-Buffer as the alpha channel of the
-         * albedo render target.
-         */
-        struct {
-            /**
-             * Node bearing the framebuffer into which the ambient occlusion
-             * contribution is copied.
-             */
-            FramebufferRenderNode* offscreen = nullptr ;
-
-            /**
-             * Selector of the right render pass.
-             */
-            RenderPassSelectorNode* passSelector = nullptr ;
-
-            /**
-             * Node that is used to blur and copy the ambient occlusion.
-             */
-            DeferredRenderingNode* deferredRendering = nullptr ;
-        } aoBlurCopy ;
     } ;
 }
 

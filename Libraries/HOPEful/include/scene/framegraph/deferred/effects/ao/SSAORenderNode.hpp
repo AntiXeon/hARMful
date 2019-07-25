@@ -9,7 +9,8 @@
     namespace API = Hope::GL ;
 #endif
 
-#include <scene/framegraph/deferred/effects/ao/SSAOData.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAOApplyData.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAOComputeData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
 #include <scene/framegraph/deferred/GBufferRenderNode.hpp>
@@ -17,7 +18,6 @@
 
 namespace Hope {
     class SSAOMaterialComponent ;
-    class SSAOBlurMaterialComponent ;
 
     /**
      * Node to compute screen-space ambient occlusion.
@@ -44,6 +44,11 @@ namespace Hope {
              */
             static const unsigned char DepthRenderTarget = 3 ;
 
+            /**
+             * Depth render target.
+             */
+            static const unsigned char AORenderTarget = AO_MAP_BINDING_UNIT ;
+
         private:
             /**
              * Amount of pixels on a side of the square noise texture that is
@@ -62,9 +67,14 @@ namespace Hope {
             const static int NoiseTextureDataSize = NoiseTexturePixelAmount * Mind::Vector3f::AmountCoords ;
 
             /**
-             * The effect data that are applied on rendering.
+             * The effect data that are applied on pass to compute AO.
              */
-            SSAOData m_effectData ;
+            SSAOComputeData m_effectComputeData ;
+
+            /**
+             * The effect data that are applied on final rendering stage.
+             */
+            SSAOApplyData m_effectApplyData ;
 
             /**
              * Random texture that is used to sample ambient occlusion all over
@@ -84,11 +94,6 @@ namespace Hope {
              * Material used to render the ambient occlusion.
              */
             SSAOMaterialComponent* m_ssaoMaterial = nullptr ;
-
-            /**
-             * Material used to blur (and copy) the ambient occlusion.
-             */
-            SSAOBlurMaterialComponent* m_ssaoBlurMaterial = nullptr ;
 
             /**
              * Normal-oriented hemisphere kernel.
@@ -130,11 +135,10 @@ namespace Hope {
             }
 
             /**
-             * Get the G-Buffer containing the normal and depth buffers,
-             * required to compute ambient occlusion.
+             * Get the buffer containing the resulting ambient occlusion.
              */
-            GBufferRenderNode* gBuffer() {
-                return m_gBuffer ;
+            FramebufferRenderNode* aoBuffer() {
+                return m_subtree.aoRendering.offscreen ;
             }
 
             /**
@@ -148,7 +152,7 @@ namespace Hope {
              * Get the effect data of the node.
              */
             EffectData* data() override {
-                return &m_effectData ;
+                return &m_effectApplyData ;
             }
 
             // Avoid copy/move operations.
@@ -172,6 +176,12 @@ namespace Hope {
              * Generate the subtree of the framegraph.
              */
             void generateFramegraphSubtree() ;
+
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

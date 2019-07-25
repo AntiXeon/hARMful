@@ -1,5 +1,5 @@
-#ifndef __HOPE__SSAO_UNIFORM_SETTER__
-#define __HOPE__SSAO_UNIFORM_SETTER__
+#ifndef __HOPE__SSAO_COMPUTE_UNIFORM_SETTER__
+#define __HOPE__SSAO_COMPUTE_UNIFORM_SETTER__
 
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
@@ -11,7 +11,7 @@ namespace Hope {
      * Setter of uniform values for screen-space ambient occlusion related
      * stuff.
      */
-    class SSAOUniformSetter final : public ExternalUniformSetter {
+    class SSAOComputeUniformSetter final : public ExternalUniformSetter {
         private:
             /**
              * To know if ambient occlusion must be computed or not.
@@ -26,9 +26,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a new SSAOUniformSetter instance.
+             * Create a new SSAOComputeUniformSetter instance.
              */
-            SSAOUniformSetter() ;
+            SSAOComputeUniformSetter() ;
 
             /**
              * Update the uniforms.

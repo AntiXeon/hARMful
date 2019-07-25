@@ -11,6 +11,9 @@ layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D specular ;\n\
 layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
+layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;\n\
+layout(location = AO_MAP_BINDING_UNIT) uniform sampler2D ao ;\n\
+\n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
 out vec4 outColor ;\n\
@@ -49,6 +52,7 @@ void main() {\n\
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;\n\
 \n\
     outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
+    //outColor = vec4(vec3(texture(ao, inTexCoords).r), 1.f) ;\n\
 \n\
     //#define DEBUG_CSM\n\
     #ifdef DEBUG_CSM\n\

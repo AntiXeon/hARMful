@@ -5,7 +5,6 @@
 #include <string>
 
 extern std::string AoRenderingSsaoVertexCode ;
-extern std::string AoRenderingBlurFragmentCode ;
 extern std::string AoRenderingSsaoFragmentCode ;
 
 #endif

@@ -63,7 +63,7 @@ void Framebuffer2D::attachColor(
         m_colorAttachments[attachmentIndex] -> bind() ;
         m_colorAttachments[attachmentIndex] -> setFiltering(GL_LINEAR, GL_LINEAR) ;
         m_colorAttachments[attachmentIndex] -> unbind() ;
-    }
+}
 
     // Attach the texture to the framebuffer.
     bind() ;

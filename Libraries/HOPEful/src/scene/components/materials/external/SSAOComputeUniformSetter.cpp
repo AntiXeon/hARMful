@@ -1,4 +1,4 @@
-#include <scene/components/materials/external/SSAOUniformSetter.hpp>
+#include <scene/components/materials/external/SSAOComputeUniformSetter.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 
@@ -11,14 +11,14 @@
 
 using namespace Hope ;
 
-SSAOUniformSetter::SSAOUniformSetter() {
+SSAOComputeUniformSetter::SSAOComputeUniformSetter() {
     std::shared_ptr<Hope::ShaderUniform> useAOUniform = std::make_shared<Hope::ShaderUniform>() ;
     useAOUniform -> setName(UniformNames::MaterialUseAOUniformName()) ;
     useAOUniform -> setLocation(UNIFORM_AO_USE_LOCATION) ;
     addShaderUniform(useAOUniform) ;
 }
 
-void SSAOUniformSetter::updateUniforms() {
+void SSAOComputeUniformSetter::updateUniforms() {
     uniform(UniformNames::MaterialUseAOUniformName()) -> setInteger(m_useAO) ;
 
     if (m_useAO) {
@@ -38,7 +38,7 @@ void SSAOUniformSetter::updateUniforms() {
     }
 }
 
-void SSAOUniformSetter::setSSAONode(const Hope::SSAORenderNode* node) {
+void SSAOComputeUniformSetter::setSSAONode(const Hope::SSAORenderNode* node) {
     m_useAO = node != nullptr ;
 
     if (!m_useAO || (m_ssaoNode == node)) {

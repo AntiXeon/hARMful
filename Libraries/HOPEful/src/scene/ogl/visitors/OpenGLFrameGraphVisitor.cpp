@@ -203,12 +203,8 @@ void OpenGLFrameGraphVisitor::visit(EffectApplierNode* node) {
     m_aggregators.back().addEffectData({ node -> effect() }) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(SSAORenderNode* /*node*/) {
-    // // Avoid overwriting the other render targets from the G-Buffer (depth,
-    // // normal, specular...).
-    // GBufferRenderNode* gBuffer = node -> gBuffer() ;
-    // gBuffer -> framebuffer() -> setDrawBuffers({ GL_NONE, GL_NONE, GL_NONE }) ;
-    // gBuffer -> framebuffer() -> detachDepth() ;
+void OpenGLFrameGraphVisitor::visit(SSAORenderNode* node) {
+    m_globalEffects.push_back(node -> data()) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

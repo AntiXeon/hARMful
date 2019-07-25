@@ -1,20 +1,20 @@
-#ifndef __HOPE__SSAO_DATA__
-#define __HOPE__SSAO_DATA__
+#ifndef __HOPE__SSAO_COMPUTE_DATA__
+#define __HOPE__SSAO_COMPUTE_DATA__
 
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
-#include <scene/components/materials/external/SSAOUniformSetter.hpp>
+#include <scene/components/materials/external/SSAOComputeUniformSetter.hpp>
 
 namespace Hope {
     /**
      * Data required for screen-space ambient occlusion.
      */
-    class SSAOData final : public EffectData {
+    class SSAOComputeData final : public EffectData {
         private:
             /**
              * Send SSAO data to shaders.
              */
-            SSAOUniformSetter m_ssaoSetter ;
+            SSAOComputeUniformSetter m_ssaoSetter ;
 
         public:
             /**

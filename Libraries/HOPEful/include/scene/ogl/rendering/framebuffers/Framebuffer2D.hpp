@@ -6,6 +6,8 @@
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <memory>
 
+#include <iostream>
+
 namespace Hope::GL {
     /**
      * Framebuffer writing/reading in 2D textures.
