@@ -1,13 +1,13 @@
 // Material for deferred rendering. Applied on a simple quad on the whole
 // viewport area.
 
-layout(binding = 0) uniform sampler2D albedoAO ;
+layout(binding = 0) uniform sampler2D albedo ;
 layout(binding = 1) uniform sampler2D normal ;
 layout(binding = 2) uniform sampler2D specular ;
 layout(binding = 3) uniform sampler2D depth ;
 
 layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;
-layout(location = AO_MAP_BINDING_UNIT) uniform sampler2D ao ;
+layout(binding = AO_MAP_BINDING_UNIT) uniform sampler2D ao ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
@@ -22,7 +22,7 @@ void main() {
 
     // Put values to perform the lighting pass for the current fragment.
     FragmentData currentFragment ;
-    currentFragment.diffuseValue = texture(albedoAO, inTexCoords).rgb ;
+    currentFragment.diffuseValue = texture(albedo, inTexCoords).rgb ;
     currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;
     currentFragment.shininess = texture(specular, inTexCoords).a ;
@@ -46,8 +46,8 @@ void main() {
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
-    //outColor = vec4(vec3(texture(ao, inTexCoords).r), 1.f) ;
+    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+    outColor = vec4(vec3(texture(ao, inTexCoords).r), 1.f) ;
 
     //#define DEBUG_CSM
     #ifdef DEBUG_CSM

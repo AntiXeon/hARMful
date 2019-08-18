@@ -102,25 +102,20 @@ void SSAORenderNode::generateFramegraphSubtree() {
             API::PixelFormat::RedGreenBlueAlpha,
             API::PixelDataType::UnsignedByte
         ) ;
+        m_subtree.aoRendering.offscreen -> framebuffer() -> attachDepth() ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
         // Clear buffers.
         m_subtree.aoRendering.clearBuffer = new ClearBuffersNode(
-            API::BufferClearer::Buffer::ColorDepthStencil,
+            API::BufferClearer::Buffer::ColorDepth,
             m_subtree.aoRendering.offscreen
-        ) ;
-
-        // Render pass selection.
-        m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
-            ForwardPassID,
-            m_subtree.aoRendering.clearBuffer
         ) ;
 
         // Rendering of the ambient occlusion pass.
         m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
         m_subtree.aoRendering.deferredRendering = new DeferredRenderingNode(
             m_ssaoMaterial,
-            m_subtree.aoRendering.passSelector
+            m_subtree.aoRendering.offscreen
         ) ;
     }
 }

@@ -24,7 +24,6 @@ void SSAOApplyUniformSetter::updateUniforms() {
     if (m_useAO) {
         FramebufferRenderNode* aoBufferNode = m_ssaoNode -> aoBuffer() ;
         API::Framebuffer2D* aoFramebuffer = aoBufferNode -> framebuffer() ;
-        aoFramebuffer -> bind(API::Framebuffer2D::ReadOnly) ;
         aoFramebuffer -> bindUnitColor(Hope::SSAORenderNode::AORenderTarget) ;
     }
 }

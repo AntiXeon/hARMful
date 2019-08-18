@@ -137,6 +137,13 @@ namespace Hope {
             /**
              * Get the buffer containing the resulting ambient occlusion.
              */
+            FramebufferRenderNode* gBuffer() {
+                return m_gBuffer ;
+            }
+
+            /**
+             * Get the buffer containing the resulting ambient occlusion.
+             */
             FramebufferRenderNode* aoBuffer() {
                 return m_subtree.aoRendering.offscreen ;
             }
