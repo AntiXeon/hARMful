@@ -37,12 +37,6 @@ namespace Hope {
              */
             void updateUniformValues() override ;
 
-        private:
-            /**
-             * Set up the Uniforms of the current material.
-             */
-            void setupUniforms() ;
-
         protected:
             /**
              * Setup the shader for the forward rendering pass.

@@ -18,7 +18,6 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const FramebufferRend
     : MaterialComponent(),
       m_gBuffer(gBuffer) {
     setupForwardShader() ;
-    setupUniforms() ;
 }
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
@@ -27,24 +26,6 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
-}
-
-void GBufferQuadMaterialComponent::setupUniforms() {
-    // std::shared_ptr<Hope::ShaderUniform> albedoUniform = std::make_shared<Hope::ShaderUniform>() ;
-    // albedoUniform -> setName(UniformNames::MaterialGBufferAlbedoUniformName()) ;
-    // addShaderUniform(albedoUniform) ;
-    //
-    // std::shared_ptr<Hope::ShaderUniform> specularUniform = std::make_shared<Hope::ShaderUniform>() ;
-    // specularUniform -> setName(UniformNames::MaterialGBufferSpecularUniformName()) ;
-    // addShaderUniform(specularUniform) ;
-    //
-    // std::shared_ptr<Hope::ShaderUniform> normalUniform = std::make_shared<Hope::ShaderUniform>() ;
-    // normalUniform -> setName(UniformNames::MaterialGBufferNormalUniformName()) ;
-    // addShaderUniform(normalUniform) ;
-    //
-    // std::shared_ptr<Hope::ShaderUniform> depthUniform = std::make_shared<Hope::ShaderUniform>() ;
-    // depthUniform -> setName(UniformNames::MaterialGBufferDepthUniformName()) ;
-    // addShaderUniform(depthUniform) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {
