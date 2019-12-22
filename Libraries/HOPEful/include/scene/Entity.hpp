@@ -20,10 +20,38 @@ namespace Hope {
 
         private:
             /**
+             * Lock state of the entity.
+             * Unlocked:    The entity is not locked and components can be
+             *              added/removed from it;
+             * ToBeLocked:  The entity is not yet locked, components can be
+             *              added/removed while the application is not yet
+             *              running.
+             *              That is to said, you must create and setup the
+             *              entities **before** running the application!
+             * Locked:      When the application runs, the entities flagged with
+             *              ToBelocked are switched to the Locked state.
+             */
+            enum class LockStateFlag {
+                Unlocked,
+                ToBeLocked,
+                Locked
+            } ;
+
+
+            /**
              * If true, the Entity is processed for rendering its content.
              * Otherwise, it is just ignored and all its children as well.
              */
             bool m_isActive = true ;
+
+            /**
+             * If Locked, the entity cannot be modified while the application is
+             * running. It is useful for static objects in the scene as it
+             * increases performances.
+             * A components cannot be added or removeed once the application is
+             * running.
+             */
+            LockStateFlag m_lockState = LockStateFlag::Unlocked ;
 
             /**
              * Transform of the entity.
@@ -38,9 +66,14 @@ namespace Hope {
         public:
             /**
              * Create a new entity instance.
-             * @param   parent  Parent entity of the new one.
+             * @param   parent      Parent entity of the new one.
+             * @param   isLocked    true to create a static object in the scene.
+             *                      May be overriden by its parent state.
              */
-            Entity(Entity* parent = nullptr) ;
+            Entity(
+                Entity* parent = nullptr,
+                const LockStateFlag lockState = LockStateFlag::Unlocked
+            ) ;
 
             /**
              * Destruction of the entity instance.
@@ -140,6 +173,14 @@ namespace Hope {
              */
             bool isActive() const {
                 return m_isActive ;
+            }
+
+            /**
+             * If true, the entity cannot be modified while the application is
+             * running.
+             */
+            bool isLocked() const {
+                return m_lockState == LockStateFlag::Locked ;
             }
 
             /**

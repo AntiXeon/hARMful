@@ -2,7 +2,8 @@
 #define __HOPE__TEST_WINDOW__
 
 #include <scene/ogl/Window.hpp>
-#include <scene/components/CameraComponent.hpp>
+#include <scene/components/cameras/PerspectiveCameraComponent.hpp>
+#include <scene/components/cameras/OrthographicCameraComponent.hpp>
 
 /**
  * Window for testing the framework.
@@ -32,7 +33,8 @@ class TestWindow final : public Hope::GL::Window {
         /**
          * Camera component.
          */
-        Hope::CameraComponent* m_cameraComponent = nullptr ;
+        Hope::PerspectiveCameraComponent* m_cameraComponent = nullptr ;
+        //Hope::OrthographicCameraComponent* m_cameraComponent = nullptr ;
 
     public:
         /**
