@@ -5,6 +5,7 @@
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
+#include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <scene/SceneTypes.hpp>
 #include <utils/Random.hpp>
@@ -20,12 +21,10 @@ SSAORenderNode::SSAORenderNode(
     generateKernel() ;
     generateFramegraphSubtree() ;
 
-    m_effectComputeData.setSSAO(this) ;
     m_effectApplyData.setSSAO(this) ;
 }
 
 SSAORenderNode::~SSAORenderNode() {
-    delete m_noiseTexture ;
     delete m_ssaoMaterial ;
 }
 
@@ -39,7 +38,7 @@ void SSAORenderNode::generateNoiseTexture() {
     }
 
     const static bool GenerateMipmap = false ;
-    m_noiseTexture = new API::TextureImage2D(
+    m_noiseTexture = std::make_shared<API::TextureImage2D>(
         Mind::Dimension2Di(NoiseTextureSideSize, NoiseTextureSideSize),
         API::InternalFormat::RedGreenBlue16f,
         API::PixelFormat::RedGreenBlue,
@@ -78,19 +77,18 @@ void SSAORenderNode::generateKernel() {
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {
+    const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
+    bool windowSized = m_gBuffer -> windowSize() ;
+
     // This subtree renders the ambient occlusion into the dedicated
     // framebuffer.
     {
-        const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
-        bool windowSized = m_gBuffer -> windowSize() ;
-
-        // To compute SSAO in the current framegraph branch.
         m_subtree.aoRendering.ssaoApplier = new EffectApplierNode(
-            &m_effectComputeData,
+            &m_effectApplyData,
             this
         ) ;
 
-        // Buffer in which AO is written with albedo.
+        // Buffer in which AO is written with ambient occlusion.
         m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
             dimension,
             windowSized,
@@ -100,14 +98,13 @@ void SSAORenderNode::generateFramegraphSubtree() {
             AORenderTarget,
             API::InternalFormat::RedGreenBlueAlpha,
             API::PixelFormat::RedGreenBlueAlpha,
-            API::PixelDataType::UnsignedByte
+            API::PixelDataType::UnsignedInt
         ) ;
-        m_subtree.aoRendering.offscreen -> framebuffer() -> attachDepth() ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
-        // Clear buffers.
-        m_subtree.aoRendering.clearBuffer = new ClearBuffersNode(
-            API::BufferClearer::Buffer::ColorDepth,
+        // Render pass selection.
+        m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
+            DeferredPassID,
             m_subtree.aoRendering.offscreen
         ) ;
 
@@ -115,11 +112,36 @@ void SSAORenderNode::generateFramegraphSubtree() {
         m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
         m_subtree.aoRendering.deferredRendering = new DeferredRenderingNode(
             m_ssaoMaterial,
-            m_subtree.aoRendering.offscreen
+            m_subtree.aoRendering.passSelector
         ) ;
     }
-}
 
-void SSAORenderNode::specificAccept(IFrameGraphVisitor* visitor) {
-    visitor -> visit(this) ;
+    // In this subtree, the ambient occlusion is copied into the G-Buffer as the
+    // alpha channel of the albedo target. It is blurred at the same time.
+    {
+        // Buffer in which AO is written with albedo.
+        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
+            dimension,
+            windowSized,
+            this
+        ) ;
+        m_subtree.aoBlurCopy.offscreen -> framebuffer() -> attachColor(
+            GBufferRenderNode::AlbedoRenderTarget,
+            m_gBuffer -> framebuffer() -> colorAttachment(GBufferRenderNode::AlbedoRenderTarget)
+        ) ;
+        //m_subtree.aoBlurCopy.offscreen -> framebuffer() -> setDrawBuffers({ GBufferRenderNode::AlbedoRenderTarget }) ;
+
+        // Render pass selection.
+        m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(
+            DeferredPassID,
+            m_subtree.aoBlurCopy.offscreen
+        ) ;
+
+        // Rendering of the ambient occlusion pass.
+        m_ssaoBlurMaterial = new SSAOBlurMaterialComponent(m_subtree.aoRendering.offscreen) ;
+        m_subtree.aoBlurCopy.deferredRendering = new DeferredRenderingNode(
+            m_ssaoBlurMaterial,
+            m_subtree.aoBlurCopy.passSelector
+        ) ;
+    }
 }

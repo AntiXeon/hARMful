@@ -6,5 +6,6 @@
 
 extern std::string AoRenderingSsaoFragmentCode ;
 extern std::string AoRenderingSsaoVertexCode ;
+extern std::string AoRenderingBlurFragmentCode ;
 
 #endif

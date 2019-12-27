@@ -103,6 +103,12 @@ void OpenGLRenderer::deferredShading(
     }
 
     m_deferredShadingQuad.unbind() ;
+
+    // Turn back to the default framebuffer in case any other is bound.
+    // TODO: improve it by using the current framebuffer mode.
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, 0) ;
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0) ;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
 }
 
 std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(

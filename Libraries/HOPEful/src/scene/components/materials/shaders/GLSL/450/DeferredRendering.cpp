@@ -19,13 +19,10 @@ std::string DeferredRenderingFinalFragmentCode =
 // Material for deferred rendering. Applied on a simple quad on the whole\n\
 // viewport area.\n\
 \n\
-layout(binding = 0) uniform sampler2D albedo ;\n\
+layout(binding = 0) uniform sampler2D albedoAO ;\n\
 layout(binding = 1) uniform sampler2D normal ;\n\
 layout(binding = 2) uniform sampler2D specular ;\n\
 layout(binding = 3) uniform sampler2D depth ;\n\
-\n\
-// layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;\n\
-// layout(binding = AO_MAP_BINDING_UNIT) uniform sampler2D ao ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
@@ -40,7 +37,7 @@ void main() {\n\
 \n\
     // Put values to perform the lighting pass for the current fragment.\n\
     FragmentData currentFragment ;\n\
-    currentFragment.diffuseValue = texture(albedo, inTexCoords).rgb ;\n\
+    currentFragment.diffuseValue = texture(albedoAO, inTexCoords).rgb ;\n\
     currentFragment.normalValue = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;\n\
     currentFragment.specularValue = texture(specular, inTexCoords).rgb ;\n\
     currentFragment.shininess = texture(specular, inTexCoords).a ;\n\
@@ -64,7 +61,9 @@ void main() {\n\
     float skyMask = 1.f - normalMask ;\n\
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;\n\
 \n\
-    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
+    outColor = vec4(vec3(texture(albedoAO, inTexCoords).a), 1.f) ;\n\
+    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
+\n\
 \n\
     //#define DEBUG_CSM\n\
     #ifdef DEBUG_CSM\n\
@@ -84,8 +83,8 @@ void main() {\n\
             }\n\
         }\n\
 \n\
-        outColor += vec4(CascadeColors[selectedCascade], 0.f) ;\n\
-        normalize(outColor) ;\n\
+        // outColor += vec4(CascadeColors[selectedCascade], 0.f) ;\n\
+        // normalize(outColor) ;\n\
     #endif\n\
 }\n\
 " ;

@@ -24,8 +24,8 @@ const std::string TestWindow::AppName = "Rendering test" ;
 
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
-    fullscreen() ;
-    hideMouseCursor() ;
+    // fullscreen() ;
+    // hideMouseCursor() ;
 
     /** SCENE GRAPH **/
     // Create a camera in the scene graph.
@@ -35,7 +35,7 @@ TestWindow::TestWindow()
     m_cameraComponent -> setFarPlaneDistance(100.f) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
-    
+
     // Cubemap.
     {
         std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
@@ -130,11 +130,13 @@ TestWindow::TestWindow()
 
 
 
-    /** FRAME GRAPH **/   
+    /** FRAME GRAPH **/
     Hope::ActiveCameraNode* activeCameraNode = new Hope::ActiveCameraNode() ;
     activeCameraNode -> setCamera(m_cameraComponent) ;
 
     /*
+                      +-- SSAORender
+                      |
                       +-- ActiveCamera -- G-Buffer
                       |
         root-- +-- Viewport
@@ -171,7 +173,7 @@ TestWindow::TestWindow()
     Hope::RenderCapabilityNode* capabilitiesNode = new Hope::RenderCapabilityNode(activeCameraNode) ;
     Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
     capabilitiesNode -> addCapability(seamlessCubemap) ;
-    
+
     Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
         Mind::Dimension2Di(800, 480),
         true,
@@ -179,9 +181,9 @@ TestWindow::TestWindow()
     ) ;
     Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepthStencil, gBufferNode) ;
     new Hope::RenderPassSelectorNode(DeferredPassID, clearBuffers) ;
-    
+
     // SSAO pass (not working yet).
-    // new Hope::SSAORenderNode(gBufferNode, activeCameraNode) ;
+    new Hope::SSAORenderNode(gBufferNode, activeCameraNode) ;
 
     // Deferred shading branch of the framegraph.
     Hope::GBufferQuadMaterialComponent* drMaterial = new Hope::GBufferQuadMaterialComponent(gBufferNode) ;

@@ -203,8 +203,8 @@ void OpenGLFrameGraphVisitor::visit(EffectApplierNode* node) {
     m_aggregators.back().addEffectData({ node -> effect() }) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(SSAORenderNode* node) {
-    m_globalEffects.push_back(node -> data()) ;
+void OpenGLFrameGraphVisitor::visit(SSAORenderNode* /*node*/) {
+    //m_globalEffects.push_back(node -> data()) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

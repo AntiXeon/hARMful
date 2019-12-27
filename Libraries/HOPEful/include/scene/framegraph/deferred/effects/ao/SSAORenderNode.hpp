@@ -18,36 +18,16 @@
 
 namespace Hope {
     class SSAOMaterialComponent ;
+    class SSAOBlurMaterialComponent ;
 
     /**
      * Node to compute screen-space ambient occlusion.
      */
     class SSAORenderNode final : public EffectFrameGraphNode {
         public:
-            /**
-             * Albedo render target.
-             */
-            static const unsigned char AlbedoRenderTarget = 0 ;
-
-            /**
-             * Normal render target.
-             */
-            static const unsigned char NormalRenderTarget = 1 ;
-
-            /**
-             * Noise render target.
-             */
-            static const unsigned char NoiseRenderTarget = 2 ;
-
-            /**
-             * Depth render target.
-             */
-            static const unsigned char DepthRenderTarget = 3 ;
-
-            /**
-             * Depth render target.
-             */
-            static const unsigned char AORenderTarget = AO_MAP_BINDING_UNIT ;
+        public:
+            static const unsigned char AORenderTarget = 0 ;
+            static const unsigned char NoiseRenderTarget = 1 ;
 
         private:
             /**
@@ -82,7 +62,7 @@ namespace Hope {
              * can be applied to every fragment of the render with a minimal
              * memory cost.
              */
-            API::TextureImage2D* m_noiseTexture = nullptr ;
+            std::shared_ptr<API::TextureImage2D> m_noiseTexture = nullptr ;
 
             /**
              * G-Buffer containing the normal and depth buffers, required to
@@ -94,6 +74,11 @@ namespace Hope {
              * Material used to render the ambient occlusion.
              */
             SSAOMaterialComponent* m_ssaoMaterial = nullptr ;
+
+            /**
+             * Material used to blur (and copy) the ambient occlusion.
+             */
+            SSAOBlurMaterialComponent* m_ssaoBlurMaterial = nullptr ;
 
             /**
              * Normal-oriented hemisphere kernel.
@@ -123,7 +108,7 @@ namespace Hope {
              * Get the random texture that is used to sample ambient occlusion
              * all over the screen.
              */
-            const API::TextureImage2D* noiseTexture() const {
+            const std::shared_ptr<API::TextureImage2D> noiseTexture() const {
                 return m_noiseTexture ;
             }
 
@@ -183,12 +168,6 @@ namespace Hope {
              * Generate the subtree of the framegraph.
              */
             void generateFramegraphSubtree() ;
-
-        protected:
-            /**
-             * Accept the visitor.
-             */
-            void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

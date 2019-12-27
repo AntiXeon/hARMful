@@ -6,8 +6,6 @@
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <memory>
 
-#include <iostream>
-
 namespace Hope::GL {
     /**
      * Framebuffer writing/reading in 2D textures.
@@ -23,22 +21,22 @@ namespace Hope::GL {
              * Color textures attached to the framebuffer.
              * Stores the textures associated to their attachment point.
              */
-            std::vector<std::unique_ptr<TextureImage2D>> m_colorAttachments ;
+            std::vector<std::shared_ptr<TextureImage2D>> m_colorAttachments ;
 
             /**
              * Depth buffer attachment.
              */
-            std::unique_ptr<TextureImage2D> m_depthAttachment ;
+            std::shared_ptr<TextureImage2D> m_depthAttachment ;
 
             /**
              * Stencil buffer attachment.
              */
-            std::unique_ptr<TextureImage2D> m_stencilAttachment ;
+            std::shared_ptr<TextureImage2D> m_stencilAttachment ;
 
             /**
              * Depth + stencil buffer attachment.
              */
-            std::unique_ptr<TextureImage2D> m_depthStencilAttachment ;
+            std::shared_ptr<TextureImage2D> m_depthStencilAttachment ;
 
         public:
             /**
@@ -81,9 +79,33 @@ namespace Hope::GL {
             ) override ;
 
             /**
+             * Attach an external color texture to the framebuffer.
+             * Notice that several textures can be attached to a same
+             * framebuffer in order to perform multiple render target
+             * operations.
+             * @param   attachmentIndex Index of the attachment point to the
+             *                          framebuffer. Starts at 0, you can get
+             *                          the amount of color attachment with the
+             *                          GetColorAttachmentCount() method.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachColor(
+                const unsigned char attachmentIndex,
+                const std::shared_ptr<TextureImage2D> texture
+            ) ;
+
+            /**
              * Attach the depth buffer.
              */
             void attachDepth() override ;
+
+            /**
+             * Attach the depth buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachDepth(const std::shared_ptr<TextureImage2D> texture) ;
 
             /**
              * Attach the stencil buffer.
@@ -91,9 +113,23 @@ namespace Hope::GL {
             void attachStencil() override ;
 
             /**
+             * Attach the stencil buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachStencil(const std::shared_ptr<TextureImage2D> texture) ;
+
+            /**
              * Attach the combination of depth+stencil buffer.
              */
             void attachDepthStencil() override ;
+
+            /**
+             * Attach the combination of depth+stencil buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachDepthStencil(const std::shared_ptr<TextureImage2D> texture) ;
 
             /**
              * Bind the color attachment.
@@ -156,6 +192,35 @@ namespace Hope::GL {
              */
             const Mind::Dimension2Di& size() const {
                 return m_size ;
+            }
+
+            /**
+             * Get the wanted color attachment.
+             * @param   attachmentIndex Attachment index.
+             */
+            std::shared_ptr<TextureImage2D> colorAttachment(const unsigned char attachmentIndex) const {
+                return m_colorAttachments[attachmentIndex] ;
+            }
+
+            /**
+             * Get the depth attachment.
+             */
+            std::shared_ptr<TextureImage2D> depthAttachment() const {
+                return m_depthAttachment ;
+            }
+
+            /**
+             * Get the stencil attachment.
+             */
+            std::shared_ptr<TextureImage2D> stencilAttachment() const {
+                return m_stencilAttachment ;
+            }
+
+            /**
+             * Get the depth & stencil attachment.
+             */
+            std::shared_ptr<TextureImage2D> depthStencilAttachment() const {
+                return m_depthStencilAttachment ;
             }
     } ;
 }

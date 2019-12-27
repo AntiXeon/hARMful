@@ -50,7 +50,7 @@ void Framebuffer2D::attachColor(
 ) {
     if (!m_colorAttachments[attachmentIndex]) {
         // Generate the texture.
-        m_colorAttachments[attachmentIndex] = std::make_unique<TextureImage2D>(
+        m_colorAttachments[attachmentIndex] = std::make_shared<TextureImage2D>(
             m_size,
             internalFormat,
             pixelDataFormat,
@@ -63,15 +63,21 @@ void Framebuffer2D::attachColor(
         m_colorAttachments[attachmentIndex] -> bind() ;
         m_colorAttachments[attachmentIndex] -> setFiltering(GL_LINEAR, GL_LINEAR) ;
         m_colorAttachments[attachmentIndex] -> unbind() ;
+    }
+
+    attachColor(attachmentIndex, m_colorAttachments[attachmentIndex]) ;
 }
 
-    // Attach the texture to the framebuffer.
+void Framebuffer2D::attachColor(
+    const unsigned char attachmentIndex,
+    const std::shared_ptr<TextureImage2D> texture
+) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0 + attachmentIndex,
         GL_TEXTURE_2D,
-        m_colorAttachments[attachmentIndex] -> id(),
+        texture -> id(),
         Framebuffer::MipmapLevel
     ) ;
     unbind() ;
@@ -80,7 +86,7 @@ void Framebuffer2D::attachColor(
 void Framebuffer2D::attachDepth() {
     if (!m_depthAttachment) {
         // Generate the texture.
-        m_depthAttachment = std::make_unique<TextureImage2D>(
+        m_depthAttachment = std::make_shared<TextureImage2D>(
             m_size,
             InternalFormat::DepthComponent,
             PixelFormat::DepthComponent,
@@ -95,13 +101,16 @@ void Framebuffer2D::attachDepth() {
     m_depthAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
     m_depthAttachment -> unbind() ;
 
-    // Attach the texture to the framebuffer.
+    attachDepth(m_depthAttachment) ;
+}
+
+void Framebuffer2D::attachDepth(const std::shared_ptr<TextureImage2D> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_ATTACHMENT,
         GL_TEXTURE_2D,
-        m_depthAttachment -> id(),
+        texture -> id(),
         Framebuffer::MipmapLevel
     ) ;
     unbind() ;
@@ -110,7 +119,7 @@ void Framebuffer2D::attachDepth() {
 void Framebuffer2D::attachStencil() {
     if (!m_stencilAttachment) {
         // Generate the texture.
-        m_stencilAttachment = std::make_unique<TextureImage2D>(
+        m_stencilAttachment = std::make_shared<TextureImage2D>(
             m_size,
             InternalFormat::StencilIndex,
             PixelFormat::StencilIndex,
@@ -126,12 +135,16 @@ void Framebuffer2D::attachStencil() {
     m_stencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
+    attachStencil(m_stencilAttachment) ;
+}
+
+void Framebuffer2D::attachStencil(const std::shared_ptr<TextureImage2D> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_STENCIL_ATTACHMENT,
         GL_TEXTURE_2D,
-        m_stencilAttachment -> id(),
+        texture -> id(),
         Framebuffer::MipmapLevel
     ) ;
     unbind() ;
@@ -140,7 +153,7 @@ void Framebuffer2D::attachStencil() {
 void Framebuffer2D::attachDepthStencil() {
     if (!m_depthStencilAttachment) {
         // Generate the texture.
-        m_depthStencilAttachment = std::make_unique<TextureImage2D>(
+        m_depthStencilAttachment = std::make_shared<TextureImage2D>(
             m_size,
             InternalFormat::Depth24Stencil8,
             PixelFormat::DepthStencil,
@@ -156,12 +169,16 @@ void Framebuffer2D::attachDepthStencil() {
     m_depthStencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
+    attachDepthStencil(m_depthStencilAttachment) ;
+}
+
+void Framebuffer2D::attachDepthStencil(const std::shared_ptr<TextureImage2D> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
         GL_DEPTH_STENCIL_ATTACHMENT,
         GL_TEXTURE_2D,
-        m_depthStencilAttachment -> id(),
+        texture -> id(),
         Framebuffer::MipmapLevel
     ) ;
     unbind() ;

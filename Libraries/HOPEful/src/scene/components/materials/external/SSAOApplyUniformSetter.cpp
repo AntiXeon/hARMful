@@ -22,9 +22,19 @@ void SSAOApplyUniformSetter::updateUniforms() {
     uniform(UniformNames::MaterialUseAOUniformName()) -> setInteger(m_useAO) ;
 
     if (m_useAO) {
-        FramebufferRenderNode* aoBufferNode = m_ssaoNode -> aoBuffer() ;
-        API::Framebuffer2D* aoFramebuffer = aoBufferNode -> framebuffer() ;
-        aoFramebuffer -> bindUnitColor(Hope::SSAORenderNode::AORenderTarget) ;
+        // Noise texture.
+        m_ssaoNode -> noiseTexture() -> bindUnit(SSAORenderNode::NoiseRenderTarget) ;
+
+        // Kernel.
+        uint8_t sampleIndex = 0 ;
+        const std::array<Mind::Vector3f, AO_KERNEL_SIZE>& kernel = m_ssaoNode -> kernel() ;
+        for (const Mind::Vector3f& sample : kernel) {
+            std::string strSampleIndex = Doom::StringExt::ToStringi(sampleIndex) ;
+
+            std::string kernelName = UniformNames::MaterialAOKernelUniformName() + "[" + strSampleIndex + "]" ;
+            uniform(kernelName) -> setVec3(sample.toArray()) ;
+            sampleIndex++ ;
+        }
     }
 }
 
@@ -36,4 +46,14 @@ void SSAOApplyUniformSetter::setSSAONode(Hope::SSAORenderNode* node) {
     }
 
     m_ssaoNode = node ;
+
+    for (uint8_t sampleIndex = 0 ; sampleIndex < AO_KERNEL_SIZE ; ++sampleIndex) {
+        std::string strSampleIndex = Doom::StringExt::ToStringi(sampleIndex) ;
+        std::string kernelName = UniformNames::MaterialAOKernelUniformName() + "[" + strSampleIndex + "]" ;
+
+        std::shared_ptr<Hope::ShaderUniform> kernalSampleUniform = std::make_shared<Hope::ShaderUniform>() ;
+        kernalSampleUniform -> setName(kernelName) ;
+        kernalSampleUniform -> setLocation(UNIFORM_AO_KERNEL_LOCATION + sampleIndex) ;
+        addShaderUniform(kernalSampleUniform) ;
+    }
 }
