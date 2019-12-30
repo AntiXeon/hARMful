@@ -20,8 +20,8 @@ std::string DeferredRenderingFinalFragmentCode =
 // viewport area.\n\
 \n\
 layout(binding = 0) uniform sampler2D albedoAO ;\n\
-layout(binding = 1) uniform sampler2D normal ;\n\
-layout(binding = 2) uniform sampler2D specular ;\n\
+layout(binding = 1) uniform sampler2D specular ;\n\
+layout(binding = 2) uniform sampler2D normal ;\n\
 layout(binding = 3) uniform sampler2D depth ;\n\
 \n\
 layout(location = 0) in vec2 inTexCoords ;\n\
@@ -51,6 +51,9 @@ void main() {\n\
         currentFragment\n\
     ) ;\n\
 \n\
+    float ambientOcclusion = texture(albedoAO, inTexCoords).a ;\n\
+    shadedColor *= ambientOcclusion ;\n\
+\n\
     // Compute the skybox mask to include it in the final render.\n\
     // 1. Get the normal mask based on the length of the normal vector (the\n\
     //    skybox material gives [0,0,0,0] during the off-screen pass).\n\
@@ -61,8 +64,7 @@ void main() {\n\
     float skyMask = 1.f - normalMask ;\n\
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;\n\
 \n\
-    outColor = vec4(vec3(texture(albedoAO, inTexCoords).a), 1.f) ;\n\
-    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
+    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;\n\
 \n\
 \n\
     //#define DEBUG_CSM\n\

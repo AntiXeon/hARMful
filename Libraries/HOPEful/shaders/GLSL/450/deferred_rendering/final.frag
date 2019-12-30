@@ -2,8 +2,8 @@
 // viewport area.
 
 layout(binding = 0) uniform sampler2D albedoAO ;
-layout(binding = 1) uniform sampler2D normal ;
-layout(binding = 2) uniform sampler2D specular ;
+layout(binding = 1) uniform sampler2D specular ;
+layout(binding = 2) uniform sampler2D normal ;
 layout(binding = 3) uniform sampler2D depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
@@ -33,6 +33,9 @@ void main() {
         currentFragment
     ) ;
 
+    float ambientOcclusion = texture(albedoAO, inTexCoords).a ;
+    shadedColor *= ambientOcclusion ;
+
     // Compute the skybox mask to include it in the final render.
     // 1. Get the normal mask based on the length of the normal vector (the
     //    skybox material gives [0,0,0,0] during the off-screen pass).
@@ -43,8 +46,7 @@ void main() {
     float skyMask = 1.f - normalMask ;
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-    outColor = vec4(vec3(texture(albedoAO, inTexCoords).a), 1.f) ;
-    //outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
+    outColor = vec4(shadedColor + skyDiffuse, 1.f) ;
 
 
     //#define DEBUG_CSM

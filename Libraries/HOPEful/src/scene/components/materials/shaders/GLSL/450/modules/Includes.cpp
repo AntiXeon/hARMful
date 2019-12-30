@@ -24,7 +24,7 @@ std::string IncludesAoModuleCode =
 \n\
 #define AO_KERNEL_SIZE  64\n\
 #define AO_RADIUS       0.5\n\
-#define AO_BIAS         0.25\n\
+#define AO_BIAS         0.02\n\
 \n\
 #endif\n\
 " ;

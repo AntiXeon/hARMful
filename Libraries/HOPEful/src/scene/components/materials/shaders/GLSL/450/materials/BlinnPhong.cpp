@@ -30,8 +30,8 @@ layout(location = 3) uniform float shininess ;\n\
 layout(location = 0) in vec3 inNormal ;\n\
 \n\
 layout(location = 0) out vec4 gAlbedo ;\n\
-layout(location = 1) out vec4 gNormal ;\n\
-layout(location = 2) out vec4 gSpecular ;\n\
+layout(location = 1) out vec4 gSpecular ;\n\
+layout(location = 2) out vec4 gNormal ;\n\
 \n\
 void main() {\n\
     gAlbedo = vec4(diffuse, 1.f) ;\n\

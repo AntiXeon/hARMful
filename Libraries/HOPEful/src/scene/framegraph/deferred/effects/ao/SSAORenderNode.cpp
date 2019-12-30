@@ -17,6 +17,7 @@ SSAORenderNode::SSAORenderNode(
     FrameGraphNode* parent
 ) : EffectFrameGraphNode(parent),
     m_gBuffer(gBuffer) {
+    Doom::Random::Initialize() ;
     generateNoiseTexture() ;
     generateKernel() ;
     generateFramegraphSubtree() ;
@@ -31,17 +32,17 @@ SSAORenderNode::~SSAORenderNode() {
 void SSAORenderNode::generateNoiseTexture() {
     std::array<float, NoiseTextureDataSize> noiseData ;
 
-    for (int index = 0 ; index < NoiseTextureDataSize ; index += Mind::Vector3f::AmountCoords) {
+    for (int index = 0 ; index < NoiseTextureDataSize ; index += Mind::Vector4f::AmountCoords) {
         noiseData[index] = Doom::Random::GetNormalizedFloat() * 2.f - 1.f ;       // X
         noiseData[index + 1] = Doom::Random::GetNormalizedFloat() * 2.f - 1.f ;   // Y
-        noiseData[index + 2] = 0.f ;                                              // Z
+        noiseData[index + 2] = 0.f ;
     }
 
-    const static bool GenerateMipmap = false ;
+    const static bool GenerateMipmap = true ;
     m_noiseTexture = std::make_shared<API::TextureImage2D>(
         Mind::Dimension2Di(NoiseTextureSideSize, NoiseTextureSideSize),
-        API::InternalFormat::RedGreenBlue16f,
-        API::PixelFormat::RedGreenBlue,
+        API::InternalFormat::RedGreenBlueAlpha32f,
+        API::PixelFormat::RedGreenBlueAlpha,
         API::PixelDataType::Float,
         noiseData.data(),
         GenerateMipmap
@@ -129,7 +130,6 @@ void SSAORenderNode::generateFramegraphSubtree() {
             GBufferRenderNode::AlbedoRenderTarget,
             m_gBuffer -> framebuffer() -> colorAttachment(GBufferRenderNode::AlbedoRenderTarget)
         ) ;
-        //m_subtree.aoBlurCopy.offscreen -> framebuffer() -> setDrawBuffers({ GBufferRenderNode::AlbedoRenderTarget }) ;
 
         // Render pass selection.
         m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(

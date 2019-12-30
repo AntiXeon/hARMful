@@ -10,11 +10,10 @@
 #endif
 
 #include <scene/framegraph/deferred/effects/ao/SSAOApplyData.hpp>
-#include <scene/framegraph/deferred/effects/ao/SSAOComputeData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
 #include <scene/framegraph/deferred/GBufferRenderNode.hpp>
-#include <geometry/points/Point3Df.hpp>
+#include <geometry/points/Point4Df.hpp>
 
 namespace Hope {
     class SSAOMaterialComponent ;
@@ -44,12 +43,7 @@ namespace Hope {
             /**
              * Amount of data in the RGB noise texture.
              */
-            const static int NoiseTextureDataSize = NoiseTexturePixelAmount * Mind::Vector3f::AmountCoords ;
-
-            /**
-             * The effect data that are applied on pass to compute AO.
-             */
-            SSAOComputeData m_effectComputeData ;
+            const static int NoiseTextureDataSize = NoiseTexturePixelAmount * Mind::Vector4f::AmountCoords ;
 
             /**
              * The effect data that are applied on final rendering stage.

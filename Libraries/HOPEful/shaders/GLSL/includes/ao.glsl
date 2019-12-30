@@ -7,6 +7,6 @@
 
 #define AO_KERNEL_SIZE  64
 #define AO_RADIUS       0.5
-#define AO_BIAS         0.25
+#define AO_BIAS         0.02
 
 #endif

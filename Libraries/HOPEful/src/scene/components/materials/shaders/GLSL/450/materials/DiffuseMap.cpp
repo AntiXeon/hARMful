@@ -34,8 +34,8 @@ layout(location = 0) in vec2 inTexCoord ;\n\
 layout(location = 1) in vec3 inNormal ;\n\
 \n\
 layout(location = 0) out vec4 gAlbedo ;\n\
-layout(location = 1) out vec4 gNormal ;\n\
-layout(location = 2) out vec4 gSpecular ;\n\
+layout(location = 1) out vec4 gSpecular ;\n\
+layout(location = 2) out vec4 gNormal ;\n\
 \n\
 void main() {\n\
     gAlbedo = vec4(texture(diffuse, inTexCoord).rgb, 1.f) ;\n\

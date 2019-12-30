@@ -28,6 +28,22 @@ vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {\n\
 }\n\
 \n\
 /**\n\
+ * Retrieve a view space position from texture coordinates and depth.\n\
+ */\n\
+vec4 ComputeWorldSpacePosition(vec2 texCoords, float depth) {\n\
+    vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;\n\
+	float x = adjustedTexCoords.x ;\n\
+	float y = adjustedTexCoords.y ;\n\
+	float z = depth * 2.f - 1.f ;\n\
+    float w = 1.f ;\n\
+\n\
+	vec4 positionProjection = vec4(x, y, z, w) ;\n\
+	vec4 positionView = inverseViewProjectionMatrix * positionProjection ;\n\
+    positionView /= positionView.w ;\n\
+	return positionView ;\n\
+}\n\
+\n\
+/**\n\
  * Encode normals using the Lambert azimuthal equal-area projection.\n\
  * See http://aras-p.info/texts/CompactNormalStorage.html\n\
  */\n\

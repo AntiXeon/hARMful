@@ -12,8 +12,8 @@ if (UNIX)
         target_link_libraries(${PROJECT_NAME} ${GLFW_LIBRARIES})
     endif()
 
-    find_package(assimp REQUIRED)
-    if (assimp_FOUND)
+    find_package(assimp REQUIRED)   
+	if (assimp_FOUND)
         # Because ASSIMP find_package seems to be broken...
         set(ASSIMP_LIBRARY "assimp")
         target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
