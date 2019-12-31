@@ -32,7 +32,7 @@ TestWindow::TestWindow()
     m_cameraEntity = new Hope::Entity(scene() -> root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(DefaultClearColor)) ;
-    m_cameraComponent -> setFarPlaneDistance(100.f) ;
+    m_cameraComponent -> setFarPlaneDistance(200.f) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
@@ -63,7 +63,7 @@ TestWindow::TestWindow()
     {
         Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
         (meshTreeEntity -> transform()).setScale(0.1f) ;
-        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/Test.fbx") ;
+        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
         meshTreeEntity -> addComponent(meshTreeComponent) ;
     }
 
@@ -150,7 +150,7 @@ TestWindow::TestWindow()
 
     // -- Shadow mapping pass --
     const uint32_t ShadowResolution = 1024 ;
-    float maxDistance = 75.f ;
+    float maxDistance = 100.f ;
     uint8_t amountCascades = 3 ;
     new Hope::DirectionalLightShadowNode(
         dirLightComponent,
