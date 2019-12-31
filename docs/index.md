@@ -27,7 +27,7 @@ Some of them are already implemented and a demonstration video is available. A "
     - Compute normals in a spheremap transform (✓)
 - Post-rendering effects:
     - Anti-aliasing (✗)
-    - Ambient occlusion (✗)
+    - Screen-Space Ambient Occlusion [[Demo](https://www.youtube.com/watch?v=oE9_VqnryoU)]
     - Bloom (✗)
     - Depth of Field (✗)
     - Many others...

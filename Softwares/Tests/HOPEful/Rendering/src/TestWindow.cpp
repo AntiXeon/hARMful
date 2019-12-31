@@ -24,8 +24,8 @@ const std::string TestWindow::AppName = "Rendering test" ;
 
 TestWindow::TestWindow()
     : Hope::GL::Window(800, 480, AppName) {
-    // fullscreen() ;
-    // hideMouseCursor() ;
+    fullscreen() ;
+    hideMouseCursor() ;
 
     /** SCENE GRAPH **/
     // Create a camera in the scene graph.
