@@ -7,7 +7,7 @@ Ambient occlusion is used to mimic the lack of light when two objects are close 
 
 The screen-space ambient occlusion (SSAO) is a quite cheap ambient occlusion technique for 3D realtime rendering. SSAO has been introduced by Crytek in their Crysis video game (2007). Since, more realistic techniques - but requiring more powerful hardware - have been developed.
 
-![With/without SSAO](../assets/images/post_img/ssao_anim.gif)
+![With/without SSAO](../../../assets/images/post_img/ssao_anim.gif)
 _When SSAO is enabled, additional shadows are visible between close objects. Look at the ground below the cubes and the pipe on right._
 
 As its name says, this post-production effect is based on what is rendered from the view space (camera) on offscreen buffers. It is thus available using deferred rendering. SSAO uses several informations rendered in the G-Buffer: position, normals and depth buffer[^1].
