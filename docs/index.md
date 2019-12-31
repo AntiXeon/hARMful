@@ -6,6 +6,7 @@ layout: default
 **hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
 
 ![hARMful screenshot](./assets/images/hARMful.jpg)
+[Fullscreen](./assets/images/hARMful_big.jpg)
 
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
 Some of them are already implemented and a demonstration video is available. A "✗" symbol indicates that the feature is not yet implemented; a "✓" symbol is used to signal non-graphic features that are implemented.
@@ -27,7 +28,7 @@ Some of them are already implemented and a demonstration video is available. A "
     - Compute normals in a spheremap transform (✓)
 - Post-rendering effects:
     - Anti-aliasing (✗)
-    - Screen-Space Ambient Occlusion [[Demo](https://www.youtube.com/watch?v=oE9_VqnryoU)]
+    - Screen-Space Ambient Occlusion [[Demo](https://www.youtube.com/watch?v=kyHOFL1iB9c)]
     - Bloom (✗)
     - Depth of Field (✗)
     - Many others...
