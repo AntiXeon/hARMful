@@ -12,6 +12,11 @@ namespace Hope {
     class Scene {
         private:
             /**
+             * true if the Scene is prepared for rendering.
+             */
+            bool m_isPrepared = false ;
+
+            /**
              * Root entity of the scene.
              */
             Entity* m_root = nullptr ;
@@ -44,6 +49,13 @@ namespace Hope {
             void render() ;
 
             /**
+             * Loop over Entity objects to lock the ones that have the lock
+             * flag.
+             * @param   state   Lock state for available entities.
+             */
+            void lockEntities(const bool state) ;
+
+            /**
              * Get the root entity of the scene.
              */
             Entity* root() const {
@@ -67,6 +79,14 @@ namespace Hope {
             Scene(Scene&& moved) = delete;
             Scene& operator=(const Scene& copied) = delete;
             Scene& operator=(Scene&& moved) = delete;
+
+        private:
+            /**
+             * Lock an Entity.
+             * @param   entity  The Entity to lock if available.
+             * @param   state   Lock state.
+             */
+            void lockEntity(Entity* entity, const bool state) ;
     } ;
 }
 

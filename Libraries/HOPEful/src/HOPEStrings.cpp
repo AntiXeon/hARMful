@@ -17,6 +17,8 @@ namespace Hope {
         std::string Init_GL_Renderer =      i18n("Renderer: ") ;
         std::string Init_GL_Vendor =        i18n("OpenGL version: ") ;
 
+        std::string Scene_NotPrepared =     i18n("The scene is not prepared for rendering.") ;
+
         /* Keep the final whitespace. */
         std::string Mesh_NotLoaded =        i18n("The mesh could not be loaded at: ") ;
         /* Keep the final whitespace. */

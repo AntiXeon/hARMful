@@ -35,6 +35,7 @@ TestWindow::TestWindow()
     m_cameraComponent -> setFarPlaneDistance(200.f) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
+    m_cameraEntity -> setLocked(true) ;
 
     // Cubemap.
     {
@@ -48,6 +49,7 @@ TestWindow::TestWindow()
         } ;
 
         Hope::Entity* cubemapEntity = new Hope::Entity(scene() -> root()) ;
+        cubemapEntity -> setLocked(true) ;
 
         Hope::GL::CubemapTexture* cubemapTexture = new Hope::GL::CubemapTexture(cubemapTexturePaths) ;
         Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
@@ -77,6 +79,7 @@ TestWindow::TestWindow()
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(true) ;
 		dirLightEntity -> addComponent(dirLightComponent) ;
+        dirLightEntity -> setLocked(true) ;
 	}
 
 
@@ -102,6 +105,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
+        pointLightEntity -> setLocked(true) ;
     }
 
 	// Point light
@@ -126,6 +130,7 @@ TestWindow::TestWindow()
         pointLightComponent -> setQuadraticAttenuation(0.f) ;
         pointLightComponent -> setLinearAttenuation(1.f) ;
         pointLightEntity -> addComponent(pointLightComponent) ;
+        pointLightEntity -> setLocked(true) ;
     }
 
 

@@ -36,6 +36,8 @@ Window::~Window() {
 }
 
 void Window::run() {
+    m_scene -> lockEntities(true) ;
+
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
         preRender() ;
@@ -44,6 +46,8 @@ void Window::run() {
         glfwPollEvents() ;
         glfwSwapBuffers(m_window) ;
     }
+
+    m_scene -> lockEntities(false) ;
 }
 
 void Window::windowed() const {
@@ -88,7 +92,7 @@ void Window::createInternalWindow(
             logSharedPtr -> writeLine(level, Texts::Init_Bad_GLFW) ;
         }
 
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE) ;
     }
 
     setGraphicsAPIVersion() ;

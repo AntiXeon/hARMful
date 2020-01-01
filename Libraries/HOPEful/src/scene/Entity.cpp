@@ -5,11 +5,7 @@
 
 using namespace Hope ;
 
-Entity::Entity(
-    Entity* parent,
-    const LockStateFlag lockState
-) : Node(parent),
-    m_lockState(lockState) {
+Entity::Entity(Entity* parent) : Node(parent) {
     m_components.resize(AmountComponentTypes) ;
 }
 

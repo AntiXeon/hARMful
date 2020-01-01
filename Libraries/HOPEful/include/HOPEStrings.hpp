@@ -11,6 +11,8 @@ namespace Hope {
         extern std::string Init_GL_Renderer ;
         extern std::string Init_GL_Vendor ;
 
+        extern std::string Scene_NotPrepared ;
+
         extern std::string Mesh_NotLoaded ;
         extern std::string Texture_UnknownFormat ;
 
