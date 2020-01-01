@@ -81,11 +81,9 @@ The first version of hARMful is waited for mid-2020. It is not yet well evolved 
     - Mesh importer
     - Hard shadows
     - Transparent objects rendering
+    - Cubemaps
     - Reflections / refractions of cubemap
-    - Cubemap
-* Some advanced rendering effects:
     - Screen-space ambient occlusion
-    - Ground-truth ambient occlusion
 
 ### Version 1.1 (Poodle)
 This version brings user interactions and physics engine. That reminds the pompom of a poodle one can love to touch!
@@ -98,6 +96,7 @@ This version brings user interactions and physics engine. That reminds the pompo
 ### Version 1.2 (Malteser)
 Mainly oriented towards an improvements of the rendering, as a Maltese dog with hair styled.
 * Physics-based rendering materials
+* Ground-truth ambient occlusion
 * Soft shadows
 * Global illumination
 * Support of sounds and musics (OGG)
