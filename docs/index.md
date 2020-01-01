@@ -29,6 +29,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Post-rendering effects:
     - Anti-aliasing (✗)
     - Screen-Space Ambient Occlusion [[Demo](https://www.youtube.com/watch?v=kyHOFL1iB9c)]
+    - Ground-Truth Ambient Occlusion (✗)
     - Bloom (✗)
     - Depth of Field (✗)
     - Many others...
@@ -58,6 +59,7 @@ Some of them are already implemented and a demonstration video is available. A "
     - PNG (✓)
     - JPEG (✓)
     - TGA (✗)
+    - DDS (✗)
 
 ### Features of HOPEful
 - Log system (✓)
@@ -78,26 +80,26 @@ The first version of hARMful is waited for mid-2020. It is not yet well evolved 
 * Support of OpenGL 4.5 (only) with basic 3D features:
     - Mesh importer
     - Hard shadows
-    - Screen-space ambient occlusion
     - Transparent objects rendering
-    - Reflections / refractions
-    - Skymaps
-    - Animated meshes
+    - Reflections / refractions of cubemap
+    - Cubemap
+* Some advanced rendering effects:
+    - Screen-space ambient occlusion
+    - Ground-truth ambient occlusion
 
 ### Version 1.1 (Poodle)
 This version brings user interactions and physics engine. That reminds the pompom of a poodle one can love to touch!
+* Animated meshes
 * Image saver (JPEG/PNG)
 * Integration of Bullet physics engine
 * User interactions (keyboard, mouse, controllers)
 * Increase of performances (instancing, octrees, multithreading)
-* Scripting language
 
 ### Version 1.2 (Malteser)
 Mainly oriented towards an improvements of the rendering, as a Maltese dog with hair styled.
 * Physics-based rendering materials
 * Soft shadows
 * Global illumination
-* Ground-truth ambient occlusion (realistic ambient occlusion)
 * Support of sounds and musics (OGG)
 * Support of Microsoft Windows
 
@@ -105,3 +107,4 @@ Mainly oriented towards an improvements of the rendering, as a Maltese dog with 
 Support of modern ARM processors (CPU and GPU).
 * Support of NEON
 * Support of Vulkan API
+* Scripting language
