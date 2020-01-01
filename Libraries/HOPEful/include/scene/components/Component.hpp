@@ -91,14 +91,18 @@ namespace Hope {
             /**
              * Attach the component to the provided entity.
              * @param   entity  Entity to attach the component to.
+             * @return  true if attached; false if cannot be attached or already
+             *          attached to the Entity.
              */
-            void attach(Entity* entity) ;
+            bool attach(Entity* entity) ;
 
             /**
              * Detach the component from its entity.
              * @param   entity  Entity to detach the component from.
+             * @return  true if detached; false if cannot be detached or is not
+             *          attached to the Entity.
              */
-            void detach(Entity* entity) ;
+            bool detach(Entity* entity) ;
 
         protected:
             /**

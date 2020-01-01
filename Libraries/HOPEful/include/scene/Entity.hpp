@@ -23,17 +23,15 @@ namespace Hope {
              * Lock state of the entity.
              * Unlocked:    The entity is not locked and components can be
              *              added/removed from it;
-             * ToBeLocked:  The entity is not yet locked, components can be
-             *              added/removed while the application is not yet
-             *              running.
+             * Locked:      The entity is locked, while the rendering is
+             *              running. However, components can be added/removed
+             *              while the application is not yet running.
              *              That is to said, you must create and setup the
-             *              entities **before** running the application!
-             * Locked:      When the application runs, the entities flagged with
-             *              ToBelocked are switched to the Locked state.
+             *              entities **before** running the application; or the
+             *              rendering must be stopped to edit locked entities!
              */
             enum class LockStateFlag {
                 Unlocked,
-                ToBeLocked,
                 Locked
             } ;
 
@@ -43,6 +41,11 @@ namespace Hope {
              * Otherwise, it is just ignored and all its children as well.
              */
             bool m_isActive = true ;
+
+            /**
+             * If true, the Entity can be edited (add/remove Component).
+             */
+            bool m_isEditable = true ;
 
             /**
              * If Locked, the entity cannot be modified while the application is
@@ -90,7 +93,7 @@ namespace Hope {
              * @return  Index of component in the list of its type.
              *          0xFFFFFFFF if the component has not been added.
              */
-            uint32_t addComponent(Component* component) ;
+            int32_t addComponent(Component* component) ;
 
             /**
              * Remove a component from the current entity.
@@ -179,6 +182,14 @@ namespace Hope {
              * If true, the entity cannot be modified while the application is
              * running.
              */
+            bool isEditable() const {
+                return m_isEditable ;
+            }
+
+            /**
+             * If true, the entity cannot be modified while the application is
+             * running.
+             */
             bool isLocked() const {
                 return m_lockState == LockStateFlag::Locked ;
             }
@@ -206,6 +217,16 @@ namespace Hope {
             Entity(Entity&& moved) = delete;
             Entity& operator=(const Entity& copied) = delete;
             Entity& operator=(Entity&& moved) = delete;
+
+        private:
+            /**
+             * Update the Entity state for edition (add/remove Component).
+             */
+            void setRenderState(const bool running) {
+                if (running && m_lockState == LockStateFlag::Locked) {
+                    m_isEditable = false ;
+                }
+            }
     } ;
 }
 

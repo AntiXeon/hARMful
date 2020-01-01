@@ -29,22 +29,28 @@ Entity::~Entity() {
     m_components.clear() ;
 }
 
-uint32_t Entity::addComponent(Component* component) {
+int32_t Entity::addComponent(Component* component) {
+    const int32_t FailAddIndex = -1 ;
+
     if (!component) {
-        return -1 ;
+        return FailAddIndex ;
     }
 
-    component -> attach(this) ;
+    bool isAttached = component -> attach(this) ;
     ComponentType newComponentType = component -> type() ;
+
+    if (!isAttached) {
+        return FailAddIndex ;
+    }
 
     if (component -> isStackable() || m_components[newComponentType].size() == 0) {
         // Stack the components.
         m_components[newComponentType].push_back(component) ;
-        int lastComponentIndex = m_components[newComponentType].size() - 1 ;
+        int32_t lastComponentIndex = m_components[newComponentType].size() - 1 ;
         return lastComponentIndex ;
     }
     else {
-        const int UniqueComponentIndex = 0 ;
+        const int32_t UniqueComponentIndex = 0 ;
 
         // Replace the lone component.
         m_components[newComponentType][UniqueComponentIndex] = component ;
@@ -58,7 +64,11 @@ void Entity::removeComponent(Component* component) {
     }
 
     if (component -> isRemovable()) {
-        component -> detach(this) ;
+        bool isDetached = component -> detach(this) ;
+
+        if (!isDetached) {
+            return ;
+        }
 
         ComponentType componentType = component -> type() ;
         std::vector<Component*>& components = m_components[componentType] ;
@@ -68,6 +78,10 @@ void Entity::removeComponent(Component* component) {
 }
 
 void Entity::removeComponents(const ComponentType type) {
+    if (!m_isEditable) {
+        return ;
+    }
+
     if (m_components[type].size() > 0) {
         std::vector<Component*>& components = m_components[type] ;
 

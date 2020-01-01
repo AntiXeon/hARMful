@@ -39,24 +39,38 @@ Entity* Component::firstEntity() const {
     return nullptr ;
 }
 
-void Component::attach(Entity* entity) {
+bool Component::attach(Entity* entity) {
+    if (!entity -> isEditable()) {
+        return false ;
+    }
+
     auto posEntity = std::find(m_entities.begin(), m_entities.end(), entity) ;
     bool alreadyAttached = (posEntity != m_entities.end()) ;
 
     if (!alreadyAttached) {
         m_entities.push_back(entity) ;
         onAttach(entity) ;
+        return true ;
     }
+
+    return false ;
 }
 
-void Component::detach(Entity* entity) {
+bool Component::detach(Entity* entity) {
+    if (!entity -> isEditable()) {
+        return false ;
+    }
+
     auto posEntity = std::find(m_entities.begin(), m_entities.end(), entity) ;
     bool isAttached = (posEntity != m_entities.end()) ;
 
     if (isAttached) {
         onDetach(entity) ;
         m_entities.erase(posEntity) ;
+        return true ;
     }
+
+    return false ;
 }
 
 void Component::onAttach(Entity*) {}
