@@ -11,7 +11,7 @@ Yet, its name was found at this time. It is a pun between the idea of the video 
 
 Moreover, hARMful stands for "_Handy, Adapted to Raspi Multimedia and Fast Utilities Libraries_". For now, it is not yet adapted to the Raspberry Pi, but it is still a wish to run it on this small platform.
 
-After the development of this first version of hARMful, I decided to continue this as a personal project. I added low-level functionalities as a logging system and mathematical tools. Some years later, I decided to simpify and rewrite these tools and to share it on GitHub. The hARMful project as you see it know was born.
+After the development of this first version of hARMful, I decided to continue this as a personal project. I added low-level functionalities as a logging system and mathematical tools. Some years later, I decided to simpify and rewrite these tools and to share it on GitHub. The hARMful project as you see it now was born.
 
 The name of each library has a signification:
 * **DOOM**: Debugging and Oriented-Object Modules
