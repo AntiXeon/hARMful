@@ -1,5 +1,6 @@
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
+#include <scene/ogl/textures/formats/FilterModes.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
@@ -14,7 +15,7 @@ TextureImage2D::TextureImage2D(
 
     glBindTexture(GL_TEXTURE_2D, id()) ;
     TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
-    setFiltering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR) ;
+    setFiltering(FilterMode::Linear_MipLinear, FilterMode::Linear_MipLinear) ;
 
     if (mipmap) {
         glGenerateMipmap(GL_TEXTURE_2D) ;

@@ -62,7 +62,7 @@ void Framebuffer2DStack::attachColor(
 
         // Set the filtering modes.
         m_colorAttachments[attachmentIndex] -> bind() ;
-        m_colorAttachments[attachmentIndex] -> setFiltering(GL_LINEAR, GL_LINEAR) ;
+        m_colorAttachments[attachmentIndex] -> setFiltering(FilterMode::Linear, FilterMode::Linear) ;
         m_colorAttachments[attachmentIndex] -> unbind() ;
     }
 
@@ -93,7 +93,7 @@ void Framebuffer2DStack::attachDepth() {
 
     // Set the filtering modes.
     m_depthAttachment -> bind() ;
-    m_depthAttachment -> setFiltering(GL_LINEAR, GL_LINEAR) ;
+    m_depthAttachment -> setFiltering(FilterMode::Linear, FilterMode::Linear) ;
     m_depthAttachment -> setWrapModes({ ClampToBorder, ClampToBorder, ClampToBorder }) ;
     m_depthAttachment -> setBorderColor(Hope::Color(1.f, 1.f, 1.f, 1.f)) ;
     m_depthAttachment -> setCompareRefToTexture(true) ;
@@ -127,7 +127,7 @@ void Framebuffer2DStack::attachStencil() {
 
     // Set the filtering modes.
     m_stencilAttachment -> bind() ;
-    m_stencilAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
+    m_stencilAttachment -> setFiltering(FilterMode::Nearest, FilterMode::Nearest) ;
     m_stencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
@@ -157,7 +157,7 @@ void Framebuffer2DStack::attachDepthStencil() {
 
     // Set the filtering modes.
     m_depthStencilAttachment -> bind() ;
-    m_depthStencilAttachment -> setFiltering(GL_NEAREST, GL_NEAREST) ;
+    m_depthStencilAttachment -> setFiltering(FilterMode::Nearest, FilterMode::Nearest) ;
     m_depthStencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.

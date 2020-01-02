@@ -25,8 +25,8 @@ void Texture::setBorderColor(const Color& color) {
 }
 
 void Texture::setFiltering(
-    GLint downscaling,
-    GLint upscaling
+    const FilterMode downscaling,
+    const FilterMode upscaling
 ) {
     glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, downscaling) ;
     glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, upscaling) ;

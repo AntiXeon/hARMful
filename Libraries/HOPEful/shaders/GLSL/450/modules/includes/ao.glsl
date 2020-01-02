@@ -6,7 +6,7 @@
 #define AO_MAP_BINDING_UNIT   4
 
 #define AO_KERNEL_SIZE  64
-#define AO_RADIUS       0.5
-#define AO_BIAS         0.02
+#define AO_RADIUS       3
+#define AO_BIAS         0.0025
 
 #endif

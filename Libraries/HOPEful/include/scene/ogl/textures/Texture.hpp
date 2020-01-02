@@ -6,6 +6,7 @@
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <scene/ogl/textures/formats/ComparisonOperators.hpp>
 #include <scene/ogl/textures/formats/WrapModes.hpp>
+#include <scene/ogl/textures/formats/FilterModes.hpp>
 #include <geometry/dimensions/Dimension3Di.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
@@ -103,8 +104,8 @@ namespace Hope::GL {
              * @param   upscaling   Filter option when the texture is upscaled.
              */
             void setFiltering(
-                GLint downscaling,
-                GLint upscaling
+                const FilterMode downscaling,
+                const FilterMode upscaling
             ) ;
 
             /**

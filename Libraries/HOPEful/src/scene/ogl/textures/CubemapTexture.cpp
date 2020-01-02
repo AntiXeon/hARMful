@@ -1,5 +1,6 @@
 #include <scene/ogl/textures/CubemapTexture.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
+#include <scene/ogl/textures/formats/FilterModes.hpp>
 #include <utils/LogSystem.hpp>
 #include <utils/StringExt.hpp>
 #include <HOPEStrings.hpp>
@@ -26,8 +27,8 @@ CubemapTexture::CubemapTexture(std::array<std::string, AmountFaces> paths) {
     }
 
     // Setup wrapping and filtering.
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR) ;
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR) ;
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, FilterMode::Linear) ;
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE) ;
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE) ;
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE) ;

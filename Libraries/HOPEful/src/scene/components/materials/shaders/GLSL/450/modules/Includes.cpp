@@ -23,8 +23,8 @@ std::string IncludesAoModuleCode =
 #define AO_MAP_BINDING_UNIT   4\n\
 \n\
 #define AO_KERNEL_SIZE  64\n\
-#define AO_RADIUS       0.5\n\
-#define AO_BIAS         0.02\n\
+#define AO_RADIUS       3\n\
+#define AO_BIAS         0.0025\n\
 \n\
 #endif\n\
 " ;
