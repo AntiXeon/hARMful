@@ -15,13 +15,19 @@ using namespace Hope ;
 const UniformNames MaterialComponent::Uniforms ;
 
 MaterialComponent::MaterialComponent()
-    : Component(ClassType) {}
+    : Component(ClassType) {
+    setupDirectionalLightDepthMapShader() ;
+}
+
+void MaterialComponent::setShadowMode(const ShadowMode mode) {
+    m_shadowMode = mode ;
+    // More to do on directional shadow render pass...
+}
 
 void MaterialComponent::setupRendering() {
     // Setup shaders for the different rendering passes.
     setupForwardShader() ;
     setupDeferredShader() ;
-    setupDirectionalLightDepthMapShader() ;
 }
 
 void MaterialComponent::setupDirectionalLightDepthMapShader() {

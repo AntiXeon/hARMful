@@ -2,6 +2,7 @@
 #define __HOPE__GL_CAPABILITY__
 
 #include <GL/glew.h>
+#include <scene/ogl/rendering/capabilities/CapabilityTypes.hpp>
 
 namespace Hope {
     class FrameGraphBranchState ;
@@ -21,6 +22,23 @@ namespace Hope::GL {
              * It is used to restore the state after the rendering.
              */
             bool m_wasEnabled = false ;
+
+            /**
+             * Type of the Capability.
+             */
+            CapabilityType m_type = CapabilityType::Undefined ;
+
+        public:
+            /**
+             * Create a new Capability instance.
+             * @param   type    Type of the Capability.
+             */
+            Capability(const CapabilityType type) : m_type(type) {}
+
+            /**
+             * Get the type of the Capability.
+             */
+            CapabilityType type() const { return m_type ; }
 
         protected:
             /**

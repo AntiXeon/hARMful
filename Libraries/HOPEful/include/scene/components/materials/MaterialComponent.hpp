@@ -5,6 +5,7 @@
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/UniformNames.hpp>
+#include <scene/components/materials/options/ShadowModes.hpp>
 #include <map>
 #include <string>
 
@@ -35,6 +36,11 @@ namespace Hope {
              * Effect of the material.
              */
             RenderEffect m_effect ;
+
+            /**
+             * Mode for rendering shadows.
+             */
+            ShadowMode m_shadowMode = ShadowMode::Opaque ;
 
             /**
              * List of shader uniforms.
@@ -102,6 +108,16 @@ namespace Hope {
             std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
                 return m_shaderUniforms ;
             }
+
+            /**
+             * Set the shadow mode applied on this material.
+             */
+            void setShadowMode(const ShadowMode mode) ;
+
+            /**
+             * Get the shadow mode applied on this material.
+             */
+            ShadowMode shadowMode() const { return m_shadowMode ; }
 
         protected:
             /**

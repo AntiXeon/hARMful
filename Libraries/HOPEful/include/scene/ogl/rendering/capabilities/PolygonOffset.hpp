@@ -44,6 +44,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new PolygonOffset instance.
+             */
+            PolygonOffset() : Capability(CapabilityType::PolygonOffset) {}
+
+            /**
              * Set the property to know if the point size can be changed from
              * shaders.
              */

@@ -8,6 +8,12 @@ namespace Hope::GL {
      * Enable alpha-to-coverage multisampling mode.
      */
     class AlphaCoverage final : public Capability {
+        public:
+            /**
+             * Create a new AlphaCoverage instance.
+             */
+            AlphaCoverage() : Capability(CapabilityType::AlphaCoverage) {}
+
         protected:
             /**
              * Apply the capability.

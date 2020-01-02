@@ -10,6 +10,12 @@ namespace Hope::GL {
      * generate the final sample value.
      */
     class SeamlessCubemap final : public Capability {
+        public:
+            /**
+             * Create a new SeamlessCubemap instance.
+             */
+            SeamlessCubemap() : Capability(CapabilityType::SeamlessCubemap) {}
+
         protected:
             /**
              * Apply the capability.

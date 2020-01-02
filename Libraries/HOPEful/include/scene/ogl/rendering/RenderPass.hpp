@@ -5,6 +5,7 @@
 #include <scene/framegraph/shading/FilterOption.hpp>
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
+#include <map>
 #include <set>
 #include <memory>
 
@@ -27,7 +28,7 @@ namespace Hope::GL {
             /**
              * List of graphics API capabilities.
              */
-            std::set<std::shared_ptr<Capability>> m_capabilities ;
+            std::map<CapabilityType, std::shared_ptr<Capability>> m_capabilities ;
 
             /**
              * The shader program that is executed in the current render pass.
@@ -67,18 +68,25 @@ namespace Hope::GL {
 
             /**
              * Add a graphics API capability.
+             * @return  true if the Capability can be added; false if a
+             *          Capability of same type is already in use.
              */
-            void addCapability(const std::shared_ptr<Capability> capability) ;
+            bool addCapability(const std::shared_ptr<Capability> capability) ;
 
             /**
              * Remove a graphics API capability.
              */
-            void removeCapability(const std::shared_ptr<Capability> capability) ;
+            std::shared_ptr<Capability> removeCapability(const CapabilityType type) ;
 
             /**
-             * Get the used capabilities.
+             * Get the capability of wanted type.
              */
-            std::set<std::shared_ptr<Capability>> capabilities() const {
+            std::shared_ptr<Capability> capability(const CapabilityType type) const ;
+
+            /**
+             * Get the capabilities of the current render pass.
+             */
+            std::map<CapabilityType, std::shared_ptr<Capability>> capabilities() const {
                 return m_capabilities ;
             }
 

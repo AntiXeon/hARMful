@@ -36,6 +36,11 @@ namespace Hope::GL {
                 OneMinusSource1Alpha = GL_ONE_MINUS_SRC1_ALPHA
             } ;
 
+            /**
+             * Create a new BlendEquationAdvanced instance.
+             */
+            BlendEquationAdvanced() : Capability(CapabilityType::BlendEquationAdvanced) {}
+
         private:
             static const char RGBIndex = 0 ;
             static const char AlphaIndex = 0 ;

@@ -36,6 +36,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new StencilMask instance.
+             */
+            StencilMask() : Capability(CapabilityType::StencilMask) {}
+
+            /**
              * Set the bit mask to enable and disable writing of individual bits
              * in the stencil planes.
              */

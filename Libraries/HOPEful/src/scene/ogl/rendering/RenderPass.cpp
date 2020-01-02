@@ -15,10 +15,29 @@ void RenderPass::removeFilterOption(const std::shared_ptr<Hope::FilterOption> op
     m_options.erase(option) ;
 }
 
-void RenderPass::addCapability(const std::shared_ptr<Capability> capability) {
-    m_capabilities.insert(capability) ;
+bool RenderPass::addCapability(const std::shared_ptr<Capability> capability) {
+    if (m_capabilities.count(capability -> type()) == 0) {
+        m_capabilities[capability -> type()] = capability ;
+        return true ;
+    }
+
+    return false ;
 }
 
-void RenderPass::removeCapability(const std::shared_ptr<Capability> capability) {
-    m_capabilities.erase(capability) ;
+std::shared_ptr<Capability> RenderPass::removeCapability(const CapabilityType type) {
+    if (m_capabilities.count(type) == 1) {
+        std::shared_ptr<Capability> capability = m_capabilities.find(type) -> second ;
+        m_capabilities.erase(type) ;
+        return capability ;
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<Capability> RenderPass::capability(const CapabilityType type) const {
+    if (m_capabilities.count(type) == 1) {
+        return m_capabilities.find(type) -> second ;
+    }
+
+    return nullptr ;
 }

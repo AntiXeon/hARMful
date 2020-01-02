@@ -34,6 +34,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new FaceCulling instance.
+             */
+            FaceCulling() : Capability(CapabilityType::FaceCulling) {}
+
+            /**
              * Set the used culling mode.
              */
             void setCullMode(const CullMode mode) {

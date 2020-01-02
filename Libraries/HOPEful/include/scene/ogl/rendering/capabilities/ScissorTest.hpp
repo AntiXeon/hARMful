@@ -43,6 +43,11 @@ namespace Hope::GL {
 
          public:
              /**
+              * Create a new ScissorTest instance.
+              */
+             ScissorTest() : Capability(CapabilityType::ScissorTest) {}
+
+             /**
               * Set the position on X axis of the bottom left corner of the
               * scissor test rectangle.
               */

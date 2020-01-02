@@ -27,6 +27,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new LineWidth instance.
+             */
+            LineWidth() : Capability(CapabilityType::LineWidth) {}
+
+            /**
              * Set the antialising of the width.
              * Default value if true.
              */

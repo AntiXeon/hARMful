@@ -20,6 +20,11 @@ namespace Hope::GL {
                 Max = GL_MAX
             } ;
 
+            /**
+             * Create a new BlendEquation instance.
+             */
+            BlendEquation() : Capability(CapabilityType::BlendEquation) {}
+
         private:
             /**
              * The blend mode that is used.

@@ -29,6 +29,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new ClipPlane instance.
+             */
+            ClipPlane() : Capability(CapabilityType::ClipPlane) {}
+
+            /**
              * Set the plane index. It must be a value in the range [0 - 7].
              */
             void setPlaneIndex(const uint8_t index) ;

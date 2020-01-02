@@ -32,6 +32,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new FrontFace instance.
+             */
+            FrontFace() : Capability(CapabilityType::FrontFace) {}
+
+            /**
              * Set the buffer index.
              */
             void setOrientation(const Orientation orientation) {

@@ -81,6 +81,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new StencilOperation instance.
+             */
+            StencilOperation() : Capability(CapabilityType::StencilOperation) {}
+
+            /**
              * Set parameters for front-facing faces.
              */
             void setFrontParameters(const Parameters& params) {

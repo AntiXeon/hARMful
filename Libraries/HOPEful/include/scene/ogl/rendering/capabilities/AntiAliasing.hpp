@@ -8,6 +8,12 @@ namespace Hope::GL {
      * Enable multisampling GL capability.
      */
     class AntiAliasing final : public Capability {
+        public:
+            /**
+             * Create a new AntiAliasing instance.
+             */
+            AntiAliasing() : Capability(CapabilityType::AntiAliasing) {}
+
         protected:
             /**
              * Apply the capability.

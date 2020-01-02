@@ -23,6 +23,11 @@ namespace Hope::GL {
                  Always = GL_ALWAYS
              } ;
 
+             /**
+              * Create a new DepthTest instance.
+              */
+             DepthTest() : Capability(CapabilityType::DepthTest) {}
+
          private:
              /**
               * To know if the depth test is to be enabled.

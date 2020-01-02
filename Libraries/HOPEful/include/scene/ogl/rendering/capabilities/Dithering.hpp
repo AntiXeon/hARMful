@@ -8,6 +8,12 @@ namespace Hope::GL {
      * Enable dithering.
      */
     class Dithering final : public Capability {
+        public:
+            /**
+             * Create a new Dithering instance.
+             */
+            Dithering() : Capability(CapabilityType::Dithering) {}
+
         protected:
             /**
              * Apply the capability.

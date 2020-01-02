@@ -21,6 +21,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new DepthMask instance.
+             */
+            DepthMask() : Capability(CapabilityType::DepthMask) {}
+
+            /**
              * Enable depth mask.
              */
             void enable() {

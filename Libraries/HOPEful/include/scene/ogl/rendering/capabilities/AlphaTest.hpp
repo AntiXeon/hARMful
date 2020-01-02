@@ -23,6 +23,11 @@ namespace Hope::GL {
                 Always = GL_ALWAYS
             } ;
 
+            /**
+             * Create a new AlphaTest instance.
+             */
+            AlphaTest() : Capability(CapabilityType::AlphaTest) {}
+
         private:
             struct Parameters {
                 /**

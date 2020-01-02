@@ -55,6 +55,11 @@ namespace Hope::GL {
                 GLuint mask = 0xFFFFFFFF ;
             } ;
 
+            /**
+             * Create a new StencilTest instance.
+             */
+            StencilTest() : Capability(CapabilityType::StencilTest) {}
+
         private:
             /**
              * Front faces parameters.

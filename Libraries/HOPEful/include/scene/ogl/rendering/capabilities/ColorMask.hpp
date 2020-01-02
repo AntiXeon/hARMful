@@ -22,6 +22,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new ColorMask instance.
+             */
+            ColorMask() : Capability(CapabilityType::ColorMask) {}
+
+            /**
              * Specify whether red is to be written into the frame buffer.
              */
             void setRedMask(const bool masked) {

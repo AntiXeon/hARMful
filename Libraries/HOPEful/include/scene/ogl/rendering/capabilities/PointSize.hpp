@@ -33,6 +33,11 @@ namespace Hope::GL {
 
         public:
             /**
+             * Create a new PointSize instance.
+             */
+            PointSize() : Capability(CapabilityType::PointSize) {}
+
+            /**
              * Set the property to know if the point size can be changed from
              * shaders.
              */
