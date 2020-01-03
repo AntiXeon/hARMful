@@ -5,6 +5,7 @@
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/UniformNames.hpp>
+#include <scene/components/materials/options/AlphaBlendingModes.hpp>
 #include <scene/components/materials/options/ShadowModes.hpp>
 #include <map>
 #include <string>
@@ -36,6 +37,11 @@ namespace Hope {
              * Effect of the material.
              */
             RenderEffect m_effect ;
+
+            /**
+             * Mode for alpha blending.
+             */
+            AlphaBlendingMode m_alphaBlend = AlphaBlendingMode::Opaque ;
 
             /**
              * Mode for rendering shadows.
@@ -110,7 +116,25 @@ namespace Hope {
             }
 
             /**
+             * Set the alpha blending mode applied on this material.
+             * @warning This is a helper method to avoid tricky stuff on render
+             *          pass capabilities. No need to add blending mode
+             *          capability on default render passes or whatever.
+             *          Default render passes are forward and deferred render
+             *          passes.
+             */
+            void setAlphaBlendingMode(const AlphaBlendingMode mode) ;
+
+            /**
+             * Get the alpha blending mode applied on this material.
+             */
+            AlphaBlendingMode alphaBlendingMode() const { return m_alphaBlend ; }
+
+            /**
              * Set the shadow mode applied on this material.
+             * @warning This is a helper method to avoid tricky stuff on render
+             *          pass capabilities. No need to add blending mode
+             *          capability on shadow render passes or whatever.
              */
             void setShadowMode(const ShadowMode mode) ;
 

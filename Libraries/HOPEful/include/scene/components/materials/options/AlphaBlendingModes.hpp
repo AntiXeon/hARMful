@@ -1,18 +1,18 @@
-#ifndef __HOPE__SHADOW_MODES__
-#define __HOPE__SHADOW_MODES__
+#ifndef __HOPE__ALPHA_BLENDING_MODES__
+#define __HOPE__ALPHA_BLENDING_MODES__
 
 namespace Hope {
     /**
-     * Shadow modes:
-     *  - None does not display shadow for the objects;
+     * Alpha blending modes:
      *  - Opaque to compute shadow as for opaque objects. Do not care about
-     *  - transparency;
+     *    transparency;
+     *  - AlphaBlend to compute blend alpha values;
      *  - AlphaClip to compute shadow taking full transparency into account. The
      *    non transparent parts draw shadows as for opaque objects.
      */
-    enum class ShadowMode : uint8_t {
-        None,
+    enum class AlphaBlendingMode : uint8_t {
         Opaque,
+        AlphaBlend,
         AlphaClip
     } ;
 }

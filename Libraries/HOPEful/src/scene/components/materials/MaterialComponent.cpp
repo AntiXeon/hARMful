@@ -19,6 +19,11 @@ MaterialComponent::MaterialComponent()
     setupDirectionalLightDepthMapShader() ;
 }
 
+void MaterialComponent::setAlphaBlendingMode(const AlphaBlendingMode mode) {
+    m_alphaBlend = mode ;
+    // More to do on default render passes (forward/deferred)...
+}
+
 void MaterialComponent::setShadowMode(const ShadowMode mode) {
     m_shadowMode = mode ;
     // More to do on directional shadow render pass...
