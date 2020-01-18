@@ -104,6 +104,11 @@ namespace Hope::GL {
                 const fs::path& meshPath,
                 const aiString& assimpPath
             ) ;
+
+            /**
+             * Set alpha blending mode on the provided material component.
+             */
+            static void SetAlphaBlendingMaterial(MaterialComponent* material) ;
     } ;
 } ;
 

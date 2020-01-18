@@ -154,7 +154,7 @@ TestWindow::TestWindow()
     Hope::FrameGraphNode* rootFG = new Hope::FrameGraphNode() ;
 
     // -- Shadow mapping pass --
-    const uint32_t ShadowResolution = 1024 ;
+    const uint32_t ShadowResolution = 2048 ;
     float maxDistance = 100.f ;
     uint8_t amountCascades = 3 ;
     new Hope::DirectionalLightShadowNode(
@@ -199,9 +199,10 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
+    float time = glfwGetTime() ;
     float radius = 10.f ;
-    float camX = sin(glfwGetTime() / 2.f) * radius ;
-    float camZ = cos(glfwGetTime() / 2.f) * radius ;
+    float camX = sin(time / 2.f) * radius ;
+    float camZ = cos(time / 2.f) * radius ;
 
     Mind::Vector3f camPos(camX, 3.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;

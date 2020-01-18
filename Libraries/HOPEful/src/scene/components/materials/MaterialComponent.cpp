@@ -1,4 +1,5 @@
 #include <scene/components/materials/MaterialComponent.hpp>
+#include <cassert>
 
 #ifdef OGL
     #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
@@ -6,8 +7,6 @@
     #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/450/DeferredPasses.hpp>
-
-    #include <scene/ogl/rendering/capabilities/FaceCulling.hpp>
 #endif
 
 using namespace Hope ;
@@ -16,17 +15,8 @@ const UniformNames MaterialComponent::Uniforms ;
 
 MaterialComponent::MaterialComponent()
     : Component(ClassType) {
+    m_settings.setRenderEffect(&m_effect) ;
     setupDirectionalLightDepthMapShader() ;
-}
-
-void MaterialComponent::setAlphaBlendingMode(const AlphaBlendingMode mode) {
-    m_alphaBlend = mode ;
-    // More to do on default render passes (forward/deferred)...
-}
-
-void MaterialComponent::setShadowMode(const ShadowMode mode) {
-    m_shadowMode = mode ;
-    // More to do on directional shadow render pass...
 }
 
 void MaterialComponent::setupRendering() {

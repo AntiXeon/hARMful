@@ -53,6 +53,8 @@ MaterialComponent* MaterialLoader::BlinnPhongMaterial(const aiMaterial* material
     materialComponent -> setDiffuse(Color(diffuseColor.r, diffuseColor.g, diffuseColor.b)) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
+    SetAlphaBlendingMaterial(materialComponent) ;
+
     return materialComponent ;
 }
 
@@ -70,6 +72,7 @@ MaterialComponent* MaterialLoader::DiffuseMaterial(
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
+    SetAlphaBlendingMaterial(materialComponent) ;
 
     return materialComponent ;
 }
@@ -89,6 +92,7 @@ MaterialComponent* MaterialLoader::DiffuseNormalMaterial(
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
+    SetAlphaBlendingMaterial(materialComponent) ;
 
     return materialComponent ;
 }
@@ -106,6 +110,7 @@ MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
     float shininess ;
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setShininess(shininess) ;
+    SetAlphaBlendingMaterial(materialComponent) ;
 
     return materialComponent ;
 }
@@ -149,4 +154,10 @@ std::string MaterialLoader::GetFullTexturePath(
     }
 
     return absoluteTexturePath.string() ;
+}
+
+void MaterialLoader::SetAlphaBlendingMaterial(MaterialComponent* material) {
+    auto& materialSettings = material -> settings() ;
+    materialSettings.setAlphaBlendingMode(ForwardPassID, AlphaBlendingMode::AlphaBlend) ;
+    materialSettings.setAlphaBlendingMode(DeferredPassID, AlphaBlendingMode::AlphaBlend) ;
 }
