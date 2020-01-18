@@ -70,40 +70,73 @@ Some of them are already implemented and a demonstration video is available. A "
 - Random numbers (integer, floats) generation (✓)
 
 ## Roadmap
-A version development lasts around 18 months (except the Puppy version, for which low-level tools have been developped as well).
+After the release of the version 1.0, the following versions will be prepared by specific features.
+The development time for each of them will vary, depending on the content of the feature and the difficulties to develop it. Some features may be faster than others to be accomplished. Moreover, intermediary versions can be included to fix bugs.
 
-### Version 1.0 (Puppy)
-The first version of hARMful is waited for mid-2020. It is not yet well evolved and it still is a "baby" engine.
-* Support of GNU/Linux (only)
+A study on this development time will be done to provide an estimated release date.
+
+### Version 1.0
+The first version of hARMful is waited for mid-2020. It is not yet well evolved and it still is a "baby" engine as it contains the base of the project structure and rendering features. Some advanced features are integrated as well to test the capability of the engine to evolve as wanted in the future.
+* Support of GNU/Linux and Windows 10
 * Intel SSE support for mathematics
 * Image loader (JPEG/PNG)
-* Support of OpenGL 4.5 (only) with basic 3D features:
+* Support of OpenGL 4.6 (only) with basic 3D features:
     - Mesh importer
-    - Hard shadows
-    - Transparent objects rendering
+    - Blinn-Phong based rendering
+    - Multitexturing (albedo, normal and specular maps)
     - Cubemaps
-    - Reflections / refractions of cubemap
+    - Lighting (directional and point lights)
+    - Hard shadows on directional lights
     - Screen-space ambient occlusion
 
-### Version 1.1 (Poodle)
-This version brings user interactions and physics engine. That reminds the pompom of a poodle one can love to touch!
-* Animated meshes
-* Image saver (JPEG/PNG)
-* Integration of Bullet physics engine
-* User interactions (keyboard, mouse, controllers)
-* Increase of performances (instancing, octrees, multithreading)
+### Version 1.1 [Physics-based rendering]
+This version adds a much more realistic rendering.
+* Support of PBR materials
+* Support of image-based lighting
+* Support of HDR
+* Parallax mapping
 
-### Version 1.2 (Malteser)
-Mainly oriented towards an improvements of the rendering, as a Maltese dog with hair styled.
-* Physics-based rendering materials
+### Version 1.2 [Lighting and shadows]
+It continues for graphics improvements with a much more realistic lighting.
+* Support of soft shadows (Percentage-Closer Soft Shadows)
+* Point light shadows
+* Spot light and their shadows
 * Ground-truth ambient occlusion
-* Soft shadows
-* Global illumination
-* Support of sounds and musics (OGG)
-* Support of Microsoft Windows
 
-### Version 1.3 (Shiba-inu)
-Support of modern ARM processors (CPU and GPU).
-* Support of NEON
-* Support of Vulkan API
-* Scripting language
+### Version 1.3 [Transparency]
+Mainly oriented towards the integration of transparent materials and their related effects.
+* Order-independent transparency
+* Alpha mapping
+* Transparent materials (blending and clipping)
+* Refraction and reflection of cubemaps
+
+### Version 1.4 [Performances - Step #1]
+A first step for improving performances of the engine.
+* Manage static and dynamic objects on rendering
+
+### Version 1.5 [Interactions]
+A version to add user interactions in the engine. It begins bringing life with physics, in order to continue this effort in the next version.
+* [v1.4a] User inputs
+    * Keyboard + mouse
+    * Controlers
+* [v1.4b] Integration of the Bullet physics engine (rigid bodies)
+
+### Version 1.6 [Animation]
+Animated meshes and animations following user defined tracks.
+* Motion based on defined paths (curves)
+* Interpolation types
+* IK mesh animation (bones)
+
+### Version 1.7 [Performances - Step #2]
+A second step for improving performances of the engine.
+* Octrees
+* Frustum culling
+
+### Version x.y [Planned features]
+* Scripting (Python)
+* Sky generation in GLSL
+* Global illumination
+* Radiosity
+* Use of the SPIR-V language for shaders
+* Support of the Vulkan API
+* ...
