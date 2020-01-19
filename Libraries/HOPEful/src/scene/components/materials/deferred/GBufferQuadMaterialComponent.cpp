@@ -4,12 +4,12 @@
 #include <memory>
 
 #ifdef OGL
-    #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/effects/Shadows.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/DeferredRendering.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/effects/AoRendering.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/Modules.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/modules/Functions.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/effects/Shadows.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/DeferredRendering.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/effects/AoRendering.hpp>
 #endif
 
 using namespace Hope ;

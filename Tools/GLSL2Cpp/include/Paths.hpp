@@ -17,8 +17,8 @@
 #define IncludesDirectory           "includes"
 #define ModuleDirectory             "modules"
 
-#define GLSL450Directory            "450"
-#define GLSL450ModulesDirectory     GLSLDirectory PathSeparator GLSL450Directory PathSeparator ModuleDirectory
+#define GLSL4xDirectory             "460"
+#define GLSL4xModulesDirectory      GLSLDirectory PathSeparator GLSL4xDirectory PathSeparator ModuleDirectory
 
 #define GLSLIncludesDirectory       GLSLDirectory PathSeparator IncludesDirectory
 #define ShadersCppHeadersDirectory  HeaderCppDirectory ShadersDirectoryName

@@ -177,11 +177,8 @@ void Window::setCallbacks() {
 }
 
 void Window::setGraphicsAPIVersion() {
-    // Use OpenGL4.5.
-    Options::SetGLVersion(4, 5) ;
+    Options::SetGLVersion(OpenGLMajorVersion, OpenGLMinorVersion) ;
     Options::SetSamplingFactor(Options::Sampling::X4) ;
-
-
 }
 
 void Window::GLFWErrorCallback(

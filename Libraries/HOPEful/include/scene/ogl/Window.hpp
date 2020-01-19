@@ -13,6 +13,16 @@ namespace Hope { namespace GL {
     class Window {
         private:
             /**
+             * Major version of the OpenGL API to use.
+             */
+            static const int OpenGLMajorVersion = 4 ;
+
+            /**
+             * Minor version of the OpenGL API to use.
+             */
+            static const int OpenGLMinorVersion = 5 ;
+
+            /**
              * Title of the window / name of the application.
              */
             std::string m_title ;

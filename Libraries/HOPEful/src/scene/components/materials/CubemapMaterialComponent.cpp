@@ -3,10 +3,10 @@
 #include <memory>
 
 #ifdef OGL
-    #include <scene/components/materials/shaders/GLSL/450/Modules.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/modules/Functions.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/modules/Includes.hpp>
-    #include <scene/components/materials/shaders/GLSL/450/materials/Cubemap.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/Modules.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/modules/Functions.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/materials/Cubemap.hpp>
 #endif
 
 using namespace Hope ;
@@ -16,7 +16,7 @@ CubemapMaterialComponent::CubemapMaterialComponent()
       m_map(nullptr) {
     setupForwardShader() ;
     setupDeferredShader() ;
-    
+
     setupUniforms() ;
 }
 

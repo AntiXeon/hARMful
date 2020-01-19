@@ -19,7 +19,7 @@ int main() {
     // Copy GLSL includes into GLSL modules/includes...
     {
         std::string fullDestinationPath = std::string(ShadersDirectory) + PathSeparatorStr +
-                                            GLSL450ModulesDirectory + PathSeparatorStr +
+                                            GLSL4xModulesDirectory + PathSeparatorStr +
                                             IncludesDirectory ;
 
         FileUtils::CopyIncludeModules(
