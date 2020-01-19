@@ -16,14 +16,14 @@ Window::Window(
 ) : m_title(title) {
     Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Info) ;
 
-    // Set the error callback to print errors while GLFW is running.
-    glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE) ;
 
     createInternalWindow(width, height, m_title) ;
     useCurrentContext() ;
     initializeGLEW() ;
     setInputMode() ;
     setCallbacks() ;
+    setupDebugMessages() ;
 
     m_scene = new Scene() ;
     m_scene -> setWindowSize(Mind::Dimension2Df(width, height)) ;
@@ -167,6 +167,28 @@ void Window::setInputMode() {
     glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE) ;
 }
 
+void Window::setupDebugMessages() {
+    // Set the message callback from OpenGL/GLFW to print logs while the app is
+    // running.
+    glEnable(GL_DEBUG_OUTPUT) ;
+    const GLenum DebugSource = GL_DONT_CARE ;
+    const GLenum DebugType = GL_DONT_CARE ;
+    const GLenum DebugNotificationSeverity = GL_DEBUG_SEVERITY_NOTIFICATION ;
+    const GLenum DebugLowSeverity = GL_DEBUG_SEVERITY_LOW ;
+    const GLenum DebugMediumSeverity = GL_DEBUG_SEVERITY_MEDIUM ;
+    const GLenum DebugHighSeverity = GL_DEBUG_SEVERITY_HIGH ;
+    const GLsizei DebugCount = 0 ;
+    const GLuint* DebugIDs = nullptr ;
+    const GLboolean DebugEnabled = GL_TRUE ;
+    glDebugMessageCallback(&Window::GLErrorCallback, nullptr) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugNotificationSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugLowSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugMediumSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugHighSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    
+    glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
+}
+
 void Window::setCallbacks() {
     // Callback for window resizing.
     auto resizeCallbackFunc = [](GLFWwindow* window, int width, int height) {
@@ -191,6 +213,41 @@ void Window::GLFWErrorCallback(
     auto logSharedPtr = logWeakPtr.lock() ;
     if (logSharedPtr) {
         logSharedPtr -> writeLine(level, description) ;
+    }
+}
+
+void Window::GLErrorCallback(
+    GLenum,
+    GLenum,
+    GLuint,
+    GLenum severity,
+    GLsizei,
+    const GLchar* message,
+    const void*
+) {
+    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Debug ;
+
+    switch (severity) {
+    case GL_DEBUG_SEVERITY_HIGH :
+            level = Doom::LogSystem::Gravity::Error ;
+            break ;
+        case GL_DEBUG_SEVERITY_MEDIUM :
+            level = Doom::LogSystem::Gravity::Warning ;
+            break ;
+        case GL_DEBUG_SEVERITY_LOW :
+            level = Doom::LogSystem::Gravity::Info ;
+            break ;
+        default:
+            break;
+    }
+
+    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+    auto logSharedPtr = logWeakPtr.lock() ;
+    if (logSharedPtr) {
+        logSharedPtr -> writeLine(
+            level,
+            message, "\n"
+        ) ;
     }
 }
 
