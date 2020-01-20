@@ -5,6 +5,7 @@
 #include <string>
 
 extern std::string FunctionsUtilityModuleCode ;
+extern std::string FunctionsFogModuleCode ;
 extern std::string FunctionsLightComputeModuleCode ;
 
 #endif

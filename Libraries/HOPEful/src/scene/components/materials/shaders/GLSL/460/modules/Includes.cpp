@@ -52,6 +52,7 @@ std::string IncludesBlockBindingsModuleCode =
 #define BASE_DATA_UBO_BINDING_INDEX 0\n\
 #define MODEL_DATA_UBO_BINDING_INDEX 1\n\
 #define LIGHTS_DATA_UBO_BINDING_INDEX 2\n\
+#define FOG_DATA_UBO_BINDING_INDEX 3\n\
 \n\
 #endif\n\
 " ;

@@ -69,6 +69,16 @@ vec3 DecodeSpheremapNormals(vec2 sphereNormal) {\n\
 }\n\
 " ;
 
+std::string FunctionsFogModuleCode =
+"\
+layout (std140, binding = FOG_DATA_UBO_BINDING_INDEX) uniform FogData\n\
+{\n\
+    vec4 color ;\n\
+    float minDistance ;\n\
+    float maxDistance ;\n\
+} fog ;\n\
+" ;
+
 std::string FunctionsLightComputeModuleCode =
 "\
 /*** Data ***/\n\

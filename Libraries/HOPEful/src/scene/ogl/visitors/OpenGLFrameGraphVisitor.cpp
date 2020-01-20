@@ -11,8 +11,8 @@
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
+#include <scene/framegraph/deferred/effects/fog/FogRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
-#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
@@ -203,8 +203,8 @@ void OpenGLFrameGraphVisitor::visit(EffectApplierNode* node) {
     m_aggregators.back().addEffectData({ node -> effect() }) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(SSAORenderNode* /*node*/) {
-    //m_globalEffects.push_back(node -> data()) ;
+void OpenGLFrameGraphVisitor::visit(FogRenderNode* node) {
+    m_globalEffects.push_back(node -> data()) ;
 }
 
 void OpenGLFrameGraphVisitor::makeRender() {

@@ -177,10 +177,9 @@ namespace Hope::GL {
             void visit(EffectApplierNode* node) override ;
 
             /**
-             * Visit a node for applying SSAO effect in the framegraph
-             * branch(es).
+             * Visit a node for applying fog.
              */
-            void visit(SSAORenderNode* node) override ;
+            void visit(FogRenderNode* node) override ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is

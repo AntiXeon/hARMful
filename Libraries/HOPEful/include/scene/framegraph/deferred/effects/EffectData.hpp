@@ -17,6 +17,13 @@ namespace Hope {
             virtual void updateUniformValues() = 0 ;
 
             /**
+             * Check if the effect has additional uniform to be send to shaders.
+             */
+            virtual bool hasAdditionalUniforms() const {
+                return true ;
+            }
+
+            /**
              * Get the shader uniforms.
              */
             virtual std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> uniforms() const = 0 ;

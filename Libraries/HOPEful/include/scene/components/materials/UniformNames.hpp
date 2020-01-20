@@ -74,6 +74,11 @@ namespace Hope {
             static std::string LightLinearAttenuationParamName() { return "linearAttenuation" ; }
             static std::string LightQuadraticAttenuationParamName() { return "quadraticAttenuation" ; }
 
+            // Fog uniforms names.
+            static std::string FogMinimalDistanceParamName() { return "minDistance" ; }
+            static std::string FogMaximalDistanceParamName() { return "maxDistance" ; }
+            static std::string FogColorParamName() { return "color" ; }
+
             // Materials uniforms names.
             static std::string MaterialNormalUniformName() { return "normal" ; }
             static std::string MaterialAmbientUniformName() { return "ambient" ; }

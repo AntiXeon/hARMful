@@ -15,8 +15,9 @@ namespace Hope {
     typedef unsigned int EffectNodeType ;
     #define AmbientOcclusionEffectType  0
     #define ShadowsEffectType           1
-    #define AmountEffectsTypes          (ShadowsEffectType + 1)
-    
+    #define FogEffectType               2
+    #define AmountEffectsTypes          (FogEffectType + 1)
+
     /**
      * ID for frames.
      */

@@ -15,6 +15,18 @@ layout(location = 0) in vec2 inTexCoords ;\n\
 \n\
 out vec4 outColor ;\n\
 \n\
+// Apply fog.\n\
+void applyFog(in float distance, inout vec3 shadedColor) {\n\
+    float fogFactor = (distance - fog.minDistance) / (fog.maxDistance - fog.minDistance) ;\n\
+    fogFactor = fog.color.a * clamp(fogFactor, 0.f, 1.f) ;\n\
+\n\
+    shadedColor = mix(\n\
+        shadedColor,\n\
+        fog.color.rgb,\n\
+        fogFactor\n\
+    ) ;\n\
+}\n\
+\n\
 void main() {\n\
     // Note: The lighting computations are performed in view-space.\n\
     // Get the view-space positions of the 3D objects from the pixel coordinates\n\
@@ -41,6 +53,8 @@ void main() {\n\
     float ambientOcclusion = texture(albedoAO, inTexCoords).a ;\n\
     shadedColor *= ambientOcclusion ;\n\
 \n\
+    applyFog(abs(currentFragment.position.z), shadedColor) ;\n\
+\n\
     // Compute the skybox mask to include it in the final render.\n\
     // 1. Get the normal mask based on the length of the normal vector (the\n\
     //    skybox material gives [0,0,0,0] during the off-screen pass).\n\
@@ -48,6 +62,7 @@ void main() {\n\
     // 3. Extract the diffuse color of the sky by multiplying by the mask.\n\
     // 4. Merge shading color and sky diffuse color.\n\
     float normalMask = clamp(ceil(length(texture(normal, inTexCoords).rgb)), 0.f, 1f) ;\n\
+    shadedColor *= normalMask ; // remove fog from the skymap!\n\
     float skyMask = 1.f - normalMask ;\n\
     vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;\n\
 \n\

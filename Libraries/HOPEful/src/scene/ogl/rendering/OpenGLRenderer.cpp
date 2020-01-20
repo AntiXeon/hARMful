@@ -139,13 +139,15 @@ std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
         }
 
         for (const Hope::EffectData* effect: effects) {
-            auto additionalUniforms = effect -> uniforms() ;
+            if (effect -> hasAdditionalUniforms()) {
+                auto additionalUniforms = effect -> uniforms() ;
 
-            for (auto& [name, uniform] : additionalUniforms) {
-                ShaderUniformApplicator::ApplyUniform(
-                    shaderProgram -> id(),
-                    uniform
-                ) ;
+                for (auto& [name, uniform] : additionalUniforms) {
+                    ShaderUniformApplicator::ApplyUniform(
+                        shaderProgram -> id(),
+                        uniform
+                    ) ;
+                }
             }
         }
     }

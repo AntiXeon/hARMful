@@ -36,7 +36,6 @@ void LightGLSLDataUBO::setPointLight(
     const Mind::Vector4f& worldPosition,
     const Mind::Matrix4x4f& viewMatrix
 ) {
-
     m_data.pointLights[index].position = (viewMatrix * worldPosition).toArray() ;
     m_data.pointLights[index].color_distance = (light -> color()).toRGBA() ;
     m_data.pointLights[index].color_distance[3] = light -> distance() ;

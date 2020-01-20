@@ -43,6 +43,7 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(FunctionsFogModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesAoModuleCode) ;
     shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
     shaderProgram -> build() ;

@@ -13,6 +13,7 @@
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
 #include <scene/framegraph/deferred/GBufferRenderNode.hpp>
+#include <scene/SceneTypes.hpp>
 #include <geometry/points/Point4Df.hpp>
 
 namespace Hope {
@@ -23,7 +24,6 @@ namespace Hope {
      * Node to compute screen-space ambient occlusion.
      */
     class SSAORenderNode final : public EffectFrameGraphNode {
-        public:
         public:
             static const unsigned char AORenderTarget = 0 ;
             static const unsigned char NoiseRenderTarget = 1 ;
