@@ -40,6 +40,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Quadtree (✗)
 - Animations (✗)
 - Cube maps (✓)
+- Fog (✓) [[Demo](https://www.youtube.com/watch?v=2GihYR76Jzw)]
 - Input management (keyboard, mouse, joypad) (✗)
 - Scripting (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
