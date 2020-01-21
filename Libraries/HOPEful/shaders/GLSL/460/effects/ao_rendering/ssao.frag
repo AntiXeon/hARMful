@@ -11,6 +11,8 @@ layout(location = 0) in vec2 inTexCoords ;
 
 layout(location = 0) out vec4 fragColor ;
 
+const float Delta = 0.0001f ;
+
 // Compute the world position of the current fragment.
 vec3 computeWorldPosition(vec2 texCoords) {
     float depthValue = texture(depth, texCoords).r ;
@@ -25,20 +27,22 @@ vec3 computeViewSpacePosition(vec2 texCoords) {
 
 // Texture coordinates of the noise texture for the current fragment.
 vec2 noiseTextureCoords() {
-    vec2 noiseTextureSize = textureSize(noise, 0) ;
-    vec2 coordScaling = viewportSize / noiseTextureSize.x ;
+    vec2 coordScaling = viewportSize / AO_NOISE_TEXTURE_SIZE ;
     return inTexCoords * coordScaling ;
 }
 
 // Compute a TBN matrix with a random orientation.
 mat3 computeTBNMatrix() {
+    vec3 randDirection = normalize(texture(noise, noiseTextureCoords()).xyz) ;
     vec3 normal = DecodeSpheremapNormals(texture(normal, inTexCoords).xy) ;
+    vec3 bitangent = cross(normal, randDirection) ;
 
-    vec2 noiseTexCoords = noiseTextureCoords() ;
-    vec3 random = normalize(texture(noise, noiseTexCoords).xyz) ;
+    if (length(bitangent) < Delta) {
+        bitangent = cross(normal, vec3(0,0,1)) ;
+    }
 
-    vec3 tangent = normalize(random - normal * dot(random, normal)) ;
-    vec3 bitangent = cross(normal, tangent) ;
+    bitangent = normalize(bitangent) ;
+    vec3 tangent = cross(bitangent, normal) ;
     return mat3(tangent, bitangent, normal) ;
 }
 
@@ -53,7 +57,7 @@ void main() {
         for (int sampleIndex = 0 ; sampleIndex < AO_KERNEL_SIZE ; ++sampleIndex) {
             // Sample position.
             vec3 kernelSample = tbnMatrix * kernel[sampleIndex] ;
-            kernelSample = worldPosition + kernelSample * AO_RADIUS ;
+            kernelSample = worldPosition + AO_RADIUS * kernelSample ;
 
             // Project the sample onto the texture (screen-space position).
             vec4 offset = vec4(kernelSample, 1.f) ;
@@ -65,9 +69,9 @@ void main() {
             float sampleDepth = computeViewSpacePosition(offset.xy).z ;
             float deltaZ = sampleDepth - worldPosition.z ;
 
-            // Range check and accumulate.
+            // Range check and accumulate points that are occluded.
             float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / deltaZ) ;
-            occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;
+            occlusion += (sampleDepth >= (kernelSample.z + AO_BIAS) ? 1.f : 0.f) * rangeCheck ;
         }
 
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;

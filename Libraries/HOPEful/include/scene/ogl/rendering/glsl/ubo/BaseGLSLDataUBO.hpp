@@ -175,12 +175,7 @@ namespace Hope::GL {
              * Set the viewport size.
              */
             void setViewportSize(const Mind::Vector2f& vec) {
-                static const uint32_t EndOffset = Mind::Vector2f::AmountCoords ;
-                std::copy(
-                    m_data.viewportSize.begin(),
-                    m_data.viewportSize.begin() + EndOffset,
-                    vec.toArray().begin()
-                ) ;
+                m_data.viewportSize = vec.toArray();
                 askForAnUpdate() ;
             }
 

@@ -10,9 +10,10 @@ std::string IncludesAoModuleCode =
 #define UNIFORM_AO_KERNEL_LOCATION UNIFORM_AO_USE_LOCATION + 1\n\
 #define AO_MAP_BINDING_UNIT   4\n\
 \n\
+#define AO_NOISE_TEXTURE_SIZE   4\n\
 #define AO_KERNEL_SIZE  64\n\
-#define AO_RADIUS       3\n\
-#define AO_BIAS         0.0025\n\
+#define AO_RADIUS       0.55\n\
+#define AO_BIAS         0.025\n\
 \n\
 #endif\n\
 " ;

@@ -33,7 +33,7 @@ namespace Hope {
              * Amount of pixels on a side of the square noise texture that is
              * generated.
              */
-            const static int NoiseTextureSideSize = 4 ;
+            const static int NoiseTextureSideSize = AO_NOISE_TEXTURE_SIZE ;
 
             /**
              * Total amount of pixels in the noise texture.

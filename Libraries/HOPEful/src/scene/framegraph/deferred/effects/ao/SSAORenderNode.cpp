@@ -48,12 +48,10 @@ void SSAORenderNode::generateNoiseTexture() {
         GenerateMipmap
     ) ;
 
-    m_noiseTexture -> setWrapModes({ API::WrapMode::Repeat, API::WrapMode::Repeat }) ;
+    m_noiseTexture -> setFiltering(API::FilterMode::Nearest, API::FilterMode::Nearest) ;
 }
 
 void SSAORenderNode::generateKernel() {
-    const float DefaultScale = 1.f / static_cast<float>(AO_KERNEL_SIZE) ;
-
     for (int kernelIndex = 0 ; kernelIndex < AO_KERNEL_SIZE ; ++kernelIndex) {
         // Generate the sample.
         Mind::Vector3f sample(
@@ -62,19 +60,39 @@ void SSAORenderNode::generateKernel() {
             Doom::Random::GetNormalizedFloat()
         ) ;
 
-        sample.normalize() ;
-        sample *= Doom::Random::GetNormalizedFloat() ;
+        float squaredIndex = kernelIndex * kernelIndex ;
+        float scale = squaredIndex / (AO_KERNEL_SIZE * AO_KERNEL_SIZE) ;
 
-        // Aggregate most of the samples close to the origin of the hemisphere.
-        // lerp
         const float LerpFrom = 0.1f ;
         const float LerpTo = 1.f ;
-        float lerpScale = LerpFrom + (DefaultScale * DefaultScale) * (LerpTo - LerpFrom) ;
-        sample *= lerpScale ;
-
-        // Store the sample.
+        sample *= LerpFrom * (1.f - scale) + LerpTo * scale ;
         m_kernel[kernelIndex] = sample ;
     }
+
+
+    // const float DefaultScale = 1.f / static_cast<float>(AO_KERNEL_SIZE) ;
+    //
+    // for (int kernelIndex = 0 ; kernelIndex < AO_KERNEL_SIZE ; ++kernelIndex) {
+    //     // Generate the sample.
+    //     Mind::Vector3f sample(
+    //         Doom::Random::GetNormalizedFloat() * 2.f - 1.f,
+    //         Doom::Random::GetNormalizedFloat() * 2.f - 1.f,
+    //         Doom::Random::GetNormalizedFloat()
+    //     ) ;
+    //
+    //     sample.normalize() ;
+    //     sample *= Doom::Random::GetNormalizedFloat() ;
+    //
+    //     // Aggregate most of the samples close to the origin of the hemisphere.
+    //     // lerp
+    //     const float LerpFrom = 0.1f ;
+    //     const float LerpTo = 1.f ;
+    //     float lerpScale = LerpFrom + (DefaultScale * DefaultScale) * (LerpTo - LerpFrom) ;
+    //     sample *= lerpScale ;
+    //
+    //     // Store the sample.
+    //     m_kernel[kernelIndex] = sample ;
+    // }
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {

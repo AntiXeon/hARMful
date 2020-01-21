@@ -42,7 +42,7 @@ void main() {\n\
     currentFragment.shininess = texture(specular, inTexCoords).a ;\n\
     currentFragment.position = viewSpacePosition ;\n\
     currentFragment.depth = depthValue ;\n\
-    currentFragment.occlusion = texture(albedoAO, inTexCoords).a ;\n\
+    currentFragment.occlusion = pow(texture(albedoAO, inTexCoords).a, 2) ;\n\
 \n\
     // Compute ligh shading.\n\
     vec3 viewDirection = normalize(-currentFragment.position.xyz) ;\n\
