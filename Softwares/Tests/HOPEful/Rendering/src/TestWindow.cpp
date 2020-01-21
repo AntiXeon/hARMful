@@ -38,28 +38,28 @@ TestWindow::TestWindow()
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
     m_cameraEntity -> setLocked(true) ;
 
-    // // Cubemap.
-    // {
-    //     std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
-    //         "../data/meshes/cubemap/right.jpg",
-    //         "../data/meshes/cubemap/left.jpg",
-    //         "../data/meshes/cubemap/top.jpg",
-    //         "../data/meshes/cubemap/bottom.jpg",
-    //         "../data/meshes/cubemap/back.jpg",
-    //         "../data/meshes/cubemap/front.jpg"
-    //     } ;
-    //
-    //     Hope::Entity* cubemapEntity = new Hope::Entity(scene() -> root()) ;
-    //     cubemapEntity -> setLocked(true) ;
-    //
-    //     Hope::GL::CubemapTexture* cubemapTexture = new Hope::GL::CubemapTexture(cubemapTexturePaths) ;
-    //     Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
-    //     cubemapMaterial -> setCubemap(cubemapTexture) ;
-    //     cubemapEntity -> addComponent(cubemapMaterial) ;
-    //
-    //     Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
-    //     cubemapEntity -> addComponent(cubeGeometry) ;
-    // }
+    // Cubemap.
+    {
+        std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
+            "../data/meshes/cubemap/right.jpg",
+            "../data/meshes/cubemap/left.jpg",
+            "../data/meshes/cubemap/top.jpg",
+            "../data/meshes/cubemap/bottom.jpg",
+            "../data/meshes/cubemap/back.jpg",
+            "../data/meshes/cubemap/front.jpg"
+        } ;
+
+        Hope::Entity* cubemapEntity = new Hope::Entity(scene() -> root()) ;
+        cubemapEntity -> setLocked(true) ;
+
+        Hope::GL::CubemapTexture* cubemapTexture = new Hope::GL::CubemapTexture(cubemapTexturePaths) ;
+        Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
+        cubemapMaterial -> setCubemap(cubemapTexture) ;
+        cubemapEntity -> addComponent(cubemapMaterial) ;
+
+        Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
+        cubemapEntity -> addComponent(cubeGeometry) ;
+    }
 
 
     // Mesh test.
@@ -169,9 +169,9 @@ TestWindow::TestWindow()
 
     // -- Fog effect --
     new Hope::FogRenderNode(
-        Hope::Color(0.4f, 0.5f, 0.6f),
-        2.f,
+        Hope::Color(0.4f, 0.5f, 0.6f, 0.2f),
         20.f,
+        50.f,
         rootFG
     ) ;
 

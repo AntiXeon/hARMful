@@ -146,6 +146,9 @@ struct FragmentData {\n\
 \n\
     // Depth of the fragment.\n\
     float depth ;\n\
+\n\
+    // Ambient occlusion value for the fragment.\n\
+    float occlusion ;\n\
 } ;\n\
 \n\
 /*** Functions ***/\n\
@@ -177,7 +180,7 @@ vec3 ComputeDirectionalLight(\n\
         fragment.depth\n\
     ) ;\n\
 \n\
-    vec3 lightPowerColor = litFragment * light.color * light.power ;\n\
+    vec3 lightPowerColor = litFragment * fragment.occlusion * light.color * light.power ;\n\
     vec3 returnedLighting = fragment.diffuseValue * lambertian * lightPowerColor ;\n\
     returnedLighting += fragment.specularValue * specularColor * lightPowerColor ;\n\
 \n\
@@ -212,7 +215,7 @@ vec3 ComputePointLight(\n\
     float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;\n\
     float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;\n\
 \n\
-    vec3 lightPowerColor = light.color * lightIntensity ;\n\
+    vec3 lightPowerColor = light.color * lightIntensity * fragment.occlusion ;\n\
     vec3 returnedLighting = fragment.diffuseValue * lambertian * lightPowerColor ;\n\
     returnedLighting += fragment.specularValue * specularColor * lightPowerColor ;\n\
 \n\

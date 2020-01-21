@@ -63,16 +63,15 @@ void main() {
 
             // Kernel sample depth.
             float sampleDepth = computeViewSpacePosition(offset.xy).z ;
+            float deltaZ = sampleDepth - worldPosition.z ;
 
             // Range check and accumulate.
-            float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / abs(worldPosition.z - sampleDepth)) ;
+            float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / deltaZ) ;
             occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;
         }
 
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;
     }
 
-fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;
-
-    // fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;
+    fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;
 }

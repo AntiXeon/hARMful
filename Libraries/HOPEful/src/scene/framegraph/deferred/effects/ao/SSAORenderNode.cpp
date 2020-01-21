@@ -41,7 +41,7 @@ void SSAORenderNode::generateNoiseTexture() {
     const static bool GenerateMipmap = true ;
     m_noiseTexture = std::make_shared<API::TextureImage2D>(
         Mind::Dimension2Di(NoiseTextureSideSize, NoiseTextureSideSize),
-        API::InternalFormat::RedGreenBlueAlpha32f,
+        API::InternalFormat::RedGreenBlueAlpha16f,
         API::PixelFormat::RedGreenBlueAlpha,
         API::PixelDataType::Float,
         noiseData.data(),
@@ -101,9 +101,6 @@ void SSAORenderNode::generateFramegraphSubtree() {
             API::PixelFormat::RedGreenBlueAlpha,
             API::PixelDataType::UnsignedInt
         ) ;
-        auto ao = m_subtree.aoRendering.offscreen -> framebuffer() -> colorAttachment(AORenderTarget) ;
-        ao -> setFiltering(GL::FilterMode::Nearest, GL::FilterMode::Nearest) ;
-        ao -> setWrapModes({ GL::WrapMode::ClampToEdge, GL::WrapMode::ClampToEdge }) ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
         // Render pass selection.

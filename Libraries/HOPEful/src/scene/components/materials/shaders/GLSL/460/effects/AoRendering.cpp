@@ -30,14 +30,14 @@ void main() {\n\
     vec2 texelSize = 1.f / vec2(textureSize(ao, 0)) ;\n\
 \n\
     float blurResult = 0.f ;\n\
-    for (int x = -2 ; x < 2 ; ++x) {\n\
-        for (int y = -2 ; y < 2 ; ++y) {\n\
+    for (int x = -1 ; x <= 1 ; ++x) {\n\
+        for (int y = -1 ; y <= 1 ; ++y) {\n\
             vec2 offset = vec2(float(x), float(y)) * texelSize ;\n\
             blurResult += texture(ao, inTexCoords + offset).a ;\n\
         }\n\
     }\n\
 \n\
-    blurResult = blurResult / (4.f * 4.f) ;\n\
+    blurResult = blurResult / 9.f ;\n\
     fragColor = vec4(texture(ao, inTexCoords).xyz, blurResult) ;\n\
 }\n\
 " ;
@@ -109,18 +109,17 @@ void main() {\n\
 \n\
             // Kernel sample depth.\n\
             float sampleDepth = computeViewSpacePosition(offset.xy).z ;\n\
+            float deltaZ = sampleDepth - worldPosition.z ;\n\
 \n\
             // Range check and accumulate.\n\
-            float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / abs(worldPosition.z - sampleDepth)) ;\n\
+            float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / deltaZ) ;\n\
             occlusion += (sampleDepth >= kernelSample.z + AO_BIAS ? 1.f : 0.f) * rangeCheck ;\n\
         }\n\
 \n\
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;\n\
     }\n\
 \n\
-fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;\n\
-\n\
-    // fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;\n\
+    fragColor = vec4(texture(albedo, inTexCoords).rgb, occlusion) ;\n\
 }\n\
 " ;
 

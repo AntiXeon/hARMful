@@ -17,9 +17,6 @@ void GBufferRenderNode::setup() {
         API::PixelFormat::RedGreenBlueAlpha,
         API::PixelDataType::UnsignedByte
     ) ;
-    auto albedo = framebuffer() -> colorAttachment(AlbedoRenderTarget) ;
-    albedo -> setFiltering(GL::FilterMode::Nearest, GL::FilterMode::Nearest) ;
-    albedo -> setWrapModes({ GL::WrapMode::ClampToEdge, GL::WrapMode::ClampToEdge }) ;
 
     framebuffer() -> attachColor(
        SpecularRenderTarget,
@@ -34,9 +31,6 @@ void GBufferRenderNode::setup() {
        API::PixelFormat::RedGreenBlueAlpha,
        API::PixelDataType::UnsignedByte
    ) ;
-   auto normal = framebuffer() -> colorAttachment(NormalRenderTarget) ;
-   normal -> setFiltering(GL::FilterMode::Nearest, GL::FilterMode::Nearest) ;
-   normal -> setWrapModes({ GL::WrapMode::ClampToEdge, GL::WrapMode::ClampToEdge }) ;
 
    framebuffer() -> setDrawBuffers({
        AlbedoRenderTarget,
@@ -45,6 +39,4 @@ void GBufferRenderNode::setup() {
    }) ;
 
    framebuffer() -> attachDepth() ;
-   auto depth = framebuffer() -> depthAttachment() ;
-   depth -> setWrapModes({ GL::WrapMode::ClampToEdge, GL::WrapMode::ClampToEdge }) ;
 }

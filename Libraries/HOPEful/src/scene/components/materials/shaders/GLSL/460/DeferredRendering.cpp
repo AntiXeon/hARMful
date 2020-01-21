@@ -42,6 +42,7 @@ void main() {\n\
     currentFragment.shininess = texture(specular, inTexCoords).a ;\n\
     currentFragment.position = viewSpacePosition ;\n\
     currentFragment.depth = depthValue ;\n\
+    currentFragment.occlusion = texture(albedoAO, inTexCoords).a ;\n\
 \n\
     // Compute ligh shading.\n\
     vec3 viewDirection = normalize(-currentFragment.position.xyz) ;\n\
@@ -49,9 +50,6 @@ void main() {\n\
         viewDirection,\n\
         currentFragment\n\
     ) ;\n\
-\n\
-    float ambientOcclusion = texture(albedoAO, inTexCoords).a ;\n\
-    shadedColor *= ambientOcclusion ;\n\
 \n\
     applyFog(abs(currentFragment.position.z), shadedColor) ;\n\
 \n\
