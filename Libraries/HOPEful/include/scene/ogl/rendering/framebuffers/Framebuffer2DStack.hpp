@@ -26,22 +26,22 @@ namespace Hope::GL {
              * Color textures attached to the framebuffer.
              * Stores the textures associated to their attachment point.
              */
-            std::vector<std::unique_ptr<TextureImage2DArray>> m_colorAttachments ;
+            std::vector<std::shared_ptr<TextureImage2DArray>> m_colorAttachments ;
 
             /**
              * Depth buffer attachment.
              */
-            std::unique_ptr<TextureImage2DArray> m_depthAttachment ;
+            std::shared_ptr<TextureImage2DArray> m_depthAttachment ;
 
             /**
              * Stencil buffer attachment.
              */
-            std::unique_ptr<TextureImage2DArray> m_stencilAttachment ;
+            std::shared_ptr<TextureImage2DArray> m_stencilAttachment ;
 
             /**
              * Depth + stencil buffer attachment.
              */
-            std::unique_ptr<TextureImage2DArray> m_depthStencilAttachment ;
+            std::shared_ptr<TextureImage2DArray> m_depthStencilAttachment ;
 
         public:
             /**
@@ -214,6 +214,35 @@ namespace Hope::GL {
                     Framebuffer::MipmapLevel,
                     layer
                 ) ;
+            }
+
+            /**
+             * Get the wanted color attachment.
+             * @param   attachmentIndex Attachment index.
+             */
+            std::shared_ptr<Texture> colorAttachment(const unsigned char attachmentIndex) const override {
+                return m_colorAttachments[attachmentIndex] ;
+            }
+
+            /**
+             * Get the depth attachment.
+             */
+            std::shared_ptr<Texture> depthAttachment() const override {
+                return m_depthAttachment ;
+            }
+
+            /**
+             * Get the stencil attachment.
+             */
+            std::shared_ptr<Texture> stencilAttachment() const override {
+                return m_stencilAttachment ;
+            }
+
+            /**
+             * Get the depth & stencil attachment.
+             */
+            std::shared_ptr<Texture> depthStencilAttachment() const override {
+                return m_depthStencilAttachment ;
             }
 
             /**

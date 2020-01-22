@@ -2,6 +2,7 @@
 #define __HOPE__GL_FRAMEBUFFER__
 
 #include <scene/ogl/GLDefines.hpp>
+#include <scene/ogl/textures/Texture.hpp>
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
@@ -9,6 +10,7 @@
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <GL/glew.h>
 #include <list>
+#include <memory>
 #include <vector>
 
 namespace Hope::GL {
@@ -186,6 +188,27 @@ namespace Hope::GL {
              * Detach the combination of depth+stencil buffer.
              */
             void detachDepthStencil() ;
+
+            /**
+             * Get the wanted color attachment.
+             * @param   attachmentIndex Attachment index.
+             */
+            virtual std::shared_ptr<Texture> colorAttachment(const unsigned char attachmentIndex) const = 0 ;
+
+            /**
+             * Get the depth attachment.
+             */
+            virtual std::shared_ptr<Texture> depthAttachment() const = 0 ;
+
+            /**
+             * Get the stencil attachment.
+             */
+            virtual std::shared_ptr<Texture> stencilAttachment() const = 0 ;
+
+            /**
+             * Get the depth & stencil attachment.
+             */
+            virtual std::shared_ptr<Texture> depthStencilAttachment() const = 0 ;
 
             /**
              * Check the status of the framebuffer.

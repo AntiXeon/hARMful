@@ -71,7 +71,7 @@ void Framebuffer2DMultisample::attachColor(
 
 void Framebuffer2DMultisample::attachColor(
     const unsigned char attachmentIndex,
-    const std::shared_ptr<TextureImage2DMultisample> texture
+    const std::shared_ptr<Texture> texture
 ) {
     bind() ;
     glFramebufferTexture2D(
@@ -103,7 +103,7 @@ void Framebuffer2DMultisample::attachDepth() {
     attachDepth(m_depthAttachment) ;
 }
 
-void Framebuffer2DMultisample::attachDepth(const std::shared_ptr<TextureImage2DMultisample> texture) {
+void Framebuffer2DMultisample::attachDepth(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -135,7 +135,7 @@ void Framebuffer2DMultisample::attachStencil() {
     attachStencil(m_stencilAttachment) ;
 }
 
-void Framebuffer2DMultisample::attachStencil(const std::shared_ptr<TextureImage2DMultisample> texture) {
+void Framebuffer2DMultisample::attachStencil(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -167,7 +167,7 @@ void Framebuffer2DMultisample::attachDepthStencil() {
     attachDepthStencil(m_depthStencilAttachment) ;
 }
 
-void Framebuffer2DMultisample::attachDepthStencil(const std::shared_ptr<TextureImage2DMultisample> texture) {
+void Framebuffer2DMultisample::attachDepthStencil(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,

@@ -71,7 +71,7 @@ void Framebuffer2D::attachColor(
 
 void Framebuffer2D::attachColor(
     const unsigned char attachmentIndex,
-    const std::shared_ptr<TextureImage2D> texture
+    const std::shared_ptr<Texture> texture
 ) {
     bind() ;
     glFramebufferTexture2D(
@@ -106,7 +106,7 @@ void Framebuffer2D::attachDepth() {
     attachDepth(m_depthAttachment) ;
 }
 
-void Framebuffer2D::attachDepth(const std::shared_ptr<TextureImage2D> texture) {
+void Framebuffer2D::attachDepth(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -141,7 +141,7 @@ void Framebuffer2D::attachStencil() {
     attachStencil(m_stencilAttachment) ;
 }
 
-void Framebuffer2D::attachStencil(const std::shared_ptr<TextureImage2D> texture) {
+void Framebuffer2D::attachStencil(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -176,7 +176,7 @@ void Framebuffer2D::attachDepthStencil() {
     attachDepthStencil(m_depthStencilAttachment) ;
 }
 
-void Framebuffer2D::attachDepthStencil(const std::shared_ptr<TextureImage2D> texture) {
+void Framebuffer2D::attachDepthStencil(const std::shared_ptr<Texture> texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
