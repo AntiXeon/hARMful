@@ -8,7 +8,7 @@ namespace Hope {
     class ClearBuffersNode ;
     class FrustumCullingNode ;
     class DirectionalLightShadowNode ;
-    class FramebufferRenderNode ;
+    class AbstractFramebufferRenderNode ;
     class LayerFramebufferRenderNode ;
     class DeferredRenderingNode ;
     class FinalStepRenderingNode ;
@@ -47,7 +47,7 @@ namespace Hope {
             /**
              * Visit an off-screen render node.
              */
-            virtual void visit(FramebufferRenderNode* node) = 0 ;
+            virtual void visit(AbstractFramebufferRenderNode* node) = 0 ;
 
             /**
              * Visit a layer off-screen render node.

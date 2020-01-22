@@ -7,23 +7,16 @@ FramebufferRenderNode::FramebufferRenderNode(
     const Mind::Dimension2Di& size,
     const bool windowSize,
     FrameGraphNode* parent
-) : FrameGraphNode(parent),
-    m_windowSize(windowSize) {
+) : AbstractFramebufferRenderNode(windowSize, parent) {
     m_framebuffer = new API::Framebuffer2D(size) ;
 }
 
 FramebufferRenderNode::FramebufferRenderNode(
     FramebufferRenderNode* other,
     FrameGraphNode* parent
-) : FrameGraphNode(parent),
-    m_internalFramebuffer(false),
-    m_framebuffer(other -> framebuffer()),
-    m_windowSize(other -> windowSize()) {}
+) : AbstractFramebufferRenderNode(other, parent),
+    m_framebuffer(other -> m_framebuffer) {}
 
 FramebufferRenderNode::~FramebufferRenderNode() {
     delete m_framebuffer ;
-}
-
-void FramebufferRenderNode::specificAccept(IFrameGraphVisitor* visitor) {
-    visitor -> visit(this) ;
 }

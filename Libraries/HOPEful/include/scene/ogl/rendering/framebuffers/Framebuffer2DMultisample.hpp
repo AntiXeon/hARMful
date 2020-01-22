@@ -68,7 +68,7 @@ namespace Hope::GL {
              * Resize the framebuffer.
              * @param   newSize Size of the framebuffer attachments in pixels.
              */
-            void resize(const Mind::Dimension2Di& newSize) ;
+            void resize(const Mind::Dimension2Di& newSize) override ;
 
             /**
              * Attach a color texture to the framebuffer.
@@ -107,7 +107,7 @@ namespace Hope::GL {
             void attachColor(
                 const unsigned char attachmentIndex,
                 const std::shared_ptr<Texture> texture
-            ) ;
+            ) override ;
 
             /**
              * Attach the depth buffer.
@@ -119,7 +119,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepth(const std::shared_ptr<Texture> texture) ;
+            void attachDepth(const std::shared_ptr<Texture> texture) override ;
 
             /**
              * Attach the stencil buffer.
@@ -131,7 +131,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachStencil(const std::shared_ptr<Texture> texture) ;
+            void attachStencil(const std::shared_ptr<Texture> texture) override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
@@ -143,7 +143,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepthStencil(const std::shared_ptr<Texture> texture) ;
+            void attachDepthStencil(const std::shared_ptr<Texture> texture) override ;
 
             /**
              * Bind the color attachment.
@@ -206,6 +206,20 @@ namespace Hope::GL {
              */
             const Mind::Dimension2Di& size() const {
                 return m_size ;
+            }
+
+            /**
+             * Get the framebuffer width.
+             */
+            int width() const override {
+                return m_size.width() ;
+            }
+
+            /**
+             * Get the framebuffer height.
+             */
+            int height() const override {
+                return m_size.height() ;
             }
 
             /**

@@ -9,6 +9,7 @@
 #include <scene/framegraph/FrameGraphBranchState.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/cache/ProjectionData.hpp>
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>
@@ -133,7 +134,7 @@ namespace Hope::GL {
             /**
              * Visit an off-screen render node.
              */
-            void visit(FramebufferRenderNode* node) override ;
+            void visit(AbstractFramebufferRenderNode* node) override ;
 
             /**
              * Visit a layer off-screen render node.

@@ -6,7 +6,7 @@
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
-#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
@@ -81,7 +81,7 @@ void OpenGLFrameGraphVisitor::visit(DirectionalLightShadowNode* node) {
     m_globalEffects.push_back(node -> data()) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(FramebufferRenderNode* node) {
+void OpenGLFrameGraphVisitor::visit(AbstractFramebufferRenderNode* node) {
     m_aggregators.back().setFramebufferRenderNode(node) ;
 
     // Resize the framebuffer textures with the window if needed.
@@ -96,13 +96,7 @@ void OpenGLFrameGraphVisitor::visit(LayerFramebufferRenderNode* node) {
     // Resize the framebuffer textures with the window if needed.
     if (m_hasWindowChanged && node -> windowSize()) {
         Framebuffer2DStack* framebuffer = node -> framebuffer() ;
-        Mind::Dimension3Di size = framebuffer -> size() ;
-        size.set(
-            m_windowSize.width(),
-            m_windowSize.height(),
-            size.depth()
-        ) ;
-        framebuffer -> resize(size) ;
+        framebuffer -> resize(m_windowSize) ;
     }
 
     (node -> framebuffer()) -> bind() ;
@@ -292,7 +286,7 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     }
 
     // Otherwise, proceed to a full update.
-    const Hope::FramebufferRenderNode* offscreen = state.offScreenRender() ;
+    const Hope::AbstractFramebufferRenderNode* offscreen = state.offScreenRender() ;
     camera -> update() ;
 
     // Set up the clear color.
@@ -310,9 +304,9 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
         aspectRatio = m_projectionData.absoluteAreaWidth / m_projectionData.absoluteAreaHeight ;
     }
     else {
-        Mind::Dimension2Di framebufferSize = (offscreen -> framebuffer()) -> size() ;
-        float width = framebufferSize.width() ;
-        float height = framebufferSize.height() ;
+        const Framebuffer* offscreenFramebuffer = offscreen -> framebuffer() ;
+        float width = offscreenFramebuffer -> width() ;
+        float height = offscreenFramebuffer -> height() ;
         aspectRatio = width / height ;
     }
 

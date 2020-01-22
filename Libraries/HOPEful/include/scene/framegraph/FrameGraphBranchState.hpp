@@ -2,6 +2,7 @@
 #define __HOPE__FRAMEGRAPH_BRANCH_STATE__
 
 #include <scene/SceneTypes.hpp>
+#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
@@ -46,7 +47,7 @@ namespace Hope {
             /**
              * Offscreen framebuffer to be used.
              */
-            FramebufferRenderNode* m_offscreen = nullptr ;
+            AbstractFramebufferRenderNode* m_offscreen = nullptr ;
 
             /**
              * Conditions to render the current branch.
@@ -192,14 +193,14 @@ namespace Hope {
             /**
              * Offscreen framebuffer to be used.
              */
-            void setFramebufferRenderNode(FramebufferRenderNode* offscreen) {
+            void setFramebufferRenderNode(AbstractFramebufferRenderNode* offscreen) {
                 m_offscreen = offscreen ;
             }
 
             /**
              * Get the offscreen framebuffer to be used.
              */
-            const FramebufferRenderNode* offScreenRender() const {
+            const AbstractFramebufferRenderNode* offScreenRender() const {
                 return m_offscreen ;
             }
 

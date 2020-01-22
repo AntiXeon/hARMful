@@ -68,35 +68,15 @@ void SSAORenderNode::generateKernel() {
         sample *= LerpFrom * (1.f - scale) + LerpTo * scale ;
         m_kernel[kernelIndex] = sample ;
     }
-
-
-    // const float DefaultScale = 1.f / static_cast<float>(AO_KERNEL_SIZE) ;
-    //
-    // for (int kernelIndex = 0 ; kernelIndex < AO_KERNEL_SIZE ; ++kernelIndex) {
-    //     // Generate the sample.
-    //     Mind::Vector3f sample(
-    //         Doom::Random::GetNormalizedFloat() * 2.f - 1.f,
-    //         Doom::Random::GetNormalizedFloat() * 2.f - 1.f,
-    //         Doom::Random::GetNormalizedFloat()
-    //     ) ;
-    //
-    //     sample.normalize() ;
-    //     sample *= Doom::Random::GetNormalizedFloat() ;
-    //
-    //     // Aggregate most of the samples close to the origin of the hemisphere.
-    //     // lerp
-    //     const float LerpFrom = 0.1f ;
-    //     const float LerpTo = 1.f ;
-    //     float lerpScale = LerpFrom + (DefaultScale * DefaultScale) * (LerpTo - LerpFrom) ;
-    //     sample *= lerpScale ;
-    //
-    //     // Store the sample.
-    //     m_kernel[kernelIndex] = sample ;
-    // }
 }
 
 void SSAORenderNode::generateFramegraphSubtree() {
-    const Mind::Dimension2Di& dimension = m_gBuffer -> framebuffer() -> size() ;
+    API::Framebuffer* gFramebuffer = m_gBuffer -> framebuffer() ;
+    const Mind::Dimension2Di FramebufferDimension(
+        gFramebuffer -> width(),
+        gFramebuffer -> height()
+    ) ;
+
     bool windowSized = m_gBuffer -> windowSize() ;
 
     // This subtree renders the ambient occlusion into the dedicated
@@ -109,7 +89,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
 
         // Buffer in which AO is written with ambient occlusion.
         m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
-            dimension,
+            FramebufferDimension,
             windowSized,
             m_subtree.aoRendering.ssaoApplier
         ) ;
@@ -140,7 +120,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
     {
         // Buffer in which AO is written with albedo.
         m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
-            dimension,
+            FramebufferDimension,
             windowSized,
             this
         ) ;

@@ -66,6 +66,12 @@ namespace Hope::GL {
              * Resize the framebuffer.
              * @param   newSize Size of the framebuffer attachments in pixels.
              */
+            void resize(const Mind::Dimension2Di& newSize) override ;
+
+            /**
+             * Resize the framebuffer.
+             * @param   newSize Size of the framebuffer attachments in pixels.
+             */
             void resize(const Mind::Dimension3Di& newSize) ;
 
             /**
@@ -91,9 +97,33 @@ namespace Hope::GL {
             ) override ;
 
             /**
+             * Attach an external color texture to the framebuffer.
+             * Notice that several textures can be attached to a same
+             * framebuffer in order to perform multiple render target
+             * operations.
+             * @param   attachmentIndex Index of the attachment point to the
+             *                          framebuffer. Starts at 0, you can get
+             *                          the amount of color attachment with the
+             *                          GetColorAttachmentCount() method.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachColor(
+                const unsigned char attachmentIndex,
+                const std::shared_ptr<Texture> texture
+            ) override ;
+
+            /**
              * Attach the depth buffer.
              */
             void attachDepth() override ;
+
+            /**
+             * Attach the depth buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachDepth(const std::shared_ptr<Texture> texture) override ;
 
             /**
              * Attach the stencil buffer.
@@ -101,9 +131,23 @@ namespace Hope::GL {
             void attachStencil() override ;
 
             /**
+             * Attach the stencil buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachStencil(const std::shared_ptr<Texture> texture) override ;
+
+            /**
              * Attach the combination of depth+stencil buffer.
              */
             void attachDepthStencil() override ;
+
+            /**
+             * Attach the combination of depth+stencil buffer.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             */
+            void attachDepthStencil(const std::shared_ptr<Texture> texture) override ;
 
             /**
              * Bind the color attachment.
@@ -248,8 +292,29 @@ namespace Hope::GL {
             /**
              * Get the size of the framebuffer in pixels.
              */
-            const Mind::Dimension3Di& size() const {
+            const Mind::Dimension3Di& size3D() const {
                 return m_size ;
+            }
+
+            /**
+             * Get the framebuffer width.
+             */
+            int width() const override {
+                return m_size.width() ;
+            }
+
+            /**
+             * Get the framebuffer height.
+             */
+            int height() const override {
+                return m_size.height() ;
+            }
+
+            /**
+             * Get the framebuffer depth.
+             */
+            int depth() const {
+                return m_size.depth() ;
             }
     } ;
 }
