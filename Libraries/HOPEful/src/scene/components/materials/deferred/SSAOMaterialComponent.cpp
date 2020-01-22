@@ -20,7 +20,7 @@ SSAOMaterialComponent::SSAOMaterialComponent(const FramebufferRenderNode* gBuffe
 }
 
 void SSAOMaterialComponent::updateUniformValues() {
-    const API::Framebuffer2D* framebuffer = m_gBuffer -> framebuffer() ;
+    const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;

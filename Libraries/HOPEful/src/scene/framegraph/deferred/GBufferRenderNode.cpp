@@ -14,22 +14,22 @@ void GBufferRenderNode::setup() {
     framebuffer() -> attachColor(
         AlbedoRenderTarget,
         API::InternalFormat::RedGreenBlueAlpha,
-        API::PixelFormat::RedGreenBlueAlpha,
-        API::PixelDataType::UnsignedByte
+        API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
+        API::PixelDataType::UnsignedByte        // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        SpecularRenderTarget,
        API::InternalFormat::RedGreenBlueAlpha,
-       API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::UnsignedByte
+       API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
+       API::PixelDataType::UnsignedByte        // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        NormalRenderTarget,
        API::InternalFormat::RedGreenBlueAlpha,
-       API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::UnsignedByte
+       API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
+       API::PixelDataType::UnsignedByte        // useless for MSAA
    ) ;
 
    framebuffer() -> setDrawBuffers({

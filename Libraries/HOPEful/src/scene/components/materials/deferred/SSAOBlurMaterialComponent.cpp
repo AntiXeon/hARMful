@@ -22,7 +22,7 @@ SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
 }
 
 void SSAOBlurMaterialComponent::updateUniformValues() {
-    const API::Framebuffer2D* framebuffer = m_aoBuffer -> framebuffer() ;
+    const API::Framebuffer* framebuffer = m_aoBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;
 }
 

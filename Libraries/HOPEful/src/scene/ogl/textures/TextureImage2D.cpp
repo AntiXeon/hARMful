@@ -46,6 +46,8 @@ void TextureImage2D::resize(
     const Mind::Dimension2Di& size,
     const float* pixelData
 ) {
+    m_size = size ;
+
     glBindTexture(GL_TEXTURE_2D, id()) ;
 
     const GLint TextureLoD = 0 ;
@@ -54,8 +56,8 @@ void TextureImage2D::resize(
         GL_TEXTURE_2D,
         TextureLoD,
         static_cast<GLint>(internalFormat()),
-        size.width(),
-        size.height(),
+        m_size.width(),
+        m_size.height(),
         Border,
         static_cast<GLenum>(m_pixelFormat),
         static_cast<GLenum>(m_pixelDataType),
