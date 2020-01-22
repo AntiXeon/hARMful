@@ -9,7 +9,7 @@
 #endif
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/GBufferRenderNode.hpp>
 
 namespace Hope {
@@ -27,7 +27,7 @@ namespace Hope {
             /**
              * Buffer containing the ambient occlusion data to copy.
              */
-            const FramebufferRenderNode* m_aoBuffer = nullptr ;
+            const AbstractFramebufferRenderNode* m_aoBuffer = nullptr ;
 
         public:
             /**
@@ -35,7 +35,7 @@ namespace Hope {
              * @param   aoBuffer    Buffer containing the ambient occlusion data
              *                      to copy.
              */
-            SSAOBlurMaterialComponent(const FramebufferRenderNode* aoBuffer) ;
+            SSAOBlurMaterialComponent(const AbstractFramebufferRenderNode* aoBuffer) ;
 
             /**
              * Update the uniform values before the processing of the material

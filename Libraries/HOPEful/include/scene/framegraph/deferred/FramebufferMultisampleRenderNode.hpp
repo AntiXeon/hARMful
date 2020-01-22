@@ -61,6 +61,14 @@ namespace Hope {
             const API::Framebuffer* framebuffer() const override {
                 return m_framebuffer ;
             }
+
+        protected:
+            /**
+             * Get the framebuffer.
+             */
+            API::Framebuffer2DMultisample* framebufferMultisample() const {
+                return m_framebuffer ;
+            }
     } ;
 }
 

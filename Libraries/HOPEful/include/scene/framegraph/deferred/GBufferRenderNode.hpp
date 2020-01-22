@@ -1,7 +1,7 @@
 #ifndef __HOPE__GBUFFER_RENDER__
 #define __HOPE__GBUFFER_RENDER__
 
-#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/FramebufferMultisampleRenderNode.hpp>
 
 namespace Hope {
     /**
@@ -17,7 +17,7 @@ namespace Hope {
      * - RT3: position  (ARGB2101010 [RGB: position], [A: unused])
      * - Depth buffer
      */
-    class GBufferRenderNode final : public FramebufferRenderNode {
+    class GBufferRenderNode final : public FramebufferMultisampleRenderNode {
         public:
             static const unsigned char AlbedoRenderTarget = 0 ;
             static const unsigned char SpecularRenderTarget = 1 ;
@@ -37,6 +37,13 @@ namespace Hope {
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
             ) ;
+
+            /**
+             * Get the multisampling quality (amount of samples).
+             */
+            int multisamplingQuality() const {
+                return framebufferMultisample() -> samples() ;
+            }
 
         protected:
             /**

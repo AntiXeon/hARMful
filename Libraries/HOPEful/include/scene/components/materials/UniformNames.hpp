@@ -100,6 +100,9 @@ namespace Hope {
             static std::string MaterialGBufferSpecularUniformName() { return "specular" ; }
             static std::string MaterialGBufferNormalUniformName() { return "normal" ; }
             static std::string MaterialGBufferDepthUniformName() { return "depth" ; }
+
+            // Other uniforms.
+            static std::string MSAAQualityUniformName() { return "msaaQuality" ; }
     } ;
 }
 

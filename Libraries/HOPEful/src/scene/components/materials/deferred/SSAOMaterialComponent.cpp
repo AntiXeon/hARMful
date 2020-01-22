@@ -13,7 +13,7 @@
 
 using namespace Hope ;
 
-SSAOMaterialComponent::SSAOMaterialComponent(const FramebufferRenderNode* gBuffer)
+SSAOMaterialComponent::SSAOMaterialComponent(const AbstractFramebufferRenderNode* gBuffer)
     : MaterialComponent(),
       m_gBuffer(gBuffer) {
     setupForwardShader() ;

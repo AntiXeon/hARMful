@@ -17,7 +17,6 @@ namespace Hope::GL {
              */
             static const int DefaultSampleAmount = 4 ;
 
-
             /**
              * Size of the framebuffer attachments.
              */
@@ -220,6 +219,13 @@ namespace Hope::GL {
              */
             int height() const override {
                 return m_size.height() ;
+            }
+
+            /**
+             * Amount of samples.
+             */
+            int samples() const {
+                return m_samples ;
             }
 
             /**

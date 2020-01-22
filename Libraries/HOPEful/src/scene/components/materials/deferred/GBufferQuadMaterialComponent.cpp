@@ -14,10 +14,11 @@
 
 using namespace Hope ;
 
-GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const FramebufferRenderNode* gBuffer)
+GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const GBufferRenderNode* gBuffer)
     : MaterialComponent(),
       m_gBuffer(gBuffer) {
     setupForwardShader() ;
+    setupUniforms() ;
 }
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
@@ -26,6 +27,14 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
+    uniform(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
+}
+
+void GBufferQuadMaterialComponent::setupUniforms() {
+    std::shared_ptr<Hope::ShaderUniform> msaaQualityUniform = std::make_shared<Hope::ShaderUniform>() ;
+    msaaQualityUniform -> setName(UniformNames::MSAAQualityUniformName()) ;
+    msaaQualityUniform -> setLocation(MSAAQualityUniformLocation) ;
+    addShaderUniform(msaaQualityUniform) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {

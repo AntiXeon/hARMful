@@ -6,6 +6,7 @@ using namespace Hope::GL ;
 
 Framebuffer2DMultisample::Framebuffer2DMultisample()
     : Framebuffer() {
+    glEnable(GL_MULTISAMPLE) ;
     m_colorAttachments.resize(GetColorAttachmentCount()) ;
 }
 
@@ -15,6 +16,7 @@ Framebuffer2DMultisample::Framebuffer2DMultisample(
 ) : Framebuffer(),
     m_size(size),
     m_samples(samples) {
+    glEnable(GL_MULTISAMPLE) ;
     m_colorAttachments.resize(GetColorAttachmentCount()) ;
 }
 

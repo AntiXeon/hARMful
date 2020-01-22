@@ -14,7 +14,7 @@
 using namespace Hope ;
 
 SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
-    const FramebufferRenderNode* aoBuffer
+    const AbstractFramebufferRenderNode* aoBuffer
 )
     : MaterialComponent(),
       m_aoBuffer(aoBuffer) {

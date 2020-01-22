@@ -1,11 +1,12 @@
 #ifndef __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 #define __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 
+#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+
 namespace Hope {
     class RenderPassSelectorNode ;
     class ClearBuffersNode ;
     class DeferredRenderingNode ;
-    class FramebufferRenderNode ;
     class EffectApplierNode ;
 
     /**

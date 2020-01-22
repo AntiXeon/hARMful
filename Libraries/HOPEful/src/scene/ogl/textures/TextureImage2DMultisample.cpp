@@ -36,11 +36,7 @@ void TextureImage2DMultisample::resize(const Mind::Dimension2Di& size) {
         m_fixedSampleLocation
     ) ;
 
-    if (m_mipmap) {
-        glGenerateMipmap(GL_TEXTURE_2D) ;
-    }
-
-    glBindTexture(GL_TEXTURE_2D, 0) ;
+    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0) ;
 }
 
 void TextureImage2DMultisample::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {

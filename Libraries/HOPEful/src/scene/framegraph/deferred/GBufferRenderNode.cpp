@@ -6,7 +6,7 @@ GBufferRenderNode::GBufferRenderNode(
     const Mind::Dimension2Di& size,
     const bool windowSize,
     FrameGraphNode* parent
-) : FramebufferRenderNode(size, windowSize, parent) {
+) : FramebufferMultisampleRenderNode(size, windowSize, parent) {
     setup() ;
 }
 
