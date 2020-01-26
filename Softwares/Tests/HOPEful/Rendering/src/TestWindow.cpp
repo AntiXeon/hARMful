@@ -196,7 +196,7 @@ TestWindow::TestWindow()
     Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepthStencil, gBufferNode) ;
     new Hope::RenderPassSelectorNode(DeferredPassID, clearBuffers) ;
 
-    // SSAO pass (not working yet).
+    // SSAO pass.
     new Hope::SSAORenderNode(gBufferNode, activeCameraNode) ;
 
     // Deferred shading branch of the framegraph.

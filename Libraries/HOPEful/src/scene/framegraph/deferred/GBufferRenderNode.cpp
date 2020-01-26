@@ -27,7 +27,7 @@ void GBufferRenderNode::setup() {
 
     framebuffer() -> attachColor(
        NormalRenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha,
+       API::InternalFormat::RedGreenBlue10Alpha2,
        API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
        API::PixelDataType::UnsignedByte        // useless for MSAA
    ) ;

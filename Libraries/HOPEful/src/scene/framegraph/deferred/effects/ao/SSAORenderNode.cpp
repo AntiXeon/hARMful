@@ -88,7 +88,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
 
         // Buffer in which AO is written with ambient occlusion.
-        m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
+        m_subtree.aoRendering.offscreen = new FramebufferMultisampleRenderNode(
             FramebufferDimension,
             windowSized,
             m_subtree.aoRendering.ssaoApplier
@@ -119,7 +119,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
     // alpha channel of the albedo target. It is blurred at the same time.
     {
         // Buffer in which AO is written with albedo.
-        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
+        m_subtree.aoBlurCopy.offscreen = new FramebufferMultisampleRenderNode(
             FramebufferDimension,
             windowSized,
             this

@@ -26,6 +26,8 @@ void applyFog(in float distance, inout vec3 shadedColor) {
 void main() {
     const ivec2 FragCoords = ivec2(gl_FragCoord.xy) ;
 
+    FragmentData currentFragment ;
+
     for (int sampleIndex = 0; sampleIndex < msaaQuality; ++sampleIndex) {
         // Note: The lighting computations are performed in view-space.
         // Get the view-space positions of the 3D objects from the pixel coordinates
@@ -34,7 +36,6 @@ void main() {
         vec4 viewSpacePosition = ComputeViewSpacePosition(inTexCoords, depthValue) ;
 
         // Put values to perform the lighting pass for the current fragment.
-        FragmentData currentFragment ;
         currentFragment.diffuseValue = texelFetch(albedoAO, FragCoords, sampleIndex).rgb ;
         currentFragment.normalValue = DecodeSpheremapNormals(texelFetch(normal, FragCoords, sampleIndex).xy) ;
         currentFragment.specularValue = texelFetch(specular, FragCoords, sampleIndex).rgb ;
