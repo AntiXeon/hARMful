@@ -13,7 +13,7 @@
 
 namespace Hope {
     /**
-     * Perform an off-screen render pass using a framebuffer.
+     * Node to use a framebuffer.
      */
     class AbstractFramebufferRenderNode : public FrameGraphNode {
         friend class FrameGraphBranchState ;
@@ -44,9 +44,10 @@ namespace Hope {
             ) ;
 
             /**
-             * Create a new AbstractFramebufferRenderNode instance to edit the content of
-             * an existing framebuffer.
-             * @param   other   Other AbstractFramebufferRenderNode to edit framebuffer.
+             * Create a new AbstractFramebufferRenderNode instance to edit the
+             * content of an existing framebuffer.
+             * @param   other   Other AbstractFramebufferRenderNode to edit
+             *                  framebuffer.
              */
             AbstractFramebufferRenderNode(
                 AbstractFramebufferRenderNode* other,

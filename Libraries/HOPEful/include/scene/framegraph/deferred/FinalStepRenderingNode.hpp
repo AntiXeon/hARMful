@@ -2,7 +2,7 @@
 #define __HOPE__FINAL_STEP_RENDERING__
 
 #include <scene/FrameGraphNode.hpp>
-#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/FramebufferRenderNode.hpp>
 #include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
 
 namespace Hope {

@@ -1,6 +1,5 @@
 #include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
 #include <scene/components/materials/UniformNames.hpp>
-#include <scene/framegraph/deferred/GBufferRenderNode.hpp>
 #include <memory>
 
 #ifdef OGL

@@ -12,7 +12,7 @@
 #include <scene/framegraph/deferred/effects/ao/SSAOApplyData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
-#include <scene/framegraph/deferred/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/GBufferRenderNode.hpp>
 #include <scene/SceneTypes.hpp>
 #include <geometry/points/Point4Df.hpp>
 

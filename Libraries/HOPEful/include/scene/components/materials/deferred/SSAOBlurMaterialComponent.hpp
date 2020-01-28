@@ -9,8 +9,8 @@
 #endif
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
-#include <scene/framegraph/deferred/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/GBufferRenderNode.hpp>
 
 namespace Hope {
     /**

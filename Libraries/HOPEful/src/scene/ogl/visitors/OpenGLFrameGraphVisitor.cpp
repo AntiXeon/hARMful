@@ -6,8 +6,8 @@
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ViewportNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
-#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
-#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>

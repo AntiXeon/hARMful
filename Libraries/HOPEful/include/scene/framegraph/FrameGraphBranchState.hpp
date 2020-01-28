@@ -2,7 +2,7 @@
 #define __HOPE__FRAMEGRAPH_BRANCH_STATE__
 
 #include <scene/SceneTypes.hpp>
-#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>

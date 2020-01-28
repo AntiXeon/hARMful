@@ -1,4 +1,4 @@
-#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/LayerFramebufferRenderNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;

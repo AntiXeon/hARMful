@@ -1,23 +1,23 @@
-#ifndef __HOPE__FRAMEBUFFER_MULTISAMPLE_RENDER__
-#define __HOPE__FRAMEBUFFER_MULTISAMPLE_RENDER__
+#ifndef __HOPE__FRAMEBUFFER_RENDER__
+#define __HOPE__FRAMEBUFFER_RENDER__
 
-#include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/SceneTypes.hpp>
 
 #ifdef OGL
-    #include <scene/ogl/rendering/framebuffers/Framebuffer2DMultisample.hpp>
+    #include <scene/ogl/rendering/framebuffers/Framebuffer2D.hpp>
 #endif
 
 namespace Hope {
     /**
-     * Perform an off-screen render pass using a framebuffer.
+     * Node to use a framebuffer.
      */
-    class FramebufferMultisampleRenderNode : public AbstractFramebufferRenderNode {
+    class FramebufferRenderNode : public AbstractFramebufferRenderNode {
         private:
             /**
              * The underlying framebuffer to perform off-screen rendering.
              */
-            API::Framebuffer2DMultisample* m_framebuffer = nullptr ;
+            API::Framebuffer2D* m_framebuffer = nullptr ;
 
         public:
             /**
@@ -27,26 +27,26 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            FramebufferMultisampleRenderNode(
+            FramebufferRenderNode(
                 const Mind::Dimension2Di& size,
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
             ) ;
 
             /**
-             * Create a new FramebufferMultisampleRenderNode instance to edit the content of
+             * Create a new FramebufferRenderNode instance to edit the content of
              * an existing framebuffer.
-             * @param   other   Other FramebufferMultisampleRenderNode to edit framebuffer.
+             * @param   other   Other OffScreenRenderNode to edit framebuffer.
              */
-            FramebufferMultisampleRenderNode(
-                FramebufferMultisampleRenderNode* other,
+            FramebufferRenderNode(
+                FramebufferRenderNode* other,
                 FrameGraphNode* parent
             ) ;
 
             /**
              * Destruction of the FramebufferRenderNode.
              */
-            virtual ~FramebufferMultisampleRenderNode() ;
+            virtual ~FramebufferRenderNode() ;
 
             /**
              * Get the framebuffer.
@@ -59,14 +59,6 @@ namespace Hope {
              * Get the framebuffer.
              */
             const API::Framebuffer* framebuffer() const override {
-                return m_framebuffer ;
-            }
-
-        protected:
-            /**
-             * Get the framebuffer.
-             */
-            API::Framebuffer2DMultisample* framebufferMultisample() const {
                 return m_framebuffer ;
             }
     } ;

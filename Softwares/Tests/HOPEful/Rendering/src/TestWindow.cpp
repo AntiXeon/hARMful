@@ -7,7 +7,7 @@
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/deferred/effects/fog/FogRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
-#include <scene/framegraph/deferred/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/GBufferRenderNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/components/mesh/MeshTreeComponent.hpp>
 #include <scene/components/mesh/builtin/CubeGeometryComponent.hpp>

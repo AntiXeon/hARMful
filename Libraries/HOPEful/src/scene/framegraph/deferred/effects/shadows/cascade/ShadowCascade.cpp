@@ -2,7 +2,7 @@
 #include <scene/framegraph/ActiveCameraNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
-#include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/framebuffers/base/LayerFramebufferRenderNode.hpp>
 #include <scene/components/cameras/OrthographicCameraComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/FrameGraphNode.hpp>
