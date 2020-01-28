@@ -1,4 +1,4 @@
-#include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;

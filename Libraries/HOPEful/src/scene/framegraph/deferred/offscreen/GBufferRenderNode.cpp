@@ -1,4 +1,4 @@
-#include <scene/framegraph/deferred/framebuffers/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
 
 using namespace Hope ;
 

@@ -3,7 +3,7 @@
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
-#include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
 #include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>

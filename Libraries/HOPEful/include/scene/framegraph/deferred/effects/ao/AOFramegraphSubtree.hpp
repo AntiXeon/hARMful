@@ -1,7 +1,7 @@
 #ifndef __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 #define __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 
-#include <scene/framegraph/deferred/framebuffers/base/FramebufferMultisampleRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
 
 namespace Hope {
     class RenderPassSelectorNode ;

@@ -1,4 +1,4 @@
-#include <scene/framegraph/deferred/framebuffers/base/FramebufferMultisampleRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;

@@ -2,7 +2,7 @@
 #define __HOPE__SCREEN_SPACE_AMBIENT_OCCLUSION_MATERIAL_COMPONENT__
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/framegraph/deferred/framebuffers/base/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 
 namespace Hope {
     /**

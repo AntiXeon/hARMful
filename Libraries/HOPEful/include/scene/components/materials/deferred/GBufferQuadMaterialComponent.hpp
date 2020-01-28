@@ -2,7 +2,7 @@
 #define __HOPE__DEFERRED_RENDERING_SCREEN_QUAD_MATERIAL_COMPONENT__
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/framegraph/deferred/framebuffers/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
 
 namespace Hope {
     /**

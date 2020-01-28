@@ -9,7 +9,7 @@
 #include <scene/framegraph/FrameGraphBranchState.hpp>
 #include <scene/framegraph/conditions/RenderConditionAggregator.hpp>
 #include <scene/framegraph/cache/ProjectionData.hpp>
-#include <scene/framegraph/deferred/framebuffers/base/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/Entity.hpp>
 #include <algorithm>

@@ -1,7 +1,7 @@
 #ifndef __HOPE__GBUFFER_RENDER__
 #define __HOPE__GBUFFER_RENDER__
 
-#include <scene/framegraph/deferred/framebuffers/base/FramebufferMultisampleRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
 
 namespace Hope {
     /**
