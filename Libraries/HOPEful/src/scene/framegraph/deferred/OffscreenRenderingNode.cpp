@@ -1,9 +1,9 @@
-#include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
+#include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 
 using namespace Hope ;
 
-DeferredRenderingNode::DeferredRenderingNode(
+OffscreenRenderingNode::OffscreenRenderingNode(
     MaterialComponent* material,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
@@ -11,6 +11,6 @@ DeferredRenderingNode::DeferredRenderingNode(
     setRenderingStepEnabled(false) ;
 }
 
-void DeferredRenderingNode::specificAccept(IFrameGraphVisitor* visitor) {
+void OffscreenRenderingNode::specificAccept(IFrameGraphVisitor* visitor) {
     visitor -> visit(this) ;
 }

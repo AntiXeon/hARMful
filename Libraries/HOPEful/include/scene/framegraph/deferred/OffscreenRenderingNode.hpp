@@ -11,7 +11,7 @@ namespace Hope {
      * Framegraph node dedicated to display only a quad to display the result of
      * deferred rendering from a framegraph.
      */
-    class DeferredRenderingNode final : public FrameGraphNode {
+    class OffscreenRenderingNode final : public FrameGraphNode {
         private:
             /**
              * Material bearing the shader program to use for performing the
@@ -21,11 +21,11 @@ namespace Hope {
 
         public:
             /**
-             * Create a new DeferredRenderingNode instance.
+             * Create a new OffscreenRenderingNode instance.
              * @param   material    Material bearing the shader program to use
              *                      for performing the deferred shading.
              */
-            DeferredRenderingNode(
+            OffscreenRenderingNode(
                 MaterialComponent* material,
                 FrameGraphNode* parent = nullptr
             ) ;

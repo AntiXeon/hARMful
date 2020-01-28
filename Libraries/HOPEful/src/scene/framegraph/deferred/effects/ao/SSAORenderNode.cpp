@@ -3,7 +3,7 @@
 #include <scene/framegraph/ClearBuffersNode.hpp>
 #include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
-#include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
+#include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
 #include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
@@ -109,7 +109,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
 
         // Rendering of the ambient occlusion pass.
         m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
-        m_subtree.aoRendering.deferredRendering = new DeferredRenderingNode(
+        m_subtree.aoRendering.deferredRendering = new OffscreenRenderingNode(
             m_ssaoMaterial,
             m_subtree.aoRendering.passSelector
         ) ;
@@ -137,7 +137,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
 
         // Rendering of the ambient occlusion pass.
         m_ssaoBlurMaterial = new SSAOBlurMaterialComponent(m_subtree.aoRendering.offscreen) ;
-        m_subtree.aoBlurCopy.deferredRendering = new DeferredRenderingNode(
+        m_subtree.aoBlurCopy.deferredRendering = new OffscreenRenderingNode(
             m_ssaoBlurMaterial,
             m_subtree.aoBlurCopy.passSelector
         ) ;

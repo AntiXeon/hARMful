@@ -8,7 +8,7 @@
 #include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/LayerFramebufferRenderNode.hpp>
-#include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
+#include <scene/framegraph/deferred/OffscreenRenderingNode.hpp>
 #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/deferred/effects/fog/FogRenderNode.hpp>
@@ -103,7 +103,7 @@ void OpenGLFrameGraphVisitor::visit(LayerFramebufferRenderNode* node) {
     (node -> framebuffer()) -> bindDepthLayer(node -> layer()) ;
 }
 
-void OpenGLFrameGraphVisitor::visit(DeferredRenderingNode* node) {
+void OpenGLFrameGraphVisitor::visit(OffscreenRenderingNode* node) {
     m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
 
     m_aggregators.back().applyRenderCapabilities() ;

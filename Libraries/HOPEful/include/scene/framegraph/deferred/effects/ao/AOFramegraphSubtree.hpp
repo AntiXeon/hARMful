@@ -6,7 +6,7 @@
 namespace Hope {
     class RenderPassSelectorNode ;
     class ClearBuffersNode ;
-    class DeferredRenderingNode ;
+    class OffscreenRenderingNode ;
     class EffectApplierNode ;
 
     /**
@@ -38,7 +38,7 @@ namespace Hope {
             /**
              * Node that is used to render the ambient occlusion.
              */
-            DeferredRenderingNode* deferredRendering = nullptr ;
+            OffscreenRenderingNode* deferredRendering = nullptr ;
         } aoRendering ;
 
         /**
@@ -61,7 +61,7 @@ namespace Hope {
             /**
              * Node that is used to blur and copy the ambient occlusion.
              */
-            DeferredRenderingNode* deferredRendering = nullptr ;
+            OffscreenRenderingNode* deferredRendering = nullptr ;
         } aoBlurCopy ;
     } ;
 }

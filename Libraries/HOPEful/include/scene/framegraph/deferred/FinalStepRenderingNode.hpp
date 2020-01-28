@@ -11,7 +11,7 @@ namespace Hope {
      * final picture that is shown on screen. It applies different rendering
      * effects as wanted in its configuration (depth of field, bloom,
      * motion blur, ...).
-     * One can use a simple DeferredRenderingNode if no effect is wanted (nor
+     * One can use a simple OffscreenRenderingNode if no effect is wanted (nor
      * shadows and ambient occlusion though) but is not as obvious as this one
      * when reading the code.
      *

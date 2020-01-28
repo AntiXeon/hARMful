@@ -144,7 +144,7 @@ namespace Hope::GL {
             /**
              * Visit a node to perform deferred rendering.
              */
-            void visit(DeferredRenderingNode* node) override ;
+            void visit(OffscreenRenderingNode* node) override ;
 
             /**
              * Visit a node to perform deferred rendering for the final step.
