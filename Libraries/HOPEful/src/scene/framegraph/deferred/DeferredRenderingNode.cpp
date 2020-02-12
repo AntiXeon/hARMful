@@ -8,11 +8,14 @@ DeferredRenderingNode::DeferredRenderingNode(
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_gBuffer(gBuffer) {
-    m_framebufferNode = new FramebufferRenderNode(size, FollowWindowSize, this) ;
+    m_framebufferNode = new FramebufferRenderNode(size, FollowWindowSize, nullptr) ;
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
     m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, this) ;
+
+    // To put m_framebufferNode after m_computeSSAONode in graph.
+    m_framebufferNode -> setParent(this) ;
     m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
     m_postProdNode = new PostProdStepNode(outputFBO, outputFBO, m_framebufferNode) ;
 }
