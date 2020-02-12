@@ -69,6 +69,12 @@ namespace Hope {
              */
             virtual ~DeferredRenderingNode() ;
 
+            // Remove copy/move operations.
+            DeferredRenderingNode(const DeferredRenderingNode& copied) = delete;
+            DeferredRenderingNode(DeferredRenderingNode&& moved) = delete;
+            DeferredRenderingNode& operator=(const DeferredRenderingNode& copied) = delete;
+            DeferredRenderingNode& operator=(DeferredRenderingNode&& moved) = delete;
+
         private:
             /**
              * Set up the framebuffer for deferred rendering.
