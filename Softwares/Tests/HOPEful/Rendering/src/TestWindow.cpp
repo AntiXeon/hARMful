@@ -8,7 +8,7 @@
 #include <scene/framegraph/deferred/effects/fog/FogRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
-#include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
+// #include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
 #include <scene/components/mesh/MeshTreeComponent.hpp>
 #include <scene/components/mesh/builtin/CubeGeometryComponent.hpp>
 #include <scene/components/mesh/builtin/QuadGeometryComponent.hpp>
@@ -187,20 +187,20 @@ TestWindow::TestWindow()
     Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
     capabilitiesNode -> addCapability(seamlessCubemap) ;
 
-    Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
-        Mind::Dimension2Di(800, 480),
-        true,
-        capabilitiesNode
-    ) ;
-    Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepthStencil, gBufferNode) ;
-    new Hope::RenderPassSelectorNode(DeferredPassID, clearBuffers) ;
+    // Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
+    //     Mind::Dimension2Di(800, 480),
+    //     true,
+    //     capabilitiesNode
+    // ) ;
+    // Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepthStencil, gBufferNode) ;
+    // new Hope::RenderPassSelectorNode(DeferredPassID, clearBuffers) ;
 
-    // SSAO pass.
-    new Hope::SSAORenderNode(gBufferNode, activeCameraNode) ;
+    // // SSAO pass.
+    // new Hope::SSAORenderNode(gBufferNode, activeCameraNode) ;
 
-    // Deferred shading branch of the framegraph.
-    Hope::GBufferQuadMaterialComponent* drMaterial = new Hope::GBufferQuadMaterialComponent(gBufferNode) ;
-    new Hope::FinalStepRenderingNode(drMaterial, viewportNode) ;
+    // // Deferred shading branch of the framegraph.
+    // Hope::GBufferQuadMaterialComponent* drMaterial = new Hope::GBufferQuadMaterialComponent(gBufferNode) ;
+    // new Hope::FinalStepRenderingNode(drMaterial, viewportNode) ;
 
     // Use the frame graph.
     scene() -> setFrameGraphRoot(rootFG) ;

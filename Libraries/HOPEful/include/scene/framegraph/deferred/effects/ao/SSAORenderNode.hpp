@@ -25,7 +25,7 @@ namespace Hope {
      */
     class SSAORenderNode final : public EffectFrameGraphNode {
         public:
-            static const unsigned char AORenderTarget = 0 ;
+            static const unsigned char AORenderTarget = 1 ;
             static const unsigned char NoiseRenderTarget = 1 ;
 
         private:
@@ -65,6 +65,12 @@ namespace Hope {
             GBufferRenderNode* m_gBuffer = nullptr ;
 
             /**
+             * Framebuffer to which SSAO will be finally rendered to (in a
+             * specific render target).
+             */
+            API::Framebuffer* m_output = nullptr ;
+
+            /**
              * Material used to render the ambient occlusion.
              */
             SSAOMaterialComponent* m_ssaoMaterial = nullptr ;
@@ -87,9 +93,14 @@ namespace Hope {
         public:
             /**
              * Create a new SSAORenderNode instance.
+             * @param   gBuffer G-Buffer containing required data for SSAO
+             *                  computing.
+             * @param   output  Framebuffer to which SSAO will be finally
+             *                  rendered to (in a specific render target).
              */
             SSAORenderNode(
                 GBufferRenderNode* gBuffer,
+                API::Framebuffer* output,
                 FrameGraphNode* parent = nullptr
             ) ;
 

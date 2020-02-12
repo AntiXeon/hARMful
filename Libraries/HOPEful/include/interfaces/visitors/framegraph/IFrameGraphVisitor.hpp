@@ -11,7 +11,7 @@ namespace Hope {
     class AbstractFramebufferRenderNode ;
     class LayerFramebufferRenderNode ;
     class OffscreenRenderingNode ;
-    class FinalStepRenderingNode ;
+    class ShadingStepNode ;
     class RenderPassSelectorNode ;
     class ViewportNode ;
     class MemoryBarrierNode ;
@@ -60,9 +60,9 @@ namespace Hope {
             virtual void visit(OffscreenRenderingNode* node) = 0 ;
 
             /**
-             * Visit a node to perform deferred rendering for the final step.
+             * Visit a node to perform deferred rendering for the shading step.
              */
-            virtual void visit(FinalStepRenderingNode* node) = 0 ;
+            virtual void visit(ShadingStepNode* node) = 0 ;
 
             /**
              * Visit a render pass selector node.

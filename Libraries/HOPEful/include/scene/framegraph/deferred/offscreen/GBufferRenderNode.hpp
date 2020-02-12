@@ -24,17 +24,16 @@ namespace Hope {
             static const unsigned char NormalRenderTarget = 2 ;
             static const unsigned char DepthRenderTarget = 3 ;
 
+        private:
+            static const bool FollowWindowSize = false ;
+
         public:
             /**
              * Create a new GBufferRenderNode instance.
              * @param   size        Size of the framebuffer.
-             * @param   windowSize  If true, the size of the framebuffer follows
-             *                      the size of the window. If false, the size
-             *                      of the framebuffer is fixed.
              */
             GBufferRenderNode(
                 const Mind::Dimension2Di& size,
-                const bool windowSize,
                 FrameGraphNode* parent = nullptr
             ) ;
 

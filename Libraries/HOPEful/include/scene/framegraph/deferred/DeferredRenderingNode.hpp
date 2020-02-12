@@ -1,47 +1,79 @@
 #ifndef __HOPE__DEFERRED_RENDERING__
 #define __HOPE__DEFERRED_RENDERING__
 
-#include <scene/FrameGraphNode.hpp>
-#include <scene/framegraph/deferred/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
+#include <scene/framegraph/deferred/subtree/PostProdStepNode.hpp>
+#include <memory>
 
 namespace Hope {
-    class MaterialComponent ;
-
     /**
      * Framegraph node to perform deferred rendering.
+     * It uses a framebuffer containing several temporary results for applying
+     * the different steps of the deferred rendering.
+     * It does not use multisampling textures but can receive
+     * precomputed multisampled pictures.
      */
     class DeferredRenderingNode final : public FrameGraphNode {
         private:
+            static const bool FollowWindowSize = false ;
+
             /**
-             * Material bearing the shader program to use for performing
-             * deferred rendering.
+             * G-Buffer used for the rendering (shading, SSAO, ...).
              */
-            MaterialComponent* m_material = nullptr ;
+            GBufferRenderNode* m_gBuffer = nullptr ;
+
+            /**
+             * Compute SSAO from the G-Buffer content (depth, normals).
+             */
+            SSAORenderNode* m_computeSSAONode = nullptr ;
+
+            /**
+             * Framebuffer node in which the deferred rendering is performed.
+             */
+            FramebufferRenderNode* m_framebufferNode = nullptr ;
+
+            /**
+             * Compute the shading from a G-Buffer node. It applies
+             * multisampling as well in rendering so that the resulting texture
+             * does not need to enable multisample.
+             */
+            ShadingStepNode* m_shadingNode = nullptr ;
+
+            /**
+             * Apply post-prod effects.
+             */
+            PostProdStepNode* m_postProdNode = nullptr ;
 
         public:
             /**
              * Create a new DeferredRenderingNode instance.
-             * @param   material    Material bearing the shader program to use
-             *                      for performing deferred rendering.
+             * @param   gBuffer     G-Buffer used for the rendering (shading,
+             *                      SSAO, ...).
+             * @param   size        Size of the framebuffer.
+             * @param   windowSize  If true, the size of the framebuffer follows
+             *                      the size of the window. If false, the size
+             *                      of the framebuffer is fixed.
              */
             DeferredRenderingNode(
-                MaterialComponent* material,
+                GBufferRenderNode* gBuffer,
+                const Mind::Dimension2Di& size,
                 FrameGraphNode* parent = nullptr
             ) ;
 
             /**
-             * Material bearing the shader program to use for performing
-             * deferred rendering.
+             * Destruction of the DeferredRenderingNode.
              */
-            MaterialComponent* material() const {
-                return m_material ;
-            }
+            virtual ~DeferredRenderingNode() ;
 
-        protected:
+        private:
             /**
-             * Accept the visitor.
+             * Set up the framebuffer for deferred rendering.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) ;
+            void setupFramebuffer() ;
     } ;
 }
 

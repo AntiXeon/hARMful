@@ -14,9 +14,11 @@ using namespace Hope ;
 
 SSAORenderNode::SSAORenderNode(
     GBufferRenderNode* gBuffer,
+    API::Framebuffer* output,
     FrameGraphNode* parent
 ) : EffectFrameGraphNode(parent),
-    m_gBuffer(gBuffer) {
+    m_gBuffer(gBuffer),
+    m_output(output) {
     Doom::Random::Initialize() ;
     generateNoiseTexture() ;
     generateKernel() ;
@@ -72,7 +74,7 @@ void SSAORenderNode::generateKernel() {
 
 void SSAORenderNode::generateFramegraphSubtree() {
     API::Framebuffer* gFramebuffer = m_gBuffer -> framebuffer() ;
-    const Mind::Dimension2Di FramebufferDimension(
+    Mind::Dimension2Di framebufferDimension(
         gFramebuffer -> width(),
         gFramebuffer -> height()
     ) ;
@@ -88,11 +90,12 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
 
         // Buffer in which AO is written with ambient occlusion.
-        m_subtree.aoRendering.offscreen = new FramebufferMultisampleRenderNode(
-            FramebufferDimension,
+        m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
+            framebufferDimension,
             windowSized,
             m_subtree.aoRendering.ssaoApplier
         ) ;
+        // Try to use RED channel only.
         m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
             AORenderTarget,
             API::InternalFormat::RedGreenBlueAlpha,
@@ -115,18 +118,18 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
     }
 
-    // In this subtree, the ambient occlusion is copied into the G-Buffer as the
-    // alpha channel of the albedo target. It is blurred at the same time.
+    // In this subtree, the ambient occlusion is blurred in its final render
+    // target.
     {
-        // Buffer in which AO is written with albedo.
-        m_subtree.aoBlurCopy.offscreen = new FramebufferMultisampleRenderNode(
-            FramebufferDimension,
+        // Buffer in which AO is written.
+        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
+            framebufferDimension,
             windowSized,
             this
         ) ;
         m_subtree.aoBlurCopy.offscreen -> framebuffer() -> attachColor(
-            GBufferRenderNode::AlbedoRenderTarget,
-            m_gBuffer -> framebuffer() -> colorAttachment(GBufferRenderNode::AlbedoRenderTarget)
+            AORenderTarget,
+            m_output -> colorAttachment(AORenderTarget)
         ) ;
 
         // Render pass selection.

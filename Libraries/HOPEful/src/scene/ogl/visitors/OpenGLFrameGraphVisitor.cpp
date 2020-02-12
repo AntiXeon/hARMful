@@ -9,7 +9,7 @@
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/offscreen/base/LayerFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
-#include <scene/framegraph/deferred/FinalStepRenderingNode.hpp>
+#include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/framegraph/deferred/effects/fog/FogRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
@@ -115,7 +115,7 @@ void OpenGLFrameGraphVisitor::visit(OffscreenRenderingNode* node) {
     m_aggregators.back().removeRenderCapabilities() ;
 }
 
-void OpenGLFrameGraphVisitor::visit(FinalStepRenderingNode* node) {
+void OpenGLFrameGraphVisitor::visit(ShadingStepNode* node) {
     m_aggregators.back().setRenderAtEnd(node -> renderingStepEnabled()) ;
 
     // Merge global effects.

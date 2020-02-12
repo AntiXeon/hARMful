@@ -1,7 +1,7 @@
 #ifndef __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 #define __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 
-#include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
 namespace Hope {
     class RenderPassSelectorNode ;
@@ -28,7 +28,7 @@ namespace Hope {
              * Node bearing the framebuffer in which the ambient occlusion
              * contribution is written.
              */
-            FramebufferMultisampleRenderNode* offscreen = nullptr ;
+            FramebufferRenderNode* offscreen = nullptr ;
 
             /**
              * Selector of the right render pass.
@@ -51,7 +51,7 @@ namespace Hope {
              * Node bearing the framebuffer into which the ambient occlusion
              * contribution is copied.
              */
-            FramebufferMultisampleRenderNode* offscreen = nullptr ;
+            FramebufferRenderNode* offscreen = nullptr ;
 
             /**
              * Selector of the right render pass.

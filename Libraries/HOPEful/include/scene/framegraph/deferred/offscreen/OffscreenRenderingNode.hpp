@@ -2,7 +2,7 @@
 #define __HOPE__OFFSCREEN_RENDERING__
 
 #include <scene/FrameGraphNode.hpp>
-#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 
 namespace Hope {
     class MaterialComponent ;
@@ -10,7 +10,7 @@ namespace Hope {
     /**
      * Framegraph node to perform offscreen rendering.
      */
-    class OffscreenRenderingNode final : public FrameGraphNode {
+    class OffscreenRenderingNode : public FrameGraphNode {
         private:
             /**
              * Material bearing the shader program to use for performing the

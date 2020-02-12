@@ -9,7 +9,7 @@ layout(binding = 3) uniform sampler2DMS depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
-layout(location = 0) out vec4 fragColor ;
+layout(location = 1) out vec4 fragColor ;
 
 const float Epsilon = 0.0001f ;
 

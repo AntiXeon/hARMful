@@ -4,9 +4,8 @@ using namespace Hope ;
 
 GBufferRenderNode::GBufferRenderNode(
     const Mind::Dimension2Di& size,
-    const bool windowSize,
     FrameGraphNode* parent
-) : FramebufferMultisampleRenderNode(size, windowSize, parent) {
+) : FramebufferMultisampleRenderNode(size, FollowWindowSize, parent) {
     setup() ;
 }
 
