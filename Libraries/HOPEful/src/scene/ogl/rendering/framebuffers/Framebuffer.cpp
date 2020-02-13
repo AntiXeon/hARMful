@@ -14,6 +14,14 @@ Framebuffer::~Framebuffer() {
     glDeleteFramebuffers(1, &m_fboID) ;
 }
 
+void Framebuffer::setReadBuffer(const unsigned char index) {
+    glNamedFramebufferReadBuffer(m_fboID, GL_COLOR_ATTACHMENT0 + index) ;
+}
+
+void Framebuffer::unsetReadBuffer() {
+    glNamedFramebufferReadBuffer(m_fboID, GL_NONE) ;
+}
+
 void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
     if (indices.size() > 0) {
         std::vector<unsigned int> attachments ;
@@ -21,25 +29,17 @@ void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
             attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
         }
 
-        bind(AccessMode::WriteOnly) ;
         glNamedFramebufferDrawBuffers(m_fboID, attachments.size(), attachments.data()) ;
-        unbind(AccessMode::WriteOnly) ;
     }
     else {
-        const static GLsizei Size = 1 ;
-        const static GLenum None[Size] = { GL_NONE } ;
-
-        bind(AccessMode::WriteOnly) ;
-        glNamedFramebufferDrawBuffers(m_fboID, Size, None) ;
-        unbind(AccessMode::WriteOnly) ;
+        useNoColorBuffers() ;
     }
 }
 
 void Framebuffer::useNoColorBuffers() {
-    bind() ;
-    glDrawBuffer(GL_NONE) ;
-    glReadBuffer(GL_NONE) ;
-    unbind() ;
+    const static GLsizei Size = 1 ;
+    const static GLenum None[Size] = { GL_NONE } ;
+    glNamedFramebufferDrawBuffers(m_fboID, Size, None) ;
 }
 
 void Framebuffer::detachColor(const int attachmentIndex) {

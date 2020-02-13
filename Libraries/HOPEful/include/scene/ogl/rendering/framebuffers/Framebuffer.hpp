@@ -85,6 +85,16 @@ namespace Hope::GL {
             }
 
             /**
+             * Set the read buffer.
+             */
+            void setReadBuffer(const unsigned char index) ;
+
+            /**
+             * Unset the read buffer.
+             */
+            void unsetReadBuffer() ;
+
+            /**
              * Set the color attachments to use.
              * @param   indices List of the attachment indices to use.
              */
