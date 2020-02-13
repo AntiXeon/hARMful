@@ -4,6 +4,7 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
+    class Entity ;
     class ActiveCameraNode ;
     class ClearBuffersNode ;
     class FrustumCullingNode ;
@@ -24,6 +25,11 @@ namespace Hope {
      */
     class IFrameGraphVisitor {
         public:
+            /**
+             * Set the root of the scene graph.
+             */
+            virtual void setSceneRoot(Entity* root) = 0 ;
+
             /**
              * Visit a camera node.
              */

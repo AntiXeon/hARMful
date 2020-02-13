@@ -25,12 +25,12 @@ Window::Window(
     setCallbacks() ;
     setupDebugMessages() ;
 
-    m_scene = new Scene() ;
-    m_scene -> setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_frameGraphVisitor = std::make_shared<OpenGLFrameGraphVisitor>() ;
+    m_scene = std::make_unique<Scene>(m_frameGraphVisitor) ;
+    m_frameGraphVisitor -> setWindowSize(Mind::Dimension2Df(width, height)) ;
 }
 
 Window::~Window() {
-    delete m_scene ;
     glfwDestroyWindow(m_window) ;
     glfwTerminate() ;
 }
@@ -40,9 +40,13 @@ void Window::run() {
 
     while (!glfwWindowShouldClose(m_window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
+
         preRender() ;
         m_scene -> render() ;
         postRender() ;
+
+        m_frameGraphVisitor -> nextFrame() ;
+
         glfwPollEvents() ;
         glfwSwapBuffers(m_window) ;
     }
@@ -185,7 +189,7 @@ void Window::setupDebugMessages() {
     glDebugMessageControl(DebugSource, DebugType, DebugLowSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
     glDebugMessageControl(DebugSource, DebugType, DebugMediumSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
     glDebugMessageControl(DebugSource, DebugType, DebugHighSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
-    
+
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
 }
 
@@ -256,5 +260,5 @@ void Window::resizedWindow(
     int width,
     int height
 ) {
-    m_scene -> setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_frameGraphVisitor -> setWindowSize(Mind::Dimension2Df(width, height)) ;
 }

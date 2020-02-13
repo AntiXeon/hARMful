@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <scene/Scene.hpp>
+#include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
+#include <memory>
 #include <string>
 
 namespace Hope { namespace GL {
@@ -33,9 +35,14 @@ namespace Hope { namespace GL {
             GLFWwindow* m_window = nullptr ;
 
             /**
+             * Frame graph visitor for rendering the scene.
+             */
+            std::shared_ptr<OpenGLFrameGraphVisitor> m_frameGraphVisitor = nullptr ;
+
+            /**
              * Scene to be displayed in the window.
              */
-            Scene* m_scene = nullptr ;
+            std::unique_ptr<Scene> m_scene = nullptr ;
 
         public:
             /**
@@ -61,10 +68,17 @@ namespace Hope { namespace GL {
             void run() ;
 
             /**
-             * Get the scene that is rendered in the current window.
+             * Get the root entity of the scene.
              */
-            Scene* scene() const {
-                return m_scene ;
+            Entity* root() const {
+                return m_scene -> root() ;
+            }
+
+            /**
+             * Set the root of the framegraph.
+             */
+            void setFrameGraphRoot(FrameGraphNode* root) {
+                m_scene -> setFrameGraphRoot(root) ;
             }
 
             /**

@@ -3,9 +3,10 @@
 
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
-#include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+
     /**
      * Scene that embeds the scene graph.
      */
@@ -30,13 +31,13 @@ namespace Hope {
             /**
              * Frame graph visitor for rendering the scene.
              */
-            Hope::GL::OpenGLFrameGraphVisitor* m_frameGraphVisitor = nullptr ;
+            std::shared_ptr<IFrameGraphVisitor> m_frameGraphVisitor = nullptr ;
 
         public:
             /**
              * Create a new Scene instance.
              */
-            Scene() ;
+            Scene(std::shared_ptr<IFrameGraphVisitor> visitor) ;
 
             /**
              * Destroy the Scene instance.
@@ -66,13 +67,6 @@ namespace Hope {
              * Set the root of the framegraph.
              */
             void setFrameGraphRoot(FrameGraphNode* root) ;
-
-            /**
-             * Set the size of the window.
-             */
-            void setWindowSize(const Mind::Dimension2Df& size) {
-                m_frameGraphVisitor -> setWindowSize(size) ;
-            }
 
             // Remove copy/move operations.
             Scene(const Scene& copied) = delete;

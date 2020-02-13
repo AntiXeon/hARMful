@@ -79,11 +79,6 @@ namespace Hope::GL {
             OpenGLFrameGraphVisitor() ;
 
             /**
-             * Set the root of the scene graph.
-             */
-            void setSceneRoot(Hope::Entity* root) ;
-
-            /**
              * Set the window size.
              */
             void setWindowSize(const Mind::Dimension2Df& size) {
@@ -110,6 +105,11 @@ namespace Hope::GL {
             bool hasWindowChanged() const {
                 return m_hasWindowChanged ;
             }
+
+            /**
+             * Set the root of the scene graph.
+             */
+            void setSceneRoot(Hope::Entity* root) override ;
 
             /**
              * Visit a camera node.

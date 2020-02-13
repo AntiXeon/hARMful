@@ -1,21 +1,20 @@
 #include <scene/Scene.hpp>
+#include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope ;
-using namespace Hope::GL ;
 
-Scene::Scene()
+Scene::Scene(std::shared_ptr<IFrameGraphVisitor> visitor)
     : m_root(new Entity()),
-      m_renderConfig(new RenderConfiguration()) {
+      m_renderConfig(new RenderConfiguration()),
+      m_frameGraphVisitor(visitor) {
     m_root -> addComponent(m_renderConfig) ;
-    m_frameGraphVisitor = new OpenGLFrameGraphVisitor() ;
     m_frameGraphVisitor -> setSceneRoot(m_root) ;
 }
 
 Scene::~Scene() {
     delete m_root ;
-    delete m_frameGraphVisitor ;
 }
 
 void Scene::render() {
@@ -33,8 +32,7 @@ void Scene::render() {
 
     // Execute the frame graph processing for rendering the scene.
     FrameGraphNode* fgRoot = m_renderConfig -> root() ;
-    fgRoot -> accept(m_frameGraphVisitor) ;
-    m_frameGraphVisitor -> nextFrame() ;
+    fgRoot -> accept(m_frameGraphVisitor.get()) ;
 }
 
 void Scene::lockEntities(const bool state) {

@@ -29,7 +29,7 @@ TestWindow::TestWindow()
 
     /** SCENE GRAPH **/
     // Create a camera in the scene graph.
-    m_cameraEntity = new Hope::Entity(scene() -> root()) ;
+    m_cameraEntity = new Hope::Entity(root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
     m_cameraComponent -> setClearColor(Hope::Color(0.4f, 0.5f, 0.6f)) ;
     m_cameraComponent -> setFarPlaneDistance(200.f) ;
@@ -48,7 +48,7 @@ TestWindow::TestWindow()
             "../data/meshes/cubemap/front.jpg"
         } ;
 
-        Hope::Entity* cubemapEntity = new Hope::Entity(scene() -> root()) ;
+        Hope::Entity* cubemapEntity = new Hope::Entity(root()) ;
         cubemapEntity -> setLocked(true) ;
 
         Hope::GL::CubemapTexture* cubemapTexture = new Hope::GL::CubemapTexture(cubemapTexturePaths) ;
@@ -63,7 +63,7 @@ TestWindow::TestWindow()
 
     // Mesh test.
     {
-        Hope::Entity* meshTreeEntity = new Hope::Entity(scene() -> root()) ;
+        Hope::Entity* meshTreeEntity = new Hope::Entity(root()) ;
         (meshTreeEntity -> transform()).setScale(0.1f) ;
         Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
         meshTreeEntity -> addComponent(meshTreeComponent) ;
@@ -72,7 +72,7 @@ TestWindow::TestWindow()
     // Create a directional light.
     Hope::DirectionalLightComponent* dirLightComponent = nullptr ;
 	{
-		Hope::Entity* dirLightEntity = new Hope::Entity(scene() -> root()) ;
+		Hope::Entity* dirLightEntity = new Hope::Entity(root()) ;
 		dirLightComponent = new Hope::DirectionalLightComponent() ;
 		dirLightComponent -> setDirection(Mind::Vector3f(0.3f, -0.5f, 0.5f)) ;
 		dirLightComponent -> setColor(Hope::Color(1.f, 1.f, 0.95f, 1.f)) ;
@@ -87,7 +87,7 @@ TestWindow::TestWindow()
     {
         Hope::Color lightColor(1.f, 1.f, 1.f) ;
 
-    	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
+    	Hope::Entity* parentLightEntity = new Hope::Entity(root()) ;
         (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, -25.f, 0.f)) ;
 
         {
@@ -112,7 +112,7 @@ TestWindow::TestWindow()
     {
         Hope::Color lightColor(0.3f, 0.7f, 1.f) ;
 
-    	Hope::Entity* parentLightEntity = new Hope::Entity(scene() -> root()) ;
+    	Hope::Entity* parentLightEntity = new Hope::Entity(root()) ;
         (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 125.f, 150.f)) ;
 
         {
@@ -203,7 +203,7 @@ TestWindow::TestWindow()
     // new Hope::FinalStepRenderingNode(drMaterial, viewportNode) ;
 
     // Use the frame graph.
-    scene() -> setFrameGraphRoot(rootFG) ;
+    setFrameGraphRoot(rootFG) ;
 }
 
 void TestWindow::preRender() {
