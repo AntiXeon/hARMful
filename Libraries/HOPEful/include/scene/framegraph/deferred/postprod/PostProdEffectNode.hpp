@@ -29,7 +29,12 @@ namespace Hope {
              * Framebuffer node used as input to apply the effect on the texture
              * it contains.
              */
-            FramebufferRenderNode* m_input = nullptr ;
+            API::Framebuffer* m_input = nullptr ;
+
+            /**
+             * Framebuffer to output effect result to.
+             */
+             API::Framebuffer* m_output = nullptr ;
 
         public:
             /**
@@ -53,9 +58,10 @@ namespace Hope {
 
         protected:
             /**
-             * Accept the visitor.
+             * Blit framebuffers content (input and output) for the next process
+             * on them.
              */
-            // void specificAccept(IFrameGraphVisitor* visitor) ;
+            void postAccept() override ;
     } ;
 }
 
