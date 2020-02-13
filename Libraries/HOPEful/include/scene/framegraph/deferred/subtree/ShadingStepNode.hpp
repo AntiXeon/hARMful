@@ -1,5 +1,5 @@
-#ifndef __HOPE__SHADING_STEP_RENDERING__
-#define __HOPE__SHADING_STEP_RENDERING__
+#ifndef __HOPE__SHADING_STEP_NODE__
+#define __HOPE__SHADING_STEP_NODE__
 
 #include <HopeAPI.hpp>
 

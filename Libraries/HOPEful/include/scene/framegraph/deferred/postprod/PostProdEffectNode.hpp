@@ -19,6 +19,16 @@ namespace Hope {
             static const short DefaultID = -1 ;
 
             /**
+             * Render target containing the input picture to apply effect on.
+             */
+            int* m_inputRenderTarget = nullptr ;
+
+            /**
+             * Render target to which the effect result is written.
+             */
+            int* m_outputRenderTarget = nullptr ;
+
+            /**
              * ID of the node when added to a PostProdStepNode.
              * If the node is not added to a PostProdStepNode, its ID is defined
              * to -1.
@@ -40,6 +50,20 @@ namespace Hope {
                 FramebufferRenderNode* input
             ) ;
 
+            /**
+             * Get the ID of the input render target.
+             */
+            int inputRenderTargetID() const {
+                return m_inputRenderTarget ? *m_inputRenderTarget : -1 ;
+            }
+
+            /**
+             * Get the ID of the output render target.
+             */
+            int outputRenderTargetID() const {
+                return m_outputRenderTarget ? *m_outputRenderTarget : -1 ;
+            }
+
         private:
             /**
              * Set the ID of the node when added to a PostProdStepNode.
@@ -50,6 +74,28 @@ namespace Hope {
              * Get the ID of the node when added to a PostProdStepNode.
              */
             short id() const { return m_id ; }
+
+            /**
+             * Set the render target ID pointers.
+             */
+            void setRenderTargetsIDs(int& input, int& output) {
+                m_inputRenderTarget = &input ;
+                m_outputRenderTarget = &output ;
+            }
+
+            /**
+             * Unset the render target ID pointers.
+             */
+            void unsetRenderTargetsIDs() {
+                m_inputRenderTarget = nullptr ;
+                m_outputRenderTarget = nullptr ;
+            }
+
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            // void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

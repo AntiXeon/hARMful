@@ -47,7 +47,15 @@ void DeferredRenderingNode::setupFramebuffer() {
 
     // Render target to apply post production effects.
     m_framebufferNode -> framebuffer() -> attachColor(
-       PostProdStepNode::PostProdRenderTarget,
+       PostProdStepNode::PostProdRenderTargetOne,
+       API::InternalFormat::RedGreenBlueAlpha,
+       API::PixelFormat::RedGreenBlueAlpha,
+       API::PixelDataType::UnsignedByte
+    ) ;
+
+    // Render target to apply post production effects.
+    m_framebufferNode -> framebuffer() -> attachColor(
+       PostProdStepNode::PostProdRenderTargetTwo,
        API::InternalFormat::RedGreenBlueAlpha,
        API::PixelFormat::RedGreenBlueAlpha,
        API::PixelDataType::UnsignedByte

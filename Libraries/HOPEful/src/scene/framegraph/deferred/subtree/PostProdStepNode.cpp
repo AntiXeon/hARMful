@@ -11,9 +11,7 @@ PostProdStepNode::PostProdStepNode(
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_shadingFBO(shadingFBO),
-    m_outputFBO(outputFBO) {
-
-}
+    m_outputFBO(outputFBO) {}
 
 void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     assert(node != nullptr) ;
@@ -27,6 +25,7 @@ void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     short nodeID = static_cast<short>(m_effects.size()) ;
     m_effects.push_back(node) ;
     node -> setId(nodeID) ;
+    node -> setRenderTargetsIDs(m_pingpongInputTarget, m_pingpongOutputTarget) ;
 }
 
 void PostProdStepNode::removeEffect(PostProdEffectNode* node) {
@@ -40,8 +39,5 @@ void PostProdStepNode::removeEffect(PostProdEffectNode* node) {
     node -> setParent(nullptr) ;
     m_effects.erase(m_effects.begin() + id) ;
     node -> setId(PostProdEffectNode::DefaultID) ;
-}
-
-void PostProdStepNode::specificAccept(IFrameGraphVisitor*) {
-    m_outputFBO -> setDrawBuffers({ PostProdRenderTarget }) ;
+    node -> unsetRenderTargetsIDs() ;
 }
