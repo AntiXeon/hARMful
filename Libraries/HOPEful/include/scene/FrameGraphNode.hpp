@@ -61,6 +61,7 @@ namespace Hope {
             void accept(IFrameGraphVisitor* visitor) override {
                 specificAccept(visitor) ;
                 generalAccept(visitor) ;
+                postAccept() ;
             }
 
             /**
@@ -105,6 +106,11 @@ namespace Hope {
              * Specific implementation for visitors.
              */
             virtual void specificAccept(IFrameGraphVisitor* /*visitor*/) {}
+
+            /**
+             * Do something just after the node as been visited.
+             */
+            virtual void postAccept() {}
 
             /**
              * Root of the scene graph.
