@@ -23,22 +23,9 @@ namespace Hope {
              * Use two render targets that are swapped while post-prod effects
              * are applied (ping-pong).
              */
-            static const unsigned char PostProdRenderTargetOne = 2 ;
-            static const unsigned char PostProdRenderTargetTwo = PostProdRenderTargetOne + 1 ;
+            static const unsigned char PostProdRenderTarget = 2 ;
 
         private:
-            /**
-             * Use two render targets that are swapped while post-prod effects
-             * are applied (ping-pong).
-             */
-            int m_pingpongInputTarget = PostProdRenderTargetOne ;
-
-            /**
-             * Use two render targets that are swapped while post-prod effects
-             * are applied (ping-pong).
-             */
-            int m_pingpongOutputTarget = PostProdRenderTargetTwo ;
-
             /**
              * Framebuffer containing the render targets in which the shading
              * result of deferred rendering has been performed, ambient
