@@ -17,7 +17,7 @@ DeferredRenderingNode::DeferredRenderingNode(
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
     m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
-    m_postProdNode = new PostProdStepNode(outputFBO, outputFBO, m_framebufferNode) ;
+    m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
 }
 
 DeferredRenderingNode::~DeferredRenderingNode() {
@@ -52,8 +52,4 @@ void DeferredRenderingNode::setupFramebuffer() {
        API::PixelFormat::RedGreenBlueAlpha,
        API::PixelDataType::UnsignedByte
     ) ;
-
-    // Use a depth texture and render G-Buffer depth into it. For any future
-    // transparent objects pass.
-    // m_framebufferNode -> framebuffer() -> attachDepth() ;
 }

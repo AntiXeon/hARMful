@@ -1,17 +1,17 @@
 #include <scene/framegraph/deferred/subtree/PostProdStepNode.hpp>
+#include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <scene/framegraph/deferred/postprod/PostProdEffectNode.hpp>
+#include <scene/ogl/rendering/framebuffers/FramebufferBlitter.hpp>
 #include <cassert>
 
 using namespace Hope ;
 
 PostProdStepNode::PostProdStepNode(
-    API::Framebuffer* shadingFBO,
-    API::Framebuffer* outputFBO,
+    API::Framebuffer* framebuffer,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
-    m_shadingFBO(shadingFBO),
-    m_outputFBO(outputFBO) {}
+    m_framebuffer(framebuffer) {}
 
 void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     assert(node != nullptr) ;
@@ -38,4 +38,32 @@ void PostProdStepNode::removeEffect(PostProdEffectNode* node) {
     node -> setParent(nullptr) ;
     m_effects.erase(m_effects.begin() + id) ;
     node -> setId(PostProdEffectNode::DefaultID) ;
+}
+
+void PostProdStepNode::specificAccept(IFrameGraphVisitor*) {
+    // Copy the content of shading result into the post-prod target.
+    API::FramebufferBlitter()
+        .setSourceFBO(m_framebuffer)
+        .setSourceColor(ShadingStepNode::ShadingRenderTarget)
+        .setSourceArea(
+            Mind::Rectangle2Df(
+                0,
+                0,
+                m_framebuffer -> width(),
+                m_framebuffer -> height()
+            )
+        )
+        .setDestinationFBO(m_framebuffer)
+        .setDestinationColor(PostProdRenderTarget)
+        .setDestinationArea(
+            Mind::Rectangle2Df(
+                0,
+                0,
+                m_framebuffer -> width(),
+                m_framebuffer -> height()
+            )
+        )
+        .setMask(API::FramebufferBlitter::Mask::ColorBuffer)
+        .setFilter(API::FramebufferBlitter::Filter::Nearest)
+        .doBlit() ;
 }

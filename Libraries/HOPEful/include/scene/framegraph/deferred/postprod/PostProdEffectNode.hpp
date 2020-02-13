@@ -29,12 +29,7 @@ namespace Hope {
              * Framebuffer node used as input to apply the effect on the texture
              * it contains.
              */
-            API::Framebuffer* m_input = nullptr ;
-
-            /**
-             * Framebuffer to output effect result to.
-             */
-             API::Framebuffer* m_output = nullptr ;
+            API::Framebuffer* m_framebuffer = nullptr ;
 
         public:
             /**
@@ -42,7 +37,7 @@ namespace Hope {
              */
             PostProdEffectNode(
                 MaterialComponent* material,
-                FramebufferRenderNode* input
+                API::Framebuffer* framebuffer
             ) ;
 
         private:

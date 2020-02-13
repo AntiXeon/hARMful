@@ -31,12 +31,7 @@ namespace Hope {
              * result of deferred rendering has been performed, ambient
              * occlusion has (optionnaly) been computed, etc.
              */
-            API::Framebuffer* m_shadingFBO = nullptr ;
-
-            /**
-             * Framebuffer in which the post-production rendering is output.
-             */
-            API::Framebuffer* m_outputFBO = nullptr ;
+            API::Framebuffer* m_framebuffer = nullptr ;
 
             /**
              * Root node for all post-prod effects.
@@ -51,14 +46,14 @@ namespace Hope {
         public:
             /**
              * Create a new PostProdStepNode instance.
-             * @param   shadingFBO  Framebuffer in which the shading result
-             *                      of deferred rendering has been performed.
-             * @param   outputFBO   Framebuffer in which the post-production
-             *                      rendering is output.
+             * @param   framebuffer Framebuffer containing the render targets in
+             *                      which the shading result of deferred
+             *                      rendering has been performed, ambient
+             *                      occlusion has (optionnaly) been computed,
+             *                      etc.
              */
             PostProdStepNode(
-                API::Framebuffer* shadingFBO,
-                API::Framebuffer* outputFBO,
+                API::Framebuffer* framebuffer,
                 FrameGraphNode* parent = nullptr
             ) ;
 
@@ -73,6 +68,12 @@ namespace Hope {
              *              not destroyed though.
              */
             void removeEffect(PostProdEffectNode* node) ;
+
+        protected:
+            /**
+             * Accept the visitor.
+             */
+            void specificAccept(IFrameGraphVisitor*) ;
     } ;
 }
 
