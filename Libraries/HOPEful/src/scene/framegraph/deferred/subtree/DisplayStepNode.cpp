@@ -1,14 +1,13 @@
 #include <scene/framegraph/deferred/subtree/DisplayStepNode.hpp>
-#include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
+#include <scene/components/materials/deferred/DisplayDeferredRenderMaterialComponent.hpp>
 
 using namespace Hope ;
 
 DisplayStepNode::DisplayStepNode(
-    API::Framebuffer* framebuffer,
+    FramebufferRenderNode* framebufferNode,
     FrameGraphNode* parent
-) : FrameGraphNode(parent),
-    m_framebuffer(framebuffer) {}
-
-void DisplayStepNode::specificAccept(IFrameGraphVisitor* /*visitor*/) {
-    //visitor -> visit(this) ;
-}
+) : OffscreenRenderingNode(
+        new DisplayDeferredRenderMaterialComponent(framebufferNode),
+        parent
+    ),
+    m_framebufferNode(framebufferNode) {}

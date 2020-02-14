@@ -1,42 +1,32 @@
 #ifndef __HOPE__DISPLAY_STEP_NODE__
 #define __HOPE__DISPLAY_STEP_NODE__
 
-#include <HopeAPI.hpp>
-
-#ifdef OGL
-    #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
-    namespace API = Hope::GL ;
-#endif
-
 #include <scene/FrameGraphNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
 namespace Hope {
     /**
      * Framegraph node to display on screen the result of deferred rendering.
      */
-    class DisplayStepNode final : public FrameGraphNode {
+    class DisplayStepNode final : public OffscreenRenderingNode {
         private:
             /**
-             * Framebuffer containing the final render to be displayed.
+             * Node bearing the framebuffer containing the final render to be
+             * displayed.
              */
-            API::Framebuffer* m_framebuffer = nullptr ;
+            FramebufferRenderNode* m_framebufferNode = nullptr ;
 
         public:
             /**
-            * Create a new PostProdStepNode instance.
-            * @param   outputFBO    Framebuffer containing the final render to
-            *                       be displayed.
+            * Create a new DisplayStepNode instance.
+            * @param   framebufferNode  Node bearing the framebuffer containing
+            *                           the final render to be displayed.
             */
             DisplayStepNode(
-                API::Framebuffer* framebuffer,
+                FramebufferRenderNode* framebufferNode,
                 FrameGraphNode* parent = nullptr
             ) ;
-
-        protected:
-            /**
-             * Accept the visitor.
-             */
-            void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

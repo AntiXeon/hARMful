@@ -4,22 +4,29 @@ using namespace Hope ;
 
 DeferredRenderingNode::DeferredRenderingNode(
     GBufferRenderNode* gBuffer,
-    const Mind::Dimension2Di& size,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_gBuffer(gBuffer) {
-    m_framebufferNode = new FramebufferRenderNode(size, FollowWindowSize, nullptr) ;
+    m_framebufferNode = new FramebufferRenderNode(
+        Mind::Dimension2Di(
+            gBuffer -> framebuffer() -> width(),
+            gBuffer -> framebuffer() -> height()
+        ),
+        FollowWindowSize,
+        nullptr
+    ) ;
+
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
-    m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, nullptr) ;
+    //m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, nullptr) ;
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
     m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
-    m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
+    //m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
 
-    m_displayStepNode = new DisplayStepNode(outputFBO, this) ;
+    m_displayStepNode = new DisplayStepNode(m_framebufferNode, this) ;
 }
 
 DeferredRenderingNode::~DeferredRenderingNode() {

@@ -8,7 +8,6 @@
     #include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/460/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/460/DeferredRendering.hpp>
-    #include <scene/components/materials/shaders/GLSL/460/effects/AoRendering.hpp>
 #endif
 
 using namespace Hope ;
@@ -41,7 +40,7 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(DeferredRenderingFinalVertexCode) ;
+    shaderProgram -> addVertexShaderCode(DeferredRenderingShadingVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
@@ -52,8 +51,7 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsFogModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAoModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(DeferredRenderingFinalFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(DeferredRenderingShadingFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

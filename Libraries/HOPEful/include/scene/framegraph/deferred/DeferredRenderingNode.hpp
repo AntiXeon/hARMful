@@ -59,14 +59,12 @@ namespace Hope {
              * Create a new DeferredRenderingNode instance.
              * @param   gBuffer     G-Buffer used for the rendering (shading,
              *                      SSAO, ...).
-             * @param   size        Size of the framebuffer.
              * @param   windowSize  If true, the size of the framebuffer follows
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
             DeferredRenderingNode(
                 GBufferRenderNode* gBuffer,
-                const Mind::Dimension2Di& size,
                 FrameGraphNode* parent = nullptr
             ) ;
 
