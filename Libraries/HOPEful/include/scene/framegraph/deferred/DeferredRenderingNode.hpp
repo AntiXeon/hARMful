@@ -7,6 +7,7 @@
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <scene/framegraph/deferred/subtree/PostProdStepNode.hpp>
+#include <scene/framegraph/deferred/subtree/DisplayStepNode.hpp>
 #include <memory>
 
 namespace Hope {
@@ -47,6 +48,11 @@ namespace Hope {
              * Apply post-prod effects.
              */
             PostProdStepNode* m_postProdNode = nullptr ;
+
+            /**
+             * Node to display the result on screen.
+             */
+            DisplayStepNode* m_displayStepNode = nullptr ;
 
         public:
             /**

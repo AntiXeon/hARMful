@@ -18,9 +18,12 @@ DeferredRenderingNode::DeferredRenderingNode(
     m_framebufferNode -> setParent(this) ;
     m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
     m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
+
+    m_displayStepNode = new DisplayStepNode(outputFBO, this) ;
 }
 
 DeferredRenderingNode::~DeferredRenderingNode() {
+    delete m_displayStepNode ;
     delete m_postProdNode ;
     delete m_shadingNode ;
     delete m_computeSSAONode ;
