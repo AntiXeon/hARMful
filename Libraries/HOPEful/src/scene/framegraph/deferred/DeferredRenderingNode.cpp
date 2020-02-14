@@ -12,7 +12,7 @@ DeferredRenderingNode::DeferredRenderingNode(
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
-    m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, this) ;
+    m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, nullptr) ;
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
