@@ -1,7 +1,7 @@
 // Material for deferred rendering. Applied on a simple quad on the whole
 // viewport area.
 
-layout(binding = 0) uniform sampler2DMS albedoAO ;
+layout(binding = 0) uniform sampler2DMS albedo ;
 layout(binding = 1) uniform sampler2DMS specular ;
 layout(binding = 2) uniform sampler2DMS normal ;
 layout(binding = 3) uniform sampler2DMS depth ;
@@ -36,13 +36,12 @@ void main() {
         vec4 viewSpacePosition = ComputeViewSpacePosition(inTexCoords, depthValue) ;
 
         // Put values to perform the lighting pass for the current fragment.
-        currentFragment.diffuseValue = texelFetch(albedoAO, FragCoords, sampleIndex).rgb ;
+        currentFragment.diffuseValue = texelFetch(albedo, FragCoords, sampleIndex).rgb ;
         currentFragment.normalValue = DecodeSpheremapNormals(texelFetch(normal, FragCoords, sampleIndex).xy) ;
         currentFragment.specularValue = texelFetch(specular, FragCoords, sampleIndex).rgb ;
         currentFragment.shininess = texelFetch(specular, FragCoords, sampleIndex).a ;
         currentFragment.position = viewSpacePosition ;
         currentFragment.depth = depthValue ;
-        currentFragment.occlusion = pow(texelFetch(albedoAO, FragCoords, sampleIndex).a, 2) ;
 
         // Compute ligh shading.
         vec3 viewDirection = normalize(-currentFragment.position.xyz) ;
