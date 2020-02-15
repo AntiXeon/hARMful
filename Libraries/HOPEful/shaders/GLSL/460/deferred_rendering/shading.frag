@@ -84,8 +84,8 @@ void main() {
                 }
             }
 
-            // outColor += vec4(CascadeColors[selectedCascade], 0.f) ;
-            // normalize(outColor) ;
+            outColor += vec3(CascadeColors[selectedCascade]) ;
+            normalize(outColor) ;
         #endif
     }
 

@@ -42,10 +42,12 @@ float ShadowCompute(
 
     // Select the right cascade index based on the distance of the fragment to
     // the camera.
+    bool insideMap = false ;
     int selectedCascade = 0 ;
     for (int cascadeIndex = amountCascades - 1 ; cascadeIndex >= 0 ; cascadeIndex--) {
         if (distanceCamera < cascadedSplits[cascadeIndex]) {
             selectedCascade = cascadeIndex ;
+            insideMap = true ;
             break ;
         }
     }
@@ -59,6 +61,6 @@ float ShadowCompute(
     float shadowMapDepth = texture(cascadedDepthTexture, projectionCoordinates).r ;
 
     float currentDepth = projectionCoordinates.w ;// - bias ;
-    litFragment = float(currentDepth < shadowMapDepth) ;
+    litFragment = float((currentDepth < shadowMapDepth) || !insideMap) ;
     return litFragment ;
 }
