@@ -12,8 +12,8 @@ GBufferRenderNode::GBufferRenderNode(
 void GBufferRenderNode::setup() {
     framebuffer() -> attachColor(
         AlbedoRenderTarget,
-        API::InternalFormat::RedGreenBlueAlpha,
-        API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
+        API::InternalFormat::RedGreenBlue,
+        API::PixelFormat::RedGreenBlue,    // useless for MSAA
         API::PixelDataType::UnsignedByte        // useless for MSAA
     ) ;
 

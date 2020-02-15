@@ -9,7 +9,7 @@ layout(location = 10) uniform int msaaQuality ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
-out vec4 outColor ;
+out vec3 outColor ;
 
 // Apply fog.
 void applyFog(in float distance, inout vec3 shadedColor) {
@@ -63,7 +63,7 @@ void main() {
         float skyMask = 1.f - normalMask ;
         vec3 skyDiffuse = currentFragment.diffuseValue * skyMask ;
 
-        outColor += vec4(shadedColor + skyDiffuse, 1.f) ;
+        outColor += shadedColor + skyDiffuse ;
 
 
         //#define DEBUG_CSM
