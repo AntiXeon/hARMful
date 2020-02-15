@@ -38,7 +38,7 @@ namespace Hope {
              * Create a new PostProdEffectNode instance.
              */
             PostProdEffectNode(
-                MaterialComponent* material,
+                std::unique_ptr<MaterialComponent> material,
                 FramebufferRenderNode* framebufferNode
             ) ;
 

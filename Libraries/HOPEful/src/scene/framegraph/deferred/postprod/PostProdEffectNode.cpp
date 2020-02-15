@@ -9,9 +9,9 @@
 using namespace Hope ;
 
 PostProdEffectNode::PostProdEffectNode(
-    MaterialComponent* material,
+    std::unique_ptr<MaterialComponent> material,
     FramebufferRenderNode* framebufferNode
-) : OffscreenRenderingNode(material, nullptr),
+) : OffscreenRenderingNode(std::move(material), nullptr),
     m_framebufferNode(framebufferNode) {}
 
 void PostProdEffectNode::postAccept() {

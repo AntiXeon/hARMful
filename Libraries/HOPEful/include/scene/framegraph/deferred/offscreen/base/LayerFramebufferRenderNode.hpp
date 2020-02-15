@@ -2,14 +2,13 @@
 #define __HOPE__LAYER_FRAMEBUFFER_RENDER__
 
 #include <HopeAPI.hpp>
+#include <scene/FrameGraphNode.hpp>
+#include <scene/SceneTypes.hpp>
 
 #ifdef OGL
     #include <scene/ogl/rendering/framebuffers/Framebuffer2DStack.hpp>
     namespace API = Hope::GL ;
 #endif
-
-#include <scene/FrameGraphNode.hpp>
-#include <scene/SceneTypes.hpp>
 
 namespace Hope {
     /**

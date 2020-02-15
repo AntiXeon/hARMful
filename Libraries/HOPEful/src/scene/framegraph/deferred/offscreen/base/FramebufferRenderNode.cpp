@@ -8,7 +8,7 @@ FramebufferRenderNode::FramebufferRenderNode(
     const bool windowSize,
     FrameGraphNode* parent
 ) : AbstractFramebufferRenderNode(windowSize, parent) {
-    m_framebuffer = new API::Framebuffer2D(size) ;
+    m_framebuffer = std::make_shared<API::Framebuffer2D>(size) ;
 }
 
 FramebufferRenderNode::FramebufferRenderNode(
@@ -16,7 +16,3 @@ FramebufferRenderNode::FramebufferRenderNode(
     FrameGraphNode* parent
 ) : AbstractFramebufferRenderNode(other, parent),
     m_framebuffer(other -> m_framebuffer) {}
-
-FramebufferRenderNode::~FramebufferRenderNode() {
-    delete m_framebuffer ;
-}

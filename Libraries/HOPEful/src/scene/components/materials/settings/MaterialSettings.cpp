@@ -12,7 +12,7 @@ void MaterialSettings::setAlphaBlendingMode(
     const RenderPassID pass,
     const AlphaBlendingMode mode
 ) {
-    std::shared_ptr<API::RenderPass> renderPass = m_effect -> renderPass(pass) ;
+    API::RenderPass* renderPass = m_effect -> renderPass(pass) ;
 
     if (!renderPass || (mode == m_alphaBlend)) {
         return ;
@@ -34,7 +34,7 @@ void MaterialSettings::setAlphaBlendingMode(
 }
 
 void MaterialSettings::setShadowMode(const ShadowMode mode) {
-    std::shared_ptr<API::RenderPass> renderPass = m_effect -> renderPass(DirectionalShadowPassID) ;
+    API::RenderPass* renderPass = m_effect -> renderPass(DirectionalShadowPassID) ;
     assert(renderPass != nullptr) ;
 
     ShadowMode previousMode = m_shadowMode ;

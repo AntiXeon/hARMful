@@ -29,7 +29,7 @@ void OpenGLRenderer::render(
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
             material -> updateUniformValues() ;
-            std::shared_ptr<API::RenderPass> renderPass = useMaterial(renderPassID, material) ;
+            API::RenderPass* renderPass = useMaterial(renderPassID, material) ;
 
             if (!renderPass) {
                 // Do not try to render as it is not possible!
@@ -87,7 +87,7 @@ void OpenGLRenderer::deferredShading(
         effect -> updateUniformValues() ;
     }
 
-    std::shared_ptr<API::RenderPass> renderPass = useMaterial(
+    useMaterial(
         ForwardPassID,
         material,
         effects
@@ -111,12 +111,12 @@ void OpenGLRenderer::deferredShading(
     glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
 }
 
-std::shared_ptr<API::RenderPass> OpenGLRenderer::useMaterial(
+API::RenderPass* OpenGLRenderer::useMaterial(
     const RenderPassID renderPassID,
     const MaterialComponent* component,
     const std::vector<Hope::EffectData*>& effects
 ) {
-    std::shared_ptr<API::RenderPass> pass = component -> renderPass(renderPassID) ;
+    API::RenderPass* pass = component -> renderPass(renderPassID) ;
 
     if (!pass) {
         return nullptr ;

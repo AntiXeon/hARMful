@@ -8,7 +8,7 @@ FramebufferMultisampleRenderNode::FramebufferMultisampleRenderNode(
     const bool windowSize,
     FrameGraphNode* parent
 ) : AbstractFramebufferRenderNode(windowSize, parent) {
-    m_framebuffer = new API::Framebuffer2DMultisample(size) ;
+    m_framebuffer = std::make_shared<API::Framebuffer2DMultisample>(size) ;
 }
 
 FramebufferMultisampleRenderNode::FramebufferMultisampleRenderNode(
@@ -16,7 +16,3 @@ FramebufferMultisampleRenderNode::FramebufferMultisampleRenderNode(
     FrameGraphNode* parent
 ) : AbstractFramebufferRenderNode(other, parent),
     m_framebuffer(other -> m_framebuffer) {}
-
-FramebufferMultisampleRenderNode::~FramebufferMultisampleRenderNode() {
-    delete m_framebuffer ;
-}

@@ -3,6 +3,7 @@
 
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/SceneTypes.hpp>
+#include <memory>
 
 #ifdef OGL
     #include <scene/ogl/rendering/framebuffers/Framebuffer2DMultisample.hpp>
@@ -17,7 +18,7 @@ namespace Hope {
             /**
              * The underlying framebuffer to perform off-screen rendering.
              */
-            API::Framebuffer2DMultisample* m_framebuffer = nullptr ;
+            std::shared_ptr<API::Framebuffer2DMultisample> m_framebuffer = nullptr ;
 
         public:
             /**
@@ -45,22 +46,17 @@ namespace Hope {
             ) ;
 
             /**
-             * Destruction of the FramebufferRenderNode.
-             */
-            virtual ~FramebufferMultisampleRenderNode() ;
-
-            /**
              * Get the framebuffer.
              */
             API::Framebuffer* framebuffer() override {
-                return m_framebuffer ;
+                return m_framebuffer.get() ;
             }
 
             /**
              * Get the framebuffer.
              */
             const API::Framebuffer* framebuffer() const override {
-                return m_framebuffer ;
+                return m_framebuffer.get() ;
             }
 
         protected:
@@ -68,7 +64,7 @@ namespace Hope {
              * Get the framebuffer.
              */
             API::Framebuffer2DMultisample* framebufferMultisample() const {
-                return m_framebuffer ;
+                return m_framebuffer.get() ;
             }
     } ;
 }

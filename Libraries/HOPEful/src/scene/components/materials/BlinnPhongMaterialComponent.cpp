@@ -55,7 +55,7 @@ void BlinnPhongMaterialComponent::setupUniforms() {
 }
 
 void BlinnPhongMaterialComponent::setupForwardShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
@@ -75,11 +75,11 @@ void BlinnPhongMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(BlinnPhongForwardFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }
 
 void BlinnPhongMaterialComponent::setupDeferredShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
@@ -96,5 +96,5 @@ void BlinnPhongMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(BlinnPhongDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }

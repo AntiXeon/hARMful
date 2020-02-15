@@ -22,18 +22,18 @@ namespace Hope {
             /**
              * List of shader parameters.
              */
-            std::map<RenderPassID, std::shared_ptr<API::RenderPass>> m_renderPasses ;
+            std::map<RenderPassID, std::unique_ptr<API::RenderPass>> m_renderPasses ;
 
         public:
             /**
              * Add a render pass.
              */
-            void addRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
+            void addRenderPass(std::unique_ptr<API::RenderPass> pass) ;
 
             /**
              * Remove a render pass.
              */
-            void removeRenderPass(const std::shared_ptr<API::RenderPass> pass) ;
+            void removeRenderPass(std::unique_ptr<API::RenderPass> pass) ;
 
             /**
              * Check if the render effect has a render pass corresponding the
@@ -48,9 +48,9 @@ namespace Hope {
              * @return  The render pass having the provided ID if available;
              *          nullptr otherwise.
              */
-            std::shared_ptr<API::RenderPass> renderPass(const RenderPassID passID) const {
+            API::RenderPass* renderPass(const RenderPassID passID) const {
                 if (hasRenderPass(passID)) {
-                    return m_renderPasses.at(passID) ;
+                    return m_renderPasses.at(passID).get() ;
                 }
 
                 return nullptr ;

@@ -17,9 +17,6 @@
 #include <geometry/points/Point4Df.hpp>
 
 namespace Hope {
-    class SSAOMaterialComponent ;
-    class SSAOBlurMaterialComponent ;
-
     /**
      * Node to compute screen-space ambient occlusion.
      */
@@ -71,16 +68,6 @@ namespace Hope {
             FramebufferRenderNode* m_output = nullptr ;
 
             /**
-             * Material used to render the ambient occlusion.
-             */
-            SSAOMaterialComponent* m_ssaoMaterial = nullptr ;
-
-            /**
-             * Material used to blur (and copy) the ambient occlusion.
-             */
-            SSAOBlurMaterialComponent* m_ssaoBlurMaterial = nullptr ;
-
-            /**
              * Normal-oriented hemisphere kernel.
              */
             std::array<Mind::Vector3f, AO_KERNEL_SIZE> m_kernel ;
@@ -103,11 +90,6 @@ namespace Hope {
                 FramebufferRenderNode* output,
                 FrameGraphNode* parent = nullptr
             ) ;
-
-            /**
-             * Destruction of the SSAORenderNode.
-             */
-            virtual ~SSAORenderNode() ;
 
             /**
              * Get the random texture that is used to sample ambient occlusion
@@ -151,12 +133,6 @@ namespace Hope {
             EffectData* data() override {
                 return &m_effectApplyData ;
             }
-
-            // Avoid copy/move operations.
-            SSAORenderNode(const SSAORenderNode& copied) = delete ;
-            SSAORenderNode(SSAORenderNode&& moved) = delete ;
-            SSAORenderNode& operator=(const SSAORenderNode& copied) = delete ;
-            SSAORenderNode& operator=(SSAORenderNode&& moved) = delete ;
 
         private:
             /**

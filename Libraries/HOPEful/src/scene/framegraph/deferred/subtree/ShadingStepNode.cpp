@@ -9,7 +9,7 @@ ShadingStepNode::ShadingStepNode(
     API::Framebuffer* shadingFBO,
     FrameGraphNode* parent
 ) : OffscreenRenderingNode(
-        new GBufferQuadMaterialComponent(gBuffer),
+        std::make_unique<GBufferQuadMaterialComponent>(gBuffer),
         parent
     ),
     m_shadingFBO(shadingFBO) {}

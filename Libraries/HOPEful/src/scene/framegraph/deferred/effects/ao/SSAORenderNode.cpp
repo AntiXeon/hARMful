@@ -27,10 +27,6 @@ SSAORenderNode::SSAORenderNode(
     m_effectApplyData.setSSAO(this) ;
 }
 
-SSAORenderNode::~SSAORenderNode() {
-    delete m_ssaoMaterial ;
-}
-
 void SSAORenderNode::generateNoiseTexture() {
     std::array<float, NoiseTextureDataSize> noiseData ;
 
@@ -111,9 +107,8 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
 
         // Rendering of the ambient occlusion pass.
-        m_ssaoMaterial = new SSAOMaterialComponent(m_gBuffer) ;
         m_subtree.aoRendering.deferredRendering = new OffscreenRenderingNode(
-            m_ssaoMaterial,
+            std::make_unique<SSAOMaterialComponent>(m_gBuffer),
             m_subtree.aoRendering.passSelector
         ) ;
     }
@@ -140,9 +135,8 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
 
         // Rendering of the ambient occlusion pass.
-        m_ssaoBlurMaterial = new SSAOBlurMaterialComponent(m_subtree.aoRendering.offscreen) ;
         m_subtree.aoBlurCopy.deferredRendering = new OffscreenRenderingNode(
-            m_ssaoBlurMaterial,
+            std::make_unique<SSAOBlurMaterialComponent>(m_subtree.aoRendering.offscreen),
             m_subtree.aoBlurCopy.passSelector
         ) ;
     }

@@ -4,10 +4,10 @@
 using namespace Hope ;
 
 OffscreenRenderingNode::OffscreenRenderingNode(
-    MaterialComponent* material,
+    std::unique_ptr<MaterialComponent> material,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
-    m_material(material) {
+    m_material(std::move(material)) {
     setRenderingStepEnabled(false) ;
 }
 

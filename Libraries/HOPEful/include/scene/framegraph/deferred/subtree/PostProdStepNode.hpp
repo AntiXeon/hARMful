@@ -9,7 +9,8 @@
 #endif
 
 #include <scene/FrameGraphNode.hpp>
-#include <vector>
+#include <memory>
+#include <unordered_set>
 
 namespace Hope {
     class PostProdEffectNode ;
@@ -36,12 +37,12 @@ namespace Hope {
             /**
              * Root node for all post-prod effects.
              */
-            FrameGraphNode* m_effectsRoot = nullptr ;
+            std::unique_ptr<FrameGraphNode> m_effectsRoot = nullptr ;
 
             /**
              * All the post-prod effect to apply.
              */
-            std::vector<PostProdEffectNode*> m_effects ;
+            std::unordered_set<PostProdEffectNode*> m_effects ;
 
         public:
             /**

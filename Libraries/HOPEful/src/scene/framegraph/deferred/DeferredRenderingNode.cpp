@@ -1,7 +1,5 @@
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 
-#include <scene/framegraph/deferred/postprod/AOApplyEffectNode.hpp>
-
 using namespace Hope ;
 
 DeferredRenderingNode::DeferredRenderingNode(
@@ -9,7 +7,7 @@ DeferredRenderingNode::DeferredRenderingNode(
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_gBuffer(gBuffer) {
-    m_framebufferNode = new FramebufferRenderNode(
+    m_framebufferNode = std::make_unique<FramebufferRenderNode>(
         Mind::Dimension2Di(
             gBuffer -> framebuffer() -> width(),
             gBuffer -> framebuffer() -> height()
@@ -21,25 +19,17 @@ DeferredRenderingNode::DeferredRenderingNode(
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
-    m_computeSSAONode = new SSAORenderNode(m_gBuffer, m_framebufferNode, this) ;
+    m_computeSSAONode = std::make_unique<SSAORenderNode>(m_gBuffer, m_framebufferNode.get(), this) ;
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
-    m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
-    m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
+    m_shadingNode = std::make_unique<ShadingStepNode>(m_gBuffer, outputFBO, m_framebufferNode.get()) ;
+    m_postProdNode = std::make_unique<PostProdStepNode>(outputFBO, m_framebufferNode.get()) ;
 
-    AOApplyEffectNode* aoApplyNode = new AOApplyEffectNode(m_framebufferNode) ;
-    aoApplyNode -> setParent(m_postProdNode) ;
+    m_aoApplyNode = std::make_unique<AOApplyEffectNode>(m_framebufferNode.get()) ;
+    m_postProdNode -> addEffect(m_aoApplyNode.get()) ;
 
-    m_displayStepNode = new DisplayStepNode(m_framebufferNode, this) ;
-}
-
-DeferredRenderingNode::~DeferredRenderingNode() {
-    delete m_displayStepNode ;
-    delete m_postProdNode ;
-    delete m_shadingNode ;
-    delete m_computeSSAONode ;
-    delete m_framebufferNode ;
+    m_displayStepNode = std::make_unique<DisplayStepNode>(m_framebufferNode.get(), this) ;
 }
 
 void DeferredRenderingNode::setupFramebuffer() {

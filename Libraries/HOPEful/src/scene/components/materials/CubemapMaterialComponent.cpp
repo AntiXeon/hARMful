@@ -39,7 +39,7 @@ void CubemapMaterialComponent::setupUniforms() {
 }
 
 void CubemapMaterialComponent::setupForwardShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(depthTest) ;
@@ -57,11 +57,11 @@ void CubemapMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(CubemapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }
 
 void CubemapMaterialComponent::setupDeferredShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
     std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(depthTest) ;
@@ -80,5 +80,5 @@ void CubemapMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(CubemapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }

@@ -60,7 +60,7 @@ void DiffuseNormalMaterialComponent::setupUniforms() {
 }
 
 void DiffuseNormalMaterialComponent::setupForwardShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
@@ -81,11 +81,11 @@ void DiffuseNormalMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(DiffuseNormalMapForwardFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }
 
 void DiffuseNormalMaterialComponent::setupDeferredShader() {
-    std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(DeferredPassID) ;
+    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
@@ -102,5 +102,5 @@ void DiffuseNormalMaterialComponent::setupDeferredShader() {
     shaderProgram -> addFragmentShaderCode(DiffuseNormalMapDeferredFragmentCode) ;
     shaderProgram -> build() ;
 
-    effect().addRenderPass(renderPass) ;
+    effect().addRenderPass(std::move(renderPass)) ;
 }

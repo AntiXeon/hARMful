@@ -99,7 +99,7 @@ namespace Hope {
              * @return  The render pass having the provided ID if available;
              *          nullptr otherwise.
              */
-            std::shared_ptr<API::RenderPass> renderPass(const RenderPassID passID) const {
+            API::RenderPass* renderPass(const RenderPassID passID) const {
                 return m_effect.renderPass(passID) ;
             }
 

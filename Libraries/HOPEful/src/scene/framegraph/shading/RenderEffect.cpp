@@ -2,10 +2,12 @@
 
 using namespace Hope ;
 
-void RenderEffect::addRenderPass(const std::shared_ptr<API::RenderPass> pass) {
-    m_renderPasses[pass -> id()] = pass ;
+void RenderEffect::addRenderPass(std::unique_ptr<API::RenderPass> pass) {
+    //m_renderPasses[pass -> id()] = std::move(pass) ;
+    RenderPassID passID = pass -> id() ;
+    m_renderPasses.insert(std::make_pair(passID, std::move(pass))) ;
 }
 
-void RenderEffect::removeRenderPass(const std::shared_ptr<API::RenderPass> pass) {
+void RenderEffect::removeRenderPass(std::unique_ptr<API::RenderPass> pass) {
     m_renderPasses.erase(pass -> id()) ;
 }

@@ -124,7 +124,7 @@ namespace Hope::GL {
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
-            std::shared_ptr<API::RenderPass> useMaterial(
+            API::RenderPass* useMaterial(
                 const RenderPassID renderPassID,
                 const Hope::MaterialComponent* component,
                 const std::vector<Hope::EffectData*>& effects = {}
@@ -133,7 +133,7 @@ namespace Hope::GL {
             /**
              * Enable the capabilities of the render pass that is used.
              */
-            void enableCapabilities(const std::shared_ptr<API::RenderPass>& renderPass) {
+            void enableCapabilities(API::RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& [type, capability] : capabilities) {
                     capability -> apply() ;
@@ -143,7 +143,7 @@ namespace Hope::GL {
             /**
              * Disable the capabilities of the render pass that is used.
              */
-            void disableCapabilities(const std::shared_ptr<API::RenderPass>& renderPass) {
+            void disableCapabilities(API::RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& [type, capability] : capabilities) {
                     capability -> remove() ;

@@ -3,10 +3,10 @@
 
 #include <scene/FrameGraphNode.hpp>
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
+#include <memory>
 
 namespace Hope {
-    class MaterialComponent ;
-
     /**
      * Framegraph node to perform offscreen rendering.
      */
@@ -16,7 +16,7 @@ namespace Hope {
              * Material bearing the shader program to use for performing the
              * rendering.
              */
-            MaterialComponent* m_material = nullptr ;
+            std::unique_ptr<MaterialComponent> m_material = nullptr ;
 
         public:
             /**
@@ -25,7 +25,7 @@ namespace Hope {
              *                      for performing the rendering.
              */
             OffscreenRenderingNode(
-                MaterialComponent* material,
+                std::unique_ptr<MaterialComponent> material,
                 FrameGraphNode* parent = nullptr
             ) ;
 
@@ -34,7 +34,7 @@ namespace Hope {
              * rendering.
              */
             MaterialComponent* material() const {
-                return m_material ;
+                return m_material.get() ;
             }
 
         protected:

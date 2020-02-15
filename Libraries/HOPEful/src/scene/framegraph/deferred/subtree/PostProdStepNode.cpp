@@ -11,7 +11,9 @@ PostProdStepNode::PostProdStepNode(
     API::Framebuffer* framebuffer,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
-    m_framebuffer(framebuffer) {}
+    m_framebuffer(framebuffer) {
+    m_effectsRoot = std::make_unique<FrameGraphNode>(this) ;
+}
 
 void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     assert(node != nullptr) ;
@@ -21,9 +23,9 @@ void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     // list.
     assert(id == PostProdEffectNode::DefaultID) ;
 
-    node -> setParent(m_effectsRoot) ;
+    node -> setParent(m_effectsRoot.get()) ;
     short nodeID = static_cast<short>(m_effects.size()) ;
-    m_effects.push_back(node) ;
+    m_effects.insert(node) ;
     node -> setId(nodeID) ;
 }
 
@@ -33,10 +35,10 @@ void PostProdStepNode::removeEffect(PostProdEffectNode* node) {
 
     // Be sure the node is linked to this PostProdStepNode.
     assert(id >= 0) ;
-    assert(m_effects[id] == node) ;
+    assert(m_effects.count(node)  == 1) ;
 
     node -> setParent(nullptr) ;
-    m_effects.erase(m_effects.begin() + id) ;
+    m_effects.erase(node) ;
     node -> setId(PostProdEffectNode::DefaultID) ;
 }
 

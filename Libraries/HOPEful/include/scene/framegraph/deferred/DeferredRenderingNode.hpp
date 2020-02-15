@@ -8,6 +8,7 @@
 #include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <scene/framegraph/deferred/subtree/PostProdStepNode.hpp>
 #include <scene/framegraph/deferred/subtree/DisplayStepNode.hpp>
+#include <scene/framegraph/deferred/postprod/AOApplyEffectNode.hpp>
 #include <memory>
 
 namespace Hope {
@@ -30,29 +31,34 @@ namespace Hope {
             /**
              * Compute SSAO from the G-Buffer content (depth, normals).
              */
-            SSAORenderNode* m_computeSSAONode = nullptr ;
+            std::unique_ptr<SSAORenderNode> m_computeSSAONode = nullptr ;
+
+            /**
+             * Node to apply ambient occlusion on shaded result.
+             */
+            std::unique_ptr<AOApplyEffectNode> m_aoApplyNode = nullptr ;
 
             /**
              * Framebuffer node in which the deferred rendering is performed.
              */
-            FramebufferRenderNode* m_framebufferNode = nullptr ;
+            std::unique_ptr<FramebufferRenderNode> m_framebufferNode = nullptr ;
 
             /**
              * Compute the shading from a G-Buffer node. It applies
              * multisampling as well in rendering so that the resulting texture
              * does not need to enable multisample.
              */
-            ShadingStepNode* m_shadingNode = nullptr ;
+            std::unique_ptr<ShadingStepNode> m_shadingNode = nullptr ;
 
             /**
              * Apply post-prod effects.
              */
-            PostProdStepNode* m_postProdNode = nullptr ;
+            std::unique_ptr<PostProdStepNode> m_postProdNode = nullptr ;
 
             /**
              * Node to display the result on screen.
              */
-            DisplayStepNode* m_displayStepNode = nullptr ;
+            std::unique_ptr<DisplayStepNode> m_displayStepNode = nullptr ;
 
         public:
             /**
@@ -67,17 +73,6 @@ namespace Hope {
                 GBufferRenderNode* gBuffer,
                 FrameGraphNode* parent = nullptr
             ) ;
-
-            /**
-             * Destruction of the DeferredRenderingNode.
-             */
-            virtual ~DeferredRenderingNode() ;
-
-            // Remove copy/move operations.
-            DeferredRenderingNode(const DeferredRenderingNode& copied) = delete;
-            DeferredRenderingNode(DeferredRenderingNode&& moved) = delete;
-            DeferredRenderingNode& operator=(const DeferredRenderingNode& copied) = delete;
-            DeferredRenderingNode& operator=(DeferredRenderingNode&& moved) = delete;
 
         private:
             /**
