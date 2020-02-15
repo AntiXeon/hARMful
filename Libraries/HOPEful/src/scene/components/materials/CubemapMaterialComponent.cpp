@@ -12,7 +12,7 @@
 using namespace Hope ;
 
 CubemapMaterialComponent::CubemapMaterialComponent()
-    : MaterialComponent(),
+    : MaterialComponent(false),
       m_map(nullptr) {
     setupForwardShader() ;
     setupDeferredShader() ;

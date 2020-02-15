@@ -50,8 +50,9 @@ namespace Hope {
         public:
             /**
              * Create a MaterialComponent.
+             * @param   drawShadow  true to draw a shadow; false otherwise.
              */
-            MaterialComponent() ;
+            MaterialComponent(const bool drawShadow = true) ;
 
             /**
              * Update the uniform values before the processing of the material

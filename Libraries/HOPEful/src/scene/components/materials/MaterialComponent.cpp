@@ -12,10 +12,13 @@ using namespace Hope ;
 
 const UniformNames MaterialComponent::Uniforms ;
 
-MaterialComponent::MaterialComponent()
+MaterialComponent::MaterialComponent(const bool drawShadow)
     : Component(ClassType) {
     m_settings.setRenderEffect(&m_effect) ;
-    setupDirectionalLightDepthMapShader() ;
+
+    if (drawShadow) {
+        setupDirectionalLightDepthMapShader() ;
+    }
 }
 
 void MaterialComponent::setupRendering() {
