@@ -1,44 +1,42 @@
-#include <scene/components/materials/deferred/SSAOBlurMaterialComponent.hpp>
-#include <scene/components/materials/UniformNames.hpp>
+#include <scene/components/materials/deferred/postprod/AOPostProdMaterialComponent.hpp>
+#include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
+#include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
 #ifdef OGL
-    #define NoTarget    GL_NONE
     #include <scene/components/materials/shaders/GLSL/460/Modules.hpp>
     #include <scene/components/materials/shaders/GLSL/460/modules/Functions.hpp>
     #include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
-    #include <scene/components/materials/shaders/GLSL/460/effects/AoRendering.hpp>
+    #include <scene/components/materials/shaders/GLSL/460/DeferredRendering.hpp>
 #endif
 
 using namespace Hope ;
 
-SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
-    const AbstractFramebufferRenderNode* aoBuffer
-)
+AOPostProdMaterialComponent::AOPostProdMaterialComponent(const FramebufferRenderNode* framebufferNode)
     : MaterialComponent(),
-      m_aoBuffer(aoBuffer) {
+      m_framebufferNode(framebufferNode) {
     setupForwardShader() ;
 }
 
-void SSAOBlurMaterialComponent::updateUniformValues() {
-    const API::Framebuffer* framebuffer = m_aoBuffer -> framebuffer() ;
+void AOPostProdMaterialComponent::updateUniformValues() {
+    const API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
+    framebuffer -> bindUnitColor(ShadingStepNode::ShadingRenderTarget) ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;
 }
 
-void SSAOBlurMaterialComponent::setupUniforms() {}
-
-void SSAOBlurMaterialComponent::setupForwardShader() {
+void AOPostProdMaterialComponent::setupForwardShader() {
     std::shared_ptr<API::RenderPass> renderPass = std::make_shared<API::RenderPass>(ForwardPassID) ;
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(AoRenderingSsaoVertexCode) ;
+    shaderProgram -> addVertexShaderCode(DeferredRenderingShadingVertexCode) ;
     // Fragment shader code.
     shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(AoRenderingBlurFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+    shaderProgram -> addFragmentShaderCode(DeferredRenderingAoApplyFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(renderPass) ;

@@ -14,7 +14,7 @@ using namespace Hope ;
 
 SSAORenderNode::SSAORenderNode(
     GBufferRenderNode* gBuffer,
-    API::Framebuffer* output,
+    FramebufferRenderNode* output,
     FrameGraphNode* parent
 ) : EffectFrameGraphNode(parent),
     m_gBuffer(gBuffer),
@@ -129,8 +129,9 @@ void SSAORenderNode::generateFramegraphSubtree() {
         ) ;
         m_subtree.aoBlurCopy.offscreen -> framebuffer() -> attachColor(
             AORenderTarget,
-            m_output -> colorAttachment(AORenderTarget)
+            m_output -> framebuffer() -> colorAttachment(AORenderTarget)
         ) ;
+        m_subtree.aoBlurCopy.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
         // Render pass selection.
         m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(

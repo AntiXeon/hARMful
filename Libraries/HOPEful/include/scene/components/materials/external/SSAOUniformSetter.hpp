@@ -11,7 +11,7 @@ namespace Hope {
      * Setter of uniform values for screen-space ambient occlusion related
      * stuff.
      */
-    class SSAOApplyUniformSetter final : public ExternalUniformSetter {
+    class SSAOUniformSetter final : public ExternalUniformSetter {
         private:
             /**
              * To know if ambient occlusion must be computed or not.
@@ -26,9 +26,9 @@ namespace Hope {
 
         public:
             /**
-             * Create a new SSAOApplyUniformSetter instance.
+             * Create a new SSAOUniformSetter instance.
              */
-            SSAOApplyUniformSetter() ;
+            SSAOUniformSetter() ;
 
             /**
              * Update the uniforms.

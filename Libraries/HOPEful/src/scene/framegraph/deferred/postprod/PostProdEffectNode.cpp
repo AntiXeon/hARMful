@@ -2,6 +2,7 @@
 #include <scene/framegraph/deferred/subtree/ShadingStepNode.hpp>
 #include <scene/framegraph/deferred/subtree/PostProdStepNode.hpp>
 #include <scene/ogl/rendering/framebuffers/FramebufferBlitter.hpp>
+#include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <cassert>
 #include <utility>
 
@@ -9,31 +10,33 @@ using namespace Hope ;
 
 PostProdEffectNode::PostProdEffectNode(
     MaterialComponent* material,
-    API::Framebuffer* framebuffer
+    FramebufferRenderNode* framebufferNode
 ) : OffscreenRenderingNode(material, nullptr),
-    m_framebuffer(framebuffer) {}
+    m_framebufferNode(framebufferNode) {}
 
 void PostProdEffectNode::postAccept() {
+    API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
+
     // Copy the content of post-prod result into the shading target.
     API::FramebufferBlitter()
-        .setSourceFBO(m_framebuffer)
+        .setSourceFBO(framebuffer)
         .setSourceColor(PostProdStepNode::PostProdRenderTarget)
         .setSourceArea(
             Mind::Rectangle2Df(
                 0,
                 0,
-                m_framebuffer -> width(),
-                m_framebuffer -> height()
+                framebuffer -> width(),
+                framebuffer -> height()
             )
         )
-        .setDestinationFBO(m_framebuffer)
+        .setDestinationFBO(framebuffer)
         .setDestinationColor(ShadingStepNode::ShadingRenderTarget)
         .setDestinationArea(
             Mind::Rectangle2Df(
                 0,
                 0,
-                m_framebuffer -> width(),
-                m_framebuffer -> height()
+                framebuffer -> width(),
+                framebuffer -> height()
             )
         )
         .setMask(API::FramebufferBlitter::Mask::ColorBuffer)

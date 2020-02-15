@@ -9,7 +9,7 @@ layout(binding = 3) uniform sampler2DMS depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
-layout(location = 1) out vec4 fragColor ;
+out vec4 fragColor ;
 
 const float Epsilon = 0.0001f ;
 
@@ -79,5 +79,5 @@ void main() {
         occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;
     }
 
-    fragColor = vec4(texelFetch(albedo, ivec2(gl_FragCoord), 0).rgb, occlusion) ;
+    fragColor = vec4(occlusion) ;
 }

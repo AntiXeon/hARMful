@@ -9,7 +9,7 @@
     namespace API = Hope::GL ;
 #endif
 
-#include <scene/framegraph/deferred/effects/ao/SSAOApplyData.hpp>
+#include <scene/framegraph/deferred/effects/ao/SSAOData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/AOFramegraphSubtree.hpp>
 #include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
@@ -48,7 +48,7 @@ namespace Hope {
             /**
              * The effect data that are applied on final rendering stage.
              */
-            SSAOApplyData m_effectApplyData ;
+            SSAOData m_effectApplyData ;
 
             /**
              * Random texture that is used to sample ambient occlusion all over
@@ -65,10 +65,10 @@ namespace Hope {
             GBufferRenderNode* m_gBuffer = nullptr ;
 
             /**
-             * Framebuffer to which SSAO will be finally rendered to (in a
+             * Framebuffer node to which SSAO will be finally rendered to (in a
              * specific render target).
              */
-            API::Framebuffer* m_output = nullptr ;
+            FramebufferRenderNode* m_output = nullptr ;
 
             /**
              * Material used to render the ambient occlusion.
@@ -95,12 +95,12 @@ namespace Hope {
              * Create a new SSAORenderNode instance.
              * @param   gBuffer G-Buffer containing required data for SSAO
              *                  computing.
-             * @param   output  Framebuffer to which SSAO will be finally
+             * @param   output  Framebuffer node to which SSAO will be finally
              *                  rendered to (in a specific render target).
              */
             SSAORenderNode(
                 GBufferRenderNode* gBuffer,
-                API::Framebuffer* output,
+                FramebufferRenderNode* output,
                 FrameGraphNode* parent = nullptr
             ) ;
 

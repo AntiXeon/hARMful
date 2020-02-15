@@ -5,6 +5,8 @@
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
 namespace Hope {
+    class IFrameGraphVisitor ;
+
     /**
      * Framegraph node to compute a post-prod effect.
      */
@@ -29,7 +31,7 @@ namespace Hope {
              * Framebuffer node used as input to apply the effect on the texture
              * it contains.
              */
-            API::Framebuffer* m_framebuffer = nullptr ;
+            FramebufferRenderNode* m_framebufferNode = nullptr ;
 
         public:
             /**
@@ -37,7 +39,7 @@ namespace Hope {
              */
             PostProdEffectNode(
                 MaterialComponent* material,
-                API::Framebuffer* framebuffer
+                FramebufferRenderNode* framebufferNode
             ) ;
 
         private:

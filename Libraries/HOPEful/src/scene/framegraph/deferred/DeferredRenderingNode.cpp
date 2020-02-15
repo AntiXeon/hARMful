@@ -1,5 +1,7 @@
 #include <scene/framegraph/deferred/DeferredRenderingNode.hpp>
 
+#include <scene/framegraph/deferred/postprod/AOApplyEffectNode.hpp>
+
 using namespace Hope ;
 
 DeferredRenderingNode::DeferredRenderingNode(
@@ -19,12 +21,15 @@ DeferredRenderingNode::DeferredRenderingNode(
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
-    //m_computeSSAONode = new SSAORenderNode(m_gBuffer, outputFBO, nullptr) ;
+    m_computeSSAONode = new SSAORenderNode(m_gBuffer, m_framebufferNode, this) ;
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
     m_shadingNode = new ShadingStepNode(m_gBuffer, outputFBO, m_framebufferNode) ;
-    //m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
+    m_postProdNode = new PostProdStepNode(outputFBO, m_framebufferNode) ;
+
+    AOApplyEffectNode* aoApplyNode = new AOApplyEffectNode(m_framebufferNode) ;
+    aoApplyNode -> setParent(m_postProdNode) ;
 
     m_displayStepNode = new DisplayStepNode(m_framebufferNode, this) ;
 }

@@ -22,8 +22,11 @@
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
+#define     WIDTH   1280
+#define     HEIGHT  720
+
 TestWindow::TestWindow()
-    : Hope::GL::Window(800, 480, AppName) {
+    : Hope::GL::Window(WIDTH, HEIGHT, AppName) {
     // fullscreen() ;
     // hideMouseCursor() ;
 
@@ -188,7 +191,7 @@ TestWindow::TestWindow()
     capabilitiesNode -> addCapability(seamlessCubemap) ;
 
     Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
-        Mind::Dimension2Di(800, 480),
+        Mind::Dimension2Di(WIDTH, HEIGHT),
         capabilitiesNode
     ) ;
 
