@@ -3,6 +3,7 @@
 
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
+#include <memory>
 
 namespace Hope {
     class IFrameGraphVisitor ;
@@ -20,13 +21,13 @@ namespace Hope {
             /**
              * Root entity of the scene.
              */
-            Entity* m_root = nullptr ;
+            std::unique_ptr<Entity> m_root = nullptr ;
 
             /**
              * Enable the configuration of the rendering through frame graph
              * nodes.
              */
-            RenderConfiguration* m_renderConfig = nullptr ;
+            std::unique_ptr<RenderConfiguration> m_renderConfig = nullptr ;
 
             /**
              * Frame graph visitor for rendering the scene.
@@ -38,11 +39,6 @@ namespace Hope {
              * Create a new Scene instance.
              */
             Scene(std::shared_ptr<IFrameGraphVisitor> visitor) ;
-
-            /**
-             * Destroy the Scene instance.
-             */
-            virtual ~Scene() ;
 
             /**
              * Render the scene.
@@ -60,19 +56,13 @@ namespace Hope {
              * Get the root entity of the scene.
              */
             Entity* root() const {
-                return m_root ;
+                return m_root.get() ;
             }
 
             /**
              * Set the root of the framegraph.
              */
             void setFrameGraphRoot(FrameGraphNode* root) ;
-
-            // Remove copy/move operations.
-            Scene(const Scene& copied) = delete;
-            Scene(Scene&& moved) = delete;
-            Scene& operator=(const Scene& copied) = delete;
-            Scene& operator=(Scene&& moved) = delete;
 
         private:
             /**

@@ -6,15 +6,11 @@
 using namespace Hope ;
 
 Scene::Scene(std::shared_ptr<IFrameGraphVisitor> visitor)
-    : m_root(new Entity()),
-      m_renderConfig(new RenderConfiguration()),
+    : m_root(std::make_unique<Entity>()),
+      m_renderConfig(std::make_unique<RenderConfiguration>()),
       m_frameGraphVisitor(visitor) {
-    m_root -> addComponent(m_renderConfig) ;
-    m_frameGraphVisitor -> setSceneRoot(m_root) ;
-}
-
-Scene::~Scene() {
-    delete m_root ;
+    m_root -> addComponent(m_renderConfig.get()) ;
+    m_frameGraphVisitor -> setSceneRoot(m_root.get()) ;
 }
 
 void Scene::render() {
@@ -37,11 +33,11 @@ void Scene::render() {
 
 void Scene::lockEntities(const bool state) {
     m_isPrepared = state ;
-    lockEntity(m_root, state) ;
+    lockEntity(m_root.get(), state) ;
 }
 
 void Scene::setFrameGraphRoot(FrameGraphNode* root) {
-    root -> setSceneGraphRoot(m_root) ;
+    root -> setSceneGraphRoot(m_root.get()) ;
     m_renderConfig -> setFrameGraphRoot(root) ;
 }
 

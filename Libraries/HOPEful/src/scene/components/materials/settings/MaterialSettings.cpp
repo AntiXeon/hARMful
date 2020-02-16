@@ -24,12 +24,12 @@ void MaterialSettings::setAlphaBlendingMode(
 
     // Use the new capability.
     if (mode == AlphaBlendingMode::AlphaBlend) {
-        std::shared_ptr<API::BlendEquation> blendEquation = std::make_shared<API::BlendEquation>() ;
-        renderPass -> addCapability(blendEquation) ;
+        std::unique_ptr<API::BlendEquation> blendEquation = std::make_unique<API::BlendEquation>() ;
+        renderPass -> addCapability(std::move(blendEquation)) ;
     }
     else if (mode == AlphaBlendingMode::AlphaClip) {
-        std::shared_ptr<API::AlphaTest> alphaTest = std::make_shared<API::AlphaTest>() ;
-        renderPass -> addCapability(alphaTest) ;
+        std::unique_ptr<API::AlphaTest> alphaTest = std::make_unique<API::AlphaTest>() ;
+        renderPass -> addCapability(std::move(alphaTest)) ;
     }
 }
 
@@ -47,8 +47,8 @@ void MaterialSettings::setShadowMode(const ShadowMode mode) {
     }
 
     // In case of AlphaClip, add the AlphaTest capability.
-    std::shared_ptr<API::AlphaTest> alphaTest = std::make_shared<API::AlphaTest>() ;
-    renderPass -> addCapability(alphaTest) ;
+    std::unique_ptr<API::AlphaTest> alphaTest = std::make_unique<API::AlphaTest>() ;
+    renderPass -> addCapability(std::move(alphaTest)) ;
 }
 
 API::CapabilityType MaterialSettings::findAlphaCapabilityType(const AlphaBlendingMode mode) {

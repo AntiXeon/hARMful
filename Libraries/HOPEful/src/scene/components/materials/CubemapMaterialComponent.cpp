@@ -36,9 +36,9 @@ void CubemapMaterialComponent::setupUniforms() {
 
 void CubemapMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
-    std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
+    std::unique_ptr<API::DepthTest> depthTest = std::make_unique<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
-    renderPass -> addCapability(depthTest) ;
+    renderPass -> addCapability(std::move(depthTest)) ;
 
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
@@ -58,9 +58,9 @@ void CubemapMaterialComponent::setupForwardShader() {
 
 void CubemapMaterialComponent::setupDeferredShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
-    std::shared_ptr<API::DepthTest> depthTest = std::make_shared<API::DepthTest>() ;
+    std::unique_ptr<API::DepthTest> depthTest = std::make_unique<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
-    renderPass -> addCapability(depthTest) ;
+    renderPass -> addCapability(std::move(depthTest)) ;
 
     std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.

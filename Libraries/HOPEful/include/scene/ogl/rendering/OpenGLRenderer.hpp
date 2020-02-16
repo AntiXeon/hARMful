@@ -135,7 +135,7 @@ namespace Hope::GL {
              */
             void enableCapabilities(API::RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
-                for(auto const& [type, capability] : capabilities) {
+                for(auto const& capability : capabilities) {
                     capability -> apply() ;
                 }
             }
@@ -145,7 +145,7 @@ namespace Hope::GL {
              */
             void disableCapabilities(API::RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
-                for(auto const& [type, capability] : capabilities) {
+                for(auto const& capability : capabilities) {
                     capability -> remove() ;
                 }
             }

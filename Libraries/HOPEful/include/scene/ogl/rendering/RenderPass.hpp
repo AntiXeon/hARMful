@@ -6,8 +6,9 @@
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <map>
-#include <set>
 #include <memory>
+#include <set>
+#include <vector>
 
 namespace Hope::GL {
     /**
@@ -15,6 +16,14 @@ namespace Hope::GL {
      */
     class RenderPass final {
         private:
+            /**
+             * For direct access to capabilities pointers.
+             */
+            struct CapabilityIndex {
+                unsigned int index ;
+                std::unique_ptr<Capability> capability ;
+            } ;
+
             /**
              * ID of the pass.
              */
@@ -28,7 +37,13 @@ namespace Hope::GL {
             /**
              * List of graphics API capabilities.
              */
-            std::map<CapabilityType, std::shared_ptr<Capability>> m_capabilities ;
+            std::map<CapabilityType, CapabilityIndex> m_capabilities ;
+
+            /**
+             * Cache pointers on capabilities for easy sharing without
+             * ownership.
+             */
+            std::vector<Capability*> m_capabilitiesPointers ;
 
             /**
              * The shader program that is executed in the current render pass.
@@ -71,23 +86,23 @@ namespace Hope::GL {
              * @return  true if the Capability can be added; false if a
              *          Capability of same type is already in use.
              */
-            bool addCapability(const std::shared_ptr<Capability> capability) ;
+            bool addCapability(std::unique_ptr<Capability> capability) ;
 
             /**
              * Remove a graphics API capability.
              */
-            std::shared_ptr<Capability> removeCapability(const CapabilityType type) ;
+            void removeCapability(const CapabilityType type) ;
 
             /**
              * Get the capability of wanted type.
              */
-            std::shared_ptr<Capability> capability(const CapabilityType type) const ;
+            const Capability* capability(const CapabilityType type) const ;
 
             /**
              * Get the capabilities of the current render pass.
              */
-            std::map<CapabilityType, std::shared_ptr<Capability>> capabilities() const {
-                return m_capabilities ;
+            const std::vector<Capability*>& capabilities() const {
+                return m_capabilitiesPointers ;
             }
 
             /**

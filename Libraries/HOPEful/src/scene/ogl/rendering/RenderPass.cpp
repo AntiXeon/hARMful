@@ -1,4 +1,5 @@
 #include <scene/ogl/rendering/RenderPass.hpp>
+#include <iostream>
 
 using namespace Hope::GL ;
 
@@ -15,28 +16,38 @@ void RenderPass::removeFilterOption(const std::shared_ptr<Hope::FilterOption> op
     m_options.erase(option) ;
 }
 
-bool RenderPass::addCapability(const std::shared_ptr<Capability> capability) {
+bool RenderPass::addCapability(std::unique_ptr<Capability> capability) {
     if (m_capabilities.count(capability -> type()) == 0) {
-        m_capabilities[capability -> type()] = capability ;
+        unsigned int index = m_capabilitiesPointers.size() ;
+        m_capabilitiesPointers.push_back(capability.get()) ;
+
+        auto type = capability -> type() ;
+        m_capabilities.insert(
+            std::make_pair(
+                type,
+                CapabilityIndex({
+                    index,
+                    std::move(capability)
+                })
+            )
+        ) ;
         return true ;
     }
 
     return false ;
 }
 
-std::shared_ptr<Capability> RenderPass::removeCapability(const CapabilityType type) {
+void RenderPass::removeCapability(const CapabilityType type) {
     if (m_capabilities.count(type) == 1) {
-        std::shared_ptr<Capability> capability = m_capabilities.find(type) -> second ;
+        size_t index = (m_capabilities.find(type) -> second).index ;
+        m_capabilitiesPointers.erase(m_capabilitiesPointers.begin() + index) ;
         m_capabilities.erase(type) ;
-        return capability ;
     }
-
-    return nullptr;
 }
 
-std::shared_ptr<Capability> RenderPass::capability(const CapabilityType type) const {
+const Capability* RenderPass::capability(const CapabilityType type) const {
     if (m_capabilities.count(type) == 1) {
-        return m_capabilities.find(type) -> second ;
+        return (m_capabilities.find(type) -> second).capability.get() ;
     }
 
     return nullptr ;
