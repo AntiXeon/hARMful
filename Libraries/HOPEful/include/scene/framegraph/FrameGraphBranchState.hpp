@@ -55,7 +55,7 @@ namespace Hope {
             RenderConditionAggregator m_conditions ;
 
             /**
-             * Capability to enaéble on rendering of the current framegraph
+             * Capability to enable on rendering of the current framegraph
              * branch.
              */
             std::vector<API::Capability*> m_capabilities ;
