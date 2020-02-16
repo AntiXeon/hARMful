@@ -9,15 +9,16 @@
     namespace API = Hope::GL ;
 #endif
 
+#include <scene/Entity.hpp>
+#include <scene/components/cameras/OrthographicCameraComponent.hpp>
+#include <scene/components/lights/DirectionalLightComponent.hpp>
+#include <scene/FrameGraphNode.hpp>
 #include <scene/components/cameras/light/DirectionalLightCameraComponent.hpp>
 #include <scene/framegraph/deferred/effects/shadows/cascade/CSMFramegraphSubtree.hpp>
 #include <matrices/Matrix4x4f.hpp>
+#include <memory>
 
 namespace Hope {
-    class FrameGraphNode ;
-    class DirectionalLightComponent ;
-    class OrthographicCameraComponent ;
-
     /**
      * Store the data for a division of the render camera frustum in which
      * shadows are computed (cascade shadow mapping for directional lights).
@@ -30,9 +31,14 @@ namespace Hope {
             uint8_t m_cascadeIndex = 0 ;
 
             /**
+             * Entity bearing the DirectionalLightCameraComponent.
+             */
+            std::unique_ptr<Entity> m_lightCamEntity = nullptr ;
+
+            /**
              * Camera component that is used to render the cascade shadow map.
              */
-            DirectionalLightCameraComponent* m_lightCamera = nullptr ;
+            std::unique_ptr<DirectionalLightCameraComponent> m_lightCamera = nullptr ;
 
             /**
              * An orthographic camera used to compute the matrices to apply.

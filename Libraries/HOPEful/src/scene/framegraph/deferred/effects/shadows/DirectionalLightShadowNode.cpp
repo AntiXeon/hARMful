@@ -1,9 +1,5 @@
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
-#include <scene/components/cameras/OrthographicCameraComponent.hpp>
-#include <scene/Entity.hpp>
-
-#include <iostream>
 
 using namespace Hope ;
 
@@ -26,7 +22,7 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
     m_cascades.resize(m_parameters.amountCascades) ;
 
     Mind::Dimension3Di dimensions(resolution, resolution, m_parameters.amountCascades) ;
-    m_framebuffer = new API::Framebuffer2DStack(dimensions) ;
+    m_framebuffer = std::make_unique<API::Framebuffer2DStack>(dimensions) ;
     m_framebuffer -> attachDepth() ;
     m_framebuffer -> useNoColorBuffers() ;
 
@@ -91,13 +87,13 @@ void DirectionalLightShadowNode::specificAccept(IFrameGraphVisitor* visitor) {
 }
 
 void DirectionalLightShadowNode::generateSubtree() {
-    m_cascadeRoot = new Entity(sceneRoot()) ;
+    m_cascadeRoot = std::unique_ptr<Entity>(sceneRoot()) ;
 
     // Generate an OrthographicCamera, to compute light matrices, that is child
     // of the cascade root.
-    Entity* computeCamEntity = new Entity(m_cascadeRoot) ;
-    OrthographicCameraComponent* computeCameraComponent = new OrthographicCameraComponent() ;
-    computeCamEntity -> addComponent(computeCameraComponent) ;
+    m_computeCamEntity = std::make_unique<Entity>(m_cascadeRoot.get()) ;
+    m_computeCameraComponent = std::make_unique<OrthographicCameraComponent>() ;
+    m_computeCamEntity -> addComponent(m_computeCameraComponent.get()) ;
 
     // Compute cascade distances.
     std::vector<float> cascadedSplits(m_parameters.amountCascades + 1) ;
@@ -111,8 +107,8 @@ void DirectionalLightShadowNode::generateSubtree() {
     for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
         m_cascades[cascadeIndex] = ShadowCascade(
             cascadeIndex,
-            m_cascadeRoot,
-            computeCameraComponent
+            m_cascadeRoot.get(),
+            m_computeCameraComponent.get()
         ) ;
 
         m_cascades[cascadeIndex].setNearPlane(cascadedSplits[cascadeIndex + 1]) ;
@@ -120,7 +116,7 @@ void DirectionalLightShadowNode::generateSubtree() {
         m_cascades[cascadeIndex].setupFramegraph(
             this,
             m_renderingCamera,
-            m_framebuffer
+            m_framebuffer.get()
         ) ;
     }
 }

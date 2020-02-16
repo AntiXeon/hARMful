@@ -9,13 +9,16 @@
     namespace API = Hope::GL ;
 #endif
 
+#include <scene/components/lights/DirectionalLightComponent.hpp>
+#include <scene/components/cameras/OrthographicCameraComponent.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowData.hpp>
 #include <scene/framegraph/deferred/effects/EffectFramegraphNode.hpp>
 #include <scene/framegraph/ActiveCameraNode.hpp>
-#include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/framegraph/deferred/effects/shadows/cascade/CSMParameters.hpp>
 #include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
 #include <scene/SceneTypes.hpp>
+#include <scene/Entity.hpp>
+#include <memory>
 #include <vector>
 
 namespace Hope {
@@ -65,13 +68,24 @@ namespace Hope {
             /**
              * Root node for cascade related cameras.
              */
-            Entity* m_cascadeRoot = nullptr ;
+            std::unique_ptr<Entity> m_cascadeRoot = nullptr ;
+
+            /**
+             * Orthographic camera entity
+             */
+            std::unique_ptr<Entity> m_computeCamEntity = nullptr ;
+
+            /**
+             * Orthographic camera, to compute light matrices, that is child
+             * of the cascade root.
+             */
+            std::unique_ptr<OrthographicCameraComponent> m_computeCameraComponent = nullptr ;
 
             /**
              * Framebuffer that is shared among the different
              * LayerFramebufferRenderNodes.
              */
-            API::Framebuffer2DStack* m_framebuffer = nullptr ;
+            std::unique_ptr<API::Framebuffer2DStack> m_framebuffer = nullptr ;
 
             /**
              * Shadow cascade objects.
@@ -141,7 +155,7 @@ namespace Hope {
              * light.
              */
             const API::Framebuffer2DStack* depthFramebuffer() const {
-                return m_framebuffer ;
+                return m_framebuffer.get() ;
             }
 
             /**

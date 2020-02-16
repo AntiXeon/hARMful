@@ -14,10 +14,6 @@ Entity::~Entity() {
         for (Component* component : componentList) {
             if (component) {
                 component -> detach(this) ;
-
-                if (component -> amountAttachedEntities() == 0) {
-                    delete component ;
-                }
             }
         }
     }

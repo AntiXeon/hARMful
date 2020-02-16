@@ -1,12 +1,13 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_SHADOW_CASCADE_FRAMEGRAPH_SUBTREE__
 #define __HOPE__DIRECTIONAL_LIGHT_SHADOW_CASCADE_FRAMEGRAPH_SUBTREE__
 
-namespace Hope {
-    class ActiveCameraNode ;
-    class RenderPassSelectorNode ;
-    class ClearBuffersNode ;
-    class LayerFramebufferRenderNode ;
+#include <scene/framegraph/ActiveCameraNode.hpp>
+#include <scene/framegraph/ClearBuffersNode.hpp>
+#include <scene/framegraph/RenderPassSelectorNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/LayerFramebufferRenderNode.hpp>
+#include <memory>
 
+namespace Hope {
     /**
      * Structure grouping the nodes of the subtree that is generated
      * just below the current DirectionalLightShadowNode to render the
@@ -22,24 +23,24 @@ namespace Hope {
          * the depth map with common framegraph nodes. This is "hidden" to
          * make shadows easier at use.
          */
-        ActiveCameraNode* lightSpaceCamera = nullptr ;
+        std::unique_ptr<ActiveCameraNode> lightSpaceCamera = nullptr ;
 
         /**
          * This selector is useful to only draw the depth map from the
          * light point-of-view with the previous orthographic camera.
          */
-        RenderPassSelectorNode* depthMapPassSelector = nullptr ;
+        std::unique_ptr<RenderPassSelectorNode> depthMapPassSelector = nullptr ;
 
         /**
          * This node is used to clear the depth map in between two frame
          * renders.
          */
-        ClearBuffersNode* clearBuffers = nullptr ;
+        std::unique_ptr<ClearBuffersNode> clearBuffers = nullptr ;
 
         /**
          * Contains the framebuffer to render the depth map in.
          */
-        LayerFramebufferRenderNode* offscreenBuffer = nullptr ;
+        std::unique_ptr<LayerFramebufferRenderNode> offscreenBuffer = nullptr ;
     } ;
 }
 

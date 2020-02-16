@@ -1,12 +1,4 @@
 #include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
-#include <scene/framegraph/ActiveCameraNode.hpp>
-#include <scene/framegraph/ClearBuffersNode.hpp>
-#include <scene/framegraph/RenderPassSelectorNode.hpp>
-#include <scene/framegraph/deferred/offscreen/base/LayerFramebufferRenderNode.hpp>
-#include <scene/components/cameras/OrthographicCameraComponent.hpp>
-#include <scene/components/lights/DirectionalLightComponent.hpp>
-#include <scene/FrameGraphNode.hpp>
-#include <scene/Entity.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <Math.hpp>
 #include <limits>
@@ -23,9 +15,9 @@ ShadowCascade::ShadowCascade(
     // compute camera. This camera is used in the framegraph to set up
     // the camera matrices that are sent to the shaders, to compute the
     // related shadow depth map.
-    Entity* lightCamEntity = new Entity(cascadeRoot) ;
-    m_lightCamera = new DirectionalLightCameraComponent() ;
-    lightCamEntity -> addComponent(m_lightCamera) ;
+    m_lightCamEntity = std::make_unique<Entity>(cascadeRoot) ;
+    m_lightCamera = std::make_unique<DirectionalLightCameraComponent>() ;
+    m_lightCamEntity -> addComponent(m_lightCamera.get()) ;
 }
 
 void ShadowCascade::update(
@@ -66,29 +58,29 @@ void ShadowCascade::setupFramegraph(
     API::Framebuffer2DStack* framebuffer
 ) {
     // 1. Set up the camera node for the depth map rendering.
-    m_fgSubtree.lightSpaceCamera = new ActiveCameraNode(owner, renderingCamera) ;
-    m_fgSubtree.lightSpaceCamera -> setCamera(m_lightCamera) ;
+    m_fgSubtree.lightSpaceCamera = std::make_unique<ActiveCameraNode>(owner, renderingCamera) ;
+    m_fgSubtree.lightSpaceCamera -> setCamera(m_lightCamera.get()) ;
 
     // 2. Select the DirectionalShadowPassID to only render the depth map from
     //    the light point-of-view.
-    m_fgSubtree.depthMapPassSelector = new RenderPassSelectorNode(
+    m_fgSubtree.depthMapPassSelector = std::make_unique<RenderPassSelectorNode>(
         DirectionalShadowPassID,
-        m_fgSubtree.lightSpaceCamera
+        m_fgSubtree.lightSpaceCamera.get()
     ) ;
 
     // 3. Framebuffer to draw the depth map in.
     static const bool WindowSizedFramebuffer2D = false ;
-    m_fgSubtree.offscreenBuffer = new LayerFramebufferRenderNode(
+    m_fgSubtree.offscreenBuffer = std::make_unique<LayerFramebufferRenderNode>(
         framebuffer,
         m_cascadeIndex,
         WindowSizedFramebuffer2D,
-        m_fgSubtree.depthMapPassSelector
+        m_fgSubtree.depthMapPassSelector.get()
     ) ;
 
     // 4. Clear the depth buffer from the previous frame.
-    m_fgSubtree.clearBuffers = new ClearBuffersNode(
+    m_fgSubtree.clearBuffers = std::make_unique<ClearBuffersNode>(
         API::BufferClearer::Buffer::Depth,
-        m_fgSubtree.offscreenBuffer
+        m_fgSubtree.offscreenBuffer.get()
     ) ;
 }
 
