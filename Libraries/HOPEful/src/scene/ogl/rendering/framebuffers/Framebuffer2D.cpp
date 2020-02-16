@@ -50,7 +50,7 @@ void Framebuffer2D::attachColor(
 ) {
     if (!m_colorAttachments[attachmentIndex]) {
         // Generate the texture.
-        m_colorAttachments[attachmentIndex] = std::make_shared<TextureImage2D>(
+        m_colorAttachments[attachmentIndex] = std::make_unique<TextureImage2D>(
             m_size,
             internalFormat,
             pixelDataFormat,
@@ -66,12 +66,12 @@ void Framebuffer2D::attachColor(
         m_colorAttachments[attachmentIndex] -> unbind() ;
     }
 
-    attachColor(attachmentIndex, m_colorAttachments[attachmentIndex]) ;
+    attachColor(attachmentIndex, m_colorAttachments[attachmentIndex].get()) ;
 }
 
 void Framebuffer2D::attachColor(
     const unsigned char attachmentIndex,
-    const std::shared_ptr<Texture> texture
+    const Texture* texture
 ) {
     bind() ;
     glFramebufferTexture2D(
@@ -87,7 +87,7 @@ void Framebuffer2D::attachColor(
 void Framebuffer2D::attachDepth() {
     if (!m_depthAttachment) {
         // Generate the texture.
-        m_depthAttachment = std::make_shared<TextureImage2D>(
+        m_depthAttachment = std::make_unique<TextureImage2D>(
             m_size,
             InternalFormat::DepthComponent,
             PixelFormat::DepthComponent,
@@ -103,10 +103,10 @@ void Framebuffer2D::attachDepth() {
     m_depthAttachment -> setWrapModes({ WrapMode::ClampToEdge, WrapMode::ClampToEdge }) ;
     m_depthAttachment -> unbind() ;
 
-    attachDepth(m_depthAttachment) ;
+    attachDepth(m_depthAttachment.get()) ;
 }
 
-void Framebuffer2D::attachDepth(const std::shared_ptr<Texture> texture) {
+void Framebuffer2D::attachDepth(const Texture* texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -121,7 +121,7 @@ void Framebuffer2D::attachDepth(const std::shared_ptr<Texture> texture) {
 void Framebuffer2D::attachStencil() {
     if (!m_stencilAttachment) {
         // Generate the texture.
-        m_stencilAttachment = std::make_shared<TextureImage2D>(
+        m_stencilAttachment = std::make_unique<TextureImage2D>(
             m_size,
             InternalFormat::StencilIndex,
             PixelFormat::StencilIndex,
@@ -138,10 +138,10 @@ void Framebuffer2D::attachStencil() {
     m_stencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
-    attachStencil(m_stencilAttachment) ;
+    attachStencil(m_stencilAttachment.get()) ;
 }
 
-void Framebuffer2D::attachStencil(const std::shared_ptr<Texture> texture) {
+void Framebuffer2D::attachStencil(const Texture* texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,
@@ -156,7 +156,7 @@ void Framebuffer2D::attachStencil(const std::shared_ptr<Texture> texture) {
 void Framebuffer2D::attachDepthStencil() {
     if (!m_depthStencilAttachment) {
         // Generate the texture.
-        m_depthStencilAttachment = std::make_shared<TextureImage2D>(
+        m_depthStencilAttachment = std::make_unique<TextureImage2D>(
             m_size,
             InternalFormat::Depth24Stencil8,
             PixelFormat::DepthStencil,
@@ -173,10 +173,10 @@ void Framebuffer2D::attachDepthStencil() {
     m_depthStencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
-    attachDepthStencil(m_depthStencilAttachment) ;
+    attachDepthStencil(m_depthStencilAttachment.get()) ;
 }
 
-void Framebuffer2D::attachDepthStencil(const std::shared_ptr<Texture> texture) {
+void Framebuffer2D::attachDepthStencil(const Texture* texture) {
     bind() ;
     glFramebufferTexture2D(
         GL_FRAMEBUFFER,

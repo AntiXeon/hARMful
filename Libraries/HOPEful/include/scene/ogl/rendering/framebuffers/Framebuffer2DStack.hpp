@@ -26,22 +26,22 @@ namespace Hope::GL {
              * Color textures attached to the framebuffer.
              * Stores the textures associated to their attachment point.
              */
-            std::vector<std::shared_ptr<TextureImage2DArray>> m_colorAttachments ;
+            std::vector<std::unique_ptr<TextureImage2DArray>> m_colorAttachments ;
 
             /**
              * Depth buffer attachment.
              */
-            std::shared_ptr<TextureImage2DArray> m_depthAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_depthAttachment ;
 
             /**
              * Stencil buffer attachment.
              */
-            std::shared_ptr<TextureImage2DArray> m_stencilAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_stencilAttachment ;
 
             /**
              * Depth + stencil buffer attachment.
              */
-            std::shared_ptr<TextureImage2DArray> m_depthStencilAttachment ;
+            std::unique_ptr<TextureImage2DArray> m_depthStencilAttachment ;
 
         public:
             /**
@@ -110,7 +110,7 @@ namespace Hope::GL {
              */
             void attachColor(
                 const unsigned char attachmentIndex,
-                const std::shared_ptr<Texture> texture
+                const Texture* texture
             ) override ;
 
             /**
@@ -123,7 +123,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepth(const std::shared_ptr<Texture> texture) override ;
+            void attachDepth(const Texture* texture) override ;
 
             /**
              * Attach the stencil buffer.
@@ -135,7 +135,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachStencil(const std::shared_ptr<Texture> texture) override ;
+            void attachStencil(const Texture* texture) override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
@@ -147,7 +147,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepthStencil(const std::shared_ptr<Texture> texture) override ;
+            void attachDepthStencil(const Texture* texture) override ;
 
             /**
              * Bind the color attachment.
@@ -264,29 +264,29 @@ namespace Hope::GL {
              * Get the wanted color attachment.
              * @param   attachmentIndex Attachment index.
              */
-            std::shared_ptr<Texture> colorAttachment(const unsigned char attachmentIndex) const override {
-                return m_colorAttachments[attachmentIndex] ;
+            const Texture* colorAttachment(const unsigned char attachmentIndex) const override {
+                return m_colorAttachments[attachmentIndex].get() ;
             }
 
             /**
              * Get the depth attachment.
              */
-            std::shared_ptr<Texture> depthAttachment() const override {
-                return m_depthAttachment ;
+            const Texture* depthAttachment() const override {
+                return m_depthAttachment.get() ;
             }
 
             /**
              * Get the stencil attachment.
              */
-            std::shared_ptr<Texture> stencilAttachment() const override {
-                return m_stencilAttachment ;
+            const Texture* stencilAttachment() const override {
+                return m_stencilAttachment.get() ;
             }
 
             /**
              * Get the depth & stencil attachment.
              */
-            std::shared_ptr<Texture> depthStencilAttachment() const override {
-                return m_depthStencilAttachment ;
+            const Texture* depthStencilAttachment() const override {
+                return m_depthStencilAttachment.get() ;
             }
 
             /**

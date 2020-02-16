@@ -141,7 +141,7 @@ namespace Hope::GL {
              */
             virtual void attachColor(
                 const unsigned char attachmentIndex,
-                const std::shared_ptr<Texture> texture
+                const Texture* texture
             ) = 0 ;
 
             /**
@@ -154,7 +154,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            virtual void attachDepth(const std::shared_ptr<Texture> texture) = 0 ;
+            virtual void attachDepth(const Texture* texture) = 0 ;
 
             /**
              * Attach the stencil buffer.
@@ -166,7 +166,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            virtual void attachStencil(const std::shared_ptr<Texture> texture) = 0 ;
+            virtual void attachStencil(const Texture* texture) = 0 ;
 
             /**
              * Attach the combination of depth+stencil buffer.
@@ -178,7 +178,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            virtual void attachDepthStencil(const std::shared_ptr<Texture> texture) = 0 ;
+            virtual void attachDepthStencil(const Texture* texture) = 0 ;
 
             /**
              * Bind the color attachment.
@@ -247,22 +247,22 @@ namespace Hope::GL {
              * Get the wanted color attachment.
              * @param   attachmentIndex Attachment index.
              */
-            virtual std::shared_ptr<Texture> colorAttachment(const unsigned char attachmentIndex) const = 0 ;
+            virtual const Texture* colorAttachment(const unsigned char attachmentIndex) const = 0 ;
 
             /**
              * Get the depth attachment.
              */
-            virtual std::shared_ptr<Texture> depthAttachment() const = 0 ;
+            virtual const Texture* depthAttachment() const = 0 ;
 
             /**
              * Get the stencil attachment.
              */
-            virtual std::shared_ptr<Texture> stencilAttachment() const = 0 ;
+            virtual const Texture* stencilAttachment() const = 0 ;
 
             /**
              * Get the depth & stencil attachment.
              */
-            virtual std::shared_ptr<Texture> depthStencilAttachment() const = 0 ;
+            virtual const Texture* depthStencilAttachment() const = 0 ;
 
             /**
              * Check the status of the framebuffer.
