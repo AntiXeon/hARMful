@@ -26,32 +26,32 @@ BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
 }
 
 void BlinnPhongMaterialComponent::updateUniformValues() {
-    uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
-    uniform(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
-    uniform(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
-    uniform(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
+    uniforms().at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
+    uniforms().at(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
+    uniforms().at(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
+    uniforms().at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
 }
 
 void BlinnPhongMaterialComponent::setupUniforms() {
     auto ambientUniform = std::make_unique<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
     ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
-    addShaderUniform(std::move(ambientUniform)) ;
+    uniforms().add(std::move(ambientUniform)) ;
 
     auto diffuseUniform = std::make_unique<Hope::ShaderUniform>() ;
     diffuseUniform -> setName(UniformNames::MaterialDiffuseUniformName()) ;
     diffuseUniform -> setLocation(UniformNames::DiffuseLocation) ;
-    addShaderUniform(std::move(diffuseUniform)) ;
+    uniforms().add(std::move(diffuseUniform)) ;
 
     auto specularUniform = std::make_unique<Hope::ShaderUniform>() ;
     specularUniform -> setName(UniformNames::MaterialSpecularUniformName()) ;
     specularUniform -> setLocation(UniformNames::SpecularLocation) ;
-    addShaderUniform(std::move(specularUniform)) ;
+    uniforms().add(std::move(specularUniform)) ;
 
     auto shininessUniform = std::make_unique<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
     shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
-    addShaderUniform(std::move(shininessUniform)) ;
+    uniforms().add(std::move(shininessUniform)) ;
 }
 
 void BlinnPhongMaterialComponent::setupForwardShader() {

@@ -28,14 +28,14 @@ void CubemapMaterialComponent::updateUniformValues() {
     if (m_map) {
         m_map -> activate() ;
         m_map -> bind() ;
-        uniform(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
+        uniforms().at(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
     }
 }
 
 void CubemapMaterialComponent::setupUniforms() {
     auto cubemapUniform = std::make_unique<Hope::ShaderUniform>() ;
     cubemapUniform -> setName(UniformNames::MaterialCubemapUniformName()) ;
-    addShaderUniform(std::move(cubemapUniform)) ;
+    uniforms().add(std::move(cubemapUniform)) ;
 }
 
 void CubemapMaterialComponent::setupForwardShader() {

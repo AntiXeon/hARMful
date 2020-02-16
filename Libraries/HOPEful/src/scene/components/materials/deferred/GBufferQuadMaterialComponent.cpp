@@ -25,14 +25,14 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
-    uniform(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
+    uniforms().at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
     auto msaaQualityUniform = std::make_unique<Hope::ShaderUniform>() ;
     msaaQualityUniform -> setName(UniformNames::MSAAQualityUniformName()) ;
     msaaQualityUniform -> setLocation(MSAAQualityUniformLocation) ;
-    addShaderUniform(std::move(msaaQualityUniform)) ;
+    uniforms().add(std::move(msaaQualityUniform)) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {

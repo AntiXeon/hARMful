@@ -2,10 +2,7 @@
 #define __HOPE__EXTERNAL_UNIFORM_SETTER__
 
 #include <scene/framegraph/shading/ShaderValue.hpp>
-#include <map>
-#include <vector>
-#include <string>
-#include <memory>
+#include <scene/components/materials/UniformCache.hpp>
 
 namespace Hope {
     /**
@@ -16,14 +13,9 @@ namespace Hope {
     class ExternalUniformSetter {
         private:
             /**
-             * List of shader uniforms.
+             * Uniforms cache.
              */
-            std::map<std::string, std::unique_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
-
-            /**
-             * Cache of uniform pointers for sharing without ownership.
-             */
-            std::vector<Hope::ShaderUniform*> m_uniformCache ;
+            UniformCache m_uniforms ;
 
         public:
             /**
@@ -35,28 +27,15 @@ namespace Hope {
              * Get the shader uniforms.
              */
             const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
-                return m_uniformCache ;
+                return m_uniforms.pointers() ;
             }
 
         protected:
             /**
-             * Add a shader uniform value.
-             * It is sent to the shader as a uniform value.
-             * Some usual values are already sent to the shaders.
+             * Get the unoforms of the material.
              */
-            void addShaderUniform(std::unique_ptr<Hope::ShaderUniform> uniform) {
-                m_uniformCache.push_back(uniform.get()) ;
-                m_shaderUniforms.insert(std::make_pair(uniform -> name(), std::move(uniform))) ;
-            }
-
-            /**
-             * Get the uniform with the given name.
-             */
-            Hope::ShaderUniform* uniform(const std::string& name) {
-                if (m_shaderUniforms.count(name) == 1) {
-                    return m_shaderUniforms[name].get() ;
-                }
-                return nullptr ;
+            UniformCache& uniforms() {
+                return m_uniforms ;
             }
     } ;
 }

@@ -15,11 +15,11 @@ SSAOUniformSetter::SSAOUniformSetter() {
     auto useAOUniform = std::make_unique<Hope::ShaderUniform>() ;
     useAOUniform -> setName(UniformNames::MaterialUseAOUniformName()) ;
     useAOUniform -> setLocation(UNIFORM_AO_USE_LOCATION) ;
-    addShaderUniform(std::move(useAOUniform)) ;
+    uniforms().add(std::move(useAOUniform)) ;
 }
 
 void SSAOUniformSetter::updateUniforms() {
-    uniform(UniformNames::MaterialUseAOUniformName()) -> setInteger(m_useAO) ;
+    uniforms().at(UniformNames::MaterialUseAOUniformName()) -> setInteger(m_useAO) ;
 
     if (m_useAO) {
         // Noise texture.
@@ -32,7 +32,7 @@ void SSAOUniformSetter::updateUniforms() {
             std::string strSampleIndex = Doom::StringExt::ToStringi(sampleIndex) ;
 
             std::string kernelName = UniformNames::MaterialAOKernelUniformName() + "[" + strSampleIndex + "]" ;
-            uniform(kernelName) -> setVec3(sample.toArray()) ;
+            uniforms().at(kernelName) -> setVec3(sample.toArray()) ;
             sampleIndex++ ;
         }
     }
@@ -54,6 +54,6 @@ void SSAOUniformSetter::setSSAONode(Hope::SSAORenderNode* node) {
         auto kernalSampleUniform = std::make_unique<Hope::ShaderUniform>() ;
         kernalSampleUniform -> setName(kernelName) ;
         kernalSampleUniform -> setLocation(UNIFORM_AO_KERNEL_LOCATION + sampleIndex) ;
-        addShaderUniform(std::move(kernalSampleUniform)) ;
+        uniforms().add(std::move(kernalSampleUniform)) ;
     }
 }

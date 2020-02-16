@@ -42,20 +42,20 @@ void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
         m_specular -> bindUnit(SpecularMapBinding) ;
     }
 
-    uniform(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
-    uniform(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
+    uniforms().at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
+    uniforms().at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
     auto ambientUniform = std::make_unique<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
     ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
-    addShaderUniform(std::move(ambientUniform)) ;
+    uniforms().add(std::move(ambientUniform)) ;
 
     auto shininessUniform = std::make_unique<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
     shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
-    addShaderUniform(std::move(shininessUniform)) ;
+    uniforms().add(std::move(shininessUniform)) ;
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {

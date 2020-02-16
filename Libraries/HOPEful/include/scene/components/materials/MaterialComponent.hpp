@@ -4,11 +4,9 @@
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
+#include <scene/components/materials/UniformCache.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <scene/components/materials/settings/MaterialSettings.hpp>
-#include <map>
-#include <memory>
-#include <string>
 
 #include <HopeAPI.hpp>
 
@@ -44,14 +42,9 @@ namespace Hope {
             RenderEffect m_effect ;
 
             /**
-             * List of shader uniforms.
+             * Uniforms cache.
              */
-            std::map<std::string, std::unique_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
-
-            /**
-             * Cache of uniform pointers for sharing without ownership.
-             */
-            std::vector<Hope::ShaderUniform*> m_uniformCache ;
+            UniformCache m_uniforms ;
 
         public:
             /**
@@ -113,7 +106,7 @@ namespace Hope {
              * Get the shader uniforms.
              */
             const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
-                return m_uniformCache ;
+                return m_uniforms.pointers() ;
             }
 
             /**
@@ -130,27 +123,10 @@ namespace Hope {
             }
 
             /**
-             * Add a shader uniform value.
-             * It is sent to the shader as a uniform value.
-             * Some usual values are already sent to the shaders.
+             * Get the unoforms of the material.
              */
-            void addShaderUniform(std::unique_ptr<Hope::ShaderUniform> uniform) {
-                m_uniformCache.push_back(uniform.get()) ;
-                m_shaderUniforms.insert(std::make_pair(uniform -> name(), std::move(uniform))) ;
-            }
-
-            /**
-             * Remove a shader ubniform.
-             */
-            void removeShaderUniform(const std::string& name) {
-                m_shaderUniforms.erase(name) ;
-            }
-
-            /**
-             * Get the uniform with the given name.
-             */
-            Hope::ShaderUniform* uniform(const std::string& name) {
-                return m_shaderUniforms[name].get() ;
+            UniformCache& uniforms() {
+                return m_uniforms ;
             }
 
             /**
