@@ -131,7 +131,7 @@ API::RenderPass* OpenGLRenderer::useMaterial(
 
         // Apply shader uniforms.
         auto materialUniforms = component -> shaderUniforms() ;
-        for (auto& [name, uniform] : materialUniforms) {
+        for (auto uniform : materialUniforms) {
             ShaderUniformApplicator::ApplyUniform(
                 shaderProgram -> id(),
                 uniform
@@ -142,7 +142,7 @@ API::RenderPass* OpenGLRenderer::useMaterial(
             if (effect -> hasAdditionalUniforms()) {
                 auto additionalUniforms = effect -> uniforms() ;
 
-                for (auto& [name, uniform] : additionalUniforms) {
+                for (auto uniform : additionalUniforms) {
                     ShaderUniformApplicator::ApplyUniform(
                         shaderProgram -> id(),
                         uniform

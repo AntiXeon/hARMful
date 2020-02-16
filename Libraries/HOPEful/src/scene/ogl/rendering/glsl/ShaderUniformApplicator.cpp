@@ -6,7 +6,7 @@ using namespace Hope::GL ;
 
 void ShaderUniformApplicator::ApplyUniform(
     const GLuint programID,
-    const std::shared_ptr<ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     ShaderUniform::ValueType type = uniform -> type() ;
 
@@ -98,7 +98,7 @@ void ShaderUniformApplicator::ApplyUniform(
 
 bool ShaderUniformApplicator::LocateUniform(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     const char* uniformName = (uniform -> name()).c_str() ;
     uniform -> setLocation(glGetUniformLocation(programID, uniformName)) ;
@@ -109,7 +109,7 @@ bool ShaderUniformApplicator::LocateUniform(
 
 void ShaderUniformApplicator::Integer(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -123,7 +123,7 @@ void ShaderUniformApplicator::Integer(
 
 void ShaderUniformApplicator::IVec2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -138,7 +138,7 @@ void ShaderUniformApplicator::IVec2(
 
 void ShaderUniformApplicator::IVec3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -153,7 +153,7 @@ void ShaderUniformApplicator::IVec3(
 
 void ShaderUniformApplicator::IVec4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -168,7 +168,7 @@ void ShaderUniformApplicator::IVec4(
 
 void ShaderUniformApplicator::UnsignedInteger(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -182,7 +182,7 @@ void ShaderUniformApplicator::UnsignedInteger(
 
 void ShaderUniformApplicator::UnsignedIVec2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -197,7 +197,7 @@ void ShaderUniformApplicator::UnsignedIVec2(
 
 void ShaderUniformApplicator::UnsignedIVec3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -212,7 +212,7 @@ void ShaderUniformApplicator::UnsignedIVec3(
 
 void ShaderUniformApplicator::UnsignedIVec4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -227,7 +227,7 @@ void ShaderUniformApplicator::UnsignedIVec4(
 
 void ShaderUniformApplicator::Floating(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -241,7 +241,7 @@ void ShaderUniformApplicator::Floating(
 
 void ShaderUniformApplicator::Vec2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -256,7 +256,7 @@ void ShaderUniformApplicator::Vec2(
 
 void ShaderUniformApplicator::Vec3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -271,7 +271,7 @@ void ShaderUniformApplicator::Vec3(
 
 void ShaderUniformApplicator::Vec4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -286,7 +286,7 @@ void ShaderUniformApplicator::Vec4(
 
 void ShaderUniformApplicator::Mat2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -303,7 +303,7 @@ void ShaderUniformApplicator::Mat2(
 
 void ShaderUniformApplicator::Mat3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -320,7 +320,7 @@ void ShaderUniformApplicator::Mat3(
 
 void ShaderUniformApplicator::Mat4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -337,7 +337,7 @@ void ShaderUniformApplicator::Mat4(
 
 void ShaderUniformApplicator::Mat2x3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -354,7 +354,7 @@ void ShaderUniformApplicator::Mat2x3(
 
 void ShaderUniformApplicator::Mat3x2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -371,7 +371,7 @@ void ShaderUniformApplicator::Mat3x2(
 
 void ShaderUniformApplicator::Mat2x4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -388,7 +388,7 @@ void ShaderUniformApplicator::Mat2x4(
 
 void ShaderUniformApplicator::Mat4x2(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -405,7 +405,7 @@ void ShaderUniformApplicator::Mat4x2(
 
 void ShaderUniformApplicator::Mat3x4(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -422,7 +422,7 @@ void ShaderUniformApplicator::Mat3x4(
 
 void ShaderUniformApplicator::Mat4x3(
     GLuint programID,
-    const std::shared_ptr<Hope::ShaderUniform>& uniform
+    Hope::ShaderUniform* uniform
 ) {
     bool success = true ;
     if (uniform -> location() == -2) {
@@ -439,12 +439,12 @@ void ShaderUniformApplicator::Mat4x3(
 
 void ShaderUniformApplicator::Sampler2D(
     GLuint /*programID*/,
-    const std::shared_ptr<Hope::ShaderUniform>& /*uniform*/
+    Hope::ShaderUniform* /*uniform*/
 ) {
 }
 
 void ShaderUniformApplicator::SamplerCube(
     GLuint /*programID*/,
-    const std::shared_ptr<Hope::ShaderUniform>& /*uniform*/
+    Hope::ShaderUniform* /*uniform*/
 ) {
 }

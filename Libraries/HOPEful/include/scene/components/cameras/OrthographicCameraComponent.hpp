@@ -2,7 +2,7 @@
 #define __HOPE__ORTHOGRAPHIC_CAMERA_COMPONENT__
 
 #include <scene/components/cameras/CameraComponent.hpp>
-#include <scene/components/cameras/Utils.hpp>
+#include <scene/components/cameras/CameraUtils.hpp>
 #include <geometry/points/Point3Df.hpp>
 
 namespace Hope {

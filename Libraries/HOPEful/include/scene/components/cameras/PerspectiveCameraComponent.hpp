@@ -3,7 +3,7 @@
 
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <scene/components/cameras/Utils.hpp>
+#include <scene/components/cameras/CameraUtils.hpp>
 
 namespace Hope {
     /**

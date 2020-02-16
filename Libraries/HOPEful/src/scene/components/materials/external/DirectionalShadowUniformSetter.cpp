@@ -11,10 +11,10 @@
 using namespace Hope ;
 
 DirectionalShadowUniformSetter::DirectionalShadowUniformSetter() {
-    std::shared_ptr<Hope::ShaderUniform> useShadowUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto useShadowUniform = std::make_unique<Hope::ShaderUniform>() ;
     useShadowUniform -> setName(UniformNames::MaterialUseShadowUniformName()) ;
     useShadowUniform -> setLocation(UNIFORM_SHADOW_USE_LOCATION) ;
-    addShaderUniform(useShadowUniform) ;
+    addShaderUniform(std::move(useShadowUniform)) ;
 }
 
 void DirectionalShadowUniformSetter::updateUniforms() {
@@ -53,27 +53,27 @@ void DirectionalShadowUniformSetter::setLightShadowNode(const Hope::DirectionalL
     m_useShadow = node != nullptr ;
 
     m_dirLightShadowNode = node ;
-    std::shared_ptr<Hope::ShaderUniform> amountCascadesUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto amountCascadesUniform = std::make_unique<Hope::ShaderUniform>() ;
     amountCascadesUniform -> setName(UniformNames::MaterialAmountCascadesUniformName()) ;
     amountCascadesUniform -> setLocation(UNIFORM_SHADOW_AMOUNT_CASCADE_LOCATION) ;
-    addShaderUniform(amountCascadesUniform) ;
+    addShaderUniform(std::move(amountCascadesUniform)) ;
 
     int amountCascades = m_dirLightShadowNode -> amountCascades() ;
     for (int cascadeIndex = 0 ; cascadeIndex < amountCascades ; ++cascadeIndex) {
         std::string strCascadeIndex = Doom::StringExt::ToStringi(cascadeIndex) ;
 
         // Cascade split uniforms.
-        std::shared_ptr<Hope::ShaderUniform> cascadedSplitUniform = std::make_shared<Hope::ShaderUniform>() ;
+        auto cascadedSplitUniform = std::make_unique<Hope::ShaderUniform>() ;
         std::string cascadeSplitName = UniformNames::MaterialCascadedSplitsUniformName() + "[" + strCascadeIndex + "]" ;
         cascadedSplitUniform -> setName(cascadeSplitName) ;
         cascadedSplitUniform -> setLocation(UNIFORM_SHADOW_CASCADED_SPLITS_LOCATION + cascadeIndex) ;
-        addShaderUniform(cascadedSplitUniform) ;
+        addShaderUniform(std::move(cascadedSplitUniform)) ;
 
         // Light view matrices.
-        std::shared_ptr<Hope::ShaderUniform> lightMatrixUniform = std::make_shared<Hope::ShaderUniform>() ;
+        auto lightMatrixUniform = std::make_unique<Hope::ShaderUniform>() ;
         std::string lightMatrixName = UniformNames::MaterialLightViewProjectionMatricesUniformName() + "[" + strCascadeIndex + "]" ;
         lightMatrixUniform -> setName(lightMatrixName) ;
         lightMatrixUniform -> setLocation(UNIFORM_SHADOW_CASCADE_MATRICES_LOCATION + cascadeIndex) ;
-        addShaderUniform(lightMatrixUniform) ;
+        addShaderUniform(std::move(lightMatrixUniform)) ;
     }
 }

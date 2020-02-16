@@ -29,10 +29,10 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
-    std::shared_ptr<Hope::ShaderUniform> msaaQualityUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto msaaQualityUniform = std::make_unique<Hope::ShaderUniform>() ;
     msaaQualityUniform -> setName(UniformNames::MSAAQualityUniformName()) ;
     msaaQualityUniform -> setLocation(MSAAQualityUniformLocation) ;
-    addShaderUniform(msaaQualityUniform) ;
+    addShaderUniform(std::move(msaaQualityUniform)) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {

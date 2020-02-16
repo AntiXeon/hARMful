@@ -58,8 +58,8 @@ namespace Hope {
             /**
              * Get the shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> uniforms() const override {
-                return std::map<std::string, std::shared_ptr<Hope::ShaderUniform>>() ;
+            std::vector<Hope::ShaderUniform*> uniforms() const override {
+                return std::vector<Hope::ShaderUniform*>() ;
             }
     } ;
 }

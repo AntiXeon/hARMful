@@ -1,4 +1,4 @@
-#include <scene/components/cameras/Utils.hpp>
+#include <scene/components/cameras/CameraUtils.hpp>
 #include <Math.hpp>
 #include <cassert>
 #include <algorithm>

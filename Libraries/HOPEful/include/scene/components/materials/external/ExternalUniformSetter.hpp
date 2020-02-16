@@ -3,6 +3,7 @@
 
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <map>
+#include <vector>
 #include <string>
 #include <memory>
 
@@ -17,7 +18,12 @@ namespace Hope {
             /**
              * List of shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
+            std::map<std::string, std::unique_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
+
+            /**
+             * Cache of uniform pointers for sharing without ownership.
+             */
+            std::vector<Hope::ShaderUniform*> m_uniformCache ;
 
         public:
             /**
@@ -28,8 +34,8 @@ namespace Hope {
             /**
              * Get the shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
-                return m_shaderUniforms ;
+            const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
+                return m_uniformCache ;
             }
 
         protected:
@@ -38,15 +44,19 @@ namespace Hope {
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
-                m_shaderUniforms[uniform -> name()] = uniform ;
+            void addShaderUniform(std::unique_ptr<Hope::ShaderUniform> uniform) {
+                m_uniformCache.push_back(uniform.get()) ;
+                m_shaderUniforms.insert(std::make_pair(uniform -> name(), std::move(uniform))) ;
             }
 
             /**
              * Get the uniform with the given name.
              */
-            std::shared_ptr<Hope::ShaderUniform> uniform(const std::string& name) {
-                return m_shaderUniforms[name] ;
+            Hope::ShaderUniform* uniform(const std::string& name) {
+                if (m_shaderUniforms.count(name) == 1) {
+                    return m_shaderUniforms[name].get() ;
+                }
+                return nullptr ;
             }
     } ;
 }

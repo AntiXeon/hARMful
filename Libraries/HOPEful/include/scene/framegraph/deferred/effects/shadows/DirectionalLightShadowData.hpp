@@ -34,7 +34,7 @@ namespace Hope {
             /**
              * Get the shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> uniforms() const override {
+            std::vector<Hope::ShaderUniform*> uniforms() const override {
                 return m_dirShadowSetter.shaderUniforms() ;
             }
     } ;

@@ -26,7 +26,7 @@ namespace Hope {
             /**
              * Get the shader uniforms.
              */
-            virtual std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> uniforms() const = 0 ;
+            virtual std::vector<Hope::ShaderUniform*> uniforms() const = 0 ;
     } ;
 }
 

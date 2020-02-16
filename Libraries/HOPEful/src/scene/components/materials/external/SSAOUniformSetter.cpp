@@ -12,10 +12,10 @@
 using namespace Hope ;
 
 SSAOUniformSetter::SSAOUniformSetter() {
-    std::shared_ptr<Hope::ShaderUniform> useAOUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto useAOUniform = std::make_unique<Hope::ShaderUniform>() ;
     useAOUniform -> setName(UniformNames::MaterialUseAOUniformName()) ;
     useAOUniform -> setLocation(UNIFORM_AO_USE_LOCATION) ;
-    addShaderUniform(useAOUniform) ;
+    addShaderUniform(std::move(useAOUniform)) ;
 }
 
 void SSAOUniformSetter::updateUniforms() {
@@ -51,9 +51,9 @@ void SSAOUniformSetter::setSSAONode(Hope::SSAORenderNode* node) {
         std::string strSampleIndex = Doom::StringExt::ToStringi(sampleIndex) ;
         std::string kernelName = UniformNames::MaterialAOKernelUniformName() + "[" + strSampleIndex + "]" ;
 
-        std::shared_ptr<Hope::ShaderUniform> kernalSampleUniform = std::make_shared<Hope::ShaderUniform>() ;
+        auto kernalSampleUniform = std::make_unique<Hope::ShaderUniform>() ;
         kernalSampleUniform -> setName(kernelName) ;
         kernalSampleUniform -> setLocation(UNIFORM_AO_KERNEL_LOCATION + sampleIndex) ;
-        addShaderUniform(kernalSampleUniform) ;
+        addShaderUniform(std::move(kernalSampleUniform)) ;
     }
 }

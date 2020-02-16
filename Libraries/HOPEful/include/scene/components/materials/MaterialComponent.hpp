@@ -7,6 +7,7 @@
 #include <scene/components/materials/UniformNames.hpp>
 #include <scene/components/materials/settings/MaterialSettings.hpp>
 #include <map>
+#include <memory>
 #include <string>
 
 #include <HopeAPI.hpp>
@@ -45,7 +46,12 @@ namespace Hope {
             /**
              * List of shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
+            std::map<std::string, std::unique_ptr<Hope::ShaderUniform>> m_shaderUniforms ;
+
+            /**
+             * Cache of uniform pointers for sharing without ownership.
+             */
+            std::vector<Hope::ShaderUniform*> m_uniformCache ;
 
         public:
             /**
@@ -106,8 +112,8 @@ namespace Hope {
             /**
              * Get the shader uniforms.
              */
-            std::map<std::string, std::shared_ptr<Hope::ShaderUniform>> shaderUniforms() const {
-                return m_shaderUniforms ;
+            const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
+                return m_uniformCache ;
             }
 
             /**
@@ -128,22 +134,23 @@ namespace Hope {
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void addShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
-                m_shaderUniforms[uniform -> name()] = uniform ;
+            void addShaderUniform(std::unique_ptr<Hope::ShaderUniform> uniform) {
+                m_uniformCache.push_back(uniform.get()) ;
+                m_shaderUniforms.insert(std::make_pair(uniform -> name(), std::move(uniform))) ;
             }
 
             /**
              * Remove a shader ubniform.
              */
-            void removeShaderUniform(const std::shared_ptr<Hope::ShaderUniform> uniform) {
-                m_shaderUniforms.erase(uniform -> name()) ;
+            void removeShaderUniform(const std::string& name) {
+                m_shaderUniforms.erase(name) ;
             }
 
             /**
              * Get the uniform with the given name.
              */
-            std::shared_ptr<Hope::ShaderUniform> uniform(const std::string& name) {
-                return m_shaderUniforms[name] ;
+            Hope::ShaderUniform* uniform(const std::string& name) {
+                return m_shaderUniforms[name].get() ;
             }
 
             /**

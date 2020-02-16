@@ -43,20 +43,20 @@ void DiffuseNormalMaterialComponent::updateUniformValues() {
 }
 
 void DiffuseNormalMaterialComponent::setupUniforms() {
-    std::shared_ptr<Hope::ShaderUniform> ambientUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto ambientUniform = std::make_unique<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
     ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
-    addShaderUniform(ambientUniform) ;
+    addShaderUniform(std::move(ambientUniform)) ;
 
-    std::shared_ptr<Hope::ShaderUniform> specularUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto specularUniform = std::make_unique<Hope::ShaderUniform>() ;
     specularUniform -> setName(UniformNames::MaterialSpecularUniformName()) ;
     specularUniform -> setLocation(UniformNames::SpecularLocation) ;
-    addShaderUniform(specularUniform) ;
+    addShaderUniform(std::move(specularUniform)) ;
 
-    std::shared_ptr<Hope::ShaderUniform> shininessUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto shininessUniform = std::make_unique<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
     shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
-    addShaderUniform(shininessUniform) ;
+    addShaderUniform(std::move(shininessUniform)) ;
 }
 
 void DiffuseNormalMaterialComponent::setupForwardShader() {

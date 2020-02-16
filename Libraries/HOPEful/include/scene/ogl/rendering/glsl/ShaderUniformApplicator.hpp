@@ -15,7 +15,7 @@ namespace Hope::GL {
              */
             static void ApplyUniform(
                 const GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
         private:
@@ -25,7 +25,7 @@ namespace Hope::GL {
              */
             static bool LocateUniform(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -33,7 +33,7 @@ namespace Hope::GL {
              */
             static void Integer(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -41,7 +41,7 @@ namespace Hope::GL {
              */
             static void IVec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -49,7 +49,7 @@ namespace Hope::GL {
              */
             static void IVec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -57,7 +57,7 @@ namespace Hope::GL {
              */
             static void IVec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -65,7 +65,7 @@ namespace Hope::GL {
              */
             static void UnsignedInteger(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -73,7 +73,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -81,7 +81,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -89,7 +89,7 @@ namespace Hope::GL {
              */
             static void UnsignedIVec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -97,7 +97,7 @@ namespace Hope::GL {
              */
             static void Floating(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -105,7 +105,7 @@ namespace Hope::GL {
              */
             static void Vec2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -113,7 +113,7 @@ namespace Hope::GL {
              */
             static void Vec3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -121,7 +121,7 @@ namespace Hope::GL {
              */
             static void Vec4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -129,7 +129,7 @@ namespace Hope::GL {
              */
             static void Mat2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -137,7 +137,7 @@ namespace Hope::GL {
              */
             static void Mat3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -145,7 +145,7 @@ namespace Hope::GL {
              */
             static void Mat4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -153,7 +153,7 @@ namespace Hope::GL {
              */
             static void Mat2x3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -161,7 +161,7 @@ namespace Hope::GL {
              */
             static void Mat3x2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -169,7 +169,7 @@ namespace Hope::GL {
              */
             static void Mat2x4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -177,7 +177,7 @@ namespace Hope::GL {
              */
             static void Mat4x2(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -185,7 +185,7 @@ namespace Hope::GL {
              */
             static void Mat3x4(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -193,7 +193,7 @@ namespace Hope::GL {
              */
             static void Mat4x3(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -201,7 +201,7 @@ namespace Hope::GL {
              */
             static void Sampler2D(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
 
             /**
@@ -209,7 +209,7 @@ namespace Hope::GL {
              */
             static void SamplerCube(
                 GLuint programID,
-                const std::shared_ptr<Hope::ShaderUniform>& uniform
+                Hope::ShaderUniform* uniform
             ) ;
     } ;
 }

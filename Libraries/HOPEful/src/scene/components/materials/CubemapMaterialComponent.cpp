@@ -33,9 +33,9 @@ void CubemapMaterialComponent::updateUniformValues() {
 }
 
 void CubemapMaterialComponent::setupUniforms() {
-    std::shared_ptr<Hope::ShaderUniform> cubemapUniform = std::make_shared<Hope::ShaderUniform>() ;
+    auto cubemapUniform = std::make_unique<Hope::ShaderUniform>() ;
     cubemapUniform -> setName(UniformNames::MaterialCubemapUniformName()) ;
-    addShaderUniform(cubemapUniform) ;
+    addShaderUniform(std::move(cubemapUniform)) ;
 }
 
 void CubemapMaterialComponent::setupForwardShader() {
