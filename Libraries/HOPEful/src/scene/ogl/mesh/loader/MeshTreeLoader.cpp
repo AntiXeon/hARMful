@@ -2,7 +2,6 @@
 #include <scene/ogl/mesh/loader/MaterialLoader.hpp>
 #include <scene/ogl/mesh/Vertex.hpp>
 #include <scene/ogl/mesh/MeshGeometry.hpp>
-#include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
 #include <utils/LogSystem.hpp>
 #include <assimp/Importer.hpp>
@@ -12,10 +11,6 @@
 
 using namespace Hope::GL ;
 namespace fs = std::filesystem ;
-
-MeshTreeLoader::~MeshTreeLoader() {
-    delete m_meshRoot ;
-}
 
 void MeshTreeLoader::load(
     const std::string& source,
@@ -30,8 +25,8 @@ void MeshTreeLoader::load(
     ) ;
 
     if (scene) {
-        m_meshRoot = new Hope::Entity(meshRoot) ;
-        generateNode(scene, scene -> mRootNode, m_meshRoot) ;
+        m_meshRoot = std::make_unique<Hope::Entity>(meshRoot) ;
+        generateNode(scene, scene -> mRootNode, m_meshRoot.get()) ;
     }
     else {
         std::string errorLog = importer.GetErrorString() ;
@@ -187,7 +182,7 @@ uint32_t MeshTreeLoader::materialProcessing(
         ) ;
     }
 
-    MaterialComponent* materialComponent = m_materialRelations[aiMaterialIndex] ;
+    MaterialComponent* materialComponent = m_materialRelations[aiMaterialIndex].get() ;
     partMaterialIndex = entity -> addComponent(materialComponent) ;
 
     return partMaterialIndex ;

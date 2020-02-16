@@ -7,7 +7,7 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-MaterialComponent* MaterialLoader::ConvertMaterial(
+std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
     const fs::path& meshPath,
     const aiMaterial* material
 ) {
@@ -31,7 +31,8 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
         material -> Get(AI_MATKEY_NAME, currentName) ;
 
         if (currentName == DefaultMaterialName) {
-            return new BlinnPhongMaterialComponent() ;
+            auto defaultMaterial = std::make_unique<BlinnPhongMaterialComponent>() ;
+            return defaultMaterial ;
         }
         else {
             return BlinnPhongMaterial(material) ;
@@ -39,8 +40,8 @@ MaterialComponent* MaterialLoader::ConvertMaterial(
     }
 }
 
-MaterialComponent* MaterialLoader::BlinnPhongMaterial(const aiMaterial* material) {
-    BlinnPhongMaterialComponent* materialComponent = new BlinnPhongMaterialComponent() ;
+std::unique_ptr<MaterialComponent> MaterialLoader::BlinnPhongMaterial(const aiMaterial* material) {
+    auto materialComponent = std::make_unique<BlinnPhongMaterialComponent>() ;
     aiColor4D specularColor ;
     aiColor4D diffuseColor ;
     aiColor4D ambientColor ;
@@ -53,16 +54,16 @@ MaterialComponent* MaterialLoader::BlinnPhongMaterial(const aiMaterial* material
     materialComponent -> setDiffuse(Color(diffuseColor.r, diffuseColor.g, diffuseColor.b)) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent) ;
+    SetAlphaBlendingMaterial(materialComponent.get()) ;
 
     return materialComponent ;
 }
 
-MaterialComponent* MaterialLoader::DiffuseMaterial(
+std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseMaterial(
     const fs::path& meshPath,
     const aiMaterial* material
 ) {
-    DiffuseMaterialComponent* materialComponent = new DiffuseMaterialComponent() ;
+    auto materialComponent = std::make_unique<DiffuseMaterialComponent>() ;
     materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
 
     // Get the other values of the material.
@@ -72,16 +73,16 @@ MaterialComponent* MaterialLoader::DiffuseMaterial(
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent) ;
+    SetAlphaBlendingMaterial(materialComponent.get()) ;
 
     return materialComponent ;
 }
 
-MaterialComponent* MaterialLoader::DiffuseNormalMaterial(
+std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseNormalMaterial(
     const fs::path& meshPath,
     const aiMaterial* material
 ) {
-    DiffuseNormalMaterialComponent* materialComponent = new DiffuseNormalMaterialComponent() ;
+    auto materialComponent = std::make_unique<DiffuseNormalMaterialComponent>() ;
     materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
     materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
 
@@ -92,16 +93,16 @@ MaterialComponent* MaterialLoader::DiffuseNormalMaterial(
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
     materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent) ;
+    SetAlphaBlendingMaterial(materialComponent.get()) ;
 
     return materialComponent ;
 }
 
-MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
+std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseNormalSpecularMaterial(
     const fs::path& meshPath,
     const aiMaterial* material
 ) {
-    DiffuseNormalSpecularMaterialComponent* materialComponent = new DiffuseNormalSpecularMaterialComponent() ;
+    auto materialComponent = std::make_unique<DiffuseNormalSpecularMaterialComponent>() ;
     materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
     materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
     materialComponent -> setSpecularMap(GetTexture(aiTextureType_SPECULAR, meshPath, material)) ;
@@ -110,7 +111,7 @@ MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
     float shininess ;
     aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
     materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent) ;
+    SetAlphaBlendingMaterial(materialComponent.get()) ;
 
     return materialComponent ;
 }

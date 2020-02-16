@@ -1,16 +1,13 @@
 #ifndef __HOPE__GL_MATERIAL_LOADER__
 #define __HOPE__GL_MATERIAL_LOADER__
 
+#include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <assimp/scene.h>
 #include <filesystem>
 #include <memory>
 
 namespace fs = std::filesystem ;
-
-namespace Hope {
-    class MaterialComponent ;
-}
 
 namespace Hope::GL {
     /**
@@ -27,7 +24,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static MaterialComponent* ConvertMaterial(
+            static std::unique_ptr<MaterialComponent> ConvertMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -44,7 +41,7 @@ namespace Hope::GL {
              * Create a Blinn-Phong material.
              * @param   material    Material to convert as a component.
              */
-            static MaterialComponent* BlinnPhongMaterial(const aiMaterial* material) ;
+            static std::unique_ptr<MaterialComponent> BlinnPhongMaterial(const aiMaterial* material) ;
 
             /**
              * Create a Blinn-Phong material with a diffuse texture.
@@ -54,7 +51,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static MaterialComponent* DiffuseMaterial(
+            static std::unique_ptr<MaterialComponent> DiffuseMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -68,7 +65,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static MaterialComponent* DiffuseNormalMaterial(
+            static std::unique_ptr<MaterialComponent> DiffuseNormalMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -82,7 +79,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static MaterialComponent* DiffuseNormalSpecularMaterial(
+            static std::unique_ptr<MaterialComponent> DiffuseNormalSpecularMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;

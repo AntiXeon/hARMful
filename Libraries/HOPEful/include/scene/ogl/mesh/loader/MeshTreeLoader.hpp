@@ -1,15 +1,13 @@
 #ifndef __HOPE__GL_MESH_TREE_LOADER__
 #define __HOPE__GL_MESH_TREE_LOADER__
 
+#include <assimp/matrix4x4.h>
+#include <scene/Entity.hpp>
+#include <scene/components/materials/MaterialComponent.hpp>
 #include <cstdint>
 #include <string>
 #include <map>
-#include <assimp/matrix4x4.h>
-#include <scene/Entity.hpp>
-
-namespace Hope {
-    class MaterialComponent ;
-}
+#include <memory>
 
 class Importer ;
 struct aiScene ;
@@ -45,7 +43,7 @@ namespace Hope::GL {
              * Link the materials from the input file to the material components
              * used by entities and the rendering step.
              */
-            std::map<unsigned int, MaterialComponent*> m_materialRelations ;
+            std::map<unsigned int, std::unique_ptr<MaterialComponent>> m_materialRelations ;
 
             /**
              * Path to the source file.
@@ -55,14 +53,9 @@ namespace Hope::GL {
             /**
              * Root of the mesh that is created by the loader.
              */
-            Hope::Entity* m_meshRoot = nullptr ;
+            std::unique_ptr<Hope::Entity> m_meshRoot = nullptr ;
 
         public:
-            /**
-             * Destruction of the MeshTreeLoader.
-             */
-            ~MeshTreeLoader() ;
-
             /**
              * Load a mesh.
              * @param   source      File to be loaded.
@@ -77,7 +70,7 @@ namespace Hope::GL {
              * Get the mesh root.
              */
             Hope::Entity* meshRoot() const {
-                return m_meshRoot ;
+                return m_meshRoot.get() ;
             }
 
             /**
