@@ -22,7 +22,7 @@ void Framebuffer::unsetReadBuffer() {
     glNamedFramebufferReadBuffer(m_fboID, GL_NONE) ;
 }
 
-void Framebuffer::setDrawBuffers(const std::list<unsigned char> indices) {
+void Framebuffer::setDrawBuffers(const std::list<unsigned char>& indices) {
     if (indices.size() > 0) {
         std::vector<unsigned int> attachments ;
         for (unsigned char index: indices) {

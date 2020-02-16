@@ -127,7 +127,7 @@ namespace Hope {
              * Add effect data to the current branch. They are applied on the
              * deferred rendering steps.
              */
-            void addEffectData(const std::vector<EffectData*> data) {
+            void addEffectData(const std::vector<EffectData*>& data) {
                 m_effects.insert(
                     m_effects.begin(),
                     data.begin(),

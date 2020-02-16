@@ -54,9 +54,7 @@ namespace Hope::GL {
             /**
              * Create a shader program.
              */
-            ShaderProgram() {
-                m_programID = glCreateProgram() ;
-            }
+            ShaderProgram() : m_programID(glCreateProgram()) {}
 
             /**
              * Destroy a shader program.

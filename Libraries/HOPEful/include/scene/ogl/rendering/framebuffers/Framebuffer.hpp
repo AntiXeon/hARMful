@@ -98,7 +98,7 @@ namespace Hope::GL {
              * Set the color attachments to use.
              * @param   indices List of the attachment indices to use.
              */
-            void setDrawBuffers(const std::list<unsigned char> indices) ;
+            void setDrawBuffers(const std::list<unsigned char>& indices) ;
 
             /**
              * Indicate that the framebuffer does not use any color attachment.
