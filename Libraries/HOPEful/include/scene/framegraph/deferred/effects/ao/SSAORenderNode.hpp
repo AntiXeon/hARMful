@@ -53,7 +53,7 @@ namespace Hope {
              * can be applied to every fragment of the render with a minimal
              * memory cost.
              */
-            std::shared_ptr<API::TextureImage2D> m_noiseTexture = nullptr ;
+            std::unique_ptr<API::TextureImage2D> m_noiseTexture = nullptr ;
 
             /**
              * G-Buffer containing the normal and depth buffers, required to
@@ -95,8 +95,8 @@ namespace Hope {
              * Get the random texture that is used to sample ambient occlusion
              * all over the screen.
              */
-            const std::shared_ptr<API::TextureImage2D> noiseTexture() const {
-                return m_noiseTexture ;
+            const API::TextureImage2D* noiseTexture() const {
+                return m_noiseTexture.get() ;
             }
 
             /**
@@ -117,7 +117,7 @@ namespace Hope {
              * Get the buffer containing the resulting ambient occlusion.
              */
             AbstractFramebufferRenderNode* aoBuffer() {
-                return m_subtree.aoRendering.offscreen ;
+                return m_subtree.aoRendering.offscreen.get() ;
             }
 
             /**

@@ -2,13 +2,13 @@
 #define __HOPE__AMBIENT_OCCLUSION_FRAMEGRAPH_SUBTREE__
 
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
+#include <scene/framegraph/RenderPassSelectorNode.hpp>
+#include <scene/framegraph/ClearBuffersNode.hpp>
+#include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
+#include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
+#include <memory>
 
 namespace Hope {
-    class RenderPassSelectorNode ;
-    class ClearBuffersNode ;
-    class OffscreenRenderingNode ;
-    class EffectApplierNode ;
-
     /**
      * Structure grouping the nodes of the subtree that is generated
      * just below the current ambient occlusion node.
@@ -22,23 +22,23 @@ namespace Hope {
             /**
              * Node to enable the SSAO computations.
              */
-            EffectApplierNode* ssaoApplier = nullptr ;
+            std::unique_ptr<EffectApplierNode> ssaoApplier = nullptr ;
 
             /**
              * Node bearing the framebuffer in which the ambient occlusion
              * contribution is written.
              */
-            FramebufferRenderNode* offscreen = nullptr ;
+            std::unique_ptr<FramebufferRenderNode> offscreen = nullptr ;
 
             /**
              * Selector of the right render pass.
              */
-            RenderPassSelectorNode* passSelector = nullptr ;
+            std::unique_ptr<RenderPassSelectorNode> passSelector = nullptr ;
 
             /**
              * Node that is used to render the ambient occlusion.
              */
-            OffscreenRenderingNode* deferredRendering = nullptr ;
+            std::unique_ptr<OffscreenRenderingNode> deferredRendering = nullptr ;
         } aoRendering ;
 
         /**
@@ -51,17 +51,17 @@ namespace Hope {
              * Node bearing the framebuffer into which the ambient occlusion
              * contribution is copied.
              */
-            FramebufferRenderNode* offscreen = nullptr ;
+            std::unique_ptr<FramebufferRenderNode> offscreen = nullptr ;
 
             /**
              * Selector of the right render pass.
              */
-            RenderPassSelectorNode* passSelector = nullptr ;
+            std::unique_ptr<RenderPassSelectorNode> passSelector = nullptr ;
 
             /**
              * Node that is used to blur and copy the ambient occlusion.
              */
-            OffscreenRenderingNode* deferredRendering = nullptr ;
+            std::unique_ptr<OffscreenRenderingNode> deferredRendering = nullptr ;
         } aoBlurCopy ;
     } ;
 }

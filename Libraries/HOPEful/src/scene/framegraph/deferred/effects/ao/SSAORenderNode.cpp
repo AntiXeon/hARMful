@@ -1,7 +1,6 @@
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/framegraph/RenderPassSelectorNode.hpp>
 #include <scene/framegraph/ClearBuffersNode.hpp>
-#include <scene/framegraph/MemoryBarrierNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectApplierNode.hpp>
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/components/materials/deferred/SSAOMaterialComponent.hpp>
@@ -37,7 +36,7 @@ void SSAORenderNode::generateNoiseTexture() {
     }
 
     const static bool GenerateMipmap = true ;
-    m_noiseTexture = std::make_shared<API::TextureImage2D>(
+    m_noiseTexture = std::make_unique<API::TextureImage2D>(
         Mind::Dimension2Di(NoiseTextureSideSize, NoiseTextureSideSize),
         API::InternalFormat::RedGreenBlueAlpha16f,
         API::PixelFormat::RedGreenBlueAlpha,
@@ -80,16 +79,16 @@ void SSAORenderNode::generateFramegraphSubtree() {
     // This subtree renders the ambient occlusion into the dedicated
     // framebuffer.
     {
-        m_subtree.aoRendering.ssaoApplier = new EffectApplierNode(
+        m_subtree.aoRendering.ssaoApplier = std::make_unique<EffectApplierNode>(
             &m_effectApplyData,
             this
         ) ;
 
         // Buffer in which AO is written with ambient occlusion.
-        m_subtree.aoRendering.offscreen = new FramebufferRenderNode(
+        m_subtree.aoRendering.offscreen = std::make_unique<FramebufferRenderNode>(
             framebufferDimension,
             windowSized,
-            m_subtree.aoRendering.ssaoApplier
+            m_subtree.aoRendering.ssaoApplier.get()
         ) ;
         // Try to use RED channel only.
         m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
@@ -101,15 +100,15 @@ void SSAORenderNode::generateFramegraphSubtree() {
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
         // Render pass selection.
-        m_subtree.aoRendering.passSelector = new RenderPassSelectorNode(
+        m_subtree.aoRendering.passSelector = std::make_unique<RenderPassSelectorNode>(
             DeferredPassID,
-            m_subtree.aoRendering.offscreen
+            m_subtree.aoRendering.offscreen.get()
         ) ;
 
         // Rendering of the ambient occlusion pass.
-        m_subtree.aoRendering.deferredRendering = new OffscreenRenderingNode(
+        m_subtree.aoRendering.deferredRendering = std::make_unique<OffscreenRenderingNode>(
             std::make_unique<SSAOMaterialComponent>(m_gBuffer),
-            m_subtree.aoRendering.passSelector
+            m_subtree.aoRendering.passSelector.get()
         ) ;
     }
 
@@ -117,7 +116,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
     // target.
     {
         // Buffer in which AO is written.
-        m_subtree.aoBlurCopy.offscreen = new FramebufferRenderNode(
+        m_subtree.aoBlurCopy.offscreen = std::make_unique<FramebufferRenderNode>(
             framebufferDimension,
             windowSized,
             this
@@ -129,15 +128,15 @@ void SSAORenderNode::generateFramegraphSubtree() {
         m_subtree.aoBlurCopy.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 
         // Render pass selection.
-        m_subtree.aoBlurCopy.passSelector = new RenderPassSelectorNode(
+        m_subtree.aoBlurCopy.passSelector = std::make_unique<RenderPassSelectorNode>(
             DeferredPassID,
-            m_subtree.aoBlurCopy.offscreen
+            m_subtree.aoBlurCopy.offscreen.get()
         ) ;
 
         // Rendering of the ambient occlusion pass.
-        m_subtree.aoBlurCopy.deferredRendering = new OffscreenRenderingNode(
-            std::make_unique<SSAOBlurMaterialComponent>(m_subtree.aoRendering.offscreen),
-            m_subtree.aoBlurCopy.passSelector
+        m_subtree.aoBlurCopy.deferredRendering = std::make_unique<OffscreenRenderingNode>(
+            std::make_unique<SSAOBlurMaterialComponent>(m_subtree.aoRendering.offscreen.get()),
+            m_subtree.aoBlurCopy.passSelector.get()
         ) ;
     }
 }
