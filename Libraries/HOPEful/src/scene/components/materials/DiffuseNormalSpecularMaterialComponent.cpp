@@ -23,12 +23,6 @@ DiffuseNormalSpecularMaterialComponent::DiffuseNormalSpecularMaterialComponent()
     setupUniforms() ;
 }
 
-DiffuseNormalSpecularMaterialComponent::~DiffuseNormalSpecularMaterialComponent() {
-    delete m_diffuse ;
-    delete m_normal ;
-    delete m_specular ;
-}
-
 void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
     if (m_diffuse) {
         m_diffuse -> bindUnit(DiffuseMapBinding) ;

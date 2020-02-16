@@ -5,7 +5,9 @@
 #include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <algorithm>
+#include <memory>
 #include <string>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -38,7 +40,7 @@ namespace Hope {
             /**
              * Diffuse texture.
              */
-            const API::TextureImage2D* m_diffuse ;
+            std::unique_ptr<API::TextureImage2D> m_diffuse ;
 
             /**
              * Specular color.
@@ -57,11 +59,6 @@ namespace Hope {
             DiffuseMaterialComponent() ;
 
             /**
-             * Destruction of the DiffuseMaterialComponent.
-             */
-            virtual ~DiffuseMaterialComponent() ;
-
-            /**
              * Update the uniform values before the processing of the material
              * component.
              */
@@ -77,8 +74,8 @@ namespace Hope {
             /**
              * Set the diffuse texture.
              */
-            void setDiffuseMap(const API::TextureImage2D* diffuse) {
-                m_diffuse = diffuse ;
+            void setDiffuseMap(std::unique_ptr<API::TextureImage2D> diffuse) {
+                m_diffuse = std::move(diffuse) ;
             }
 
             /**
@@ -110,7 +107,7 @@ namespace Hope {
              * Get the diffuse texture.
              */
             const API::TextureImage2D* diffuseMap() const {
-                return m_diffuse ;
+                return m_diffuse.get() ;
             }
 
             /**

@@ -4,7 +4,9 @@
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <algorithm>
+#include <memory>
 #include <string>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -33,18 +35,13 @@ namespace Hope {
             /**
              * Cubemap texture.
              */
-            const API::CubemapTexture* m_map = nullptr ;
+            std::unique_ptr<API::CubemapTexture> m_map = nullptr ;
 
         public:
             /**
              * Create a CubemapMaterialComponent.
              */
             CubemapMaterialComponent() ;
-
-            /**
-             * Destruction of the CubemapMaterialComponent.
-             */
-            virtual ~CubemapMaterialComponent() ;
 
             /**
              * Update the uniform values before the processing of the material
@@ -55,15 +52,15 @@ namespace Hope {
             /**
              * Set the cubemap texture.
              */
-            void setCubemap(const API::CubemapTexture* map) {
-                m_map = map ;
+            void setCubemap(std::unique_ptr<API::CubemapTexture> map) {
+                m_map = std::move(map) ;
             }
 
             /**
              * Get the cubemap texture.
              */
             const API::CubemapTexture* cubemap() const {
-                return m_map ;
+                return m_map.get() ;
             }
 
         protected:

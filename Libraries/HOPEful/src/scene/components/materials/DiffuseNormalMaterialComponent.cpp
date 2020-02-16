@@ -23,11 +23,6 @@ DiffuseNormalMaterialComponent::DiffuseNormalMaterialComponent()
     setupUniforms() ;
 }
 
-DiffuseNormalMaterialComponent::~DiffuseNormalMaterialComponent() {
-    delete m_diffuse ;
-    delete m_normal ;
-}
-
 void DiffuseNormalMaterialComponent::updateUniformValues() {
     if (m_diffuse) {
         m_diffuse -> bindUnit(DiffuseMapBinding) ;

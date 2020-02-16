@@ -20,10 +20,6 @@ CubemapMaterialComponent::CubemapMaterialComponent()
     setupUniforms() ;
 }
 
-CubemapMaterialComponent::~CubemapMaterialComponent() {
-    delete m_map ;
-}
-
 void CubemapMaterialComponent::updateUniformValues() {
     if (m_map) {
         m_map -> activate() ;

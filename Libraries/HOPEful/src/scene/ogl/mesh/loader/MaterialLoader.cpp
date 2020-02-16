@@ -115,7 +115,7 @@ MaterialComponent* MaterialLoader::DiffuseNormalSpecularMaterial(
     return materialComponent ;
 }
 
-TextureImage2D* MaterialLoader::GetTexture(
+std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
     const aiTextureType type,
     const fs::path& meshPath,
     const aiMaterial* material
@@ -135,7 +135,8 @@ TextureImage2D* MaterialLoader::GetTexture(
         mapMode
     ) ;
 
-    return new TextureImage2D(GetFullTexturePath(meshPath, assimpPath)) ;
+    auto texturePtr = std::make_unique<TextureImage2D>(GetFullTexturePath(meshPath, assimpPath)) ;
+    return texturePtr ;
 }
 
 std::string MaterialLoader::GetFullTexturePath(

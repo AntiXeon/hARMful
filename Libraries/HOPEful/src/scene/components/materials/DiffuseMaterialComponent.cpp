@@ -22,10 +22,6 @@ DiffuseMaterialComponent::DiffuseMaterialComponent()
     setupUniforms() ;
 }
 
-DiffuseMaterialComponent::~DiffuseMaterialComponent() {
-    delete m_diffuse ;
-}
-
 void DiffuseMaterialComponent::updateUniformValues() {
     if (m_diffuse) {
         m_diffuse -> bindUnit(DiffuseMapBinding) ;

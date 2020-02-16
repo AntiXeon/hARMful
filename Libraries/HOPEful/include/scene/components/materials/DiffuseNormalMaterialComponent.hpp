@@ -5,7 +5,10 @@
 #include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <algorithm>
+#include <memory>
 #include <string>
+
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -44,12 +47,12 @@ namespace Hope {
             /**
              * Diffuse map.
              */
-            const API::TextureImage2D* m_diffuse = nullptr ;
+            std::unique_ptr<API::TextureImage2D> m_diffuse = nullptr ;
 
             /**
              * Normal map.
              */
-            const API::TextureImage2D* m_normal = nullptr ;
+            std::unique_ptr<API::TextureImage2D> m_normal = nullptr ;
 
             /**
              * Specular color.
@@ -68,11 +71,6 @@ namespace Hope {
             DiffuseNormalMaterialComponent() ;
 
             /**
-             * Destruction of the DiffuseNormalMaterialComponent.
-             */
-            virtual ~DiffuseNormalMaterialComponent() ;
-
-            /**
              * Update the uniform values before the processing of the material
              * component.
              */
@@ -88,15 +86,15 @@ namespace Hope {
             /**
              * Set the diffuse map.
              */
-            void setDiffuseMap(const API::TextureImage2D* diffuse) {
-                m_diffuse = diffuse ;
+            void setDiffuseMap(std::unique_ptr<API::TextureImage2D> diffuse) {
+                m_diffuse = std::move(diffuse) ;
             }
 
             /**
              * Set the normal map.
              */
-            void setNormalMap(const API::TextureImage2D* normal) {
-                m_normal = normal ;
+            void setNormalMap(std::unique_ptr<API::TextureImage2D> normal) {
+                m_normal = std::move(normal) ;
             }
 
             /**
@@ -128,14 +126,14 @@ namespace Hope {
              * Get the diffuse texture.
              */
             const API::TextureImage2D* diffuseMap() const {
-                return m_diffuse ;
+                return m_diffuse.get() ;
             }
 
             /**
              * Get the normal map.
              */
             const API::TextureImage2D* normalMap() const {
-                return m_normal ;
+                return m_normal.get() ;
             }
 
             /**

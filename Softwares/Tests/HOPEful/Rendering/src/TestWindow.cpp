@@ -17,8 +17,8 @@
 #include <scene/components/materials/CubemapMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
-
 #include <scene/ogl/rendering/capabilities/SeamlessCubemap.hpp>
+#include <memory>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
@@ -54,9 +54,9 @@ TestWindow::TestWindow()
         Hope::Entity* cubemapEntity = new Hope::Entity(root()) ;
         cubemapEntity -> setLocked(true) ;
 
-        Hope::GL::CubemapTexture* cubemapTexture = new Hope::GL::CubemapTexture(cubemapTexturePaths) ;
+        auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
         Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
-        cubemapMaterial -> setCubemap(cubemapTexture) ;
+        cubemapMaterial -> setCubemap(std::move(cubemapTexture)) ;
         cubemapEntity -> addComponent(cubemapMaterial) ;
 
         Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
