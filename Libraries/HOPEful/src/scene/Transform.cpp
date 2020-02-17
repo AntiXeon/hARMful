@@ -119,10 +119,7 @@ void Transform::setMatrix(const Mind::Matrix4x4f& matrix) {
     m_outdatedMatrix = false ;
 
     // Decompose the matrix to rotation, translation and scale.
-    Mind::Vector3f translation ;
-    Mind::Quaternion rotation ;
-    Mind::Vector3f scale ;
-    m_matrix.decompose(translation, rotation, scale) ;
+    m_matrix.decompose(m_translation, m_rotation, m_scale) ;
 }
 
 
