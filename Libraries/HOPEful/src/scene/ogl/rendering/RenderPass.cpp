@@ -5,7 +5,7 @@ using namespace Hope::GL ;
 
 RenderPass::RenderPass(const RenderPassID id)
     : m_id(id) {
-    m_shaderProgram = std::make_shared<ShaderProgram>() ;
+    m_shaderProgram = std::make_unique<ShaderProgram>() ;
 }
 
 void RenderPass::addFilterOption(const std::shared_ptr<Hope::FilterOption> option) {

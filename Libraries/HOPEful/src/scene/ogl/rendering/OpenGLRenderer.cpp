@@ -123,8 +123,7 @@ API::RenderPass* OpenGLRenderer::useMaterial(
     }
 
     // Do material processing.
-    std::weak_ptr<ShaderProgram> shaderProgramWk = pass -> shaderProgram() ;
-    std::shared_ptr<ShaderProgram> shaderProgram = shaderProgramWk.lock() ;
+    ShaderProgram* shaderProgram = pass -> shaderProgram() ;
 
     if (shaderProgram) {
         shaderProgram -> use() ;

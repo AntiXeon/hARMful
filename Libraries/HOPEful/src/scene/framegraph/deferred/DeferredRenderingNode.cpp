@@ -19,15 +19,15 @@ DeferredRenderingNode::DeferredRenderingNode(
     setupFramebuffer() ;
 
     auto outputFBO = m_framebufferNode -> framebuffer() ;
-    // m_computeSSAONode = std::make_unique<SSAORenderNode>(m_gBuffer, m_framebufferNode.get(), this) ;
+    m_computeSSAONode = std::make_unique<SSAORenderNode>(m_gBuffer, m_framebufferNode.get(), this) ;
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
     m_shadingNode = std::make_unique<ShadingStepNode>(m_gBuffer, outputFBO, m_framebufferNode.get()) ;
     m_postProdNode = std::make_unique<PostProdStepNode>(outputFBO, m_framebufferNode.get()) ;
 
-    // m_aoApplyNode = std::make_unique<AOApplyEffectNode>(m_framebufferNode.get()) ;
-    // m_postProdNode -> addEffect(m_aoApplyNode.get()) ;
+    m_aoApplyNode = std::make_unique<AOApplyEffectNode>(m_framebufferNode.get()) ;
+    m_postProdNode -> addEffect(m_aoApplyNode.get()) ;
 
     m_displayStepNode = std::make_unique<DisplayStepNode>(m_framebufferNode.get(), this) ;
 }

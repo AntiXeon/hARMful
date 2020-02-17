@@ -40,7 +40,7 @@ void CubemapMaterialComponent::setupForwardShader() {
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(std::move(depthTest)) ;
 
-    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
@@ -62,7 +62,7 @@ void CubemapMaterialComponent::setupDeferredShader() {
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
     renderPass -> addCapability(std::move(depthTest)) ;
 
-    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;

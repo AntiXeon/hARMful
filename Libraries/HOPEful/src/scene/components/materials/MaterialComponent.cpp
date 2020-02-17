@@ -29,7 +29,7 @@ void MaterialComponent::setupRendering() {
 
 void MaterialComponent::setupDirectionalLightDepthMapShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DirectionalShadowPassID) ;
-    std::shared_ptr<API::ShaderProgram> shaderProgram = renderPass -> shaderProgram() ;
+    API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
 
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;

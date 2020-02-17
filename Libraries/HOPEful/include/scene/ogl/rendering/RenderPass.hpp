@@ -48,7 +48,7 @@ namespace Hope::GL {
             /**
              * The shader program that is executed in the current render pass.
              */
-            std::shared_ptr<ShaderProgram> m_shaderProgram ;
+            std::unique_ptr<ShaderProgram> m_shaderProgram ;
 
         public:
             /**
@@ -108,8 +108,8 @@ namespace Hope::GL {
             /**
              * Get the shader program.
              */
-            std::shared_ptr<ShaderProgram> shaderProgram() const {
-                return m_shaderProgram ;
+            ShaderProgram* shaderProgram() const {
+                return m_shaderProgram.get() ;
             }
 
             /**
