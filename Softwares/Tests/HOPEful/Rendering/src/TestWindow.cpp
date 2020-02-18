@@ -18,6 +18,8 @@
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
 #include <scene/ogl/rendering/capabilities/SeamlessCubemap.hpp>
+
+#include <algorithm>
 #include <memory>
 
 const std::string TestWindow::AppName = "Rendering test" ;
@@ -68,8 +70,10 @@ TestWindow::TestWindow()
     {
         Hope::Entity* meshTreeEntity = new Hope::Entity(root()) ;
         (meshTreeEntity -> transform()).setScale(0.1f) ;
-        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
+        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SimpleScene.fbx") ;
         meshTreeEntity -> addComponent(meshTreeComponent) ;
+
+        m_cubeEntity = meshTreeComponent -> entity("Cube") ;
     }
 
     // Create a directional light.
@@ -215,6 +219,10 @@ void TestWindow::preRender() {
 
     Mind::Vector3f camPos(camX, 3.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
+
+    float cubeY = std::clamp(camX, 0.f, radius) ;
+    Mind::Vector3f cubePos(0, cubeY, 0) ;
+    (m_cubeEntity -> transform()).setTranslation(cubePos) ;
 }
 
 void TestWindow::postRender() {

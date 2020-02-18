@@ -1,11 +1,9 @@
 #include <FileUtils.hpp>
 #include <StringUtils.hpp>
-#include <Paths.hpp>
 #include <fstream>
 #include <filesystem>
 #include <iostream>
-
-namespace fs = std::filesystem ;
+#include <Paths.hpp>
 
 std::map<std::string, ShaderFileAggregator> FileUtils::GetShaderFiles(
     const std::string& shaderDirectory
@@ -18,8 +16,8 @@ std::map<std::string, ShaderFileAggregator> FileUtils::GetShaderFiles(
         }
 
         fs::path filepath = p.path() ;
-        fs::path dirPath = filepath ;
-        std::string directory = dirPath.remove_filename() ;
+        fs::path dirPath = filepath.make_preferred() ;
+        std::string directory = dirPath.remove_filename().string() ;
 
         size_t PathSeparatorLength = std::string(PathSeparator).size() ;
         size_t ShadersDirectoryLength = shaderDirectory.size() ;
@@ -64,12 +62,13 @@ void FileUtils::CopyIncludeModules(
 ) {
     fs::create_directories(destinationDirName) ;
 
-    const std::string PathSeparatorStr = std::string(PathSeparator) ;
+    auto PathSeparatorStr = std::string(PathSeparator) ;
     std::string pathIteration = shaderDirectory + PathSeparatorStr + includeAggregator.directoryPath() ;
 
     // Copy each file in the original directory.
     for (auto& p: fs::recursive_directory_iterator(pathIteration)) {
-        const fs::path& fromFilePath = p.path() ;
+        fs::path fromFilePath = p.path() ;
+        fromFilePath.make_preferred() ;
 
         std::string filename ;
         if (removeUnderscores) {

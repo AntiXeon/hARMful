@@ -1,18 +1,48 @@
-#include <Paths.hpp>
 #include <FileUtils.hpp>
 #include <StringUtils.hpp>
 #include <iostream>
-#include <unistd.h>
+#include <filesystem>
+#include <system_error>
+#include <Paths.hpp>
 
-using namespace std ;
-
-int main() {
+void createSymLink() {
     const std::string PathSeparatorStr = std::string(PathSeparator) ;
+    
+    fs::path currentDir = fs::current_path() ;
+    fs::path harmfulDir = currentDir ;
 
+    const std::string WantedDirName(ProjectDirName) ;
+    std::string stem = harmfulDir.stem().string() ;
+    while (harmfulDir.has_parent_path() && (stem != WantedDirName)) {
+        harmfulDir = harmfulDir.parent_path() ;
+        stem = harmfulDir.stem().string() ;
+    }
+
+	fs::path libDirectoryPath(harmfulDir.string() + PathSeparator + LibDirectory) ;
+	libDirectoryPath = libDirectoryPath.make_preferred() ;
+	
+	fs::path symlibDirectoryPath(SimLinkDirectory) ;
+	symlibDirectoryPath = symlibDirectoryPath.make_preferred() ;
+	
+	if (fs::exists(symlibDirectoryPath)) {
+	    return ;
+    }
 
     // Create the local symlink to the HOPEful library folder.
-    symlink(LibDirectory, SimLinkDirectory) ;
+	std::error_code error ;
+	fs::create_directory_symlink(libDirectoryPath, symlibDirectoryPath, error) ;
 
+	if (error) {
+		auto errorMsg = error.message() ;
+		std::cerr << "ERROR: " << error << errorMsg << std::endl ;
+	}
+}
+
+int main() {
+    createSymLink() ;
+
+    const std::string PathSeparatorStr = std::string(PathSeparator) ;
+    
     // Get the shader files.
     auto shaderFiles = FileUtils::GetShaderFiles(ShadersDirectory) ;
 

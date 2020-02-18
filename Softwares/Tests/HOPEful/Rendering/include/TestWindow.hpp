@@ -31,6 +31,11 @@ class TestWindow final : public Hope::GL::Window {
         Hope::Entity* m_cameraEntity = nullptr ;
 
         /**
+         * Cube entity.
+         */
+        Hope::Entity* m_cubeEntity = nullptr ;
+
+        /**
          * Camera component.
          */
         Hope::PerspectiveCameraComponent* m_cameraComponent = nullptr ;

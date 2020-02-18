@@ -2,12 +2,10 @@
 #include <GLSL2CPPStrings.hpp>
 #include <FileUtils.hpp>
 #include <StringUtils.hpp>
-#include <Paths.hpp>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-
-namespace fs = std::filesystem ;
+#include <Paths.hpp>
 
 ShaderFileAggregator::ShaderFileAggregator(
     const std::string& relativeDirectoryPath,

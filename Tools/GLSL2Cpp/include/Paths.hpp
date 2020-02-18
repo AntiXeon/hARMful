@@ -1,7 +1,11 @@
 #ifndef __GLSL2CPP__PATHS__
 #define __GLSL2CPP__PATHS__
 
+namespace fs = std::filesystem ;
+
 #define PathSeparator               "/"
+#define ProjectDirName              "hARMful"
+#define LibrariesDirName            "Libraries"
 #define LibName                     "HOPE"
 #define LibDirName                  LibName "ful"
 #define ShadersDirectoryName        "shaders"
@@ -10,7 +14,7 @@
 #define HeaderCppDirectory          LibDirName PathSeparator "include" PathSeparator CppPath
 #define SourceCppDirectory          LibDirName PathSeparator "src" PathSeparator CppPath
 
-#define LibDirectory                ".." PathSeparator ".." PathSeparator ".." PathSeparator "Libraries" PathSeparator LibDirName PathSeparator
+#define LibDirectory                LibrariesDirName PathSeparator LibDirName PathSeparator
 #define SimLinkDirectory            "." PathSeparator LibDirName
 
 #define GLSLDirectory               "GLSL"

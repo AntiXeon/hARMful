@@ -1,0 +1,9 @@
+# @Author: Denis CARLUS <bibi09>
+# @Date:   28-Jan-2020
+# @Filename: .gitignore
+# @Last modified by:   bibi09
+# @Last modified time: 20-Jan-2020
+# @License: GNU GENERAL PUBLIC LICENSE, Version 3, 29 June 2007
+
+# All files
+bin/

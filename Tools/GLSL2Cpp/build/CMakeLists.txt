@@ -16,7 +16,13 @@ if (UNIX)
 endif()
 
 if (WIN32)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+    if (MSVC_VERSION GREATER_EQUAL "1900")
+        include(CheckCXXCompilerFlag)
+        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
+        if (_cpp_latest_flag_supported)
+            add_compile_options("/std:c++latest")
+        endif()
+    endif()
 endif()
 
 # Set the include files for the library.
@@ -36,4 +42,10 @@ add_executable (
     ${SOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME} -lstdc++fs)
+if (UNIX)
+    target_link_libraries(${PROJECT_NAME} -lstdc++fs)
+endif()
+
+if (WIN32)
+    target_link_libraries(${PROJECT_NAME})
+endif()
