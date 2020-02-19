@@ -1,6 +1,8 @@
 #ifndef __MIND__OPTIONS__
 #define __MIND__OPTIONS__
 
+#include <utils/Platform.hpp>
+
 // List of macros used by MINDful :
 // ================================
 // Optimizations:
@@ -32,32 +34,51 @@
         #include <xmmintrin.h>  // SSE  instructions set
         #include <emmintrin.h>  // SSE2 instructions set
         #define ALIGNMENT_ON_STACK  16
-        // Extra SSE instructions for modern processors
-        #if defined (__SSE3__)
-            #define USE_INTEL_SSE3
-            #include <pmmintrin.h>  // SSE3 instructions set
-        #endif
-        #if defined ( __SSSE3__ )
-            #define USE_INTEL_SSSE3
-            #include <tmmintrin.h>  // SSSE3 instructions set
-        #endif
-        #if defined (__SSE4_1__)
-            #define USE_INTEL_SSE4_1
-            #include <smmintrin.h>  // SSE4.1 instructions set
-        #endif
-        #if defined (__SSE4_2__)
-            #define USE_INTEL_SSE4_2
-            #include <nmmintrin.h>  // SSE4.2 instructions set
-        #endif
 
-        #if defined (__FMA__)
-            #define USE_FMA
-            #include <immintrin.h>  // FMA instructions set
-        #endif
-        #if defined (__FMA4__)
-            #define USE_FMA4        // FMA4 instructions set
-            #include <fma4intrin.h>
-        #endif
+		#ifdef LinuxPlatform
+			// Extra SSE instructions for modern processors
+			#if defined (__SSE3__)
+				#define USE_INTEL_SSE3
+				#include <pmmintrin.h>  // SSE3 instructions set
+			#endif
+			#if defined ( __SSSE3__ )
+				#define USE_INTEL_SSSE3
+				#include <tmmintrin.h>  // SSSE3 instructions set
+			#endif
+			#if defined (__SSE4_1__)
+				#define USE_INTEL_SSE4_1
+				#include <smmintrin.h>  // SSE4.1 instructions set
+			#endif
+			#if defined (__SSE4_2__)
+				#define USE_INTEL_SSE4_2
+				#include <nmmintrin.h>  // SSE4.2 instructions set
+			#endif
+
+			#if defined (__FMA__)
+				#define USE_FMA
+				#include <immintrin.h>  // FMA instructions set
+			#endif
+			#if defined (__FMA4__)
+				#define USE_FMA4        // FMA4 instructions set
+				#include <fma4intrin.h>
+			#endif
+		#endif
+
+		#ifdef WindowsPlatform
+			// Extra SSE instructions for modern processors
+			#define USE_INTEL_SSE3
+			#include <pmmintrin.h>  // SSE3 instructions set
+
+			#define USE_INTEL_SSSE3
+			#include <tmmintrin.h>  // SSSE3 instructions set
+
+			#define USE_INTEL_SSE4_1
+			#include <smmintrin.h>  // SSE4.1 instructions set
+
+			#define USE_INTEL_SSE4_2
+			#include <nmmintrin.h>  // SSE4.2 instructions set
+		#endif
+
     // ARM
     #elif defined (__ARM_NEON__) && !defined(FORCE_EMULATED_SIMD)
         #define USE_SIMD

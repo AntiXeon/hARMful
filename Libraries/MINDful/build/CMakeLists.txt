@@ -51,7 +51,9 @@ if (UNIX)
         SOVERSION ${MIND_VERSION_MAJOR}
     )
 elseif (MSVC)
-   ADD_DEFINITIONS(/arch:SSE2)
+    if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
+        ADD_DEFINITIONS(/arch:SSE2)
+    endif()
 endif()
 
 set (
