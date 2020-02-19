@@ -12,13 +12,13 @@ void createSymLink() {
     fs::path harmfulDir = currentDir ;
 
     const std::string WantedDirName(ProjectDirName) ;
-    std::string stem = harmfulDir.stem().string() ;
+    std::string stem = harmfulDir.stem().generic_string() ;
     while (harmfulDir.has_parent_path() && (stem != WantedDirName)) {
         harmfulDir = harmfulDir.parent_path() ;
-        stem = harmfulDir.stem().string() ;
+        stem = harmfulDir.stem().generic_string() ;
     }
 
-	fs::path libDirectoryPath(harmfulDir.string() + PathSeparator + LibDirectory) ;
+	fs::path libDirectoryPath(harmfulDir.generic_string() + PathSeparator + LibDirectory) ;
 	libDirectoryPath = libDirectoryPath ;
 
 	fs::path symlibDirectoryPath(SimLinkDirectory) ;

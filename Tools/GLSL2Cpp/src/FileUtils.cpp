@@ -17,7 +17,7 @@ std::map<std::string, ShaderFileAggregator> FileUtils::GetShaderFiles(
 
         fs::path filepath = p.path() ;
         fs::path dirPath = filepath ;
-        std::string directory = dirPath.remove_filename().string() ;
+        std::string directory = dirPath.remove_filename().generic_string() ;
 
         size_t PathSeparatorLength = std::string(PathSeparator).size() ;
         size_t ShadersDirectoryLength = shaderDirectory.size() ;
@@ -43,8 +43,8 @@ std::map<std::string, ShaderFileAggregator> FileUtils::GetShaderFiles(
         }
 
         ShaderFile file = {
-            filepath.stem().string(),
-            filepath.extension().string()
+            filepath.stem().generic_string(),
+            filepath.extension().generic_string()
         } ;
 
         files[relativeDir].insert(file) ;
@@ -71,10 +71,10 @@ void FileUtils::CopyIncludeModules(
 
         std::string filename ;
         if (removeUnderscores) {
-            filename = StringUtils::RemoveUnderscoreChars(fromFilePath.stem().string()) ;
+            filename = StringUtils::RemoveUnderscoreChars(fromFilePath.stem().generic_string()) ;
         }
         else {
-            filename = fromFilePath.stem().string() ;
+            filename = fromFilePath.stem().generic_string() ;
         }
 
         // Use the right file extension.
@@ -83,7 +83,7 @@ void FileUtils::CopyIncludeModules(
             extension = std::string(destExtension) ;
         }
         else {
-            extension = fromFilePath.extension().string() ;
+            extension = fromFilePath.extension().generic_string() ;
         }
 
         std::string completeFilename = filename + extension ;
