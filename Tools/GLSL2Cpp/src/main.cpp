@@ -7,7 +7,7 @@
 
 void createSymLink() {
     const std::string PathSeparatorStr = std::string(PathSeparator) ;
-    
+
     fs::path currentDir = fs::current_path() ;
     fs::path harmfulDir = currentDir ;
 
@@ -19,11 +19,11 @@ void createSymLink() {
     }
 
 	fs::path libDirectoryPath(harmfulDir.string() + PathSeparator + LibDirectory) ;
-	libDirectoryPath = libDirectoryPath.make_preferred() ;
-	
+	libDirectoryPath = libDirectoryPath ;
+
 	fs::path symlibDirectoryPath(SimLinkDirectory) ;
-	symlibDirectoryPath = symlibDirectoryPath.make_preferred() ;
-	
+	symlibDirectoryPath = symlibDirectoryPath ;
+
 	if (fs::exists(symlibDirectoryPath)) {
 	    return ;
     }
@@ -42,7 +42,7 @@ int main() {
     createSymLink() ;
 
     const std::string PathSeparatorStr = std::string(PathSeparator) ;
-    
+
     // Get the shader files.
     auto shaderFiles = FileUtils::GetShaderFiles(ShadersDirectory) ;
 
