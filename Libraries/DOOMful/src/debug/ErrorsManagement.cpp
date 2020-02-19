@@ -47,29 +47,6 @@ static void PrintErrno(
             ::strerror(errno)
         ) ;
     }
-#elif defined(WindowsPlatform)
-    if (message) {
-        logSys -> writeLine<const char*, const char*, const char*, const char*, int, const char*, const char*>(
-            LogSystem::Gravity::Error,
-            message,
-            "\n",
-            file,
-            "::",
-            line,
-            "@",
-            function
-        ) ;
-    }
-    else {
-        logSys -> writeLine<const char*, const char*, int, const char*, const char*>(
-            LogSystem::Gravity::Error,
-            file,
-            "::",
-            line,
-            "@",
-            function
-        ) ;
-    }
 #endif
 }
 
