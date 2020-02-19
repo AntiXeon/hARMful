@@ -47,5 +47,9 @@ if (UNIX)
 endif()
 
 if (WIN32)
+    set_target_properties(
+        ${PROJECT_NAME}
+        PROPERTIES LINK_FLAGS
+        "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\" /SUBSYSTEM:CONSOLE")
     target_link_libraries(${PROJECT_NAME})
 endif()
