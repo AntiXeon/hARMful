@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.15)
 
 # Project declaration
 project(SPITE)
@@ -58,8 +58,6 @@ if (UNIX)
         VERSION ${SPITE_VERSION_STRING}
         SOVERSION ${SPITE_VERSION_MAJOR}
     )
-elseif (MSVC)
-   ADD_DEFINITIONS(/arch:SSE2)
 endif()
 
 set (
