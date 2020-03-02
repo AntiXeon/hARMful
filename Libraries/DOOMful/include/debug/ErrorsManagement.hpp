@@ -21,7 +21,7 @@ namespace Doom {
          * @param   line        Line in the file at which the error occurs.
          * @param   function    Function in which the error occurs.
          */
-        void PrintCError(
+        exported void PrintCError(
             const char* file,
             int line,
             const char* function
@@ -35,7 +35,7 @@ namespace Doom {
          * @param   Message     User message to be printed when the error
          *                      occurs.
          */
-        void ExitOnCError(
+        exported void ExitOnCError(
             const char* file,
             int line,
             const char* function,
