@@ -31,23 +31,23 @@ void ImageFile::open(OpenMode mode) {
 
     switch(mode) {
         case File::Open_ReadOnly:
-            m_file = fopen(filepath, "rb") ;
+            fopen_s(&m_file, filepath, "rb") ;
             break ;
 
         case File::Open_Append:
-            m_file = fopen(filepath, "ab") ;
+            fopen_s(&m_file, filepath, "ab") ;
             break ;
 
         case File::Open_WriteOnly:
-            m_file = fopen(filepath, "wb") ;
+            fopen_s(&m_file, filepath, "wb") ;
             break ;
 
         case File::Open_ReadWrite:
-            m_file = fopen(filepath, "rb+") ;
+            fopen_s(&m_file, filepath, "rb+") ;
             break ;
 
         case File::Open_ReadAppend:
-            m_file = fopen(filepath, "ab+") ;
+            fopen_s(&m_file, filepath, "ab+") ;
             break ;
 
         default:

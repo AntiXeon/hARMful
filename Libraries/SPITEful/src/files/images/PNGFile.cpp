@@ -177,7 +177,7 @@ void PNGFile::startDecompression(
     output -> data(imageDataBuffer, imageDataSize) ;
 
     // Get the image allocated buffer.
-    unsigned int pngRowBytesLength = png_get_rowbytes(pngStruct, pngInfo) ;
+    size_t pngRowBytesLength = png_get_rowbytes(pngStruct, pngInfo) ;
 
     if (isBottomUp()) {
         for (int y = height - 1; y >= 0; --y) {

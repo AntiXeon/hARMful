@@ -17,8 +17,8 @@ ColorFormat::ColorFormat(
     m_name(name),
     m_componentMasks(components),
     m_componentSize(componentSize),
-    m_pixelSize(components.size()),
-    m_colorDepth(components.size() * ByteSizeInBits),
+    m_pixelSize(static_cast<unsigned char>(components.size())),
+    m_colorDepth(static_cast<unsigned char>(components.size() * ByteSizeInBits)),
     m_isInitialized(true) {}
 
 
@@ -66,7 +66,7 @@ const std::string& ColorFormat::name() const {
 }
 
 unsigned char ColorFormat::amountOfComponents() const {
-    return m_componentMasks.size() ;
+    return static_cast<unsigned char>(m_componentMasks.size()) ;
 }
 
 unsigned char ColorFormat::pixelSizeInBytes() const {

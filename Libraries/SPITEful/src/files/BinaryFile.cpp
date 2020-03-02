@@ -24,7 +24,7 @@ BinaryFile::BinaryFile(
             m_writer = new ReversedCPUEndiannessBinaryFileWriter() ;
         }
     }
-    catch(std::bad_alloc& e) {
+    catch(std::bad_alloc&) {
         // Log error.
         std::weak_ptr<Doom::LogSystem> logWeakPtr = Doom::LogSystem::GetInstance() ;
         std::shared_ptr<Doom::LogSystem> logSystem = logWeakPtr.lock() ;

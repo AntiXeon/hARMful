@@ -38,7 +38,7 @@ namespace Spite {
              */
             exported void data(unsigned char*& data, unsigned int& size) override {
                 data = reinterpret_cast<unsigned char*>(&m_text[0]) ;
-                size = m_text.size() ;
+                size = static_cast<unsigned int>(m_text.size()) ;
             }
 
             /**

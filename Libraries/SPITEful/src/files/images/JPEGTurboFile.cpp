@@ -64,7 +64,7 @@ bool JPEGTurboFile::loadSpecific(IFileData* filedata) {
     tjDecompress2(
         jpegDecompressor,
         fileBytes.data(),
-        fileBytes.size(),
+        static_cast<unsigned long>(fileBytes.size()),
         rawImageBytes,
         width,
         Pitch,
