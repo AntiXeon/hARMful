@@ -27,8 +27,8 @@ All the libraries require `cmake`.
 -   ARM CPUs with NEON are not yet supported
 
 ### SPITEful (multimedia files management)
--   [libpng 1.6.35](https://github.com/glennrp/libpng)
--   [libjpeg-turbo 2.0.1](https://github.com/libjpeg-turbo/libjpeg-turbo)
+-   [libpng 1.6.37](https://github.com/glennrp/libpng)
+-   [libjpeg-turbo 2.0.4](https://github.com/libjpeg-turbo/libjpeg-turbo)
 
 ## Source code
 The source code of the **hARMful** project is mainly written in C++17 language and SIMD operations.
@@ -44,6 +44,10 @@ To compile on a GNU/Linux system, enter the `Library` folder and type `./build.s
 
 ### Microsoft® Windows™
 The compilation of **hARMful** on Microsoft® Windows™ is still work in progress.
+
+The **hARMful** libraries will be compilable using [Visual Studio 2019](https://visualstudio.microsoft.com) and next. _Be aware that previous versions of Visual Studio are not supported and cannot compile the code!_
+
+The third-party dependencies are available as prebuilt NuGet packages on the [official NuGet server](https://www.nuget.org/). More details in a near future!
 
 ### Mac™ OS
 Not officially supported.

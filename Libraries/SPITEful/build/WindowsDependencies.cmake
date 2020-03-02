@@ -1,3 +1,0 @@
-if (MSVC)
-
-endif()

@@ -29,13 +29,10 @@ add_library (
     ${SOURCES}
 )
 
-# Linux dependencies
+# Linux/Windows dependencies
 include("./LinuxDependencies.cmake")
 
 target_link_libraries(${PROJECT_NAME} DOOM)
-
-# Windows dependencies
-include("./WindowsDependencies.cmake")
 
 # Versioning
 if (UNIX)
