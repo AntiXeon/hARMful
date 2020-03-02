@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(HARMFUL_LIBS_DIR ${CMAKE_SOURCE_DIR}../../Libraries)
 set(COMMON_UNIT_TESTS_SRC_DIR ${CMAKE_SOURCE_DIR}/Common/src)
