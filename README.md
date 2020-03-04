@@ -13,12 +13,10 @@ The repository is structured in different parts:
 -   **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
 
 ## Dependencies
-All the libraries require `cmake`.
-
 ### HOPEful (OpenGL rendering)
 -   [GLFW 3.2.1](https://github.com/glfw/glfw) (for window and inputs)
 -   [GLEW 2.1.0](https://github.com/nigels-com/glew) (for modern OpenGL functions)
--   [Assimp 4.1.0](https://github.com/assimp/assimp) (for importing 3D file models)
+-   [Assimp 5.1.0](https://github.com/assimp/assimp) (for importing 3D file models)
 -   Hardware supporting OpenGL 4.5 or higher is required
 
 ### MINDful (mathematics tools)
@@ -28,26 +26,40 @@ All the libraries require `cmake`.
 
 ### SPITEful (multimedia files management)
 -   [libpng 1.6.37](https://github.com/glennrp/libpng)
--   [libjpeg-turbo 2.0.4](https://github.com/libjpeg-turbo/libjpeg-turbo)
+-   [libjpeg-turbo 2.0.2](https://github.com/libjpeg-turbo/libjpeg-turbo)
 
-## Source code
-The source code of the **hARMful** project is mainly written in C++17 language and SIMD operations.
-
-To compile the code, enter into the Libraries folder and compile all the libraries at once by typing `cmake .`.
-
+## Compilation
 ### GNU/Linux
-A compliant compiler is required, g++ is advised.
+#### Requirements
+- CMake 2.8.12 or above;
+- A C++17 compliant compiler is required, `g++9` and above is advised.
 
-Install the dependencies on your system.
+#### Optional tools
+- Conan (you can install conan with your package manager or using `pip`).
+
+#### Build steps
+Install the requirements on your system.
+
+:exclamation: You can either choose to install the dependencies from your distribution package manager, or let Conan select the right libraries from its own repository. Just build the project and CMake will select the right ones according to what is installed on your system.
 
 To compile on a GNU/Linux system, enter the `Library` folder and type `./build.sh` in a command prompt. It will generate the `.so` files.
 
 ### Microsoft® Windows™
-The compilation of **hARMful** on Microsoft® Windows™ is still work in progress.
+:warning: The compilation of **hARMful** on Microsoft® Windows™ is still work in progress! :warning:
 
-The **hARMful** libraries will be compilable using [Visual Studio 2019](https://visualstudio.microsoft.com) and next. _Be aware that previous versions of Visual Studio are not supported and cannot compile the code!_
+#### Requirements
+- [CMake 2.8.12](https://cmake.org/download/) or above;
+- [Visual Studio 2019](https://visualstudio.microsoft.com) and above. Notice that Visual Studio Community is free to use. **Previous versions of Visual Studio cannot build the project!**
+- [Python 3](https://www.python.org/downloads/)
 
-The third-party dependencies are available as prebuilt NuGet packages on the [official NuGet server](https://www.nuget.org/). More details in a near future!
+#### Build steps
+- Install all the requirements. Add both CMake and Python to the `PATH` environment variable.
+- In a PowerShell or any other CLI, install Conan by typing the `pip install conan` command.
+- Open the CMake GUI:
+    - Select the **hARMful** `Library` directory for both "source code" and "build" folders.
+    - Press the "Configure" button, check that Visual Studio 2019 is selected and use the `x64` platform in combobox. Press "Finish" when it's done. Wait until the configuration is complete (it can takea while if the dependencies have to be downloaded by Conan).
+    - Press the "Generate" button then close CMake.
+- Open the generated `hARMful.sln` file with Visual Studio 2019. Compile the projects in either Release or Debug mode. You can see warnings above missing PDB files, it just means the dependencies have no debug informations; the compilation of **hARMful** is not impacted by this.
 
 ### Mac™ OS
 Not officially supported.
