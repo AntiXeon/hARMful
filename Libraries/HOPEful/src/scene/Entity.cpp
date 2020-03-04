@@ -38,7 +38,7 @@ int32_t Entity::addComponent(Component* component) {
     if (component -> isStackable() || m_components[newComponentType].size() == 0) {
         // Stack the components.
         m_components[newComponentType].push_back(component) ;
-        int32_t lastComponentIndex = m_components[newComponentType].size() - 1 ;
+        int32_t lastComponentIndex = static_cast<int32_t>(m_components[newComponentType].size() - 1) ;
         return lastComponentIndex ;
     }
     else {

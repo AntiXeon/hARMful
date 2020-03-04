@@ -369,7 +369,7 @@ namespace Mind {
              *          Rectangle and the added Point. If p was inside the
              *          previous Rectangle, the original Rectangle is returned.
              */
-            friend Rectangle2Df operator+(Rectangle2Df& r, Point2Df& p) ;
+            exported friend Rectangle2Df operator+(Rectangle2Df& r, Point2Df& p) ;
 
             /**
              * Merge two Rectangles
@@ -377,7 +377,7 @@ namespace Mind {
              * @param   r2  Second Rectangle.
              * @return  The smallest Rectangle including the two Rectangles.
              */
-            friend Rectangle2Df operator+(Rectangle2Df& r1, Rectangle2Df& r2) ;
+            exported friend Rectangle2Df operator+(Rectangle2Df& r1, Rectangle2Df& r2) ;
 
             /**
              * Echo the Rectangle2D coordinates on console.
@@ -385,7 +385,7 @@ namespace Mind {
              * @param   r   The Rectangle2D to print.
              * @return  The stream with the printed Line coordinates.
              */
-            friend std::ostream& operator<<(std::ostream& s, const Rectangle2Df& r) ;
+            exported friend std::ostream& operator<<(std::ostream& s, const Rectangle2Df& r) ;
     } ;
 } ;
 

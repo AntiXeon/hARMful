@@ -422,7 +422,7 @@ namespace Mind {
             * @param   p   The Quaternion to print.
             * @return  The stream with the printed Quaternion coordinates.
             */
-            inline friend std::ostream& operator<<(std::ostream& s, const Quaternion& p) ;
+            exported inline friend std::ostream& operator<<(std::ostream& s, const Quaternion& p) ;
     } ;
 
     #ifdef USE_SIMD

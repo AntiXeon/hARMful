@@ -98,7 +98,7 @@ void DirectionalLightShadowNode::generateSubtree() {
     // Compute cascade distances.
     std::vector<float> cascadedSplits(m_parameters.amountCascades + 1) ;
     for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
-        float step = std::pow(CascadeSplitStep, cascadeIndex) ;
+        float step = static_cast<float>(std::pow(CascadeSplitStep, cascadeIndex)) ;
         cascadedSplits[cascadeIndex] = m_parameters.maxDistance / step ;
     }
     cascadedSplits[m_parameters.amountCascades] = m_renderingCamera -> camera() -> nearPlaneDistance() ;

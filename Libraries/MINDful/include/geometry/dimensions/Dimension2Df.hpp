@@ -126,7 +126,7 @@ namespace Mind {
              * @param   b   Second Dimension.
              * @return  Dimension of (a.w + b.w, a.h + b.h).
              */
-            friend Dimension2Df operator+(const Dimension2Df& a, const Dimension2Df& b) ;
+            exported friend Dimension2Df operator+(const Dimension2Df& a, const Dimension2Df& b) ;
 
 
             /**
@@ -135,7 +135,7 @@ namespace Mind {
              * @param   b   Second Dimension.
              * @return  Dimension of (a.w - b.w, a.h - b.h).
              */
-            friend Dimension2Df operator-(const Dimension2Df& a, const Dimension2Df& b) ;
+            exported friend Dimension2Df operator-(const Dimension2Df& a, const Dimension2Df& b) ;
 
 
             /**
@@ -144,7 +144,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Dimension at (d.w * coeff, d.w * coeff).
              */
-            friend Dimension2Df operator*(const Dimension2Df& d, const Scalar coeff) ;
+            exported friend Dimension2Df operator*(const Dimension2Df& d, const Scalar coeff) ;
 
 
             /**
@@ -153,7 +153,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Dimension of (d.w / coeff, d.h / coeff).
              */
-            friend Dimension2Df operator/(const Dimension2Df& d, const Scalar coeff) ;
+            exported friend Dimension2Df operator/(const Dimension2Df& d, const Scalar coeff) ;
 
 
             /**
@@ -162,7 +162,7 @@ namespace Mind {
              * @param   d   The Dimension to print.
              * @return  The stream with the printed Dimension size.
              */
-            friend std::ostream& operator<<(std::ostream& s, const Dimension2Df& d) ;
+            exported friend std::ostream& operator<<(std::ostream& s, const Dimension2Df& d) ;
     } ;
 } ;
 

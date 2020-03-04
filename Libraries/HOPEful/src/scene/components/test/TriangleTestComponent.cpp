@@ -27,7 +27,7 @@ TriangleTestComponent::TriangleTestComponent()
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr) ;
         glEnableVertexAttribArray(0) ;
 
-        ushort indices[3] ;
+        unsigned short indices[3] ;
         indices[0] = 0 ;
         indices[1] = 1 ;
         indices[2] = 2 ;

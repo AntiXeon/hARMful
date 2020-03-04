@@ -47,12 +47,12 @@ void MeshGeometry::addPart(
     const uint32_t materialID,
     const std::vector<uint32_t>& indices
 ) {
-    uint32_t offset = m_indices.size() ;
+    uint32_t offset = static_cast<uint32_t>(m_indices.size()) ;
     m_parts.push_back(
         GeometryPart(
             materialID,
             offset,
-            indices.size()
+            static_cast<uint32_t>(indices.size())
         )
     ) ;
 

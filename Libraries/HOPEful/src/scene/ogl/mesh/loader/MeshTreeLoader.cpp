@@ -97,7 +97,7 @@ void MeshTreeLoader::loadNodeData(
     std::vector<GeometryPartData> partData ;
     partData.resize(node -> mNumMeshes) ;
 
-    size_t indexOffset = 0 ;
+    uint32_t indexOffset = 0 ;
 
     // Process the different meshes of the node.
     for (unsigned int index = 0 ; index < node -> mNumMeshes ; ++index) {
@@ -194,9 +194,9 @@ void MeshTreeLoader::setupTransform(
 ) {
     Mind::Matrix4x4f transformMatrix ;
 
-    const size_t MatrixSize = transformMatrix.size() ;
+    const uint32_t MatrixSize = static_cast<uint32_t>(transformMatrix.size()) ;
 
-    for (size_t row = 0 ; row < MatrixSize ; ++row) {
+    for (uint32_t row = 0 ; row < MatrixSize ; ++row) {
         Mind::Point4Df transformRow(
             nodeMatrix[row][0],
             nodeMatrix[row][1],

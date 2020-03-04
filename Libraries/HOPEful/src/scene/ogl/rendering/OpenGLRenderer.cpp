@@ -12,11 +12,11 @@ using namespace Hope::GL ;
 #define BufferOffset(offset) (static_cast<const char*>(nullptr) + (offset))
 
 void OpenGLRenderer::render(
-    const RenderPassID renderPassID,
-    std::vector<GeometryData>& dataList,
+    const Hope::RenderPassID renderPassID,
+    std::vector<Hope::GeometryData>& dataList,
     const uint32_t memoryBarrier
 ) {
-    for (GeometryData& meshData : dataList) {
+    for (Hope::GeometryData& meshData : dataList) {
         m_modelUBO.setMatrices(
             meshData.worldTransformation,
             m_viewMatrix,
@@ -29,7 +29,7 @@ void OpenGLRenderer::render(
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
             material -> updateUniformValues() ;
-            API::RenderPass* renderPass = useMaterial(renderPassID, material) ;
+            RenderPass* renderPass = useMaterial(renderPassID, material) ;
 
             if (!renderPass) {
                 // Do not try to render as it is not possible!
@@ -54,7 +54,7 @@ void OpenGLRenderer::render(
                 counts.data(),
                 geometry -> indiceType(),
                 indiceOffsets.data(),
-                amountParts
+                static_cast<int>(amountParts)
             ) ;
             disableCapabilities(renderPass) ;
 
@@ -95,7 +95,12 @@ void OpenGLRenderer::deferredShading(
 
     // Draw the quad.
     size_t amountIndices = m_deferredShadingQuad.part(0).amountIndices() ;
-    glDrawElements(GL_TRIANGLE_STRIP, amountIndices, GL_UNSIGNED_BYTE, nullptr) ;
+    glDrawElements(
+        GL_TRIANGLE_STRIP, 
+        static_cast<int>(amountIndices), 
+        GL_UNSIGNED_BYTE, 
+        nullptr
+    ) ;
 
     // Insert a memory barrier.
     if (memoryBarrier != 0) {
@@ -111,12 +116,12 @@ void OpenGLRenderer::deferredShading(
     glBindFramebuffer(GL_FRAMEBUFFER, 0) ;
 }
 
-API::RenderPass* OpenGLRenderer::useMaterial(
-    const RenderPassID renderPassID,
-    const MaterialComponent* component,
+RenderPass* OpenGLRenderer::useMaterial(
+    const Hope::RenderPassID renderPassID,
+    const Hope::MaterialComponent* component,
     const std::vector<Hope::EffectData*>& effects
 ) {
-    API::RenderPass* pass = component -> renderPass(renderPassID) ;
+    RenderPass* pass = component -> renderPass(renderPassID) ;
 
     if (!pass) {
         return nullptr ;
@@ -157,7 +162,8 @@ API::RenderPass* OpenGLRenderer::useMaterial(
 void OpenGLRenderer::updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) {
     {
         const auto& directionalLights = cache -> directionalLights() ;
-        m_lightUBO.setAmountDirectionalLights(directionalLights.size()) ;
+        const int amountDirLights = static_cast<int>(directionalLights.size());
+        m_lightUBO.setAmountDirectionalLights(amountDirLights) ;
 
         uint16_t lightIndex = 0 ;
         for (DirectionalLightComponent* dirLight : directionalLights) {
@@ -171,7 +177,8 @@ void OpenGLRenderer::updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache
 
     {
         const auto& pointLightsData = cache -> pointLights() ;
-        m_lightUBO.setAmountPointLights(pointLightsData.size()) ;
+        const int amountLights = static_cast<int>(pointLightsData.size());
+        m_lightUBO.setAmountPointLights(amountLights) ;
 
         uint16_t lightIndex = 0 ;
         for (const PointLightData& lightData : pointLightsData) {

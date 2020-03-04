@@ -20,7 +20,7 @@ Texture::~Texture() {
     glDeleteTextures(1, &m_textureID) ;
 }
 
-void Texture::setBorderColor(const Color& color) {
+void Texture::setBorderColor(const Hope::Color& color) {
     glTexParameterfv(m_target, GL_TEXTURE_BORDER_COLOR, color.toRGBA().data()) ;
 }
 

@@ -27,7 +27,12 @@ Window::Window(
 
     m_frameGraphVisitor = std::make_shared<OpenGLFrameGraphVisitor>() ;
     m_scene = std::make_unique<Scene>(m_frameGraphVisitor) ;
-    m_frameGraphVisitor -> setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_frameGraphVisitor -> setWindowSize(
+        Mind::Dimension2Df(
+            static_cast<Mind::Scalar>(width),
+            static_cast<Mind::Scalar>(height)
+        )
+    ) ;
 }
 
 Window::~Window() {
@@ -260,5 +265,10 @@ void Window::resizedWindow(
     int width,
     int height
 ) {
-    m_frameGraphVisitor -> setWindowSize(Mind::Dimension2Df(width, height)) ;
+    m_frameGraphVisitor -> setWindowSize(
+        Mind::Dimension2Df(
+            static_cast<Mind::Scalar>(width),
+            static_cast<Mind::Scalar>(height)
+        )
+    ) ;
 }

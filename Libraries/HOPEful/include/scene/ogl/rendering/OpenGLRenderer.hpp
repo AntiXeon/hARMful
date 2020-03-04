@@ -9,6 +9,7 @@
 #include <scene/framegraph/cache/GeometryData.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <matrices/Matrix4x4f.hpp>
+#include <scene/SceneTypes.hpp>
 #include <vector>
 
 namespace Hope {
@@ -65,8 +66,8 @@ namespace Hope::GL {
              *                          the pass.
              */
             void render(
-                const RenderPassID renderPassID,
-                std::vector<GeometryData>& dataList,
+                const Hope::RenderPassID renderPassID,
+                std::vector<Hope::GeometryData>& dataList,
                 const uint32_t memoryBarrier
             ) ;
 
@@ -124,8 +125,8 @@ namespace Hope::GL {
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
-            API::RenderPass* useMaterial(
-                const RenderPassID renderPassID,
+            RenderPass* useMaterial(
+                const Hope::RenderPassID renderPassID,
                 const Hope::MaterialComponent* component,
                 const std::vector<Hope::EffectData*>& effects = {}
             ) ;
@@ -133,7 +134,7 @@ namespace Hope::GL {
             /**
              * Enable the capabilities of the render pass that is used.
              */
-            void enableCapabilities(API::RenderPass* renderPass) {
+            void enableCapabilities(RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> apply() ;
@@ -143,7 +144,7 @@ namespace Hope::GL {
             /**
              * Disable the capabilities of the render pass that is used.
              */
-            void disableCapabilities(API::RenderPass* renderPass) {
+            void disableCapabilities(RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> remove() ;

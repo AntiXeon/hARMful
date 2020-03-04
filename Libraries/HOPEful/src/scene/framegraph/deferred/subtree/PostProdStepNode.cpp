@@ -51,8 +51,8 @@ void PostProdStepNode::specificAccept(IFrameGraphVisitor*) {
             Mind::Rectangle2Df(
                 0,
                 0,
-                m_framebuffer -> width(),
-                m_framebuffer -> height()
+                static_cast<Mind::Scalar>(m_framebuffer -> width()),
+                static_cast<Mind::Scalar>(m_framebuffer -> height())
             )
         )
         .setDestinationFBO(m_framebuffer)
@@ -61,8 +61,8 @@ void PostProdStepNode::specificAccept(IFrameGraphVisitor*) {
             Mind::Rectangle2Df(
                 0,
                 0,
-                m_framebuffer -> width(),
-                m_framebuffer -> height()
+                static_cast<Mind::Scalar>(m_framebuffer -> width()),
+                static_cast<Mind::Scalar>(m_framebuffer -> height())
             )
         )
         .setMask(API::FramebufferBlitter::Mask::ColorBuffer)

@@ -3,7 +3,7 @@
 
 using namespace Hope::GL ;
 
-RenderPass::RenderPass(const RenderPassID id)
+RenderPass::RenderPass(const Hope::RenderPassID id)
     : m_id(id) {
     m_shaderProgram = std::make_unique<ShaderProgram>() ;
 }
@@ -18,7 +18,7 @@ void RenderPass::removeFilterOption(const std::shared_ptr<Hope::FilterOption> op
 
 bool RenderPass::addCapability(std::unique_ptr<Capability> capability) {
     if (m_capabilities.count(capability -> type()) == 0) {
-        unsigned int index = m_capabilitiesPointers.size() ;
+        unsigned int index = static_cast<unsigned int>(m_capabilitiesPointers.size()) ;
         m_capabilitiesPointers.push_back(capability.get()) ;
 
         auto type = capability -> type() ;

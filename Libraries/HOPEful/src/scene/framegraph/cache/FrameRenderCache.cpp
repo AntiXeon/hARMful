@@ -67,9 +67,9 @@ void FrameRenderCache::cacheGeometry(
     entityGeometryData.worldTransformation = worldTransformation ;
 
     const API::Geometry* geometry = entityGeometryData.mesh -> geometry() ;
-    size_t amountParts = geometry -> amountParts() ;
+    uint32_t amountParts = static_cast<int32_t>(geometry -> amountParts()) ;
 
-    for (size_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
+    for (uint32_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
         API::GeometryPart& part = const_cast<API::GeometryPart&>(geometry -> part(partIndex)) ;
 
         uint32_t materialID = part.materialID() ;

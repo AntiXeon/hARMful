@@ -2,6 +2,7 @@
 #define __HOPE__SCENE_MESH_DATA__
 
 #include <matrices/Matrix4x4f.hpp>
+#include <cstdint>
 #include <map>
 #include <vector>
 

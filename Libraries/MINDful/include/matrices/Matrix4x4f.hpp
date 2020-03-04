@@ -204,7 +204,7 @@ namespace Mind {
              * @param   b   Second matrix.
              * @return  Result of the multiplication.
              */
-            friend Matrix4x4f operator*(const Matrix4x4f& a, const Matrix4x4f& b) ;
+            exported friend Matrix4x4f operator*(const Matrix4x4f& a, const Matrix4x4f& b) ;
 
             /**
              * Multiply the current matrix by a vector.
