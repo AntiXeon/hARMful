@@ -57,9 +57,9 @@ To compile on a GNU/Linux system, enter the `Library` folder and type `./build.s
 - In a PowerShell or any other CLI, install Conan by typing the `pip install conan` command.
 - Open the CMake GUI:
     - Select the **hARMful** `Library` directory for both "source code" and "build" folders.
-    - Press the "Configure" button, check that Visual Studio 2019 is selected and use the `x64` platform in combobox. Press "Finish" when it's done. Wait until the configuration is complete (it can takea while if the dependencies have to be downloaded by Conan).
+    - Press the "Configure" button, check that Visual Studio 2019 is selected and use the `x64` platform in combobox. Press "Finish" when it's done. Wait until the configuration is complete (it can take a while if the dependencies have to be downloaded by Conan).
     - Press the "Generate" button then close CMake.
-- Open the generated `hARMful.sln` file with Visual Studio 2019. Compile the projects in either Release or Debug mode. You can see warnings above missing PDB files, it just means the dependencies have no debug informations; the compilation of **hARMful** is not impacted by this.
+- Open the generated `hARMful.sln` file with Visual Studio 2019. Compile the projects in either Release or Debug mode. You can see warnings about missing PDB files, it just means the dependencies have no debug informations; the compilation of **hARMful** is not impacted by this.
 
 ### Mac™ OS
 Not officially supported.
