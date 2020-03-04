@@ -12,6 +12,7 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/conan.cmake")
 endif()
 
 include(${CMAKE_SOURCE_DIR}/conan.cmake)
+option(USE_CONAN_LIBS "To know if dependencies from Conan are required" OFF)
 
 # Remove prefix for shared libraries on Windows
 if (WIN32)

@@ -31,13 +31,10 @@ add_library (
     ${SOURCES}
 )
 
-# Linux dependencies
-include("./LinuxDependencies.cmake")
+# Linux/Windows dependencies
+include("./dependencies.cmake")
 
 target_link_libraries(${PROJECT_NAME} DOOM MIND SPITE)
-
-# Windows dependencies
-include("./WindowsDependencies.cmake")
 
 # Versioning
 if (UNIX)

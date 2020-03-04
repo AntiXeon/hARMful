@@ -5,10 +5,10 @@ SET(LIBPNG_REQUIRED_VERSION "1.6.37")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/modules/")
 
-option(USE_CONAN_LIBS "To know if dependencies from Conan are required" OFF)
 set(CONAN_LIBS "")
 set(CONAN_LINK "")
 
+# LibJpegTurbo (load JPEG files)
 find_package(LibJpegTurbo ${LIBJPEGTURBO_REQUIRED_VERSION} QUIET)
 if (JPEGTURBO_FOUND AND NOT USE_CONAN_LIBS)
     include_directories(${JPEGTURBO_INCLUDE_DIR})
@@ -20,6 +20,7 @@ else()
     list(APPEND CONAN_LINK CONAN_PKG::libjpeg-turbo)
 endif()
 
+# libpng (load PNG files)
 find_package(PNG ${LIBPNG_REQUIRED_VERSION} QUIET)
 if (PNG_FOUND AND NOT USE_CONAN_LIBS)
     include_directories(${PNG_INCLUDE_DIRS})
