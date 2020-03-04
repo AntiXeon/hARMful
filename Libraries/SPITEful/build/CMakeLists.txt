@@ -30,7 +30,7 @@ add_library (
 )
 
 # Linux/Windows dependencies
-include("./LinuxDependencies.cmake")
+include("./dependencies.cmake")
 
 target_link_libraries(${PROJECT_NAME} DOOM)
 
