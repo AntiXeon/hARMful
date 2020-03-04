@@ -12,16 +12,16 @@ void FramebufferBlitter::doBlit() {
 
     // Blit.
     glBlitFramebuffer(
-        m_source.area.upLeftCornerX(),
-      	m_source.area.upLeftCornerY(),
-        m_source.area.bottomRightCornerX(),
-      	m_source.area.bottomRightCornerY(),
-        m_destination.area.upLeftCornerX(),
-      	m_destination.area.upLeftCornerY(),
-        m_destination.area.bottomRightCornerX(),
-      	m_destination.area.bottomRightCornerY(),
-      	m_mask,
-      	m_filter
+        static_cast<int>(m_source.area.upLeftCornerX()),
+        static_cast<int>(m_source.area.upLeftCornerY()),
+        static_cast<int>(m_source.area.bottomRightCornerX()),
+        static_cast<int>(m_source.area.bottomRightCornerY()),
+        static_cast<int>(m_destination.area.upLeftCornerX()),
+        static_cast<int>(m_destination.area.upLeftCornerY()),
+        static_cast<int>(m_destination.area.bottomRightCornerX()),
+        static_cast<int>(m_destination.area.bottomRightCornerY()),
+        static_cast<int>(m_mask),
+        static_cast<int>(m_filter)
     ) ;
 
     // Unbind source.

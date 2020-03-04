@@ -1,6 +1,8 @@
 #ifndef __HOPE__FOG_RENDER_NODE__
 #define __HOPE__FOG_RENDER_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -31,7 +33,7 @@ namespace Hope {
              * @param   maxDistance Maximal distance from the camera to end
              *                      displaying fog (full intensity).
              */
-            FogRenderNode(
+            exported FogRenderNode(
                 const Color& color,
                 const float minDistance,
                 const float maxDistance,
@@ -41,21 +43,21 @@ namespace Hope {
             /**
              * Set the color value.
              */
-            void setColor(const Color& color) {
+            exported void setColor(const Color& color) {
                 m_effectData.setColor(color) ;
             }
 
             /**
              * Set the minimal distance value.
              */
-            void setMinimalDistance(const float min) {
+            exported void setMinimalDistance(const float min) {
                 m_effectData.setMinimalDistance(min) ;
             }
 
             /**
              * Set the maximal distance value.
              */
-            void setMaximalDistance(const float max) {
+            exported void setMaximalDistance(const float max) {
                 m_effectData.setMaximalDistance(max) ;
             }
 

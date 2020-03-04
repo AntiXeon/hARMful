@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TESSELATIONCONTROLSHADER__
 #define __HOPE__GL_TESSELATIONCONTROLSHADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
@@ -14,7 +16,7 @@ namespace Hope::GL {
             /**
              * Create a new TesselationControlShader.
              */
-            TesselationControlShader() : Shader(GL_TESS_CONTROL_SHADER) {}
+            exported TesselationControlShader() : Shader(GL_TESS_CONTROL_SHADER) {}
     } ;
 }
 

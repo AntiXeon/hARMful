@@ -1,6 +1,8 @@
 #ifndef __HOPE__DISPLAY_STEP_NODE__
 #define __HOPE__DISPLAY_STEP_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
@@ -23,7 +25,7 @@ namespace Hope {
             * @param   framebufferNode  Node bearing the framebuffer containing
             *                           the final render to be displayed.
             */
-            DisplayStepNode(
+            exported DisplayStepNode(
                 FramebufferRenderNode* framebufferNode,
                 FrameGraphNode* parent = nullptr
             ) ;

@@ -15,15 +15,15 @@ void Hope::Perspective(
 ) {
     assert(abs(aspect - std::numeric_limits<float>::epsilon()) > 0.f) ;
 
-    const float TanHalfFovY = std::tan(fovY / 2.f) ;
+    const double TanHalfFovY = std::tan(fovY / 2.f) ;
     const double FarMinusNear = zFar - zNear ;
     result.clear() ;
 
-    result[0][0] = 1.f / (aspect * TanHalfFovY) ;
-	result[1][1] = 1.f / (TanHalfFovY) ;
-	result[2][2] = -(zFar + zNear) / FarMinusNear ;
-    result[3][2] = -1.f ;
-    result[2][3] = -(2.f * zFar * zNear) / FarMinusNear ;
+    result[0][0] = static_cast<float>(1.f / aspect * TanHalfFovY) ;
+	result[1][1] = static_cast<float>(1.f / TanHalfFovY) ;
+	result[2][2] = static_cast<float>(-(zFar + zNear) / FarMinusNear) ;
+    result[3][2] = static_cast<float>(-1.f) ;
+    result[2][3] = static_cast<float>(-(2.f * zFar * zNear) / FarMinusNear) ;
 }
 
 void Hope::Orthographic(
@@ -35,15 +35,15 @@ void Hope::Orthographic(
     const double zNear,
     const double zFar
 ) {
-    const float RightMinusLeft = right - left ;
-    const float TopMinusBottom = top - bottom ;
-    const float FarMinusNear = zFar - zNear ;
+    const double RightMinusLeft = right - left ;
+    const double TopMinusBottom = top - bottom ;
+    const double FarMinusNear = zFar - zNear ;
 
-    result[0][0] = +2.f / RightMinusLeft ;
-    result[1][1] = +2.f / TopMinusBottom ;
-    result[2][2] = -2.f / FarMinusNear ;
-    result[0][3] = -((right + left) / RightMinusLeft) ;
-    result[1][3] = -((top + bottom) / TopMinusBottom) ;
-    result[2][3] = -((zFar + zNear) / FarMinusNear) ;
-    result[3][3] = +1.f ;
+    result[0][0] = static_cast<float>(+2.f / RightMinusLeft) ;
+    result[1][1] = static_cast<float>(+2.f / TopMinusBottom) ;
+    result[2][2] = static_cast<float>(-2.f / FarMinusNear) ;
+    result[0][3] = static_cast<float>(-((right + left) / RightMinusLeft)) ;
+    result[1][3] = static_cast<float>(-((top + bottom) / TopMinusBottom)) ;
+    result[2][3] = static_cast<float>(-((zFar + zNear) / FarMinusNear)) ;
+    result[3][3] = static_cast<float>(+1.f) ;
 }

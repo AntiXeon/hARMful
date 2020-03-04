@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_ALPHA_TEST__
 #define __HOPE__GL_CAPABILITY_ALPHA_TEST__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -26,7 +28,7 @@ namespace Hope::GL {
             /**
              * Create a new AlphaTest instance.
              */
-            AlphaTest() : Capability(CapabilityType::AlphaTest) {}
+            exported AlphaTest() : Capability(CapabilityType::AlphaTest) {}
 
         private:
             struct Parameters {
@@ -64,14 +66,14 @@ namespace Hope::GL {
             /**
              * Set the applied alpha test function.
              */
-            void setFunction(const AlphaFunction func) {
+            exported void setFunction(const AlphaFunction func) {
                 m_current.function = func ;
             }
 
             /**
              * Set the reference value for the alpha test function.
              */
-            void setReference(const GLclampf ref) {
+            exported void setReference(const GLclampf ref) {
                 m_current.reference = ref ;
             }
 

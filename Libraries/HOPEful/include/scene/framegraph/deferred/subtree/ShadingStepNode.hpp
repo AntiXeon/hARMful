@@ -1,6 +1,8 @@
 #ifndef __HOPE__SHADING_STEP_NODE__
 #define __HOPE__SHADING_STEP_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -36,7 +38,7 @@ namespace Hope {
              * Create a new ShadingStepNode instance.
              * @param   gBuffer G-Buffer used for the deferred shading.
              */
-            ShadingStepNode(
+            exported ShadingStepNode(
                 GBufferRenderNode* gBuffer,
                 API::Framebuffer* shadingFBO,
                 FrameGraphNode* parent = nullptr
@@ -45,7 +47,7 @@ namespace Hope {
             /**
              * Destruction of the ShadingStepNode instance.
              */
-            virtual ~ShadingStepNode() ;
+            exported virtual ~ShadingStepNode() ;
 
             // Remove copy/move operations.
             ShadingStepNode(const ShadingStepNode& copied) = delete;

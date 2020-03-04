@@ -1,12 +1,14 @@
 #ifndef __HOPE__RENDER_PASS_SELECTOR__
 #define __HOPE__RENDER_PASS_SELECTOR__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
     class IFrameGraphVisitor ;
-    
+
     /**
      * Define which render pass to use to render the objects.
      * Any object that does not bear the RenderPass is not rendered.
@@ -23,7 +25,7 @@ namespace Hope {
             /**
              * Create a new RenderPassSelectorNode node.
              */
-            RenderPassSelectorNode(
+            exported RenderPassSelectorNode(
                 const RenderPassID passID,
                 Hope::FrameGraphNode* parent = nullptr
             ) : Hope::FrameGraphNode(parent),
@@ -33,7 +35,7 @@ namespace Hope {
              * Get the ID of the render pass to use for rendering the framegraph
              * branch in which the node is.
              */
-            RenderPassID passID() const {
+            exported RenderPassID passID() const {
                 return m_passID ;
             }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__RENDER_CONFIGURATION__
 #define __HOPE__RENDER_CONFIGURATION__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/Component.hpp>
 #include <scene/FrameGraphNode.hpp>
 
@@ -29,13 +31,13 @@ namespace Hope {
             /**
              * Create a new RenderConfiguration.
              */
-            RenderConfiguration() ;
+            exported RenderConfiguration() ;
 
             /**
              * To know if the component can be shared by several entities.
              * @return  false, the RenderConfiguration cannot be shared.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return false ;
             }
 
@@ -43,7 +45,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  false, the component cannot be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return false ;
             }
 
@@ -52,21 +54,21 @@ namespace Hope {
              * by a single entity.
              * @return  false, an entity can only bear one RenderConfiguration.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return false ;
             }
 
             /**
              * Set the root node of the frame graph.
              */
-            void setFrameGraphRoot(FrameGraphNode* root) {
+            exported void setFrameGraphRoot(FrameGraphNode* root) {
                 m_frameGraphRoot = root ;
             }
 
             /**
              * Get the frame graph root node.
              */
-            FrameGraphNode* root() const {
+            exported FrameGraphNode* root() const {
                 return m_frameGraphRoot ;
             }
     } ;

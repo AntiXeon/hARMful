@@ -1,6 +1,8 @@
 #ifndef __HOPE__FILTER_OPTION__
 #define __HOPE__FILTER_OPTION__
 
+#include <utils/Platform.hpp>
+
 #include <string>
 
 namespace Hope {
@@ -27,42 +29,42 @@ namespace Hope {
             /**
              * Set the name of the filter option.
              */
-            void setName(const std::string& name) {
+            exported void setName(const std::string& name) {
                 m_name = name ;
             }
 
             /**
              * Get the name of the filter option.
              */
-            std::string name() const {
+            exported std::string name() const {
                 return m_name ;
             }
 
             /**
              * Set the value of the filter option.
              */
-            void setValue(const std::string& value) {
+            exported void setValue(const std::string& value) {
                 m_value = value ;
             }
 
             /**
              * Get the value of the filter option.
              */
-            std::string value() const {
+            exported std::string value() const {
                 return m_value ;
             }
 
             /**
              * Compare if two filter options are equal.
              */
-            bool operator==(const FilterOption& other) {
+            exported bool operator==(const FilterOption& other) {
                 return (m_name == other.m_name) && (m_value == other.m_value) ;
             }
 
             /**
              * Compare if two filter options are not equal.
              */
-            bool operator!=(const FilterOption& other) {
+            exported bool operator!=(const FilterOption& other) {
                 return !(*this == other) ;
             }
     } ;

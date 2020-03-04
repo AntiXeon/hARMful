@@ -1,6 +1,8 @@
 #ifndef __HOPE__RENDER_EFFECT__
 #define __HOPE__RENDER_EFFECT__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -28,18 +30,18 @@ namespace Hope {
             /**
              * Add a render pass.
              */
-            void addRenderPass(std::unique_ptr<API::RenderPass> pass) ;
+            exported void addRenderPass(std::unique_ptr<API::RenderPass> pass) ;
 
             /**
              * Remove a render pass.
              */
-            void removeRenderPass(std::unique_ptr<API::RenderPass> pass) ;
+            exported void removeRenderPass(std::unique_ptr<API::RenderPass> pass) ;
 
             /**
              * Check if the render effect has a render pass corresponding the
              * provided ID.
              */
-            bool hasRenderPass(const RenderPassID passID) const {
+            exported bool hasRenderPass(const RenderPassID passID) const {
                 return (m_renderPasses.count(passID) == 1) ;
             }
 
@@ -48,7 +50,7 @@ namespace Hope {
              * @return  The render pass having the provided ID if available;
              *          nullptr otherwise.
              */
-            API::RenderPass* renderPass(const RenderPassID passID) const {
+            exported API::RenderPass* renderPass(const RenderPassID passID) const {
                 if (hasRenderPass(passID)) {
                     return m_renderPasses.at(passID).get() ;
                 }

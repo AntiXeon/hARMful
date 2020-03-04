@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_DEPTH_MASK__
 #define __HOPE__GL_CAPABILITY_DEPTH_MASK__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -23,19 +25,19 @@ namespace Hope::GL {
             /**
              * Create a new DepthMask instance.
              */
-            DepthMask() : Capability(CapabilityType::DepthMask) {}
+            exported DepthMask() : Capability(CapabilityType::DepthMask) {}
 
             /**
              * Enable depth mask.
              */
-            void enable() {
+            exported void enable() {
                 m_isEnabled = true ;
             }
 
             /**
              * Disable depth mask.
              */
-            void disable() {
+            exported void disable() {
                 m_isEnabled = false ;
             }
 

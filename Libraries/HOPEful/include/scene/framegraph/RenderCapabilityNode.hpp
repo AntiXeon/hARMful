@@ -1,6 +1,8 @@
 #ifndef __HOPE__RENDER_CAPABILITY__
 #define __HOPE__RENDER_CAPABILITY__
 
+#include <utils/Platform.hpp>
+
 #include <vector>
 #include <scene/FrameGraphNode.hpp>
 #include <HopeAPI.hpp>
@@ -33,13 +35,13 @@ namespace Hope {
             /**
              * Create a new RenderCapabilityNode.
              */
-            RenderCapabilityNode(FrameGraphNode* parent = nullptr)
+            exported RenderCapabilityNode(FrameGraphNode* parent = nullptr)
                 : FrameGraphNode(parent) {}
 
             /**
              * Add a new capability.
              */
-            void addCapability(API::Capability* capability) {
+            exported void addCapability(API::Capability* capability) {
                 if (capability) {
                     m_capabilities.push_back(capability) ;
                 }

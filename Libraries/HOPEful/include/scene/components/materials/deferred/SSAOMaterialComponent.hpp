@@ -1,6 +1,8 @@
 #ifndef __HOPE__SCREEN_SPACE_AMBIENT_OCCLUSION_MATERIAL_COMPONENT__
 #define __HOPE__SCREEN_SPACE_AMBIENT_OCCLUSION_MATERIAL_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 
@@ -28,7 +30,7 @@ namespace Hope {
              * @param   gBuffer G-Buffer contening all the required data to
              *                  perform the deferred shading step.
              */
-            SSAOMaterialComponent(const AbstractFramebufferRenderNode* gBuffer) ;
+            exported SSAOMaterialComponent(const AbstractFramebufferRenderNode* gBuffer) ;
 
             /**
              * Update the uniform values before the processing of the material

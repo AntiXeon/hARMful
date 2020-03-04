@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_GEOMETRYSHADER__
 #define __HOPE__GL_GEOMETRYSHADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
@@ -13,7 +15,7 @@ namespace Hope::GL {
             /**
              * Create a new GeometryShader.
              */
-            GeometryShader() : Shader(GL_GEOMETRY_SHADER) {}
+            exported GeometryShader() : Shader(GL_GEOMETRY_SHADER) {}
     } ;
 }
 

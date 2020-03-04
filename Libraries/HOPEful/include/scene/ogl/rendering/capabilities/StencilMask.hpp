@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_STENCIL_MASK__
 #define __HOPE__GL_CAPABILITY_STENCIL_MASK__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -38,13 +40,13 @@ namespace Hope::GL {
             /**
              * Create a new StencilMask instance.
              */
-            StencilMask() : Capability(CapabilityType::StencilMask) {}
+            exported StencilMask() : Capability(CapabilityType::StencilMask) {}
 
             /**
              * Set the bit mask to enable and disable writing of individual bits
              * in the stencil planes.
              */
-            void setFrontMask(const uint32_t mask) {
+            exported void setFrontMask(const uint32_t mask) {
                 m_current.front = mask ;
             }
 
@@ -52,7 +54,7 @@ namespace Hope::GL {
              * Set the bit mask to enable and disable writing of individual bits
              * in the stencil planes.
              */
-            void setBackMask(const uint32_t mask) {
+            exported void setBackMask(const uint32_t mask) {
                 m_current.back = mask ;
             }
 

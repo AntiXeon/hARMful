@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TESSELATIONEVALUATIONSHADER__
 #define __HOPE__GL_TESSELATIONEVALUATIONSHADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
@@ -14,7 +16,7 @@ namespace Hope::GL {
             /**
              * Create a new TesselationEvaluationShader.
              */
-            TesselationEvaluationShader() : Shader( GL_TESS_EVALUATION_SHADER) {}
+            exported TesselationEvaluationShader() : Shader( GL_TESS_EVALUATION_SHADER) {}
     } ;
 }
 

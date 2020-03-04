@@ -57,7 +57,7 @@ void SSAORenderNode::generateKernel() {
             Doom::Random::GetNormalizedFloat()
         ) ;
 
-        float squaredIndex = kernelIndex * kernelIndex ;
+        float squaredIndex = static_cast<float>(kernelIndex * kernelIndex) ;
         float scale = squaredIndex / (AO_KERNEL_SIZE * AO_KERNEL_SIZE) ;
 
         const float LerpFrom = 0.1f ;

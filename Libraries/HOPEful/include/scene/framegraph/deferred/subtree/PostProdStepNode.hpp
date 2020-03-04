@@ -1,6 +1,8 @@
 #ifndef __HOPE__POST_PROD_STEP_NODE__
 #define __HOPE__POST_PROD_STEP_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -53,7 +55,7 @@ namespace Hope {
              *                      occlusion has (optionnaly) been computed,
              *                      etc.
              */
-            PostProdStepNode(
+            exported PostProdStepNode(
                 API::Framebuffer* framebuffer,
                 FrameGraphNode* parent = nullptr
             ) ;
@@ -61,14 +63,14 @@ namespace Hope {
             /**
              * Add a post-prod effect.
              */
-            void addEffect(PostProdEffectNode* node) ;
+            exported void addEffect(PostProdEffectNode* node) ;
 
             /**
              * Remove a post-prod effect.
              * @warning     The node is only removed from the list. Its data are
              *              not destroyed though.
              */
-            void removeEffect(PostProdEffectNode* node) ;
+            exported void removeEffect(PostProdEffectNode* node) ;
 
         protected:
             /**

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_COLOR_MASK__
 #define __HOPE__GL_CAPABILITY_COLOR_MASK__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <scene/common/Color.hpp>
 
@@ -24,33 +26,33 @@ namespace Hope::GL {
             /**
              * Create a new ColorMask instance.
              */
-            ColorMask() : Capability(CapabilityType::ColorMask) {}
+            exported ColorMask() : Capability(CapabilityType::ColorMask) {}
 
             /**
              * Specify whether red is to be written into the frame buffer.
              */
-            void setRedMask(const bool masked) {
+            exported void setRedMask(const bool masked) {
                 m_channels[Color::Channels::Red] = masked ;
             }
 
             /**
              * Specify whether green is to be written into the frame buffer.
              */
-            void setGreenMask(const bool masked) {
+            exported void setGreenMask(const bool masked) {
                 m_channels[Color::Channels::Green] = masked ;
             }
 
             /**
              * Specify whether blue is to be written into the frame buffer.
              */
-            void setBlueMask(const bool masked) {
+            exported void setBlueMask(const bool masked) {
                 m_channels[Color::Channels::Blue] = masked ;
             }
 
             /**
              * Specify whether alpha is to be written into the frame buffer.
              */
-            void setAlphaMask(const bool masked) {
+            exported void setAlphaMask(const bool masked) {
                 m_channels[Color::Channels::Alpha] = masked ;
             }
 

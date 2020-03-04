@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_DITHERING__
 #define __HOPE__GL_CAPABILITY_DITHERING__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -12,7 +14,7 @@ namespace Hope::GL {
             /**
              * Create a new Dithering instance.
              */
-            Dithering() : Capability(CapabilityType::Dithering) {}
+            exported Dithering() : Capability(CapabilityType::Dithering) {}
 
         protected:
             /**

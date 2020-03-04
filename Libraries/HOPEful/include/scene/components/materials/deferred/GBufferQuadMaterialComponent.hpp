@@ -1,6 +1,8 @@
 #ifndef __HOPE__DEFERRED_RENDERING_SCREEN_QUAD_MATERIAL_COMPONENT__
 #define __HOPE__DEFERRED_RENDERING_SCREEN_QUAD_MATERIAL_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
 
@@ -34,7 +36,7 @@ namespace Hope {
              * @param gBuffer   G-Buffer contening all the required data to
              *                  perform the deferred shading step.
              */
-            GBufferQuadMaterialComponent(const GBufferRenderNode* gBuffer) ;
+            exported GBufferQuadMaterialComponent(const GBufferRenderNode* gBuffer) ;
 
             /**
              * Update the uniform values before the processing of the material

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GEOMETRY_COMPONENT__
 #define __HOPE__GEOMETRY_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/Component.hpp>
 #include <HopeAPI.hpp>
 
@@ -26,18 +28,18 @@ namespace Hope {
             /**
              * Creation of a GeometryComponent.
              */
-            GeometryComponent() : Component(ClassType) {}
+            exported GeometryComponent() : Component(ClassType) {}
 
             /**
              * Get the geometry.
              */
-            virtual const API::Geometry* geometry() const = 0 ;
+            exported virtual const API::Geometry* geometry() const = 0 ;
 
             /**
              * To know if the component can be shared by several entities.
              * @return  true, the MeshGeometryComponent can be shared.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return true ;
             }
 
@@ -45,7 +47,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  true, the component can be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return false ;
             }
 
@@ -55,7 +57,7 @@ namespace Hope {
              * @return  false, an entity cannot bear several
              *          MeshGeometryComponent.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return false ;
             }
     } ;

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_FACE_CULLING__
 #define __HOPE__GL_CAPABILITY_FACE_CULLING__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -36,12 +38,12 @@ namespace Hope::GL {
             /**
              * Create a new FaceCulling instance.
              */
-            FaceCulling() : Capability(CapabilityType::FaceCulling) {}
+            exported FaceCulling() : Capability(CapabilityType::FaceCulling) {}
 
             /**
              * Set the used culling mode.
              */
-            void setCullMode(const CullMode mode) {
+            exported void setCullMode(const CullMode mode) {
                 m_mode = mode ;
             }
 

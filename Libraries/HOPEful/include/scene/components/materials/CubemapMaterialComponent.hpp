@@ -1,6 +1,8 @@
 #ifndef __HOPE__CUBEMAP_MATERIAL_COMPONENT__
 #define __HOPE__CUBEMAP_MATERIAL_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/common/Color.hpp>
 #include <algorithm>
@@ -41,25 +43,25 @@ namespace Hope {
             /**
              * Create a CubemapMaterialComponent.
              */
-            CubemapMaterialComponent() ;
+            exported CubemapMaterialComponent() ;
 
             /**
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues() override ;
+            exported void updateUniformValues() override ;
 
             /**
              * Set the cubemap texture.
              */
-            void setCubemap(std::unique_ptr<API::CubemapTexture> map) {
+            exported void setCubemap(std::unique_ptr<API::CubemapTexture> map) {
                 m_map = std::move(map) ;
             }
 
             /**
              * Get the cubemap texture.
              */
-            const API::CubemapTexture* cubemap() const {
+            exported const API::CubemapTexture* cubemap() const {
                 return m_map.get() ;
             }
 
@@ -67,12 +69,12 @@ namespace Hope {
             /**
              * Setup the shader for the forward rendering pass.
              */
-            void setupForwardShader() override ;
+            exported void setupForwardShader() override ;
 
             /**
              * Setup the shader for the deferred rendering pass.
              */
-            void setupDeferredShader() override ;
+            exported void setupDeferredShader() override ;
 
         private:
             /**

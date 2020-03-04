@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_UNIFORM_BUFFER_OBJECT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
 
@@ -33,22 +35,22 @@ namespace Hope::GL {
             /**
              * Create a UniformBufferObject instance.
              */
-            UniformBufferObject(const GLuint bindingPointIndex) ;
+            exported UniformBufferObject(const GLuint bindingPointIndex) ;
 
             /**
              * Destruction of the UniformBufferObject.
              */
-            ~UniformBufferObject() ;
+            exported ~UniformBufferObject() ;
 
             /**
              * Update the UBO on the GPU side.
              */
-            void update() ;
+            exported void update() ;
 
             /**
              * To know if an update is required.
              */
-            bool needUpdate() const {
+            exported bool needUpdate() const {
                 return m_needUpdate ;
             }
 
@@ -56,39 +58,39 @@ namespace Hope::GL {
             /**
              * The UBO ask for sending new values to the GPU memory.
              */
-            void askForAnUpdate() {
+            exported void askForAnUpdate() {
                 m_needUpdate = true ;
             }
 
             /**
              * The UBO has been updated.
              */
-            void updated() {
+            exported void updated() {
                 m_needUpdate = false ;
             }
 
             /**
              * Get the ID of the UBO.
              */
-            GLuint bufferID() const {
+            exported GLuint bufferID() const {
                 return m_uniformBuffer ;
             }
 
             /**
              * Get the data of the UBO.
              */
-            virtual const void* data() const = 0 ;
+            exported virtual const void* data() const = 0 ;
 
             /**
              * Size of the data.
              */
-            virtual size_t size() const = 0 ;
+            exported virtual size_t size() const = 0 ;
 
         public:
             /**
              * Get the maximal amount of UBO that can be stored on the GPU.
              */
-            static GLint MaxUniformBufferBindings() {
+            exported static GLint MaxUniformBufferBindings() {
                 GLint value ;
                 glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &value) ;
                 return value ;
@@ -97,7 +99,7 @@ namespace Hope::GL {
             /**
              * Get the maximal size of UBO that can be stored on the GPU.
              */
-            static GLint MaxUniformBufferSize() {
+            exported static GLint MaxUniformBufferSize() {
                 GLint value ;
                 glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &value) ;
                 return value ;
@@ -107,7 +109,7 @@ namespace Hope::GL {
              * Get the maximal amount of UBO that can be stored on the GPU for a
              * vertex shader.
              */
-            static GLint MaxVertexUniformBlocks() {
+            exported static GLint MaxVertexUniformBlocks() {
                 GLint value ;
                 glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &value) ;
                 return value ;
@@ -117,7 +119,7 @@ namespace Hope::GL {
              * Get the maximal amount of UBO that can be stored on the GPU for a
              * fragment shader.
              */
-            static GLint MaxFragmentUniformBlocks() {
+            exported static GLint MaxFragmentUniformBlocks() {
                 GLint value ;
                 glGetIntegerv(GL_MAX_FRAGMENT_UNIFORM_BLOCKS, &value) ;
                 return value ;
@@ -127,7 +129,7 @@ namespace Hope::GL {
              * Get the maximal amount of UBO that can be stored on the GPU for a
              * geometry shader.
              */
-            static GLint MaxGeometryUniformBlocks() {
+            exported static GLint MaxGeometryUniformBlocks() {
                 GLint value ;
                 glGetIntegerv(GL_MAX_GEOMETRY_UNIFORM_BLOCKS, &value) ;
                 return value ;

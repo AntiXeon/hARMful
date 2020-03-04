@@ -1,6 +1,8 @@
 #ifndef __HOPE__DIRECTIONAL_SHADOW_UNIFORM_SETTER__
 #define __HOPE__DIRECTIONAL_SHADOW_UNIFORM_SETTER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 
@@ -27,7 +29,7 @@ namespace Hope {
             /**
              * Create a new DirectionalShadowUniformSetter instance.
              */
-            DirectionalShadowUniformSetter() ;
+            exported DirectionalShadowUniformSetter() ;
 
             /**
              * Update the uniforms.
@@ -38,7 +40,7 @@ namespace Hope {
              * Set the frame graph node that contains all required data for
              * computing directional light shadows.
              */
-            void setLightShadowNode(const Hope::DirectionalLightShadowNode* node) ;
+            exported void setLightShadowNode(const Hope::DirectionalLightShadowNode* node) ;
     } ;
 }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_FRAGMENTSHADER__
 #define __HOPE__GL_FRAGMENTSHADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
@@ -13,7 +15,7 @@ namespace Hope::GL {
             /**
              * Create a new FragmentShader.
              */
-            FragmentShader() : Shader(GL_FRAGMENT_SHADER) {}
+            exported FragmentShader() : Shader(GL_FRAGMENT_SHADER) {}
     } ;
 }
 

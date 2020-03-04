@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_TYPES__
 #define __HOPE__GL_CAPABILITY_TYPES__
 
+#include <cstdint>
+
 namespace Hope::GL {
     /**
      * Capability types.

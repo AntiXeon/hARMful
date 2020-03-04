@@ -1,6 +1,8 @@
 #ifndef __HOPE__EXTERNAL_UNIFORM_SETTER__
 #define __HOPE__EXTERNAL_UNIFORM_SETTER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/UniformCache.hpp>
 
@@ -21,12 +23,12 @@ namespace Hope {
             /**
              * Update the uniforms.
              */
-            virtual void updateUniforms() = 0 ;
+            exported virtual void updateUniforms() = 0 ;
 
             /**
              * Get the shader uniforms.
              */
-            const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
+            exported const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
                 return m_uniforms.pointers() ;
             }
 
@@ -34,7 +36,7 @@ namespace Hope {
             /**
              * Get the unoforms of the material.
              */
-            UniformCache& uniforms() {
+            exported UniformCache& uniforms() {
                 return m_uniforms ;
             }
     } ;

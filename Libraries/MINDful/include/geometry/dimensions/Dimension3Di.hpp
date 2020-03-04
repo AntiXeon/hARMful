@@ -142,7 +142,7 @@ namespace Mind {
              * @param   b   Second Dimension.
              * @return  Point at (a.w + b.w, a.h + b.h).
              */
-            friend Dimension3Di operator+(const Dimension3Di& a, const Dimension3Di& b) ;
+            exported friend Dimension3Di operator+(const Dimension3Di& a, const Dimension3Di& b) ;
 
             /**
              * Substract a Dimension to another one.
@@ -150,7 +150,7 @@ namespace Mind {
              * @param   b   Second Dimension.
              * @return  Point at (a.w - b.w, a.h - b.h).
              */
-            friend Dimension3Di operator-(const Dimension3Di& a, const Dimension3Di& b) ;
+            exported friend Dimension3Di operator-(const Dimension3Di& a, const Dimension3Di& b) ;
 
             /**
              * Multiply a Dimension by a uint32_t value (scale).
@@ -158,7 +158,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (d.w * coeff, d.h * coeff).
              */
-            friend Dimension3Di operator*(const Dimension3Di& d, const uint32_t coeff) ;
+            exported friend Dimension3Di operator*(const Dimension3Di& d, const uint32_t coeff) ;
 
             /**
              * Divide a Dimension by a uint32_t value (scale).
@@ -166,7 +166,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (d.w / coeff, d.h / coeff).
              */
-            friend Dimension3Di operator/(const Dimension3Di& d, const uint32_t coeff) ;
+            exported friend Dimension3Di operator/(const Dimension3Di& d, const uint32_t coeff) ;
 
             /**
              * Echo the Dimension size on console.
@@ -174,7 +174,7 @@ namespace Mind {
              * @param   p   The Dimension to print.
              * @return  The stream with the printed Dimension size.
              */
-            friend std::ostream& operator<<(std::ostream& s, const Dimension3Di& p) ;
+            exported friend std::ostream& operator<<(std::ostream& s, const Dimension3Di& p) ;
     } ;
 } ;
 

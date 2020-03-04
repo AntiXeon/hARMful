@@ -1,6 +1,8 @@
 #ifndef __HOPE__AO_APPLY_EFFECT_NODE__
 #define __HOPE__AO_APPLY_EFFECT_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/postprod/PostProdEffectNode.hpp>
 
 namespace Hope {
@@ -12,7 +14,7 @@ namespace Hope {
             /**
              * Create a new AOApplyEffectNode instance.
              */
-            AOApplyEffectNode(FramebufferRenderNode* framebuffer) ;
+            exported AOApplyEffectNode(FramebufferRenderNode* framebuffer) ;
     } ;
 }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_SCISSOR_TEST__
 #define __HOPE__GL_CAPABILITY_SCISSOR_TEST__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -45,13 +47,13 @@ namespace Hope::GL {
              /**
               * Create a new ScissorTest instance.
               */
-             ScissorTest() : Capability(CapabilityType::ScissorTest) {}
+             exported ScissorTest() : Capability(CapabilityType::ScissorTest) {}
 
              /**
               * Set the position on X axis of the bottom left corner of the
               * scissor test rectangle.
               */
-             void setLeftPosition(const int left) {
+             exported void setLeftPosition(const int left) {
                  m_rectangle.x = left ;
              }
 
@@ -59,21 +61,21 @@ namespace Hope::GL {
               * Set the position on Y axis of the bottom left corner of the
               * scissor test rectangle.
               */
-             void setLeftBottom(const int bottom) {
+             exported void setLeftBottom(const int bottom) {
                  m_rectangle.y = bottom ;
              }
 
              /**
               * Set the width of the scissor test rectangle.
               */
-             void setWidth(const int width) {
+             exported void setWidth(const int width) {
                  m_rectangle.width = width ;
              }
 
              /**
               * Set the height of the scissor test rectangle.
               */
-             void setHeight(const int height) {
+             exported void setHeight(const int height) {
                  m_rectangle.height = height ;
              }
 

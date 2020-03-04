@@ -29,7 +29,11 @@ void Framebuffer::setDrawBuffers(const std::list<unsigned char>& indices) {
             attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
         }
 
-        glNamedFramebufferDrawBuffers(m_fboID, attachments.size(), attachments.data()) ;
+        glNamedFramebufferDrawBuffers(
+            m_fboID,
+            static_cast<int>(attachments.size()),
+            attachments.data()
+        ) ;
     }
     else {
         useNoColorBuffers() ;

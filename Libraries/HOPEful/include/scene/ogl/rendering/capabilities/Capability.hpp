@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY__
 #define __HOPE__GL_CAPABILITY__
 
+#include <utils/Platform.hpp>
+
 #include <GL/glew.h>
 #include <scene/ogl/rendering/capabilities/CapabilityTypes.hpp>
 
@@ -33,28 +35,28 @@ namespace Hope::GL {
              * Create a new Capability instance.
              * @param   type    Type of the Capability.
              */
-            Capability(const CapabilityType type) : m_type(type) {}
+            exported Capability(const CapabilityType type) : m_type(type) {}
 
             /**
              * Get the type of the Capability.
              */
-            CapabilityType type() const { return m_type ; }
+            exported CapabilityType type() const { return m_type ; }
 
         protected:
             /**
              * Apply the capability.
              */
-            virtual void apply() = 0 ;
+            exported virtual void apply() = 0 ;
 
             /**
              * Remove the capability.
              */
-            virtual void remove() = 0 ;
+            exported virtual void remove() = 0 ;
 
             /**
              * Enable the capability if needed.
              */
-            void enable(const GLenum capability) {
+            exported void enable(const GLenum capability) {
                 m_wasEnabled = glIsEnabled(capability) ;
 
                 if (!m_wasEnabled) {
@@ -65,7 +67,7 @@ namespace Hope::GL {
             /**
              * Disable the capability if needed.
              */
-            void disable(const GLenum capability) {
+            exported void disable(const GLenum capability) {
                 if (!m_wasEnabled) {
                     glDisable(capability) ;
                 }

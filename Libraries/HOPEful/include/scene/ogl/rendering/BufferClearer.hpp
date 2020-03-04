@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_BUFFER_CLEARER__
 #define __HOPE__GL_BUFFER_CLEARER__
 
+#include <utils/Platform.hpp>
+
 #include <GL/glew.h>
 
 namespace Hope::GL {
@@ -26,7 +28,7 @@ namespace Hope::GL {
             /**
              * Clear the provided buffers
              */
-            static void Clear(const Buffer buffers) {
+            exported static void Clear(const Buffer buffers) {
                 glClear(static_cast<GLbitfield>(buffers)) ;
             }
 

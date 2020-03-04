@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_SHADER__
 #define __HOPE__GL_SHADER__
 
+#include <utils/Platform.hpp>
+
 #include <GL/glew.h>
 #include <string>
 #include <vector>
@@ -31,22 +33,22 @@ namespace Hope::GL {
             /**
              * Create a new Shader.
              */
-            Shader(const GLenum shaderType) ;
+            exported Shader(const GLenum shaderType) ;
 
             /**
              * Destroy a shader.
              */
-            virtual ~Shader() ;
+            exported virtual ~Shader() ;
 
             /**
              * Add a source file of the shader.
              */
-            void addSourceFile(const std::string& filepath) ;
+            exported void addSourceFile(const std::string& filepath) ;
 
             /**
              * Directly add the source code of the shader.
              */
-            void addSourceCode(const std::string& code) {
+            exported void addSourceCode(const std::string& code) {
                 m_sources.push_back(code) ;
             }
 
@@ -54,33 +56,33 @@ namespace Hope::GL {
              * Compile the source codes of the shader.
              * @return  true on success; false on failure.
              */
-            bool compile() ;
+            exported bool compile() ;
 
             /**
              * Check if the shader is valid.
              */
-            bool isValid() const {
+            exported bool isValid() const {
                 return glIsShader(m_shaderID) ;
             }
 
             /**
              * Return true if at least one source is set, false otherwise.
              */
-            bool hasSource() const {
+            exported bool hasSource() const {
                 return m_sources.size() > 0 ;
             }
 
             /**
              * Get the type of the shader.
              */
-            GLenum type() const {
+            exported GLenum type() const {
                 return m_shaderType ;
             }
 
             /**
              * Get the ID of the shader provided by the OpenGL API.
              */
-            GLuint id() const {
+            exported GLuint id() const {
                 return m_shaderID ;
             }
 
@@ -88,7 +90,7 @@ namespace Hope::GL {
              * Convert the shader directly to its ID for using it more easily in
              * the OpenGL API.
              */
-            operator GLuint() const {
+            exported operator GLuint() const {
                 return m_shaderID ;
             }
 

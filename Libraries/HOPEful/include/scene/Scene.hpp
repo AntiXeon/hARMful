@@ -1,6 +1,8 @@
 #ifndef __HOPE_SCENE__
 #define __HOPE_SCENE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/Entity.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <memory>
@@ -38,7 +40,7 @@ namespace Hope {
             /**
              * Create a new Scene instance.
              */
-            Scene(std::shared_ptr<IFrameGraphVisitor> visitor) ;
+            exported Scene(std::shared_ptr<IFrameGraphVisitor> visitor) ;
 
             /**
              * Render the scene.
@@ -55,14 +57,14 @@ namespace Hope {
             /**
              * Get the root entity of the scene.
              */
-            Entity* root() const {
+            exported Entity* root() const {
                 return m_root.get() ;
             }
 
             /**
              * Set the root of the framegraph.
              */
-            void setFrameGraphRoot(FrameGraphNode* root) ;
+            exported void setFrameGraphRoot(FrameGraphNode* root) ;
 
         private:
             /**

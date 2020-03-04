@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_COMPUTESHADER__
 #define __HOPE__GL_COMPUTESHADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
 
 namespace Hope::GL {
@@ -16,7 +18,7 @@ namespace Hope::GL {
             /**
              * Create a new ComputeShader.
              */
-            ComputeShader() : Shader(GL_COMPUTE_SHADER) {}
+            exported ComputeShader() : Shader(GL_COMPUTE_SHADER) {}
     } ;
 }
 

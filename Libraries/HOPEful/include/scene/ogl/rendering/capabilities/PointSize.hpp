@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_POINT_SIZE__
 #define __HOPE__GL_CAPABILITY_POINT_SIZE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -35,20 +37,20 @@ namespace Hope::GL {
             /**
              * Create a new PointSize instance.
              */
-            PointSize() : Capability(CapabilityType::PointSize) {}
+            exported PointSize() : Capability(CapabilityType::PointSize) {}
 
             /**
              * Set the property to know if the point size can be changed from
              * shaders.
              */
-            void setProgrammable(const bool isProgrammable) {
+            exported void setProgrammable(const bool isProgrammable) {
                 m_current.isProgrammable = isProgrammable ;
             }
 
             /**
              * Set the line width.
              */
-            void setSize(const float size) {
+            exported void setSize(const float size) {
                 m_current.size = size ;
             }
 

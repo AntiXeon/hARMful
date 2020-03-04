@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_ALPHA_COVERAGE__
 #define __HOPE__GL_CAPABILITY_ALPHA_COVERAGE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -12,7 +14,7 @@ namespace Hope::GL {
             /**
              * Create a new AlphaCoverage instance.
              */
-            AlphaCoverage() : Capability(CapabilityType::AlphaCoverage) {}
+            exported AlphaCoverage() : Capability(CapabilityType::AlphaCoverage) {}
 
         protected:
             /**

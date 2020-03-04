@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_BLEND_EQUATION_ADVANCED__
 #define __HOPE__GL_CAPABILITY_BLEND_EQUATION_ADVANCED__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <scene/common/Color.hpp>
 #include <array>
@@ -39,7 +41,7 @@ namespace Hope::GL {
             /**
              * Create a new BlendEquationAdvanced instance.
              */
-            BlendEquationAdvanced() : Capability(CapabilityType::BlendEquationAdvanced) {}
+            exported BlendEquationAdvanced() : Capability(CapabilityType::BlendEquationAdvanced) {}
 
         private:
             static const char RGBIndex = 0 ;
@@ -90,28 +92,28 @@ namespace Hope::GL {
             /**
              * Set the buffer index.
              */
-            void setBufferIndex(const GLuint index) {
+            exported void setBufferIndex(const GLuint index) {
                 m_bufferIndex = index ;
             }
 
             /**
              * Set the blend parameter for the RGB channels of the source.
              */
-            void setSourceRGBParameter(const BlendParameter param) {
+            exported void setSourceRGBParameter(const BlendParameter param) {
                 m_current.source[RGBIndex] = param ;
             }
 
             /**
              * Set the blend parameter for the alpha channel of the source.
              */
-            void setSourceAlphaParameter(const BlendParameter param) {
+            exported void setSourceAlphaParameter(const BlendParameter param) {
                 m_current.source[AlphaIndex] = param ;
             }
 
             /**
              * Set the blend parameter for the RGBA channels of the source.
              */
-            void setSourceRGBAParameter(const BlendParameter param) {
+            exported void setSourceRGBAParameter(const BlendParameter param) {
                 setSourceRGBParameter(param) ;
                 setSourceAlphaParameter(param) ;
             }
@@ -119,21 +121,21 @@ namespace Hope::GL {
             /**
              * Set the blend parameter for the RGB channels of the destination.
              */
-            void setDestinationRGBParameter(const BlendParameter param) {
+            exported void setDestinationRGBParameter(const BlendParameter param) {
                 m_current.destination[RGBIndex] = param ;
             }
 
             /**
              * Set the blend parameter for the alpha channel of the destination.
              */
-            void setDestinationAlphaParameter(const BlendParameter param) {
+            exported void setDestinationAlphaParameter(const BlendParameter param) {
                 m_current.destination[AlphaIndex] = param ;
             }
 
             /**
              * Set the blend parameter for the RGBA channels of the destination.
              */
-            void setDestinationRGBAParameter(const BlendParameter param) {
+            exported void setDestinationRGBAParameter(const BlendParameter param) {
                 setDestinationRGBParameter(param) ;
                 setDestinationAlphaParameter(param) ;
             }

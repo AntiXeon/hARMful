@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CUBEMAP_TEXTURE__
 #define __HOPE__GL_CUBEMAP_TEXTURE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
@@ -44,12 +46,12 @@ namespace Hope::GL {
              *                  The expected order of the maps is as follow:
              *                  right, left, top, bottom, back, front.
              */
-            CubemapTexture(std::array<std::string, AmountFaces> paths) ;
+            exported CubemapTexture(std::array<std::string, AmountFaces> paths) ;
 
             /**
              * Destruction of the CubemapTexture.
              */
-            ~CubemapTexture() ;
+            exported ~CubemapTexture() ;
 
             /**
              * Bind the cubemap texture.

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TEXTURE_IMAGE_2D__
 #define __HOPE__GL_TEXTURE_IMAGE_2D__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/textures/Texture.hpp>
 #include <array>
 
@@ -46,7 +48,7 @@ namespace Hope::GL {
              *                  loaded.
              * @param   mipmap  Generate the mipmaps if true.
              */
-            TextureImage2D(
+            exported TextureImage2D(
                 const std::string& path,
                 const bool mipmap = true
             ) ;
@@ -64,7 +66,7 @@ namespace Hope::GL {
              *                          attachments.
              * @param   mipmap          Generate the mipmaps if true.
              */
-            TextureImage2D(
+            exported TextureImage2D(
                 const Mind::Dimension2Di& size,
                 const InternalFormat internalFormat,
                 const PixelFormat pixelFormat,
@@ -78,7 +80,7 @@ namespace Hope::GL {
              * @param   size        The new size to apply.
              * @param   pixelData   Pixel data that fit the new size.
              */
-            void resize(
+            exported void resize(
                 const Mind::Dimension2Di& size,
                 const float* pixelData = nullptr
             ) ;
@@ -86,7 +88,7 @@ namespace Hope::GL {
             /**
              * Set the wrap mode for each dimension of the texture.
              */
-            void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
+            exported void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
     } ;
 }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__COLOR__
 #define __HOPE__COLOR__
 
+#include <utils/Platform.hpp>
+
 #include <algorithm>
 #include <array>
 #include <cstdint>
@@ -51,7 +53,7 @@ namespace Hope {
              * @param   blue    Blue channel.
              * @param   alpha   Alpha channel.
              */
-            Color(
+            exported Color(
                 const float red = 0.f,
                 const float green = 0.f,
                 const float blue = 0.f,
@@ -67,7 +69,7 @@ namespace Hope {
              * Create a new Color.
              * @param   color   Hexadecimal representation of a RGBA color.
              */
-            Color(const int32_t color) {
+            exported Color(const int32_t color) {
                 uint8_t red = (color & 0xFF000000) >> 24 ;
                 uint8_t green = (color & 0x00FF0000) >> 16 ;
                 uint8_t blue = (color & 0x0000FF00) >> 8 ;
@@ -82,7 +84,7 @@ namespace Hope {
              * @param   blue    Blue channel.
              * @param   alpha   Alpha channel.
              */
-            Color(
+            exported Color(
                 const uint8_t red,
                 const uint8_t green,
                 const uint8_t blue,
@@ -94,42 +96,42 @@ namespace Hope {
             /**
              * Get the red channel value.
              */
-            float red() const {
+            exported float red() const {
                 return m_red ;
             }
 
             /**
              * Get the red channel value.
              */
-            float green() const {
+            exported float green() const {
                 return m_green ;
             }
 
             /**
              * Get the red channel value.
              */
-            float blue() const {
+            exported float blue() const {
                 return m_blue ;
             }
 
             /**
              * Get the red channel value.
              */
-            float alpha() const {
+            exported float alpha() const {
                 return m_alpha ;
             }
 
             /**
              * Export the color to a RGB value array.
              */
-            std::array<float, 3> toRGB() const {
+            exported std::array<float, 3> toRGB() const {
                 return { m_red, m_green, m_blue } ;
             }
 
             /**
              * Export the color to a RGBA value array.
              */
-            std::array<float, 4> toRGBA() const {
+            exported std::array<float, 4> toRGBA() const {
                 return { m_red, m_green, m_blue, m_alpha } ;
             }
 

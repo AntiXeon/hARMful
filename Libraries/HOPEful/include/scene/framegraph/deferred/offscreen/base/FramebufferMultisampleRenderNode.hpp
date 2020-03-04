@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRAMEBUFFER_MULTISAMPLE_RENDER__
 #define __HOPE__FRAMEBUFFER_MULTISAMPLE_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/SceneTypes.hpp>
 #include <memory>
@@ -28,7 +30,7 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            FramebufferMultisampleRenderNode(
+            exported FramebufferMultisampleRenderNode(
                 const Mind::Dimension2Di& size,
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
@@ -40,7 +42,7 @@ namespace Hope {
              * @param   other   Other FramebufferMultisampleRenderNode to edit
              *                  framebuffer.
              */
-            FramebufferMultisampleRenderNode(
+            exported FramebufferMultisampleRenderNode(
                 FramebufferMultisampleRenderNode* other,
                 FrameGraphNode* parent
             ) ;
@@ -48,14 +50,14 @@ namespace Hope {
             /**
              * Get the framebuffer.
              */
-            API::Framebuffer* framebuffer() override {
+            exported API::Framebuffer* framebuffer() override {
                 return m_framebuffer.get() ;
             }
 
             /**
              * Get the framebuffer.
              */
-            const API::Framebuffer* framebuffer() const override {
+            exported const API::Framebuffer* framebuffer() const override {
                 return m_framebuffer.get() ;
             }
 
@@ -63,7 +65,7 @@ namespace Hope {
             /**
              * Get the framebuffer.
              */
-            API::Framebuffer2DMultisample* framebufferMultisample() const {
+            exported API::Framebuffer2DMultisample* framebufferMultisample() const {
                 return m_framebuffer.get() ;
             }
     } ;

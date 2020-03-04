@@ -1,6 +1,8 @@
 #ifndef __HOPE__MEMORY_BARRIER__
 #define __HOPE__MEMORY_BARRIER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 
 namespace Hope {
@@ -21,7 +23,7 @@ namespace Hope {
             /**
              * Create a new MemoryBarrierNode node.
              */
-            MemoryBarrierNode(
+            exported MemoryBarrierNode(
                 const uint32_t bits,
                 Hope::FrameGraphNode* parent = nullptr
             ) ;
@@ -29,7 +31,7 @@ namespace Hope {
             /**
              * Bits of the memory barrier.
              */
-            uint32_t bits() const {
+            exported uint32_t bits() const {
                 return m_bits ;
             }
 

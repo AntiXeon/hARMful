@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_BLEND_EQUATION__
 #define __HOPE__GL_CAPABILITY_BLEND_EQUATION__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -23,7 +25,7 @@ namespace Hope::GL {
             /**
              * Create a new BlendEquation instance.
              */
-            BlendEquation() : Capability(CapabilityType::BlendEquation) {}
+            exported BlendEquation() : Capability(CapabilityType::BlendEquation) {}
 
         private:
             /**
@@ -40,7 +42,7 @@ namespace Hope::GL {
             /**
              * Set the blend mode that is used.
              */
-            void setBlendMode(const BlendMode& mode) {
+            exported void setBlendMode(const BlendMode& mode) {
                 m_mode = mode ;
             }
 

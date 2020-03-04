@@ -1,6 +1,8 @@
 #ifndef __HOPE__ACTIVE_CAMERA__
 #define __HOPE__ACTIVE_CAMERA__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/components/cameras/CameraComponent.hpp>
@@ -48,7 +50,7 @@ namespace Hope {
              * @warning Only the owner of the cache render can clear its
              *          content. Be aware to do things in the right order!
              */
-            ActiveCameraNode(
+            exported ActiveCameraNode(
                 FrameGraphNode* parent = nullptr,
                 ActiveCameraNode* cacheOwner = nullptr
             ) ;
@@ -56,21 +58,21 @@ namespace Hope {
             /**
              * Set the camera that is used to render the scene.
              */
-            void setCamera(CameraComponent* camera) {
+            exported void setCamera(CameraComponent* camera) {
                 m_camera = camera ;
             }
 
             /**
              * Get the camera that is used to render the scene.
              */
-            Hope::CameraComponent* camera() const {
+            exported Hope::CameraComponent* camera() const {
                 return m_camera ;
             }
 
             /**
              * Check if the cache is empty.
              */
-            bool cacheEmpty() const {
+            exported bool cacheEmpty() const {
                 return m_cache -> empty() ;
             }
 

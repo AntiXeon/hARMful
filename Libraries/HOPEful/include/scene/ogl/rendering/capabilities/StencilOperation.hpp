@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_STENCIL_OPERATION__
 #define __HOPE__GL_CAPABILITY_STENCIL_OPERATION__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -83,12 +85,12 @@ namespace Hope::GL {
             /**
              * Create a new StencilOperation instance.
              */
-            StencilOperation() : Capability(CapabilityType::StencilOperation) {}
+            exported StencilOperation() : Capability(CapabilityType::StencilOperation) {}
 
             /**
              * Set parameters for front-facing faces.
              */
-            void setFrontParameters(const Parameters& params) {
+            exported void setFrontParameters(const Parameters& params) {
                 m_frontFaces = params ;
                 m_frontFaces.face = Parameters::FaceMode::Front ;
             }
@@ -96,7 +98,7 @@ namespace Hope::GL {
             /**
              * Set parameters for back-facing faces.
              */
-            void setBackParameters(const Parameters& params) {
+            exported void setBackParameters(const Parameters& params) {
                 m_backFaces = params ;
                 m_frontFaces.face = Parameters::FaceMode::Back ;
             }

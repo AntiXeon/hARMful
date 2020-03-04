@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_POLYGON_OFFSET__
 #define __HOPE__GL_CAPABILITY_POLYGON_OFFSET__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -46,20 +48,20 @@ namespace Hope::GL {
             /**
              * Create a new PolygonOffset instance.
              */
-            PolygonOffset() : Capability(CapabilityType::PolygonOffset) {}
+            exported PolygonOffset() : Capability(CapabilityType::PolygonOffset) {}
 
             /**
              * Set the property to know if the point size can be changed from
              * shaders.
              */
-            void setScaleFactor(const float scaleFactor) {
+            exported void setScaleFactor(const float scaleFactor) {
                 m_current.scaleFactor = scaleFactor ;
             }
 
             /**
              * Set the depth offset.
              */
-            void setDepthOffset(const float units) {
+            exported void setDepthOffset(const float units) {
                 m_current.depthOffset = units ;
             }
 

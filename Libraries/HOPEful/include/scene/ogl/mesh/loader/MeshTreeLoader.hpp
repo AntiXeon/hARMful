@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_MESH_TREE_LOADER__
 #define __HOPE__GL_MESH_TREE_LOADER__
 
+#include <utils/Platform.hpp>
+
 #include <assimp/matrix4x4.h>
 #include <scene/Entity.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
@@ -61,7 +63,7 @@ namespace Hope::GL {
              * @param   source      File to be loaded.
              * @param   meshRoot    Root entity of the mesh tree.
              */
-            void load(
+            exported void load(
                 const std::string& source,
                 Hope::Entity* meshRoot
             ) ;
@@ -69,7 +71,7 @@ namespace Hope::GL {
             /**
              * Get the mesh root.
              */
-            Hope::Entity* meshRoot() const {
+            exported Hope::Entity* meshRoot() const {
                 return m_meshRoot.get() ;
             }
 
@@ -77,7 +79,7 @@ namespace Hope::GL {
              * Get an entity generated on loading by its name.
              * If the name is not found, nullptr is returned.
              */
-            Hope::Entity* entity(const std::string& name) {
+            exported Hope::Entity* entity(const std::string& name) {
                 if (m_meshEntities.count(name) > 0) {
                     return m_meshEntities[name] ;
                 }

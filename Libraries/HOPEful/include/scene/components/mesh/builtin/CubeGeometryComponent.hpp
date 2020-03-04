@@ -1,6 +1,8 @@
 #ifndef __HOPE__CUBE_GEOMETRY_COMPONENT__
 #define __HOPE__CUBE_GEOMETRY_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/mesh/GeometryComponent.hpp>
 #include <HopeAPI.hpp>
 
@@ -32,12 +34,12 @@ namespace Hope {
             /**
              * Creation of a CubeGeometryComponent.
              */
-            CubeGeometryComponent() : GeometryComponent() {}
+            exported CubeGeometryComponent() : GeometryComponent() {}
 
             /**
              * Get the geometry.
              */
-            const API::CubeGeometry* geometry() const override {
+            exported const API::CubeGeometry* geometry() const override {
                 return &m_geometry ;
             }
     } ;

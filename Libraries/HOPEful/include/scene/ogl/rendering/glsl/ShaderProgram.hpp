@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_SHADER_PROGRAM__
 #define __HOPE__GL_SHADER_PROGRAM__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/shaders/VertexShader.hpp>
 #include <scene/ogl/rendering/glsl/shaders/FragmentShader.hpp>
 #include <scene/ogl/rendering/glsl/shaders/GeometryShader.hpp>
@@ -54,24 +56,24 @@ namespace Hope::GL {
             /**
              * Create a shader program.
              */
-            ShaderProgram() : m_programID(glCreateProgram()) {}
+            exported ShaderProgram() : m_programID(glCreateProgram()) {}
 
             /**
              * Destroy a shader program.
              */
-            ~ShaderProgram() {
+            exported ~ShaderProgram() {
                 glDeleteProgram(m_programID) ;
             }
 
             /**
              * Build the shader program.
              */
-            void build() ;
+            exported void build() ;
 
             /**
              * Link the program.
              */
-            bool link() {
+            exported bool link() {
                 glLinkProgram(m_programID) ;
                 return isSuccessful(GL_LINK_STATUS) ;
             }
@@ -79,63 +81,63 @@ namespace Hope::GL {
             /**
              * Use the program.
              */
-            void use() {
+            exported void use() {
                 glUseProgram(m_programID) ;
             }
 
             /**
              * Unuse the program.
              */
-            void unuse() {
+            exported void unuse() {
                 glUseProgram(0) ;
             }
 
             /**
              * Get the ID of the shader program, attributed by the OpenGL API.
              */
-            GLuint id() const {
+            exported GLuint id() const {
                 return m_programID ;
             }
 
             /**
              * Add the vertex shader file that contains the source code.
              */
-            void addVertexShaderFile(const std::string& filepath) {
+            exported void addVertexShaderFile(const std::string& filepath) {
                 m_vertex.addSourceFile(filepath) ;
             }
 
             /**
              * Add the vertex shader source code.
              */
-            void addVertexShaderCode(const std::string& code) {
+            exported void addVertexShaderCode(const std::string& code) {
                 m_vertex.addSourceCode(code) ;
             }
 
             /**
              * Add the fragment shader file that contains the source code.
              */
-            void addFragmentShaderFile(const std::string& filepath) {
+            exported void addFragmentShaderFile(const std::string& filepath) {
                 m_fragment.addSourceFile(filepath) ;
             }
 
             /**
              * Add the fragment shader source code.
              */
-            void addFragmentShaderCode(const std::string& code) {
+            exported void addFragmentShaderCode(const std::string& code) {
                 m_fragment.addSourceCode(code) ;
             }
 
             /**
              * Add the geometry shader file that contains the source code.
              */
-            void addGeometryShaderFile(const std::string& filepath) {
+            exported void addGeometryShaderFile(const std::string& filepath) {
                 m_geometry.addSourceFile(filepath) ;
             }
 
             /**
              * Add the geometry shader source code.
              */
-            void addGeometryShaderCode(const std::string& code) {
+            exported void addGeometryShaderCode(const std::string& code) {
                 m_geometry.addSourceCode(code) ;
             }
 
@@ -143,14 +145,14 @@ namespace Hope::GL {
              * Add the tesselation control shader file that contains the source
              * code.
              */
-            void addTesselationControlShaderFile(const std::string& filepath) {
+            exported void addTesselationControlShaderFile(const std::string& filepath) {
                 m_tessControl.addSourceFile(filepath) ;
             }
 
             /**
              * Set the tesselation control shader source code.
              */
-            void addTesselationControlShaderCode(const std::string& code) {
+            exported void addTesselationControlShaderCode(const std::string& code) {
                 m_tessControl.addSourceCode(code) ;
             }
 
@@ -158,14 +160,14 @@ namespace Hope::GL {
              * Add the tesselation evaluation shader file that contains the source
              * code.
              */
-            void addTesselationEvaluationShaderFile(const std::string& filepath) {
+            exported void addTesselationEvaluationShaderFile(const std::string& filepath) {
                 m_tessEval.addSourceFile(filepath) ;
             }
 
             /**
              * Add the tesselation evaluation shader source code.
              */
-            void addTesselationEvaluationShaderCode(const std::string& code) {
+            exported void addTesselationEvaluationShaderCode(const std::string& code) {
                 m_tessEval.addSourceCode(code) ;
             }
 

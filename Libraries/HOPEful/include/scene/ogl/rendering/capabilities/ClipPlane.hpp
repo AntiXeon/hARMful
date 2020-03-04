@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_CLIP_PLANE__
 #define __HOPE__GL_CAPABILITY_CLIP_PLANE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <geometry/points/Point4Df.hpp>
@@ -31,27 +33,27 @@ namespace Hope::GL {
             /**
              * Create a new ClipPlane instance.
              */
-            ClipPlane() : Capability(CapabilityType::ClipPlane) {}
+            exported ClipPlane() : Capability(CapabilityType::ClipPlane) {}
 
             /**
              * Set the plane index. It must be a value in the range [0 - 7].
              */
-            void setPlaneIndex(const uint8_t index) ;
+            exported void setPlaneIndex(const uint8_t index) ;
 
             /**
              * Set the distance of the plane from the camera.
              */
-            void setDistance(const float distance) ;
+            exported void setDistance(const float distance) ;
 
             /**
              * Set the normal of the plane.
              */
-            void setNormal(const Mind::Vector3f& normal) ;
+            exported void setNormal(const Mind::Vector3f& normal) ;
 
             /**
              * Set the normal of the plane.
              */
-            void setNormal(const float x, const float y, const float z) ;
+            exported void setNormal(const float x, const float y, const float z) ;
 
         protected:
             /**

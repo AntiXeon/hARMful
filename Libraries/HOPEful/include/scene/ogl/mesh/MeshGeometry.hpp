@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_MESH_GEOMETRY__
 #define __HOPE__GL_MESH_GEOMETRY__
 
+#include <utils/Platform.hpp>
+
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
@@ -44,12 +46,12 @@ namespace Hope::GL {
             /**
              * Create a new MeshGeometry.
              */
-            MeshGeometry(const std::vector<float>& vertices) ;
+            exported MeshGeometry(const std::vector<float>& vertices) ;
 
             /**
              * Add a mesh part.
              */
-            void addPart(
+            exported void addPart(
                 const uint32_t materialID,
                 const std::vector<uint32_t>& indices
             ) ;
@@ -57,52 +59,52 @@ namespace Hope::GL {
             /**
              * Generate all the buffers when the
              */
-            void completed() ;
+            exported void completed() ;
 
             /**
              * Destruction of the MeshGeometry by deleting the buffers.
              */
-            void clearBuffers() ;
+            exported void clearBuffers() ;
 
             /**
              * Bind the mesh geometry for data management, rendering, etc.
              */
-            void bind() const override {
+            exported void bind() const override {
                 glBindVertexArray(m_vertexArray) ;
             }
 
             /**
              * Unbind the mesh geometry after data management, rendering, etc.
              */
-            void unbind() const override {
+            exported void unbind() const override {
                 glBindVertexArray(0) ;
             }
 
             /**
              * Get a part.
              */
-            const GeometryPart& part(const uint32_t index) const override {
+            exported const GeometryPart& part(const uint32_t index) const override {
                 return m_parts[index] ;
             }
 
             /**
              * Amount of indices in the total mesh.
              */
-            size_t amountIndices() const override {
+            exported size_t amountIndices() const override {
                 return m_indices.size() ;
             }
 
             /**
              * Get the amount of parts composing the current mesh.
              */
-            size_t amountParts() const override {
+            exported size_t amountParts() const override {
                 return m_parts.size() ;
             }
 
             /**
              * Type of the indice values.
              */
-            GLenum indiceType() const override {
+            exported GLenum indiceType() const override {
                 return GL_UNSIGNED_INT ;
             }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRAMEBUFFER_RENDER__
 #define __HOPE__FRAMEBUFFER_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/SceneTypes.hpp>
 #include <memory>
@@ -28,7 +30,7 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            FramebufferRenderNode(
+            exported FramebufferRenderNode(
                 const Mind::Dimension2Di& size,
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
@@ -39,7 +41,7 @@ namespace Hope {
              * an existing framebuffer.
              * @param   other   Other OffScreenRenderNode to edit framebuffer.
              */
-            FramebufferRenderNode(
+            exported FramebufferRenderNode(
                 FramebufferRenderNode* other,
                 FrameGraphNode* parent
             ) ;
@@ -47,14 +49,14 @@ namespace Hope {
             /**
              * Get the framebuffer.
              */
-            API::Framebuffer* framebuffer() override {
+            exported API::Framebuffer* framebuffer() override {
                 return m_framebuffer.get() ;
             }
 
             /**
              * Get the framebuffer.
              */
-            const API::Framebuffer* framebuffer() const override {
+            exported const API::Framebuffer* framebuffer() const override {
                 return m_framebuffer.get() ;
             }
     } ;

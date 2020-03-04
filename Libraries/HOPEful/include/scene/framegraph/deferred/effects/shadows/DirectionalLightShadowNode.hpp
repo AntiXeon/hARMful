@@ -1,6 +1,8 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_SHADOW_RENDER__
 #define __HOPE__DIRECTIONAL_LIGHT_SHADOW_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -106,7 +108,7 @@ namespace Hope {
              *                      plane distance of the rendering camera as
              *                      the maximal distance of shadows.
              */
-            DirectionalLightShadowNode(
+            exported DirectionalLightShadowNode(
                 DirectionalLightComponent* light,
                 ActiveCameraNode* renderingCamera,
                 const uint32_t resolution,
@@ -124,7 +126,7 @@ namespace Hope {
             /**
              * Get the source light.
              */
-            const DirectionalLightComponent* light() const {
+            exported const DirectionalLightComponent* light() const {
                 return m_parameters.light ;
             }
 
@@ -132,21 +134,21 @@ namespace Hope {
              * Get the maximal distance from the active camera to generate
              * shadows.
              */
-            float maxDistance() const {
+            exported float maxDistance() const {
                 return m_parameters.maxDistance ;
             }
 
             /**
              * Get the resolution of the shadow map.
              */
-            uint32_t resolution() const {
+            exported uint32_t resolution() const {
                 return m_parameters.resolution ;
             }
 
             /**
              * Get the camera for which the shadows are computed.
              */
-            CameraComponent* renderingCamera() const {
+            exported CameraComponent* renderingCamera() const {
                 return m_renderingCamera -> camera() ;
             }
 
@@ -168,7 +170,7 @@ namespace Hope {
             /**
              * Amount of cascades.
              */
-            int amountCascades() const {
+            exported int amountCascades() const {
                 return m_parameters.amountCascades ;
             }
 

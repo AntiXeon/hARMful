@@ -1,6 +1,8 @@
 #ifndef __HOPE__DEFERRED_RENDERING__
 #define __HOPE__DEFERRED_RENDERING__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/framegraph/deferred/effects/ao/SSAORenderNode.hpp>
 #include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
@@ -69,7 +71,7 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            DeferredRenderingNode(
+            exported DeferredRenderingNode(
                 GBufferRenderNode* gBuffer,
                 FrameGraphNode* parent = nullptr
             ) ;

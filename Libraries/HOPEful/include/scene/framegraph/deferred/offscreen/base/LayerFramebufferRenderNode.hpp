@@ -1,6 +1,8 @@
 #ifndef __HOPE__LAYER_FRAMEBUFFER_RENDER__
 #define __HOPE__LAYER_FRAMEBUFFER_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 #include <scene/FrameGraphNode.hpp>
 #include <scene/SceneTypes.hpp>
@@ -44,7 +46,7 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            LayerFramebufferRenderNode(
+            exported LayerFramebufferRenderNode(
                 API::Framebuffer2DStack* framebuffer,
                 int layer,
                 const bool windowSize,
@@ -54,21 +56,21 @@ namespace Hope {
             /**
              * Get the framebuffer.
              */
-            API::Framebuffer2DStack* framebuffer() {
+            exported API::Framebuffer2DStack* framebuffer() {
                 return m_framebuffer ;
             }
 
             /**
              * Get the framebuffer.
              */
-            const API::Framebuffer2DStack* framebuffer() const {
+            exported const API::Framebuffer2DStack* framebuffer() const {
                 return m_framebuffer ;
             }
 
             /**
              * Layer of the framegraph to use.
              */
-            int layer() const {
+            exported int layer() const {
                 return m_layer ;
             }
 
@@ -76,7 +78,7 @@ namespace Hope {
              * If true, the size of the framebuffer follows the size of the
              * window. If false, the size of the framebuffer is fixed.
              */
-            bool windowSize() const {
+            exported bool windowSize() const {
                 return m_windowSize ;
             }
 
@@ -84,7 +86,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

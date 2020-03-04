@@ -1,6 +1,8 @@
 #ifndef __HOPE__ENTITY__
 #define __HOPE__ENTITY__
 
+#include <utils/Platform.hpp>
+
 #include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
 #include <scene/Transform.hpp>
@@ -54,12 +56,12 @@ namespace Hope {
              * Create a new entity instance.
              * @param   parent      Parent entity of the new one.
              */
-            Entity(Entity* parent = nullptr) ;
+            exported Entity(Entity* parent = nullptr) ;
 
             /**
              * Destruction of the entity instance.
              */
-            virtual ~Entity() ;
+            exported virtual ~Entity() ;
 
             /**
              * Add a new component to the current entity.
@@ -71,20 +73,20 @@ namespace Hope {
              * @return  Index of component in the list of its type.
              *          0xFFFFFFFF if the component has not been added.
              */
-            int32_t addComponent(Component* component) ;
+            exported int32_t addComponent(Component* component) ;
 
             /**
              * Remove a component from the current entity.
              * @param   component   Component to remove.
              */
-            void removeComponent(Component* component) ;
+            exported void removeComponent(Component* component) ;
 
             /**
              * Remove a component from the current entity.
              * @param   type    Type of the component to remove.
              * @param   index   Index of the component to remove.
              */
-            void removeComponent(const ComponentType type, const uint32_t index) {
+            exported void removeComponent(const ComponentType type, const uint32_t index) {
                 Component* toRemove = component(type, index) ;
                 removeComponent(toRemove) ;
             }
@@ -93,7 +95,7 @@ namespace Hope {
              * Remove the components of the provided type.
              * @param   type    Type of the components to remove.
              */
-            void removeComponents(const ComponentType type) ;
+            exported void removeComponents(const ComponentType type) ;
 
             /**
              * Get a component of the wanted type.
@@ -103,7 +105,7 @@ namespace Hope {
              * @warning Check the index value with the amountComponents()
              *          method!
              */
-            Component* component(
+            exported Component* component(
                 const ComponentType type,
                 const uint32_t index = 0
             ) const {
@@ -122,7 +124,7 @@ namespace Hope {
              *          method!
              */
             template<class T>
-            T* component(const uint32_t index = 0) const {
+            exported T* component(const uint32_t index = 0) const {
                 if (m_components[T::ClassType].empty()) {
                     return nullptr ;
                 }
@@ -136,7 +138,7 @@ namespace Hope {
              * @return  Amount of components of the wanted type that are
              *          attached to the current entity.
              */
-            size_t amountComponents(const ComponentType type) const {
+            exported size_t amountComponents(const ComponentType type) const {
                 return m_components[type].size() ;
             }
 
@@ -144,7 +146,7 @@ namespace Hope {
              * If true, the Entity is processed for rendering its content.
              * Otherwise, it is just ignored and all its children as well.
              */
-            void setActive(const bool isActive) {
+            exported void setActive(const bool isActive) {
                 m_isActive = isActive ;
             }
 
@@ -152,7 +154,7 @@ namespace Hope {
              * If true, the Entity is processed for rendering its content.
              * Otherwise, it is just ignored and all its children as well.
              */
-            bool isActive() const {
+            exported bool isActive() const {
                 return m_isActive ;
             }
 
@@ -160,7 +162,7 @@ namespace Hope {
              * If true, the entity cannot be modified while the application is
              * running.
              */
-            bool isEditable() const {
+            exported bool isEditable() const {
                 return m_isEditable ;
             }
 
@@ -169,7 +171,7 @@ namespace Hope {
              * @warning Setting the Entity locked while the rendering is running
              *          will have no effect.
              */
-            void setLocked(const bool locked) {
+            exported void setLocked(const bool locked) {
                 if (m_isEditable) {
                     m_isLocked = locked ;
                 }
@@ -179,25 +181,25 @@ namespace Hope {
              * If true, the entity cannot be modified while the application is
              * running.
              */
-            bool isLocked() const {
+            exported bool isLocked() const {
                 return m_isLocked ;
             }
 
             /**
              * Get the transform of the entity.
              */
-            const Transform& transform() const {
+            exported const Transform& transform() const {
                 return m_transform ;
             }
 
-            Transform& transform() {
+            exported Transform& transform() {
                 return m_transform ;
             }
 
             /**
              * Get the list of the components attached to the current entity.
              */
-            const std::vector<std::vector<Component*>>& components() const {
+            exported const std::vector<std::vector<Component*>>& components() const {
                 return m_components ;
             }
 

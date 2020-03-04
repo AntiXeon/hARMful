@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_RENDER_PASS__
 #define __HOPE__GL_RENDER_PASS__
 
+#include <utils/Platform.hpp>
+
 #include <scene/SceneTypes.hpp>
 #include <scene/framegraph/shading/FilterOption.hpp>
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
@@ -54,7 +56,7 @@ namespace Hope::GL {
             /**
              * Create a render pass.
              */
-            RenderPass(const RenderPassID id = ForwardPassID) ;
+            exported RenderPass(const Hope::RenderPassID id = ForwardPassID) ;
 
             /**
              * Add a filter option.
@@ -67,17 +69,17 @@ namespace Hope::GL {
              * current render pass, the entity is discarded from rendering (and
              * its children as well).
              */
-            void addFilterOption(const std::shared_ptr<Hope::FilterOption> option) ;
+            exported void addFilterOption(const std::shared_ptr<Hope::FilterOption> option) ;
 
             /**
              * Remove a filter option.
              */
-            void removeFilterOption(const std::shared_ptr<Hope::FilterOption> option) ;
+            exported void removeFilterOption(const std::shared_ptr<Hope::FilterOption> option) ;
 
             /**
              * Get the filter options.
              */
-            std::set<std::shared_ptr<Hope::FilterOption>> filterOptions() const {
+            exported std::set<std::shared_ptr<Hope::FilterOption>> filterOptions() const {
                 return m_options ;
             }
 
@@ -86,36 +88,36 @@ namespace Hope::GL {
              * @return  true if the Capability can be added; false if a
              *          Capability of same type is already in use.
              */
-            bool addCapability(std::unique_ptr<Capability> capability) ;
+            exported bool addCapability(std::unique_ptr<Capability> capability) ;
 
             /**
              * Remove a graphics API capability.
              */
-            void removeCapability(const CapabilityType type) ;
+            exported void removeCapability(const CapabilityType type) ;
 
             /**
              * Get the capability of wanted type.
              */
-            const Capability* capability(const CapabilityType type) const ;
+            exported const Capability* capability(const CapabilityType type) const ;
 
             /**
              * Get the capabilities of the current render pass.
              */
-            const std::vector<Capability*>& capabilities() const {
+            exported const std::vector<Capability*>& capabilities() const {
                 return m_capabilitiesPointers ;
             }
 
             /**
              * Get the shader program.
              */
-            ShaderProgram* shaderProgram() const {
+            exported ShaderProgram* shaderProgram() const {
                 return m_shaderProgram.get() ;
             }
 
             /**
              * Get the render pass ID.
              */
-            RenderPassID id() const {
+            exported Hope::RenderPassID id() const {
                 return m_id ;
             }
     } ;

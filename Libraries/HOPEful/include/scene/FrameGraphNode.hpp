@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRAMEGRAPH_NODE__
 #define __HOPE__FRAMEGRAPH_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <string>
 #include <vector>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitant.hpp>
@@ -48,17 +50,17 @@ namespace Hope {
              * Create a new node instance.
              * @param   parent  Parent node of the new one.
              */
-            FrameGraphNode(FrameGraphNode* parent = nullptr) ;
+            exported FrameGraphNode(FrameGraphNode* parent = nullptr) ;
 
             /**
              * Destruction of the node instance.
              */
-            virtual ~FrameGraphNode() ;
+            exported virtual ~FrameGraphNode() ;
 
             /**
              * Accept the visitor.
              */
-            void accept(IFrameGraphVisitor* visitor) override {
+            exported void accept(IFrameGraphVisitor* visitor) override {
                 specificAccept(visitor) ;
                 generalAccept(visitor) ;
                 postAccept() ;
@@ -67,23 +69,23 @@ namespace Hope {
             /**
              * Set the parent of the current node.
              */
-            void setParent(FrameGraphNode* parent) ;
+            exported void setParent(FrameGraphNode* parent) ;
 
             /**
              * Get the parent of the current node.
              */
-            const FrameGraphNode* parent() const ;
+            exported const FrameGraphNode* parent() const ;
 
             /**
              * Get the list of children.
              */
-            const std::vector<FrameGraphNode*>& children() const ;
+            exported const std::vector<FrameGraphNode*>& children() const ;
 
             /**
              * If true, the node allows the rendering of the framegraph branch
              * in which it is. If false, it prevents the rendering step.
              */
-            bool renderingStepEnabled() const {
+            exported bool renderingStepEnabled() const {
                 return m_renderingStepEnabled ;
             }
 
@@ -98,24 +100,24 @@ namespace Hope {
              * If true, the node allows the rendering of the framegraph branch
              * in which it is. If false, it prevents the rendering step.
              */
-            void setRenderingStepEnabled(const bool enabled) {
+            exported void setRenderingStepEnabled(const bool enabled) {
                 m_renderingStepEnabled = enabled ;
             }
 
             /**
              * Specific implementation for visitors.
              */
-            virtual void specificAccept(IFrameGraphVisitor* /*visitor*/) {}
+            exported virtual void specificAccept(IFrameGraphVisitor* /*visitor*/) {}
 
             /**
              * Do something just after the node as been visited.
              */
-            virtual void postAccept() {}
+            exported virtual void postAccept() {}
 
             /**
              * Root of the scene graph.
              */
-            Entity* sceneRoot() ;
+            exported Entity* sceneRoot() ;
 
         private:
             /**

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GENERIC_CAMERA_UTILS__
 #define __HOPE__GENERIC_CAMERA_UTILS__
 
+#include <utils/Platform.hpp>
+
 #include <matrices/Matrix4x4f.hpp>
 
 namespace Hope {
@@ -18,7 +20,7 @@ namespace Hope {
      * @param   zFar    Specifies the distance from the viewer to the far
      *                  clipping plane (always positive).
      */
-    void Perspective(
+    exported void Perspective(
         Mind::Matrix4x4f& result,
         const double fovY,
         const double aspect,
@@ -42,7 +44,7 @@ namespace Hope {
      * @param   zFar    Specifies the distance from the viewer to the far
      *                  clipping plane (always positive).
      */
-    void Orthographic(
+    exported void Orthographic(
         Mind::Matrix4x4f& result,
         const double left,
         const double right,

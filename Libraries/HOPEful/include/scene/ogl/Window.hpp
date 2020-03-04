@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_WINDOW__
 #define __HOPE__GL_WINDOW__
 
+#include <utils/Platform.hpp>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <scene/Scene.hpp>
@@ -51,7 +53,7 @@ namespace Hope { namespace GL {
              * @param   height  Height of the window.
              * @param   title   Title of the window.
              */
-            Window(
+            exported Window(
                 const int width,
                 const int height,
                 const std::string& title
@@ -60,51 +62,51 @@ namespace Hope { namespace GL {
             /**
              * Destruction of the GLWindow.
              */
-            virtual ~Window() ;
+            exported virtual ~Window() ;
 
             /**
              * Run the rendering/input acquisition loop of the window.
              */
-            void run() ;
+            exported void run() ;
 
             /**
              * Get the root entity of the scene.
              */
-            Entity* root() const {
+            exported Entity* root() const {
                 return m_scene -> root() ;
             }
 
             /**
              * Set the root of the framegraph.
              */
-            void setFrameGraphRoot(FrameGraphNode* root) {
+            exported void setFrameGraphRoot(FrameGraphNode* root) {
                 m_scene -> setFrameGraphRoot(root) ;
             }
 
             /**
              * Switch to windowed window.
              */
-            void windowed() const ;
+            exported void windowed() const ;
 
             /**
              * Switch to fullscreen.
              */
-            void fullscreen() const ;
+            exported void fullscreen() const ;
 
             /**
              * Show the mouse cursor.
              */
-            void showMouseCursor() const ;
+            exported void showMouseCursor() const ;
 
             /**
              * Hide the mouse cursor.
              */
-            void hideMouseCursor() const ;
+            exported void hideMouseCursor() const ;
 
             /**
              * Hide and lock the mouse cursor inside the window.
              */
-            void disableMouseCursor() const ;
+            exported void disableMouseCursor() const ;
 
             // Remove copy/move operations.
             Window(const Window& copied) = delete ;
@@ -117,13 +119,13 @@ namespace Hope { namespace GL {
              * Allow the user to perform custom actions before rendering the
              * frame.
              */
-            virtual void preRender() {}
+            exported virtual void preRender() {}
 
             /**
              * Allow the user to perform custom actions after rendering the
              * frame.
              */
-            virtual void postRender() {}
+            exported virtual void postRender() {}
 
         private:
             /**

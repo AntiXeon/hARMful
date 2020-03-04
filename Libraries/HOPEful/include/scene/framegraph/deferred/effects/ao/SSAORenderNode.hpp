@@ -1,6 +1,8 @@
 #ifndef __HOPE__SSAO_RENDER_NODE__
 #define __HOPE__SSAO_RENDER_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -85,7 +87,7 @@ namespace Hope {
              * @param   output  Framebuffer node to which SSAO will be finally
              *                  rendered to (in a specific render target).
              */
-            SSAORenderNode(
+            exported SSAORenderNode(
                 GBufferRenderNode* gBuffer,
                 FramebufferRenderNode* output,
                 FrameGraphNode* parent = nullptr

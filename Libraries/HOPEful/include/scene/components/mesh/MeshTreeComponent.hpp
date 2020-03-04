@@ -1,6 +1,8 @@
 #ifndef __HOPE__MESH_TREE_COMPONENT__
 #define __HOPE__MESH_TREE_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <string>
 #include <scene/components/Component.hpp>
 #include <HopeAPI.hpp>
@@ -40,13 +42,13 @@ namespace Hope {
              * @param   meshFile    File path of the mesh to use in this
              *                      component.
              */
-            MeshTreeComponent(const std::string& meshFile) ;
+            exported MeshTreeComponent(const std::string& meshFile) ;
 
             /**
              * Get an entity generated on loading by its name.
              * If the name is not found, nullptr is returned.
              */
-            Entity* entity(const std::string& name) {
+            exported Entity* entity(const std::string& name) {
                 return m_loader.entity(name) ;
             }
 
@@ -54,7 +56,7 @@ namespace Hope {
              * To know if the component can be shared by several entities.
              * @return  false, the MeshTreeComponent cannot be shared.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return false ;
             }
 
@@ -62,7 +64,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  true, the component can be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return false ;
             }
 
@@ -71,7 +73,7 @@ namespace Hope {
              * by a single entity.
              * @return  false, an entity cannot bear several MeshTreeComponent.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return false ;
             }
 

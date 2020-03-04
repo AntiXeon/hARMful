@@ -82,7 +82,10 @@ namespace Hope::GL {
              * Set the window size.
              */
             void setWindowSize(const Mind::Dimension2Df& size) {
-                m_windowSize = Mind::Dimension2Di(size.width(), size.height()) ;
+                m_windowSize = Mind::Dimension2Di(
+                    static_cast<uint32_t>(size.width()),
+                    static_cast<uint32_t>(size.height())
+                ) ;
 
                 if (m_windowSize.height() < 1) {
                     m_windowSize.setHeight(1) ;

@@ -1,6 +1,8 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_SHADOW_DATA__
 #define __HOPE__DIRECTIONAL_LIGHT_SHADOW_DATA__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
 #include <scene/framegraph/deferred/effects/shadows/DirectionalLightShadowNode.hpp>
 #include <scene/components/materials/external/DirectionalShadowUniformSetter.hpp>
@@ -20,7 +22,7 @@ namespace Hope {
             /**
              * Set the node containing directional light shadow data.
              */
-            void setDirectionalLightShadow(Hope::DirectionalLightShadowNode* node) {
+            exported void setDirectionalLightShadow(Hope::DirectionalLightShadowNode* node) {
                 m_dirShadowSetter.setLightShadowNode(node) ;
             }
 

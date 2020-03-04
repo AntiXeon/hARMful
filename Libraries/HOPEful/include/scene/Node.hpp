@@ -1,6 +1,8 @@
 #ifndef __HOPE__NODE__
 #define __HOPE__NODE__
 
+#include <utils/Platform.hpp>
+
 #include <string>
 #include <vector>
 
@@ -26,32 +28,32 @@ namespace Hope {
              * Create a new node instance.
              * @param   parent  Parent node of the new one.
              */
-            Node(Node* parent = nullptr) ;
+            exported Node(Node* parent = nullptr) ;
 
             /**
              * Destruction of the node instance.
              */
-            virtual ~Node() ;
+            exported virtual ~Node() ;
 
             /**
              * Set the parent of the current node.
              */
-            void setParent(Node* parent) ;
+            exported void setParent(Node* parent) ;
 
             /**
              * Get the parent of the current node.
              */
-            const Node* parent() const ;
+            exported const Node* parent() const ;
 
             /**
              * Get the list of children.
              */
-            const std::vector<Node*>& children() const ;
+            exported const std::vector<Node*>& children() const ;
 
             /**
              * Amount of children.
              */
-            size_t childrenCount() const ;
+            exported size_t childrenCount() const ;
 
             // Remove copy/move operations.
             Node(const Node& copied) = delete;

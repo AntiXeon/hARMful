@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_QUAD_GEOMETRY__
 #define __HOPE__GL_QUAD_GEOMETRY__
 
+#include <utils/Platform.hpp>
+
 #include <array>
 #include <scene/ogl/mesh/Geometry.hpp>
 #include <scene/ogl/mesh/GeometryPart.hpp>
@@ -45,12 +47,12 @@ namespace Hope::GL {
             /**
              * Create a new QuadGeometry.
              */
-            QuadGeometry() ;
+            exported QuadGeometry() ;
 
             /**
              * Destruction of the QuadGeometry.
              */
-            ~QuadGeometry() ;
+            exported ~QuadGeometry() ;
 
             /**
              * Bind the geometry for data management, rendering, etc.

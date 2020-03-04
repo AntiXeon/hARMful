@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_SEAMLESS_CUBEMAP__
 #define __HOPE__GL_CAPABILITY_SEAMLESS_CUBEMAP__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -14,7 +16,7 @@ namespace Hope::GL {
             /**
              * Create a new SeamlessCubemap instance.
              */
-            SeamlessCubemap() : Capability(CapabilityType::SeamlessCubemap) {}
+            exported SeamlessCubemap() : Capability(CapabilityType::SeamlessCubemap) {}
 
         protected:
             /**

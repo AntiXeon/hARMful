@@ -1,6 +1,8 @@
 #ifndef __HOPE__ORTHOGRAPHIC_CAMERA_COMPONENT__
 #define __HOPE__ORTHOGRAPHIC_CAMERA_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <scene/components/cameras/CameraUtils.hpp>
 #include <geometry/points/Point3Df.hpp>
@@ -41,61 +43,61 @@ namespace Hope {
             /**
              * Create a new OrthographicCameraComponent.
              */
-            OrthographicCameraComponent() ;
+            exported OrthographicCameraComponent() ;
 
             /**
              * Set the coordinates for the top horizontal clipping plane.
              */
-            void setTopPlane(const float top) {
+            exported void setTopPlane(const float top) {
                 m_top = top ;
             }
 
             /**
              * Set the coordinates for the bottom horizontal clipping plane.
              */
-            void setBottomPlane(const float bottom) {
+            exported void setBottomPlane(const float bottom) {
                 m_bottom = bottom ;
             }
 
             /**
              * Set the coordinates for the left vertical clipping plane.
              */
-            void setLeftPlane(const float left) {
+            exported void setLeftPlane(const float left) {
                 m_left = left ;
             }
 
             /**
              * Set the coordinates for the right vertical clipping plane.
              */
-            void setRightPlane(const float right) {
+            exported void setRightPlane(const float right) {
                 m_right = right ;
             }
 
             /**
              * Get the coordinates for the top horizontal clipping plane.
              */
-            float topPlane() {
+            exported float topPlane() {
                 return m_top ;
             }
 
             /**
              * Get the coordinates for the bottom horizontal clipping plane.
              */
-            float bottomPlane() {
+            exported float bottomPlane() {
                 return m_bottom ;
             }
 
             /**
              * Get the coordinates for the left vertical clipping plane.
              */
-            float leftPlane() {
+            exported float leftPlane() {
                 return m_left ;
             }
 
             /**
              * Get the coordinates for the right vertical clipping plane.
              */
-            float rightPlane() {
+            exported float rightPlane() {
                 return m_right ;
             }
 
@@ -103,7 +105,7 @@ namespace Hope {
              * Get the field of view of the camera.
              * An orthographic camera does not have FOV...
              */
-            float fov() const override {
+            exported float fov() const override {
                 return 0.f ;
             }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TEXTURE__
 #define __HOPE__GL_TEXTURE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
@@ -38,7 +40,7 @@ namespace Hope::GL {
              * Create a new Texture instance.
              * @param   target  Target to which the texture is bound.
              */
-            Texture(const GLenum target) ;
+            exported Texture(const GLenum target) ;
 
             /**
              * Create a new Texture instance.
@@ -46,7 +48,7 @@ namespace Hope::GL {
              * @param   internalFormat  Number of color components in the
              *                          texture.
              */
-            Texture(
+            exported Texture(
                 const GLenum target,
                 const InternalFormat internalFormat
             ) ;
@@ -54,7 +56,7 @@ namespace Hope::GL {
             /**
              * Destruction of the Texture.
              */
-            ~Texture() ;
+            exported ~Texture() ;
 
             /**
              * Set the current texture active.
@@ -95,7 +97,7 @@ namespace Hope::GL {
              * Set the border color in case the texture does not fit the borders
              * of the polygons.
              */
-            void setBorderColor(const Hope::Color& color) ;
+            exported void setBorderColor(const Hope::Color& color) ;
 
             /**
              * Set the texture filtering options.
@@ -103,7 +105,7 @@ namespace Hope::GL {
              *                      downscaled.
              * @param   upscaling   Filter option when the texture is upscaled.
              */
-            void setFiltering(
+            exported void setFiltering(
                 const FilterMode downscaling,
                 const FilterMode upscaling
             ) ;
@@ -120,31 +122,31 @@ namespace Hope::GL {
              *                      the appropriate value from the currently
              *                      bound depth texture.
              */
-            void setCompareRefToTexture(const bool compare) ;
+            exported void setCompareRefToTexture(const bool compare) ;
 
             /**
              * Set the comparison operator.
              */
-            void setComparisonOperator(const ComparisonOperator op) ;
+            exported void setComparisonOperator(const ComparisonOperator op) ;
 
             /**
              * Get the target of the texture.
              */
-            GLenum target() const {
+            exported GLenum target() const {
                 return m_target ;
             }
 
             /**
              * Get the texture ID.
              */
-            GLuint id() const {
+            exported GLuint id() const {
                 return m_textureID ;
             }
 
             /**
              * Get the internal format of the texture.
              */
-            InternalFormat internalFormat() const {
+            exported InternalFormat internalFormat() const {
                 return m_internalFormat ;
             }
     } ;

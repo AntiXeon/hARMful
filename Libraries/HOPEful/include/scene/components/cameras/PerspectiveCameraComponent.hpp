@@ -1,6 +1,8 @@
 #ifndef __HOPE__PERSPECTIVE_CAMERA_COMPONENT__
 #define __HOPE__PERSPECTIVE_CAMERA_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <scene/components/cameras/CameraUtils.hpp>
@@ -26,12 +28,12 @@ namespace Hope {
             /**
              * Create a new PerspectiveCameraComponent.
              */
-            PerspectiveCameraComponent() ;
+            exported PerspectiveCameraComponent() ;
 
             /**
              * Set the field of view of the camera.
              */
-            void setFOV(const float fov) {
+            exported void setFOV(const float fov) {
                 if (m_fov != fov) {
                     notifyProjectionChange() ;
                     m_fov = fov ;
@@ -41,7 +43,7 @@ namespace Hope {
             /**
              * Get the field of view of the camera.
              */
-            float fov() const override {
+            exported float fov() const override {
                 return m_fov ;
             }
 

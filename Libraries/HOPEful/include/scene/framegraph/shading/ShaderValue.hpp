@@ -1,6 +1,8 @@
 #ifndef __HOPE__SHADER_VALUE__
 #define __HOPE__SHADER_VALUE__
 
+#include <utils/Platform.hpp>
+
 #include <array>
 #include <string>
 #include <cstdlib>
@@ -131,7 +133,7 @@ namespace Hope {
              * Values from the first set are replaced by the ones in the second
              * set.
              */
-            static void merge(
+            exported static void merge(
                 std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& first,
                 const std::map<std::string, std::shared_ptr<Hope::ShaderValue>>& second
             ) ;
@@ -140,26 +142,26 @@ namespace Hope {
              * Check if two parameters describe the same value.
              * Only compares name and type, the value is not evaluated here.
              */
-            bool identical(const std::shared_ptr<Hope::ShaderValue>& other) ;
+            exported bool identical(const std::shared_ptr<Hope::ShaderValue>& other) ;
 
             /**
              * Set the location of the value.
              */
-            void setLocation(const int location) {
+            exported void setLocation(const int location) {
                 m_location = location ;
             }
 
             /**
              * Set the parameter name.
              */
-            void setName(const std::string& name) {
+            exported void setName(const std::string& name) {
                 m_name = name ;
             }
 
             /**
              * Set the parameter value.
              */
-            void setBoolean(const bool boolean) {
+            exported void setBoolean(const bool boolean) {
                 m_type = Boolean ;
                 m_value.boolean = boolean ;
             }
@@ -167,7 +169,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setInteger(const int integer) {
+            exported void setInteger(const int integer) {
                 m_type = Integer ;
                 m_value.integer = integer ;
             }
@@ -175,7 +177,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setUInteger(const unsigned int uinteger) {
+            exported void setUInteger(const unsigned int uinteger) {
                 m_type = UInteger ;
                 m_value.uinteger = uinteger ;
             }
@@ -183,7 +185,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setFloating(const float floating) {
+            exported void setFloating(const float floating) {
                 m_type = Floating ;
                 m_value.floating = floating ;
             }
@@ -191,7 +193,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setBVec2(const std::array<bool, 2>& bvec2) {
+            exported void setBVec2(const std::array<bool, 2>& bvec2) {
                 m_type = BVec2 ;
                 std::copy(
                     std::begin(bvec2),
@@ -203,7 +205,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setBVec3(const std::array<bool, 3>& bvec3) {
+            exported void setBVec3(const std::array<bool, 3>& bvec3) {
                 m_type = BVec3 ;
                 std::copy(
                     std::begin(bvec3),
@@ -215,7 +217,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setBVec4(const std::array<bool, 4>& bvec4) {
+            exported void setBVec4(const std::array<bool, 4>& bvec4) {
                 m_type = BVec4 ;
                 std::copy(
                     std::begin(bvec4),
@@ -227,7 +229,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setIVec2(const std::array<int, 2>& ivec2) {
+            exported void setIVec2(const std::array<int, 2>& ivec2) {
                 m_type = IVec2 ;
                 std::copy(
                     std::begin(ivec2),
@@ -239,7 +241,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setIVec3(const std::array<int, 3>& ivec3) {
+            exported void setIVec3(const std::array<int, 3>& ivec3) {
                 m_type = IVec3 ;
                 std::copy(
                     std::begin(ivec3),
@@ -251,7 +253,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setIVec4(const std::array<int, 4>& ivec4) {
+            exported void setIVec4(const std::array<int, 4>& ivec4) {
                 m_type = IVec4 ;
                 std::copy(
                     std::begin(ivec4),
@@ -263,7 +265,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setUIVec2(const std::array<unsigned int, 2>& uivec2) {
+            exported void setUIVec2(const std::array<unsigned int, 2>& uivec2) {
                 m_type = UIVec2 ;
                 std::copy(
                     std::begin(uivec2),
@@ -275,7 +277,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setUIVec3(const std::array<unsigned int, 3>& uivec3) {
+            exported void setUIVec3(const std::array<unsigned int, 3>& uivec3) {
                 m_type = UIVec3 ;
                 std::copy(
                     std::begin(uivec3),
@@ -287,7 +289,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setUIVec4(const std::array<unsigned int, 4>& uivec4) {
+            exported void setUIVec4(const std::array<unsigned int, 4>& uivec4) {
                 m_type = UIVec4 ;
                 std::copy(
                     std::begin(uivec4),
@@ -299,7 +301,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setVec2(const std::array<float, 2>& vec2) {
+            exported void setVec2(const std::array<float, 2>& vec2) {
                 m_type = Vec2 ;
                 std::copy(
                     std::begin(vec2),
@@ -311,7 +313,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setVec3(const std::array<float, 3>& vec3) {
+            exported void setVec3(const std::array<float, 3>& vec3) {
                 m_type = Vec3 ;
                 std::copy(
                     std::begin(vec3),
@@ -323,7 +325,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setVec4(const std::array<float, 4>& vec4) {
+            exported void setVec4(const std::array<float, 4>& vec4) {
                 m_type = Vec4 ;
                 std::copy(
                     std::begin(vec4),
@@ -335,7 +337,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat2(const std::array<float, 4>& mat2) {
+            exported void setMat2(const std::array<float, 4>& mat2) {
                 m_type = Mat2 ;
                 std::copy(
                     std::begin(mat2),
@@ -347,7 +349,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat3(const std::array<float, 9>& mat3) {
+            exported void setMat3(const std::array<float, 9>& mat3) {
                 m_type = Mat3 ;
                 std::copy(
                     std::begin(mat3),
@@ -359,7 +361,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat4(const std::array<float, 16>& mat4) {
+            exported void setMat4(const std::array<float, 16>& mat4) {
                 m_type = Mat4 ;
                 std::copy(
                     std::begin(mat4),
@@ -371,7 +373,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat2x3(const std::array<float, 6>& mat) {
+            exported void setMat2x3(const std::array<float, 6>& mat) {
                 m_type = Mat2x3 ;
                 std::copy(
                     std::begin(mat),
@@ -383,7 +385,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat3x2(const std::array<float, 6>& mat) {
+            exported void setMat3x2(const std::array<float, 6>& mat) {
                 m_type = Mat3x2 ;
                 std::copy(
                     std::begin(mat),
@@ -395,7 +397,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat2x4(const std::array<float, 8>& mat) {
+            exported void setMat2x4(const std::array<float, 8>& mat) {
                 m_type = Mat2x4 ;
                 std::copy(
                     std::begin(mat),
@@ -407,7 +409,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat4x2(const std::array<float, 8>& mat) {
+            exported void setMat4x2(const std::array<float, 8>& mat) {
                 m_type = Mat4x2 ;
                 std::copy(
                     std::begin(mat),
@@ -419,7 +421,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat3x4(const std::array<float, 12>& mat) {
+            exported void setMat3x4(const std::array<float, 12>& mat) {
                 m_type = Mat3x4 ;
                 std::copy(
                     std::begin(mat),
@@ -431,7 +433,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setMat4x3(const std::array<float, 12>& mat) {
+            exported void setMat4x3(const std::array<float, 12>& mat) {
                 m_type = Mat4x3 ;
                 std::copy(
                     std::begin(mat),
@@ -443,7 +445,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setSampler2D(const int sampler2D) {
+            exported void setSampler2D(const int sampler2D) {
                 m_type = Sampler2D ;
                 m_value.sampler2D = sampler2D ;
             }
@@ -451,7 +453,7 @@ namespace Hope {
             /**
              * Set the parameter value.
              */
-            void setSamplerCube(const int samplerCube) {
+            exported void setSamplerCube(const int samplerCube) {
                 m_type = SamplerCube ;
                 m_value.samplerCube = samplerCube ;
             }
@@ -459,210 +461,210 @@ namespace Hope {
             /**
              * Get the location of the value.
              */
-            int location() const {
+            exported int location() const {
                 return m_location ;
             }
 
             /**
              * Get the name of the parameter.
              */
-            const std::string& name() const {
+            exported const std::string& name() const {
                 return m_name ;
             }
 
             /**
              * Type of the parameter.
              */
-            ValueType type() const {
+            exported ValueType type() const {
                 return m_type ;
             }
 
             /**
              * Get the value.
              */
-            bool boolean() const {
+            exported bool boolean() const {
                 return m_value.boolean ;
             }
 
             /**
              * Get the value.
              */
-            int integer() const {
+            exported int integer() const {
                 return m_value.integer ;
             }
 
             /**
              * Get the value.
              */
-            unsigned int uinteger() const {
+            exported unsigned int uinteger() const {
                 return m_value.uinteger ;
             }
 
             /**
              * Get the value.
              */
-            float floating() const {
+            exported float floating() const {
                 return m_value.floating ;
             }
 
             /**
              * Get the value.
              */
-            const bool* bvec2() const {
+            exported const bool* bvec2() const {
                 return m_value.bvec2 ;
             }
 
             /**
              * Get the value.
              */
-            const bool* bvec3() const {
+            exported const bool* bvec3() const {
                 return m_value.bvec3 ;
             }
 
             /**
              * Get the value.
              */
-            const bool* bvec4() const {
+            exported const bool* bvec4() const {
                 return m_value.bvec4 ;
             }
 
             /**
              * Get the value.
              */
-            const int* ivec2() const {
+            exported const int* ivec2() const {
                 return m_value.ivec2 ;
             }
 
             /**
              * Get the value.
              */
-            const int* ivec3() const {
+            exported const int* ivec3() const {
                 return m_value.ivec3 ;
             }
 
             /**
              * Get the value.
              */
-            const int* ivec4() const {
+            exported const int* ivec4() const {
                 return m_value.ivec4 ;
             }
 
             /**
              * Get the value.
              */
-            const unsigned int* uivec2() const {
+            exported const unsigned int* uivec2() const {
                 return m_value.uivec2 ;
             }
 
             /**
              * Get the value.
              */
-            const unsigned int* uivec3() const {
+            exported const unsigned int* uivec3() const {
                 return m_value.uivec3 ;
             }
 
             /**
              * Get the value.
              */
-            const unsigned int* uivec4() const {
+            exported const unsigned int* uivec4() const {
                 return m_value.uivec4 ;
             }
 
             /**
              * Get the value.
              */
-            const float* vec2() const {
+            exported const float* vec2() const {
                 return m_value.vec2 ;
             }
 
             /**
              * Get the value.
              */
-            const float* vec3() const {
+            exported const float* vec3() const {
                 return m_value.vec3 ;
             }
 
             /**
              * Get the value.
              */
-            const float* vec4() const {
+            exported const float* vec4() const {
                 return m_value.vec4 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat2() const {
+            exported const float* mat2() const {
                 return m_value.mat2 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat3() const {
+            exported const float* mat3() const {
                 return m_value.mat3 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat4() const {
+            exported const float* mat4() const {
                 return m_value.mat4 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat2x3() const {
+            exported const float* mat2x3() const {
                 return m_value.mat2x3 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat3x2() const {
+            exported const float* mat3x2() const {
                 return m_value.mat3x2 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat2x4() const {
+            exported const float* mat2x4() const {
                 return m_value.mat2x4 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat4x2() const {
+            exported const float* mat4x2() const {
                 return m_value.mat4x2 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat3x4() const {
+            exported const float* mat3x4() const {
                 return m_value.mat3x4 ;
             }
 
             /**
              * Get the value.
              */
-            const float* mat4x3() const {
+            exported const float* mat4x3() const {
                 return m_value.mat4x3 ;
             }
 
             /**
              * Get the value.
              */
-            int sampler2D() const {
+            exported int sampler2D() const {
                 return m_value.sampler2D ;
             }
 
             /**
              * Get the value.
              */
-            int samplerCube() const {
+            exported int samplerCube() const {
                 return m_value.samplerCube ;
             }
     } ;

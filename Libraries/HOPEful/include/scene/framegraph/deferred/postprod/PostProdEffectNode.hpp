@@ -1,6 +1,8 @@
 #ifndef __HOPE__POST_PROD_EFFECT_NODE__
 #define __HOPE__POST_PROD_EFFECT_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
@@ -37,7 +39,7 @@ namespace Hope {
             /**
              * Create a new PostProdEffectNode instance.
              */
-            PostProdEffectNode(
+            exported PostProdEffectNode(
                 std::unique_ptr<MaterialComponent> material,
                 FramebufferRenderNode* framebufferNode
             ) ;
@@ -58,7 +60,7 @@ namespace Hope {
              * Blit framebuffers content (input and output) for the next process
              * on them.
              */
-            void postAccept() override ;
+            exported void postAccept() override ;
     } ;
 }
 

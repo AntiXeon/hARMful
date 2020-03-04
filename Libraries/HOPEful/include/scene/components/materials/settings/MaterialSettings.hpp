@@ -1,6 +1,8 @@
 #ifndef __HOPE__MATERIAL_SETTINGS__
 #define __HOPE__MATERIAL_SETTINGS__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <scene/components/materials/settings/AlphaBlendingModes.hpp>
@@ -47,7 +49,7 @@ namespace Hope {
              *          pass capabilities. No need to add blending mode
              *          capability on default render passes or whatever.
              */
-            void setAlphaBlendingMode(
+            exported void setAlphaBlendingMode(
                 const RenderPassID pass,
                 const AlphaBlendingMode mode
             ) ;
@@ -55,7 +57,7 @@ namespace Hope {
             /**
              * Get the alpha blending mode applied on this material.
              */
-            AlphaBlendingMode alphaBlendingMode() const { return m_alphaBlend ; }
+            exported AlphaBlendingMode alphaBlendingMode() const { return m_alphaBlend ; }
 
             /**
              * Set the shadow mode applied on this material.
@@ -63,12 +65,12 @@ namespace Hope {
              *          pass capabilities. No need to add blending mode
              *          capability on shadow render passes or whatever.
              */
-            void setShadowMode(const ShadowMode mode) ;
+            exported void setShadowMode(const ShadowMode mode) ;
 
             /**
              * Get the shadow mode applied on this material.
              */
-            ShadowMode shadowMode() const { return m_shadowMode ; }
+            exported ShadowMode shadowMode() const { return m_shadowMode ; }
 
         private:
             /**

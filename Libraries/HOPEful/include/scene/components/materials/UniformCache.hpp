@@ -1,6 +1,8 @@
 #ifndef __HOPE__MATERIAL_UNIFORM_CACHE__
 #define __HOPE__MATERIAL_UNIFORM_CACHE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/shading/ShaderValue.hpp>
 #include <map>
 #include <memory>
@@ -29,7 +31,7 @@ namespace Hope {
              * It is sent to the shader as a uniform value.
              * Some usual values are already sent to the shaders.
              */
-            void add(std::unique_ptr<Hope::ShaderUniform> uniform) {
+            exported void add(std::unique_ptr<Hope::ShaderUniform> uniform) {
                 m_pointers.push_back(uniform.get()) ;
                 m_named.insert(std::make_pair(uniform -> name(), std::move(uniform))) ;
             }
@@ -37,14 +39,14 @@ namespace Hope {
             /**
              * Get the uniform pointers for sharing without ownership.
              */
-            const std::vector<Hope::ShaderUniform*>& pointers() const {
+            exported const std::vector<Hope::ShaderUniform*>& pointers() const {
                 return m_pointers ;
             }
 
             /**
              * Get a uniform from its name.
              */
-            Hope::ShaderUniform* at(const std::string& name) {
+            exported Hope::ShaderUniform* at(const std::string& name) {
                 if (m_named.count(name) == 1) {
                     return m_named[name].get() ;
                 }

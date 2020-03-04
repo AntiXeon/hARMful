@@ -1,6 +1,8 @@
 #ifndef __HOPE__COMPONENT__
 #define __HOPE__COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/SceneTypes.hpp>
 #include <cstddef>
 #include <vector>
@@ -31,25 +33,25 @@ namespace Hope {
              * Create a new component instance.
              * @param   type    Type of the component.
              */
-            Component(const ComponentType type) ;
+            exported Component(const ComponentType type) ;
 
             /**
              * Destruction of the component instance.
              */
-            virtual ~Component() ;
+            exported virtual ~Component() ;
 
             /**
              * To know if the component can be shared by several entities.
              * @return  true if the component can be shared by several entities;
              *          false otherwise.
              */
-            virtual bool isShareable() const = 0 ;
+            exported virtual bool isShareable() const = 0 ;
 
             /**
              * To know if the component can be removed from its entity(-ies).
              * @return  true if the component can be removed; false otherwise.
              */
-            virtual bool isRemovable() const = 0 ;
+            exported virtual bool isRemovable() const = 0 ;
 
             /**
              * To know if several components of the current type can be beared
@@ -57,29 +59,29 @@ namespace Hope {
              * @return  true if an entity can bear several component of the
              *          current type; false otherwise.
              */
-            virtual bool isStackable() const = 0 ;
+            exported virtual bool isStackable() const = 0 ;
 
             /**
              * Get the type of the component.
              */
-            ComponentType type() const ;
+            exported ComponentType type() const ;
 
             /**
              * To know how many entities are attached to the current component.
              * @return  Amount of attached entities to the current component.
              */
-            size_t amountAttachedEntities() const ;
+            exported size_t amountAttachedEntities() const ;
 
             /**
              * Get the entities that bear the current component.
              * @param   entities    Output the entities.
              */
-            void entities(std::vector<Entity*>& entities) const ;
+            exported void entities(std::vector<Entity*>& entities) const ;
 
             /**
              * Get the first entity bearing this component.
              */
-            Entity* firstEntity() const ;
+            exported Entity* firstEntity() const ;
 
             // Remove copy/move operations.
             Component(const Component& copied) = delete;
@@ -110,13 +112,13 @@ namespace Hope {
              * entity.
              * @param   entity  Entity to attach the component to.
              */
-            virtual void onAttach(Entity* entity) ;
+            exported virtual void onAttach(Entity* entity) ;
 
             /**
              * Action to perform when the component is detached from its entity.
              * @param   entity  Entity to detach the component from.
              */
-            virtual void onDetach(Entity* entity) ;
+            exported virtual void onDetach(Entity* entity) ;
     } ;
 }
 

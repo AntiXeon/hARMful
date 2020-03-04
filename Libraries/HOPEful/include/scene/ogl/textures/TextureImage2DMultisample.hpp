@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TEXTURE_IMAGE_2D_MULTISAMPLE__
 #define __HOPE__GL_TEXTURE_IMAGE_2D_MULTISAMPLE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/textures/Texture.hpp>
 #include <array>
 
@@ -59,7 +61,7 @@ namespace Hope::GL {
              *                                  not depend on the internal
              *                                  format or size of the image.
              */
-            TextureImage2DMultisample(
+            exported TextureImage2DMultisample(
                 const Mind::Dimension2Di& size,
                 const InternalFormat internalFormat,
                 const int samples = 4,
@@ -70,12 +72,12 @@ namespace Hope::GL {
              * Resize the texture.
              * @param   size        The new size to apply.
              */
-            void resize(const Mind::Dimension2Di& size) ;
+            exported void resize(const Mind::Dimension2Di& size) ;
 
             /**
              * Set the wrap mode for each dimension of the texture.
              */
-            void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
+            exported void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
     } ;
 }
 

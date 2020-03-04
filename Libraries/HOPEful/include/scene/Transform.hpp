@@ -1,6 +1,8 @@
 #ifndef __HOPE__TRANSFORM__
 #define __HOPE__TRANSFORM__
 
+#include <utils/Platform.hpp>
+
 #include <geometry/quaternions/Quaternion.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
@@ -52,103 +54,103 @@ namespace Hope {
             /**
              * Create a new Transform.
              */
-            Transform() ;
+            exported Transform() ;
 
             /**
              * Set the rotation of the object.
              * @param  rotation    Rotation to apply.
              */
-            void setRotation(const Mind::Quaternion& rotation) ;
+            exported void setRotation(const Mind::Quaternion& rotation) ;
 
             /**
              * Set the rotation of the object on X axis.
              * @param  rotation    Rotation to apply.
              */
-            void setRotationOnX(const float rotation) ;
+            exported void setRotationOnX(const float rotation) ;
 
             /**
              * Set the rotation of the object on Y axis.
              * @param  rotation    Rotation to apply.
              */
-            void setRotationOnY(const float rotation) ;
+            exported void setRotationOnY(const float rotation) ;
 
             /**
              * Set the rotation of the object on Z axis.
              * @param  rotation    Rotation to apply.
              */
-            void setRotationOnZ(const float rotation) ;
+            exported void setRotationOnZ(const float rotation) ;
 
             /**
              * Set the translation of the object.
              * @param  translation  Translation to apply.
              */
-            void setTranslation(const Mind::Vector3f& translation) ;
+            exported void setTranslation(const Mind::Vector3f& translation) ;
 
             /**
              * Set the scale of the object.
              * @param  scale    Scale to apply.
              */
-            void setScale(const float scale) ;
+            exported void setScale(const float scale) ;
 
             /**
              * Set the scale of the object.
              * @param  scale    Scale to apply.
              */
-            void setScale3D(const Mind::Vector3f& scale) ;
+            exported void setScale3D(const Mind::Vector3f& scale) ;
 
             /**
              * Set the transformation matrix of the object.
              */
-            void setMatrix(const Mind::Matrix4x4f& matrix) ;
+            exported void setMatrix(const Mind::Matrix4x4f& matrix) ;
 
 
             /**
              * Get the rotation of the object.
              * @return  Rotation of the object.
              */
-            Mind::Quaternion rotation() const ;
+            exported Mind::Quaternion rotation() const ;
 
             /**
              * Get the rotation of the object on X axis.
              * @return  Rotation of the object.
              */
-            float rotationOnX() const ;
+            exported float rotationOnX() const ;
 
             /**
              * Get the rotation of the object on Y axis.
              * @return  Rotation of the object.
              */
-            float rotationOnY() const ;
+            exported float rotationOnY() const ;
 
             /**
              * Get the rotation of the object on Z axis.
              * @return  Rotation of the object.
              */
-            float rotationOnZ() const ;
+            exported float rotationOnZ() const ;
 
             /**
              * Get the translation of the object.
              * @return  Translation of the object.
              */
-            Mind::Vector3f translation() const ;
+            exported Mind::Vector3f translation() const ;
 
             /**
              * Get the scale of the object.
              * @return  Scale of the object.
              */
-            float scale() const ;
+            exported float scale() const ;
 
             /**
              * Get the scale of the object for each axis.
              * @return  Scale of the object.
              */
-            Mind::Vector3f scale3D() const ;
+            exported Mind::Vector3f scale3D() const ;
 
             /**
              * Get the transformation matrix of the object.
              * @return  Transformation matrix of the object.
              */
-            const Mind::Matrix4x4f& matrix() ;
+            exported const Mind::Matrix4x4f& matrix() ;
     } ;
 }
 

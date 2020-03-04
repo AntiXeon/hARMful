@@ -269,7 +269,7 @@ namespace Mind {
               * @param   p   The point to negate.
               * @return  The negate version of the point @a p.
               */
-            friend Point3Df operator-(const Point3Df& p) ;
+            exported friend Point3Df operator-(const Point3Df& p) ;
 
             /**
              * Add a Point coordinates to another ones.
@@ -277,7 +277,7 @@ namespace Mind {
              * @param   b   Second Point.
              * @return  Point at (a.x + b.x, a.y + b.y).
              */
-            friend Point3Df operator+(const Point3Df& a, const Point3Df& b) ;
+            exported friend Point3Df operator+(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Substract a Point coordinates to another ones.
@@ -285,7 +285,7 @@ namespace Mind {
              * @param   b   Second Point.
              * @return  Point at (a.x - b.x, a.y - b.y).
              */
-            friend Point3Df operator-(const Point3Df& a, const Point3Df& b) ;
+            exported friend Point3Df operator-(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Dot product of two Points (A.B).
@@ -293,7 +293,7 @@ namespace Mind {
              * @param   b   Another Point to compute the dot product.
              * @return  Result of the dot product A.B.
              */
-            friend Scalar operator*(const Point3Df& a, const Point3Df& b) ;
+            exported friend Scalar operator*(const Point3Df& a, const Point3Df& b) ;
 
             /**
              * Multiply a vector by a matrix.
@@ -301,7 +301,7 @@ namespace Mind {
              * @param   mat Matrix to multiply.
              * @return  Result of the multiplication vec * mat.
              */
-            friend Point3Df operator*(const Point3Df& vec, const Matrix3x3f& mat) ;
+            exported friend Point3Df operator*(const Point3Df& vec, const Matrix3x3f& mat) ;
 
             /**
              * Multiply a Point coordinates by a scalar value (scale).
@@ -309,7 +309,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x * coeff, a.y * coeff).
              */
-            friend Point3Df operator*(const Point3Df& p, Scalar coeff) ;
+            exported friend Point3Df operator*(const Point3Df& p, Scalar coeff) ;
 
             /**
              * Divide a Point coordinates by a scalar value (scale).
@@ -317,7 +317,7 @@ namespace Mind {
              * @param   coeff   Factor to scale the coordinates.
              * @return  Point at (a.x / coeff, a.y / coeff).
              */
-            friend Point3Df operator/(const Point3Df& p, Scalar coeff) ;
+            exported friend Point3Df operator/(const Point3Df& p, Scalar coeff) ;
 
             /**
              * Echo the Point coordinates on console.
@@ -325,7 +325,7 @@ namespace Mind {
              * @param   p   The Point to print.
              * @return  The stream with the printed Point coordinates.
              */
-            friend std::ostream& operator<<(std::ostream& s, const Point3Df& p) ;
+            exported friend std::ostream& operator<<(std::ostream& s, const Point3Df& p) ;
     } ;
 
     typedef Point3Df Vector3f ;

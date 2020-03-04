@@ -1,6 +1,8 @@
 #ifndef __HOPE__SSAO_APPLY_UNIFORM_SETTER__
 #define __HOPE__SSAO_APPLY_UNIFORM_SETTER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
 
@@ -28,7 +30,7 @@ namespace Hope {
             /**
              * Create a new SSAOUniformSetter instance.
              */
-            SSAOUniformSetter() ;
+            exported SSAOUniformSetter() ;
 
             /**
              * Update the uniforms.
@@ -39,7 +41,7 @@ namespace Hope {
              * Set the frame graph node that contains all required data for
              * computing ambient occlusion.
              */
-            void setSSAONode(Hope::SSAORenderNode* node) ;
+            exported void setSSAONode(Hope::SSAORenderNode* node) ;
     } ;
 }
 

@@ -135,7 +135,7 @@ namespace Mind {
              * @param   b   Second matrix.
              * @return  Result of the multiplication.
              */
-            friend Matrix3x3f operator*(const Matrix3x3f& a, const Matrix3x3f& b) ;
+            exported friend Matrix3x3f operator*(const Matrix3x3f& a, const Matrix3x3f& b) ;
 
             /**
              * Multiply the current matrix by a vector.

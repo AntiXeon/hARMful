@@ -1,6 +1,7 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_CAMERA_COMPONENT__
 #define __HOPE__DIRECTIONAL_LIGHT_CAMERA_COMPONENT__
 
+#include <utils/Platform.hpp>
 #include <scene/components/cameras/CameraComponent.hpp>
 
 namespace Hope {
@@ -26,21 +27,21 @@ namespace Hope {
              *          (and so computed on CPU side); false to limit the amount
              *          of data to compute and to send to shaders.
              */
-            bool requireFullDataUpdate() const override {
+            exported bool requireFullDataUpdate() const override {
                 return false ;
             }
 
             /**
              * Update the camera.
              */
-            void update() override {
+            exported void update() override {
                 // Do nothing.
             }
 
             /**
              * Get the field of view of the camera.
              */
-            float fov() const override {
+            exported float fov() const override {
                 return 0.f ;
             }
 

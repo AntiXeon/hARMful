@@ -1,6 +1,8 @@
 #ifndef __HOPE__GBUFFER_RENDER__
 #define __HOPE__GBUFFER_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
 
 namespace Hope {
@@ -32,7 +34,7 @@ namespace Hope {
              * Create a new GBufferRenderNode instance.
              * @param   size        Size of the framebuffer.
              */
-            GBufferRenderNode(
+            exported GBufferRenderNode(
                 const Mind::Dimension2Di& size,
                 FrameGraphNode* parent = nullptr
             ) ;
@@ -40,7 +42,7 @@ namespace Hope {
             /**
              * Get the multisampling quality (amount of samples).
              */
-            int multisamplingQuality() const {
+            exported int multisamplingQuality() const {
                 return framebufferMultisample() -> samples() ;
             }
 

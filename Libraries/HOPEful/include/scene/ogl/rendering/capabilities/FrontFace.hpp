@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_FRONT_FACE__
 #define __HOPE__GL_CAPABILITY_FRONT_FACE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -34,12 +36,12 @@ namespace Hope::GL {
             /**
              * Create a new FrontFace instance.
              */
-            FrontFace() : Capability(CapabilityType::FrontFace) {}
+            exported FrontFace() : Capability(CapabilityType::FrontFace) {}
 
             /**
              * Set the buffer index.
              */
-            void setOrientation(const Orientation orientation) {
+            exported void setOrientation(const Orientation orientation) {
                 m_orientation = orientation ;
             }
 

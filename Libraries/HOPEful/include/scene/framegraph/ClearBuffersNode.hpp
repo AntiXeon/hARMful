@@ -1,6 +1,8 @@
 #ifndef __HOPE__CLEAR_BUFFERS__
 #define __HOPE__CLEAR_BUFFERS__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <HopeAPI.hpp>
 
@@ -26,7 +28,7 @@ namespace Hope {
             /**
              * Create a new ClearBuffersNode.
              */
-            ClearBuffersNode(
+            exported ClearBuffersNode(
                 const API::BufferClearer::Buffer buffers,
                 Hope::FrameGraphNode* parent = nullptr
             ) : FrameGraphNode(parent),
@@ -35,7 +37,7 @@ namespace Hope {
             /**
              * The buffers to clear.
              */
-            API::BufferClearer::Buffer buffers() {
+            exported API::BufferClearer::Buffer buffers() {
                 return m_buffers ;
             }
 

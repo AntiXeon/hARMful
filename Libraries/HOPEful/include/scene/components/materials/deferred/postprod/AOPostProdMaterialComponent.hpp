@@ -1,6 +1,8 @@
 #ifndef __HOPE__AO_POST_PROD_MATERIAL_COMPONENT__
 #define __HOPE__AO_POST_PROD_MATERIAL_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
@@ -31,7 +33,7 @@ namespace Hope {
              * @param framebufferNode   Node bearing the framebuffer containing
              *                          the result of deferred rendering.
              */
-            AOPostProdMaterialComponent(const FramebufferRenderNode* framebufferNode) ;
+            exported AOPostProdMaterialComponent(const FramebufferRenderNode* framebufferNode) ;
 
             /**
              * Update the uniform values before the processing of the material

@@ -47,7 +47,7 @@ bool Shader::compile() {
     // Set the source code of the shader.
     glShaderSource(
         m_shaderID,
-        sourceCodes.size(),
+        static_cast<int>(sourceCodes.size()),
         &sourceCodes[0],
         nullptr
     ) ;

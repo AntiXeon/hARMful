@@ -1,6 +1,8 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_SHADOW_CASCADE__
 #define __HOPE__DIRECTIONAL_LIGHT_SHADOW_CASCADE__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -99,7 +101,7 @@ namespace Hope {
             /**
              * Create a new ShadowCascade instance.
              */
-            ShadowCascade(
+            exported ShadowCascade(
                 uint8_t cascadeIndex = 0,
                 Entity* cascadeRoot = nullptr,
                 OrthographicCameraComponent* computeCameraComponent = nullptr
@@ -117,14 +119,14 @@ namespace Hope {
             /**
              * Set the near plane for the current division.
              */
-            void setNearPlane(const float nearPlane) {
+            exported void setNearPlane(const float nearPlane) {
                 m_cascadeNearPlane = nearPlane ;
             }
 
             /**
              * Set the far plane for the current division.
              */
-            void setFarPlane(const float farPlane) {
+            exported void setFarPlane(const float farPlane) {
                 m_cascadeFarPlane = farPlane ;
             }
 
@@ -140,28 +142,28 @@ namespace Hope {
             /**
              * Near plane of the current shadow cascade.
              */
-            float nearPlane() const {
+            exported float nearPlane() const {
                 return m_cascadeNearPlane ;
             }
 
             /**
              * Far plane of the current shadow cascade.
              */
-            float farPlane() const {
+            exported float farPlane() const {
                 return m_cascadeFarPlane ;
             }
 
             /**
              * Near plane of the current shadow cascade.
              */
-            float relativeNearPlane() const {
+            exported float relativeNearPlane() const {
                 return m_relativeCascadeNearPlane ;
             }
 
             /**
              * Far plane of the current shadow cascade.
              */
-            float relativeFarPlane() const {
+            exported float relativeFarPlane() const {
                 return m_relativeCascadeFarPlane ;
             }
 

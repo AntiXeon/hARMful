@@ -1,6 +1,8 @@
 #ifndef __HOPE__ABSTRACT_MATERIAL__
 #define __HOPE__ABSTRACT_MATERIAL__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
 #include <scene/framegraph/shading/ShaderValue.hpp>
@@ -51,20 +53,20 @@ namespace Hope {
              * Create a MaterialComponent.
              * @param   drawShadow  true to draw a shadow; false otherwise.
              */
-            MaterialComponent(const bool drawShadow = true) ;
+            exported MaterialComponent(const bool drawShadow = true) ;
 
             /**
              * Update the uniform values before the processing of the material
              * component.
              */
-            virtual void updateUniformValues() = 0 ;
+            exported virtual void updateUniformValues() = 0 ;
 
             /**
              * To know if the component can be shared by several entities.
              * @return  true as it can be shared among several objects that are
              *          rendered the same way.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return true ;
             }
 
@@ -72,7 +74,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  false, the component cannot be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return false ;
             }
 
@@ -81,7 +83,7 @@ namespace Hope {
              * by a single entity.
              * @return  true, an entity can bear several MaterialComponent.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return true ;
             }
 
@@ -89,7 +91,7 @@ namespace Hope {
              * Check if the material has a render pass corresponding the
              * provided ID.
              */
-            bool hasRenderPass(const RenderPassID passID) const {
+            exported bool hasRenderPass(const RenderPassID passID) const {
                 return m_effect.hasRenderPass(passID) ;
             }
 
@@ -98,51 +100,51 @@ namespace Hope {
              * @return  The render pass having the provided ID if available;
              *          nullptr otherwise.
              */
-            API::RenderPass* renderPass(const RenderPassID passID) const {
+            exported API::RenderPass* renderPass(const RenderPassID passID) const {
                 return m_effect.renderPass(passID) ;
             }
 
             /**
              * Get the shader uniforms.
              */
-            const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
+            exported const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
                 return m_uniforms.pointers() ;
             }
 
             /**
              * Get the settings of the material.
              */
-            MaterialSettings& settings() { return m_settings ; }
+            exported MaterialSettings& settings() { return m_settings ; }
 
         protected:
             /**
              * Get the effect of the material.
              */
-            RenderEffect& effect() {
+            exported RenderEffect& effect() {
                 return m_effect ;
             }
 
             /**
              * Get the unoforms of the material.
              */
-            UniformCache& uniforms() {
+            exported UniformCache& uniforms() {
                 return m_uniforms ;
             }
 
             /**
              * Setup the render passes of the material.
              */
-            void setupRendering() ;
+            exported void setupRendering() ;
 
             /**
              * Setup the shader for the forward rendering pass.
              */
-            virtual void setupForwardShader() = 0 ;
+            exported virtual void setupForwardShader() = 0 ;
 
             /**
              * Setup the shader for the deferred rendering pass.
              */
-            virtual void setupDeferredShader() = 0 ;
+            exported virtual void setupDeferredShader() = 0 ;
 
         private:
             /**

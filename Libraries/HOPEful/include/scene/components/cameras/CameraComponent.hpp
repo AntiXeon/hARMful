@@ -1,6 +1,8 @@
 #ifndef __HOPE__CAMERA_COMPONENT__
 #define __HOPE__CAMERA_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/Component.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
@@ -105,12 +107,12 @@ namespace Hope {
             /**
              * Create a new CameraComponent.
              */
-            CameraComponent() ;
+            exported CameraComponent() ;
 
             /**
              * Update the camera.
              */
-            virtual void update() {
+            exported virtual void update() {
                 lookAt(m_target) ;
             }
 
@@ -118,7 +120,7 @@ namespace Hope {
              * To know if the component can be shared by several entities.
              * @return  false, the CameraComponent cannot be shared.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return false ;
             }
 
@@ -126,7 +128,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  true, the component can be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return true ;
             }
 
@@ -135,7 +137,7 @@ namespace Hope {
              * by a single entity.
              * @return  false, an entity can only bear one CameraComponent.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return false ;
             }
 
@@ -146,14 +148,14 @@ namespace Hope {
              *          (and so computed on CPU side); false to limit the amount
              *          of data to compute and to send to shaders.
              */
-            virtual bool requireFullDataUpdate() const {
+            exported virtual bool requireFullDataUpdate() const {
                 return true ;
             }
 
             /**
              * Set the near plane distance of the camera frustum.
              */
-            void setNearPlaneDistance(const float distance) {
+            exported void setNearPlaneDistance(const float distance) {
                 if (m_nearPlaneDistance != distance) {
                     m_projectionChanged = true ;
                     m_nearPlaneDistance = distance ;
@@ -163,7 +165,7 @@ namespace Hope {
             /**
              * Set the far plane distance of the camera frustum.
              */
-            void setFarPlaneDistance(const float distance) {
+            exported void setFarPlaneDistance(const float distance) {
                 if (m_farPlaneDistance != distance) {
                     m_projectionChanged = true ;
                     m_farPlaneDistance = distance ;
@@ -174,88 +176,88 @@ namespace Hope {
              * Set the up vector of the camera. The up vector is normalized.
              * Default is Y-up.
              */
-            void setUpVector(const Mind::Vector3f& up) ;
+            exported void setUpVector(const Mind::Vector3f& up) ;
 
             /**
              * Generate the view matrix.
              * @param   target      Center of the camera view.
              */
-            void lookAt(const Mind::Vector3f& target) ;
+            exported void lookAt(const Mind::Vector3f& target) ;
 
             /**
              * Get the near plane distance of the camera frustum.
              */
-            float nearPlaneDistance() const {
+            exported float nearPlaneDistance() const {
                 return m_nearPlaneDistance ;
             }
 
             /**
              * Get the far plane distance of the camera frustum.
              */
-            float farPlaneDistance() const {
+            exported float farPlaneDistance() const {
                 return m_farPlaneDistance ;
             }
 
             /**
              * Get the target of the camera.
              */
-            const Mind::Vector3f& target() const {
+            exported const Mind::Vector3f& target() const {
                 return m_target ;
             }
 
             /**
              * Get the view direction of the camera.
              */
-            const Mind::Vector3f& viewDirection() const {
+            exported const Mind::Vector3f& viewDirection() const {
                 return m_viewDirection ;
             }
 
             /**
              * Get the right axis of the camera.
              */
-            const Mind::Vector3f& rightAxis() const {
+            exported const Mind::Vector3f& rightAxis() const {
                 return m_rightAxis ;
             }
 
             /**
              * Get the up vector of the camera as defined.
              */
-            const Mind::Vector3f& up() const {
+            exported const Mind::Vector3f& up() const {
                 return m_up ;
             }
 
             /**
              * Get the up vector of the camera as it is oriented with the camera.
              */
-            Mind::Vector3f upOriented() {
+            exported Mind::Vector3f upOriented() {
                 return m_viewDirection.cross(m_rightAxis) ;
             }
 
             /**
              * Set the clear color of the camera.
              */
-            void setClearColor(const Color& color) {
+            exported void setClearColor(const Color& color) {
                 m_clearColor = color ;
             }
 
             /**
              * Get the clear color of the camera.
              */
-            const Color& clearColor() const {
+            exported const Color& clearColor() const {
                 return m_clearColor ;
             }
 
             /**
              * Get the view matrix.
              */
-            const Mind::Matrix4x4f& viewMatrix() const {
+            exported const Mind::Matrix4x4f& viewMatrix() const {
                 return m_viewMatrix ;
             }
 
             /**
              * Get the field of view of the camera.
              */
-            virtual float fov() const = 0 ;
+            exported virtual float fov() const = 0 ;
 
             /**
              * Get the projection matrix.
@@ -266,7 +268,7 @@ namespace Hope {
              *          parameter value for a convenient use.
              * @warning Clear any change in the projection matrix value.
              */
-            Mind::Matrix4x4f& projectionMatrix(
+            exported Mind::Matrix4x4f& projectionMatrix(
                 Mind::Matrix4x4f& projection,
                 const float aspectRatio
             ) ;
@@ -274,7 +276,7 @@ namespace Hope {
             /**
              * To know if the projection matrix needs to be updated.
              */
-            bool projectionChanged() const {
+            exported bool projectionChanged() const {
                 return m_projectionChanged ;
             }
 
@@ -283,7 +285,7 @@ namespace Hope {
              * Set the view matrix in an other way than computed from the
              * lookAt() method.
              */
-            void setViewMatrix(const Mind::Matrix4x4f& matrix) {
+            exported void setViewMatrix(const Mind::Matrix4x4f& matrix) {
                 m_viewMatrix = matrix ;
             }
 
@@ -292,7 +294,7 @@ namespace Hope {
              * entity.
              * @param   entity  Entity to attach the component to.
              */
-            void onAttach(Entity* entity) override ;
+            exported void onAttach(Entity* entity) override ;
 
             /**
              * Compute the projection matrix.
@@ -302,7 +304,7 @@ namespace Hope {
              * @return  The computed projection, same result as the given
              *          parameter value for a convenient use.
              */
-            virtual void computeProjectionMatrix(
+            exported virtual void computeProjectionMatrix(
                 Mind::Matrix4x4f& projection,
                 const float aspectRatio
             ) const = 0 ;
@@ -311,7 +313,7 @@ namespace Hope {
              * Notify when a value has been updated and the projection matrix
              * needs to be computed again.
              */
-            void notifyProjectionChange() {
+            exported void notifyProjectionChange() {
                 m_projectionChanged = true ;
             }
     } ;

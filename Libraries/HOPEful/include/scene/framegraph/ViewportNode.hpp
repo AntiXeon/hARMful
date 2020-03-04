@@ -1,6 +1,8 @@
 #ifndef __HOPE__VIEWPORT__
 #define __HOPE__VIEWPORT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
@@ -30,14 +32,14 @@ namespace Hope {
             /**
              * Create a new ViewportNode node.
              */
-            ViewportNode(Hope::FrameGraphNode* parent = nullptr)
+            exported ViewportNode(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
 
             /**
              * Set the position of the top left corner of the viewport in
              * relative value (between 0 and 1).
              */
-            void setPosition(const Mind::Point2Df& position) {
+            exported void setPosition(const Mind::Point2Df& position) {
                 const float MinValue = 0.f ;
                 const float MaxValue = 1.f ;
 
@@ -49,7 +51,7 @@ namespace Hope {
             /**
              * Set the dimension of the viewport.
              */
-            void setDimension(const Mind::Dimension2Df& dimension) {
+            exported void setDimension(const Mind::Dimension2Df& dimension) {
                 const float MinValue = 0.f ;
                 const float MaxValue = 1.f ;
 
@@ -62,14 +64,14 @@ namespace Hope {
              * Get the position of the top left corner of the viewport in
              * relative value (between 0 and 1).
              */
-            Mind::Point2Df position() {
+            exported Mind::Point2Df position() {
                 return m_position ;
             }
 
             /**
              * Get the dimension of the viewport.
              */
-            Mind::Dimension2Df dimension() {
+            exported Mind::Dimension2Df dimension() {
                 return m_dimension ;
             }
 

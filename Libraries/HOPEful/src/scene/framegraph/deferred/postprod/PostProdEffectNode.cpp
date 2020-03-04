@@ -25,8 +25,8 @@ void PostProdEffectNode::postAccept() {
             Mind::Rectangle2Df(
                 0,
                 0,
-                framebuffer -> width(),
-                framebuffer -> height()
+                static_cast<Mind::Scalar>(framebuffer -> width()),
+                static_cast<Mind::Scalar>(framebuffer -> height())
             )
         )
         .setDestinationFBO(framebuffer)
@@ -35,8 +35,8 @@ void PostProdEffectNode::postAccept() {
             Mind::Rectangle2Df(
                 0,
                 0,
-                framebuffer -> width(),
-                framebuffer -> height()
+                static_cast<Mind::Scalar>(framebuffer -> width()),
+                static_cast<Mind::Scalar>(framebuffer -> height())
             )
         )
         .setMask(API::FramebufferBlitter::Mask::ColorBuffer)

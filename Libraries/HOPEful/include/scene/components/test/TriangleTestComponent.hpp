@@ -1,6 +1,8 @@
 #ifndef __HOPE__TRIANGLE_TEST_MESH_COMPONENT__
 #define __HOPE__TRIANGLE_TEST_MESH_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <array>
 #include <scene/components/Component.hpp>
 #include <HopeAPI.hpp>
@@ -45,18 +47,18 @@ namespace Hope {
             /**
              * Create a new TriangleTestComponent.
              */
-            TriangleTestComponent() ;
+            exported TriangleTestComponent() ;
 
             /**
              * Render the TriangleTestComponent.
              */
-            void render() ;
+            exported void render() ;
 
             /**
              * To know if the component can be shared by several entities.
              * @return  true, the TriangleTestComponent can be shared.
              */
-            bool isShareable() const override {
+            exported bool isShareable() const override {
                 return true ;
             }
 
@@ -64,7 +66,7 @@ namespace Hope {
              * To know if the component can be removed from its entity(-ies).
              * @return  true, the component can be removed.
              */
-            bool isRemovable() const override {
+            exported bool isRemovable() const override {
                 return true ;
             }
 
@@ -74,7 +76,7 @@ namespace Hope {
              * @return  false, an entity can only bear one
              *          TriangleTestComponent.
              */
-            bool isStackable() const override {
+            exported bool isStackable() const override {
                 return false ;
             }
     } ;

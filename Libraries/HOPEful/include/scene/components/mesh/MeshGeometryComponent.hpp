@@ -1,6 +1,8 @@
 #ifndef __HOPE__MESH_GEOMETRY_COMPONENT__
 #define __HOPE__MESH_GEOMETRY_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/mesh/GeometryComponent.hpp>
 #include <HopeAPI.hpp>
 
@@ -32,17 +34,17 @@ namespace Hope {
             /**
              * Creation of a MeshGeometryComponent.
              */
-            MeshGeometryComponent(API::MeshGeometry* geometry) ;
+            exported MeshGeometryComponent(API::MeshGeometry* geometry) ;
 
             /**
              * Destruction of the MeshGeometryComponent.
              */
-            virtual ~MeshGeometryComponent() ;
+            exported virtual ~MeshGeometryComponent() ;
 
             /**
              * Get the geometry.
              */
-            const API::Geometry* geometry() const override {
+            exported const API::Geometry* geometry() const override {
                 return m_geometry ;
             }
 

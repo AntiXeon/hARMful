@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_VERTEX__
 #define __HOPE__GL_VERTEX__
 
+#include <utils/Platform.hpp>
+
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <vector>
@@ -51,7 +53,7 @@ namespace Hope::GL {
             /**
              * Create a new vertex.
              */
-            Vertex(
+            exported Vertex(
                 const Mind::Vector3f& pos,
                 const Mind::Vector2f& tex,
                 const Mind::Vector3f& normal,
@@ -67,7 +69,7 @@ namespace Hope::GL {
              * 5,6,7    => normal(X,Y,Z)
              * 8,9,10   => tangent(X,Y,Z)
              */
-            std::vector<float>& data() {
+            exported std::vector<float>& data() {
                 return m_data ;
             }
     };

@@ -97,7 +97,7 @@ namespace Mind {
 
     /** Echo the matrix on console. */
     template<class T>
-    std::ostream& operator<<(std::ostream& s, Matrix2D<T>& mat) ;
+    exported std::ostream& operator<<(std::ostream& s, Matrix2D<T>& mat) ;
 
 
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__POINT_LIGHT_COMPONENT__
 #define __HOPE__POINT_LIGHT_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/lights/LightComponent.hpp>
 #include <algorithm>
 
@@ -35,12 +37,12 @@ namespace Hope {
             /**
              * Create a new PointLightComponent instance.
              */
-            PointLightComponent() ;
+            exported PointLightComponent() ;
 
             /**
              * Set the distance of the light effect.
              */
-            void setDistance(const float distance) {
+            exported void setDistance(const float distance) {
                 m_distance = distance ;
                 signalChange() ;
             }
@@ -49,7 +51,7 @@ namespace Hope {
              * Set the linear attenuation of the light effect. It is set between
              * 0 and 1.
              */
-            void setLinearAttenuation(const float attenuation) {
+            exported void setLinearAttenuation(const float attenuation) {
                 m_linearAttenuation = std::clamp(attenuation, 0.f, 1.f) ;
                 signalChange() ;
             }
@@ -58,7 +60,7 @@ namespace Hope {
              * Set the quadratic attenuation of the light effect. It is set
              * between 0 and 1.
              */
-            void setQuadraticAttenuation(const float attenuation) {
+            exported void setQuadraticAttenuation(const float attenuation) {
                 m_quadraticAttenuation = std::clamp(attenuation, 0.f, 1.f) ;
                 signalChange() ;
             }
@@ -66,21 +68,21 @@ namespace Hope {
             /**
              * Get the distance of the light effect.
              */
-            float distance() const {
+            exported float distance() const {
                 return m_distance ;
             }
 
             /**
              * Get the linear attenuation of the light effect.
              */
-            float linearAttenuation() const {
+            exported float linearAttenuation() const {
                 return m_linearAttenuation ;
             }
 
             /**
              * Get the quadratic attenuation of the light effect.
              */
-            float quadraticAttenuation() const {
+            exported float quadraticAttenuation() const {
                 return m_quadraticAttenuation ;
             }
     } ;

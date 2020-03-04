@@ -154,10 +154,10 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
 
     // Apply the viewport parameters.
     glViewport(
-        absolutePosition.get(Mind::Point2Df::X),
-        absolutePosition.get(Mind::Point2Df::Y),
-        m_projectionData.absoluteAreaWidth,
-        m_projectionData.absoluteAreaHeight
+        static_cast<int>(absolutePosition.get(Mind::Point2Df::X)),
+        static_cast<int>(absolutePosition.get(Mind::Point2Df::Y)),
+        static_cast<int>(m_projectionData.absoluteAreaWidth),
+        static_cast<int>(m_projectionData.absoluteAreaHeight)
     ) ;
 
     // Compute the viewport matrices.
@@ -305,8 +305,8 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     }
     else {
         const Framebuffer* offscreenFramebuffer = offscreen -> framebuffer() ;
-        float width = offscreenFramebuffer -> width() ;
-        float height = offscreenFramebuffer -> height() ;
+        float width = static_cast<float>(offscreenFramebuffer -> width()) ;
+        float height = static_cast<float>(offscreenFramebuffer -> height()) ;
         aspectRatio = width / height ;
     }
 
@@ -329,7 +329,7 @@ void OpenGLFrameGraphVisitor::updateCameraSettings() {
     m_renderer.baseUBO().setFieldOfView(camera -> fov()) ;
     m_renderer.baseUBO().setNearPlaneDistance(camera -> nearPlaneDistance()) ;
     m_renderer.baseUBO().setFarPlaneDistance(camera -> farPlaneDistance()) ;
-    m_renderer.baseUBO().setTime(glfwGetTime()) ;
+    m_renderer.baseUBO().setTime(static_cast<float>(glfwGetTime())) ;
     m_renderer.baseUBO().setViewMatrix(viewMatrix) ;
 
     Mind::Matrix4x4f resultInverse ;

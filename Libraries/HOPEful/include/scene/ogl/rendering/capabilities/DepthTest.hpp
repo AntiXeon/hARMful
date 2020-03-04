@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_DEPTH_TEST__
 #define __HOPE__GL_CAPABILITY_DEPTH_TEST__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -26,7 +28,7 @@ namespace Hope::GL {
              /**
               * Create a new DepthTest instance.
               */
-             DepthTest() : Capability(CapabilityType::DepthTest) {}
+             exported DepthTest() : Capability(CapabilityType::DepthTest) {}
 
          private:
              /**
@@ -48,7 +50,7 @@ namespace Hope::GL {
              /**
               * Set the applied depth test function.
               */
-             void setFunction(const DepthFunction func) {
+             exported void setFunction(const DepthFunction func) {
                  m_function = func ;
              }
 

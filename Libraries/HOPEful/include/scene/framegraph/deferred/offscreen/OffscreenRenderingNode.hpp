@@ -1,6 +1,8 @@
 #ifndef __HOPE__OFFSCREEN_RENDERING__
 #define __HOPE__OFFSCREEN_RENDERING__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 #include <scene/framegraph/deferred/offscreen/OffscreenRenderingNode.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
@@ -24,7 +26,7 @@ namespace Hope {
              * @param   material    Material bearing the shader program to use
              *                      for performing the rendering.
              */
-            OffscreenRenderingNode(
+            exported OffscreenRenderingNode(
                 std::unique_ptr<MaterialComponent> material,
                 FrameGraphNode* parent = nullptr
             ) ;
@@ -33,7 +35,7 @@ namespace Hope {
              * Material bearing the shader program to use for performing the
              * rendering.
              */
-            MaterialComponent* material() const {
+            exported MaterialComponent* material() const {
                 return m_material.get() ;
             }
 
@@ -41,7 +43,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

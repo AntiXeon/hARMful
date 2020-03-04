@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_CAPABILITY_LINE_WIDTH__
 #define __HOPE__GL_CAPABILITY_LINE_WIDTH__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
 
 namespace Hope::GL {
@@ -29,20 +31,20 @@ namespace Hope::GL {
             /**
              * Create a new LineWidth instance.
              */
-            LineWidth() : Capability(CapabilityType::LineWidth) {}
+            exported LineWidth() : Capability(CapabilityType::LineWidth) {}
 
             /**
              * Set the antialising of the width.
              * Default value if true.
              */
-            void setAntialiasing(const bool isEnabled) {
+            exported void setAntialiasing(const bool isEnabled) {
                 m_isAntialiased = isEnabled ;
             }
 
             /**
              * Set the line width.
              */
-            void setWidth(const float width) {
+            exported void setWidth(const float width) {
                 m_width = width ;
             }
 

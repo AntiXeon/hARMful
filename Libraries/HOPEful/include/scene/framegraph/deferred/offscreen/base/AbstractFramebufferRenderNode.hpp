@@ -1,6 +1,8 @@
 #ifndef __HOPE__ABSTRACT_FRAMEBUFFER_RENDER__
 #define __HOPE__ABSTRACT_FRAMEBUFFER_RENDER__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -38,7 +40,7 @@ namespace Hope {
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
-            AbstractFramebufferRenderNode(
+            exported AbstractFramebufferRenderNode(
                 const bool windowSize,
                 FrameGraphNode* parent = nullptr
             ) ;
@@ -49,7 +51,7 @@ namespace Hope {
              * @param   other   Other AbstractFramebufferRenderNode to edit
              *                  framebuffer.
              */
-            AbstractFramebufferRenderNode(
+            exported AbstractFramebufferRenderNode(
                 AbstractFramebufferRenderNode* other,
                 FrameGraphNode* parent
             ) ;
@@ -57,18 +59,18 @@ namespace Hope {
             /**
              * Get the framebuffer.
              */
-            virtual API::Framebuffer* framebuffer() = 0 ;
+            exported virtual API::Framebuffer* framebuffer() = 0 ;
 
             /**
              * Get the framebuffer.
              */
-            virtual const API::Framebuffer* framebuffer() const = 0 ;
+            exported virtual const API::Framebuffer* framebuffer() const = 0 ;
 
             /**
              * If true, the size of the framebuffer follows the size of the
              * window. If false, the size of the framebuffer is fixed.
              */
-            bool windowSize() const {
+            exported bool windowSize() const {
                 return m_windowSize ;
             }
 
@@ -82,12 +84,12 @@ namespace Hope {
             /**
              * Set up the attachments to the framebuffer.
              */
-            virtual void setup() {}
+            exported virtual void setup() {}
 
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__DIRECTIONAL_LIGHT_COMPONENT__
 #define __HOPE__DIRECTIONAL_LIGHT_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/lights/LightComponent.hpp>
 
 namespace Hope {
@@ -25,12 +27,12 @@ namespace Hope {
             /**
              * Create a new DirectionalLightComponent.
              */
-            DirectionalLightComponent() ;
+            exported DirectionalLightComponent() ;
 
             /**
              * Set the direction of the light.
              */
-            void setDirection(const Mind::Vector3f& direction) {
+            exported void setDirection(const Mind::Vector3f& direction) {
                 m_direction = direction ;
                 m_direction.normalize() ;
                 signalChange() ;
@@ -39,7 +41,7 @@ namespace Hope {
             /**
              * Set the direction of the light.
              */
-            void setDirection(const float x, const float y, const float z) {
+            exported void setDirection(const float x, const float y, const float z) {
                 m_direction = Mind::Vector3f(x, y, z) ;
                 signalChange() ;
             }
@@ -47,7 +49,7 @@ namespace Hope {
             /**
              * Get the direction of the light.
              */
-            const Mind::Vector3f& direction() const {
+            exported const Mind::Vector3f& direction() const {
                 return m_direction ;
             }
     } ;

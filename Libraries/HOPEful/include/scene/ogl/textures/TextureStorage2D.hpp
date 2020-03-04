@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_TEXTURE_STORAGE_2D__
 #define __HOPE__GL_TEXTURE_STORAGE_2D__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/textures/Texture.hpp>
 
 namespace Hope::GL {
@@ -29,7 +31,7 @@ namespace Hope::GL {
              * @param   internalFormat  Number of color components in the
              *                          texture.
              */
-            TextureStorage2D(
+            exported TextureStorage2D(
                 const Mind::Dimension2Di& size,
                 const InternalFormat internalFormat
             ) ;
@@ -39,12 +41,12 @@ namespace Hope::GL {
              * @param   size        The new size to apply.
              * @param   pixelData   Pixel data that fit the new size.
              */
-            void resize(const Mind::Dimension2Di& size) ;
+            exported void resize(const Mind::Dimension2Di& size) ;
 
             /**
              * Set the wrap mode for each dimension of the texture.
              */
-            void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
+            exported void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;
     } ;
 }
 

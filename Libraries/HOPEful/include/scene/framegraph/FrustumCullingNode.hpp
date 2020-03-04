@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRUSTUM_CULLING__
 #define __HOPE__FRUSTUM_CULLING__
 
+#include <utils/Platform.hpp>
+
 #include <scene/FrameGraphNode.hpp>
 
 namespace Hope {
@@ -21,7 +23,7 @@ namespace Hope {
             /**
              * Create a new FrustumCullingNode node.
              */
-            FrustumCullingNode(Hope::FrameGraphNode* parent = nullptr)
+            exported FrustumCullingNode(Hope::FrameGraphNode* parent = nullptr)
                 : Hope::FrameGraphNode(parent) {}
 
         protected:

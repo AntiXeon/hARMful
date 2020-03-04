@@ -1,6 +1,8 @@
 #ifndef __HOPE__SCREEN_SPACE_AMBIENT_OCCLUSION_BLUR_MATERIAL_COMPONENT__
 #define __HOPE__SCREEN_SPACE_AMBIENT_OCCLUSION_BLUR_MATERIAL_COMPONENT__
 
+#include <utils/Platform.hpp>
+
 #include <HopeAPI.hpp>
 
 #ifdef OGL
@@ -35,7 +37,7 @@ namespace Hope {
              * @param   aoBuffer    Buffer containing the ambient occlusion data
              *                      to copy.
              */
-            SSAOBlurMaterialComponent(const AbstractFramebufferRenderNode* aoBuffer) ;
+            exported SSAOBlurMaterialComponent(const AbstractFramebufferRenderNode* aoBuffer) ;
 
             /**
              * Update the uniform values before the processing of the material
