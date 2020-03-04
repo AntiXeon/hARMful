@@ -213,7 +213,7 @@ namespace Hope {
             /**
              * Update the Entity state for edition (add/remove Component).
              */
-            void setRenderState(const bool running) {
+            exported void setRenderState(const bool running) {
                 if (running && m_isLocked) {
                     m_isEditable = false ;
                 }

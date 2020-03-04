@@ -53,7 +53,7 @@ namespace Hope {
              * @return  The computed projection, same result as the given
              *          parameter value for a convenient use.
              */
-            void computeProjectionMatrix(
+            exported void computeProjectionMatrix(
                 Mind::Matrix4x4f& projection,
                 const float
             ) const {
@@ -64,7 +64,7 @@ namespace Hope {
             /**
              * Set the projection matrix.
              */
-            void setProjectionMatrix(const Mind::Matrix4x4f& projection) {
+            exported void setProjectionMatrix(const Mind::Matrix4x4f& projection) {
                 m_projectionMatrix = projection ;
                 notifyProjectionChange() ;
             }

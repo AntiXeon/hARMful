@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_FRAMEBUFFER_2D_MULTISAMPLE__
 #define __HOPE__GL_FRAMEBUFFER_2D_MULTISAMPLE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/textures/TextureImage2DMultisample.hpp>
@@ -52,13 +54,13 @@ namespace Hope::GL {
             /**
              * Create a new Framebuffer2D instance.
              */
-            Framebuffer2DMultisample() ;
+            exported Framebuffer2DMultisample() ;
 
             /**
              * Create a new Framebuffer2D instance with a predefined size.
              * @param   size    Size of the framebuffer attachments in pixels.
              */
-            Framebuffer2DMultisample(
+            exported Framebuffer2DMultisample(
                 const Mind::Dimension2Di& size,
                 const int samples = DefaultSampleAmount
             ) ;
@@ -67,7 +69,7 @@ namespace Hope::GL {
              * Resize the framebuffer.
              * @param   newSize Size of the framebuffer attachments in pixels.
              */
-            void resize(const Mind::Dimension2Di& newSize) override ;
+            exported void resize(const Mind::Dimension2Di& newSize) override ;
 
             /**
              * Attach a color texture to the framebuffer.
@@ -84,7 +86,7 @@ namespace Hope::GL {
              * @param   pixelDataFormat Unused.
              * @param   pixelDataType   Unused.
              */
-            void attachColor(
+            exported void attachColor(
                 const unsigned char attachmentIndex,
                 const InternalFormat internalFormat,
                 const PixelFormat pixelDataFormat,
@@ -103,7 +105,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachColor(
+            exported void attachColor(
                 const unsigned char attachmentIndex,
                 const Texture* texture
             ) override ;
@@ -111,120 +113,120 @@ namespace Hope::GL {
             /**
              * Attach the depth buffer.
              */
-            void attachDepth() override ;
+            exported void attachDepth() override ;
 
             /**
              * Attach the depth buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepth(const Texture* texture) override ;
+            exported void attachDepth(const Texture* texture) override ;
 
             /**
              * Attach the stencil buffer.
              */
-            void attachStencil() override ;
+            exported void attachStencil() override ;
 
             /**
              * Attach the stencil buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachStencil(const Texture* texture) override ;
+            exported void attachStencil(const Texture* texture) override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
              */
-            void attachDepthStencil() override ;
+            exported void attachDepthStencil() override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepthStencil(const Texture* texture) override ;
+            exported void attachDepthStencil(const Texture* texture) override ;
 
             /**
              * Bind the color attachment.
              */
-            void bindUnitColor(const unsigned char attachmentIndex) const override {
+            exported void bindUnitColor(const unsigned char attachmentIndex) const override {
                 m_colorAttachments[attachmentIndex] -> bindUnit(attachmentIndex) ;
             }
 
             /**
              * Bind the depth attachment.
              */
-            void bindUnitDepth(const unsigned char unit) const override {
+            exported void bindUnitDepth(const unsigned char unit) const override {
                 m_depthAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the stencil attachment.
              */
-            void bindUnitStencil(const unsigned char unit) const override {
+            exported void bindUnitStencil(const unsigned char unit) const override {
                 m_stencilAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the depth+stencil attachment.
              */
-            void bindUnitDepthStencil(const unsigned char unit) const override {
+            exported void bindUnitDepthStencil(const unsigned char unit) const override {
                 m_depthStencilAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Unbind the color attachment.
              */
-            void unbindUnitColor(const unsigned char attachmentIndex) const override {
+            exported void unbindUnitColor(const unsigned char attachmentIndex) const override {
                 m_colorAttachments[attachmentIndex] -> unbindUnit(attachmentIndex) ;
             }
 
             /**
              * Unbind the depth attachment.
              */
-            void unbindUnitDepth(const unsigned char unit) const override {
+            exported void unbindUnitDepth(const unsigned char unit) const override {
                 m_depthAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Unbind the stencil attachment.
              */
-            void unbindUnitStencil(const unsigned char unit) const override {
+            exported void unbindUnitStencil(const unsigned char unit) const override {
                 m_stencilAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Unbind the depth+stencil attachment.
              */
-            void unbindUnitDepthStencil(const unsigned char unit) const override {
+            exported void unbindUnitDepthStencil(const unsigned char unit) const override {
                 m_depthStencilAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Get the size of the framebuffer in pixels.
              */
-            const Mind::Dimension2Di& size() const {
+            exported const Mind::Dimension2Di& size() const {
                 return m_size ;
             }
 
             /**
              * Get the framebuffer width.
              */
-            int width() const override {
+            exported int width() const override {
                 return m_size.width() ;
             }
 
             /**
              * Get the framebuffer height.
              */
-            int height() const override {
+            exported int height() const override {
                 return m_size.height() ;
             }
 
             /**
              * Amount of samples.
              */
-            int samples() const {
+            exported int samples() const {
                 return m_samples ;
             }
 
@@ -232,28 +234,28 @@ namespace Hope::GL {
              * Get the wanted color attachment.
              * @param   attachmentIndex Attachment index.
              */
-            const Texture* colorAttachment(const unsigned char attachmentIndex) const override {
+            exported const Texture* colorAttachment(const unsigned char attachmentIndex) const override {
                 return m_colorAttachments[attachmentIndex].get() ;
             }
 
             /**
              * Get the depth attachment.
              */
-            const Texture* depthAttachment() const override {
+            exported const Texture* depthAttachment() const override {
                 return m_depthAttachment.get() ;
             }
 
             /**
              * Get the stencil attachment.
              */
-            const Texture* stencilAttachment() const override {
+            exported const Texture* stencilAttachment() const override {
                 return m_stencilAttachment.get() ;
             }
 
             /**
              * Get the depth & stencil attachment.
              */
-            const Texture* depthStencilAttachment() const override {
+            exported const Texture* depthStencilAttachment() const override {
                 return m_depthStencilAttachment.get() ;
             }
     } ;

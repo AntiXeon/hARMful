@@ -110,7 +110,7 @@ namespace Hope {
             /**
              * Update the cascade data.
              */
-            void update(
+            exported void update(
                 CameraComponent* renderCam,
                 const DirectionalLightComponent* light,
                 std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners/2>& frustumCornersWorld
@@ -133,7 +133,7 @@ namespace Hope {
             /**
              * Set up the framegraph subtree.
              */
-            void setupFramegraph(
+            exported void setupFramegraph(
                 FrameGraphNode* owner,
                 ActiveCameraNode* renderingCamera,
                 API::Framebuffer2DStack* framebuffer
@@ -170,14 +170,14 @@ namespace Hope {
             /**
              * Get the view matrix of the current shadow cascade.
              */
-            const Mind::Matrix4x4f& viewMatrix() const {
+            exported const Mind::Matrix4x4f& viewMatrix() const {
                 return m_lightViewMatrix ;
             }
 
             /**
              * Get the projection matrix of the current shadow cascade.
              */
-            const Mind::Matrix4x4f& projectionMatrix() const {
+            exported const Mind::Matrix4x4f& projectionMatrix() const {
                 return m_lightProjectionMatrix ;
             }
 
@@ -185,7 +185,7 @@ namespace Hope {
             /**
              * Update the view matrix of the cascade.
              */
-            void updateLightViewMatrix(
+            exported void updateLightViewMatrix(
                 const Mind::Vector3f& lightPosition,
                 const Mind::Vector3f& lightDirection
             ) ;
@@ -193,7 +193,7 @@ namespace Hope {
             /**
              * Update the projection matrix of the cascade.
              */
-            void updateLightProjectionMatrix(
+            exported void updateLightProjectionMatrix(
                 const std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners>& frustumCornersWorld
             ) ;
     } ;

@@ -1,6 +1,8 @@
 #ifndef __HOPE__RENDER_CONDITION_AGGREGATOR__
 #define __HOPE__RENDER_CONDITION_AGGREGATOR__
 
+#include <utils/Platform.hpp>
+
 #include <scene/framegraph/conditions/RenderCondition.hpp>
 
 namespace Hope {
@@ -23,7 +25,7 @@ namespace Hope {
              * By default, a RenderCondition (that checks if an entity is
              * active) is pushed. No need to add it so!
              */
-            RenderConditionAggregator() {
+            exported RenderConditionAggregator() {
                 RenderCondition defaultCondition ;
                 m_conditions.push_back(defaultCondition) ;
             }
@@ -31,7 +33,7 @@ namespace Hope {
             /**
              * Add a condition.
              */
-            void addCondition(const RenderCondition& condition) {
+            exported void addCondition(const RenderCondition& condition) {
                 m_conditions.push_back(condition) ;
             }
 
@@ -39,7 +41,7 @@ namespace Hope {
              * Check if all the conditions are respected for the provided
              * entity of the scene graph.
              */
-            bool check(const Entity* entity) const {
+            exported bool check(const Entity* entity) const {
                 bool isChecked = true ;
 
                 for (auto& condition : m_conditions) {
@@ -52,14 +54,14 @@ namespace Hope {
             /**
              * Clear all conditions.
              */
-            void clear() {
+            exported void clear() {
                 m_conditions.clear() ;
             }
 
             /**
              * Merge another aggregator into the current one.
              */
-            void merge(const RenderConditionAggregator& other) {
+            exported void merge(const RenderConditionAggregator& other) {
                 size_t totalSize = m_conditions.size() + other.m_conditions.size() ;
                 m_conditions.reserve(totalSize) ;
                 m_conditions.insert(

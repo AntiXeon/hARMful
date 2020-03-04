@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_FRAMEBUFFER_2D_STACK__
 #define __HOPE__GL_FRAMEBUFFER_2D_STACK__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/textures/TextureImage2DArray.hpp>
@@ -47,18 +49,18 @@ namespace Hope::GL {
             /**
              * Create a new Framebuffer2DStack instance.
              */
-            Framebuffer2DStack() ;
+            exported Framebuffer2DStack() ;
 
             /**
              * Create a new Framebuffer2DStack instance with a predefined size.
              * @param   size    Size of the framebuffer attachments in pixels.
              */
-            Framebuffer2DStack(const Mind::Dimension3Di& size) ;
+            exported Framebuffer2DStack(const Mind::Dimension3Di& size) ;
 
             /**
              * Set the layer to use on attachment.
              */
-            void setLayer(const GLint layer) {
+            exported void setLayer(const GLint layer) {
                 m_layer = layer ;
             }
 
@@ -66,13 +68,13 @@ namespace Hope::GL {
              * Resize the framebuffer.
              * @param   newSize Size of the framebuffer attachments in pixels.
              */
-            void resize(const Mind::Dimension2Di& newSize) override ;
+            exported void resize(const Mind::Dimension2Di& newSize) override ;
 
             /**
              * Resize the framebuffer.
              * @param   newSize Size of the framebuffer attachments in pixels.
              */
-            void resize(const Mind::Dimension3Di& newSize) ;
+            exported void resize(const Mind::Dimension3Di& newSize) ;
 
             /**
              * Attach a color texture to the framebuffer.
@@ -89,7 +91,7 @@ namespace Hope::GL {
              * @param   pixelDataFormat Pixel format of the attached texture.
              * @param   pixelDataType   Type of the pixels data.
              */
-            void attachColor(
+            exported void attachColor(
                 const unsigned char attachmentIndex,
                 const InternalFormat internalFormat,
                 const PixelFormat pixelDataFormat,
@@ -108,7 +110,7 @@ namespace Hope::GL {
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachColor(
+            exported void attachColor(
                 const unsigned char attachmentIndex,
                 const Texture* texture
             ) override ;
@@ -116,99 +118,99 @@ namespace Hope::GL {
             /**
              * Attach the depth buffer.
              */
-            void attachDepth() override ;
+            exported void attachDepth() override ;
 
             /**
              * Attach the depth buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepth(const Texture* texture) override ;
+            exported void attachDepth(const Texture* texture) override ;
 
             /**
              * Attach the stencil buffer.
              */
-            void attachStencil() override ;
+            exported void attachStencil() override ;
 
             /**
              * Attach the stencil buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachStencil(const Texture* texture) override ;
+            exported void attachStencil(const Texture* texture) override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
              */
-            void attachDepthStencil() override ;
+            exported void attachDepthStencil() override ;
 
             /**
              * Attach the combination of depth+stencil buffer.
              * @param   texture         The external texture to attach to the
              *                          framebuffer.
              */
-            void attachDepthStencil(const Texture* texture) override ;
+            exported void attachDepthStencil(const Texture* texture) override ;
 
             /**
              * Bind the color attachment.
              */
-            void bindUnitColor(const unsigned char attachmentIndex) const override {
+            exported void bindUnitColor(const unsigned char attachmentIndex) const override {
                 m_colorAttachments[attachmentIndex] -> bindUnit(attachmentIndex) ;
             }
 
             /**
              * Bind the depth attachment.
              */
-            void bindUnitDepth(const unsigned char unit) const override {
+            exported void bindUnitDepth(const unsigned char unit) const override {
                 m_depthAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the stencil attachment.
              */
-            void bindUnitStencil(const unsigned char unit) const override {
+            exported void bindUnitStencil(const unsigned char unit) const override {
                 m_depthAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Bind the depth+stencil attachment.
              */
-            void bindUnitDepthStencil(const unsigned char unit) const override {
+            exported void bindUnitDepthStencil(const unsigned char unit) const override {
                 return m_depthStencilAttachment -> bindUnit(unit) ;
             }
 
             /**
              * Unbind the color attachment.
              */
-            void unbindUnitColor(const unsigned char attachmentIndex) const override {
+            exported void unbindUnitColor(const unsigned char attachmentIndex) const override {
                 m_colorAttachments[attachmentIndex] -> unbindUnit(attachmentIndex) ;
             }
 
             /**
              * Unbind the depth attachment.
              */
-            void unbindUnitDepth(const unsigned char unit) const override {
+            exported void unbindUnitDepth(const unsigned char unit) const override {
                 m_depthAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Unbind the stencil attachment.
              */
-            void unbindUnitStencil(const unsigned char unit) const override {
+            exported void unbindUnitStencil(const unsigned char unit) const override {
                 m_stencilAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Unbind the depth+stencil attachment.
              */
-            void unbindUnitDepthStencil(const unsigned char unit) const override {
+            exported void unbindUnitDepthStencil(const unsigned char unit) const override {
                 m_depthStencilAttachment -> unbindUnit(unit) ;
             }
 
             /**
              * Bind a layer of the color buffer.
              */
-            void bindColorLayer(
+            exported void bindColorLayer(
                 const unsigned char attachmentIndex,
                 const GLint layer
             ) const {
@@ -224,7 +226,7 @@ namespace Hope::GL {
             /**
              * Bind a layer of the depth buffer.
              */
-            void bindDepthLayer(const GLint layer) const {
+            exported void bindDepthLayer(const GLint layer) const {
                 glFramebufferTextureLayer(
                     GL_FRAMEBUFFER,
                     GL_DEPTH_ATTACHMENT,
@@ -237,7 +239,7 @@ namespace Hope::GL {
             /**
              * Bind a layer of the stencil buffer.
              */
-            void bindStencilLayer(const GLint layer) const {
+            exported void bindStencilLayer(const GLint layer) const {
                 glFramebufferTextureLayer(
                     GL_FRAMEBUFFER,
                     GL_STENCIL_ATTACHMENT,
@@ -250,7 +252,7 @@ namespace Hope::GL {
             /**
              * Bind a layer of the depth+stencil buffer.
              */
-            void bindDepthStencilLayer(const GLint layer) const {
+            exported void bindDepthStencilLayer(const GLint layer) const {
                 glFramebufferTextureLayer(
                     GL_FRAMEBUFFER,
                     GL_DEPTH_STENCIL_ATTACHMENT,
@@ -264,56 +266,56 @@ namespace Hope::GL {
              * Get the wanted color attachment.
              * @param   attachmentIndex Attachment index.
              */
-            const Texture* colorAttachment(const unsigned char attachmentIndex) const override {
+            exported const Texture* colorAttachment(const unsigned char attachmentIndex) const override {
                 return m_colorAttachments[attachmentIndex].get() ;
             }
 
             /**
              * Get the depth attachment.
              */
-            const Texture* depthAttachment() const override {
+            exported const Texture* depthAttachment() const override {
                 return m_depthAttachment.get() ;
             }
 
             /**
              * Get the stencil attachment.
              */
-            const Texture* stencilAttachment() const override {
+            exported const Texture* stencilAttachment() const override {
                 return m_stencilAttachment.get() ;
             }
 
             /**
              * Get the depth & stencil attachment.
              */
-            const Texture* depthStencilAttachment() const override {
+            exported const Texture* depthStencilAttachment() const override {
                 return m_depthStencilAttachment.get() ;
             }
 
             /**
              * Get the size of the framebuffer in pixels.
              */
-            const Mind::Dimension3Di& size3D() const {
+            exported const Mind::Dimension3Di& size3D() const {
                 return m_size ;
             }
 
             /**
              * Get the framebuffer width.
              */
-            int width() const override {
+            exported int width() const override {
                 return m_size.width() ;
             }
 
             /**
              * Get the framebuffer height.
              */
-            int height() const override {
+            exported int height() const override {
                 return m_size.height() ;
             }
 
             /**
              * Get the framebuffer depth.
              */
-            int depth() const {
+            exported int depth() const {
                 return m_size.depth() ;
             }
     } ;

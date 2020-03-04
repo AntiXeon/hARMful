@@ -121,7 +121,7 @@ namespace Hope {
              * Compute the cascades shadow maps.
              * @param   aspectRatio Aspect ratio of the rendering camera.
              */
-            void computeCascadeShadowMaps(const float aspectRatio) ;
+            exported void computeCascadeShadowMaps(const float aspectRatio) ;
 
             /**
              * Get the source light.
@@ -156,14 +156,14 @@ namespace Hope {
              * Get the framebuffer containing the depth map from the directional
              * light.
              */
-            const API::Framebuffer2DStack* depthFramebuffer() const {
+            exported const API::Framebuffer2DStack* depthFramebuffer() const {
                 return m_framebuffer.get() ;
             }
 
             /**
              * Get a shadow cascade.
              */
-            const ShadowCascade& cascade(uint8_t index) const {
+            exported const ShadowCascade& cascade(uint8_t index) const {
                 return m_cascades[index] ;
             }
 
@@ -177,14 +177,14 @@ namespace Hope {
             /**
              * Get the type of the effect.
              */
-            EffectNodeType effectType() const override {
+            exported EffectNodeType effectType() const override {
                 return ShadowsEffectType ;
             }
 
             /**
              * Get the effect data of the node.
              */
-            EffectData* data() override {
+            exported EffectData* data() override {
                 return &m_effectData ;
             }
 
@@ -192,7 +192,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
 
         private:
             /**
@@ -200,7 +200,7 @@ namespace Hope {
              * map. This depth map is then used by shaders on the next render
              * pass to draw shadows.
              */
-            void generateSubtree() ;
+            exported void generateSubtree() ;
     } ;
 }
 

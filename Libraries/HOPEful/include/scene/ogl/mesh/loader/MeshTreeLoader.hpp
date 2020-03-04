@@ -91,7 +91,7 @@ namespace Hope::GL {
              * Initialize the mesh from the content of the Assimp scene
              * (= mesh with mesh part(s)).
              */
-            void generateNode(
+            exported void generateNode(
                 const aiScene* scene,
                 const aiNode* node,
                 Hope::Entity* entity
@@ -100,7 +100,7 @@ namespace Hope::GL {
             /**
              * Count the amount of vertices in all the meshes of the given node.
              */
-            size_t countMeshVertices(
+            exported size_t countMeshVertices(
                 const aiScene* scene,
                 const aiNode* node
             ) ;
@@ -109,7 +109,7 @@ namespace Hope::GL {
              * Load node data from the input file into a MeshGeometry.
              * @return  The MeshGeometry filled with all the geometry data.
              */
-            void loadNodeData(
+            exported void loadNodeData(
                 const aiScene* scene,
                 const aiNode* node,
                 Hope::Entity* entity
@@ -120,7 +120,7 @@ namespace Hope::GL {
              * MaterialComponent.
              * @return  Get the index of the material in the entity.
              */
-            uint32_t materialProcessing(
+            exported uint32_t materialProcessing(
                 const aiScene* scene,
                 const aiMesh* mesh,
                 Hope::Entity* entity
@@ -129,7 +129,7 @@ namespace Hope::GL {
             /**
              * Set up the transform of a mesh.
              */
-            void setupTransform(
+            exported void setupTransform(
                 const aiMatrix4x4& nodeMatrix,
                 Hope::Entity* entity
             ) ;

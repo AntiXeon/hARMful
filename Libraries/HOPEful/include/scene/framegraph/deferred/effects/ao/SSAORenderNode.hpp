@@ -97,42 +97,42 @@ namespace Hope {
              * Get the random texture that is used to sample ambient occlusion
              * all over the screen.
              */
-            const API::TextureImage2D* noiseTexture() const {
+            exported const API::TextureImage2D* noiseTexture() const {
                 return m_noiseTexture.get() ;
             }
 
             /**
              * Get the normal-oriented hemisphere kernel.
              */
-            const std::array<Mind::Vector3f, AO_KERNEL_SIZE>& kernel() const {
+            exported const std::array<Mind::Vector3f, AO_KERNEL_SIZE>& kernel() const {
                 return m_kernel ;
             }
 
             /**
              * Get the buffer containing the resulting ambient occlusion.
              */
-            AbstractFramebufferRenderNode* gBuffer() {
+            exported AbstractFramebufferRenderNode* gBuffer() {
                 return m_gBuffer ;
             }
 
             /**
              * Get the buffer containing the resulting ambient occlusion.
              */
-            AbstractFramebufferRenderNode* aoBuffer() {
+            exported AbstractFramebufferRenderNode* aoBuffer() {
                 return m_subtree.aoRendering.offscreen.get() ;
             }
 
             /**
              * Get the type of the effect.
              */
-            EffectNodeType effectType() const override {
+            exported EffectNodeType effectType() const override {
                 return AmbientOcclusionEffectType ;
             }
 
             /**
              * Get the effect data of the node.
              */
-            EffectData* data() override {
+            exported EffectData* data() override {
                 return &m_effectApplyData ;
             }
 
@@ -140,17 +140,17 @@ namespace Hope {
             /**
              * Generate the noise texture.
              */
-            void generateNoiseTexture() ;
+            exported void generateNoiseTexture() ;
 
             /**
              * Generate the AO kernel.
              */
-            void generateKernel() ;
+            exported void generateKernel() ;
 
             /**
              * Generate the subtree of the framegraph.
              */
-            void generateFramegraphSubtree() ;
+            exported void generateFramegraphSubtree() ;
     } ;
 }
 

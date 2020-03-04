@@ -6,8 +6,14 @@
         #define exported
     #elif _WIN32 || _WIN64
         #define WindowsPlatform
-        // Required on Visual C++ to generate a .lib file alongside the .dll.
-        #define exported __declspec(dllexport)
+
+        #if COMPILE_SHARED_LIBS
+            // Required on Visual C++ to generate a .lib file alongside the .dll.
+            #define exported __declspec(dllexport)
+        #else
+            // Required on Visual C++ to generate a .lib file alongside the .dll.
+            #define exported __declspec(dllimport)
+        #endif
 
         // Disable warning:
         // C++ exception specification ignored except to indicate a function is

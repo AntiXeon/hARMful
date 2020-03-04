@@ -96,7 +96,7 @@ namespace Hope {
              * @return  true if attached; false if cannot be attached or already
              *          attached to the Entity.
              */
-            bool attach(Entity* entity) ;
+            exported bool attach(Entity* entity) ;
 
             /**
              * Detach the component from its entity.
@@ -104,7 +104,7 @@ namespace Hope {
              * @return  true if detached; false if cannot be detached or is not
              *          attached to the Entity.
              */
-            bool detach(Entity* entity) ;
+            exported bool detach(Entity* entity) ;
 
         protected:
             /**

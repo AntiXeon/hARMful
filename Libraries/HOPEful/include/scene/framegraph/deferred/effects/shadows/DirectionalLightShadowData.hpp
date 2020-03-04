@@ -29,14 +29,14 @@ namespace Hope {
             /**
              * Update the uniform values for directional light shadow mapping.
              */
-            void updateUniformValues() override {
+            exported void updateUniformValues() override {
                 m_dirShadowSetter.updateUniforms() ;
             }
 
             /**
              * Get the shader uniforms.
              */
-            std::vector<Hope::ShaderUniform*> uniforms() const override {
+            exported std::vector<Hope::ShaderUniform*> uniforms() const override {
                 return m_dirShadowSetter.shaderUniforms() ;
             }
     } ;

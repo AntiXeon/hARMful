@@ -43,7 +43,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

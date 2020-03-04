@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRAME_RENDER_CACHE__
 #define __HOPE__FRAME_RENDER_CACHE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/framegraph/cache/GeometryData.hpp>
 #include <scene/framegraph/cache/PointLightData.hpp>
@@ -44,14 +46,14 @@ namespace Hope {
             /**
              * Create a new FrameRenderCache instance.
              */
-            FrameRenderCache() ;
+            exported FrameRenderCache() ;
 
             /**
              * Put the components of the entity that need to be in the cache.
              * @param   entity              Entity to get components.
              * @param   worldTransformation World transformation of the entity.
              */
-            void cacheEntity(
+            exported void cacheEntity(
                 const Entity* entity,
                 const Mind::Matrix4x4f& worldTransformation
             ) ;
@@ -59,7 +61,7 @@ namespace Hope {
             /**
              * Clear the cache data.
              */
-            void clear() {
+            exported void clear() {
                 m_meshes.clear() ;
                 m_directionalLights.clear() ;
                 m_pointLights.clear() ;
@@ -68,7 +70,7 @@ namespace Hope {
             /**
              * To know if the cache is empty.
              */
-            bool empty() const {
+            exported bool empty() const {
                 return m_meshes.empty() ||
                         m_directionalLights.empty() ||
                         m_pointLights.empty() ;
@@ -77,21 +79,21 @@ namespace Hope {
             /**
              * Get the cache of all meshes to render.
              */
-            std::vector<GeometryData>& meshes() {
+            exported std::vector<GeometryData>& meshes() {
                 return m_meshes ;
             }
 
             /**
              * Gache of all directional lights to use for the render.
              */
-            const std::vector<DirectionalLightComponent*>& directionalLights() const {
+            exported const std::vector<DirectionalLightComponent*>& directionalLights() const {
                 return m_directionalLights ;
             }
 
             /**
              * Get the cache of all points lights to use for the render.
              */
-            const std::vector<PointLightData>& pointLights() const {
+            exported const std::vector<PointLightData>& pointLights() const {
                 return m_pointLights ;
             }
 
@@ -99,7 +101,7 @@ namespace Hope {
             /**
              * Put a light in cache.
              */
-            void cacheLight(
+            exported void cacheLight(
                 LightComponent* light,
                 const Mind::Matrix4x4f& worldTransformation
             ) ;
@@ -107,7 +109,7 @@ namespace Hope {
             /**
              * Put a mesh in cache.
              */
-            void cacheGeometry(
+            exported void cacheGeometry(
                 const Entity* entity,
                 const Mind::Matrix4x4f& worldTransformation
             ) ;

@@ -144,23 +144,23 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override ;
+            exported void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override ;
+            exported void remove() override ;
 
         private:
             /**
              * Store the old source parameters.
              */
-            void storeOldSourceParameters() ;
+            exported void storeOldSourceParameters() ;
 
             /**
              * Store the old source parameters.
              */
-            void storeOldDestinationParameters() ;
+            exported void storeOldDestinationParameters() ;
     } ;
 }
 

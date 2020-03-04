@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_MATERIAL_LOADER__
 #define __HOPE__GL_MATERIAL_LOADER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <assimp/scene.h>
@@ -41,7 +43,7 @@ namespace Hope::GL {
              * Create a Blinn-Phong material.
              * @param   material    Material to convert as a component.
              */
-            static std::unique_ptr<MaterialComponent> BlinnPhongMaterial(const aiMaterial* material) ;
+            exported static std::unique_ptr<MaterialComponent> BlinnPhongMaterial(const aiMaterial* material) ;
 
             /**
              * Create a Blinn-Phong material with a diffuse texture.
@@ -51,7 +53,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static std::unique_ptr<MaterialComponent> DiffuseMaterial(
+            exported static std::unique_ptr<MaterialComponent> DiffuseMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -65,7 +67,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static std::unique_ptr<MaterialComponent> DiffuseNormalMaterial(
+            exported static std::unique_ptr<MaterialComponent> DiffuseNormalMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -79,7 +81,7 @@ namespace Hope::GL {
              *                      the file.
              * @param   material    Material to convert as a component.
              */
-            static std::unique_ptr<MaterialComponent> DiffuseNormalSpecularMaterial(
+            exported static std::unique_ptr<MaterialComponent> DiffuseNormalSpecularMaterial(
                 const fs::path& meshPath,
                 const aiMaterial* material
             ) ;
@@ -88,7 +90,7 @@ namespace Hope::GL {
             /**
              * Get the texture from an Assimp material.
              */
-            static std::unique_ptr<TextureImage2D> GetTexture(
+            exported static std::unique_ptr<TextureImage2D> GetTexture(
                 const aiTextureType type,
                 const fs::path& meshPath,
                 const aiMaterial* material
@@ -97,7 +99,7 @@ namespace Hope::GL {
             /**
              * Get the full path to a texture file.
              */
-            static std::string GetFullTexturePath(
+            exported static std::string GetFullTexturePath(
                 const fs::path& meshPath,
                 const aiString& assimpPath
             ) ;
@@ -105,7 +107,7 @@ namespace Hope::GL {
             /**
              * Set alpha blending mode on the provided material component.
              */
-            static void SetAlphaBlendingMaterial(MaterialComponent* material) ;
+            exported static void SetAlphaBlendingMaterial(MaterialComponent* material) ;
     } ;
 } ;
 

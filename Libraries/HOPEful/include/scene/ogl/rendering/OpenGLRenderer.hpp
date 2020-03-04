@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_RENDERER__
 #define __HOPE__GL_RENDERER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
@@ -65,7 +67,7 @@ namespace Hope::GL {
              * @param   memoryBarrier   Memory barrier to apply while rendering
              *                          the pass.
              */
-            void render(
+            exported void render(
                 const Hope::RenderPassID renderPassID,
                 std::vector<Hope::GeometryData>& dataList,
                 const uint32_t memoryBarrier
@@ -80,7 +82,7 @@ namespace Hope::GL {
              *                          the pass.
              * @param   effects     Effects to apply on rendering.
              */
-            void deferredShading(
+            exported void deferredShading(
                 Hope::MaterialComponent* material,
                 const uint32_t memoryBarrier,
                 std::vector<Hope::EffectData*>& effects
@@ -89,26 +91,26 @@ namespace Hope::GL {
             /**
              * Run an update of the light UBO.
              */
-            void updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) ;
+            exported void updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) ;
 
             /**
              * Set the view matrix.
              */
-            void setViewMatrix(const Mind::Matrix4x4f& viewMatrix) {
+            exported void setViewMatrix(const Mind::Matrix4x4f& viewMatrix) {
                 m_viewMatrix = viewMatrix ;
             }
 
             /**
              * Set the projection matrix.
              */
-            void setProjectionMatrix(const Mind::Matrix4x4f& projectionMatrix) {
+            exported void setProjectionMatrix(const Mind::Matrix4x4f& projectionMatrix) {
                 m_projectionMatrix = projectionMatrix ;
             }
 
             /**
              * Get the base data UBO.
              */
-            BaseGLSLDataUBO& baseUBO() {
+            exported BaseGLSLDataUBO& baseUBO() {
                 return m_baseUBO ;
             }
 
@@ -125,7 +127,7 @@ namespace Hope::GL {
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
-            RenderPass* useMaterial(
+            exported RenderPass* useMaterial(
                 const Hope::RenderPassID renderPassID,
                 const Hope::MaterialComponent* component,
                 const std::vector<Hope::EffectData*>& effects = {}
@@ -134,7 +136,7 @@ namespace Hope::GL {
             /**
              * Enable the capabilities of the render pass that is used.
              */
-            void enableCapabilities(RenderPass* renderPass) {
+            exported void enableCapabilities(RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> apply() ;
@@ -144,7 +146,7 @@ namespace Hope::GL {
             /**
              * Disable the capabilities of the render pass that is used.
              */
-            void disableCapabilities(RenderPass* renderPass) {
+            exported void disableCapabilities(RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> remove() ;

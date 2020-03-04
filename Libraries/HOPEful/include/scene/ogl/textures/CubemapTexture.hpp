@@ -56,21 +56,21 @@ namespace Hope::GL {
             /**
              * Bind the cubemap texture.
              */
-            void activate() const {
+            exported void activate() const {
                 glActiveTexture(GL_TEXTURE0) ;
             }
 
             /**
              * Bind the cubemap texture.
              */
-            void bind() const {
+            exported void bind() const {
                 glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
             }
 
             /**
              * Unbind the cubemap texture.
              */
-            void unbind() const {
+            exported void unbind() const {
                 glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
             }
     } ;

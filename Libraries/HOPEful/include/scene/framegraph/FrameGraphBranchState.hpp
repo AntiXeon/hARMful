@@ -1,6 +1,8 @@
 #ifndef __HOPE__FRAMEGRAPH_BRANCH_STATE__
 #define __HOPE__FRAMEGRAPH_BRANCH_STATE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/SceneTypes.hpp>
 #include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
@@ -69,12 +71,12 @@ namespace Hope {
             /**
              * Create a new FrameGraphBranchState.
              */
-            FrameGraphBranchState() = default ;
+            exported FrameGraphBranchState() = default ;
 
             /**
              * Create a new FrameGraphBranchState.
              */
-            FrameGraphBranchState(
+            exported FrameGraphBranchState(
                 ActiveCameraNode* activeCamera,
                 const RenderConditionAggregator& m_conditions
             ) ;
@@ -83,21 +85,21 @@ namespace Hope {
              * Set the memory barrier to apply when rendering the current
              * branch.
              */
-            void setMemoryBarrier(const uint32_t bits) {
+            exported void setMemoryBarrier(const uint32_t bits) {
                 m_memoryBarrierBits = bits ;
             }
 
             /**
              * Memory barrier to apply on branch rendering.
              */
-            uint32_t memoryBarrier() const {
+            exported uint32_t memoryBarrier() const {
                 return m_memoryBarrierBits ;
             }
 
             /**
              * Add render capabilties.
              */
-            void addRenderCapabilities(RenderCapabilityNode* node) {
+            exported void addRenderCapabilities(RenderCapabilityNode* node) {
                 m_capabilities.insert(
                     m_capabilities.begin(),
                     (node -> capabilities()).begin(),
@@ -108,7 +110,7 @@ namespace Hope {
             /**
              * Apply render capabilties.
              */
-            void applyRenderCapabilities() {
+            exported void applyRenderCapabilities() {
                 for (auto* capability : m_capabilities) {
                     capability -> apply() ;
                 }
@@ -117,7 +119,7 @@ namespace Hope {
             /**
              * Remove render capabilties.
              */
-            void removeRenderCapabilities() {
+            exported void removeRenderCapabilities() {
                 for (auto* capability : m_capabilities) {
                     capability -> remove() ;
                 }
@@ -127,7 +129,7 @@ namespace Hope {
              * Add effect data to the current branch. They are applied on the
              * deferred rendering steps.
              */
-            void addEffectData(const std::vector<EffectData*>& data) {
+            exported void addEffectData(const std::vector<EffectData*>& data) {
                 m_effects.insert(
                     m_effects.begin(),
                     data.begin(),
@@ -138,7 +140,7 @@ namespace Hope {
             /**
              * Get the effect data to apply on rendering.
              */
-            std::vector<EffectData*>& effectData() {
+            exported std::vector<EffectData*>& effectData() {
                 return m_effects ;
             }
 
@@ -148,7 +150,7 @@ namespace Hope {
              * If false, the rendering step is not performed. This may be used
              * in different situations.
              */
-            void setRenderAtEnd(const bool renderAtEnd) {
+            exported void setRenderAtEnd(const bool renderAtEnd) {
                 m_renderAtEnd = renderAtEnd ;
             }
 
@@ -158,70 +160,70 @@ namespace Hope {
              * If false, the rendering step is not performed. This may be used
              * in different situations.
              */
-            bool renderAtEnd() const {
+            exported bool renderAtEnd() const {
                 return m_renderAtEnd ;
             }
 
             /**
              * Set the render pass ID to use for rendering the current branch.
              */
-            void setRenderPassID(const RenderPassID id) {
+            exported void setRenderPassID(const RenderPassID id) {
                 m_renderPassID = id ;
             }
 
             /**
              * Get the render pass ID to use for rendering the current branch.
              */
-            RenderPassID renderPassID() const {
+            exported RenderPassID renderPassID() const {
                 return m_renderPassID ;
             }
 
             /**
              * Set the active camera used to render the branch.
              */
-            void setActiveCameraNode(ActiveCameraNode* camera) {
+            exported void setActiveCameraNode(ActiveCameraNode* camera) {
                 m_activeCamera = camera ;
             }
 
             /**
              * Get the active camera used to render the branch.
              */
-            const ActiveCameraNode* activeCamera() const {
+            exported const ActiveCameraNode* activeCamera() const {
                 return m_activeCamera ;
             }
 
             /**
              * Offscreen framebuffer to be used.
              */
-            void setFramebufferRenderNode(AbstractFramebufferRenderNode* offscreen) {
+            exported void setFramebufferRenderNode(AbstractFramebufferRenderNode* offscreen) {
                 m_offscreen = offscreen ;
             }
 
             /**
              * Get the offscreen framebuffer to be used.
              */
-            const AbstractFramebufferRenderNode* offScreenRender() const {
+            exported const AbstractFramebufferRenderNode* offScreenRender() const {
                 return m_offscreen ;
             }
 
             /**
              * Get the active camera cache.
              */
-            std::shared_ptr<FrameRenderCache> activeCameraCache() const {
+            exported std::shared_ptr<FrameRenderCache> activeCameraCache() const {
                 return m_activeCamera -> cache() ;
             }
 
             /**
              * Get the active camera entity.
              */
-            const Entity* activeCameraEntity() const {
+            exported const Entity* activeCameraEntity() const {
                 return m_activeCamera -> camera() -> firstEntity() ;
             }
 
             /**
              * Conditions to render the branch.
              */
-            const RenderConditionAggregator& conditions() const {
+            exported const RenderConditionAggregator& conditions() const {
                 return m_conditions ;
             }
     } ;

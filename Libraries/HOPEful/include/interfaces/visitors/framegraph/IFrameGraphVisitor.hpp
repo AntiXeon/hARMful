@@ -1,6 +1,8 @@
 #ifndef __HOPE__IFRAMEGRAPHVISITOR__
 #define __HOPE__IFRAMEGRAPHVISITOR__
 
+#include <utils/Platform.hpp>
+
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
@@ -28,91 +30,91 @@ namespace Hope {
             /**
              * Set the root of the scene graph.
              */
-            virtual void setSceneRoot(Entity* root) = 0 ;
+            exported virtual void setSceneRoot(Entity* root) = 0 ;
 
             /**
              * Visit a camera node.
              */
-            virtual void visit(ActiveCameraNode* node) = 0 ;
+            exported virtual void visit(ActiveCameraNode* node) = 0 ;
 
             /**
              * Visit a clear buffers node.
              */
-            virtual void visit(ClearBuffersNode* node) = 0 ;
+            exported virtual void visit(ClearBuffersNode* node) = 0 ;
 
             /**
              * Visit a frustum culling node.
              */
-            virtual void visit(FrustumCullingNode* node) = 0 ;
+            exported virtual void visit(FrustumCullingNode* node) = 0 ;
 
             /**
              * Visit a light shadow render node.
              */
-            virtual void visit(DirectionalLightShadowNode* node) = 0 ;
+            exported virtual void visit(DirectionalLightShadowNode* node) = 0 ;
 
             /**
              * Visit an off-screen render node.
              */
-            virtual void visit(AbstractFramebufferRenderNode* node) = 0 ;
+            exported virtual void visit(AbstractFramebufferRenderNode* node) = 0 ;
 
             /**
              * Visit a layer off-screen render node.
              */
-            virtual void visit(LayerFramebufferRenderNode* node) = 0 ;
+            exported virtual void visit(LayerFramebufferRenderNode* node) = 0 ;
 
             /**
              * Visit a node to perform deferred rendering.
              */
-            virtual void visit(OffscreenRenderingNode* node) = 0 ;
+            exported virtual void visit(OffscreenRenderingNode* node) = 0 ;
 
             /**
              * Visit a node to perform deferred rendering for the shading step.
              */
-            virtual void visit(ShadingStepNode* node) = 0 ;
+            exported virtual void visit(ShadingStepNode* node) = 0 ;
 
             /**
              * Visit a render pass selector node.
              */
-            virtual void visit(RenderPassSelectorNode* node) = 0 ;
+            exported virtual void visit(RenderPassSelectorNode* node) = 0 ;
 
             /**
              * Visit a viewport node.
              */
-            virtual void visit(ViewportNode* node) = 0 ;
+            exported virtual void visit(ViewportNode* node) = 0 ;
 
             /**
              * Visit a memory barrier node.
              */
-            virtual void visit(MemoryBarrierNode* node) = 0 ;
+            exported virtual void visit(MemoryBarrierNode* node) = 0 ;
 
             /**
              * Visit a capability node.
              */
-            virtual void visit(RenderCapabilityNode* node) = 0 ;
+            exported virtual void visit(RenderCapabilityNode* node) = 0 ;
 
             /**
              * Visit a node for applying render effect in the framegraph
              * branch(es).
              */
-            virtual void visit(EffectApplierNode* node) = 0 ;
+            exported virtual void visit(EffectApplierNode* node) = 0 ;
 
             /**
              * Visit a node for applying fog.
              */
-            virtual void visit(FogRenderNode* node) = 0 ;
+            exported virtual void visit(FogRenderNode* node) = 0 ;
 
             /**
              * Perform the rendering of the framegraph tree branch that is
              * currently processed.
              */
-            virtual void makeRender() = 0 ;
+            exported virtual void makeRender() = 0 ;
 
             /**
              * Save the render conditions when a there is a fork in the frame
              * graph. This allows to apply parent conditions to every branch
              * under the parent.
              */
-            virtual void backupRenderConditions() = 0 ;
+            exported virtual void backupRenderConditions() = 0 ;
     } ;
 }
 

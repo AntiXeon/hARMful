@@ -83,13 +83,13 @@ namespace Hope {
              * entity.
              * @param   entity  Entity to attach the component to.
              */
-            void onAttach(Entity* entity) override ;
+            exported void onAttach(Entity* entity) override ;
 
             /**
              * Action to perform when the component is detached from its entity.
              * @param   entity  Entity to detach the component from.
              */
-            void onDetach(Entity* entity) override ;
+            exported void onDetach(Entity* entity) override ;
     } ;
 }
 

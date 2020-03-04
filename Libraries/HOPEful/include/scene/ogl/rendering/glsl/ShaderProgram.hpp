@@ -176,7 +176,7 @@ namespace Hope::GL {
              * Log any error in the shader program set up.
              * @return  true on success; false on failure.
              */
-            bool isSuccessful(GLenum reason) ;
+            exported bool isSuccessful(GLenum reason) ;
     } ;
 }
 

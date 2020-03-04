@@ -80,13 +80,13 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
 
         private:
             /**
              * Get the cache of the scene to render objects.
              */
-            std::shared_ptr<FrameRenderCache> cache() const {
+            exported std::shared_ptr<FrameRenderCache> cache() const {
                 return m_cache ;
             } ;
     } ;

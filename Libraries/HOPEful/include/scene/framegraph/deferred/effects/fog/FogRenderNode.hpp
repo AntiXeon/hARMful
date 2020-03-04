@@ -64,14 +64,14 @@ namespace Hope {
             /**
              * Get the type of the effect.
              */
-            EffectNodeType effectType() const override {
+            exported EffectNodeType effectType() const override {
                 return FogEffectType ;
             }
 
             /**
              * Get the effect data of the node.
              */
-            EffectData* data() override {
+            exported EffectData* data() override {
                 return &m_effectData ;
             }
 
@@ -85,7 +85,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

@@ -76,13 +76,13 @@ namespace Hope {
             /**
              * Set the material render effect. Settings are applied on it.
              */
-            void setRenderEffect(RenderEffect* effect) { m_effect = effect ; }
+            exported void setRenderEffect(RenderEffect* effect) { m_effect = effect ; }
 
             /**
              * Get the capability for alpha channel management from the blending
              * mode.
              */
-            API::CapabilityType findAlphaCapabilityType(const AlphaBlendingMode mode) ;
+            exported API::CapabilityType findAlphaCapabilityType(const AlphaBlendingMode mode) ;
     } ;
 }
 

@@ -48,12 +48,12 @@ namespace Hope {
             /**
              * Set the ID of the node when added to a PostProdStepNode.
              */
-            void setId(const short id) { m_id = id ; }
+            exported void setId(const short id) { m_id = id ; }
 
             /**
              * Get the ID of the node when added to a PostProdStepNode.
              */
-            short id() const { return m_id ; }
+            exported short id() const { return m_id ; }
 
         protected:
             /**

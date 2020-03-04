@@ -107,12 +107,12 @@ namespace Hope::GL {
             /**
              * Apply the capability.
              */
-            void apply() override ;
+            exported void apply() override ;
 
             /**
              * Remove the capability.
              */
-            void remove() override ;
+            exported void remove() override ;
     } ;
 }
 

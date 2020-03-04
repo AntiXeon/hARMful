@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(hARMful)
 
 set(HARMFUL_LIBS_DIR ${CMAKE_SOURCE_DIR})
+add_compile_definitions(COMPILE_SHARED_LIBS)
 
 # The compilation may require the Conan package manager.
 # Download automatically, you can also just copy the conan.cmake file

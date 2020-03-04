@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_FOG_DATA_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_FOG_DATA_UNIFORM_BUFFER_OBJECT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/common/Color.hpp>
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
 #include <geometry/points/Point4Df.hpp>
@@ -24,12 +26,12 @@ namespace Hope::GL {
             /**
              * Create a new FogDataBlock instance.
              */
-            FogDataBlock() ;
+            exported FogDataBlock() ;
 
             /**
              * Set the color value.
              */
-            void setColor(const Color& color) {
+            exported void setColor(const Color& color) {
                 m_data.color = color.toRGBA() ;
                 askForAnUpdate() ;
             }
@@ -37,7 +39,7 @@ namespace Hope::GL {
             /**
              * Set the minimal distance value.
              */
-            void setMinimalDistance(const float min) {
+            exported void setMinimalDistance(const float min) {
                 m_data.min_max[0] = min ;
                 askForAnUpdate() ;
             }
@@ -45,7 +47,7 @@ namespace Hope::GL {
             /**
              * Set the maximal distance value.
              */
-            void setMaximalDistance(const float max) {
+            exported void setMaximalDistance(const float max) {
                 m_data.min_max[1] = max ;
                 askForAnUpdate() ;
             }
@@ -54,14 +56,14 @@ namespace Hope::GL {
             /**
              * Get the data of the UBO.
              */
-            const void* data() const override {
+            exported const void* data() const override {
                 return static_cast<const void*>(&m_data) ;
             }
 
             /**
              * Size of the data.
              */
-            size_t size() const override {
+            exported size_t size() const override {
                 return sizeof(m_data) ;
             }
     } ;

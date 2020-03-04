@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_BASE_DATA_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_BASE_DATA_UNIFORM_BUFFER_OBJECT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
 #include <geometry/points/Point4Df.hpp>
 #include <geometry/points/Point3Df.hpp>
@@ -37,12 +39,12 @@ namespace Hope::GL {
             /**
              * Create a new BaseGLSLDataUBO instance.
              */
-            BaseGLSLDataUBO() ;
+            exported BaseGLSLDataUBO() ;
 
             /**
              * Set the view matrix value.
              */
-            void setViewMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setViewMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.viewMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -50,7 +52,7 @@ namespace Hope::GL {
             /**
              * Set the projection matrix value.
              */
-            void setProjectionMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.projectionMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -58,7 +60,7 @@ namespace Hope::GL {
             /**
              * Set the view projection matrix value.
              */
-            void setViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.viewProjectionMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -66,7 +68,7 @@ namespace Hope::GL {
             /**
              * Set the inverse view matrix value.
              */
-            void setInverseViewMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setInverseViewMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseViewMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -74,7 +76,7 @@ namespace Hope::GL {
             /**
              * Set the inverse projection matrix value.
              */
-            void setInverseProjectionMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setInverseProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseProjectionMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -82,7 +84,7 @@ namespace Hope::GL {
             /**
              * Set the inverse view projection matrix value.
              */
-            void setInverseViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
+            exported void setInverseViewProjectionMatrix(const Mind::Matrix4x4f& mat) {
                 m_data.inverseViewProjectionMatrix = mat.toArray() ;
                 askForAnUpdate() ;
             }
@@ -90,7 +92,7 @@ namespace Hope::GL {
             /**
              * Set the viewport matrix value.
              */
-            void setViewportMatrix(const Mind::Matrix3x3f& mat) {
+            exported void setViewportMatrix(const Mind::Matrix3x3f& mat) {
                 static const uint32_t EndOffset = Mind::Matrix3x3f::MatrixSize - 1 ;
                 std::copy(
                     m_data.viewportMatrix.begin(),
@@ -103,7 +105,7 @@ namespace Hope::GL {
             /**
              * Set the inverse viewport matrix value.
              */
-            void setInverseViewportMatrix(const Mind::Matrix3x3f& mat) {
+            exported void setInverseViewportMatrix(const Mind::Matrix3x3f& mat) {
                 static const uint32_t EndOffset = Mind::Matrix3x3f::MatrixSize - 1 ;
                 std::copy(
                     m_data.inverseViewportMatrix.begin(),
@@ -116,7 +118,7 @@ namespace Hope::GL {
             /**
              * Set the eye position value.
              */
-            void setEyePosition(const Mind::Vector3f& vec) {
+            exported void setEyePosition(const Mind::Vector3f& vec) {
                 static const uint32_t EndOffset = Mind::Vector3f::AmountCoords - 1 ;
                 std::copy(
                     m_data.eye_fov.begin(),
@@ -129,7 +131,7 @@ namespace Hope::GL {
             /**
              * Set the camera field of view value.
              */
-            void setFieldOfView(const float value) {
+            exported void setFieldOfView(const float value) {
                 static const uint32_t Offset = 3 ;
                 m_data.eye_fov[Offset] = value ;
                 askForAnUpdate() ;
@@ -138,7 +140,7 @@ namespace Hope::GL {
             /**
              * Set the near plane distance value.
              */
-            void setNearPlaneDistance(const float value) {
+            exported void setNearPlaneDistance(const float value) {
                 static const uint32_t Offset = 0 ;
                 m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
@@ -147,7 +149,7 @@ namespace Hope::GL {
             /**
              * Set the far plane distance value.
              */
-            void setFarPlaneDistance(const float value) {
+            exported void setFarPlaneDistance(const float value) {
                 static const uint32_t Offset = 1 ;
                 m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
@@ -156,7 +158,7 @@ namespace Hope::GL {
             /**
              * Set the aspect ratio value.
              */
-            void setAspectRatio(const float value) {
+            exported void setAspectRatio(const float value) {
                 static const uint32_t Offset = 2 ;
                 m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
@@ -165,7 +167,7 @@ namespace Hope::GL {
             /**
              * Set the time value.
              */
-            void setTime(const float value) {
+            exported void setTime(const float value) {
                 static const uint32_t Offset = 3 ;
                 m_data.near_far_aspect_time[Offset] = value ;
                 askForAnUpdate() ;
@@ -174,7 +176,7 @@ namespace Hope::GL {
             /**
              * Set the viewport size.
              */
-            void setViewportSize(const Mind::Vector2f& vec) {
+            exported void setViewportSize(const Mind::Vector2f& vec) {
                 m_data.viewportSize = vec.toArray();
                 askForAnUpdate() ;
             }
@@ -182,7 +184,7 @@ namespace Hope::GL {
             /**
              * To know if an update is required.
              */
-            bool needUpdate() const {
+            exported bool needUpdate() const {
                 return true ;
             }
 
@@ -190,14 +192,14 @@ namespace Hope::GL {
             /**
              * Get the data of the UBO.
              */
-            const void* data() const override {
+            exported const void* data() const override {
                 return static_cast<const void*>(&m_data) ;
             }
 
             /**
              * Size of the data.
              */
-            size_t size() const override {
+            exported size_t size() const override {
                 return sizeof(m_data) ;
             }
     } ;

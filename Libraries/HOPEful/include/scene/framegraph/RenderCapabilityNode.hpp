@@ -51,7 +51,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) override {
+            exported void specificAccept(IFrameGraphVisitor* visitor) override {
                 visitor -> visit(this) ;
             }
 
@@ -59,7 +59,7 @@ namespace Hope {
             /**
              * Get the list of capabilities.
              */
-            const std::vector<API::Capability*>& capabilities() const {
+            exported const std::vector<API::Capability*>& capabilities() const {
                 return m_capabilities ;
             }
     } ;

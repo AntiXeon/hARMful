@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_MODEL_DATA_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_MODEL_DATA_UNIFORM_BUFFER_OBJECT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
 #include <matrices/Matrix4x4f.hpp>
 #include <array>
@@ -31,12 +33,12 @@ namespace Hope::GL {
             /**
              * Create a new ModelGLSLDataUBO instance.
              */
-            ModelGLSLDataUBO() ;
+            exported ModelGLSLDataUBO() ;
 
             /**
              * Fill the matrices of the UBO.
              */
-            void setMatrices(
+            exported void setMatrices(
                 const Mind::Matrix4x4f& modelMatrix,
                 const Mind::Matrix4x4f& viewMatrix,
                 const Mind::Matrix4x4f& projectionMatrix
@@ -46,14 +48,14 @@ namespace Hope::GL {
             /**
              * Get the data of the UBO.
              */
-            const void* data() const override {
+            exported const void* data() const override {
                 return static_cast<const void*>(&m_data) ;
             }
 
             /**
              * Size of the data.
              */
-            size_t size() const override {
+            exported size_t size() const override {
                 return sizeof(m_data) ;
             }
     } ;

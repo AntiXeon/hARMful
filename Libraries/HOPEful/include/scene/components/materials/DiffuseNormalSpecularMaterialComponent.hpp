@@ -174,7 +174,7 @@ namespace Hope {
             /**
              * Set up the Uniforms of the current material.
              */
-            void setupUniforms() ;
+            exported void setupUniforms() ;
     } ;
 }
 

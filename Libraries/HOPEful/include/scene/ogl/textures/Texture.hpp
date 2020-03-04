@@ -61,35 +61,35 @@ namespace Hope::GL {
             /**
              * Set the current texture active.
              */
-            void activate(const unsigned short unit) const {
+            exported void activate(const unsigned short unit) const {
                 glActiveTexture(GL_TEXTURE0 + unit) ;
             }
 
             /**
              * Bind texture unit.
              */
-            void bindUnit(const unsigned int unit) const {
+            exported void bindUnit(const unsigned int unit) const {
                 glBindTextureUnit(unit, m_textureID) ;
             }
 
             /**
              * Bind the current texture.
              */
-            void bind() const {
+            exported void bind() const {
                 glBindTexture(m_target, m_textureID) ;
             }
 
             /**
              * Unbind the texture.
              */
-            void unbind() const {
+            exported void unbind() const {
                 glBindTexture(m_target, 0) ;
             }
 
             /**
              * Unbind texture unit.
              */
-            void unbindUnit(const unsigned int unit) const {
+            exported void unbindUnit(const unsigned int unit) const {
                 glBindTextureUnit(unit, 0) ;
             }
 

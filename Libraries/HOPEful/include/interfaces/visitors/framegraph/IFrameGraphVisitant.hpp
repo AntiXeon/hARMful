@@ -1,6 +1,8 @@
 #ifndef __HOPE__IFRAMEGRAPHVISITANT__
 #define __HOPE__IFRAMEGRAPHVISITANT__
 
+#include <utils/Platform.hpp>
+
 namespace Hope {
     class IFrameGraphVisitor ;
 
@@ -12,7 +14,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            virtual void accept(IFrameGraphVisitor* visitor) = 0 ;
+            exported virtual void accept(IFrameGraphVisitor* visitor) = 0 ;
     } ;
 }
 

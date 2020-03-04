@@ -50,7 +50,7 @@ namespace Hope {
             /**
              * Set up the attachments to the framebuffer.
              */
-            void setup() override ;
+            exported void setup() override ;
     } ;
 }
 

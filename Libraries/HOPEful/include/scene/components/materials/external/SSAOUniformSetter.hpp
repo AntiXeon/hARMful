@@ -35,7 +35,7 @@ namespace Hope {
             /**
              * Update the uniforms.
              */
-            void updateUniforms() override ;
+            exported void updateUniforms() override ;
 
             /**
              * Set the frame graph node that contains all required data for

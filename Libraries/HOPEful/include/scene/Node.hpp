@@ -67,14 +67,14 @@ namespace Hope {
              * @param   newChild    Child node to add to the children list.
              * @return  true on success; false otherwise.
              */
-            bool addChild(Node* newChild) ;
+            exported bool addChild(Node* newChild) ;
 
             /**
              * Remove a child.
              * @param   child       Child node to remove from the children list.
              * @return  true on success; false otherwise.
              */
-            bool removeChild(Node* child) ;
+            exported bool removeChild(Node* child) ;
     } ;
 }
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__EFFECT_APPLIER_NODE__
 #define __HOPE__EFFECT_APPLIER_NODE__
 
+#include <utils/Platform.hpp>
+
 #include <scene/SceneTypes.hpp>
 #include <scene/FrameGraphNode.hpp>
 #include <scene/framegraph/deferred/effects/EffectData.hpp>
@@ -23,7 +25,7 @@ namespace Hope {
              * Create a new node instance.
              * @param   parent  Parent node of the new one.
              */
-            EffectApplierNode(
+            exported EffectApplierNode(
                 EffectData* effect,
                 FrameGraphNode* parent = nullptr
             ) ;
@@ -31,7 +33,7 @@ namespace Hope {
             /**
              * Get the type of the effect.
              */
-            EffectData* effect() {
+            exported EffectData* effect() {
                 return m_effect ;
             }
 
@@ -39,7 +41,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor* visitor) ;
+            exported void specificAccept(IFrameGraphVisitor* visitor) ;
     } ;
 }
 

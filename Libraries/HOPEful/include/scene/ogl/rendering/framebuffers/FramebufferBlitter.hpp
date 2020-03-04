@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_FRAMEBUFFER_BLITTER__
 #define __HOPE__GL_FRAMEBUFFER_BLITTER__
 
+#include <utils/Platform.hpp>
+
 #include <scene/ogl/GLDefines.hpp>
 #include <GL/glew.h>
 #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
@@ -79,12 +81,12 @@ namespace Hope::GL {
             /**
              * Do the blit process.
              */
-            void doBlit() ;
+            exported void doBlit() ;
 
             /**
              * set the source framebuffer.
              */
-            FramebufferBlitter& setSourceFBO(Framebuffer* fbo) {
+            exported FramebufferBlitter& setSourceFBO(Framebuffer* fbo) {
                 m_source.fbo = fbo ;
                 return *this ;
             }
@@ -92,7 +94,7 @@ namespace Hope::GL {
             /**
              * set the color buffer source.
              */
-            FramebufferBlitter& setSourceColor(const int colorID) {
+            exported FramebufferBlitter& setSourceColor(const int colorID) {
                 m_source.colorBuffer = GL_COLOR_ATTACHMENT0 + colorID ;
                 return *this ;
             }
@@ -100,7 +102,7 @@ namespace Hope::GL {
             /**
              * set the color buffer source.
              */
-            FramebufferBlitter& setSourceArea(const Mind::Rectangle2Df& area) {
+            exported FramebufferBlitter& setSourceArea(const Mind::Rectangle2Df& area) {
                 m_source.area = area ;
                 return *this ;
             }
@@ -108,7 +110,7 @@ namespace Hope::GL {
             /**
              * set the destination framebuffer.
              */
-            FramebufferBlitter& setDestinationFBO(Framebuffer* fbo) {
+            exported FramebufferBlitter& setDestinationFBO(Framebuffer* fbo) {
                 m_destination.fbo = fbo ;
                 return *this ;
             }
@@ -116,7 +118,7 @@ namespace Hope::GL {
             /**
              * set the color buffer destination.
              */
-            FramebufferBlitter& setDestinationColor(const int colorID) {
+            exported FramebufferBlitter& setDestinationColor(const int colorID) {
                 m_destination.colorBuffer = GL_COLOR_ATTACHMENT0 + colorID ;
                 return *this ;
             }
@@ -124,7 +126,7 @@ namespace Hope::GL {
             /**
              * set the destination buffer source.
              */
-            FramebufferBlitter& setDestinationArea(const Mind::Rectangle2Df& area) {
+            exported FramebufferBlitter& setDestinationArea(const Mind::Rectangle2Df& area) {
                 m_destination.area = area ;
                 return *this ;
             }
@@ -132,7 +134,7 @@ namespace Hope::GL {
             /**
              * Set the mask to define which buffers are to be copied.
              */
-            FramebufferBlitter& setMask(const Mask mask) {
+            exported FramebufferBlitter& setMask(const Mask mask) {
                 m_mask = mask ;
                 return *this ;
             }
@@ -140,7 +142,7 @@ namespace Hope::GL {
             /**
              * Set the interpolation to be applied if the image is stretched.
              */
-            FramebufferBlitter& setFilter(const Filter filter) {
+            exported FramebufferBlitter& setFilter(const Filter filter) {
                 m_filter = filter ;
                 return *this ;
             }

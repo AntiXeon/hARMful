@@ -139,7 +139,7 @@ namespace Hope {
             /**
              * Convert a color given as UInt8 values
              */
-            void convertFromUInt8(
+            exported void convertFromUInt8(
                 const uint8_t red,
                 const uint8_t green,
                 const uint8_t blue,

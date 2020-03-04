@@ -151,7 +151,7 @@ namespace Hope {
              * Set up the shader for the depth map used to generate the shadow
              * map of a directional light.
              */
-            void setupDirectionalLightDepthMapShader() ;
+            exported void setupDirectionalLightDepthMapShader() ;
     } ;
 }
 

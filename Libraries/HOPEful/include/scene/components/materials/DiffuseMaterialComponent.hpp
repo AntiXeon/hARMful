@@ -32,7 +32,7 @@ namespace Hope {
             /**
              * Binding of the diffuse map.
              */
-            static const unsigned short DiffuseMapBinding = 0 ;
+            exported static const unsigned short DiffuseMapBinding = 0 ;
 
             /**
              * Ambient color.
@@ -141,7 +141,7 @@ namespace Hope {
             /**
              * Set up the Uniforms of the current material.
              */
-            void setupUniforms() ;
+            exported void setupUniforms() ;
     } ;
 }
 

@@ -80,7 +80,7 @@ namespace Hope {
             /**
              * Set up the framebuffer for deferred rendering.
              */
-            void setupFramebuffer() ;
+            exported void setupFramebuffer() ;
     } ;
 }
 

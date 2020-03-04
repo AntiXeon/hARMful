@@ -1,6 +1,8 @@
 #ifndef __HOPE__EFFECT_DATA__
 #define __HOPE__EFFECT_DATA__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 
 namespace Hope {
@@ -14,19 +16,19 @@ namespace Hope {
             /**
              * Update the uniform values.
              */
-            virtual void updateUniformValues() = 0 ;
+            exported virtual void updateUniformValues() = 0 ;
 
             /**
              * Check if the effect has additional uniform to be send to shaders.
              */
-            virtual bool hasAdditionalUniforms() const {
+            exported virtual bool hasAdditionalUniforms() const {
                 return true ;
             }
 
             /**
              * Get the shader uniforms.
              */
-            virtual std::vector<Hope::ShaderUniform*> uniforms() const = 0 ;
+            exported virtual std::vector<Hope::ShaderUniform*> uniforms() const = 0 ;
     } ;
 }
 

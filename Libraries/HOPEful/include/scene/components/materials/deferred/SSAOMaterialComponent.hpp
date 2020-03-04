@@ -36,25 +36,25 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            void updateUniformValues() override ;
+            exported void updateUniformValues() override ;
 
         private:
             /**
              * Set up the Uniforms of the current material.
              */
-            void setupUniforms() {}
+            exported void setupUniforms() {}
 
         protected:
             /**
              * Setup the shader for the forward rendering pass.
              */
-            void setupForwardShader() override ;
+            exported void setupForwardShader() override ;
 
             /**
              * Setup the shader for the deferred rendering pass.
              * No deferred shading here!
              */
-            void setupDeferredShader() override {}
+            exported void setupDeferredShader() override {}
     } ;
 } ;
 

@@ -1,6 +1,8 @@
 #ifndef __HOPE__GL_LIGHT_DATA_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_LIGHT_DATA_UNIFORM_BUFFER_OBJECT__
 
+#include <utils/Platform.hpp>
+
 #include <scene/components/materials/shaders/GLSL/includes/AmountLights.hpp>
 #include <scene/components/materials/shaders/GLSL/includes/BlockBindings.hpp>
 #include <scene/ogl/rendering/glsl/ubo/UniformBufferObject.hpp>
@@ -53,12 +55,12 @@ namespace Hope::GL {
             /**
              * Create a new BaseGLSLDataUBO instance.
              */
-            LightGLSLDataUBO() ;
+            exported LightGLSLDataUBO() ;
 
             /**
              * Set the amount of directional lights.
              */
-            void setAmountDirectionalLights(const int count) {
+            exported void setAmountDirectionalLights(const int count) {
                 if (m_data.amount_dir_point[0] != count) {
                     m_data.amount_dir_point[0] = count ;
                     askForAnUpdate() ;
@@ -68,7 +70,7 @@ namespace Hope::GL {
             /**
              * Set the amount of point lights.
              */
-            void setAmountPointLights(const int count) {
+            exported void setAmountPointLights(const int count) {
                 if (m_data.amount_dir_point[1] != count) {
                     m_data.amount_dir_point[1] = count ;
                     askForAnUpdate() ;
@@ -78,7 +80,7 @@ namespace Hope::GL {
             /**
              * Set the data for a directional light.
              */
-            void setDirectionalLight(
+            exported void setDirectionalLight(
                 const uint16_t index,
                 DirectionalLightComponent* light
             ) ;
@@ -86,7 +88,7 @@ namespace Hope::GL {
             /**
              * Set the data for a point light.
              */
-            void setPointLight(
+            exported void setPointLight(
                 const uint16_t index,
                 PointLightComponent* light,
                 const Mind::Vector4f& worldPosition,
@@ -97,14 +99,14 @@ namespace Hope::GL {
             /**
              * Get the data of the UBO.
              */
-            const void* data() const override {
+            exported const void* data() const override {
                 return static_cast<const void*>(&m_data) ;
             }
 
             /**
              * Size of the data.
              */
-            size_t size() const override {
+            exported size_t size() const override {
                 return sizeof(m_data) ;
             }
     } ;

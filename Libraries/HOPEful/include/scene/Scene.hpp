@@ -45,14 +45,14 @@ namespace Hope {
             /**
              * Render the scene.
              */
-            void render() ;
+            exported void render() ;
 
             /**
              * Loop over Entity objects to lock the ones that have the lock
              * flag.
              * @param   state   Lock state for available entities.
              */
-            void lockEntities(const bool state) ;
+            exported void lockEntities(const bool state) ;
 
             /**
              * Get the root entity of the scene.
@@ -72,7 +72,7 @@ namespace Hope {
              * @param   entity  The Entity to lock if available.
              * @param   state   Lock state.
              */
-            void lockEntity(Entity* entity, const bool state) ;
+            exported void lockEntity(Entity* entity, const bool state) ;
     } ;
 }
 

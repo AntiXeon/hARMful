@@ -57,42 +57,42 @@ namespace Hope::GL {
             /**
              * Bind the geometry for data management, rendering, etc.
              */
-            void bind() const override {
+            exported void bind() const override {
                 glBindVertexArray(m_vertexArray) ;
             }
 
             /**
              * Unbind the geometry after data management, rendering, etc.
              */
-            void unbind() const override {
+            exported void unbind() const override {
                 glBindVertexArray(0) ;
             }
 
             /**
              * Get a part.
              */
-            const GeometryPart& part(const uint32_t index) const override {
+            exported const GeometryPart& part(const uint32_t index) const override {
                 return m_parts[index] ;
             }
 
             /**
              * Amount of parts in the geometry.
              */
-            size_t amountParts() const override {
+            exported size_t amountParts() const override {
                 return AmountParts ;
             }
 
             /**
              * Amount of indices in the geometry.
              */
-            size_t amountIndices() const override {
+            exported size_t amountIndices() const override {
                 return AmountIndices ;
             }
 
             /**
              * Type of the indice values.
              */
-            GLenum indiceType() const override {
+            exported GLenum indiceType() const override {
                 return GL_UNSIGNED_BYTE ;
             }
 
@@ -106,7 +106,7 @@ namespace Hope::GL {
             /**
              * Point of the cube.
              */
-            void fillBuffers() ;
+            exported void fillBuffers() ;
     } ;
 }
 

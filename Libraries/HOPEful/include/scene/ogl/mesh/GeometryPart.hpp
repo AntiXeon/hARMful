@@ -44,7 +44,7 @@ namespace Hope::GL {
             /**
              * Create a new GeometryPart.
              */
-             exported GeometryPart(
+            exported GeometryPart(
                 uint32_t materialID,
                 uint32_t offset,
                 uint32_t amountIndices

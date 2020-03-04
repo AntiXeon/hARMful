@@ -123,26 +123,26 @@ namespace Hope {
             /**
              * General method for accepting visitors.
              */
-            void generalAccept(IFrameGraphVisitor* visitor) ;
+            exported void generalAccept(IFrameGraphVisitor* visitor) ;
 
             /**
              * Set the root entity of the scene graph.
              */
-            void setSceneGraphRoot(Entity* root) ;
+            exported void setSceneGraphRoot(Entity* root) ;
 
             /**
              * Add a child.
              * @param   newChild    Child node to add to the children list.
              * @return  true on success; false otherwise.
              */
-            bool addChild(FrameGraphNode* newChild) ;
+            exported bool addChild(FrameGraphNode* newChild) ;
 
             /**
              * Remove a child.
              * @param   child       Child node to remove from the children list.
              * @return  true on success; false otherwise.
              */
-            bool removeChild(FrameGraphNode* child) ;
+            exported bool removeChild(FrameGraphNode* child) ;
     };
 }
 

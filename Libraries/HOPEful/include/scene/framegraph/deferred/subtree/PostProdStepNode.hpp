@@ -76,7 +76,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            void specificAccept(IFrameGraphVisitor*) ;
+            exported void specificAccept(IFrameGraphVisitor*) ;
     } ;
 }
 
