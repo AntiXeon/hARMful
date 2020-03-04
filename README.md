@@ -48,13 +48,13 @@ To compile on a GNU/Linux system, enter the `Library` folder and type `./build.s
 :warning: The compilation of **hARMful** on Microsoft® Windows™ is still work in progress! :warning:
 
 #### Requirements
-- [CMake 2.8.12](https://cmake.org/download/) or above;
+- [CMake 2.8.12](https://cmake.org/download/) or above (add CMake to the `PATH` environment variable);
 - [Visual Studio 2019](https://visualstudio.microsoft.com) and above. Notice that Visual Studio Community is free to use. **Previous versions of Visual Studio cannot build the project!**
-- [Python 3](https://www.python.org/downloads/)
+- [Conan](https://conan.io/downloads.html)
+    - If you have troubles using Conan, you can install it with `pip` (Python 3). Think to add Python to the `PATH` environment variable then install Conan by typing the `pip install conan` command.
 
 #### Build steps
-- Install all the requirements. Add both CMake and Python to the `PATH` environment variable.
-- In a PowerShell or any other CLI, install Conan by typing the `pip install conan` command.
+- Install all the requirements.
 - Open the CMake GUI:
     - Select the **hARMful** `Library` directory for both "source code" and "build" folders.
     - Press the "Configure" button, check that Visual Studio 2019 is selected and use the `x64` platform in combobox. Press "Finish" when it's done. Wait until the configuration is complete (it can take a while if the dependencies have to be downloaded by Conan).
