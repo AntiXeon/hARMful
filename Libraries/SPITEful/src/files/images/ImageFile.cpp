@@ -1,16 +1,20 @@
 #include <files/images/ImageFile.hpp>
 #include <debug/ErrorsManagement.hpp>
 #include <SPITEStrings.hpp>
-#include <cstdio>
 #include <ios>
 #include <filesystem>
 #include <string>
 #include <cstring>
 
-#include <iostream>
-
 using namespace Spite ;
 namespace fs = std::filesystem ;
+
+// ifstream is not possible as underlying libraries are written in C. So...
+#ifdef WindowsPlatform
+    #define OpenFile(desc, path, mode)    fopen_s(&desc, path, mode)
+#else
+    #define OpenFile(desc, path, mode)    desc = fopen(path, mode)
+#endif
 
 ImageFile::ImageFile(const std::string& path)
     : File(path),
@@ -31,23 +35,23 @@ void ImageFile::open(OpenMode mode) {
 
     switch(mode) {
         case File::Open_ReadOnly:
-            fopen_s(&m_file, filepath, "rb") ;
+            OpenFile(m_file, filepath, "rb") ;
             break ;
 
         case File::Open_Append:
-            fopen_s(&m_file, filepath, "ab") ;
+            OpenFile(m_file, filepath, "ab") ;
             break ;
 
         case File::Open_WriteOnly:
-            fopen_s(&m_file, filepath, "wb") ;
+            OpenFile(m_file, filepath, "wb") ;
             break ;
 
         case File::Open_ReadWrite:
-            fopen_s(&m_file, filepath, "rb+") ;
+            OpenFile(m_file, filepath, "rb+") ;
             break ;
 
         case File::Open_ReadAppend:
-            fopen_s(&m_file, filepath, "ab+") ;
+            OpenFile(m_file, filepath, "ab+") ;
             break ;
 
         default:
