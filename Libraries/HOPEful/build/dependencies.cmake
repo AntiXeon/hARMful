@@ -6,7 +6,10 @@ SET(LIBASSIMP_REQUIRED_VERSION "5.0.1")
 set(CONAN_LIBS "")
 set(CONAN_LINK "")
 
-# GLEW (OpenGL)
+# OpenGL
+find_package(OpenGL REQUIRED)
+
+# GLEW
 find_package(GLEW ${LIBGLEW_REQUIRED_VERSION} QUIET)
 if (GLEW_FOUND AND NOT ${USE_CONAN_LIBS})
     include_directories(${GLEW_INCLUDE_DIRS})
@@ -52,4 +55,8 @@ if (${USE_CONAN_LIBS})
         GENERATORS cmake virtualrunenv
     )
     target_link_libraries(${PROJECT_NAME} ${CONAN_LINK})
+endif()
+
+if (WIN32)
+    target_link_libraries(${PROJECT_NAME} opengl32)
 endif()
