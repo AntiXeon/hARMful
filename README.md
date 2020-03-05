@@ -30,6 +30,8 @@ The repository is structured in different parts:
 
 ## Compilation
 ### GNU/Linux
+The compilation process for GNU/Linux users is shown in this video : https://www.youtube.com/watch?v=zECjVr_6qko
+
 #### Requirements
 - CMake 2.8.12 or above;
 - A C++17 compliant compiler is required, `g++9` and above is advised.
