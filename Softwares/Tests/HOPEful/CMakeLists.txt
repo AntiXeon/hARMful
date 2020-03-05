@@ -36,10 +36,12 @@ get_filename_component(SPITEFUL_ABSOLUTE ${HARMFUL_LIBS_DIR}/SPITEful ABSOLUTE)
 get_filename_component(HOPEFUL_ABSOLUTE ${HARMFUL_LIBS_DIR}/HOPEful ABSOLUTE)
 
 # Set DOOMful library sources
+add_definitions(-DCOMPILE_SHARED_LIBS)
 add_subdirectory(${DOOMFUL_ABSOLUTE}/build ./build)
 add_subdirectory(${MINDFUL_ABSOLUTE}/build ./build/MINDful)
 add_subdirectory(${SPITEFUL_ABSOLUTE}/build ./build/SPITEful)
 add_subdirectory(${HOPEFUL_ABSOLUTE}/build ./build/HOPEful)
 
 # Set tests executable sources
+remove_definitions(-DCOMPILE_SHARED_LIBS)
 add_subdirectory(${CMAKE_SOURCE_DIR}/Rendering/build)

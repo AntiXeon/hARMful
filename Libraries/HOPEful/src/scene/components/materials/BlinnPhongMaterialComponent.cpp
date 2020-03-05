@@ -12,8 +12,8 @@
 
 using namespace Hope ;
 
-const float BlinnPhongMaterialComponent::MinimumShininessClamp = 1.f ;
-const float BlinnPhongMaterialComponent::MaximumShininessClamp = 512.f ;
+exported const float BlinnPhongMaterialComponent::MinimumShininessClamp = 1.f ;
+exported const float BlinnPhongMaterialComponent::MaximumShininessClamp = 512.f ;
 
 BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
     : MaterialComponent(),

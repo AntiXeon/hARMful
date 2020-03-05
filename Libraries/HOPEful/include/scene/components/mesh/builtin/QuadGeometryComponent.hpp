@@ -39,7 +39,7 @@ namespace Hope {
             /**
              * Get the geometry.
              */
-            exported const API::QuadGeometry* geometry() const override {
+            const API::QuadGeometry* geometry() const override {
                 return &m_geometry ;
             }
     } ;

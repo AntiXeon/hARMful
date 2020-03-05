@@ -124,7 +124,7 @@ namespace Hope {
              *          method!
              */
             template<class T>
-            exported T* component(const uint32_t index = 0) const {
+            T* component(const uint32_t index = 0) const {
                 if (m_components[T::ClassType].empty()) {
                     return nullptr ;
                 }

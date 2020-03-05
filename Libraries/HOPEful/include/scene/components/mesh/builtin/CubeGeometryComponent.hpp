@@ -34,12 +34,12 @@ namespace Hope {
             /**
              * Creation of a CubeGeometryComponent.
              */
-            exported CubeGeometryComponent() : GeometryComponent() {}
+            CubeGeometryComponent() : GeometryComponent() {}
 
             /**
              * Get the geometry.
              */
-            exported const API::CubeGeometry* geometry() const override {
+            const API::CubeGeometry* geometry() const override {
                 return &m_geometry ;
             }
     } ;

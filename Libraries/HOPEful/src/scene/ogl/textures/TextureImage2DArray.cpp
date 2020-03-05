@@ -55,5 +55,5 @@ void TextureImage2DArray::resize(
 void TextureImage2DArray::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
     glTexParameteri(target(), GL_TEXTURE_WRAP_S, modes[0]) ;
     glTexParameteri(target(), GL_TEXTURE_WRAP_T, modes[1]) ;
-    glTexParameteri(target(), GL_TEXTURE_WRAP_R, modes[3]) ;
+    glTexParameteri(target(), GL_TEXTURE_WRAP_R, modes[2]) ;
 }

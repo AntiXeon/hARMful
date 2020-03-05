@@ -47,14 +47,14 @@ namespace Mind {
          * @param   degrees Value of the angle in degrees.
          * @return  Value of the angle in radians.
          */
-        exported inline Scalar toRadians(const Scalar degrees) ;
+        inline Scalar toRadians(const Scalar degrees) ;
 
         /**
          * Convert radians to degrees.
          * @param   radians Value of the angle in radians.
          * @return  Value of the angle in degrees.
          */
-        exported inline Scalar toDegrees(const Scalar radians) ;
+        inline Scalar toDegrees(const Scalar radians) ;
 
                                                             /*** ALGORITHMS ***/
         /**
@@ -63,7 +63,7 @@ namespace Mind {
          * @return  The absolute value.
          */
         template <class T>
-        exported Scalar hypot(const T x, const T y) ;
+        Scalar hypot(const T x, const T y) ;
 
         /**
          * Check if a Scalar value is negative.

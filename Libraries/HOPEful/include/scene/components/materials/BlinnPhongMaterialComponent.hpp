@@ -24,8 +24,8 @@ namespace Hope {
             /**
              * Shininess values.
              */
-            static const float MinimumShininessClamp ;
-            static const float MaximumShininessClamp ;
+            exported static const float MinimumShininessClamp ;
+            exported static const float MaximumShininessClamp ;
 
         private:
             /**
