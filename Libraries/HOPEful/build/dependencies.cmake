@@ -48,7 +48,8 @@ if (${USE_CONAN_LIBS})
     conan_cmake_run(
         REQUIRES ${CONAN_LIBS}
         BASIC_SETUP CMAKE_TARGETS
-        OPTIONS Pkg:shared=True
+        OPTIONS *:shared=True
+        GENERATORS cmake virtualrunenv
     )
     target_link_libraries(${PROJECT_NAME} ${CONAN_LINK})
 endif()
