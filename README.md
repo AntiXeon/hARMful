@@ -45,7 +45,7 @@ Install the requirements on your system.
 To compile on a GNU/Linux system, enter the `Library` folder and type `./build.sh` in a command prompt. It will generate the `.so` files.
 
 ### Microsoft® Windows™
-:warning: The compilation of **hARMful** on Microsoft® Windows™ is still work in progress! :warning:
+The compilation process for Windows users is shown in this video: https://www.youtube.com/watch?v=b_eAQeQpg1c
 
 #### Requirements
 - [CMake 2.8.12](https://cmake.org/download/) or above (add CMake to the `PATH` environment variable);
@@ -56,10 +56,18 @@ To compile on a GNU/Linux system, enter the `Library` folder and type `./build.s
 #### Build steps
 - Install all the requirements.
 - Open the CMake GUI:
+    - Select the **hARMful** `Tools\GLSL2Cpp\build` directory for both "source code" and "build" folders.
+    - Press the "Configure" button, no matter the compiler you use. Select either the Win32 or x64 configuration.
+    - Press the "Generate" button then open the `GLSL2Cpp.sln` file with Visual Studio. Build the tool, no matter it is in debug or release mode.
+    - Quit Visual Studio once it's done then launch the `Tools\GLSL2Cpp\bin\**\glsl2cpp.exe` file. It will ask for administrator rights to create the shortcut to the HOPEful library directory, so accept the request. The `glsl2cpp` tool copies the content of the embedded GLSL shaders into C++ files (hpp/cpp), in order to embed the shaders inside the DLL itself. That's all!
+- Come back to the **hARMful** home directory.
+- Open the CMake GUI:
     - Select the **hARMful** `Library` directory for both "source code" and "build" folders.
     - Press the "Configure" button, check that Visual Studio 2019 is selected and use the `x64` platform in combobox. Press "Finish" when it's done. Wait until the configuration is complete (it can take a while if the dependencies have to be downloaded by Conan).
     - Press the "Generate" button then close CMake.
-- Open the generated `hARMful.sln` file with Visual Studio 2019. Compile the projects in either Release or Debug mode. You can see warnings about missing PDB files, it just means the dependencies have no debug informations; the compilation of **hARMful** is not impacted by this.
+- Open the generated `hARMful.sln` file with Visual Studio 2019. Compile the projects in either Release or Debug mode.
+- The DLLs are built in their library directories.
+- Notice that you have to copy the dependencies for SPITE and HOPE from the `.conan` directory (look into your user directory) to run your hARMful-based applications.
 
 ### Mac™ OS
 Not officially supported.
