@@ -19,11 +19,11 @@ void Hope::Perspective(
     const double FarMinusNear = zFar - zNear ;
     result.clear() ;
 
-    result[0][0] = static_cast<float>(1.f / aspect * TanHalfFovY) ;
-	result[1][1] = static_cast<float>(1.f / TanHalfFovY) ;
+    result[0][0] = static_cast<float>(1. / (aspect * TanHalfFovY)) ;
+	result[1][1] = static_cast<float>(1. / (TanHalfFovY)) ;
 	result[2][2] = static_cast<float>(-(zFar + zNear) / FarMinusNear) ;
-    result[3][2] = static_cast<float>(-1.f) ;
-    result[2][3] = static_cast<float>(-(2.f * zFar * zNear) / FarMinusNear) ;
+    result[3][2] = static_cast<float>(-1.) ;
+    result[2][3] = static_cast<float>(-(2. * zFar * zNear) / FarMinusNear) ;
 }
 
 void Hope::Orthographic(
@@ -39,11 +39,11 @@ void Hope::Orthographic(
     const double TopMinusBottom = top - bottom ;
     const double FarMinusNear = zFar - zNear ;
 
-    result[0][0] = static_cast<float>(+2.f / RightMinusLeft) ;
-    result[1][1] = static_cast<float>(+2.f / TopMinusBottom) ;
-    result[2][2] = static_cast<float>(-2.f / FarMinusNear) ;
+    result[0][0] = static_cast<float>(+2. / RightMinusLeft) ;
+    result[1][1] = static_cast<float>(+2. / TopMinusBottom) ;
+    result[2][2] = static_cast<float>(-2. / FarMinusNear) ;
     result[0][3] = static_cast<float>(-((right + left) / RightMinusLeft)) ;
     result[1][3] = static_cast<float>(-((top + bottom) / TopMinusBottom)) ;
     result[2][3] = static_cast<float>(-((zFar + zNear) / FarMinusNear)) ;
-    result[3][3] = static_cast<float>(+1.f) ;
+    result[3][3] = static_cast<float>(+1.) ;
 }
