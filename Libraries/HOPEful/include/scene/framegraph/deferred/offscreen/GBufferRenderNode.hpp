@@ -27,7 +27,7 @@ namespace Hope {
             static const unsigned char DepthRenderTarget = 3 ;
 
         private:
-            static const bool FollowWindowSize = false ;
+            static const bool FollowWindowSize = true ;
 
         public:
             /**
