@@ -47,7 +47,7 @@ Install the requirements on your system.
 To compile on a GNU/Linux system, enter the `Library` folder and type `./build.sh` in a command prompt. It will generate the `.so` files.
 
 ### Microsoft® Windows™
-The compilation process for Windows users is shown in this video: https://www.youtube.com/watch?v=b_eAQeQpg1c
+The compilation process for Windows users is shown in this video: https://www.youtube.com/watch?v=W5kpHneNB9I
 
 #### Requirements
 - [CMake 2.8.12](https://cmake.org/download/) or above (add CMake to the `PATH` environment variable);
