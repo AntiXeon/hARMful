@@ -23,7 +23,7 @@ namespace Hope {
      */
     class DeferredRenderingNode final : public FrameGraphNode {
         private:
-            static const bool FollowWindowSize = false ;
+            static const bool FollowWindowSize = true ;
 
             /**
              * G-Buffer used for the rendering (shading, SSAO, ...).
