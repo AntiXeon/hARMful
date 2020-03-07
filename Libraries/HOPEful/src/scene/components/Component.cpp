@@ -47,7 +47,7 @@ bool Component::attach(Entity* entity) {
     auto posEntity = std::find(m_entities.begin(), m_entities.end(), entity) ;
     bool alreadyAttached = (posEntity != m_entities.end()) ;
 
-    if (!alreadyAttached) {
+    if (!alreadyAttached || isShareable()) {
         m_entities.push_back(entity) ;
         onAttach(entity) ;
         return true ;

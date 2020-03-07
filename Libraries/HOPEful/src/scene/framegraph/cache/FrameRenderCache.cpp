@@ -72,6 +72,10 @@ void FrameRenderCache::cacheGeometry(
     for (uint32_t partIndex = 0 ; partIndex < amountParts ; ++partIndex) {
         API::GeometryPart& part = const_cast<API::GeometryPart&>(geometry -> part(partIndex)) ;
 
+        if (!part.isValid()) {
+            continue;
+        }
+
         uint32_t materialID = part.materialID() ;
         MaterialComponent* material = entity -> component<MaterialComponent>(materialID) ;
 

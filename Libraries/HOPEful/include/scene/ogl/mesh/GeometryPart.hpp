@@ -19,6 +19,12 @@ namespace Hope::GL {
 
         private:
             /**
+             * To know if the geometry os valid, ie. it contains all the
+             * required data.
+             */
+            bool m_isValid = false;
+
+            /**
              * ID of the material to draw this part.
              */
             uint32_t m_materialID = INVALID_MATERIAL ;
@@ -49,6 +55,10 @@ namespace Hope::GL {
                 uint32_t offset,
                 uint32_t amountIndices
             ) ;
+
+            exported bool isValid() const {
+                return m_isValid;
+            }
 
             /**
              * ID of the material to draw this part.
