@@ -21,6 +21,9 @@ std::cout << "stem " << stem << std::endl;
     while (harmfulDir.has_parent_path() && (stem != WantedDirName)) {
         harmfulDir = harmfulDir.parent_path() ;
         stem = harmfulDir.stem().generic_string() ;
+
+        std::cout << "harmfulDir while " << harmfulDir << std::endl;
+        std::cout << "stem while " << stem << " vs " << WantedDirName << std::endl;
     }
 std::cout << "stem (2) " << stem << std::endl;
 
