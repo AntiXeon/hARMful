@@ -4,62 +4,46 @@
 #include <filesystem>
 #include <system_error>
 #include <Paths.hpp>
+#include <cstdlib>
 
-void createSymLink() {
-std::cout << "enter createSymLink()" << std::endl;
-
+bool createSymLink(const std::string& harmfulDir) {
     const std::string PathSeparatorStr = std::string(PathSeparator) ;
 
-    fs::path currentDir = fs::current_path() ;
-    fs::path harmfulDir = currentDir ;
-std::cout << "currentDir " << currentDir << std::endl;
-    const std::string WantedDirName(ProjectDirName) ;
-    std::string stem = harmfulDir.stem().generic_string() ;
-
-std::cout << "stem " << stem << std::endl;
-
-    while (harmfulDir.has_parent_path() && (stem != WantedDirName)) {
-        harmfulDir = harmfulDir.parent_path() ;
-        stem = harmfulDir.stem().generic_string() ;
-
-        std::cout << "harmfulDir while " << harmfulDir << std::endl;
-        std::cout << "stem while " << stem << " vs " << WantedDirName << std::endl;
-    }
-std::cout << "stem (2) " << stem << std::endl;
-
-	fs::path libDirectoryPath(harmfulDir.generic_string() + PathSeparator + LibDirectory) ;
+	fs::path libDirectoryPath(harmfulDir + PathSeparator + LibDirectory) ;
 	libDirectoryPath = libDirectoryPath ;
-
-std::cout << "libDirectoryPath " << libDirectoryPath << std::endl;
 
 	fs::path symlibDirectoryPath(SimLinkDirectory) ;
 	symlibDirectoryPath = symlibDirectoryPath ;
 
-std::cout << "symlibDirectoryPath " << symlibDirectoryPath << std::endl;
-
 	if (fs::exists(symlibDirectoryPath)) {
-	    return ;
+	    return true ;
     }
 
     // Create the local symlink to the HOPEful library folder.
 	std::error_code error ;
 	fs::create_directory_symlink(libDirectoryPath, symlibDirectoryPath, error) ;
 
-std::cout << "create_directory_symlink " << std::endl;
-
 	if (error) {
 		auto errorMsg = error.message() ;
 		std::cerr << "ERROR: " << error << errorMsg << std::endl ;
+        return false ;
 	}
 
-    std::cout << "exit createSymLink()" << std::endl;
+    return true ;
 }
 
-int main() {
-    createSymLink() ;
+int main(int argc, char** argv) {
+    if (argc < 2) {
+        return EXIT_FAILURE ;
+    }
+
+    std::string harmfulDir(argv[1]) ;
+
+    if (!createSymLink(harmfulDir)) {
+        return EXIT_FAILURE ;
+    }
 
     const std::string PathSeparatorStr = std::string(PathSeparator) ;
-    std::cout << "PathSeparatorStr = " << PathSeparatorStr << std::endl;
 
     // Get the shader files.
     auto shaderFiles = FileUtils::GetShaderFiles(ShadersDirectory) ;
@@ -104,4 +88,6 @@ int main() {
             ShadersCppSourcesDirectory
         ) ;
     }
+
+    return EXIT_SUCCESS ;
 }

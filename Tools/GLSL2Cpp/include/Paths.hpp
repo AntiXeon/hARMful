@@ -4,7 +4,7 @@
 namespace fs = std::filesystem ;
 
 #define PathSeparator               "/"
-#define ProjectDirName              "hARMful"
+// #define ProjectDirName              "hARMful"
 #define LibrariesDirName            "Libraries"
 #define LibName                     "HOPE"
 #define LibDirName                  LibName "ful"
