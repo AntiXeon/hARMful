@@ -6,4 +6,4 @@ cd ./HOPEful/build && ./generate_shaders.sh
 
 # Build the project.
 cd $CURRENT_DIR
-cmake . && make -j
+cmake . -DCMAKE_BUILD_TYPE=Release && make -j
