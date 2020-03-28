@@ -4,6 +4,8 @@ project(hARMful)
 set(HARMFUL_LIBS_DIR ${CMAKE_SOURCE_DIR})
 add_compile_definitions(COMPILE_SHARED_LIBS)
 
+option(USE_CONAN_LIBS "To know if dependencies from Conan are required" OFF)
+
 if (USE_CONAN)
     # The compilation may require the Conan package manager.
     # Download automatically, you can also just copy the conan.cmake file
@@ -14,7 +16,7 @@ if (USE_CONAN)
     endif()
 
     include(${CMAKE_SOURCE_DIR}/conan.cmake)
-    option(USE_CONAN_LIBS "To know if dependencies from Conan are required" OFF)
+	set(USE_CONAN_LIBS ON)
 endif()
 
 # Remove prefix for shared libraries on Windows
