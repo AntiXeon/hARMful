@@ -7,7 +7,7 @@ jobs:
             - checkout
 
             # Build libraries
-            - run: cd Libraries && chmod a+x build.sh && ./build.sh -DNO_CONAN
+            - run: cd Libraries && chmod a+x build.sh && ./build.sh NO_CONAN:boolean=true
             # Build functional tests and run it
             ## DOOM
             - run: cd Softwares/Tests/DOOMful && cmake . && make
