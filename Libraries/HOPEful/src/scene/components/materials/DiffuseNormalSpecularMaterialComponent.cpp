@@ -23,63 +23,43 @@ DiffuseNormalSpecularMaterialComponent::DiffuseNormalSpecularMaterialComponent()
     setupUniforms() ;
 }
 
-void DiffuseNormalSpecularMaterialComponent::updateUniformValues() {
-    if (m_diffuse) {
-        m_diffuse -> bindUnit(DiffuseMapBinding) ;
-    }
+void DiffuseNormalSpecularMaterialComponent::updateUniformValues(const Hope::RenderPassID pass) {
+    if (pass == DeferredPassID) {
+        if (m_diffuse) {
+            m_diffuse -> bindUnit(DiffuseMapBinding) ;
+        }
 
-    if (m_normal) {
-        m_normal -> bindUnit(NormalMapBinding) ;
-    }
+        if (m_normal) {
+            m_normal -> bindUnit(NormalMapBinding) ;
+        }
 
-    if (m_specular) {
-        m_specular -> bindUnit(SpecularMapBinding) ;
-    }
+        if (m_specular) {
+            m_specular -> bindUnit(SpecularMapBinding) ;
+        }
 
-    uniforms().at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
-    uniforms().at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
+        uniforms(DeferredPassID).at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
+        uniforms(DeferredPassID).at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
+    }
 }
 
 void DiffuseNormalSpecularMaterialComponent::setupUniforms() {
     auto ambientUniform = std::make_unique<Hope::ShaderUniform>() ;
     ambientUniform -> setName(UniformNames::MaterialAmbientUniformName()) ;
     ambientUniform -> setLocation(UniformNames::AmbientLocation) ;
-    uniforms().add(std::move(ambientUniform)) ;
+    uniforms(DeferredPassID).add(std::move(ambientUniform)) ;
 
     auto shininessUniform = std::make_unique<Hope::ShaderUniform>() ;
     shininessUniform -> setName(UniformNames::MaterialShininessUniformName()) ;
     shininessUniform -> setLocation(UniformNames::ShininessLocation) ;
-    uniforms().add(std::move(shininessUniform)) ;
+    uniforms(DeferredPassID).add(std::move(shininessUniform)) ;
 }
 
-void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {
-    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
-    API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
-    // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(DiffuseNormalSpecularMapForwardVertexCode) ;
-    // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesModelDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(DiffuseNormalSpecularMapForwardFragmentCode) ;
-    shaderProgram -> build() ;
-
-    effect().addRenderPass(std::move(renderPass)) ;
-}
+void DiffuseNormalSpecularMaterialComponent::setupForwardShader() {}
 
 void DiffuseNormalSpecularMaterialComponent::setupDeferredShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;

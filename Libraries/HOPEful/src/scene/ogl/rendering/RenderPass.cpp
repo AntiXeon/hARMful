@@ -1,5 +1,4 @@
 #include <scene/ogl/rendering/RenderPass.hpp>
-#include <iostream>
 
 using namespace Hope::GL ;
 

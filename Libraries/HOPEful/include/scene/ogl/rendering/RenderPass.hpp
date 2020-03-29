@@ -5,18 +5,27 @@
 
 #include <scene/SceneTypes.hpp>
 #include <scene/framegraph/shading/FilterOption.hpp>
+#include <scene/framegraph/shading/ShaderValue.hpp>
+#include <scene/framegraph/shading/UniformCache.hpp>
 #include <scene/ogl/rendering/glsl/ShaderProgram.hpp>
 #include <scene/ogl/rendering/capabilities/Capability.hpp>
+#include <scene/components/materials/UniformNames.hpp>
 #include <map>
 #include <memory>
 #include <set>
 #include <vector>
+
+namespace Hope {
+    class MaterialComponent;
+}
 
 namespace Hope::GL {
     /**
      * Represents a shader program execution as a single render pass.
      */
     class RenderPass final {
+        friend class Hope::MaterialComponent ;
+
         private:
             /**
              * For direct access to capabilities pointers.
@@ -51,6 +60,11 @@ namespace Hope::GL {
              * The shader program that is executed in the current render pass.
              */
             std::unique_ptr<ShaderProgram> m_shaderProgram ;
+
+            /**
+             * Uniforms cache.
+             */
+            UniformCache m_uniforms ;
 
         public:
             /**
@@ -119,6 +133,21 @@ namespace Hope::GL {
              */
             exported Hope::RenderPassID id() const {
                 return m_id ;
+            }
+
+            /**
+             * Get the shader uniforms.
+             */
+            exported const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
+                return m_uniforms.pointers() ;
+            }
+
+        protected:
+            /**
+             * Get the uniform cache.
+             */
+            UniformCache& uniformCache() {
+                return m_uniforms ;
             }
     } ;
 }

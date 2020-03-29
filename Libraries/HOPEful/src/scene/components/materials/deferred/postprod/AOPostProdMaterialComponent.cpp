@@ -19,7 +19,7 @@ AOPostProdMaterialComponent::AOPostProdMaterialComponent(const FramebufferRender
     setupForwardShader() ;
 }
 
-void AOPostProdMaterialComponent::updateUniformValues() {
+void AOPostProdMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
     const API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
     framebuffer -> bindUnitColor(ShadingStepNode::ShadingRenderTarget) ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;
@@ -28,6 +28,7 @@ void AOPostProdMaterialComponent::updateUniformValues() {
 void AOPostProdMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(DeferredRenderingShadingVertexCode) ;

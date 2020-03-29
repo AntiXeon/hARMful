@@ -4,7 +4,7 @@
 #include <utils/Platform.hpp>
 
 #include <scene/framegraph/shading/ShaderValue.hpp>
-#include <scene/components/materials/UniformCache.hpp>
+#include <scene/framegraph/shading/UniformCache.hpp>
 
 namespace Hope {
     /**

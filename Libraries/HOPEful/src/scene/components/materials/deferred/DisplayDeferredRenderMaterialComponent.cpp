@@ -18,7 +18,7 @@ DisplayDeferredRenderMaterialComponent::DisplayDeferredRenderMaterialComponent(c
     setupForwardShader() ;
 }
 
-void DisplayDeferredRenderMaterialComponent::updateUniformValues() {
+void DisplayDeferredRenderMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
     const API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
     framebuffer -> bindUnitColor(ShadingStepNode::ShadingRenderTarget) ;
 }
@@ -26,6 +26,7 @@ void DisplayDeferredRenderMaterialComponent::updateUniformValues() {
 void DisplayDeferredRenderMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(DeferredRenderingShadingVertexCode) ;

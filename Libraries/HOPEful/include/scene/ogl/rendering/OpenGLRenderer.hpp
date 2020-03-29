@@ -116,19 +116,29 @@ namespace Hope::GL {
 
         private:
             /**
-             * Use a material component.
+             * Activate a shader to use uniforms, etc.
              * @param   renderPassID    ID of the pass to use for rendering
              *                          objects. The render pass uses its
              *                          related shader program to render the
              *                          objects.
+             * @param   component       Material component to use.
+             */
+            exported const Hope::GL::RenderPass* activateShader(
+                const Hope::RenderPassID renderPassID,
+                const Hope::MaterialComponent* component
+            ) ;
+
+            /**
+             * Use a material component.
+             * @param   RenderPass      The pass to use for rendering objects.
+             * @param   component       Material component to use.
              * @param   applyEffects    true to apply additional effects; false
              *                          otherwise.
-             * @param   component       Material component to use.
              * @return  The capabilities of the render pass that is used in the
              *          material.
              */
-            exported RenderPass* useMaterial(
-                const Hope::RenderPassID renderPassID,
+            exported void useMaterial(
+                const Hope::GL::RenderPass* pass,
                 const Hope::MaterialComponent* component,
                 const std::vector<Hope::EffectData*>& effects = {}
             ) ;
@@ -136,7 +146,7 @@ namespace Hope::GL {
             /**
              * Enable the capabilities of the render pass that is used.
              */
-            exported void enableCapabilities(RenderPass* renderPass) {
+            exported void enableCapabilities(const RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> apply() ;
@@ -146,7 +156,7 @@ namespace Hope::GL {
             /**
              * Disable the capabilities of the render pass that is used.
              */
-            exported void disableCapabilities(RenderPass* renderPass) {
+            exported void disableCapabilities(const RenderPass* renderPass) {
                 auto capabilities = renderPass -> capabilities() ;
                 for(auto const& capability : capabilities) {
                     capability -> remove() ;

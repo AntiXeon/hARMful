@@ -1,5 +1,4 @@
 #include <scene/ogl/rendering/capabilities/DepthTest.hpp>
-#include <iostream>
 
 using namespace Hope::GL ;
 

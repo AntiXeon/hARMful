@@ -70,7 +70,7 @@ TestWindow::TestWindow()
     {
         Hope::Entity* meshTreeEntity = new Hope::Entity(root()) ;
         (meshTreeEntity -> transform()).setScale(0.1f) ;
-        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
+        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SimpleScene.fbx") ;
         meshTreeEntity -> addComponent(meshTreeComponent) ;
 
         m_cubeEntity = meshTreeComponent -> entity("Cube") ;
@@ -199,7 +199,7 @@ TestWindow::TestWindow()
         capabilitiesNode
     ) ;
 
-    Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepthStencil, gBufferNode) ;
+    Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepth, gBufferNode) ;
     new Hope::RenderPassSelectorNode(DeferredPassID, clearBuffers) ;
 
     new Hope::DeferredRenderingNode(
@@ -216,8 +216,6 @@ void TestWindow::preRender() {
     float radius = 10.f ;
     float camX = sin(time / 2.f) * radius ;
     float camZ = cos(time / 2.f) * radius ;
-
-    std::cout << time << std::endl;
 
     Mind::Vector3f camPos(camX, 3.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;

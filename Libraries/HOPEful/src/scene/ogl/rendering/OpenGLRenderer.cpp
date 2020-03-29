@@ -5,7 +5,6 @@
 #include <scene/components/materials/external/ExternalUniformSetter.hpp>
 #include <scene/framegraph/cache/FrameRenderCache.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
-#include <iostream>
 
 using namespace Hope::GL ;
 
@@ -28,13 +27,15 @@ void OpenGLRenderer::render(
         geometry -> bind() ;
 
         for (auto& [material, meshPartIndices] : meshData.parts) {
-            material -> updateUniformValues() ;
-            RenderPass* renderPass = useMaterial(renderPassID, material) ;
+            const auto* renderPass = activateShader(renderPassID, material) ;
 
             if (!renderPass) {
                 // Do not try to render as it is not possible!
                 continue ;
             }
+
+            material -> updateUniformValues(renderPassID);
+            useMaterial(renderPass, material) ;
 
             size_t amountParts = geometry -> amountParts() ;
             std::vector<int32_t> counts(amountParts) ;
@@ -73,8 +74,17 @@ void OpenGLRenderer::deferredShading(
     const uint32_t memoryBarrier,
     std::vector<Hope::EffectData*>& effects
 ) {
+    const Hope::RenderPassID UsedRenderPassID = ForwardPassID ;
+
     m_deferredShadingQuad.bind() ;
-    material -> updateUniformValues() ;
+
+    const auto* renderPass = activateShader(ForwardPassID, material) ;
+
+    if (!renderPass) {
+        return ;
+    }
+
+    material -> updateUniformValues(UsedRenderPassID) ;
 
     // Apply effects.
     for (Hope::EffectData* effect : effects) {
@@ -82,7 +92,7 @@ void OpenGLRenderer::deferredShading(
     }
 
     useMaterial(
-        ForwardPassID,
+        renderPass,
         material,
         effects
     ) ;
@@ -104,10 +114,9 @@ void OpenGLRenderer::deferredShading(
     m_deferredShadingQuad.unbind() ;
 }
 
-RenderPass* OpenGLRenderer::useMaterial(
+const Hope::GL::RenderPass* OpenGLRenderer::activateShader(
     const Hope::RenderPassID renderPassID,
-    const Hope::MaterialComponent* component,
-    const std::vector<Hope::EffectData*>& effects
+    const Hope::MaterialComponent* component
 ) {
     RenderPass* pass = component -> renderPass(renderPassID) ;
 
@@ -115,15 +124,31 @@ RenderPass* OpenGLRenderer::useMaterial(
         return nullptr ;
     }
 
-    // Do material processing.
     ShaderProgram* shaderProgram = pass -> shaderProgram() ;
 
     if (shaderProgram) {
         shaderProgram -> use() ;
+    }
 
+    return pass ;
+}
+
+void OpenGLRenderer::useMaterial(
+    const Hope::GL::RenderPass* pass,
+    const Hope::MaterialComponent* component,
+    const std::vector<Hope::EffectData*>& effects
+) {
+    if (!pass) {
+        return ;
+    }
+
+    // Do material processing.
+    ShaderProgram* shaderProgram = pass -> shaderProgram() ;
+
+    if (shaderProgram) {
         // Apply shader uniforms.
-        auto materialUniforms = component -> shaderUniforms() ;
-        for (auto uniform : materialUniforms) {
+        auto passUniforms = pass -> shaderUniforms() ;
+        for (auto uniform : passUniforms) {
             ShaderUniformApplicator::ApplyUniform(
                 shaderProgram -> id(),
                 uniform
@@ -143,8 +168,6 @@ RenderPass* OpenGLRenderer::useMaterial(
             }
         }
     }
-
-    return pass ;
 }
 
 void OpenGLRenderer::updateLightUBO(const std::shared_ptr<Hope::FrameRenderCache> cache) {

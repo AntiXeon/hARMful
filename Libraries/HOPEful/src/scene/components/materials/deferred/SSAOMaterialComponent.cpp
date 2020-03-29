@@ -19,7 +19,7 @@ SSAOMaterialComponent::SSAOMaterialComponent(const AbstractFramebufferRenderNode
     setupForwardShader() ;
 }
 
-void SSAOMaterialComponent::updateUniformValues() {
+void SSAOMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
@@ -29,6 +29,7 @@ void SSAOMaterialComponent::updateUniformValues() {
 void SSAOMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(AoRenderingSsaoVertexCode) ;

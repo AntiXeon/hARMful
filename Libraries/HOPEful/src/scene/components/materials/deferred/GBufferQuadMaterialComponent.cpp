@@ -19,25 +19,26 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const GBufferRenderNo
     setupUniforms() ;
 }
 
-void GBufferQuadMaterialComponent::updateUniformValues() {
+void GBufferQuadMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
-    uniforms().at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
+    uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
     auto msaaQualityUniform = std::make_unique<Hope::ShaderUniform>() ;
     msaaQualityUniform -> setName(UniformNames::MSAAQualityUniformName()) ;
     msaaQualityUniform -> setLocation(MSAAQualityUniformLocation) ;
-    uniforms().add(std::move(msaaQualityUniform)) ;
+    uniforms(ForwardPassID).add(std::move(msaaQualityUniform)) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(DeferredRenderingShadingVertexCode) ;

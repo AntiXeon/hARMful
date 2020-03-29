@@ -20,41 +20,23 @@ CubemapMaterialComponent::CubemapMaterialComponent()
     setupUniforms() ;
 }
 
-void CubemapMaterialComponent::updateUniformValues() {
-    if (m_map) {
-        m_map -> activate() ;
-        m_map -> bind() ;
-        uniforms().at(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
+void CubemapMaterialComponent::updateUniformValues(const Hope::RenderPassID pass) {
+    if (pass == DeferredPassID) {
+        if (m_map) {
+            m_map -> activate() ;
+            m_map -> bind() ;
+            uniforms(DeferredPassID).at(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
+        }
     }
 }
 
 void CubemapMaterialComponent::setupUniforms() {
     auto cubemapUniform = std::make_unique<Hope::ShaderUniform>() ;
     cubemapUniform -> setName(UniformNames::MaterialCubemapUniformName()) ;
-    uniforms().add(std::move(cubemapUniform)) ;
+    uniforms(DeferredPassID).add(std::move(cubemapUniform)) ;
 }
 
-void CubemapMaterialComponent::setupForwardShader() {
-    std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
-    std::unique_ptr<API::DepthTest> depthTest = std::make_unique<API::DepthTest>() ;
-    depthTest -> setFunction(API::DepthTest::LessOrEqual) ;
-    renderPass -> addCapability(std::move(depthTest)) ;
-
-    API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
-    // Vertex shader code.
-    shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addVertexShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addVertexShaderCode(CubemapForwardVertexCode) ;
-    // Fragment shader code.
-    shaderProgram -> addFragmentShaderCode(ModulesDirectiveModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(CubemapForwardFragmentCode) ;
-    shaderProgram -> build() ;
-
-    effect().addRenderPass(std::move(renderPass)) ;
-}
+void CubemapMaterialComponent::setupForwardShader() {}
 
 void CubemapMaterialComponent::setupDeferredShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
@@ -63,6 +45,7 @@ void CubemapMaterialComponent::setupDeferredShader() {
     renderPass -> addCapability(std::move(depthTest)) ;
 
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;

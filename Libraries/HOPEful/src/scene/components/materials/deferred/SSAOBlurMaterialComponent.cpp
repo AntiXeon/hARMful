@@ -21,7 +21,7 @@ SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
     setupForwardShader() ;
 }
 
-void SSAOBlurMaterialComponent::updateUniformValues() {
+void SSAOBlurMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
     const API::Framebuffer* framebuffer = m_aoBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;
 }
@@ -31,6 +31,7 @@ void SSAOBlurMaterialComponent::setupUniforms() {}
 void SSAOBlurMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(AoRenderingSsaoVertexCode) ;

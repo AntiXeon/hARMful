@@ -5,9 +5,6 @@
 
 #include <scene/components/Component.hpp>
 #include <scene/framegraph/shading/RenderEffect.hpp>
-#include <scene/framegraph/shading/ShaderValue.hpp>
-#include <scene/components/materials/UniformCache.hpp>
-#include <scene/components/materials/UniformNames.hpp>
 #include <scene/components/materials/settings/MaterialSettings.hpp>
 
 #include <HopeAPI.hpp>
@@ -43,11 +40,6 @@ namespace Hope {
              */
             RenderEffect m_effect ;
 
-            /**
-             * Uniforms cache.
-             */
-            UniformCache m_uniforms ;
-
         public:
             /**
              * Create a MaterialComponent.
@@ -59,7 +51,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            exported virtual void updateUniformValues() = 0 ;
+            exported virtual void updateUniformValues(const Hope::RenderPassID pass) = 0 ;
 
             /**
              * To know if the component can be shared by several entities.
@@ -105,16 +97,11 @@ namespace Hope {
             }
 
             /**
-             * Get the shader uniforms.
-             */
-            exported const std::vector<Hope::ShaderUniform*>& shaderUniforms() const {
-                return m_uniforms.pointers() ;
-            }
-
-            /**
              * Get the settings of the material.
              */
-            exported MaterialSettings& settings() { return m_settings ; }
+            exported MaterialSettings& settings() {
+                 return m_settings ;
+             }
 
         protected:
             /**
@@ -127,8 +114,8 @@ namespace Hope {
             /**
              * Get the unoforms of the material.
              */
-            exported UniformCache& uniforms() {
-                return m_uniforms ;
+            exported UniformCache& uniforms(const RenderPassID passID) {
+                return (m_effect.renderPass(passID)) -> uniformCache() ;
             }
 
             /**
