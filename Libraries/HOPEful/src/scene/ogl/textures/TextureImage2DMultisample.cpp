@@ -39,7 +39,4 @@ void TextureImage2DMultisample::resize(const Mind::Dimension2Di& size) {
     glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0) ;
 }
 
-void TextureImage2DMultisample::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
-    glTexParameteri(target(), GL_TEXTURE_WRAP_S, modes[0]) ;
-    glTexParameteri(target(), GL_TEXTURE_WRAP_T, modes[1]) ;
-}
+void TextureImage2DMultisample::setWrapModes(std::array<WrapMode, AmountCoordinates>) {}

@@ -36,7 +36,7 @@ TestWindow::TestWindow()
     // Create a camera in the scene graph.
     m_cameraEntity = new Hope::Entity(root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
-    m_cameraComponent -> setClearColor(Hope::Color(0.4f, 0.5f, 0.6f)) ;
+    m_cameraComponent -> setClearColor(Hope::Color(1.f, 0.0f, 0.6f)) ;
     m_cameraComponent -> setFarPlaneDistance(200.f) ;
     m_cameraEntity -> addComponent(m_cameraComponent) ;
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
