@@ -8,8 +8,9 @@ layout: default
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
 Some of them are already implemented and a demonstration video is available. A "✗" symbol indicates that the feature is not yet implemented; a "✓" symbol is used to signal non-graphic features that are implemented.
 
-<a href="https://www.youtube.com/watch?v=cxUawRNoaf8">![hARMful demo (video)](./assets/images/trailer.png)</a>
-<a href="https://www.youtube.com/watch?v=cxUawRNoaf8">https://www.youtube.com/watch?v=cxUawRNoaf8</a>
+<a href="https://www.youtube.com/watch?v=cxUawRNoaf8" target="_blank" title="hARMful demo (video)">![hARMful demo (video)](./assets/images/trailer.png)</a>
+<br/>
+<a href="https://www.youtube.com/watch?v=cxUawRNoaf8" target="_blank" title="hARMful demo (video)">https://www.youtube.com/watch?v=cxUawRNoaf8</a>
 
 ## Features
 ### Features of HOPEful
