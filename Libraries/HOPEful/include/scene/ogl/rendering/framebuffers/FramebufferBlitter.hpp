@@ -95,7 +95,7 @@ namespace Hope::GL {
              * set the color buffer source.
              */
             exported FramebufferBlitter& setSourceColor(const int colorID) {
-                m_source.colorBuffer = GL_COLOR_ATTACHMENT0 + colorID ;
+                m_source.colorBuffer = colorID ;
                 return *this ;
             }
 
@@ -119,7 +119,7 @@ namespace Hope::GL {
              * set the color buffer destination.
              */
             exported FramebufferBlitter& setDestinationColor(const int colorID) {
-                m_destination.colorBuffer = GL_COLOR_ATTACHMENT0 + colorID ;
+                m_destination.colorBuffer = colorID ;
                 return *this ;
             }
 

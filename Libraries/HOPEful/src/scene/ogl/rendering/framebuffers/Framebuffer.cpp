@@ -25,7 +25,7 @@ void Framebuffer::unsetReadBuffer() {
 void Framebuffer::setDrawBuffers(const std::list<unsigned char>& indices) {
     if (indices.size() > 0) {
         std::vector<unsigned int> attachments ;
-        for (unsigned char index: indices) {
+        for (unsigned int index: indices) {
             attachments.push_back(GL_COLOR_ATTACHMENT0 + index) ;
         }
 
