@@ -30,7 +30,7 @@ namespace Hope {
             /**
              * Index of the cascade.
              */
-            uint8_t m_cascadeIndex = 0 ;
+            int8_t m_cascadeIndex = 0 ;
 
             /**
              * Entity bearing the DirectionalLightCameraComponent.
@@ -102,7 +102,7 @@ namespace Hope {
              * Create a new ShadowCascade instance.
              */
             exported ShadowCascade(
-                uint8_t cascadeIndex = 0,
+                int8_t cascadeIndex = -1,
                 Entity* cascadeRoot = nullptr,
                 OrthographicCameraComponent* computeCameraComponent = nullptr
             ) ;

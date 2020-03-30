@@ -6,18 +6,21 @@
 using namespace Hope ;
 
 ShadowCascade::ShadowCascade(
-    uint8_t cascadeIndex,
+    int8_t cascadeIndex,
     Entity* cascadeRoot,
     OrthographicCameraComponent* computeCameraComponent
 ) : m_cascadeIndex(cascadeIndex),
     m_computeCameraComponent(computeCameraComponent) {
-    // Generate a "LightCamera" that will get the matrices from the
-    // compute camera. This camera is used in the framegraph to set up
-    // the camera matrices that are sent to the shaders, to compute the
-    // related shadow depth map.
-    m_lightCamEntity = std::make_unique<Entity>(cascadeRoot) ;
-    m_lightCamera = std::make_unique<DirectionalLightCameraComponent>() ;
-    m_lightCamEntity -> addComponent(m_lightCamera.get()) ;
+
+    if (m_cascadeIndex >= 0) {
+        // Generate a "LightCamera" that will get the matrices from the
+        // compute camera. This camera is used in the framegraph to set up
+        // the camera matrices that are sent to the shaders, to compute the
+        // related shadow depth map.
+        m_lightCamEntity = std::make_unique<Entity>(cascadeRoot);
+        m_lightCamera = std::make_unique<DirectionalLightCameraComponent>();
+        m_lightCamEntity -> addComponent(m_lightCamera.get());
+    }
 }
 
 void ShadowCascade::update(
