@@ -24,10 +24,6 @@ The repository is structured in different parts:
 -   SSE4 support is recommanded for improved performances
 -   ARM CPUs with NEON are not yet supported
 
-### SPITEful (multimedia files management)
--   [libpng 1.6.37](https://github.com/glennrp/libpng)
--   [libjpeg-turbo 2.0.2](https://github.com/libjpeg-turbo/libjpeg-turbo)
-
 ## Compilation
 ### GNU/Linux
 The compilation process for GNU/Linux users is shown in this video : https://www.youtube.com/watch?v=zECjVr_6qko
