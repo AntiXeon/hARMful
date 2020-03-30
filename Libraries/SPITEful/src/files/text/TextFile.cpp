@@ -18,7 +18,7 @@ bool TextFile::saveSpecific(
 ) {
     TextData* textData = static_cast<TextData*>(filedata) ;
     m_writer.clear() ;
-    m_writer.write(textData -> data()) ;
+    m_writer.write(textData -> toString()) ;
     return true ;
 }
 

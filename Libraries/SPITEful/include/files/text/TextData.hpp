@@ -2,7 +2,7 @@
 #define __SPITE__TEXT_DATA__
 
 #include <interfaces/IFileData.hpp>
-#include <string>
+#include <vector>
 
 namespace Spite {
 
@@ -14,38 +14,32 @@ namespace Spite {
             /**
              * Encapsulated text.
              */
-            std::string m_text ;
+            std::vector<unsigned char> m_text ;
 
         public:
-            /**
-             * Get the file data.
-             */
-            std::string& data() {
-                return m_text ;
-            }
-
             /**
              * Set the file data.
              */
             void setData(const std::string& data) {
-                m_text = data ;
+                m_text.insert(m_text.begin(), data.begin(), data.end()) ;
             }
 
             /**
-             * Get the file raw data.
-             * @param   data    Output the raw data of the file.
-             * @param   size    Output the size of the file @a data.
+             * Get the image raw data.
+             * return   Output the raw data of the image. Data is
+             *          expected to be an array of bytes.
+             * @warning @a data should not be initialized, an array is
+             *          allocated on getting data.
              */
-            exported void data(unsigned char*& data, unsigned int& size) override {
-                data = reinterpret_cast<unsigned char*>(&m_text[0]) ;
-                size = static_cast<unsigned int>(m_text.size()) ;
+            exported std::vector<unsigned char>& data() {
+                return m_text ;
             }
 
             /**
-             * Free data from memory.
+             * Get the text as string.
              */
-            exported void freeData() override {
-                m_text.clear() ;
+            exported std::string toString() {
+                return std::string(m_text.begin(), m_text.end()) ;
             }
     } ;
 }

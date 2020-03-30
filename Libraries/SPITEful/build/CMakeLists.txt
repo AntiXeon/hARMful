@@ -29,9 +29,6 @@ add_library (
     ${SOURCES}
 )
 
-# Linux/Windows dependencies
-include("./dependencies.cmake")
-
 target_link_libraries(${PROJECT_NAME} DOOM)
 
 # Versioning

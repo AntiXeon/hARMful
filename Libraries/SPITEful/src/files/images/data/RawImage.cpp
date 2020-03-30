@@ -6,20 +6,7 @@
 using namespace Spite ;
 
 RawImage::RawImage(ColorFormat::ID format)
-    : m_pixelData(nullptr),
-      m_format(format) {}
-
-RawImage::~RawImage() {
-    if (m_pixelData != nullptr) {
-        delete[] m_pixelData ;
-    }
-}
-
-void RawImage::freeData() {
-    if (m_pixelData != nullptr) {
-        delete[] m_pixelData ;
-    }
-}
+    : m_format(format) {}
 
 void RawImage::setDimensions(
     const unsigned int& width,
@@ -31,35 +18,20 @@ void RawImage::setDimensions(
 
     m_width = width ;
     m_height = height ;
-
-    if (m_pixelData != nullptr) {
-        delete[] m_pixelData ;
-    }
-
-    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
-    m_pixelData = new unsigned char[m_width * m_height * amountOfComponents] ;
+    m_pixelData.clear();
 }
 
 void RawImage::setFormat(ColorFormat::ID format) {
     m_format = format ;
-
-    if (m_pixelData != nullptr) {
-        delete[] m_pixelData ;
-    }
-
-    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
-    m_pixelData = new unsigned char[m_width * m_height * amountOfComponents] ;
+    m_pixelData.clear();
 }
 
 ColorFormat::ID RawImage::format() {
     return m_format ;
 }
 
-void RawImage::data(unsigned char*& data, unsigned int& size) {
-    unsigned char amountOfComponents = ColorFormat::Get(m_format).amountOfComponents() ;
-    unsigned int totalBufferSize = m_width * m_height * amountOfComponents ;
-    data = m_pixelData ;
-    size = totalBufferSize ;
+std::vector<unsigned char>& RawImage::data() {
+    return m_pixelData ;
 }
 
 unsigned int RawImage::width() const {

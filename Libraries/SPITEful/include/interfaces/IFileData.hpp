@@ -12,15 +12,9 @@ namespace Spite {
         public:
             /**
              * Get the file raw data.
-             * @param   data    Output the raw data of the file.
-             * @param   size    Output the size of the file @a data.
+             * @return  Output the raw data of the file.
              */
-            exported virtual void data(unsigned char*& data, unsigned int& size) = 0 ;
-
-            /**
-             * Free data from memory.
-             */
-            exported virtual void freeData() = 0 ;
+            exported virtual std::vector<unsigned char>& data() = 0 ;
     } ;
 
 } ;

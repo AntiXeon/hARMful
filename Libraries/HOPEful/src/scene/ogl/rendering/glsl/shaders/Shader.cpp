@@ -24,7 +24,7 @@ void Shader::addSourceFile(const std::string& filepath) {
 
     Spite::TextData textData ;
     shaderFile.load(&textData) ;
-    addSourceCode(textData.data()) ;
+    addSourceCode(textData.toString()) ;
 }
 
 bool Shader::compile() {

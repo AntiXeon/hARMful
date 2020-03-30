@@ -16,18 +16,12 @@ namespace Spite {
              * IDs to identity the supported color formats.
              */
             enum ID {
-                RGB = 0,
-                BGR,
-                RGBA,
-                BGRA,
-                ARGB,
-                YUV,
-                YCbCr,
-                CMYK,
-                YCCK,
-                Gray,
-                AmountOfIDs,
-                Unknown = -1
+                Unknown = 0,
+                Gray = 1,
+                GrayAlpha = 2,
+                RGB = 3,
+                RGBA = 4,
+                AmountOfIDs
             } ;
 
         private:

@@ -25,7 +25,7 @@ namespace Spite {
             /**
              * Picture pixel data.
              */
-            unsigned char* m_pixelData = nullptr ;
+            std::vector<unsigned char> m_pixelData ;
 
             /**
              * Format of the picture.
@@ -39,17 +39,6 @@ namespace Spite {
              * @param   format  Format of the RawImage.
              */
             exported RawImage(ColorFormat::ID format = ColorFormat::Unknown) ;
-
-            /**
-             * Destruction of the RawImage
-             */
-            exported virtual ~RawImage() ;
-
-            /**
-             * Free data from the RawImage instance.
-             * @warning Data are not usable anymore after this call.
-             */
-            exported void freeData() override ;
 
             /**
              * Set the dimensions of the picture.
@@ -75,13 +64,12 @@ namespace Spite {
 
             /**
              * Get the image raw data.
-             * @param   data    Output the raw data of the image. Data is
-             *                  expected to be an array of integers.
-             * @param   size    Output the size of the image @a data.
+             * return   Output the raw data of the image. Data is
+             *          expected to be an array of bytes.
              * @warning @a data should not be initialized, an array is
              *          allocated on getting data.
              */
-            exported void data(unsigned char*& data, unsigned int& size) override ;
+            exported std::vector<unsigned char>& data() ;
 
             /**
              * Width of the image.
@@ -94,12 +82,6 @@ namespace Spite {
              * @return  The height of the image.
              */
             exported unsigned int height() const ;
-
-            // Remove copy/move operations.
-            RawImage(const RawImage& copied) = delete;
-            RawImage(RawImage&& moved) = delete;
-            RawImage& operator=(const RawImage& copied) = delete;
-            RawImage& operator=(RawImage&& moved) = delete;
     } ;
 }
 

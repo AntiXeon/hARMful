@@ -102,21 +102,27 @@ void ColorFormat::SetDataForFormat(
     unsigned char& componentSize
 ) {
     switch (id) {
+        case Gray:
+            name = "Gray";
+            components.resize(1);
+            components[0] = 0xFF000000;
+            componentSize = sizeof(unsigned int);
+            break;
+
+        case GrayAlpha:
+            name = "GrayAlpha";
+            components.resize(2);
+            components[0] = 0xFF000000;
+            components[1] = 0x00FF0000;
+            componentSize = sizeof(unsigned int);
+            break;
+
         case RGB:
             name = "RGB" ;
             components.resize(3) ;
             components[0] = 0x000000FF ;
             components[1] = 0x0000FF00 ;
             components[2] = 0x00FF0000 ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case BGR:
-            name = "BGR" ;
-            components.resize(3) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
             componentSize = sizeof(unsigned int) ;
             break ;
 
@@ -127,71 +133,6 @@ void ColorFormat::SetDataForFormat(
             components[1] = 0x0000FF00 ;
             components[2] = 0x00FF0000 ;
             components[3] = 0xFF000000 ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-            
-        case BGRA:
-            name = "BGRA" ;
-            components.resize(4) ;
-            components[0] = 0x00FF0000 ;
-            components[1] = 0x0000FF00 ;
-            components[2] = 0x000000FF ;
-            components[3] = 0xFF000000 ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case ARGB:
-            name = "ARGB" ;
-            components.resize(4) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
-            components[3] = 0x000000FF ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case YUV:
-            name = "YUV" ;
-            components.resize(3) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case YCbCr:
-            name = "YCbCr" ;
-            components.resize(3) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case CMYK:
-            name = "CMYK" ;
-            components.resize(4) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
-            components[3] = 0x000000FF ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case YCCK:
-            name = "YCCK" ;
-            components.resize(4) ;
-            components[0] = 0xFF000000 ;
-            components[1] = 0x00FF0000 ;
-            components[2] = 0x0000FF00 ;
-            components[3] = 0x000000FF ;
-            componentSize = sizeof(unsigned int) ;
-            break ;
-
-        case Gray:
-            name = "Gray" ;
-            components.resize(1) ;
-            components[0] = 0xFF000000 ;
             componentSize = sizeof(unsigned int) ;
             break ;
 

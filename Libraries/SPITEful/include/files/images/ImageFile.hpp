@@ -9,66 +9,30 @@ namespace Spite {
     /**
      * Base class for a file containing an image.
      */
-    class ImageFile : public File {
+    class ImageFile final : public File {
         private:
             /**
-             * File descriptor.
+             * true to flip the texture on load; false otherwise.
              */
-            FILE* m_file ;
-
-            /**
-             * Position of the data to read/write in the data buffer.
-             */
-            unsigned int m_dataPosition ;
-
-            /**
-             * To know if the picture is loaded in bottom-up order.
-             */
-            bool m_bottomUpLoad = false ;
-
-        protected:
-            /**
-             * Create a new ImageFile.
-             * @param   path    Path of the file to open.
-             * @param   format  Color format used by the image file.
-             */
-            exported ImageFile(const std::string& path) ;
-
-            /**
-             * Destruction of the ImageFile.
-             */
-            exported virtual ~ImageFile() ;
+            bool m_flip = false ;
 
         public:
             /**
-             * Open the JPEGFile in the given mode.
-             * @param   mode    Mode to access BaseFile and perform some
-             *                  operations on it.
+             * Create a new ImageFile.
+             * @param   path    Path of the file to open.
+             * @param   flip    true to flip the texture on load;
+             *                  false otherwise.
              */
-            exported void open(OpenMode mode) ;
+            exported ImageFile(
+                const std::string& path,
+                const bool flip = true
+            ) ;
 
             /**
-             * Close the JPEGFile.
-             */
-            exported void close() ;
-
-            /**
-             * Load the picture in bottom-up order.
+             * Load a data at a given place on disk.
              * @param   filedata        File data to store data in.
              */
-            exported void loadInBottomUpOrder(IFileData* filedata) {
-                m_bottomUpLoad = true ;
-                load(filedata) ;
-            }
-
-            /**
-             * Load the picture in up-bottom order.
-             * @param   filedata        File data to store data in.
-             */
-            exported void loadInUpBottomOrder(IFileData* filedata) {
-                m_bottomUpLoad = false ;
-                load(filedata) ;
-            }
+            exported bool load(IFileData* filedata);
 
             /**
              * Save a data at a given place on disk.
@@ -81,39 +45,24 @@ namespace Spite {
                 const std::string& path
             ) ;
 
-            // Remove copy/move operations.
-            ImageFile(const ImageFile& copied) = delete;
-            ImageFile(ImageFile&& moved) = delete;
-            ImageFile& operator=(const ImageFile& copied) = delete;
-            ImageFile& operator=(ImageFile&& moved) = delete;
-
-        protected:
+        private:
             /**
-             * Load a data at a given place on disk.
-             * @param   filedata        File data to store data in.
+             * Check if the file must be flipped on load,
+             * based on file extension name.
              */
-            exported bool load(IFileData* filedata) ;
+            exported void checkFlipOnLoad();
 
             /**
-             * Parse the image file and store raw data in the @a output data.
-             * @param   output  Output the raw data from the image file.
+             * Open the File in the given mode.
+             * @param   mode    Mode to access File and perform some
+             *                  operations on it.
              */
-            exported virtual bool parse(RawImage* output) = 0 ;
+            exported void open(OpenMode) override {}
 
             /**
-             * Get the file descriptor.
-             * @return  The descriptor of the file.
+             * Close the File.
              */
-            exported FILE* descriptor() const {
-                return m_file ;
-            }
-
-            /**
-             * To know if the picture is loaded in bottom-up order.
-             */
-            exported bool isBottomUp() const {
-                return m_bottomUpLoad ;
-            }
+            exported void close() override {}
     } ;
 }
 
