@@ -212,17 +212,13 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    float time = glfwGetTime() ;
+    double time = glfwGetTime() ;
     float radius = 10.f ;
-    float camX = sin(time / 2.f) * radius ;
-    float camZ = cos(time / 2.f) * radius ;
+    float camX = static_cast<float>(sin(time / 2.f) * radius) ;
+    float camZ = static_cast<float>(cos(time / 2.f) * radius) ;
 
     Mind::Vector3f camPos(camX, 3.f, camZ) ;
     (m_cameraEntity -> transform()).setTranslation(camPos) ;
-
-    float cubeY = std::clamp(camX, 0.f, radius) ;
-    Mind::Vector3f cubePos(0, cubeY, 0) ;
-    (m_cubeEntity -> transform()).setTranslation(cubePos) ;
 }
 
 void TestWindow::postRender() {

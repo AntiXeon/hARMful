@@ -190,9 +190,9 @@ void Window::setupDebugMessages() {
     const GLuint* DebugIDs = nullptr ;
     const GLboolean DebugEnabled = GL_TRUE ;
     glDebugMessageCallback(&Window::GLErrorCallback, nullptr) ;
-    glDebugMessageControl(DebugSource, DebugType, DebugNotificationSeverity, DebugCount, DebugIDs, DebugEnabled) ;
-    glDebugMessageControl(DebugSource, DebugType, DebugLowSeverity, DebugCount, DebugIDs, DebugEnabled) ;
-    glDebugMessageControl(DebugSource, DebugType, DebugMediumSeverity, DebugCount, DebugIDs, DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugNotificationSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugLowSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
+    glDebugMessageControl(DebugSource, DebugType, DebugMediumSeverity, DebugCount, DebugIDs, !DebugEnabled) ;
     glDebugMessageControl(DebugSource, DebugType, DebugHighSeverity, DebugCount, DebugIDs, DebugEnabled) ;
 
     glfwSetErrorCallback(&Window::GLFWErrorCallback) ;
@@ -255,7 +255,7 @@ void Window::GLErrorCallback(
     if (logSharedPtr) {
         logSharedPtr -> writeLine(
             level,
-            message, "\n"
+            message
         ) ;
     }
 }
