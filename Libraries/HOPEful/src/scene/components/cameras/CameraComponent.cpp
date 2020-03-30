@@ -82,7 +82,10 @@ Mind::Matrix4x4f& CameraComponent::projectionMatrix(
 
 void CameraComponent::onAttach(Entity* entity) {
     Mind::Vector3f position = (entity -> transform()).translation() ;
-    m_target = position + m_viewDirection ;
+
+    if (m_target == Mind::Vector3f()) {
+        m_target = position + m_viewDirection;
+    }
 
     m_rightAxis = WorldUpVector.cross(m_viewDirection) ;
     m_rightAxis.normalize() ;
