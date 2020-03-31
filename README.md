@@ -61,7 +61,7 @@ The compilation process for Windows users is shown in this video: https://www.yo
     - Select the **hARMful** `Tools\GLSL2Cpp\build` directory for both "source code" and "build" folders.
     - Press the "Configure" button, no matter the compiler you use. Select either the Win32 or x64 configuration.
     - Press the "Generate" button then open the `GLSL2Cpp.sln` file with Visual Studio. Build the tool, no matter it is in debug or release mode.
-    - Quit Visual Studio once it's done then launch the `Tools\GLSL2Cpp\bin\**\glsl2cpp.exe` file. It will ask for administrator rights to create the shortcut to the HOPEful library directory, so accept the request. The `glsl2cpp` tool copies the content of the embedded GLSL shaders into C++ files (hpp/cpp), in order to embed the shaders inside the DLL itself. That's all!
+    - Quit Visual Studio once it's done then launch the `Tools\GLSL2Cpp\bin\**\glsl2cpp.exe` file where you provide the path to the **hARMful** root directory. It will ask for administrator rights to create the shortcut to the HOPEful library directory, so accept the request. The `glsl2cpp` tool copies the content of the embedded GLSL shaders into C++ files (hpp/cpp), in order to embed the shaders inside the DLL itself. That's all!
 - Come back to the **hARMful** home directory.
 - Open the CMake GUI:
     - Select the **hARMful** `Library` directory for both "source code" and "build" folders.
