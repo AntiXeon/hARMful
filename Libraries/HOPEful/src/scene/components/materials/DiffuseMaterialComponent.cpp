@@ -22,16 +22,14 @@ DiffuseMaterialComponent::DiffuseMaterialComponent()
     setupUniforms() ;
 }
 
-void DiffuseMaterialComponent::updateUniformValues(const Hope::RenderPassID pass) {
-    if (pass == DeferredPassID) {
-        if (m_diffuse) {
-            m_diffuse -> bindUnit(DiffuseMapBinding) ;
-        }
-
-        uniforms(DeferredPassID).at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
-        uniforms(DeferredPassID).at(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
-        uniforms(DeferredPassID).at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
+void DiffuseMaterialComponent::updateUniformValues() {
+    if (m_diffuse) {
+        m_diffuse -> bindUnit(DiffuseMapBinding) ;
     }
+
+    uniforms(DeferredPassID).at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
+    uniforms(DeferredPassID).at(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;
+    uniforms(DeferredPassID).at(UniformNames::MaterialShininessUniformName()) -> setFloating(m_shininess) ;
 }
 
 void DiffuseMaterialComponent::setupUniforms() {

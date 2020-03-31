@@ -139,7 +139,6 @@ namespace Hope::GL {
              */
             exported void useMaterial(
                 const Hope::GL::RenderPass* pass,
-                const Hope::MaterialComponent* component,
                 const std::vector<Hope::EffectData*>& effects = {}
             ) ;
 

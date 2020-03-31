@@ -34,8 +34,8 @@ void OpenGLRenderer::render(
                 continue ;
             }
 
-            material -> updateUniformValues(renderPassID);
-            useMaterial(renderPass, material) ;
+            material -> updateUniformValues();
+            useMaterial(renderPass) ;
 
             size_t amountParts = geometry -> amountParts() ;
             std::vector<int32_t> counts(amountParts) ;
@@ -74,8 +74,6 @@ void OpenGLRenderer::deferredShading(
     const uint32_t memoryBarrier,
     std::vector<Hope::EffectData*>& effects
 ) {
-    const Hope::RenderPassID UsedRenderPassID = ForwardPassID ;
-
     m_deferredShadingQuad.bind() ;
 
     const auto* renderPass = activateShader(ForwardPassID, material) ;
@@ -84,7 +82,7 @@ void OpenGLRenderer::deferredShading(
         return ;
     }
 
-    material -> updateUniformValues(UsedRenderPassID) ;
+    material -> updateUniformValues() ;
 
     // Apply effects.
     for (Hope::EffectData* effect : effects) {
@@ -93,7 +91,6 @@ void OpenGLRenderer::deferredShading(
 
     useMaterial(
         renderPass,
-        material,
         effects
     ) ;
 
@@ -135,7 +132,6 @@ const Hope::GL::RenderPass* OpenGLRenderer::activateShader(
 
 void OpenGLRenderer::useMaterial(
     const Hope::GL::RenderPass* pass,
-    const Hope::MaterialComponent* component,
     const std::vector<Hope::EffectData*>& effects
 ) {
     if (!pass) {

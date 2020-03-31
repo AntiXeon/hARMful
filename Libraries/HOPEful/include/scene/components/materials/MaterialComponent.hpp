@@ -51,7 +51,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            exported virtual void updateUniformValues(const Hope::RenderPassID pass) = 0 ;
+            exported virtual void updateUniformValues() = 0 ;
 
             /**
              * To know if the component can be shared by several entities.

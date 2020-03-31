@@ -21,7 +21,7 @@ SSAOBlurMaterialComponent::SSAOBlurMaterialComponent(
     setupForwardShader() ;
 }
 
-void SSAOBlurMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
+void SSAOBlurMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_aoBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;
 }

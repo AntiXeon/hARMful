@@ -75,7 +75,7 @@ namespace Hope {
              * Update the uniform values before the processing of the material
              * component.
              */
-            exported void updateUniformValues(const Hope::RenderPassID pass) override ;
+            exported void updateUniformValues() override ;
 
             /**
              * Set the ambient color.
