@@ -25,7 +25,7 @@ BlinnPhongMaterialComponent::BlinnPhongMaterialComponent()
     setupUniforms() ;
 }
 
-void BlinnPhongMaterialComponent::updateUniformValues(const Hope::RenderPassID pass) {
+void BlinnPhongMaterialComponent::updateUniformValues() {
     uniforms(DeferredPassID).at(UniformNames::MaterialAmbientUniformName()) -> setVec3(m_ambient.toRGB()) ;
     uniforms(DeferredPassID).at(UniformNames::MaterialDiffuseUniformName()) -> setVec3(m_diffuse.toRGB()) ;
     uniforms(DeferredPassID).at(UniformNames::MaterialSpecularUniformName()) -> setVec3(m_specular.toRGB()) ;

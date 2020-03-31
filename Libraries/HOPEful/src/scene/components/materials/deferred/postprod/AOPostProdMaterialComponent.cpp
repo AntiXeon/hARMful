@@ -19,7 +19,7 @@ AOPostProdMaterialComponent::AOPostProdMaterialComponent(const FramebufferRender
     setupForwardShader() ;
 }
 
-void AOPostProdMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
+void AOPostProdMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
     framebuffer -> bindUnitColor(ShadingStepNode::ShadingRenderTarget) ;
     framebuffer -> bindUnitColor(SSAORenderNode::AORenderTarget) ;

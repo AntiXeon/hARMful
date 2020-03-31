@@ -18,7 +18,7 @@ DisplayDeferredRenderMaterialComponent::DisplayDeferredRenderMaterialComponent(c
     setupForwardShader() ;
 }
 
-void DisplayDeferredRenderMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
+void DisplayDeferredRenderMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
     framebuffer -> bindUnitColor(ShadingStepNode::ShadingRenderTarget) ;
 }

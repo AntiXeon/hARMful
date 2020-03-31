@@ -19,7 +19,7 @@ SSAOMaterialComponent::SSAOMaterialComponent(const AbstractFramebufferRenderNode
     setupForwardShader() ;
 }
 
-void SSAOMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
+void SSAOMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;

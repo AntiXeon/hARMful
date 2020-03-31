@@ -20,13 +20,11 @@ CubemapMaterialComponent::CubemapMaterialComponent()
     setupUniforms() ;
 }
 
-void CubemapMaterialComponent::updateUniformValues(const Hope::RenderPassID pass) {
-    if (pass == DeferredPassID) {
-        if (m_map) {
-            m_map -> activate() ;
-            m_map -> bind() ;
-            uniforms(DeferredPassID).at(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
-        }
+void CubemapMaterialComponent::updateUniformValues() {
+    if (m_map) {
+        m_map -> activate() ;
+        m_map -> bind() ;
+        uniforms(DeferredPassID).at(UniformNames::MaterialCubemapUniformName()) -> setInteger(CubemapBinding) ;
     }
 }
 

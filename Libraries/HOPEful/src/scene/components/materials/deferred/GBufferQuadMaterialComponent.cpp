@@ -19,7 +19,7 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const GBufferRenderNo
     setupUniforms() ;
 }
 
-void GBufferQuadMaterialComponent::updateUniformValues(const Hope::RenderPassID) {
+void GBufferQuadMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
