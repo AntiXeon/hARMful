@@ -148,7 +148,7 @@ void Framebuffer2DStack::attachStencil() {
 
     // Set the filtering modes.
     m_stencilAttachment -> bind() ;
-    m_stencilAttachment -> setFiltering(FilterMode::Nearest, FilterMode::Nearest) ;
+    m_stencilAttachment -> setFiltering(FilterMode::Linear, FilterMode::Linear) ;
     m_stencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.
@@ -182,7 +182,7 @@ void Framebuffer2DStack::attachDepthStencil() {
 
     // Set the filtering modes.
     m_depthStencilAttachment -> bind() ;
-    m_depthStencilAttachment -> setFiltering(FilterMode::Nearest, FilterMode::Nearest) ;
+    m_depthStencilAttachment -> setFiltering(FilterMode::Linear, FilterMode::Linear) ;
     m_depthStencilAttachment -> unbind() ;
 
     // Attach the texture to the framebuffer.

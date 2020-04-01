@@ -19,6 +19,8 @@
 #include <scene/components/lights/PointLightComponent.hpp>
 #include <scene/ogl/rendering/capabilities/SeamlessCubemap.hpp>
 
+#include <files/images/ImageFile.hpp>
+
 #include <algorithm>
 #include <memory>
 
@@ -36,10 +38,13 @@ TestWindow::TestWindow()
     // Create a camera in the scene graph.
     m_cameraEntity = new Hope::Entity(root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
-    m_cameraComponent -> setClearColor(Hope::Color(1.f, 0.0f, 0.6f)) ;
-    m_cameraComponent -> setFarPlaneDistance(200.f) ;
-    m_cameraEntity -> addComponent(m_cameraComponent) ;
+  
+    m_cameraComponent -> setClearColor(Hope::Color(1.f, 0.0f, 0.6f));
+    m_cameraComponent -> setFarPlaneDistance(200.f);
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
+
+    m_cameraEntity -> addComponent(m_cameraComponent);
+
     m_cameraEntity -> setLocked(true) ;
 
     // Cubemap.
@@ -59,8 +64,8 @@ TestWindow::TestWindow()
         auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
         Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
         cubemapMaterial -> setCubemap(std::move(cubemapTexture)) ;
-        cubemapEntity -> addComponent(cubemapMaterial) ;
 
+        cubemapEntity -> addComponent(cubemapMaterial) ;
         Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
         cubemapEntity -> addComponent(cubeGeometry) ;
     }
@@ -70,7 +75,7 @@ TestWindow::TestWindow()
     {
         Hope::Entity* meshTreeEntity = new Hope::Entity(root()) ;
         (meshTreeEntity -> transform()).setScale(0.1f) ;
-        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SimpleScene.fbx") ;
+        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
         meshTreeEntity -> addComponent(meshTreeComponent) ;
 
         m_cubeEntity = meshTreeComponent -> entity("Cube") ;
@@ -140,8 +145,6 @@ TestWindow::TestWindow()
         pointLightEntity -> setLocked(true) ;
     }
 
-
-
     /** FRAME GRAPH **/
     Hope::ActiveCameraNode* activeCameraNode = new Hope::ActiveCameraNode() ;
     activeCameraNode -> setCamera(m_cameraComponent) ;
@@ -161,7 +164,7 @@ TestWindow::TestWindow()
     Hope::FrameGraphNode* rootFG = new Hope::FrameGraphNode() ;
 
     // -- Shadow mapping pass --
-    const uint32_t ShadowResolution = 2048 ;
+    const uint32_t ShadowResolution = 1024 ;
     float maxDistance = 100.f ;
     uint8_t amountCascades = 3 ;
     new Hope::DirectionalLightShadowNode(

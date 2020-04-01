@@ -37,7 +37,7 @@ float ShadowCompute(
         return litFragment ;
     }
 
-    const float bias = max(0.005f * (1.f - dot(normal, lightDirection)), 0.0005f) ;
+    const float bias = max(0.01f * (1.f - dot(normal, lightDirection)), 0.001f) ;
     float distanceCamera = distanceFromCamera(position) ;
 
     // Select the right cascade index based on the distance of the fragment to
@@ -58,9 +58,18 @@ float ShadowCompute(
     projectionCoordinates.xyw = (lightSpacePosition.xyz / lightSpacePosition.w) * 0.5f + 0.5f ;
     projectionCoordinates.w = projectionCoordinates.w - bias ;
     projectionCoordinates.z = float(selectedCascade) ;
-    float shadowMapDepth = texture(cascadedDepthTexture, projectionCoordinates).r ;
+    // float shadowMapDepth = texture(cascadedDepthTexture, projectionCoordinates).r ;
 
-    float currentDepth = projectionCoordinates.w ;// - bias ;
-    litFragment = float((currentDepth < shadowMapDepth) || !insideMap) ;
-    return litFragment ;
+    litFragment = 0.f ;
+    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1, -1)) ;
+    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1,  1)) ;
+    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 0,  0)) ;
+    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1, -1)) ;
+    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1,  1)) ;
+    return litFragment / 5.f ;
+
+
+    // float currentDepth = projectionCoordinates.w ;// - bias ;
+    // litFragment = float((currentDepth < shadowMapDepth) || !insideMap) ;
+    // return litFragment ;
 }
