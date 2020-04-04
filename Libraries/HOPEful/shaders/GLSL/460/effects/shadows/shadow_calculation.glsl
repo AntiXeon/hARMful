@@ -52,24 +52,22 @@ float ShadowCompute(
         }
     }
 
-    vec4 projectionCoordinates ;
-    vec4 worldPosition = inverseViewMatrix * position ;
-    vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;
-    projectionCoordinates.xyw = (lightSpacePosition.xyz / lightSpacePosition.w) * 0.5f + 0.5f ;
-    projectionCoordinates.w = projectionCoordinates.w - bias ;
-    projectionCoordinates.z = float(selectedCascade) ;
-    // float shadowMapDepth = texture(cascadedDepthTexture, projectionCoordinates).r ;
+    if (insideMap) {
+        vec4 projectionCoordinates ;
+        vec4 worldPosition = inverseViewMatrix * position ;
+        vec4 lightSpacePosition = lightViewProjectionMatrices[selectedCascade] * worldPosition ;
+        projectionCoordinates.xyw = (lightSpacePosition.xyz / lightSpacePosition.w) * 0.5f + 0.5f ;
+        projectionCoordinates.w = projectionCoordinates.w - bias ;
+        projectionCoordinates.z = float(selectedCascade) ;
 
-    litFragment = 0.f ;
-    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1, -1)) ;
-    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1,  1)) ;
-    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 0,  0)) ;
-    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1, -1)) ;
-    litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1,  1)) ;
-    return litFragment / 5.f ;
+        litFragment = 0.f ;
+        litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1, -1)) ;
+        litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2(-1,  1)) ;
+        litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 0,  0)) ;
+        litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1, -1)) ;
+        litFragment += textureOffset(cascadedDepthTexture, projectionCoordinates, ivec2( 1,  1)) ;
+        return litFragment / 5.f ;
+    }
 
-
-    // float currentDepth = projectionCoordinates.w ;// - bias ;
-    // litFragment = float((currentDepth < shadowMapDepth) || !insideMap) ;
-    // return litFragment ;
+    return 1.f ;
 }
