@@ -113,7 +113,7 @@ namespace Hope {
             exported void update(
                 CameraComponent* renderCam,
                 const DirectionalLightComponent* light,
-                std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners/2>& frustumCornersWorld
+                std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners / 2>& frustumCornersWorld
             ) ;
 
             /**

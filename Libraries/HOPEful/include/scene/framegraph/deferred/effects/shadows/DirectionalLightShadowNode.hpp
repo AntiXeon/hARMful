@@ -46,6 +46,12 @@ namespace Hope {
      */
     class DirectionalLightShadowNode final : public EffectFrameGraphNode {
         private:
+			/**
+			 * Allowed movement in pixel of the shadow map to keep its static on
+			 * screen, when applied to the render (to avoid waving shadows).
+			 */
+			static const int ShadowMapMoveAmplitude = 1 ;
+
             /**
              * Steps for splitting the total render frustum.
              */
@@ -189,6 +195,11 @@ namespace Hope {
             }
 
         protected:
+			/**
+			 * Create the framebuffer for shadow mapping.
+			 */
+			exported void createFramebuffer(const uint32_t resolution) ;
+
             /**
              * Accept the visitor.
              */

@@ -34,7 +34,8 @@ void OpenGLFrameGraphVisitor::visit(ActiveCameraNode* node) {
     m_aggregators.back().setActiveCameraNode(node) ;
 
     // TODO: Compute eye position in world space on camera attach!
-    Mind::Vector3f position = (node -> camera() -> firstEntity() -> transform()).translation() ;
+	auto cameraEntity = node -> camera() -> firstEntity() ;
+    Mind::Vector3f position = (cameraEntity -> transform()).translation() ;
     m_renderer.baseUBO().setEyePosition(position) ;
 
     if (node -> cacheEmpty()) {

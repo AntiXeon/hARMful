@@ -21,10 +21,7 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
     m_parameters.amountCascades = std::min(static_cast<uint8_t>(MAX_AMOUNT_SHADOW_CASCADES), amountCascades) ;
     m_cascades.resize(m_parameters.amountCascades) ;
 
-    Mind::Dimension3Di dimensions(resolution, resolution, m_parameters.amountCascades) ;
-    m_framebuffer = std::make_unique<API::Framebuffer2DStack>(dimensions) ;
-    m_framebuffer -> attachDepth() ;
-    m_framebuffer -> useNoColorBuffers() ;
+	createFramebuffer(resolution) ;
 
     // Set the maximal distance at which shadows are rendered.
     if (maxDistance < 0.f) {
@@ -41,40 +38,86 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
 }
 
 void DirectionalLightShadowNode::computeCascadeShadowMaps(const float aspectRatio) {
-    // Compute the dimensions of the frustum of the rendering camera...
+	// Compute the dimensions of the frustum of the rendering camera...
     CameraComponent* renderCam = m_renderingCamera -> camera() ;
+	auto* renderCamEntity = renderCam -> firstEntity() ;
+	auto renderCamPosition = (renderCamEntity -> transform()).translation() ;
 
-    // Compute the far plane of the render camera frustum (the cascade planes
-    // are deduced from it during their update).
-    // From http://cgvr.cs.uni-bremen.de/teaching/cg_literatur/lighthouse3d_view_frustum_culling/
-    const float RenderCamFOV = Mind::Math::toRadians(renderCam -> fov()) ;
-    const Mind::Vector3f RenderCamViewDirection = -renderCam -> viewDirection() ;
-    const Mind::Vector3f RenderCamUpVector = renderCam -> upOriented() ;
-    const Mind::Vector3f RenderCamRightVector = renderCam -> rightAxis() ;
+	const Mind::Vector3f RenderCamUpVector = renderCam -> upOriented() ;
+	const Mind::Vector3f RenderCamRightVector = renderCam -> rightAxis() ;
+	const Mind::Vector3f RenderCamViewDirection = -renderCam -> viewDirection() ;
 
-    const float RenderCamFarDistance = renderCam -> farPlaneDistance() ;
-    const float HalfHeightFarPlane = (2.f * std::tan(RenderCamFOV / 2.f) * RenderCamFarDistance) / 2.f ;
-    const Mind::Vector3f YAxisFarPlaneDistance = RenderCamUpVector * HalfHeightFarPlane ;
-    const float HalfWidthFarPlane = HalfHeightFarPlane * aspectRatio ;
-    const Mind::Vector3f XAxisFarPlaneDistance = RenderCamRightVector * HalfWidthFarPlane ;
-    const Mind::Vector3f FarPlaneCenter = (RenderCamViewDirection * RenderCamFarDistance) ;
+	const float RenderCamFarDistance = renderCam -> farPlaneDistance() ;
+	const Mind::Vector3f FarCenter = renderCamPosition + (RenderCamViewDirection * RenderCamFarDistance) ;
 
-    // Store the render camera frustum points (far plane) in world space.
-    std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners/2> frustumCornersWorld {
-        FarPlaneCenter + YAxisFarPlaneDistance + XAxisFarPlaneDistance,
-        FarPlaneCenter + YAxisFarPlaneDistance - XAxisFarPlaneDistance,
-        FarPlaneCenter - YAxisFarPlaneDistance + XAxisFarPlaneDistance,
-        FarPlaneCenter - YAxisFarPlaneDistance - XAxisFarPlaneDistance
+	const float RenderCamFOV = Mind::Math::toRadians(renderCam -> fov()) ;
+	const float TanHalfRenderCamFOV = tan(RenderCamFOV / 2.f) ;
+	const float FarHeight = TanHalfRenderCamFOV * RenderCamFarDistance ;
+	const float FarWidth = FarHeight * aspectRatio ;
+
+	// Store the render camera frustum points in world space.
+	auto FarHeightShift = RenderCamUpVector * FarHeight ;
+	auto FarWidthShift = RenderCamRightVector *FarWidth ;
+    std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners / 2> frustumCornersWorld {
+		// Far plane.
+		FarCenter - FarHeightShift - FarWidthShift,
+		FarCenter + FarHeightShift - FarWidthShift,
+		FarCenter + FarHeightShift + FarWidthShift,
+		FarCenter - FarHeightShift + FarWidthShift
     } ;
 
-    // Update each cascade frustum.
-    for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
-        m_cascades[cascadeIndex].update(
-            renderCam,
-            m_parameters.light,
-            frustumCornersWorld
-        ) ;
-    }
+	// Update each cascade frustum.
+	for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
+	    m_cascades[cascadeIndex].update(
+	        renderCam,
+	        m_parameters.light,
+	        frustumCornersWorld
+	    ) ;
+	}
+
+
+
+
+    // // Compute the dimensions of the frustum of the rendering camera...
+    // CameraComponent* renderCam = m_renderingCamera -> camera() ;
+	//
+    // // Compute the far plane of the render camera frustum (the cascade planes
+    // // are deduced from it during their update).
+    // // From http://cgvr.cs.uni-bremen.de/teaching/cg_literatur/lighthouse3d_view_frustum_culling/
+    // const float RenderCamFOV = Mind::Math::toRadians(renderCam -> fov()) ;
+    // const Mind::Vector3f RenderCamViewDirection = -renderCam -> viewDirection() ;
+    // const Mind::Vector3f RenderCamUpVector = renderCam -> upOriented() ;
+    // const Mind::Vector3f RenderCamRightVector = renderCam -> rightAxis() ;
+	//
+    // const float RenderCamFarDistance = renderCam -> farPlaneDistance() ;
+    // const float HalfHeightFarPlane = (2.f * std::tan(RenderCamFOV / 2.f) * RenderCamFarDistance) / 2.f ;
+    // const Mind::Vector3f YAxisFarPlaneDistance = RenderCamUpVector * HalfHeightFarPlane ;
+    // const float HalfWidthFarPlane = HalfHeightFarPlane * aspectRatio ;
+    // const Mind::Vector3f XAxisFarPlaneDistance = RenderCamRightVector * HalfWidthFarPlane ;
+    // const Mind::Vector3f FarPlaneCenter = (RenderCamViewDirection * RenderCamFarDistance) ;
+
+    // // Store the render camera frustum points (far plane) in world space.
+    // std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners> frustumCornersWorld {
+	//
+    // } ;
+
+    // // Update each cascade frustum.
+    // for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
+    //     m_cascades[cascadeIndex].update(
+    //         renderCam,
+    //         m_parameters.light,
+    //         frustumCornersWorld
+    //     ) ;
+    // }
+}
+
+exported void DirectionalLightShadowNode::createFramebuffer(const uint32_t resolution) {
+	uint32_t realResolution = resolution + ShadowMapMoveAmplitude ;
+
+	Mind::Dimension3Di dimensions(realResolution, realResolution, m_parameters.amountCascades) ;
+    m_framebuffer = std::make_unique<API::Framebuffer2DStack>(dimensions) ;
+    m_framebuffer -> attachDepth() ;
+    m_framebuffer -> useNoColorBuffers() ;
 }
 
 void DirectionalLightShadowNode::specificAccept(IFrameGraphVisitor* visitor) {

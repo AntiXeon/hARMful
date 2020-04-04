@@ -26,7 +26,7 @@ ShadowCascade::ShadowCascade(
 void ShadowCascade::update(
     CameraComponent* renderCam,
     const DirectionalLightComponent* light,
-    std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners/2>& frustumCornersWorld
+    std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners / 2>& frustumCornersWorld
 ) {
     static const uint8_t AmountFrustumSides = 4 ;
     std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners> cascadeCornersWorld = {} ;
@@ -47,7 +47,7 @@ void ShadowCascade::update(
         maxHeight = std::max(maxHeight, cascadeCornersWorld[sideIndex + AmountFrustumSides].get(Mind::Vector3f::Y)) ;
 	}
 
-    Mind::Vector3f lightPosition ;// = m_center ;
+    Mind::Vector3f lightPosition ;
     lightPosition.set(Mind::Vector3f::Y, maxHeight) ;
 
     // Compute the light view and projection matrices.
@@ -88,13 +88,11 @@ void ShadowCascade::setupFramegraph(
 }
 
 void ShadowCascade::updateLightViewMatrix(
-    const Mind::Vector3f& lightPosition,
+    const Mind::Vector3f&,
     const Mind::Vector3f& lightDirection
 ) {
-    Entity* computeCamEntity = m_computeCameraComponent -> firstEntity() ;
-    (computeCamEntity -> transform()).setTranslation(lightPosition) ;
-    // Set the direction of of the compute camera.
-    m_computeCameraComponent -> lookAt(lightPosition + lightDirection) ;
+    // Set the direction of the compute camera.
+    m_computeCameraComponent -> lookAt(lightDirection) ;
     // Extract its view matrix.
     m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;
     m_lightCamera -> setViewMatrix(m_lightViewMatrix) ;
@@ -129,8 +127,8 @@ void ShadowCascade::updateLightProjectionMatrix(
     m_computeCameraComponent -> setRightPlane(maxX) ;
     m_computeCameraComponent -> setBottomPlane(minY) ;
     m_computeCameraComponent -> setTopPlane(maxY) ;
-    m_computeCameraComponent -> setNearPlaneDistance(minZ) ;
-    m_computeCameraComponent -> setFarPlaneDistance(maxZ - minZ) ;
+    m_computeCameraComponent -> setNearPlaneDistance(-maxZ) ;
+    m_computeCameraComponent -> setFarPlaneDistance(-minZ) ;
     m_computeCameraComponent -> projectionMatrix(m_lightProjectionMatrix, 1.f) ;
     m_lightCamera -> setProjectionMatrix(m_lightProjectionMatrix) ;
 }
