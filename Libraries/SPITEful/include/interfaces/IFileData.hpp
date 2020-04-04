@@ -2,6 +2,7 @@
 #define __SPITE__IFILEDATA__
 
 #include <utils/Platform.hpp>
+#include <vector>
 
 namespace Spite {
 
