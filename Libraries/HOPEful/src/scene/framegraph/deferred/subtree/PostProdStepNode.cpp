@@ -17,11 +17,11 @@ PostProdStepNode::PostProdStepNode(
 
 void PostProdStepNode::addEffect(PostProdEffectNode* node) {
     assert(node != nullptr) ;
-    short id = node -> id() ;
+    [[maybe_unused]] short id = node -> id() ;
 
     // Be sure the node is not already in this (or another) PostProdStepNode
     // list.
-    assert(id == PostProdEffectNode::DefaultID) ;
+    assert (id == PostProdEffectNode::DefaultID) ;
 
     node -> setParent(m_effectsRoot.get()) ;
     short nodeID = static_cast<short>(m_effects.size()) ;
@@ -31,7 +31,7 @@ void PostProdStepNode::addEffect(PostProdEffectNode* node) {
 
 void PostProdStepNode::removeEffect(PostProdEffectNode* node) {
     assert(node != nullptr) ;
-    short id = node -> id() ;
+    [[maybe_unused]] short id = node -> id() ;
 
     // Be sure the node is linked to this PostProdStepNode.
     assert(id >= 0) ;
