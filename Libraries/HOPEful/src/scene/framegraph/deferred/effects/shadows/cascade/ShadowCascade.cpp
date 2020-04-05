@@ -116,7 +116,7 @@ void ShadowCascade::updateLightProjectionMatrix(
     }
 
 	float cascadeDistance = m_cascadeFarPlane - m_cascadeNearPlane ;
-	float sphereRadius = cascadeDistance / sqrt(2.f) ;
+	float sphereRadius = cascadeDistance * sqrt(3.f) ;
 
 	m_computeCameraComponent -> setLeftPlane(-sphereRadius) ;
 	m_computeCameraComponent -> setRightPlane(sphereRadius) ;
