@@ -32,6 +32,11 @@ namespace Hope {
              */
             int8_t m_cascadeIndex = 0 ;
 
+			/**
+			 * Shadow map resolution.
+			 */
+			uint32_t m_resolution = 0 ;
+
             /**
              * Entity bearing the DirectionalLightCameraComponent.
              */
@@ -103,6 +108,7 @@ namespace Hope {
              */
             exported ShadowCascade(
                 int8_t cascadeIndex = -1,
+				uint32_t m_resolution = 0,
                 Entity* cascadeRoot = nullptr,
                 OrthographicCameraComponent* computeCameraComponent = nullptr
             ) ;

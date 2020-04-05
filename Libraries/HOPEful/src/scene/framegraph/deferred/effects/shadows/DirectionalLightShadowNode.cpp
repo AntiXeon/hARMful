@@ -74,41 +74,6 @@ void DirectionalLightShadowNode::computeCascadeShadowMaps(const float aspectRati
 	        frustumCornersWorld
 	    ) ;
 	}
-
-
-
-
-    // // Compute the dimensions of the frustum of the rendering camera...
-    // CameraComponent* renderCam = m_renderingCamera -> camera() ;
-	//
-    // // Compute the far plane of the render camera frustum (the cascade planes
-    // // are deduced from it during their update).
-    // // From http://cgvr.cs.uni-bremen.de/teaching/cg_literatur/lighthouse3d_view_frustum_culling/
-    // const float RenderCamFOV = Mind::Math::toRadians(renderCam -> fov()) ;
-    // const Mind::Vector3f RenderCamViewDirection = -renderCam -> viewDirection() ;
-    // const Mind::Vector3f RenderCamUpVector = renderCam -> upOriented() ;
-    // const Mind::Vector3f RenderCamRightVector = renderCam -> rightAxis() ;
-	//
-    // const float RenderCamFarDistance = renderCam -> farPlaneDistance() ;
-    // const float HalfHeightFarPlane = (2.f * std::tan(RenderCamFOV / 2.f) * RenderCamFarDistance) / 2.f ;
-    // const Mind::Vector3f YAxisFarPlaneDistance = RenderCamUpVector * HalfHeightFarPlane ;
-    // const float HalfWidthFarPlane = HalfHeightFarPlane * aspectRatio ;
-    // const Mind::Vector3f XAxisFarPlaneDistance = RenderCamRightVector * HalfWidthFarPlane ;
-    // const Mind::Vector3f FarPlaneCenter = (RenderCamViewDirection * RenderCamFarDistance) ;
-
-    // // Store the render camera frustum points (far plane) in world space.
-    // std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners> frustumCornersWorld {
-	//
-    // } ;
-
-    // // Update each cascade frustum.
-    // for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
-    //     m_cascades[cascadeIndex].update(
-    //         renderCam,
-    //         m_parameters.light,
-    //         frustumCornersWorld
-    //     ) ;
-    // }
 }
 
 exported void DirectionalLightShadowNode::createFramebuffer(const uint32_t resolution) {
@@ -150,6 +115,7 @@ void DirectionalLightShadowNode::generateSubtree() {
     for (uint8_t cascadeIndex = 0 ; cascadeIndex < m_parameters.amountCascades ; ++cascadeIndex) {
         m_cascades[cascadeIndex] = ShadowCascade(
             cascadeIndex,
+			m_parameters.resolution,
             m_cascadeRoot.get(),
             m_computeCameraComponent.get()
         ) ;

@@ -164,7 +164,7 @@ TestWindow::TestWindow()
     Hope::FrameGraphNode* rootFG = new Hope::FrameGraphNode() ;
 
     // -- Shadow mapping pass --
-    const uint32_t ShadowResolution = 1024 ;
+    const uint32_t ShadowResolution = 2048 ;
     float maxDistance = 100.f ;
     uint8_t amountCascades = 3 ;
     new Hope::DirectionalLightShadowNode(
