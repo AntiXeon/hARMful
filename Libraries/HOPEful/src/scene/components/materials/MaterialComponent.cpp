@@ -31,6 +31,9 @@ void MaterialComponent::setupDirectionalLightDepthMapShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DirectionalShadowPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
 
+	auto depthClamping = std::make_unique<API::DepthClamping>() ;
+	renderPass -> addCapability(std::move(depthClamping)) ;
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;

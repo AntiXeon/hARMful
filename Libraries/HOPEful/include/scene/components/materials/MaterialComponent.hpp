@@ -10,6 +10,7 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
+	#include <scene/ogl/rendering/capabilities/DepthClamping.hpp>
     namespace API = Hope::GL ;
 #endif
 

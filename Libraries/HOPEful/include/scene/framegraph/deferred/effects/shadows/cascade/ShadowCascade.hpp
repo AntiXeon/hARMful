@@ -27,6 +27,12 @@ namespace Hope {
      */
     class ShadowCascade final {
         private:
+			/**
+			 * Fixed limit size in height, waiting for autocomputed scene
+			 * bounding box to get true value.
+			 */
+			static const float SceneYLimit ;
+
             /**
              * Index of the cascade.
              */
@@ -191,10 +197,7 @@ namespace Hope {
             /**
              * Update the view matrix of the cascade.
              */
-            exported void updateLightViewMatrix(
-                const Mind::Vector3f& lightPosition,
-                const Mind::Vector3f& lightDirection
-            ) ;
+            exported void updateLightViewMatrix(const Mind::Vector3f& lightDirection) ;
 
             /**
              * Update the projection matrix of the cascade.

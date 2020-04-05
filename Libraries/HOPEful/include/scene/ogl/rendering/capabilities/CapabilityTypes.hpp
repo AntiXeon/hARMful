@@ -16,6 +16,7 @@ namespace Hope::GL {
         BlendEquationAdvanced,
         ClipPlane,
         ColorMask,
+		DepthClamping,
         DepthMask,
         DepthTest,
         Dithering,

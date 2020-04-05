@@ -5,6 +5,8 @@
 
 using namespace Hope ;
 
+const float ShadowCascade::SceneYLimit = 10.f ;
+
 ShadowCascade::ShadowCascade(
     int8_t cascadeIndex,
 	uint32_t m_resolution,
@@ -49,11 +51,8 @@ void ShadowCascade::update(
         maxHeight = std::max(maxHeight, cascadeCornersWorld[sideIndex + AmountFrustumSides].get(Mind::Vector3f::Y)) ;
 	}
 
-    Mind::Vector3f lightPosition ;
-    lightPosition.set(Mind::Vector3f::Y, maxHeight) ;
-
     // Compute the light view and projection matrices.
-    updateLightViewMatrix(lightPosition, light -> direction()) ;
+    updateLightViewMatrix(light -> direction()) ;
     updateLightProjectionMatrix(cascadeCornersWorld) ;
 }
 
@@ -89,15 +88,14 @@ void ShadowCascade::setupFramegraph(
     ) ;
 }
 
-void ShadowCascade::updateLightViewMatrix(
-    const Mind::Vector3f&,
-    const Mind::Vector3f& lightDirection
-) {
+void ShadowCascade::updateLightViewMatrix(const Mind::Vector3f& lightDirection) {
     // Set the direction of the compute camera.
-    m_computeCameraComponent -> lookAt(lightDirection) ;
-    // Extract its view matrix.
+	m_computeCameraComponent -> lookAt(lightDirection) ;
+
+	// Extract its view matrix.
     m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;
     m_lightCamera -> setViewMatrix(m_lightViewMatrix) ;
+	(m_lightCamEntity -> transform()).setTranslation(-lightDirection * SceneYLimit) ;
 }
 
 void ShadowCascade::updateLightProjectionMatrix(
@@ -124,7 +122,7 @@ void ShadowCascade::updateLightProjectionMatrix(
 	m_computeCameraComponent -> setRightPlane(sphereRadius) ;
 	m_computeCameraComponent -> setBottomPlane(-sphereRadius) ;
 	m_computeCameraComponent -> setTopPlane(sphereRadius) ;
-	m_computeCameraComponent -> setNearPlaneDistance(-10.f) ;
+	m_computeCameraComponent -> setNearPlaneDistance(-std::max(maxZ, SceneYLimit)) ;
 	m_computeCameraComponent -> setFarPlaneDistance(-minZ) ;
 	m_computeCameraComponent -> projectionMatrix(m_lightProjectionMatrix, 1.f) ;
 	m_lightCamera -> setProjectionMatrix(m_lightProjectionMatrix) ;
