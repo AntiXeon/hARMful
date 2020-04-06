@@ -24,6 +24,8 @@ The repository is structured in different parts:
 -   SSE4 support is recommanded for improved performances
 -   ARM CPUs with NEON are not yet supported
 
+![hARMful render](./docs/assets/images/renders/shadows.jpg)
+
 ## Compilation
 ### GNU/Linux
 The compilation process for GNU/Linux users is shown in this video : https://www.youtube.com/watch?v=zECjVr_6qko
