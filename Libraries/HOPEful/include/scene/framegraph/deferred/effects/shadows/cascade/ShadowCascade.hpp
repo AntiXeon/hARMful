@@ -197,12 +197,16 @@ namespace Hope {
             /**
              * Update the view matrix of the cascade.
              */
-            exported void updateLightViewMatrix(const Mind::Vector3f& lightDirection) ;
+            exported void updateLightViewMatrix(
+                const Mind::Vector3f& frustumCenter, 
+                const Mind::Vector3f& lightDirection
+            ) ;
 
             /**
              * Update the projection matrix of the cascade.
              */
             exported void updateLightProjectionMatrix(
+                const float cascadeSphereRadius,
                 const std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners>& frustumCornersWorld
             ) ;
     } ;

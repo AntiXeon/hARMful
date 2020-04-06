@@ -5,7 +5,7 @@
 
 using namespace Hope ;
 
-const float ShadowCascade::SceneYLimit = 10.f ;
+const float ShadowCascade::SceneYLimit = 50.f ;
 
 ShadowCascade::ShadowCascade(
     int8_t cascadeIndex,
@@ -32,7 +32,7 @@ void ShadowCascade::update(
     const DirectionalLightComponent* light,
     std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners / 2>& frustumCornersWorld
 ) {
-    static const uint8_t AmountFrustumSides = 4 ;
+    static const uint8_t AmountFrustumSides = CameraComponent::AmountFrustumCorners / 2;
     std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners> cascadeCornersWorld = {} ;
     m_relativeCascadeNearPlane = m_cascadeNearPlane / renderCam -> farPlaneDistance() ;
     m_relativeCascadeFarPlane = m_cascadeFarPlane / renderCam -> farPlaneDistance() ;
@@ -42,18 +42,30 @@ void ShadowCascade::update(
 
     // Maximal height in the current cascade frustum.
     float maxHeight = -std::numeric_limits<float>::max() ;
+    Mind::Vector3f nearPlaneCenter;
+    Mind::Vector3f farPlaneCenter;
+    Mind::Vector3f frustumCenter;
 
     // Compute the near and far planes of the render camera frustum for the
     // current cascade.
     for (uint8_t sideIndex = 0 ; sideIndex < AmountFrustumSides ; ++sideIndex) {
 		cascadeCornersWorld[sideIndex] = renderCamPosition + frustumCornersWorld[sideIndex] * m_relativeCascadeNearPlane ;
+        nearPlaneCenter += cascadeCornersWorld[sideIndex];
+
         cascadeCornersWorld[sideIndex + AmountFrustumSides] = renderCamPosition + frustumCornersWorld[sideIndex] * m_relativeCascadeFarPlane ;
+        farPlaneCenter += cascadeCornersWorld[sideIndex + AmountFrustumSides];
+
         maxHeight = std::max(maxHeight, cascadeCornersWorld[sideIndex + AmountFrustumSides].get(Mind::Vector3f::Y)) ;
 	}
 
+    nearPlaneCenter /= AmountFrustumSides;
+    farPlaneCenter /= AmountFrustumSides;
+    frustumCenter = (nearPlaneCenter + farPlaneCenter) / 2.f;
+    float cascadeSphereRadius = Mind::Vector3f::distance(frustumCenter, cascadeCornersWorld[AmountFrustumSides]);
+
     // Compute the light view and projection matrices.
-    updateLightViewMatrix(light -> direction()) ;
-    updateLightProjectionMatrix(cascadeCornersWorld) ;
+    updateLightViewMatrix(frustumCenter, light -> direction()) ;
+    updateLightProjectionMatrix(cascadeSphereRadius, cascadeCornersWorld) ;
 }
 
 void ShadowCascade::setupFramegraph(
@@ -88,17 +100,22 @@ void ShadowCascade::setupFramegraph(
     ) ;
 }
 
-void ShadowCascade::updateLightViewMatrix(const Mind::Vector3f& lightDirection) {
+void ShadowCascade::updateLightViewMatrix(
+    const Mind::Vector3f& frustumCenter,
+    const Mind::Vector3f& lightDirection
+) {
     // Set the direction of the compute camera.
-	m_computeCameraComponent -> lookAt(lightDirection) ;
+    auto& computeTransform = m_computeCameraComponent->firstEntity()->transform();
+    computeTransform.setTranslation(frustumCenter);
+	m_computeCameraComponent -> lookAt(frustumCenter + lightDirection) ;
 
 	// Extract its view matrix.
-    m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;
+    m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;    
     m_lightCamera -> setViewMatrix(m_lightViewMatrix) ;
-	(m_lightCamEntity -> transform()).setTranslation(-lightDirection * SceneYLimit) ;
 }
 
 void ShadowCascade::updateLightProjectionMatrix(
+    const float cascadeSphereRadius,
     const std::array<Mind::Vector3f, CameraComponent::AmountFrustumCorners>& frustumCornersWorld
 ) {
     Mind::Vector4f firstCorner = m_lightViewMatrix * Mind::Vector4f(frustumCornersWorld[0]) ;
@@ -115,13 +132,10 @@ void ShadowCascade::updateLightProjectionMatrix(
         maxZ = std::max(corner.get(Mind::Vector4f::Z), maxZ) ;
     }
 
-	float cascadeDistance = m_cascadeFarPlane - m_cascadeNearPlane ;
-	float sphereRadius = cascadeDistance * sqrt(3.f) ;
-
-	m_computeCameraComponent -> setLeftPlane(-sphereRadius) ;
-	m_computeCameraComponent -> setRightPlane(sphereRadius) ;
-	m_computeCameraComponent -> setBottomPlane(-sphereRadius) ;
-	m_computeCameraComponent -> setTopPlane(sphereRadius) ;
+	m_computeCameraComponent -> setLeftPlane(-cascadeSphereRadius) ;
+	m_computeCameraComponent -> setRightPlane(cascadeSphereRadius) ;
+	m_computeCameraComponent -> setBottomPlane(-cascadeSphereRadius) ;
+	m_computeCameraComponent -> setTopPlane(cascadeSphereRadius) ;
 	m_computeCameraComponent -> setNearPlaneDistance(-std::max(maxZ, SceneYLimit)) ;
 	m_computeCameraComponent -> setFarPlaneDistance(-minZ) ;
 	m_computeCameraComponent -> projectionMatrix(m_lightProjectionMatrix, 1.f) ;

@@ -48,7 +48,7 @@ void DirectionalLightShadowNode::computeCascadeShadowMaps(const float aspectRati
 	const Mind::Vector3f RenderCamViewDirection = -renderCam -> viewDirection() ;
 
 	const float RenderCamFarDistance = renderCam -> farPlaneDistance() ;
-	const Mind::Vector3f FarCenter = renderCamPosition + (RenderCamViewDirection * RenderCamFarDistance) ;
+	const Mind::Vector3f FarCenter = RenderCamViewDirection * RenderCamFarDistance ;
 
 	const float RenderCamFOV = Mind::Math::toRadians(renderCam -> fov()) ;
 	const float TanHalfRenderCamFOV = tan(RenderCamFOV / 2.f) ;
