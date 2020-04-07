@@ -34,6 +34,10 @@ void MaterialComponent::setupDirectionalLightDepthMapShader() {
 	auto depthClamping = std::make_unique<API::DepthClamping>() ;
 	renderPass -> addCapability(std::move(depthClamping)) ;
 
+    auto culling = std::make_unique<API::FaceCulling>();
+    culling -> setCullMode(API::FaceCulling::Back);
+    renderPass -> addCapability(std::move(culling));
+
     // Vertex shader code.
     shaderProgram -> addVertexShaderCode(ModulesDirectiveModuleCode) ;
     shaderProgram -> addVertexShaderCode(IncludesBlockBindingsModuleCode) ;

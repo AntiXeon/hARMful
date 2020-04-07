@@ -11,6 +11,7 @@
 
 #ifdef OGL
 	#include <scene/ogl/rendering/capabilities/DepthClamping.hpp>
+#include <scene/ogl/rendering/capabilities/FaceCulling.hpp>
     namespace API = Hope::GL ;
 #endif
 

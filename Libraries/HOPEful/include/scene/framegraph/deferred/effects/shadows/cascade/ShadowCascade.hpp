@@ -114,7 +114,7 @@ namespace Hope {
              */
             exported ShadowCascade(
                 int8_t cascadeIndex = -1,
-				uint32_t m_resolution = 0,
+				uint32_t resolution = 0,
                 Entity* cascadeRoot = nullptr,
                 OrthographicCameraComponent* computeCameraComponent = nullptr
             ) ;
@@ -198,6 +198,7 @@ namespace Hope {
              * Update the view matrix of the cascade.
              */
             exported void updateLightViewMatrix(
+                const float cascadeSphereRadius,
                 const Mind::Vector3f& frustumCenter, 
                 const Mind::Vector3f& lightDirection
             ) ;
