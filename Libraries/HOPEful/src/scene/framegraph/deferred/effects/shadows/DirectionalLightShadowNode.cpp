@@ -40,8 +40,6 @@ DirectionalLightShadowNode::DirectionalLightShadowNode(
 void DirectionalLightShadowNode::computeCascadeShadowMaps(const float aspectRatio) {
 	// Compute the dimensions of the frustum of the rendering camera...
     CameraComponent* renderCam = m_renderingCamera -> camera() ;
-	auto* renderCamEntity = renderCam -> firstEntity() ;
-	auto renderCamPosition = (renderCamEntity -> transform()).translation() ;
 
 	const Mind::Vector3f RenderCamUpVector = renderCam -> upOriented() ;
 	const Mind::Vector3f RenderCamRightVector = renderCam -> rightAxis() ;

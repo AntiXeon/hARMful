@@ -77,6 +77,24 @@ namespace Hope { namespace GL {
             }
 
             /**
+             * Get the width of the window.
+             */
+            exported int width() const {
+                int width;
+                glfwGetWindowSize(m_window, &width, nullptr);
+                return width;
+            }
+
+            /**
+             * Get the height of the window.
+             */
+            exported int height() const {
+                int height;
+                glfwGetWindowSize(m_window, nullptr, &height);
+                return height;
+            }
+
+            /**
              * Set the root of the framegraph.
              */
             exported void setFrameGraphRoot(FrameGraphNode* root) {
@@ -116,6 +134,13 @@ namespace Hope { namespace GL {
 
         protected:
             /**
+             * Get the underlying low-level window handler.
+             */
+            exported GLFWwindow* handler() const {
+                return m_window;
+            }
+
+            /**
              * Allow the user to perform custom actions before rendering the
              * frame.
              */
@@ -126,6 +151,24 @@ namespace Hope { namespace GL {
              * frame.
              */
             exported virtual void postRender() {}
+
+            /**
+             * Allow the user to set the keyboard inputs.
+             */
+            exported virtual void keyboard(
+                [[maybe_unused]] const int key,
+                [[maybe_unused]] const int scancode,
+                [[maybe_unused]] const int action,
+                [[maybe_unused]] const int mods
+            ) {}
+
+            /**
+             * Allow the user to use mouse movements.
+             */
+            exported virtual void mouse(
+                [[maybe_unused]] const double x,
+                [[maybe_unused]] const double y
+            ) {}
 
         private:
             /**

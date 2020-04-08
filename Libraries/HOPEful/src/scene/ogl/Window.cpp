@@ -52,8 +52,8 @@ void Window::run() {
 
         m_frameGraphVisitor -> nextFrame() ;
 
-        glfwPollEvents() ;
         glfwSwapBuffers(m_window) ;
+        glfwPollEvents();
     }
 
     m_scene -> lockEntities(false) ;
@@ -205,6 +205,30 @@ void Window::setCallbacks() {
         that -> resizedWindow(window, width, height) ;
     } ;
     glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
+
+    // Callback for keyboard key inputs.
+    auto keyboardKeyCallbackFunc = [](
+        GLFWwindow* window,
+        const int key,
+        const int scancode,
+        const int action,
+        const int mods
+      ) {
+        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
+        that -> keyboard(key, scancode, action, mods) ;
+    } ;
+    glfwSetKeyCallback(m_window, keyboardKeyCallbackFunc) ;
+
+    // Callback for mouse position changes.
+    auto mousePositionCallbackFunc = [](
+        GLFWwindow* window,
+        const double x,
+        const double y
+        ) {
+        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
+        that -> mouse(x, y) ;
+    };
+    glfwSetCursorPosCallback(m_window, mousePositionCallbackFunc) ;
 }
 
 void Window::setGraphicsAPIVersion() {
