@@ -76,12 +76,12 @@ namespace Hope {
             /**
              * Root node for cascade related cameras.
              */
-            std::unique_ptr<Entity> m_cascadeRoot = nullptr ;
+            std::unique_ptr<Transform> m_cascadeRoot = nullptr ;
 
             /**
-             * Orthographic camera entity
+             * Orthographic camera transform.
              */
-            std::unique_ptr<Entity> m_computeCamEntity = nullptr ;
+            std::unique_ptr<Transform> m_computeCamTransform = nullptr ;
 
             /**
              * Orthographic camera, to compute light matrices, that is child

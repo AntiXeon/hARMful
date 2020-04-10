@@ -1,5 +1,6 @@
 #include <scene/components/cameras/CameraComponent.hpp>
 #include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 #include <utils/literals/NumberLiterals.hpp>
 
 using namespace Hope ;

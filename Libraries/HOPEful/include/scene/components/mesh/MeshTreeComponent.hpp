@@ -48,8 +48,8 @@ namespace Hope {
              * Get an entity generated on loading by its name.
              * If the name is not found, nullptr is returned.
              */
-            exported Entity* entity(const std::string& name) {
-                return m_loader.entity(name) ;
+            exported Transform* transform(const std::string& name) {
+                return m_loader.transform(name) ;
             }
 
             /**

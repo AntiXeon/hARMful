@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <scene/Transform.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitant.hpp>
 
 namespace Hope {
@@ -36,7 +37,7 @@ namespace Hope {
             /**
              * Root entity of the scene.
              */
-            Entity* m_sceneGraphRoot = nullptr ;
+            Transform* m_sceneGraphRoot = nullptr ;
 
             /**
              * If true, the node allows the rendering of the framegraph branch
@@ -117,7 +118,7 @@ namespace Hope {
             /**
              * Root of the scene graph.
              */
-            exported Entity* sceneRoot() ;
+            exported Transform* sceneRoot() ;
 
         private:
             /**
@@ -128,7 +129,7 @@ namespace Hope {
             /**
              * Set the root entity of the scene graph.
              */
-            exported void setSceneGraphRoot(Entity* root) ;
+            exported void setSceneGraphRoot(Transform* root) ;
 
             /**
              * Add a child.

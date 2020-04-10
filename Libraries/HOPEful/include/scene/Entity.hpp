@@ -3,21 +3,20 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/Node.hpp>
 #include <scene/SceneTypes.hpp>
-#include <scene/Transform.hpp>
 #include <memory>
 #include <vector>
 
 namespace Hope {
 
     class Component ;
+	class Transform ;
 
     /**
-     * An entity is a node that can bear components for many purpose: rendering,
-     * sound, logic, etc.
+     * An entity can bear components for many purpose: rendering, sound, logic,
+	 * etc.
      */
-    class Entity: public Node {
+    class Entity final {
         friend class Scene ;
 
         private:
@@ -42,26 +41,26 @@ namespace Hope {
             bool m_isLocked = false ;
 
             /**
-             * Transform of the entity.
-             */
-            Transform m_transform ;
-
-            /**
              * Components attached to the current entity.
              */
             std::vector<std::vector<Component*>> m_components ;
 
+			/**
+			 * Link to the transform of the entity.
+			 */
+			Transform* m_transform = nullptr ;
+
         public:
             /**
              * Create a new entity instance.
-             * @param   parent      Parent entity of the new one.
+             * @param   transform	Transform of the entity.
              */
-            exported Entity(Entity* parent = nullptr) ;
+            exported Entity(Transform* transform) ;
 
             /**
              * Destruction of the entity instance.
              */
-            exported virtual ~Entity() ;
+            exported ~Entity() ;
 
             /**
              * Add a new component to the current entity.
@@ -189,11 +188,11 @@ namespace Hope {
              * Get the transform of the entity.
              */
             exported const Transform& transform() const {
-                return m_transform ;
+                return *m_transform ;
             }
 
             exported Transform& transform() {
-                return m_transform ;
+                return *m_transform ;
             }
 
             /**

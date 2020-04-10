@@ -3,6 +3,7 @@
 #include <scene/ogl/mesh/Vertex.hpp>
 #include <scene/ogl/mesh/MeshGeometry.hpp>
 #include <scene/components/mesh/MeshGeometryComponent.hpp>
+#include <scene/Entity.hpp>
 #include <utils/LogSystem.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -14,7 +15,7 @@ namespace fs = std::filesystem ;
 
 void MeshTreeLoader::load(
     const std::string& source,
-    Hope::Entity* meshRoot
+    Hope::Transform* meshRoot
 ) {
     m_source = source ;
     Assimp::Importer importer ;
@@ -25,7 +26,7 @@ void MeshTreeLoader::load(
     ) ;
 
     if (scene) {
-        m_meshRoot = std::make_unique<Hope::Entity>(meshRoot) ;
+        m_meshRoot = std::make_unique<Hope::Transform>(meshRoot) ;
         generateNode(scene, scene -> mRootNode, m_meshRoot.get()) ;
     }
     else {
@@ -44,24 +45,24 @@ void MeshTreeLoader::load(
 void MeshTreeLoader::generateNode(
     const aiScene* scene,
     const aiNode* node,
-    Hope::Entity* entity
+    Hope::Transform* transform
 ) {
-    setupTransform(node -> mTransformation, entity) ;
+    setupTransform(node -> mTransformation, transform) ;
 
     if (node -> mNumMeshes > 0) {
-        loadNodeData(scene, node, entity) ;
+        loadNodeData(scene, node, transform -> entity()) ;
 
         std::string nodeName((node -> mName).C_Str()) ;
-        if (!nodeName.empty() && m_meshEntities.count(nodeName) == 0) {
-            m_meshEntities[nodeName] = entity ;
+        if (!nodeName.empty() && m_meshTransforms.count(nodeName) == 0) {
+            m_meshTransforms[nodeName] = transform ;
         }
     }
 
     // Load the meshes of the children.
     for (unsigned int index = 0 ; index < node -> mNumChildren ; ++index) {
-        Hope::Entity* childEntity = new Hope::Entity(entity) ;
+        Hope::Transform* childTransform = new Hope::Transform(transform) ;
         aiNode* child = node -> mChildren[index] ;
-        generateNode(scene, child, childEntity) ;
+        generateNode(scene, child, childTransform) ;
     }
 }
 
@@ -149,7 +150,11 @@ void MeshTreeLoader::loadNodeData(
             partData[index].indices.push_back(face.mIndices[2] + indexOffset) ;
         }
 
-        partData[index].material = materialProcessing(scene, meshToLoad, entity) ;
+        partData[index].material = materialProcessing(
+			scene,
+			meshToLoad,
+			entity
+		) ;
 
         indexOffset += amountVertices ;
     }
@@ -190,7 +195,7 @@ uint32_t MeshTreeLoader::materialProcessing(
 
 void MeshTreeLoader::setupTransform(
     const aiMatrix4x4& nodeMatrix,
-    Hope::Entity* entity
+    Hope::Transform* transform
 ) {
     Mind::Matrix4x4f transformMatrix ;
 
@@ -206,5 +211,5 @@ void MeshTreeLoader::setupTransform(
 
         transformMatrix.setRowValues(row, transformRow) ;
     }
-    (entity -> transform()).setMatrix(transformMatrix) ;
+    transform -> setMatrix(transformMatrix) ;
 }

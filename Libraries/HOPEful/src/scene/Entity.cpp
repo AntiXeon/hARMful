@@ -1,11 +1,13 @@
-#include <scene/components/Component.hpp>
 #include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
+#include <scene/components/Component.hpp>
 #include <algorithm>
 #include <cassert>
 
 using namespace Hope ;
 
-Entity::Entity(Entity* parent) : Node(parent) {
+Entity::Entity(Transform* transform)
+ 	: m_transform(transform) {
     m_components.resize(AmountComponentTypes) ;
 }
 

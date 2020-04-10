@@ -72,7 +72,7 @@ namespace Hope { namespace GL {
             /**
              * Get the root entity of the scene.
              */
-            exported Entity* root() const {
+            exported Transform* root() const {
                 return m_scene -> root() ;
             }
 

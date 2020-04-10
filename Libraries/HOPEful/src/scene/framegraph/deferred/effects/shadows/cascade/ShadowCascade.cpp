@@ -1,4 +1,5 @@
 #include <scene/framegraph/deferred/effects/shadows/cascade/ShadowCascade.hpp>
+#include <scene/Entity.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <Math.hpp>
 #include <limits>
@@ -10,7 +11,7 @@ const float ShadowCascade::SceneYLimit = 50.f ;
 ShadowCascade::ShadowCascade(
     int8_t cascadeIndex,
 	uint32_t resolution,
-    Entity* cascadeRoot,
+    Transform* cascadeRoot,
     OrthographicCameraComponent* computeCameraComponent
 ) : m_cascadeIndex(cascadeIndex),
 	m_resolution(resolution),
@@ -21,9 +22,9 @@ ShadowCascade::ShadowCascade(
         // compute camera. This camera is used in the framegraph to set up
         // the camera matrices that are sent to the shaders, to compute the
         // related shadow depth map.
-        m_lightCamEntity = std::make_unique<Entity>(cascadeRoot);
+        m_lightCamTransform = std::make_unique<Transform>(cascadeRoot);
         m_lightCamera = std::make_unique<DirectionalLightCameraComponent>();
-        m_lightCamEntity -> addComponent(m_lightCamera.get());
+        m_lightCamTransform -> entity() -> addComponent(m_lightCamera.get());
     }
 }
 
@@ -131,7 +132,7 @@ void ShadowCascade::updateLightViewMatrix(
 	m_computeCameraComponent -> lookAt(computeCamPosition + lightDirection) ;
 
 	// Extract its view matrix.
-    m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;    
+    m_lightViewMatrix = m_computeCameraComponent -> viewMatrix() ;
     m_lightCamera -> setViewMatrix(m_lightViewMatrix) ;
 }
 

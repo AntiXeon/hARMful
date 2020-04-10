@@ -93,13 +93,13 @@ void DirectionalLightShadowNode::specificAccept(IFrameGraphVisitor* visitor) {
 }
 
 void DirectionalLightShadowNode::generateSubtree() {
-    m_cascadeRoot = std::unique_ptr<Entity>(sceneRoot()) ;
+    m_cascadeRoot = std::unique_ptr<Transform>(sceneRoot()) ;
 
     // Generate an OrthographicCamera, to compute light matrices, that is child
     // of the cascade root.
-    m_computeCamEntity = std::make_unique<Entity>(m_cascadeRoot.get()) ;
+    m_computeCamTransform = std::make_unique<Transform>(m_cascadeRoot.get()) ;
     m_computeCameraComponent = std::make_unique<OrthographicCameraComponent>() ;
-    m_computeCamEntity -> addComponent(m_computeCameraComponent.get()) ;
+    m_computeCamTransform -> entity() -> addComponent(m_computeCameraComponent.get()) ;
 
     // Compute cascade distances.
     std::vector<float> cascadedSplits(m_parameters.amountCascades + 1) ;

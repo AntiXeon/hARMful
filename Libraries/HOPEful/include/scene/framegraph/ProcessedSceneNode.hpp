@@ -15,7 +15,7 @@ namespace Hope {
         /**
          * The node itself.
          */
-        Hope::Entity* node = nullptr ;
+        Hope::Transform* node = nullptr ;
 
         /**
          * The world matrix of the node. Requires its parents matrices.

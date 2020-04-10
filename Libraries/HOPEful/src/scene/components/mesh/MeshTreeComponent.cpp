@@ -11,17 +11,17 @@ MeshTreeComponent::MeshTreeComponent(const std::string& meshFile)
 
 void MeshTreeComponent::onAttach(Entity* entity) {
     if (!m_loader.meshRoot()) {
-        m_loader.load(m_source, entity) ;
+        m_loader.load(m_source, &(entity -> transform())) ;
     }
     else {
-        Hope::Entity* meshRootEntity = m_loader.meshRoot() ;
-        meshRootEntity -> setParent(entity) ;
+        Hope::Transform* meshRootTransform = m_loader.meshRoot() ;
+        meshRootTransform -> setParent(&(entity -> transform())) ;
     }
 }
 
 void MeshTreeComponent::onDetach(Entity*) {
     if (m_loader.meshRoot()) {
-        Hope::Entity* meshRootEntity = m_loader.meshRoot() ;
-        meshRootEntity -> setParent(nullptr) ;
+        Hope::Transform* meshRootTransform = m_loader.meshRoot() ;
+        meshRootTransform -> setParent(nullptr) ;
     }
 }

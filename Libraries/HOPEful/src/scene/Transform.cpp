@@ -1,8 +1,11 @@
 #include <scene/Transform.hpp>
+#include <scene/Entity.hpp>
 
 using namespace Hope ;
 
-Transform::Transform() {
+Transform::Transform(Transform* parent)
+	: Node(parent),
+	  m_entity(std::make_unique<Entity>(this)) {
     m_matrix.identity() ;
 }
 

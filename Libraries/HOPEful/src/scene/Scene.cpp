@@ -1,4 +1,5 @@
 #include <scene/Scene.hpp>
+#include <scene/Entity.hpp>
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
@@ -6,10 +7,10 @@
 using namespace Hope ;
 
 Scene::Scene(std::shared_ptr<IFrameGraphVisitor> visitor)
-    : m_root(std::make_unique<Entity>()),
+    : m_root(std::make_unique<Transform>()),
       m_renderConfig(std::make_unique<RenderConfiguration>()),
       m_frameGraphVisitor(visitor) {
-    m_root -> addComponent(m_renderConfig.get()) ;
+    m_root -> entity() -> addComponent(m_renderConfig.get()) ;
     m_frameGraphVisitor -> setSceneRoot(m_root.get()) ;
 }
 
@@ -37,16 +38,16 @@ void Scene::lockEntities(const bool state) {
 }
 
 void Scene::setFrameGraphRoot(FrameGraphNode* root) {
-    root -> setSceneGraphRoot(m_root.get()) ;
+    root -> setSceneGraphRoot(m_root.get() ) ;
     m_renderConfig -> setFrameGraphRoot(root) ;
 }
 
-void Scene::lockEntity(Entity* entity, const bool state) {
-    entity -> setRenderState(state) ;
+void Scene::lockEntity(Transform* transform, const bool state) {
+    transform -> entity() -> setRenderState(state) ;
 
-    auto& children = entity -> children() ;
+    auto& children = transform -> children() ;
     for (Node* child : children) {
-        Entity* entityChild = static_cast<Entity*>(child) ;
-        lockEntity(entityChild, state) ;
+        Transform* transformChild = static_cast<Transform*>(child) ;
+        lockEntity(transformChild, state) ;
     }
 }

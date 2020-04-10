@@ -43,7 +43,7 @@ const std::vector<FrameGraphNode*>& FrameGraphNode::children() const {
     return m_children ;
 }
 
-Entity* FrameGraphNode::sceneRoot() {
+Transform* FrameGraphNode::sceneRoot() {
     return m_sceneGraphRoot ;
 }
 
@@ -67,7 +67,7 @@ void FrameGraphNode::generalAccept(IFrameGraphVisitor* visitor) {
     }
 }
 
-void FrameGraphNode::setSceneGraphRoot(Entity* root) {
+void FrameGraphNode::setSceneGraphRoot(Transform* root) {
     m_sceneGraphRoot = root ;
 
     for (FrameGraphNode* child : m_children) {

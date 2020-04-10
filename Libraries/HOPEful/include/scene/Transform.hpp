@@ -3,11 +3,16 @@
 
 #include <utils/Platform.hpp>
 
+#include <scene/Node.hpp>
 #include <geometry/quaternions/Quaternion.hpp>
 #include <geometry/points/Point3Df.hpp>
 #include <matrices/Matrix4x4f.hpp>
 
+#include <memory>
+
 namespace Hope {
+	class Entity ;
+
     /**
      * Transform of an object to describe its position, rotation and scale in a
      * 3D space. It is also a handy way to manipulate such 3D objects in their
@@ -15,8 +20,13 @@ namespace Hope {
      * Operations on transform are applied in the following order:
      * scale, rotation, translation.
      */
-    class Transform final {
+    class Transform final : public Node {
         private:
+			/**
+			 * Entity associated to the current transform.
+			 */
+			std::unique_ptr<Entity> m_entity ;
+
             /**
              * Rotation of the object.
              */
@@ -54,7 +64,14 @@ namespace Hope {
             /**
              * Create a new Transform.
              */
-            exported Transform() ;
+            exported Transform(Transform* parent = nullptr) ;
+
+			/**
+			 * Get the entity associated to the current transform.
+			 */
+			exported Entity* entity() const {
+				return m_entity.get() ;
+			}
 
             /**
              * Set the rotation of the object.

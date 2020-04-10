@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 #include <scene/components/RenderConfiguration.hpp>
 #include <memory>
 
@@ -23,7 +23,7 @@ namespace Hope {
             /**
              * Root entity of the scene.
              */
-            std::unique_ptr<Entity> m_root = nullptr ;
+            std::unique_ptr<Transform> m_root = nullptr ;
 
             /**
              * Enable the configuration of the rendering through frame graph
@@ -57,7 +57,7 @@ namespace Hope {
             /**
              * Get the root entity of the scene.
              */
-            exported Entity* root() const {
+            exported Transform* root() const {
                 return m_root.get() ;
             }
 
@@ -68,11 +68,12 @@ namespace Hope {
 
         private:
             /**
-             * Lock an Entity.
-             * @param   entity  The Entity to lock if available.
-             * @param   state   Lock state.
+             * Lock the Entity of a Transform.
+             * @param   transform  	The Transform to get the Entity to lock if
+			 *						available.
+             * @param   state   	Lock state.
              */
-            exported void lockEntity(Entity* entity, const bool state) ;
+            exported void lockEntity(Transform* transform, const bool state) ;
     } ;
 }
 

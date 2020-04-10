@@ -1,6 +1,7 @@
 #include <scene/components/lights/LightComponent.hpp>
 #include <utils/literals/NumberLiterals.hpp>
 #include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 
 using namespace Hope ;
 

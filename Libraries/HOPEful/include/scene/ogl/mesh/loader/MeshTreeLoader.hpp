@@ -4,7 +4,7 @@
 #include <utils/Platform.hpp>
 
 #include <assimp/matrix4x4.h>
-#include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 #include <scene/components/materials/MaterialComponent.hpp>
 #include <cstdint>
 #include <string>
@@ -36,10 +36,10 @@ namespace Hope::GL {
             } ;
 
             /**
-             * Store the mesh entities by their name.
-             * Only entities having a name are stored here.
+             * Store the mesh transforms by their name.
+             * Only transforms having a name are stored here.
              */
-            std::map<std::string, Hope::Entity*> m_meshEntities ;
+            std::map<std::string, Hope::Transform*> m_meshTransforms ;
 
             /**
              * Link the materials from the input file to the material components
@@ -55,7 +55,7 @@ namespace Hope::GL {
             /**
              * Root of the mesh that is created by the loader.
              */
-            std::unique_ptr<Hope::Entity> m_meshRoot = nullptr ;
+            std::unique_ptr<Hope::Transform> m_meshRoot = nullptr ;
 
         public:
             /**
@@ -65,23 +65,23 @@ namespace Hope::GL {
              */
             exported void load(
                 const std::string& source,
-                Hope::Entity* meshRoot
+                Hope::Transform* meshRoot
             ) ;
 
             /**
              * Get the mesh root.
              */
-            exported Hope::Entity* meshRoot() const {
+            exported Hope::Transform* meshRoot() const {
                 return m_meshRoot.get() ;
             }
 
             /**
-             * Get an entity generated on loading by its name.
+             * Get a transform generated on loading by its name.
              * If the name is not found, nullptr is returned.
              */
-            exported Hope::Entity* entity(const std::string& name) {
-                if (m_meshEntities.count(name) > 0) {
-                    return m_meshEntities[name] ;
+            exported Hope::Transform* transform(const std::string& name) {
+                if (m_meshTransforms.count(name) > 0) {
+                    return m_meshTransforms[name] ;
                 }
                 return nullptr ;
             }
@@ -94,7 +94,7 @@ namespace Hope::GL {
             exported void generateNode(
                 const aiScene* scene,
                 const aiNode* node,
-                Hope::Entity* entity
+                Hope::Transform* transform
             ) ;
 
             /**
@@ -131,7 +131,7 @@ namespace Hope::GL {
              */
             exported void setupTransform(
                 const aiMatrix4x4& nodeMatrix,
-                Hope::Entity* entity
+                Hope::Transform* transform
             ) ;
     } ;
 }

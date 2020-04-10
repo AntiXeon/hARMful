@@ -31,7 +31,7 @@ namespace Hope::GL {
              * Root of the scene graph. May be used by some frame graph nodes
              * to render the scene.
              */
-            Hope::Entity* m_sceneRoot = nullptr ;
+            Hope::Transform* m_sceneRoot = nullptr ;
 
             /**
              * To know if the window has changed since the last run.
@@ -112,7 +112,7 @@ namespace Hope::GL {
             /**
              * Set the root of the scene graph.
              */
-            void setSceneRoot(Hope::Entity* root) override ;
+            void setSceneRoot(Hope::Transform* root) override ;
 
             /**
              * Visit a camera node.

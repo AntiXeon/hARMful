@@ -11,7 +11,7 @@
     namespace API = Hope::GL ;
 #endif
 
-#include <scene/Entity.hpp>
+#include <scene/Transform.hpp>
 #include <scene/components/cameras/OrthographicCameraComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/FrameGraphNode.hpp>
@@ -44,9 +44,10 @@ namespace Hope {
 			uint32_t m_resolution = 0 ;
 
             /**
-             * Entity bearing the DirectionalLightCameraComponent.
+             * Transform of the entity bearing the
+			 * DirectionalLightCameraComponent.
              */
-            std::unique_ptr<Entity> m_lightCamEntity = nullptr ;
+            std::unique_ptr<Transform> m_lightCamTransform = nullptr ;
 
             /**
              * Camera component that is used to render the cascade shadow map.
@@ -115,7 +116,7 @@ namespace Hope {
             exported ShadowCascade(
                 int8_t cascadeIndex = -1,
 				uint32_t resolution = 0,
-                Entity* cascadeRoot = nullptr,
+                Transform* cascadeRoot = nullptr,
                 OrthographicCameraComponent* computeCameraComponent = nullptr
             ) ;
 
@@ -199,7 +200,7 @@ namespace Hope {
              */
             exported void updateLightViewMatrix(
                 const float cascadeSphereRadius,
-                const Mind::Vector3f& frustumCenter, 
+                const Mind::Vector3f& frustumCenter,
                 const Mind::Vector3f& lightDirection
             ) ;
 

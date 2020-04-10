@@ -6,7 +6,7 @@
 #include <scene/SceneTypes.hpp>
 
 namespace Hope {
-    class Entity ;
+    class Transform ;
     class ActiveCameraNode ;
     class ClearBuffersNode ;
     class FrustumCullingNode ;
@@ -30,7 +30,7 @@ namespace Hope {
             /**
              * Set the root of the scene graph.
              */
-            exported virtual void setSceneRoot(Entity* root) = 0 ;
+            exported virtual void setSceneRoot(Transform* root) = 0 ;
 
             /**
              * Visit a camera node.

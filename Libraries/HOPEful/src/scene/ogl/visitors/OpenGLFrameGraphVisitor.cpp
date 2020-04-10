@@ -26,7 +26,7 @@ OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
     m_aggregators.push_back(FrameGraphBranchState()) ;
 }
 
-void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Entity* root) {
+void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Transform* root) {
     m_sceneRoot = root ;
 }
 
@@ -43,7 +43,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCameraNode* node) {
         assert(m_aggregators.size() > 0) ;
         Hope::ProcessedSceneNode rootNode ;
         rootNode.node = m_sceneRoot ;
-        rootNode.worldMatrix = (m_sceneRoot -> transform()).matrix() ;
+        rootNode.worldMatrix = m_sceneRoot -> matrix() ;
         m_processedNodes.push(rootNode) ;
 
         while (m_processedNodes.size() > 0) {
@@ -235,7 +235,8 @@ void OpenGLFrameGraphVisitor::makeRender() {
 }
 
 void OpenGLFrameGraphVisitor::parseSceneGraph() {
-    Hope::Entity* renderedEntity = m_processedNodes.top().node ;
+	Hope::Transform* processedTransform = m_processedNodes.top().node ;
+    Hope::Entity* renderedEntity = processedTransform -> entity() ;
     FrameGraphBranchState& state = m_aggregators.back() ;
 
     if (renderedEntity && state.conditions().check(renderedEntity)) {
@@ -251,14 +252,14 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
         m_processedNodes.pop() ;
 
         // If the node has children, push them in the stack.
-        const std::vector<Node*>& nodeChildren = renderedEntity -> children() ;
+        const std::vector<Node*>& nodeChildren = processedTransform -> children() ;
         for (const Hope::Node* child : nodeChildren) {
-            const Hope::Entity* childEntityConst = static_cast<const Entity*>(child) ;
-            Hope::Entity* childEntity = const_cast<Entity*>(childEntityConst) ;
-            Mind::Matrix4x4f childMatrix = (childEntity -> transform()).matrix() ;
+            const Hope::Transform* childTransformConst = static_cast<const Transform*>(child) ;
+            Hope::Transform* childTransform = const_cast<Transform*>(childTransformConst) ;
+            Mind::Matrix4x4f childMatrix = childTransform -> matrix() ;
 
             Hope::ProcessedSceneNode childNode ;
-            childNode.node = childEntity ;
+            childNode.node = childTransform ;
             childNode.worldMatrix = currentWorldMatrix * childMatrix ;
             m_processedNodes.push(childNode) ;
         }
