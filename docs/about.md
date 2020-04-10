@@ -5,6 +5,8 @@ title: About
 
 hARMful was - at its very beginning - an idea. It was the idea of a 3D video game I could never produce as it would be too complicated to create for a single developer. In this survival video game, the player was in danger in a very hostile environment.
 
+![hARMful banner](assets/images/renders/shadows.jpg)
+
 Later, this idea became a little bit more concrete for a project at the engineering school on a Raspberry Pi. I compiled the Irrlicht game engine on this platform to create a small 3D application in splitscreen with a classmate. The aim was to control two players on the same computer with two keyboards and mouses. Moreover, I began to develop a kind of character behavior during this project. This was what hARMful looked like at this time: a naive video game artificial intelligence.
 
 Yet, its name was found at this time. It is a pun between the idea of the video game staging harmful enemies and dangerous environments; and the ARM microcontroller unit of the Raspberry Pi.

@@ -22,13 +22,13 @@ Some of them are already implemented and a demonstration video is available. A "
 - Alpha channel supporting materials (✗)
 - Order-independent transparency (✗)
 - Physics based rendering materials (✗)
-- Cascade shadow mapping [[Demo](https://www.youtube.com/watch?v=8Q3Ci3c_1Pg)]
+- Cascade shadow mapping [[Demo 1](https://www.youtube.com/watch?v=8Q3Ci3c_1Pg)] [[Demo 2](https://www.youtube.com/watch?v=BIaklMRR1RQ)]
 - Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
 - Support of deferred rendering (✓)
     - Compute scene objects position from depth (✓)
     - Compute normals in a spheremap transform (✓)
 - Post-rendering effects:
-    - Anti-aliasing (✗)
+    - Anti-aliasing (✓)
     - Screen-Space Ambient Occlusion [[Demo](https://www.youtube.com/watch?v=-YB91aXd1RY)]
     - Ground-Truth Ambient Occlusion (✗)
     - Bloom (✗)
@@ -63,7 +63,8 @@ Some of them are already implemented and a demonstration video is available. A "
 - Load images:
     - PNG (✓)
     - JPEG (✓)
-    - TGA (✗)
+    - TGA (✓)
+	- HDR (✓)
     - DDS (✗)
 
 ### Features of HOPEful
@@ -94,45 +95,46 @@ The first version of hARMful is waited for mid-2020. It is not yet well evolved 
     - Hard shadows on directional lights
     - Screen-space ambient occlusion
 
-### Version 1.1 [Physics-based rendering]
-This version adds a much more realistic rendering.
+### Version 2.0 [Physics-based rendering]
+Blinn-Phong materials are deprecated and huge change in scene tree are made (tree of transforms instead of entities).
+This version adds instead a much more realistic rendering.
 * Support of PBR materials
 * Support of image-based lighting
 * Support of HDR
 * Parallax mapping
 
-### Version 1.2 [Lighting and shadows]
+### Version 2.1 [Lighting and shadows]
 It continues for graphics improvements with a much more realistic lighting.
-* Support of soft shadows (Percentage-Closer Soft Shadows)
+* Support of soft shadows (Screen Space Percentage-Closer Soft Shadows)
 * Point light shadows
 * Spot light and their shadows
 * Ground-truth ambient occlusion
 
-### Version 1.3 [Transparency]
+### Version 2.2 [Transparency]
 Mainly oriented towards the integration of transparent materials and their related effects.
 * Order-independent transparency
 * Alpha mapping
 * Transparent materials (blending and clipping)
 * Refraction and reflection of cubemaps
 
-### Version 1.4 [Performances - Step #1]
+### Version 2.3 [Performances - Step #1]
 A first step for improving performances of the engine.
 * Manage static and dynamic objects on rendering
 
-### Version 1.5 [Interactions]
+### Version 2.4 [Interactions]
 A version to add user interactions in the engine. It begins bringing life with physics, in order to continue this effort in the next version.
 * [v1.4a] User inputs
     * Keyboard + mouse
     * Controlers
 * [v1.4b] Integration of the Bullet physics engine (rigid bodies)
 
-### Version 1.6 [Animation]
+### Version 2.5 [Animation]
 Animated meshes and animations following user defined tracks.
 * Motion based on defined paths (curves)
 * Interpolation types
 * IK mesh animation (bones)
 
-### Version 1.7 [Performances - Step #2]
+### Version 2.6 [Performances - Step #2]
 A second step for improving performances of the engine.
 * Octrees
 * Frustum culling
