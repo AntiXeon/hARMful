@@ -6,7 +6,8 @@ using namespace Hope ;
 Transform::Transform(Transform* parent)
 	: Node(parent),
 	  m_entity(std::make_unique<Entity>(this)) {
-    m_matrix.identity() ;
+    m_localMatrix.identity() ;
+	m_worldMatrix.identity() ;
 }
 
 void Transform::setRotation(const Mind::Quaternion& rotation) {
@@ -15,7 +16,8 @@ void Transform::setRotation(const Mind::Quaternion& rotation) {
     }
 
     m_rotation = rotation ;
-    m_outdatedMatrix = true ;
+    m_outdatedLocal = true ;
+	notifyWorldChangeToChildren() ;
 
     float roll ;
     float pitch ;
@@ -41,7 +43,8 @@ void Transform::setRotationOnX(const float rotation) {
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
-        m_outdatedMatrix = true ;
+        m_outdatedLocal = true ;
+		notifyWorldChangeToChildren() ;
     }
 }
 
@@ -62,7 +65,8 @@ void Transform::setRotationOnY(const float rotation) {
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
-        m_outdatedMatrix = true ;
+        m_outdatedLocal = true ;
+		notifyWorldChangeToChildren() ;
     }
 }
 
@@ -83,7 +87,8 @@ void Transform::setRotationOnZ(const float rotation) {
 
     if (newRotation != m_rotation) {
         m_rotation = newRotation ;
-        m_outdatedMatrix = true ;
+        m_outdatedLocal = true ;
+		notifyWorldChangeToChildren() ;
     }
 }
 
@@ -93,7 +98,8 @@ void Transform::setTranslation(const Mind::Vector3f& translation) {
     }
 
     m_translation = translation ;
-    m_outdatedMatrix = true ;
+    m_outdatedLocal = true ;
+	notifyWorldChangeToChildren() ;
 }
 
 void Transform::setScale(const float scale) {
@@ -110,19 +116,20 @@ void Transform::setScale3D(const Mind::Vector3f& scale) {
     }
 
     m_scale = scale ;
-    m_outdatedMatrix = true ;
+    m_outdatedLocal = true ;
+	notifyWorldChangeToChildren() ;
 }
 
-void Transform::setMatrix(const Mind::Matrix4x4f& matrix) {
-    if (m_matrix == matrix) {
+void Transform::setLocal(const Mind::Matrix4x4f& matrix) {
+    if (m_localMatrix == matrix) {
          return ;
     }
 
-    m_matrix = matrix ;
-    m_outdatedMatrix = false ;
+    m_localMatrix = matrix ;
+    m_outdatedLocal = false ;
 
     // Decompose the matrix to rotation, translation and scale.
-    m_matrix.decompose(m_translation, m_rotation, m_scale) ;
+    m_localMatrix.decompose(m_translation, m_rotation, m_scale) ;
 }
 
 
@@ -154,12 +161,41 @@ Mind::Vector3f Transform::scale3D() const {
     return m_scale ;
 }
 
-const Mind::Matrix4x4f& Transform::matrix() {
-    if (m_outdatedMatrix) {
+const Mind::Matrix4x4f& Transform::local() {
+    if (m_outdatedLocal) {
         // Recompose the matrix from the different component values.
-        m_matrix.compose(m_translation, m_rotation, m_scale) ;
-        m_outdatedMatrix = false ;
+        m_localMatrix.compose(m_translation, m_rotation, m_scale) ;
+        m_outdatedLocal = false ;
+		notifyWorldChangeToChildren() ;
     }
 
-    return m_matrix ;
+    return m_localMatrix ;
+}
+
+const Mind::Matrix4x4f& Transform::world() {
+	auto* parentNode = parent() ;
+
+	if (!parentNode) {
+		m_worldMatrix = local() ;
+		m_outdatedWorld = false ;
+	}
+	else if (m_outdatedWorld) {
+		auto* parentTransform = static_cast<Transform*>(parentNode) ;
+
+		m_worldMatrix = (parentTransform -> world()) * local() ;
+		m_outdatedWorld = false ;
+	}
+
+	return m_worldMatrix ;
+}
+
+void Transform::notifyWorldChangeToChildren() {
+	m_outdatedWorld = true ;
+	
+	auto childTransforms = children() ;
+
+	for (auto* child: childTransforms) {
+		Transform* childTransform = static_cast<Transform*>(child) ;
+		childTransform -> notifyWorldChangeToChildren() ;
+	}
 }

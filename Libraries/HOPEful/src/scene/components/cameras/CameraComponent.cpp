@@ -30,7 +30,8 @@ void CameraComponent::lookAt(const Mind::Vector3f& target) {
         return ;
     }
 
-    Mind::Vector3f position = (firstEntity() -> transform()).translation() ;
+    auto cameraWorldMatrix = (firstEntity() -> transform()).world() ;
+	auto position = cameraWorldMatrix.extractTranslation() ;
 
     m_viewDirection = target - position ;
     m_viewDirection.normalize() ;

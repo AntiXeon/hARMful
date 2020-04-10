@@ -211,5 +211,5 @@ void MeshTreeLoader::setupTransform(
 
         transformMatrix.setRowValues(row, transformRow) ;
     }
-    transform -> setMatrix(transformMatrix) ;
+    transform -> setLocal(transformMatrix) ;
 }

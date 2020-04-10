@@ -43,7 +43,7 @@ void OpenGLFrameGraphVisitor::visit(ActiveCameraNode* node) {
         assert(m_aggregators.size() > 0) ;
         Hope::ProcessedSceneNode rootNode ;
         rootNode.node = m_sceneRoot ;
-        rootNode.worldMatrix = m_sceneRoot -> matrix() ;
+        rootNode.worldMatrix = m_sceneRoot -> world() ;
         m_processedNodes.push(rootNode) ;
 
         while (m_processedNodes.size() > 0) {
@@ -255,12 +255,9 @@ void OpenGLFrameGraphVisitor::parseSceneGraph() {
         const std::vector<Node*>& nodeChildren = processedTransform -> children() ;
         for (const Hope::Node* child : nodeChildren) {
             const Hope::Transform* childTransformConst = static_cast<const Transform*>(child) ;
-            Hope::Transform* childTransform = const_cast<Transform*>(childTransformConst) ;
-            Mind::Matrix4x4f childMatrix = childTransform -> matrix() ;
-
             Hope::ProcessedSceneNode childNode ;
-            childNode.node = childTransform ;
-            childNode.worldMatrix = currentWorldMatrix * childMatrix ;
+            childNode.node = const_cast<Transform*>(childTransformConst) ;
+            childNode.worldMatrix = childNode.node -> world() ;
             m_processedNodes.push(childNode) ;
         }
     }

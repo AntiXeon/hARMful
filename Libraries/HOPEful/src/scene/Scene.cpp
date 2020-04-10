@@ -45,7 +45,7 @@ void Scene::setFrameGraphRoot(FrameGraphNode* root) {
 void Scene::lockEntity(Transform* transform, const bool state) {
     transform -> entity() -> setRenderState(state) ;
 
-    auto& children = transform -> children() ;
+    auto children = transform -> children() ;
     for (Node* child : children) {
         Transform* transformChild = static_cast<Transform*>(child) ;
         lockEntity(transformChild, state) ;

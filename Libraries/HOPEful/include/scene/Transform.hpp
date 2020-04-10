@@ -48,17 +48,28 @@ namespace Hope {
             Mind::Vector3f m_eulerAngles ;
 
             /**
-             * Transformation matrix containing all the operations in a single
-             * place: scale, rotation and translation.
+             * Local transformation matrix containing all the operations in a
+			 * single place: scale, rotation and translation.
              */
-            Mind::Matrix4x4f m_matrix ;
+            Mind::Matrix4x4f m_localMatrix ;
 
-            /**
-             * true if the matrix is not up to date with the independent
+			/**
+             * true if the local matrix is not up to date with the independent
              * transformation values (m_rotation, m_translation and m_scale).
              * false if the matrix corresponds to these values.
              */
-            bool m_outdatedMatrix = true ;
+            bool m_outdatedLocal = true ;
+
+			/**
+			 * World transformation matrix containing all the operations in a
+			 * single place: scale, rotation and translation.
+			 */
+			Mind::Matrix4x4f m_worldMatrix ;
+
+			/**
+			 * true if the world matrix is not up to date. false otherwise.
+			 */
+			bool m_outdatedWorld = true ;
 
         public:
             /**
@@ -74,100 +85,113 @@ namespace Hope {
 			}
 
             /**
-             * Set the rotation of the object.
+             * Set the local rotation of the object.
              * @param  rotation    Rotation to apply.
              */
             exported void setRotation(const Mind::Quaternion& rotation) ;
 
             /**
-             * Set the rotation of the object on X axis.
+             * Set the local rotation of the object on X axis.
              * @param  rotation    Rotation to apply.
              */
             exported void setRotationOnX(const float rotation) ;
 
             /**
-             * Set the rotation of the object on Y axis.
+             * Set the local rotation of the object on Y axis.
              * @param  rotation    Rotation to apply.
              */
             exported void setRotationOnY(const float rotation) ;
 
             /**
-             * Set the rotation of the object on Z axis.
+             * Set the local rotation of the object on Z axis.
              * @param  rotation    Rotation to apply.
              */
             exported void setRotationOnZ(const float rotation) ;
 
             /**
-             * Set the translation of the object.
+             * Set the local translation of the object.
              * @param  translation  Translation to apply.
              */
             exported void setTranslation(const Mind::Vector3f& translation) ;
 
             /**
-             * Set the scale of the object.
+             * Set the local scale of the object.
              * @param  scale    Scale to apply.
              */
             exported void setScale(const float scale) ;
 
             /**
-             * Set the scale of the object.
+             * Set the local scale of the object.
              * @param  scale    Scale to apply.
              */
             exported void setScale3D(const Mind::Vector3f& scale) ;
 
             /**
-             * Set the transformation matrix of the object.
+             * Set the local transformation matrix of the object.
              */
-            exported void setMatrix(const Mind::Matrix4x4f& matrix) ;
+            exported void setLocal(const Mind::Matrix4x4f& matrix) ;
 
 
             /**
-             * Get the rotation of the object.
+             * Get the local rotation of the object.
              * @return  Rotation of the object.
              */
             exported Mind::Quaternion rotation() const ;
 
             /**
-             * Get the rotation of the object on X axis.
+             * Get the local rotation of the object on X axis.
              * @return  Rotation of the object.
              */
             exported float rotationOnX() const ;
 
             /**
-             * Get the rotation of the object on Y axis.
+             * Get the local rotation of the object on Y axis.
              * @return  Rotation of the object.
              */
             exported float rotationOnY() const ;
 
             /**
-             * Get the rotation of the object on Z axis.
+             * Get the local rotation of the object on Z axis.
              * @return  Rotation of the object.
              */
             exported float rotationOnZ() const ;
 
             /**
-             * Get the translation of the object.
+             * Get the local translation of the object.
              * @return  Translation of the object.
              */
             exported Mind::Vector3f translation() const ;
 
             /**
-             * Get the scale of the object.
+             * Get the local scale of the object.
              * @return  Scale of the object.
              */
             exported float scale() const ;
 
             /**
-             * Get the scale of the object for each axis.
+             * Get the local scale of the object for each axis.
              * @return  Scale of the object.
              */
             exported Mind::Vector3f scale3D() const ;
 
             /**
-             * Get the transformation matrix of the object.
-             * @return  Transformation matrix of the object.
+             * Get the local transformation matrix of the object.
+             * @return  Local transformation matrix of the object.
              */
-            exported const Mind::Matrix4x4f& matrix() ;
+            exported const Mind::Matrix4x4f& local() ;
+
+			/**
+			 * Get the world transformation matrix of the object.
+			 * @return  World transformation matrix of the object.
+			 */
+			exported const Mind::Matrix4x4f& world() ;
+
+		private:
+			/**
+			 * Notify the children transform that the current transform has
+			 * changed.
+			 */
+			exported void notifyWorldChangeToChildren() ;
     } ;
 }
 

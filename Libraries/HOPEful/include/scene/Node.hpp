@@ -43,12 +43,17 @@ namespace Hope {
             /**
              * Get the parent of the current node.
              */
-            exported const Node* parent() const ;
+            exported Node* parent() const ;
 
             /**
              * Get the list of children.
              */
             exported const std::vector<Node*>& children() const ;
+
+			/**
+			 * Get the list of children.
+			 */
+			exported std::vector<Node*> children() ;
 
             /**
              * Amount of children.

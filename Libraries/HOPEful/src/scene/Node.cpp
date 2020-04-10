@@ -34,12 +34,17 @@ void Node::setParent(Node* parent) {
     }
 }
 
-const Node* Node::parent() const {
+Node* Node::parent() const {
     return m_parent ;
 }
 
 const std::vector<Node*>& Node::children() const {
     return m_children ;
+}
+
+std::vector<Node*> Node::children() {
+	std::vector<Node*> copied(m_children) ;
+    return copied ;
 }
 
 size_t Node::childrenCount() const {
