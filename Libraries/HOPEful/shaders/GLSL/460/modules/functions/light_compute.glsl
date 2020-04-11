@@ -122,7 +122,7 @@ vec3 ComputePointLight(
     vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
 
     float lightDistance = length(fragment.position.xyz - light.position) ;
-    float sqrLightDistance = lightDistance * lightDistance ;
+    float sqrLightDistance = lightDistance ;
     float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
 
     float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;

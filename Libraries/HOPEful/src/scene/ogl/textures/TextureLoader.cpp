@@ -32,11 +32,12 @@ void TextureLoader::LoadFromFile(
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
 
+	InternalFormat internalFormat = ConvertInternalColorFormat(rawData.format()) ;
     GLenum colorFormat = ConvertColorFormat(rawData.format()) ;
     glTexImage2D(
         target,
         TextureLoD,
-        colorFormat,
+        static_cast<GLint>(internalFormat),
         rawData.width(),
         rawData.height(),
         Border,
@@ -44,6 +45,21 @@ void TextureLoader::LoadFromFile(
         GL_UNSIGNED_BYTE,
         pixelData.data()
     ) ;
+}
+
+InternalFormat TextureLoader::ConvertInternalColorFormat(const Spite::ColorFormat::ID format) {
+    switch(format) {
+        case Spite::ColorFormat::Gray:
+            return InternalFormat::Red ;
+        case Spite::ColorFormat::GrayAlpha:
+            return InternalFormat::RedGreen ;
+        case Spite::ColorFormat::RGB:
+            return InternalFormat::StdRedGreenBlue8 ;
+        case Spite::ColorFormat::RGBA:
+            return InternalFormat::StdRedGreenBlueAlpha8 ;
+        default:
+            return InternalFormat::RedGreenBlue ;
+    }
 }
 
 GLenum TextureLoader::ConvertColorFormat(const Spite::ColorFormat::ID format) {

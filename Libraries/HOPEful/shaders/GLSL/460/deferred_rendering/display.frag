@@ -8,5 +8,7 @@ layout(location = 0) in vec2 inTexCoords ;
 out vec4 outColor ;
 
 void main() {
-    outColor = vec4(texture(albedo, inTexCoords).rgb, 1.f) ;
+	const float Gamma = 2.2f ;
+	vec3 correctedColor = pow(texture(albedo, inTexCoords).rgb, vec3(1.f / Gamma)) ;
+    outColor = vec4(correctedColor, 1.f) ;
 }
