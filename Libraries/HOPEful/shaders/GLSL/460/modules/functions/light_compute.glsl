@@ -1,41 +1,3 @@
-/*** Data ***/
-struct DirectionalLight {
-    // Direction of the light.
-    vec3 direction ;
-
-    // Color of the light.
-    vec3 color ;
-
-    // Power of the light.
-    float power ;
-
-    // Does the light produce a specular?
-    float generateSpecular ;
-} ;
-
-struct PointLight {
-    // Position of the light in the 3D space.
-    vec3 position ;
-
-    // Color of the light.
-    vec3 color ;
-
-    // Distance of the light effect.
-    float falloffDistance ;
-
-    // Linear attenuation of the light.
-    float linearAttenuation ;
-
-    // Quadratic attenuation of the light.
-    float quadraticAttenuation ;
-
-    // Power of the light.
-    float power ;
-
-    // Does the light produce a specular?
-    float generateSpecular ;
-} ;
-
 layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData
 {
     DirectionalLight dirLights[MAX_DIRECTIONAL_LIGHTS] ;
@@ -44,110 +6,75 @@ layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData
     int amountPointLights ;
 } ;
 
-
-struct FragmentData {
-    // Position of the fragment.
-    vec4 position ;
-
-    // Diffuse color value.
-    vec3 diffuseValue ;
-
-    // Normal value.
-    vec3 normalValue ;
-
-    // Specular color value.
-    vec3 specularValue ;
-
-    // Shininess value.
-    float shininess ;
-
-    // Depth of the fragment.
-    float depth ;
-} ;
-
 /*** Functions ***/
 /**
- * Compute the directional light contribution in a fragment shader.
+ * Compute the directional light reflectance on a PBR fragment shader.
  * @param   light           Data of the directional light.
  * @param   viewDirection   Direction of the view.
  * @param   fragment        Data on the processed fragment.
  * @return  Light contribution color.
  */
-vec3 ComputeDirectionalLight(
+vec3 ComputeDirectionalLightReflectance(
     DirectionalLight light,
     vec3 viewDirection,
-    FragmentData fragment
+    PBRFragmentData fragment
 ) {
-    vec3 lightDirection = -light.direction ;
+	vec3 lightRadiance = light.color * light.power ;
+
+	vec3 lightDirection = -light.direction ;
     lightDirection = normalize((viewMatrix * vec4(lightDirection, 0.f))).xyz ;
-    float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;
-    vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;
 
-    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
-    specularAngle *= pow(specularAngle, fragment.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
-
-    float litFragment = ShadowCompute(
-        lightDirection,
-        fragment.position,
-        fragment.normalValue,
-        fragment.depth
-    ) ;
-
-    vec3 lightPowerColor = litFragment * light.color * light.power ;
-    vec3 returnedLighting = fragment.diffuseValue * lambertian * lightPowerColor ;
-    returnedLighting += fragment.specularValue * specularColor * lightPowerColor ;
-
-    return returnedLighting ;
+	return brdfCookTorrance(
+		viewDirection,
+		lightRadiance,
+		lightDirection,
+		fragment
+	) ;
 }
 
 /**
- * Compute the point light contribution in a fragment shader.
+ * Compute the point light reflectance on a PBR fragment shader.
  * @param   light           Data of the point light.
  * @param   viewDirection   Direction of the view.
  * @param   fragment        Data on the processed fragment.
  * @return  Light contribution color.
  */
-vec3 ComputePointLight(
+vec3 ComputePointLightReflectance(
     PointLight light,
     vec3 viewDirection,
-    FragmentData fragment
+    PBRFragmentData fragment
 ) {
-    vec3 lightDirection = normalize(light.position - fragment.position.xyz) ;
-    float lambertian = max(dot(lightDirection, fragment.normalValue), 0.0) ;
-    vec3 reflectDirection = reflect(-lightDirection, fragment.normalValue) ;
+	vec3 diffLighFragment = light.position - fragment.viewPosition.xyz ;
 
-    float specularAngle = max(dot(reflectDirection, viewDirection), 0.f) ;
-    specularAngle *= pow(specularAngle, fragment.shininess) ;
-    vec3 specularColor = light.generateSpecular * light.color * specularAngle ;
+	float distance = length(diffLighFragment) ;
+	float attenuation = 1.f / (distance * distance) ;
+	vec3 lightRadiance = light.power * light.color * attenuation ;
 
-    float lightDistance = length(fragment.position.xyz - light.position) ;
-    float sqrLightDistance = lightDistance ;
-    float sqrFalloffDistance = light.falloffDistance * light.falloffDistance ;
+	vec3 lightDirection = normalize(diffLighFragment) ;
 
-    float lightLinearIntensity = light.falloffDistance / (light.falloffDistance + (light.linearAttenuation * lightDistance)) ;
-    float lightQuadIntensity = sqrFalloffDistance / (sqrFalloffDistance + (light.quadraticAttenuation * sqrLightDistance)) ;
-    float lightIntensity = light.power * lightLinearIntensity * lightQuadIntensity ;
-
-    vec3 lightPowerColor = light.color * lightIntensity ;
-    vec3 returnedLighting = fragment.diffuseValue * lambertian * lightPowerColor ;
-    returnedLighting += fragment.specularValue * specularColor * lightPowerColor ;
-
-    return returnedLighting ;
+	return brdfCookTorrance(
+		viewDirection,
+		lightRadiance,
+		lightDirection,
+		fragment
+	) ;
 }
 
 /**
- * Compute the lights contribution in a fragment shader.
+* Compute the reflectance of all the lights on a PBR fragment shader.
  * @param   viewDirection   Direction of the view.
  * @param   fragment        Data on the processed fragment.
  * @return  Color of the whole scene lights contribution.
  */
-vec3 ComputeLightsContribution(
+vec3 ComputeLightsReflectance(
     vec3 viewDirection,
-    FragmentData fragment
+    PBRFragmentData fragment
 ) {
+	// Reflectance equation.
+	vec3 totalL0 = vec3(0.f) ;
+
     // Contribution of the directional light.
-    vec3 colorLinear = ComputeDirectionalLight(
+    totalL0 += ComputeDirectionalLightReflectance(
         dirLights[0],
         viewDirection,
         fragment
@@ -156,13 +83,14 @@ vec3 ComputeLightsContribution(
     // Contribution of point lights.
     int validAmountOfPointLights = min(MAX_POINT_LIGHTS, amountPointLights) ;
     for (int lightIndex = 0 ; lightIndex < validAmountOfPointLights ; lightIndex++) {
-        colorLinear = colorLinear +
-            ComputePointLight(
-                pointLights[lightIndex],
-                viewDirection,
-                fragment
-            ) ;
+        totalL0 += ComputePointLightReflectance(
+            pointLights[lightIndex],
+            viewDirection,
+            fragment
+        ) ;
     }
 
-    return colorLinear ;
+	totalL0 /= (amountDirectionalLights + amountPointLights) ;
+
+    return totalL0 + fragment.emissive ;
 }

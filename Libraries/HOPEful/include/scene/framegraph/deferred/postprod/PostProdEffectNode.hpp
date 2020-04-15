@@ -56,6 +56,11 @@ namespace Hope {
             exported short id() const { return m_id ; }
 
         protected:
+			/**
+			 * Accept the visitor.
+			 */
+			exported void specificAccept(IFrameGraphVisitor* visitor) ;
+			
             /**
              * Blit framebuffers content (input and output) for the next process
              * on them.

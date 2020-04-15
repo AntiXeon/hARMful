@@ -28,11 +28,6 @@ namespace Hope {
 
         private:
             /**
-             * Names of the uniform variables.
-             */
-            static const UniformNames Uniforms ;
-
-            /**
              * Settings of the material.
              */
             MaterialSettings m_settings ;
@@ -119,6 +114,15 @@ namespace Hope {
             exported UniformCache& uniforms(const RenderPassID passID) {
                 return (m_effect.renderPass(passID)) -> uniformCache() ;
             }
+
+			/**
+			 * Generate a single uniform.
+			 */
+			exported void generateUniform(
+				RenderPassID passID,
+				const std::string& name,
+				const unsigned short location
+			) ;
 
             /**
              * Setup the render passes of the material.

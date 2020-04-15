@@ -4,8 +4,8 @@ layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;
 layout(location = UNIFORM_AO_KERNEL_LOCATION) uniform vec3 kernel[AO_KERNEL_SIZE] ;
 layout(binding = 0) uniform sampler2DMS albedo ;
 layout(binding = 1) uniform sampler2D noise ;
-layout(binding = 2) uniform sampler2DMS normal ;
-layout(binding = 3) uniform sampler2DMS depth ;
+layout(binding = 3) uniform sampler2DMS normal ;
+layout(binding = 4) uniform sampler2DMS depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
@@ -36,16 +36,16 @@ vec2 noiseTextureCoords() {
 // Compute a TBN matrix with a random orientation.
 mat3 computeTBNMatrix() {
     vec3 randDirection = normalize(texture(noise, noiseTextureCoords()).xyz) ;
-    vec3 normal = DecodeSpheremapNormals(texelFetch(normal, ivec2(gl_FragCoord), 0).xy) ;
-    vec3 bitangent = cross(normal, randDirection) ;
+    vec3 normalValue = DecodeSpheremapNormals(texelFetch(normal, ivec2(gl_FragCoord), 0).xy) ;
+    vec3 bitangent = cross(normalValue, randDirection) ;
 
     if (length(bitangent) < Epsilon) {
-        bitangent = cross(normal, vec3(0,0,1)) ;
+        bitangent = cross(normalValue, vec3(0,0,1)) ;
     }
 
     bitangent = normalize(bitangent) ;
-    vec3 tangent = cross(bitangent, normal) ;
-    return mat3(tangent, bitangent, normal) ;
+    vec3 tangent = cross(bitangent, normalValue) ;
+    return mat3(tangent, bitangent, normalValue) ;
 }
 
 void main() {

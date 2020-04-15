@@ -14,6 +14,11 @@ PostProdEffectNode::PostProdEffectNode(
 ) : OffscreenRenderingNode(std::move(material), nullptr),
     m_framebufferNode(framebufferNode) {}
 
+void PostProdEffectNode::specificAccept(IFrameGraphVisitor* visitor) {
+	m_framebufferNode -> framebuffer() -> setDrawBuffers({ PostProdStepNode::PostProdRenderTarget }) ;
+	visitor -> visit(this) ;
+}
+
 void PostProdEffectNode::postAccept() {
     API::Framebuffer* framebuffer = m_framebufferNode -> framebuffer() ;
 

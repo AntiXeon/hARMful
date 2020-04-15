@@ -23,7 +23,7 @@ vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {
 }
 
 /**
- * Retrieve a view space position from texture coordinates and depth.
+ * Retrieve a world space position from texture coordinates and depth.
  */
 vec4 ComputeWorldSpacePosition(vec2 texCoords, float depth) {
     vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;

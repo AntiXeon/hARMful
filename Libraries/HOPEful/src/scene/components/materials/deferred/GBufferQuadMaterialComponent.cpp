@@ -4,8 +4,9 @@
 
 #ifdef OGL
     #include <scene/components/materials/shaders/GLSL/460/Modules.hpp>
+	#include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
+	#include <scene/components/materials/shaders/GLSL/460/modules/Structures.hpp>
     #include <scene/components/materials/shaders/GLSL/460/modules/Functions.hpp>
-    #include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
     #include <scene/components/materials/shaders/GLSL/460/effects/Shadows.hpp>
     #include <scene/components/materials/shaders/GLSL/460/DeferredRendering.hpp>
 #endif
@@ -21,9 +22,10 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const GBufferRenderNo
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
-    framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoRenderTarget) ;
-    framebuffer -> bindUnitColor(GBufferRenderNode::SpecularRenderTarget) ;
-    framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoMetalnessRenderTarget) ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::EmissiveRoughnessRenderTarget) ;
+    framebuffer -> bindUnitColor(GBufferRenderNode::AORenderTarget) ;
+	framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
     uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
 }
@@ -47,12 +49,15 @@ void GBufferQuadMaterialComponent::setupForwardShader() {
     shaderProgram -> addFragmentShaderCode(IncludesBlockBindingsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ModulesBaseDataBlockModuleCode) ;
     shaderProgram -> addFragmentShaderCode(IncludesTextureUnitsModuleCode) ;
+	shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
+	shaderProgram -> addFragmentShaderCode(StructuresMaterialsModuleCode) ;
+	shaderProgram -> addFragmentShaderCode(StructuresLightsModuleCode) ;
     shaderProgram -> addFragmentShaderCode(ShadowsShadowCalculationModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(IncludesAmountLightsModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+	shaderProgram -> addFragmentShaderCode(FunctionsUtilityModuleCode) ;
+	shaderProgram -> addFragmentShaderCode(FunctionsPbrComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsLightComputeModuleCode) ;
     shaderProgram -> addFragmentShaderCode(FunctionsFogModuleCode) ;
-    shaderProgram -> addFragmentShaderCode(DeferredRenderingShadingFragmentCode) ;
+    shaderProgram -> addFragmentShaderCode(DeferredRenderingShadingPbrFragmentCode) ;
     shaderProgram -> build() ;
 
     effect().addRenderPass(std::move(renderPass)) ;

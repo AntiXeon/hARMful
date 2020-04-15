@@ -19,6 +19,11 @@ namespace Hope {
             static const ComponentType ClassType = MaterialComponentType ;
 
         private:
+			/**
+			 * Location of the uniform for the ambient light color.
+			 */
+			static const int AmbientLightColorUniformLocation = 5 ;
+
             /**
              * Location of the uniform for the MSAA quality.
              */

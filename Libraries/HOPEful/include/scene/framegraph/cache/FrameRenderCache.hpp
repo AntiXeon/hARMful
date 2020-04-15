@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
+#include <scene/components/materials/PBRMaterialComponent.hpp>
 #include <scene/framegraph/cache/GeometryData.hpp>
 #include <scene/framegraph/cache/PointLightData.hpp>
 #include <map>
@@ -25,7 +25,7 @@ namespace Hope {
             /**
              * Default material.
              */
-            BlinnPhongMaterialComponent m_defaultMaterial ;
+            PBRMaterialComponent m_defaultMaterial ;
 
             /**
              * Cache of all meshes to render.

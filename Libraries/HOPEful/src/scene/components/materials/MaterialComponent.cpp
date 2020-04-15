@@ -10,8 +10,6 @@
 
 using namespace Hope ;
 
-const UniformNames MaterialComponent::Uniforms ;
-
 MaterialComponent::MaterialComponent(const bool drawShadow)
     : Component(ClassType) {
     m_settings.setRenderEffect(&m_effect) ;
@@ -19,6 +17,17 @@ MaterialComponent::MaterialComponent(const bool drawShadow)
     if (drawShadow) {
         setupDirectionalLightDepthMapShader() ;
     }
+}
+
+void MaterialComponent::generateUniform(
+	RenderPassID passID,
+	const std::string& name,
+	const unsigned short location
+) {
+	auto uniform = std::make_unique<Hope::ShaderUniform>() ;
+	uniform -> setName(name) ;
+	uniform -> setLocation(location) ;
+	uniforms(passID).add(std::move(uniform)) ;
 }
 
 void MaterialComponent::setupRendering() {

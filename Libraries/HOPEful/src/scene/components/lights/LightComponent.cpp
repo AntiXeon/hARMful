@@ -13,5 +13,5 @@ LightComponent::LightComponent(const Type type)
       m_generateSpecular(true) {}
 
 Mind::Vector3f LightComponent::position() const {
-    return (firstEntity() -> transform()).translation() ;
+    return (firstEntity() -> transform()).world().extractTranslation() ;
 }

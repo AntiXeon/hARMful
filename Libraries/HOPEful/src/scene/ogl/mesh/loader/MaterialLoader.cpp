@@ -1,119 +1,28 @@
 #include <scene/ogl/mesh/loader/MaterialLoader.hpp>
-#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
-#include <scene/components/materials/DiffuseMaterialComponent.hpp>
-#include <scene/components/materials/DiffuseNormalMaterialComponent.hpp>
-#include <scene/components/materials/DiffuseNormalSpecularMaterialComponent.hpp>
+#include <scene/components/materials/PBRMaterialComponent.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
 
 std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
-    const fs::path& meshPath,
+    const fs::path& /*meshPath*/,
     const aiMaterial* material
 ) {
-    if (material -> GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-        if (material -> GetTextureCount(aiTextureType_NORMALS) > 0) {
-            if (material -> GetTextureCount(aiTextureType_SPECULAR) > 0) {
-                return DiffuseNormalSpecularMaterial(meshPath, material) ;
-            }
-            else {
-                return DiffuseNormalMaterial(meshPath, material) ;
-            }
-        }
-        else {
-            return DiffuseMaterial(meshPath, material) ;
-        }
-    }
-    else {
-        // Override the default material from Assimp.
-        static const aiString DefaultMaterialName(AI_DEFAULT_MATERIAL_NAME) ;
-        aiString currentName ;
-        material -> Get(AI_MATKEY_NAME, currentName) ;
+	// Override the default material from Assimp.
+	static const aiString DefaultMaterialName(AI_DEFAULT_MATERIAL_NAME) ;
+	aiString currentName ;
+	material -> Get(AI_MATKEY_NAME, currentName) ;
 
-        if (currentName == DefaultMaterialName) {
-            auto defaultMaterial = std::make_unique<BlinnPhongMaterialComponent>() ;
-            return defaultMaterial ;
-        }
-        else {
-            return BlinnPhongMaterial(material) ;
-        }
-    }
-}
+	// if (currentName == DefaultMaterialName) {
+	// 	auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
+	// 	return defaultMaterial ;
+	// }
+	// else {
+	// 	return BlinnPhongMaterial(material) ;
+	// }
 
-std::unique_ptr<MaterialComponent> MaterialLoader::BlinnPhongMaterial(const aiMaterial* material) {
-    auto materialComponent = std::make_unique<BlinnPhongMaterialComponent>() ;
-    aiColor4D specularColor ;
-    aiColor4D diffuseColor ;
-    aiColor4D ambientColor ;
-    float shininess ;
-    aiGetMaterialColor(material, AI_MATKEY_COLOR_AMBIENT, &ambientColor) ;
-    aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diffuseColor) ;
-    aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
-    aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
-    materialComponent -> setAmbient(Color(ambientColor.r, ambientColor.g, ambientColor.b)) ;
-    materialComponent -> setDiffuse(Color(diffuseColor.r, diffuseColor.g, diffuseColor.b)) ;
-    materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
-    materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent.get()) ;
-
-    return materialComponent ;
-}
-
-std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseMaterial(
-    const fs::path& meshPath,
-    const aiMaterial* material
-) {
-    auto materialComponent = std::make_unique<DiffuseMaterialComponent>() ;
-    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
-
-    // Get the other values of the material.
-    aiColor4D specularColor ;
-    float shininess ;
-    aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
-    aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
-    materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
-    materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent.get()) ;
-
-    return materialComponent ;
-}
-
-std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseNormalMaterial(
-    const fs::path& meshPath,
-    const aiMaterial* material
-) {
-    auto materialComponent = std::make_unique<DiffuseNormalMaterialComponent>() ;
-    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
-    materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
-
-    // Get the other values of the material.
-    aiColor4D specularColor ;
-    float shininess ;
-    aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &specularColor) ;
-    aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
-    materialComponent -> setSpecular(Color(specularColor.r, specularColor.g, specularColor.b)) ;
-    materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent.get()) ;
-
-    return materialComponent ;
-}
-
-std::unique_ptr<MaterialComponent> MaterialLoader::DiffuseNormalSpecularMaterial(
-    const fs::path& meshPath,
-    const aiMaterial* material
-) {
-    auto materialComponent = std::make_unique<DiffuseNormalSpecularMaterialComponent>() ;
-    materialComponent -> setDiffuseMap(GetTexture(aiTextureType_DIFFUSE, meshPath, material)) ;
-    materialComponent -> setNormalMap(GetTexture(aiTextureType_NORMALS, meshPath, material)) ;
-    materialComponent -> setSpecularMap(GetTexture(aiTextureType_SPECULAR, meshPath, material)) ;
-
-    // Get the other values of the material.
-    float shininess ;
-    aiGetMaterialFloat(material, AI_MATKEY_SHININESS, &shininess) ;
-    materialComponent -> setShininess(shininess) ;
-    SetAlphaBlendingMaterial(materialComponent.get()) ;
-
-    return materialComponent ;
+	auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
+	return defaultMaterial ;
 }
 
 std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(

@@ -13,18 +13,19 @@ namespace Hope {
      * deferred rendering.
      *
      * Here are the render targets to the framebuffer:
-     * - RT0: albedo    (RGBA [RGB: color], [A: unused])
-     * - RT1: specular  (RGBA [RGB: color], [A: roughness])
-     * - RT2: normal    (ARGB2101010 [RGB: normal], [A: unused])
-     * - RT3: position  (ARGB2101010 [RGB: position], [A: unused])
+     * - RT0: albedo + metalness	(RGBA [RGB: albedo], [A: metalness])
+     * - RT1: emissive + roughness  (RGBA [RGB: emissive], [A: roughness])
+     * - RT2: AO    				(RGBA [R: AO], [GBA: unused])
+     * - RT3: normal  				(ARGB2101010 [RGB: normal], [A: unused])
      * - Depth buffer
      */
     class GBufferRenderNode final : public FramebufferMultisampleRenderNode {
         public:
-            static const unsigned char AlbedoRenderTarget = 0 ;
-            static const unsigned char SpecularRenderTarget = 1 ;
-            static const unsigned char NormalRenderTarget = 2 ;
-            static const unsigned char DepthRenderTarget = 3 ;
+            static const unsigned char AlbedoMetalnessRenderTarget = 0 ;
+            static const unsigned char EmissiveRoughnessRenderTarget = 1 ;
+            static const unsigned char AORenderTarget = 2 ;
+            static const unsigned char NormalRenderTarget = 3 ;
+			static const unsigned char DepthRenderTarget = 4 ;
 
         private:
             static const bool FollowWindowSize = true ;
