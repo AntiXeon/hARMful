@@ -4,6 +4,7 @@
 #include <utils/Platform.hpp>
 
 #include <scene/components/materials/MaterialComponent.hpp>
+#include <scene/components/materials/PBRMaterialComponent.hpp>
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <assimp/scene.h>
 #include <filesystem>
@@ -40,51 +41,36 @@ namespace Hope::GL {
 
         private:
             /**
-             * Create a Blinn-Phong material.
-             * @param   material    Material to convert as a component.
+             * Load a single value property of the material.
+			 * @param 	meshPath			Path to the mesh.
+			 * @param 	material			Material structure from Assimp.
+			 * @param 	propertyKeyValue	Key value of the property.
+			 * @param 	propertyTextureType	Texture type of the property.
              */
-            exported static std::unique_ptr<MaterialComponent> BlinnPhongMaterial(const aiMaterial* material) ;
+            exported static Hope::ValueTexture PropertyValue(
+				const fs::path& meshPath,
+				const aiMaterial* material,
+				const char* pKey,
+				const unsigned int type,
+				const unsigned int idx,
+				const aiTextureType propertyTextureType
+			) ;
 
-            /**
-             * Create a Blinn-Phong material with a diffuse texture.
-             * @param   meshPath    Path of the mesh that is currently loaded.
-             *                      It is useful to retreive the absolute path
-             *                      to the textures in case it is relative to
-             *                      the file.
-             * @param   material    Material to convert as a component.
+			/**
+             * Load a color value property of the material.
+			 * @param 	meshPath			Path to the mesh.
+			 * @param 	material			Material structure from Assimp.
+			 * @param 	propertyKeyValue	Key value of the property.
+			 * @param 	propertyTextureType	Texture type of the property.
              */
-            exported static std::unique_ptr<MaterialComponent> DiffuseMaterial(
-                const fs::path& meshPath,
-                const aiMaterial* material
-            ) ;
-
-            /**
-             * Create a Blinn-Phong material with a diffuse texture and a normal
-             * map.
-             * @param   meshPath    Path of the mesh that is currently loaded.
-             *                      It is useful to retreive the absolute path
-             *                      to the textures in case it is relative to
-             *                      the file.
-             * @param   material    Material to convert as a component.
-             */
-            exported static std::unique_ptr<MaterialComponent> DiffuseNormalMaterial(
-                const fs::path& meshPath,
-                const aiMaterial* material
-            ) ;
-
-            /**
-             * Create a Blinn-Phong material with a diffuse texture, a normal
-             * and a specular maps.
-             * @param   meshPath    Path of the mesh that is currently loaded.
-             *                      It is useful to retreive the absolute path
-             *                      to the textures in case it is relative to
-             *                      the file.
-             * @param   material    Material to convert as a component.
-             */
-            exported static std::unique_ptr<MaterialComponent> DiffuseNormalSpecularMaterial(
-                const fs::path& meshPath,
-                const aiMaterial* material
-            ) ;
+			exported static Hope::ColorTexture PropertyColor(
+				const fs::path& meshPath,
+				const aiMaterial* material,
+				const char* pKey,
+				const unsigned int type,
+				const unsigned int idx,
+				const aiTextureType propertyTextureType
+			) ;
 
 
             /**

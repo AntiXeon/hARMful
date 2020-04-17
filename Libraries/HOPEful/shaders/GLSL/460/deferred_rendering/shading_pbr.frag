@@ -35,7 +35,6 @@ void main() {
 		currentFragment.ao = texelFetch(gAO, FragCoords, sampleIndex).r ;
         currentFragment.normal = normalize(DecodeSpheremapNormals(texelFetch(gNormal, FragCoords, sampleIndex).xy)) ;
         currentFragment.viewPosition = ComputeViewSpacePosition(inTexCoords, depthValue) ;
-		currentFragment.worldPosition = ComputeWorldSpacePosition(inTexCoords, depthValue) ;
         currentFragment.depth = depthValue ;
 
         // Compute ligh shading.

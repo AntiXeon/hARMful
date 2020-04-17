@@ -28,42 +28,42 @@ void PBRMaterialComponent::updateUniformValues() {
 	bind(
 		m_albedo,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialAlbedoVertexUniformName()),
-		AlbedoTextureValueBinding,
+		AlbedoTextureBinding,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialAlbedoUseTextureUniformName())
 	) ;
 	// Metalness.
 	bind(
 		m_metalness,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialMetalnessVertexUniformName()),
-		MetalnessTextureValueBinding,
+		MetalnessTextureBinding,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialMetalnessUseTextureUniformName())
 	) ;
 	// Emissive.
 	bind(
 		m_emissive,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialEmissiveVertexUniformName()),
-		EmissiveTextureValueBinding,
+		EmissiveTextureBinding,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialEmissiveUseTextureUniformName())
 	) ;
 	// Roughness.
 	bind(
 		m_roughness,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialRoughnessVertexUniformName()),
-		RoughnessTextureValueBinding,
+		RoughnessTextureBinding,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialRoughnessUseTextureUniformName())
 	) ;
 	// Ambient occlusion.
 	bind(
 		m_ao,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialAOVertexUniformName()),
-		AOUseTextureBinding,
+		AOTextureBinding,
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialAOUseTextureUniformName())
 	) ;
 
 	// Normal map.
 	const float NormalMapPercentage = 1.f ;
 	bind(
-		NormalTextureValueBinding,
+		NormalTextureBinding,
 		m_normal.get(),
 		uniforms(DeferredPassID).at(UniformNames::PBRMaterialNormalUseTextureUniformName()),
 		NormalMapPercentage
@@ -86,7 +86,7 @@ void PBRMaterialComponent::setupUniforms() {
 		{{
 			{UniformNames::PBRMaterialAlbedoUseTextureUniformName(), AlbedoUseTextureBinding},
 			{UniformNames::PBRMaterialAlbedoVertexUniformName(), AlbedoVertexValueBinding},
-			{UniformNames::PBRMaterialAlbedoTextureUniformName(), AlbedoTextureValueBinding}
+			{UniformNames::PBRMaterialAlbedoTextureUniformName(), AlbedoTextureBinding}
 		}}
 	) ;
 
@@ -96,7 +96,7 @@ void PBRMaterialComponent::setupUniforms() {
 		{{
 			{UniformNames::PBRMaterialMetalnessUseTextureUniformName(), MetalnessUseTextureBinding},
 			{UniformNames::PBRMaterialMetalnessVertexUniformName(), MetalnessVertexValueBinding},
-			{UniformNames::PBRMaterialMetalnessTextureUniformName(), MetalnessTextureValueBinding}
+			{UniformNames::PBRMaterialMetalnessTextureUniformName(), MetalnessTextureBinding}
 		}}
 	) ;
 
@@ -106,7 +106,7 @@ void PBRMaterialComponent::setupUniforms() {
 		{{
 			{UniformNames::PBRMaterialEmissiveUseTextureUniformName(), EmissiveUseTextureBinding},
 			{UniformNames::PBRMaterialEmissiveVertexUniformName(), EmissiveVertexValueBinding},
-			{UniformNames::PBRMaterialEmissiveTextureUniformName(), EmissiveTextureValueBinding}
+			{UniformNames::PBRMaterialEmissiveTextureUniformName(), EmissiveTextureBinding}
 		}}
 	) ;
 
@@ -116,7 +116,7 @@ void PBRMaterialComponent::setupUniforms() {
 		{{
 			{UniformNames::PBRMaterialRoughnessUseTextureUniformName(), RoughnessUseTextureBinding},
 			{UniformNames::PBRMaterialRoughnessVertexUniformName(), RoughnessVertexValueBinding},
-			{UniformNames::PBRMaterialRoughnessTextureUniformName(), RoughnessTextureValueBinding}
+			{UniformNames::PBRMaterialRoughnessTextureUniformName(), RoughnessTextureBinding}
 		}}
 	) ;
 
@@ -126,7 +126,7 @@ void PBRMaterialComponent::setupUniforms() {
 		{{
 			{UniformNames::PBRMaterialAOUseTextureUniformName(), AOUseTextureBinding},
 			{UniformNames::PBRMaterialAOVertexUniformName(), AOVertexValueBinding},
-			{UniformNames::PBRMaterialAOTextureUniformName(), AOTextureValueBinding}
+			{UniformNames::PBRMaterialAOTextureUniformName(), AOTextureBinding}
 		}}
 	) ;
 
@@ -140,7 +140,7 @@ void PBRMaterialComponent::setupUniforms() {
 	generateUniform(
 		DeferredPassID,
 		UniformNames::PBRMaterialNormalTextureUniformName(),
-		NormalTextureValueBinding
+		NormalTextureBinding
 	) ;
 }
 

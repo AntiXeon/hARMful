@@ -8,24 +8,23 @@ layout(location = 4) in vec3 bitangent ;
 
 layout(location = 0) out vec2 outTexCoord ;
 layout(location = 1) out vec3 outNormal ;
-// layout(location = 1) out mat3 outTBNMatrix ;
+layout(location = 2) out mat3 outTBNMatrix ;
 
-// void correctTBNMatrix() {
-// 	vec3 normalVector = (normalMatrix * vec4(normal, 0.f)).xyz ;
-// 	outNormal = normalVector ;
-//
-//     vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;
-//     vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;
-//     vec3 correctedNormal = normalize(normalVector) ;
-//
-//     outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;
-// }
+void correctTBNMatrix() {
+	vec3 normalVector = vec3(normalMatrix * vec4(normal, 0.f)) ;
+	outNormal = normalVector ;
+
+    vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;
+    vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;
+    vec3 correctedNormal = normalize(normalVector) ;
+
+    outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;
+}
 
 void main() {
-    // correctTBNMatrix() ;
+    correctTBNMatrix() ;
 
     vec4 position4D = vec4(position, 1.f) ;
     gl_Position = mvpMatrix * position4D ;
     outTexCoord = texCoord ;
-	outNormal = (normalMatrix * vec4(normal, 0.f)).xyz ;
 }

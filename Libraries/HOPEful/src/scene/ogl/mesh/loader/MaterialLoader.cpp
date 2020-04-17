@@ -1,11 +1,10 @@
 #include <scene/ogl/mesh/loader/MaterialLoader.hpp>
-#include <scene/components/materials/PBRMaterialComponent.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
 
 std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
-    const fs::path& /*meshPath*/,
+    const fs::path& meshPath,
     const aiMaterial* material
 ) {
 	// Override the default material from Assimp.
@@ -13,16 +12,98 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 	aiString currentName ;
 	material -> Get(AI_MATKEY_NAME, currentName) ;
 
-	// if (currentName == DefaultMaterialName) {
-	// 	auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
-	// 	return defaultMaterial ;
-	// }
-	// else {
-	// 	return BlinnPhongMaterial(material) ;
-	// }
+	if (currentName == DefaultMaterialName) {
+		auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
+		return defaultMaterial ;
+	}
+	else {
+		auto pbrMat = std::make_unique<PBRMaterialComponent>() ;
 
-	auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
-	return defaultMaterial ;
+		// Albedo from diffuse.
+		pbrMat -> setAlbedo(
+			PropertyColor(
+				meshPath,
+				material,
+				AI_MATKEY_COLOR_DIFFUSE,
+				aiTextureType::aiTextureType_DIFFUSE
+			)
+		) ;
+
+		// Emissive from emissive.
+		pbrMat -> setEmissive(
+			PropertyColor(
+				meshPath,
+				material,
+				AI_MATKEY_COLOR_EMISSIVE,
+				aiTextureType::aiTextureType_EMISSIVE
+			)
+		) ;
+
+		// Normal from normal.
+		if (material -> GetTextureCount(aiTextureType_NORMALS) > 0) {
+			pbrMat -> setNormalMap(
+				GetTexture(
+				    aiTextureType::aiTextureType_NORMALS,
+				    meshPath,
+				    material
+				)
+			) ;
+		}
+
+		return pbrMat ;
+	}
+}
+
+Hope::ValueTexture MaterialLoader::PropertyValue(
+	const fs::path& meshPath,
+	const aiMaterial* material,
+	const char* pKey,
+	const unsigned int type,
+	const unsigned int idx,
+	const aiTextureType propertyTextureType
+) {
+	ValueTexture value ;
+
+	if (material -> GetTextureCount(propertyTextureType) > 0) {
+		value.setTexture(GetTexture(propertyTextureType, meshPath, material)) ;
+		value.setTexturePercentage(1.f) ;
+	}
+	else {
+		float aiValue = 0.f ;
+
+	    if (aiGetMaterialFloat(material, pKey, type, idx, &aiValue) == AI_SUCCESS) {
+			value.setValue(aiValue) ;
+		}
+	}
+
+	return value ;
+}
+
+Hope::ColorTexture MaterialLoader::PropertyColor(
+	const fs::path& meshPath,
+	const aiMaterial* material,
+	const char* pKey,
+	const unsigned int type,
+	const unsigned int idx,
+	const aiTextureType propertyTextureType
+) {
+	ColorTexture color ;
+
+	if (material -> GetTextureCount(propertyTextureType) > 0) {
+		color.setTexture(GetTexture(propertyTextureType, meshPath, material)) ;
+		color.setTexturePercentage(1.f) ;
+	}
+	else {
+		aiColor4D aiColor ;
+
+		if (aiGetMaterialColor(material, pKey, type, idx, &aiColor) == AI_SUCCESS) {
+			color.setColor(
+				Color(aiColor.r, aiColor.g, aiColor.b, aiColor.a)
+			) ;
+		}
+	}
+
+	return color ;
 }
 
 std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
@@ -34,7 +115,7 @@ std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
     aiString assimpPath ;
     aiTextureMapMode mapMode[3] ;
 
-    material -> GetTexture(
+   material -> GetTexture(
         type,
         TextureIndex,
         &assimpPath,

@@ -12,7 +12,6 @@
 #include <scene/components/mesh/MeshTreeComponent.hpp>
 #include <scene/components/mesh/builtin/CubeGeometryComponent.hpp>
 #include <scene/components/mesh/builtin/QuadGeometryComponent.hpp>
-#include <scene/components/materials/BlinnPhongMaterialComponent.hpp>
 #include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
 #include <scene/components/materials/CubemapMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
@@ -22,128 +21,97 @@
 #include <files/images/ImageFile.hpp>
 
 #include <algorithm>
+#include <cmath>
 #include <memory>
 
 const std::string TestWindow::AppName = "Rendering test" ;
 
-#define     WIDTH   1280
-#define     HEIGHT  720
+#define     WIDTH   1400
+#define     HEIGHT  900
 
 TestWindow::TestWindow()
     : Hope::GL::Window(WIDTH, HEIGHT, AppName) {
-    // fullscreen() ;
-    // hideMouseCursor() ;
+    //fullscreen() ;
+    disableMouseCursor() ;
 
     /** SCENE GRAPH **/
     // Create a camera in the scene graph.
-    m_cameraEntity = new Hope::Entity(root()) ;
+    m_cameraTransform = new Hope::Transform(root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
-  
-    m_cameraComponent -> setClearColor(Hope::Color(1.f, 0.0f, 0.6f));
-    m_cameraComponent -> setFarPlaneDistance(200.f);
+
+    m_cameraComponent -> setClearColor(Hope::Color(0.1f, 0.1f, 0.1f));
+    m_cameraComponent -> setFOV(50.f);
+    m_cameraComponent -> setFarPlaneDistance(100.f);
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
 
-    m_cameraEntity -> addComponent(m_cameraComponent);
+    m_cameraTransform -> entity() -> addComponent(m_cameraComponent);
+    m_cameraTransform -> entity() -> setLocked(true) ;
 
-    m_cameraEntity -> setLocked(true) ;
-
-    // Cubemap.
-    {
-        std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
-            "../data/meshes/cubemap/right.jpg",
-            "../data/meshes/cubemap/left.jpg",
-            "../data/meshes/cubemap/top.jpg",
-            "../data/meshes/cubemap/bottom.jpg",
-            "../data/meshes/cubemap/back.jpg",
-            "../data/meshes/cubemap/front.jpg"
-        } ;
-
-        Hope::Entity* cubemapEntity = new Hope::Entity(root()) ;
-        cubemapEntity -> setLocked(true) ;
-
-        auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
-        Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
-        cubemapMaterial -> setCubemap(std::move(cubemapTexture)) ;
-
-        cubemapEntity -> addComponent(cubemapMaterial) ;
-        Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
-        cubemapEntity -> addComponent(cubeGeometry) ;
-    }
+    // // Cubemap.
+    // {
+    //     std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
+    //         "../data/meshes/cubemap/right.jpg",
+    //         "../data/meshes/cubemap/left.jpg",
+    //         "../data/meshes/cubemap/top.jpg",
+    //         "../data/meshes/cubemap/bottom.jpg",
+    //         "../data/meshes/cubemap/back.jpg",
+    //         "../data/meshes/cubemap/front.jpg"
+    //     } ;
+	//
+    //     Hope::Transform* cubemapTransform = new Hope::Transform(root()) ;
+    //     cubemapTransform -> entity() -> setLocked(true) ;
+	//
+    //     auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
+    //     Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
+    //     cubemapMaterial -> setCubemap(std::move(cubemapTexture)) ;
+	//
+    //     cubemapTransform -> entity() -> addComponent(cubemapMaterial) ;
+    //     Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
+    //     cubemapTransform -> entity() -> addComponent(cubeGeometry) ;
+    // }
 
 
     // Mesh test.
     {
-        Hope::Entity* meshTreeEntity = new Hope::Entity(root()) ;
-        (meshTreeEntity -> transform()).setScale(0.1f) ;
-        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/SciFiDemo.fbx") ;
-        meshTreeEntity -> addComponent(meshTreeComponent) ;
+        Hope::Transform* meshTreeTransform = new Hope::Transform(root()) ;
+        meshTreeTransform -> setScale(10.f) ;
+        Hope::MeshTreeComponent* meshTreeComponent = new Hope::MeshTreeComponent("../data/meshes/WoodenTable.fbx") ;
+        meshTreeTransform -> entity() -> addComponent(meshTreeComponent) ;
 
-        m_cubeEntity = meshTreeComponent -> entity("Cube") ;
+        m_cubeTransform = meshTreeComponent -> transform("Cube") ;
     }
 
     // Create a directional light.
     Hope::DirectionalLightComponent* dirLightComponent = nullptr ;
 	{
-		Hope::Entity* dirLightEntity = new Hope::Entity(root()) ;
+		Hope::Transform* dirLightTransform = new Hope::Transform(root()) ;
 		dirLightComponent = new Hope::DirectionalLightComponent() ;
-		dirLightComponent -> setDirection(Mind::Vector3f(0.3f, -0.5f, 0.5f)) ;
-		dirLightComponent -> setColor(Hope::Color(1.f, 1.f, 0.95f, 1.f)) ;
+		dirLightComponent -> setDirection(Mind::Vector3f(-0.5f, -0.8f, 0.5f)) ;
+		dirLightComponent -> setColor(Hope::Color(1.f, 0.95f, 0.95f, 1.f)) ;
 		dirLightComponent -> setPower(1.f) ;
 		dirLightComponent -> setSpecularGenerated(true) ;
-		dirLightEntity -> addComponent(dirLightComponent) ;
-        dirLightEntity -> setLocked(true) ;
+		dirLightTransform -> entity() -> addComponent(dirLightComponent) ;
+        dirLightTransform -> entity() -> setLocked(true) ;
 	}
 
 
-	// Point light
-    {
-        Hope::Color lightColor(1.f, 1.f, 1.f) ;
-
-    	Hope::Entity* parentLightEntity = new Hope::Entity(root()) ;
-        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, -25.f, 0.f)) ;
-
-        {
-            Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
-            Hope::BlinnPhongMaterialComponent* cubeMaterial = new Hope::BlinnPhongMaterialComponent() ;
-            cubeMaterial -> setAmbient(lightColor) ;
-            lightReprensentationEntity -> addComponent(cubeMaterial) ;
-        }
-
-        Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
-        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        pointLightComponent -> setColor(lightColor) ;
-        pointLightComponent -> setPower(0.5f) ;
-        pointLightComponent -> setSpecularGenerated(false) ;
-        pointLightComponent -> setQuadraticAttenuation(0.f) ;
-        pointLightComponent -> setLinearAttenuation(1.f) ;
-        pointLightEntity -> addComponent(pointLightComponent) ;
-        pointLightEntity -> setLocked(true) ;
-    }
-
-	// Point light
-    {
-        Hope::Color lightColor(0.3f, 0.7f, 1.f) ;
-
-    	Hope::Entity* parentLightEntity = new Hope::Entity(root()) ;
-        (parentLightEntity -> transform()).setTranslation(Mind::Vector3f(0.f, 125.f, 150.f)) ;
-
-        {
-            Hope::Entity* lightReprensentationEntity = new Hope::Entity(parentLightEntity) ;
-            Hope::BlinnPhongMaterialComponent* cubeMaterial = new Hope::BlinnPhongMaterialComponent() ;
-            cubeMaterial -> setAmbient(lightColor) ;
-            lightReprensentationEntity -> addComponent(cubeMaterial) ;
-        }
-
-        Hope::Entity* pointLightEntity = new Hope::Entity(parentLightEntity) ;
-        Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
-        pointLightComponent -> setColor(lightColor) ;
-        pointLightComponent -> setPower(5.f) ;
-        pointLightComponent -> setSpecularGenerated(false) ;
-        pointLightComponent -> setQuadraticAttenuation(0.f) ;
-        pointLightComponent -> setLinearAttenuation(1.f) ;
-        pointLightEntity -> addComponent(pointLightComponent) ;
-        pointLightEntity -> setLocked(true) ;
-    }
+	// // Point light
+    // {
+    //     Hope::Color lightColor(1.f, 1.f, 1.f) ;
+	//
+    // 	Hope::Transform* parentLightTransform = new Hope::Transform(root()) ;
+    //     parentLightTransform -> setTranslation(Mind::Vector3f(0.f, 1.f, 1.f)) ;
+	//
+    //     Hope::Transform* pointLightTransform = new Hope::Transform(parentLightTransform) ;
+    //     Hope::PointLightComponent* pointLightComponent = new Hope::PointLightComponent() ;
+    //     pointLightComponent -> setColor(lightColor) ;
+    //     pointLightComponent -> setPower(1.f) ;
+    //     pointLightComponent -> setSpecularGenerated(false) ;
+    //     pointLightComponent -> setQuadraticAttenuation(0.f) ;
+    //     pointLightComponent -> setLinearAttenuation(1.f) ;
+    //     pointLightTransform -> entity() -> addComponent(pointLightComponent) ;
+    //     pointLightTransform -> entity() -> setLocked(true) ;
+    // }
 
     /** FRAME GRAPH **/
     Hope::ActiveCameraNode* activeCameraNode = new Hope::ActiveCameraNode() ;
@@ -165,8 +133,8 @@ TestWindow::TestWindow()
 
     // -- Shadow mapping pass --
     const uint32_t ShadowResolution = 2048 ;
-    float maxDistance = 100.f ;
-    uint8_t amountCascades = 3 ;
+    float maxDistance = 250.f ;
+    uint8_t amountCascades = 4 ;
     new Hope::DirectionalLightShadowNode(
         dirLightComponent,
         activeCameraNode,
@@ -176,13 +144,13 @@ TestWindow::TestWindow()
         rootFG
     ) ;
 
-    // -- Fog effect --
-    new Hope::FogRenderNode(
-        Hope::Color(0.4f, 0.5f, 0.6f, 0.2f),
-        20.f,
-        50.f,
-        rootFG
-    ) ;
+    // // -- Fog effect --
+    // new Hope::FogRenderNode(
+    //     Hope::Color(0.4f, 0.5f, 0.6f, 0.7f),
+    //     100.f,
+    //     300.f,
+    //     rootFG
+    // ) ;
 
     // -- Rendering pass --
     Hope::ViewportNode* viewportNode = new Hope::ViewportNode(rootFG) ;
@@ -193,13 +161,13 @@ TestWindow::TestWindow()
     //renderingActiveCameraNode -> setParent(viewportNode) ;
     activeCameraNode -> setParent(viewportNode) ;
 
-    Hope::RenderCapabilityNode* capabilitiesNode = new Hope::RenderCapabilityNode(activeCameraNode) ;
-    Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
-    capabilitiesNode -> addCapability(seamlessCubemap) ;
+    // Hope::RenderCapabilityNode* capabilitiesNode = new Hope::RenderCapabilityNode(activeCameraNode) ;
+    // Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
+    // capabilitiesNode -> addCapability(seamlessCubemap) ;
 
     Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
         Mind::Dimension2Di(WIDTH, HEIGHT),
-        capabilitiesNode
+        activeCameraNode//capabilitiesNode
     ) ;
 
     Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepth, gBufferNode) ;
@@ -215,15 +183,102 @@ TestWindow::TestWindow()
 }
 
 void TestWindow::preRender() {
-    double time = glfwGetTime() ;
-    float radius = 10.f ;
-    float camX = static_cast<float>(sin(time / 2.f) * radius) ;
-    float camZ = static_cast<float>(cos(time / 2.f) * radius) ;
+    //double time = glfwGetTime() ;
+    //float radius = 10.f ;
+    //float camX = static_cast<float>(sin(time / 2.f) * radius) ;
+    //float camZ = static_cast<float>(cos(time / 2.f) * radius) ;
 
-    Mind::Vector3f camPos(camX, 3.f, camZ) ;
-    (m_cameraEntity -> transform()).setTranslation(camPos) ;
+    //const Mind::Vector3f shift(-30.f, 0.f, 80.f);
+    //Mind::Vector3f camPos(/*-4.f, 3.f, 7.f*/ camX, 1.7f, camZ) ;
+
+    //(m_cameraTransform -> transform()).setTranslation(camPos + shift) ;
+    //m_cameraComponent->lookAt(shift);
 }
 
 void TestWindow::postRender() {
     // Nothing to do for now!
+    m_cameraTransform -> setTranslation(m_cameraPosition);
+    m_cameraComponent -> lookAt(m_cameraPosition + m_cameraDirection);
+    m_lastTime = glfwGetTime();
+}
+
+void TestWindow::keyboard(
+    const int,
+    const int scancode,
+    const int action,
+    const int mods
+) {
+    const float CameraSpeed = 100.f;
+    const float SpeedBoost = 10.f;
+
+    auto direction = m_cameraComponent -> viewDirection();
+    auto up = m_cameraComponent -> up();
+    auto right = direction.cross(up);
+    double deltaTime = glfwGetTime() - m_lastTime;
+
+    float speed = CameraSpeed * deltaTime;
+
+    if (mods & GLFW_MOD_SHIFT) {
+        speed *= SpeedBoost;
+    }
+
+    const int scancodeW = glfwGetKeyScancode(GLFW_KEY_W);
+    if (scancode == scancodeW && action == GLFW_REPEAT) {
+        auto shift = direction * -speed;
+        m_cameraPosition += shift;
+    }
+
+    const int scancodeS = glfwGetKeyScancode(GLFW_KEY_S);
+    if (scancode == scancodeS && action == GLFW_REPEAT) {
+        auto shift = direction * speed;
+        m_cameraPosition += shift;
+    }
+
+    const int scancodeA = glfwGetKeyScancode(GLFW_KEY_A);
+    if (scancode == scancodeA && action == GLFW_REPEAT) {
+        auto shift = right * speed;
+        m_cameraPosition += shift;
+    }
+
+    const int scancodeD = glfwGetKeyScancode(GLFW_KEY_D);
+    if (scancode == scancodeD && action == GLFW_REPEAT) {
+        auto shift = right * -speed;
+        m_cameraPosition += shift;
+    }
+
+    const int scancodeSpace = glfwGetKeyScancode(GLFW_KEY_SPACE);
+    if (scancode == scancodeSpace && action == GLFW_REPEAT) {
+        auto shift = up * speed;
+        m_cameraPosition += shift;
+    }
+}
+
+void TestWindow::mouse(
+    const double x,
+    const double y
+) {
+    float halfWidth = width() / 2.f;
+    float halfHeight = height() / 2.f;
+
+    float adjustedX = static_cast<float>(x) - halfWidth;
+    float adjustedY = static_cast<float>(y) - halfHeight;
+
+    float rotationX = static_cast<float>(adjustedX - m_oldCursorPosition.x) * m_mouseSensibility;
+    float rotationY = static_cast<float>(m_oldCursorPosition.y - adjustedY) * m_mouseSensibility;
+
+    m_oldCursorPosition.x = adjustedX;
+    m_oldCursorPosition.y = adjustedY;
+
+    m_cameraYaw += rotationX;
+    m_cameraPitch += rotationY;
+    m_cameraPitch = std::clamp(m_cameraPitch, -89.f, 89.f);
+
+    m_cameraDirection.set(
+		Mind::Vector3f(
+	        std::cos(Mind::Math::toRadians(m_cameraYaw)) * std::cos(Mind::Math::toRadians(m_cameraPitch)),
+	        std::sin(Mind::Math::toRadians(m_cameraPitch)),
+	        std::sin(Mind::Math::toRadians(m_cameraYaw)) * std::cos(Mind::Math::toRadians(m_cameraPitch))
+    	)
+	);
+    m_cameraDirection.normalize();
 }

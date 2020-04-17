@@ -22,7 +22,11 @@ void MeshTreeLoader::load(
 
     const aiScene* scene = importer.ReadFile(
         m_source.c_str(),
-        0
+        aiProcess_Triangulate
+		| aiProcess_CalcTangentSpace
+		| aiProcess_RemoveRedundantMaterials
+		| aiProcess_JoinIdenticalVertices
+		| aiProcess_GenSmoothNormals
     ) ;
 
     if (scene) {

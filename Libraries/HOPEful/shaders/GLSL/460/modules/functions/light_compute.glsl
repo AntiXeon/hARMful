@@ -24,12 +24,21 @@ vec3 ComputeDirectionalLightReflectance(
 	vec3 lightDirection = -light.direction ;
     lightDirection = normalize((viewMatrix * vec4(lightDirection, 0.f))).xyz ;
 
-	return brdfCookTorrance(
+	float litFragment = ShadowCompute(
+        lightDirection,
+        fragment.viewPosition,
+        fragment.normal,
+        fragment.depth
+    ) ;
+
+	vec3 brdf = brdfCookTorrance(
 		viewDirection,
 		lightRadiance,
 		lightDirection,
 		fragment
 	) ;
+
+	return brdf * litFragment ;
 }
 
 /**

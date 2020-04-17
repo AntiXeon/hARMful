@@ -38,41 +38,41 @@ namespace Hope {
 			 */
 			static const unsigned short AlbedoUseTextureBinding = 0 ;
 			static const unsigned short AlbedoVertexValueBinding = 1 ;
-			static const unsigned short AlbedoTextureValueBinding = 2 ;
+			static const unsigned short AlbedoTextureBinding = 2 ;
 
 			/**
 			 * Bindings of the metalness.
 			 */
 			static const unsigned short MetalnessUseTextureBinding = 3 ;
 			static const unsigned short MetalnessVertexValueBinding = 4 ;
-			static const unsigned short MetalnessTextureValueBinding = 5 ;
+			static const unsigned short MetalnessTextureBinding = 5 ;
 
 			/**
 			 * Bindings of the emissive.
 			 */
 			static const unsigned short EmissiveUseTextureBinding = 6 ;
 			static const unsigned short EmissiveVertexValueBinding = 7 ;
-			static const unsigned short EmissiveTextureValueBinding = 8 ;
+			static const unsigned short EmissiveTextureBinding = 8 ;
 
 			/**
 			 * Bindings of the roughness.
 			 */
 			static const unsigned short RoughnessUseTextureBinding = 9 ;
 			static const unsigned short RoughnessVertexValueBinding = 10 ;
-			static const unsigned short RoughnessTextureValueBinding = 11 ;
+			static const unsigned short RoughnessTextureBinding = 11 ;
 
 			/**
 			 * Bindings of the AO.
 			 */
 			static const unsigned short AOUseTextureBinding = 12 ;
 			static const unsigned short AOVertexValueBinding = 13 ;
-			static const unsigned short AOTextureValueBinding = 14 ;
+			static const unsigned short AOTextureBinding = 14 ;
 
 			/**
 			 * Bindings of the normal.
 			 */
 			static const unsigned short NormalUseTextureBinding = 15 ;
-			static const unsigned short NormalTextureValueBinding = 16 ;
+			static const unsigned short NormalTextureBinding = 16 ;
 
 
 			/**
@@ -125,6 +125,13 @@ namespace Hope {
 			}
 
 			/**
+			 * Set the albedo value.
+			 */
+			exported void setAlbedo(ColorTexture&& colorTexture) {
+				m_albedo = std::move(colorTexture) ;
+			}
+
+			/**
 			 * Set the metalness value.
 			 */
 			exported void setMetalness(
@@ -135,6 +142,13 @@ namespace Hope {
 				m_metalness.setValue(value) ;
 				m_metalness.setTexture(std::move(texture)) ;
 				m_metalness.setTexturePercentage(texturePercentage) ;
+			}
+
+			/**
+			 * Set the metalness value.
+			 */
+			exported void setMetalness(ValueTexture&& valueTexture) {
+				m_metalness = std::move(valueTexture) ;
 			}
 
 			/**
@@ -151,6 +165,13 @@ namespace Hope {
 			}
 
 			/**
+			 * Set the emissive value.
+			 */
+			exported void setEmissive(ColorTexture&& colorTexture) {
+				m_emissive = std::move(colorTexture) ;
+			}
+
+			/**
 			 * Set the roughness value.
 			 */
 			exported void setRoughness(
@@ -161,6 +182,13 @@ namespace Hope {
 				m_roughness.setValue(value) ;
 				m_roughness.setTexture(std::move(texture)) ;
 				m_roughness.setTexturePercentage(texturePercentage) ;
+			}
+
+			/**
+			 * Set the roughness value.
+			 */
+			exported void setRoughness(ValueTexture&& valueTexture) {
+				m_roughness = std::move(valueTexture) ;
 			}
 
 			/**
@@ -177,9 +205,16 @@ namespace Hope {
 			}
 
 			/**
+			 * Set the ambient occlusion value.
+			 */
+			exported void setAmbientOcclusion(ValueTexture&& valueTexture) {
+				m_ao = std::move(valueTexture) ;
+			}
+
+			/**
 			 * Set the normal map.
 			 */
-			exported void setNormalMap(std::unique_ptr<API::TextureImage2D> normal) {
+			exported void setNormalMap(std::unique_ptr<API::TextureImage2D>&& normal) {
 				m_normal = std::move(normal) ;
 			}
 

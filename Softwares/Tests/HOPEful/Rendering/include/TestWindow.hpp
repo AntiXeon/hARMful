@@ -10,6 +10,22 @@
  */
 class TestWindow final : public Hope::GL::Window {
     private:
+        struct MouseCursor {
+            double x = 0.f;
+            double y = 0.f;
+        };
+
+        double m_lastTime = 0.f;
+
+        float m_cameraYaw = 0.f;
+        float m_cameraPitch = 0.f;
+        float m_mouseSensibility = 0.05f;
+
+        Mind::Vector3f m_cameraDirection;
+        Mind::Vector3f m_cameraPosition;
+        MouseCursor m_oldCursorPosition;
+
+
         /**
          * Application name.
          */
@@ -28,12 +44,12 @@ class TestWindow final : public Hope::GL::Window {
         /**
          * Camera entity.
          */
-        Hope::Entity* m_cameraEntity = nullptr ;
+        Hope::Transform* m_cameraTransform = nullptr ;
 
         /**
          * Cube entity.
          */
-        Hope::Entity* m_cubeEntity = nullptr ;
+        Hope::Transform* m_cubeTransform = nullptr ;
 
         /**
          * Camera component.
@@ -59,6 +75,24 @@ class TestWindow final : public Hope::GL::Window {
          * frame.
          */
         void postRender() override ;
+
+        /**
+         * Allow the user to set the keyboard inputs.
+         */
+        void keyboard(
+            const int key,
+            const int scancode,
+            const int action,
+            const int mods
+        ) override ;
+
+        /**
+         * Allow the user to use mouse movements.
+         */
+        void mouse(
+            const double x,
+            const double y
+        ) override ;
 } ;
 
 #endif

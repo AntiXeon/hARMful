@@ -1,7 +1,6 @@
 struct PBRFragmentData {
     // Position of the fragment.
     vec4 viewPosition ;
-	vec4 worldPosition ;
 
     // Albedo color value.
     vec3 albedo ;
