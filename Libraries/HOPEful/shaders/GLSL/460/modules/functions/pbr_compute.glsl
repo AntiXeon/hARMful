@@ -6,7 +6,8 @@ vec3 reflectivity(PBRFragmentData fragment) {
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 f0) {
-    return f0 + (1.f - f0) * pow(1.f - cosTheta, 5.f) ;
+    float f = pow(1.f - cosTheta, 5.f) ;
+	return f + f0 * (1.f - f) ;
 }
 
 float ggxDistribution(float nDotH, float roughness) {
@@ -53,13 +54,14 @@ vec3 brdfCookTorrance(
 	float nDotL = max(dot( n, l ), 0.f) ;
 	float nDotV = max(dot( n, v ), 0.f) ;
 
-	float geomSmithNDotL = geometrySmith(nDotL, fragment.roughness) ;
-	float geomSmithNDotV = geometrySmith(nDotV, fragment.roughness) ;
+	float ggxL = geometrySmith(nDotL, fragment.roughness) ;
+	float ggxV = geometrySmith(nDotV, fragment.roughness) ;
 
 	vec3 f = fresnelSchlick(lDotH, f0) ;
-	float g = geomSmithNDotL * geomSmithNDotV ;
+	float g = ggxL * ggxV ;
 	float ndf = ggxDistribution(nDotH, fragment.roughness) ;
 
 	vec3 specBrdf = 0.25f * ndf * f * g ;
+
 	return (fragment.albedo + Pi * specBrdf) * lightRadiance * nDotL ;
 }
