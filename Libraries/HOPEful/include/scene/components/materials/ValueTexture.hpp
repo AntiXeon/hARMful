@@ -70,6 +70,10 @@ namespace Hope {
 			 */
 			exported void setTexture(std::unique_ptr<API::TextureImage2D> texture) {
 				m_texture = std::move(texture) ;
+
+				if (m_texture) {
+					setTexturePercentage(1.f) ;
+				}
 			}
 
 			/**

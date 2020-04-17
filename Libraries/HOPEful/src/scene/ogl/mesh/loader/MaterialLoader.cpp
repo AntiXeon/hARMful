@@ -1,7 +1,19 @@
 #include <scene/ogl/mesh/loader/MaterialLoader.hpp>
+#include <utils/StringExt.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
+
+const std::string MaterialLoader::TextureFolderName = "textures" ;
+const std::list<std::string> MaterialLoader::TextureExtensions = { ".jpg", ".jpeg", ".png" } ;
+
+const std::string MaterialLoader::AlbedoFilename = "albedo" ;
+const std::string MaterialLoader::AmbientOcclusionFilename = "ao" ;
+const std::string MaterialLoader::EmissiveFilename = "emissive" ;
+const std::string MaterialLoader::HeightFilename = "height" ;
+const std::string MaterialLoader::MetalnessFilename = "metalness" ;
+const std::string MaterialLoader::NormalFilename = "normal" ;
+const std::string MaterialLoader::RoughnessFilename = "roughness" ;
 
 std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
     const fs::path& meshPath,
@@ -19,36 +31,63 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 	else {
 		auto pbrMat = std::make_unique<PBRMaterialComponent>() ;
 
-		// Albedo from diffuse.
+		// Albedo.
 		pbrMat -> setAlbedo(
 			PropertyColor(
 				meshPath,
 				material,
 				AI_MATKEY_COLOR_DIFFUSE,
-				aiTextureType::aiTextureType_DIFFUSE
+				AlbedoFilename
 			)
 		) ;
 
-		// Emissive from emissive.
+		// Ambient occlusion.
+		pbrMat -> setAmbientOcclusion(
+			PropertyValue(
+				meshPath,
+				material,
+				nullptr, 0, 0,
+				AmbientOcclusionFilename
+			)
+		) ;
+
+		// Emissive.
 		pbrMat -> setEmissive(
 			PropertyColor(
 				meshPath,
 				material,
 				AI_MATKEY_COLOR_EMISSIVE,
-				aiTextureType::aiTextureType_EMISSIVE
+				EmissiveFilename
 			)
 		) ;
 
-		// Normal from normal.
-		if (material -> GetTextureCount(aiTextureType_NORMALS) > 0) {
-			pbrMat -> setNormalMap(
-				GetTexture(
-				    aiTextureType::aiTextureType_NORMALS,
-				    meshPath,
-				    material
-				)
-			) ;
-		}
+		// Metalness.
+		pbrMat -> setMetalness(
+			PropertyValue(
+				meshPath,
+				material,
+				nullptr, 0, 0,
+				MetalnessFilename
+			)
+		) ;
+
+		// Normal.
+		pbrMat -> setNormalMap(
+			GetTexture(
+				meshPath,
+				NormalFilename
+			)
+		) ;
+
+		// Roughness.
+		pbrMat -> setRoughness(
+			PropertyValue(
+				meshPath,
+				material,
+				nullptr, 0, 0,
+				RoughnessFilename
+			)
+		) ;
 
 		return pbrMat ;
 	}
@@ -60,15 +99,12 @@ Hope::ValueTexture MaterialLoader::PropertyValue(
 	const char* pKey,
 	const unsigned int type,
 	const unsigned int idx,
-	const aiTextureType propertyTextureType
+	const std::string& textureName
 ) {
 	ValueTexture value ;
+	value.setTexture(GetTexture(meshPath, textureName)) ;
 
-	if (material -> GetTextureCount(propertyTextureType) > 0) {
-		value.setTexture(GetTexture(propertyTextureType, meshPath, material)) ;
-		value.setTexturePercentage(1.f) ;
-	}
-	else {
+	if (pKey) {
 		float aiValue = 0.f ;
 
 	    if (aiGetMaterialFloat(material, pKey, type, idx, &aiValue) == AI_SUCCESS) {
@@ -85,15 +121,12 @@ Hope::ColorTexture MaterialLoader::PropertyColor(
 	const char* pKey,
 	const unsigned int type,
 	const unsigned int idx,
-	const aiTextureType propertyTextureType
+	const std::string& textureName
 ) {
 	ColorTexture color ;
+	color.setTexture(GetTexture(meshPath, textureName)) ;
 
-	if (material -> GetTextureCount(propertyTextureType) > 0) {
-		color.setTexture(GetTexture(propertyTextureType, meshPath, material)) ;
-		color.setTexturePercentage(1.f) ;
-	}
-	else {
+	if (pKey) {
 		aiColor4D aiColor ;
 
 		if (aiGetMaterialColor(material, pKey, type, idx, &aiColor) == AI_SUCCESS) {
@@ -107,45 +140,29 @@ Hope::ColorTexture MaterialLoader::PropertyColor(
 }
 
 std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
-    const aiTextureType type,
-    const fs::path& meshPath,
-    const aiMaterial* material
+	const fs::path& meshPath,
+	const std::string& textureName
 ) {
-    const int TextureIndex = 0 ;
-    aiString assimpPath ;
-    aiTextureMapMode mapMode[3] ;
+	std::string texturePath ;
 
-   material -> GetTexture(
-        type,
-        TextureIndex,
-        &assimpPath,
-        nullptr,
-        nullptr,
-        nullptr,
-        nullptr,
-        mapMode
-    ) ;
+	for (auto& extension : TextureExtensions) {
+		fs::path textureFilename(textureName + extension) ;
 
-    auto texturePtr = std::make_unique<TextureImage2D>(GetFullTexturePath(meshPath, assimpPath)) ;
-    return texturePtr ;
-}
+		fs::path texturePath(TextureFolderName) ;
+		texturePath = texturePath / meshPath.stem() / textureFilename ;
 
-std::string MaterialLoader::GetFullTexturePath(
-    const fs::path& meshPath,
-    const aiString& assimpPath
-) {
-    // Use an absolute path to the texture.
-    fs::path absoluteTexturePath ;
-    fs::path texturePath(assimpPath.C_Str()) ;
+		fs::path absoluteTexturePath ;
+		absoluteTexturePath = meshPath.parent_path() / texturePath ;
 
-    if (texturePath.is_absolute()) {
-        absoluteTexturePath = texturePath ;
-    }
-    else {
-        absoluteTexturePath = meshPath.parent_path() / texturePath ;
-    }
+		std::cout << absoluteTexturePath.string() << std::endl ;
 
-    return absoluteTexturePath.string() ;
+		if (fs::exists(absoluteTexturePath)) {
+			auto texturePtr = std::make_unique<TextureImage2D>(absoluteTexturePath) ;
+			return texturePtr ;
+		}
+	}
+
+	return nullptr ;
 }
 
 void MaterialLoader::SetAlphaBlendingMaterial(MaterialComponent* material) {

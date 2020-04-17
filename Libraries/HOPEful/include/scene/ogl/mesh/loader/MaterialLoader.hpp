@@ -8,6 +8,7 @@
 #include <scene/ogl/textures/TextureImage2D.hpp>
 #include <assimp/scene.h>
 #include <filesystem>
+#include <list>
 #include <memory>
 
 namespace fs = std::filesystem ;
@@ -17,6 +18,18 @@ namespace Hope::GL {
      * Load the right material from the Assimp data.
      */
     class MaterialLoader final {
+		private:
+			static const std::string TextureFolderName ;
+			static const std::list<std::string> TextureExtensions ;
+
+			static const std::string AlbedoFilename ;
+			static const std::string AmbientOcclusionFilename ;
+			static const std::string EmissiveFilename ;
+			static const std::string HeightFilename ;
+			static const std::string MetalnessFilename ;
+			static const std::string NormalFilename ;
+			static const std::string RoughnessFilename ;
+
         public:
             /**
              * Convert the Assimp material structure to a material component
@@ -53,7 +66,7 @@ namespace Hope::GL {
 				const char* pKey,
 				const unsigned int type,
 				const unsigned int idx,
-				const aiTextureType propertyTextureType
+				const std::string& textureName
 			) ;
 
 			/**
@@ -69,26 +82,31 @@ namespace Hope::GL {
 				const char* pKey,
 				const unsigned int type,
 				const unsigned int idx,
-				const aiTextureType propertyTextureType
+				const std::string& textureName
 			) ;
 
-
-            /**
-             * Get the texture from an Assimp material.
-             */
-            exported static std::unique_ptr<TextureImage2D> GetTexture(
-                const aiTextureType type,
-                const fs::path& meshPath,
-                const aiMaterial* material
-            ) ;
-
-            /**
-             * Get the full path to a texture file.
-             */
-            exported static std::string GetFullTexturePath(
-                const fs::path& meshPath,
-                const aiString& assimpPath
-            ) ;
+			/**
+			 * A very basic texture loader for PBR materials, as Assimp only
+			 * refers to Phong material related textures.
+			 * The textures are search into the folder called
+			 * "$TextureFolderName" at the same level as the loaded mesh file.
+			 * The textures are put into a subfolder sharing the same name as
+			 * the loaded mesh file.
+			 * Texture files must have the names among the "$xxxFilename" static
+			 * properties of the MaterialLoader.
+			 * Texture files must have the "$TextureExtensions" extensions.
+			 *
+			 * For example:
+			 * + LoadedMesh.obj
+			 * + textures/LoadedMesh/alebdo.jpg
+			 * + textures/LoadedMesh/metalness.jpg
+			 * + textures/LoadedMesh/roughness.jpg
+			 * etc.
+			 */
+			exported static std::unique_ptr<TextureImage2D> GetTexture(
+				const fs::path& meshPath,
+				const std::string& textureName
+			) ;
 
             /**
              * Set alpha blending mode on the provided material component.
