@@ -46,7 +46,7 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 			PropertyValue(
 				meshPath,
 				material,
-				nullptr, 0, 0,
+				nullptr, 1, 0,
 				AmbientOcclusionFilename
 			)
 		) ;
@@ -111,6 +111,9 @@ Hope::ValueTexture MaterialLoader::PropertyValue(
 			value.setValue(aiValue) ;
 		}
 	}
+	else {
+		value.setValue(static_cast<float>(type)) ;
+	}
 
 	return value ;
 }
@@ -153,8 +156,6 @@ std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
 
 		fs::path absoluteTexturePath ;
 		absoluteTexturePath = meshPath.parent_path() / texturePath ;
-
-		std::cout << absoluteTexturePath.string() << std::endl ;
 
 		if (fs::exists(absoluteTexturePath)) {
 			auto texturePtr = std::make_unique<TextureImage2D>(absoluteTexturePath) ;

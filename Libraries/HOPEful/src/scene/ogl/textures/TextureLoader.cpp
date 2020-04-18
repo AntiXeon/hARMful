@@ -34,6 +34,7 @@ void TextureLoader::LoadFromFile(
 
 	InternalFormat internalFormat = ConvertInternalColorFormat(rawData.format()) ;
     GLenum colorFormat = ConvertColorFormat(rawData.format()) ;
+    GLenum dataType = ConvertDataType(rawData.format()) ;
     glTexImage2D(
         target,
         TextureLoD,
@@ -42,36 +43,47 @@ void TextureLoader::LoadFromFile(
         rawData.height(),
         Border,
         colorFormat,
-        GL_UNSIGNED_BYTE,
+        dataType,
         pixelData.data()
     ) ;
 }
 
-InternalFormat TextureLoader::ConvertInternalColorFormat(const Spite::ColorFormat::ID format) {
-    switch(format) {
+InternalFormat TextureLoader::ConvertInternalColorFormat(const Spite::ColorFormat& format, const bool standard) {
+    switch (format.id()) {
         case Spite::ColorFormat::Gray:
             return InternalFormat::Red ;
         case Spite::ColorFormat::GrayAlpha:
             return InternalFormat::RedGreen ;
         case Spite::ColorFormat::RGB:
-            return InternalFormat::StdRedGreenBlue8 ;
+			return (standard) ? InternalFormat::StdRedGreenBlue8 : InternalFormat::RedGreenBlue ;
         case Spite::ColorFormat::RGBA:
-            return InternalFormat::StdRedGreenBlueAlpha8 ;
+			return (standard) ? InternalFormat::StdRedGreenBlueAlpha8 : InternalFormat::RedGreenBlueAlpha ;
         default:
             return InternalFormat::RedGreenBlue ;
     }
 }
 
-GLenum TextureLoader::ConvertColorFormat(const Spite::ColorFormat::ID format) {
-    switch(format) {
+GLenum TextureLoader::ConvertColorFormat(const Spite::ColorFormat& format) {
+    switch (format.id()) {
         case Spite::ColorFormat::Gray:
-            return GL_RED;
+            return GL_RED ;
         case Spite::ColorFormat::GrayAlpha:
-            return GL_RG;
+            return GL_RG ;
         case Spite::ColorFormat::RGB:
             return GL_RGB ;
         case Spite::ColorFormat::RGBA:
             return GL_RGBA ;
+        default:
+            return INVALID_VALUE ;
+    }
+}
+
+GLenum TextureLoader::ConvertDataType(const Spite::ColorFormat& format) {
+    switch (format.type()) {
+        case Spite::ColorFormat::Byte:
+            return GL_UNSIGNED_BYTE ;
+        case Spite::ColorFormat::FloatingPoint:
+            return GL_FLOAT ;
         default:
             return INVALID_VALUE ;
     }

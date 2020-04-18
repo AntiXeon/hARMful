@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 #include <string>
-#include <vector>
+#include <map>
 
 namespace Spite {
 
@@ -13,23 +13,39 @@ namespace Spite {
     class ColorFormat final {
         public:
             /**
-             * IDs to identity the supported color formats.
+             * Format to identity the supported color formats.
              */
             enum ID {
-                Unknown = 0,
-                Gray = 1,
-                GrayAlpha = 2,
-                RGB = 3,
-                RGBA = 4,
-                AmountOfIDs
+                UnknownID 	= 0x00,
+                Gray 		= 0x01,
+                GrayAlpha 	= 0x02,
+                RGB 		= 0x03,
+                RGBA 		= 0x04
             } ;
 
+			/**
+			 * Format of data storage in the picture for each component.
+			 */
+			enum ComponentType {
+				UnknownType   = 0x10,
+				Byte		  = 0x20,
+				FloatingPoint = 0x30
+			} ;
+
         private:
-            /**
-             * All the available ColorFormat to describe the organization of
-             * data inside the raw images.
-             */
-            static std::vector<ColorFormat> ColorFormats ;
+			static const unsigned char AmountOfIDs = 5 ;
+			static const unsigned char AmountOfTypes = 2 ;
+
+			/**
+			 * Amount of available IDs.
+			 */
+			static const unsigned char AmountOfFormats = AmountOfIDs * AmountOfTypes ;
+
+			/**
+			 * All the available ColorFormat to describe the organization of
+			 * data inside the raw images.
+			 */
+			static std::map<int, ColorFormat> ColorFormats ;
 
             /**
              * ID of the color format.
@@ -41,25 +57,30 @@ namespace Spite {
              */
             std::string m_name ;
 
-            /**
-             * Mask of the components.
-             */
-            std::vector<unsigned int> m_componentMasks ;
+			/**
+			 * Amount components.
+			 */
+			unsigned char m_amountComponents = 0 ;
 
             /**
              * Size of each component in bytes.
              */
-            unsigned char m_componentSize ;
+            unsigned char m_componentSize = 0 ;
 
             /**
              * Total size of each pixel information in bytes.
              */
-            unsigned char m_pixelSize ;
+            unsigned char m_pixelSize = 0 ;
 
             /**
              * Color depth of the ColorFormat.
              */
-            unsigned char m_colorDepth ;
+            unsigned char m_colorDepth = 0 ;
+
+			/**
+			 * Format of data storage in the picture for each component.
+			 */
+			ComponentType m_type ;
 
             /**
              * To check if a ColorFormat has been initialized.
@@ -77,26 +98,27 @@ namespace Spite {
              * Create a new ColorFormat.
              * @param   id                  ID of the ColorFormat.
              * @param   name                Name of the ColorFormat.
-             * @param   components          Components in the ColorFormat.
+             * @param   amountComponents 	Amount of components.
              * @param   componentSize       Size of each component in bytes.
+			 * @param 	type				Format of data storage.
              */
             exported ColorFormat(
-                const ColorFormat::ID id,
-                const std::string& name,
-                const std::vector<unsigned int>& components,
-                const unsigned char& componentSize
+				const ColorFormat::ID id,
+			    const std::string& name,
+			    const unsigned char amountComponents,
+			    const unsigned char componentSize,
+				const ColorFormat::ComponentType type
             ) ;
 
             /**
-             * Initialize the class for standard color formats.
-             */
-            exported static void Initialize() ;
-
-            /**
              * Create a ColorFormat.
-             * @param   id  ID of the ColorFormat.
+             * @param   id  	ID of the ColorFormat.
+			 * @param 	type	Data type.
              */
-            exported static void Create(const ColorFormat::ID& id) ;
+            exported static void Create(
+				const ColorFormat::ID id,
+				const ColorFormat::ComponentType type
+			) ;
 
             /**
              * Clear all ColorFormat instances.
@@ -105,10 +127,14 @@ namespace Spite {
 
             /**
              * Get the wanted ColorFormat.
-             * @param   id  ID of the ColorFormat to get.
+             * @param   id  	ID of the ColorFormat.
+			 * @param 	type	Data type.
              * @return  The wanted ColorFormat.
              */
-            exported static ColorFormat& Get(const ColorFormat::ID& id) ;
+            exported static const ColorFormat& Get(
+                const ColorFormat::ID id,
+				const ColorFormat::ComponentType type
+            ) ;
 
             /**
              * Get the ID of the ColorFormat.
@@ -146,13 +172,11 @@ namespace Spite {
              */
             exported unsigned char componentSize() const ;
 
-            /**
-             * Get the mask of the wanted component.
-             * @param   componentID ID of the component for which the mask is
-             *          wanted.
-             * @return  The mask for the given @a componentID.
-             */
-            exported unsigned int mask(const unsigned int& componentID) const ;
+			/**
+			 * Format of data storage in the picture for each component.
+			 * @return 	Format of data storage.
+			 */
+			exported ComponentType type() const ;
 
         private:
             /**
@@ -163,16 +187,18 @@ namespace Spite {
 
             /**
              * Set the data for the given ID of color format.
-             * @param   id                  ID of the ColorFormat.
+			 * @param   id                  ID of the ColorFormat.
+             * @param 	type				Format of data storage.
              * @param   name                Name of the ColorFormat.
-             * @param   components          Components in the ColorFormat.
+             * @param   amountComponents 	Amount of components.
              * @param   componentSize       Size of each component in bytes.
              */
             static void SetDataForFormat(
-                const ColorFormat::ID& id,
-                std::string& name,
-                std::vector<unsigned int>& components,
-                unsigned char& componentSize
+				const ColorFormat::ID& id,
+                const ColorFormat::ComponentType& type,
+			    std::string& name,
+			    unsigned char& amountComponents,
+			    unsigned char& componentSize
             ) ;
     } ;
 }

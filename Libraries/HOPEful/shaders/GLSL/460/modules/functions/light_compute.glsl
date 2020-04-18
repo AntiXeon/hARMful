@@ -101,5 +101,5 @@ vec3 ComputeLightsReflectance(
 
 	totalL0 /= (amountDirectionalLights + amountPointLights) ;
 
-    return totalL0 + fragment.emissive ;
+    return (totalL0 * fragment.ao) + fragment.emissive ;
 }

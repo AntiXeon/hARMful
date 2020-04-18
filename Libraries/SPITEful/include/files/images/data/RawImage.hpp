@@ -30,15 +30,24 @@ namespace Spite {
             /**
              * Format of the picture.
              */
-            ColorFormat::ID m_format = ColorFormat::Unknown ;
+            ColorFormat::ID m_format ;
+
+			/**
+			 * Data type of the picture.
+			 */
+			ColorFormat::ComponentType m_type ;
 
 
         public:
             /**
              * Create a new RawImage.
              * @param   format  Format of the RawImage.
+             * @param   type    Data type of the picture.
              */
-            exported RawImage(ColorFormat::ID format = ColorFormat::Unknown) ;
+            exported RawImage(
+                const ColorFormat::ID format = ColorFormat::UnknownID,
+                const ColorFormat::ComponentType type = ColorFormat::UnknownType
+            ) ;
 
             /**
              * Set the dimensions of the picture.
@@ -53,14 +62,18 @@ namespace Spite {
             /**
              * Set the color format of the picture.
              * @param   format  The format of the picture.
+             * @param   type    Data type of the picture.
              */
-            exported void setFormat(ColorFormat::ID format) ;
+            exported void setFormat(
+                const ColorFormat::ID format,
+                const ColorFormat::ComponentType type
+            ) ;
 
             /**
              * Get the ColorFormat used by the RawImage.
              * @return  ColorFormat used by the RawImage.
              */
-            exported ColorFormat::ID format() ;
+            exported const ColorFormat& format() ;
 
             /**
              * Get the image raw data.

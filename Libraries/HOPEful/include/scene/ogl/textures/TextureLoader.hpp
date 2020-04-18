@@ -24,16 +24,24 @@ namespace Hope::GL {
                 const bool flipVertically
             ) ;
 
-        private:
 			/**
 			 * Convert the SPITE color format to OpenGL internal format.
+			 * @param 	format 		The SPITE format to convert.
 			 */
-			InternalFormat static ConvertInternalColorFormat(const Spite::ColorFormat::ID format) ;
+			InternalFormat static ConvertInternalColorFormat(
+                const Spite::ColorFormat& format,
+                const bool standard = true
+            ) ;
 
             /**
              * Convert the SPITE color format to OpenGL one.
              */
-            exported static GLenum ConvertColorFormat(const Spite::ColorFormat::ID format) ;
+            exported static GLenum ConvertColorFormat(const Spite::ColorFormat& format) ;
+
+            /**
+             * Convert the SPITE color format to OpenGL data type.
+             */
+            exported static GLenum ConvertDataType(const Spite::ColorFormat& format) ;
     } ;
 }
 

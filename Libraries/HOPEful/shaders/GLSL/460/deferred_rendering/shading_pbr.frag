@@ -29,7 +29,7 @@ void main() {
 
         // Put values to perform the lighting pass for the current fragment.
         currentFragment.albedo = texelFetch(gAlbedoMetalness, FragCoords, sampleIndex).rgb ;
-		currentFragment.metalness = texelFetch(gAlbedoMetalness, FragCoords, sampleIndex).a ;	/**/
+		currentFragment.metalness = texelFetch(gAlbedoMetalness, FragCoords, sampleIndex).a ;
 		currentFragment.emissive = texelFetch(gEmissiveRoughness, FragCoords, sampleIndex).rgb ;
 		currentFragment.roughness = texelFetch(gEmissiveRoughness, FragCoords, sampleIndex).a ;
 		currentFragment.ao = texelFetch(gAO, FragCoords, sampleIndex).r ;
@@ -38,7 +38,7 @@ void main() {
         currentFragment.depth = depthValue ;
 
         // Compute ligh shading.
-		vec3 ambient = /*ambientLightColor **/ vec3(0.01f) * currentFragment.albedo * currentFragment.ao;
+		vec3 ambient = /*ambientLightColor **/ vec3(0.05f) * currentFragment.albedo * currentFragment.ao ;
 
         vec3 viewDirection = normalize(-currentFragment.viewPosition.xyz) ;
         vec3 lightsReflectance = ComputeLightsReflectance(
@@ -60,9 +60,9 @@ void main() {
         float normalMask = clamp(ceil(length(texelFetch(gNormal, FragCoords, sampleIndex).rgb)), 0.f, 1f) ;
         shadedColor *= normalMask ; // remove fog from the skymap!
         float skyMask = 1.f - normalMask ;
-        vec3 skyDiffuse = currentFragment.emissive * skyMask ;
+        vec3 envMapColor = currentFragment.emissive * skyMask ;
 
-        fragmentColor += shadedColor + skyDiffuse ;
+		fragmentColor += shadedColor + envMapColor ;
     }
 
 	fragmentColor /= msaaQuality ;

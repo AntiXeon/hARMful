@@ -11,6 +11,9 @@ namespace Spite {
      */
     class ImageFile final : public File {
         private:
+            static const float GammaCorrection ;
+            static const float HDRScale ;
+
             /**
              * true to flip the texture on load; false otherwise.
              */

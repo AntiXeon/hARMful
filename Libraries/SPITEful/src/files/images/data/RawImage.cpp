@@ -5,14 +5,18 @@
 
 using namespace Spite ;
 
-RawImage::RawImage(ColorFormat::ID format)
-    : m_format(format) {}
+RawImage::RawImage(
+    const ColorFormat::ID format,
+    const ColorFormat::ComponentType type
+)
+    : m_format(format),
+      m_type(type) {}
 
 void RawImage::setDimensions(
     const unsigned int& width,
     const unsigned int& height
 ) {
-    if (m_format == ColorFormat::Unknown) {
+    if (m_format == ColorFormat::UnknownID || m_type == ColorFormat::UnknownType) {
         throw std::runtime_error(RawImageMsg::Error::UndefinedColorFormatWhenSettingSize) ;
     }
 
@@ -21,13 +25,17 @@ void RawImage::setDimensions(
     m_pixelData.clear();
 }
 
-void RawImage::setFormat(ColorFormat::ID format) {
+void RawImage::setFormat(
+    const ColorFormat::ID format,
+    const ColorFormat::ComponentType type
+) {
     m_format = format ;
+    m_type = type ;
     m_pixelData.clear();
 }
 
-ColorFormat::ID RawImage::format() {
-    return m_format ;
+const ColorFormat& RawImage::format() {
+    return ColorFormat::Get(m_format, m_type) ;
 }
 
 std::vector<unsigned char>& RawImage::data() {

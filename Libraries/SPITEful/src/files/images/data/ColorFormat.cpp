@@ -1,49 +1,47 @@
 #include <files/images/data/ColorFormat.hpp>
 #include <SPITEStrings.hpp>
 #include <stdexcept>
+#include <iostream>
 
 #define ByteSizeInBits  8
 
 using namespace Spite ;
 
-std::vector<ColorFormat> ColorFormat::ColorFormats ;
+std::map<int, ColorFormat> ColorFormat::ColorFormats ;
 
 ColorFormat::ColorFormat(
     const ColorFormat::ID id,
     const std::string& name,
-    const std::vector<unsigned int>& components,
-    const unsigned char& componentSize
+    const unsigned char amountComponents,
+    const unsigned char componentSize,
+	const ColorFormat::ComponentType type
 ) : m_id(id),
     m_name(name),
-    m_componentMasks(components),
+    m_amountComponents(amountComponents),
     m_componentSize(componentSize),
-    m_pixelSize(static_cast<unsigned char>(components.size())),
-    m_colorDepth(static_cast<unsigned char>(components.size() * ByteSizeInBits)),
+    m_pixelSize(m_amountComponents * m_componentSize),
+    m_colorDepth(amountComponents * ByteSizeInBits),
+	m_type(type),
     m_isInitialized(true) {}
 
 
-void ColorFormat::Initialize() {
-    ColorFormats.resize(ColorFormat::AmountOfIDs, ColorFormat()) ;
-}
-
-void ColorFormat::Create(const ColorFormat::ID& id) {
-    if (ColorFormats.size() == 0) {
-        Initialize() ;
-    }
-
-    if (!ColorFormats[id].isInitialized()) {
+void ColorFormat::Create(
+	const ColorFormat::ID id,
+	const ColorFormat::ComponentType type
+) {
+    if (ColorFormats.count(id|type) == 0) {
         // Get the data on the wanted color format.
         std::string name ;
-        std::vector<unsigned int> components ;
+		unsigned char amountComponents ;
         unsigned char componentSize ;
-        SetDataForFormat(id, name, components, componentSize) ;
-
+        SetDataForFormat(id, type, name, amountComponents, componentSize) ;
         // Apply the data to the color format.
-        ColorFormats[id] = ColorFormat(
+        ColorFormats[id|type] = ColorFormat(
             id,
             name,
-            components,
-            componentSize
+            amountComponents,
+            componentSize,
+			type
         ) ;
     }
 }
@@ -52,9 +50,12 @@ void ColorFormat::Clear() {
     ColorFormats.clear() ;
 }
 
-ColorFormat& ColorFormat::Get(const ColorFormat::ID& id) {
-    Create(id) ;
-    return ColorFormats[id] ;
+const ColorFormat& ColorFormat::Get(
+    const ColorFormat::ID id,
+	const ColorFormat::ComponentType type
+) {
+    Create(id, type) ;
+    return ColorFormats.at(id|type) ;
 }
 
 ColorFormat::ID ColorFormat::id() const {
@@ -66,7 +67,7 @@ const std::string& ColorFormat::name() const {
 }
 
 unsigned char ColorFormat::amountOfComponents() const {
-    return static_cast<unsigned char>(m_componentMasks.size()) ;
+    return m_amountComponents ;
 }
 
 unsigned char ColorFormat::pixelSizeInBytes() const {
@@ -81,13 +82,8 @@ unsigned char ColorFormat::componentSize() const {
     return m_componentSize ;
 }
 
-unsigned int ColorFormat::mask(const unsigned int& componentID) const {
-    if (componentID < m_componentMasks.size()) {
-        return m_componentMasks[componentID] ;
-    }
-    else {
-        return 0 ;
-    }
+ColorFormat::ComponentType ColorFormat::type() const {
+	return m_type ;
 }
 
 bool ColorFormat::isInitialized() const {
@@ -97,47 +93,48 @@ bool ColorFormat::isInitialized() const {
 
 void ColorFormat::SetDataForFormat(
     const ColorFormat::ID& id,
+    const ColorFormat::ComponentType& type,
     std::string& name,
-    std::vector<unsigned int>& components,
+    unsigned char& amountComponents,
     unsigned char& componentSize
 ) {
     switch (id) {
         case Gray:
             name = "Gray";
-            components.resize(1);
-            components[0] = 0xFF000000;
-            componentSize = sizeof(unsigned int);
+			amountComponents = 1 ;
             break;
 
         case GrayAlpha:
             name = "GrayAlpha";
-            components.resize(2);
-            components[0] = 0xFF000000;
-            components[1] = 0x00FF0000;
-            componentSize = sizeof(unsigned int);
+            amountComponents = 2 ;
             break;
 
         case RGB:
             name = "RGB" ;
-            components.resize(3) ;
-            components[0] = 0x000000FF ;
-            components[1] = 0x0000FF00 ;
-            components[2] = 0x00FF0000 ;
-            componentSize = sizeof(unsigned int) ;
+			amountComponents = 3 ;
             break ;
 
         case RGBA:
             name = "RGBA" ;
-            components.resize(4) ;
-            components[0] = 0x000000FF ;
-            components[1] = 0x0000FF00 ;
-            components[2] = 0x00FF0000 ;
-            components[3] = 0xFF000000 ;
-            componentSize = sizeof(unsigned int) ;
+			amountComponents = 4 ;
             break ;
 
         default:
             throw std::invalid_argument(ColorFormatMsg::Error::UnknownFormat) ;
             break ;
     }
+
+	switch (type) {
+		case Byte:
+			componentSize = static_cast<unsigned char>(sizeof(unsigned char)) ;
+			break ;
+
+		case FloatingPoint:
+			componentSize = static_cast<unsigned char>(sizeof(float)) ;
+			break ;
+
+		default:
+			throw std::invalid_argument(ColorFormatMsg::Error::UnknownFormat) ;
+			break ;
+	}
 }
