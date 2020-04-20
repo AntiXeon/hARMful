@@ -1,4 +1,4 @@
-#include <scene/components/materials/CubemapMaterialComponent.hpp>
+#include <scene/components/materials/EnvironmentMapMaterialComponent.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <memory>
 
@@ -11,7 +11,7 @@
 
 using namespace Hope ;
 
-CubemapMaterialComponent::CubemapMaterialComponent()
+EnvironmentMapMaterialComponent::EnvironmentMapMaterialComponent()
     : MaterialComponent(false),
       m_map(nullptr) {
     setupForwardShader() ;
@@ -20,7 +20,7 @@ CubemapMaterialComponent::CubemapMaterialComponent()
     setupUniforms() ;
 }
 
-void CubemapMaterialComponent::updateUniformValues() {
+void EnvironmentMapMaterialComponent::updateUniformValues() {
     if (m_map) {
         m_map -> activate() ;
         m_map -> bind() ;
@@ -28,15 +28,15 @@ void CubemapMaterialComponent::updateUniformValues() {
     }
 }
 
-void CubemapMaterialComponent::setupUniforms() {
+void EnvironmentMapMaterialComponent::setupUniforms() {
     auto cubemapUniform = std::make_unique<Hope::ShaderUniform>() ;
     cubemapUniform -> setName(UniformNames::MaterialCubemapUniformName()) ;
     uniforms(DeferredPassID).add(std::move(cubemapUniform)) ;
 }
 
-void CubemapMaterialComponent::setupForwardShader() {}
+void EnvironmentMapMaterialComponent::setupForwardShader() {}
 
-void CubemapMaterialComponent::setupDeferredShader() {
+void EnvironmentMapMaterialComponent::setupDeferredShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(DeferredPassID) ;
     std::unique_ptr<API::DepthTest> depthTest = std::make_unique<API::DepthTest>() ;
     depthTest -> setFunction(API::DepthTest::LessOrEqual) ;

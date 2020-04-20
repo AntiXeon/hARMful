@@ -13,7 +13,7 @@
 
 #ifdef OGL
     #include <scene/ogl/rendering/capabilities/DepthTest.hpp>
-    #include <scene/ogl/textures/CubemapTexture.hpp>
+    #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -21,7 +21,7 @@ namespace Hope {
     /**
      * A material that is used to show a cubemap.
      */
-    class CubemapMaterialComponent : public MaterialComponent {
+    class EnvironmentMapMaterialComponent : public MaterialComponent {
         public:
             /**
              * Component class type.
@@ -37,13 +37,13 @@ namespace Hope {
             /**
              * Cubemap texture.
              */
-            std::unique_ptr<API::CubemapTexture> m_map = nullptr ;
+            std::unique_ptr<API::EnvironmentMapTexture> m_map = nullptr ;
 
         public:
             /**
-             * Create a CubemapMaterialComponent.
+             * Create a EnvironmentMapMaterialComponent.
              */
-            exported CubemapMaterialComponent() ;
+            exported EnvironmentMapMaterialComponent() ;
 
             /**
              * Update the uniform values before the processing of the material
@@ -54,14 +54,14 @@ namespace Hope {
             /**
              * Set the cubemap texture.
              */
-            exported void setCubemap(std::unique_ptr<API::CubemapTexture> map) {
+            exported void setCubemap(std::unique_ptr<API::EnvironmentMapTexture> map) {
                 m_map = std::move(map) ;
             }
 
             /**
              * Get the cubemap texture.
              */
-            exported const API::CubemapTexture* cubemap() const {
+            exported const API::EnvironmentMapTexture* cubemap() const {
                 return m_map.get() ;
             }
 
