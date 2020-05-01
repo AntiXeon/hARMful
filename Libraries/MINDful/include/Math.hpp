@@ -85,6 +85,22 @@ namespace Mind {
          * @return  TRUE if @a value is infinite, FALSE otherwise.
          */
         exported bool isInf(const Scalar value) ;
+
+        /**
+         * Test if two scalar values are close enough to consider them as equal.
+         */
+        exported bool equal(
+            const Scalar a,
+            const Scalar b,
+            const Scalar epsilon = Epsilon
+        ) ;
+
+        /**
+         * Get the closest power of 2 for the given value.
+         * @param value The value to get the closest power of 2.
+         * @return  The closest power of 2 of @a value.
+         */
+        exported unsigned int closestPower2(const unsigned int value) ;
     } ;
 
     /**************************** IMPLEMENTATIONS *****************************/

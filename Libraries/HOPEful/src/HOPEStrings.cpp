@@ -23,6 +23,13 @@ namespace Hope {
         std::string Mesh_NotLoaded =        i18n("The mesh could not be loaded at: ") ;
         /* Keep the final whitespace. */
         std::string Texture_UnknownFormat = i18n("Unknown file format: ") ;
+        /* Keep the final whitespace. */
+        std::string EnvironmentMap_UnknownAspectRatio = i18n("The environment map type cannot be determined for: ") ;
+        std::string EnvironmentMap_UnknownFaceID = i18n("Unknown cubemap face ID") ;
+        /* Keep the final whitespace. */
+        std::string EnvironmentMap_Load21 =      i18n("Load environment map (2:1 equirectangular): ") ;
+        /* Keep the final whitespace. */
+        std::string EnvironmentMap_LoadCubemap = i18n("Load environment map (cubemap): ") ;
 
         /* "binding index" is a technical expression. */
         std::string UBO_BadBindingIndex =   i18n("The provided binding index is too high for this GPU!") ;

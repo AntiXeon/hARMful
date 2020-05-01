@@ -6,41 +6,59 @@
 #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
+#include <geometry/points/Point2Df.hpp>
 #include <GL/glew.h>
 #include <array>
 
 namespace Hope::GL {
+    /**
+     * Process the loading of environment maps.
+     */
     class EnvironmentMapProcessing final {
         private:
-            static const int AmountCubeFacesX = 4 ;
-			static const int AmountCubeFacesY = 3 ;
-
-            struct RGB {
-                float r ;
-                float g ;
-                float b ;
-            } ;
-
-			struct CoordsCubeFaces {
-				float startX = 0.f ;
-				float startY = 0.f ;
-
-				float stopX = 0.f ;
-				float stopY = 0.f ;
-			} ;
-
-            static const std::array<CoordsCubeFaces, EnvironmentMap::AmountFaces> CoordinatesFaces ;
-
-            static const int AmountInterpolationCorners = 4 ;
+            static const float EquirectangularMapWHRatio ;
+            static const float CubeMapWHRatio ;
 
         public:
             /**
-             * Load a cubemap contained in a single image file.
-             * @param 	path	Path to the environment map.
+             * Load an environment map.
+             * Its type is found from its aspect ratio.
              */
-            exported static void LoadCubemap(const std::string& path) ;
+            exported static void Load(const std::string& path) ;
 
         private:
+            /**
+             * Load an equirectangular (ratio w=2:h=1) and convert it to a
+             * cubemap that is then loaded.
+             * @param 	rawData  Raw bytes of the uncompressed picture file.
+             */
+            exported static void LoadEquirectangular21(Spite::RawImage& rawData) ;
+
+            /**
+             * Load a cubemap contained in a single image file.
+             * @param 	rawData Raw bytes of the uncompressed picture file.
+             * @param   type    Type of the cubemap (ie. how are set top and
+             *                  bottom tiles).
+             */
+            exported static void LoadCubemap(
+                Spite::RawImage& rawData,
+                const EnvironmentMap::CubemapType type
+            ) ;
+
+            /**
+             * Load the bytes from a single cube face in GPU memory.
+             * @param faceBytes     Raw bytes of the texture.
+             * @param format        Format of the texture.
+             * @param faceSize      Size of the texture edge (square).
+             * @param face          ID of the face on the cube.
+             */
+            exported static void LoadFace(
+                const std::vector<unsigned char>& faceBytes,
+                const Spite::ColorFormat& format,
+                const unsigned int faceSize,
+                const EnvironmentMap::CubeFaces face
+            ) ;
+
             /**
              * Load a raw picture from a file.
              * @param 	path	Path to the environment map.
@@ -59,6 +77,7 @@ namespace Hope::GL {
              * @param 	outPixels	Output pixels data of the face.
              */
             exported static void ReadCubeFace(
+                const EnvironmentMap::CubemapType type,
                 const EnvironmentMap::CubeFaces face,
                 Spite::RawImage& pictureData,
                 std::vector<unsigned char>& outPixels

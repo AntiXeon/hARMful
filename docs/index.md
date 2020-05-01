@@ -41,6 +41,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Quadtree (✗)
 - Animations (✗)
 - Cube maps (✓)
+- Equirectangular to cubemap conversion [[Demo](https://www.youtube.com/watch?v=GDw-JpYGAx8)]
 - Fog (✓) [[Demo](https://www.youtube.com/watch?v=2GihYR76Jzw)]
 - Input management (keyboard, mouse, joypad) (✗)
 - Scripting (✗)

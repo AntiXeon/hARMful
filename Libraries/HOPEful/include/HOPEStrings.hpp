@@ -15,6 +15,10 @@ namespace Hope {
 
         extern std::string Mesh_NotLoaded ;
         extern std::string Texture_UnknownFormat ;
+        extern std::string EnvironmentMap_UnknownAspectRatio ;
+        extern std::string EnvironmentMap_UnknownFaceID ;
+        extern std::string EnvironmentMap_Load21 ;
+        extern std::string EnvironmentMap_LoadCubemap ;
 
         extern std::string UBO_BadBindingIndex ;
 

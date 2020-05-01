@@ -42,5 +42,21 @@ namespace Mind {
             uint32_t removedSignBit = (*removedSignBitPtr) << 1 ;
             return (removedSignBit == MaskInfiniteExponent) ;
         }
+
+        bool equal(
+            const Scalar a,
+            const Scalar b,
+            const Scalar epsilon
+        ) {
+            Scalar diff = std::abs(a - b) ;
+            return diff < epsilon ;
+        }
+
+        unsigned int closestPower2(const unsigned int value) {
+            static const auto Log2 = std::log(2.) ;
+            auto logValue = std::log(static_cast<double>(value)) ;
+            auto power2 = std::pow(2., std::round(logValue / Log2)) ;
+            return static_cast<unsigned int>(power2) ;
+        }
     } ;
 } ;

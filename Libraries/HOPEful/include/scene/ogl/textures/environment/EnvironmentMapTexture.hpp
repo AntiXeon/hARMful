@@ -34,12 +34,8 @@ namespace Hope::GL {
 			/**
 			 * Creation of a new EnvironmentMapTexture.
 			 * @param 	path	Path to the environment map.
-			 * @param 	type 	Type of the environment map.
 			 */
-			exported EnvironmentMapTexture(
-				const std::string& path,
-				const EnvironmentMap::TextureType type
-			) ;
+			exported EnvironmentMapTexture(const std::string& path) ;
 
             /**
              * Destruction of the EnvironmentMapTexture.

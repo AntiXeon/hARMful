@@ -14,7 +14,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Envir
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
 
     // Load all the faces.
-    for (int face = EnvironmentMap::Right ; face < EnvironmentMap::AmountFaces ; ++face) {
+    for (int face = EnvironmentMap::First ; face <= EnvironmentMap::Last ; ++face) {
         TextureLoader::LoadFromFile(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
             paths[face],
@@ -32,19 +32,11 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Envir
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path, const EnvironmentMap::TextureType type) {
+EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
 	glGenTextures(1, &m_textureID) ;
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
 
-	switch(type) {
-		case EnvironmentMap::Equirectangular :
-            throw std::runtime_error(Hope::Texts::Texture_UnknownFormat + path) ;
-			break ;
-
-		case EnvironmentMap::Cubemap :
-            EnvironmentMapProcessing::LoadCubemap(path) ;
-			break ;
-	}
+	EnvironmentMapProcessing::Load(path) ;
 
 	// Setup wrapping and filtering.
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
