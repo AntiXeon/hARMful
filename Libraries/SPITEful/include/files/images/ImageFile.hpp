@@ -35,7 +35,7 @@ namespace Spite {
              * Load a data at a given place on disk.
              * @param   filedata        File data to store data in.
              */
-            exported bool load(IFileData* filedata);
+            exported bool load(IFileData* filedata) ;
 
             /**
              * Save a data at a given place on disk.
@@ -46,6 +46,19 @@ namespace Spite {
             exported bool save(
                 IFileData* output,
                 const std::string& path
+            ) ;
+
+            /**
+             * Resize a picture to the wanted size.
+             * @param   original    Original picture data.
+             * @param   width       Width of th output resized picture.
+             * @param   height      Height of th output resized picture.
+             * @return  Resized picture.
+             */
+            exported static RawImage Resize(
+                RawImage& original,
+                const unsigned int width,
+                const unsigned int height
             ) ;
 
         private:

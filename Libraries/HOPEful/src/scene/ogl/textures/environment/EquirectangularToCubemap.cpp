@@ -11,7 +11,7 @@ using namespace Hope::GL ;
 EquirectangularToCubemap::EquirectangularToCubemap(Spite::RawImage& equirectData) {
     m_equirectWidth = equirectData.width() ;
     m_equirectHeight = equirectData.height() ;
-    m_faceEdgeLength = Mind::Math::closestPower2(m_equirectWidth / EnvironmentMap::AmountCubeFacesX) ;
+    m_faceEdgeLength = Mind::Math::closestPower2(m_equirectWidth / Cubemapping::AmountCubeFacesX) ;
 
     m_format = equirectData.format() ;
     unsigned int pixelWidth = m_format.pixelSizeInBytes() ;
@@ -32,8 +32,8 @@ void EquirectangularToCubemap::convert() {
     unsigned int faceSize = m_faceEdgeLength * m_faceEdgeLength ;
     facePixels.resize(faceSize) ;
 
-    for (unsigned int faceID = EnvironmentMap::First ; faceID <= EnvironmentMap::Last ; ++faceID) {
-        auto face = static_cast<EnvironmentMap::CubeFaces>(faceID) ;
+    for (unsigned int faceID = Cubemapping::First ; faceID <= Cubemapping::Last ; ++faceID) {
+        auto face = static_cast<Cubemapping::CubeFaces>(faceID) ;
 
         for (unsigned int x = 0 ; x < m_faceEdgeLength ; ++x) {
             for (unsigned int y = 0 ; y < m_faceEdgeLength ; ++y) {
@@ -107,20 +107,20 @@ void EquirectangularToCubemap::writeBilinearInterpolation(
 Mind::Vector3f EquirectangularToCubemap::orientation(
     const float u,
     const float v,
-    const EnvironmentMap::CubeFaces face
+    const Cubemapping::CubeFaces face
 ) {
     switch (face) {
-        case EnvironmentMap::Back:
+        case Cubemapping::Back:
             return Mind::Vector3f(1.f, u, -v) ;
-        case EnvironmentMap::Left:
+        case Cubemapping::Left:
             return Mind::Vector3f(-u, 1.f, -v) ;
-        case EnvironmentMap::Front:
+        case Cubemapping::Front:
             return Mind::Vector3f(-1.f, -u, -v) ;
-        case EnvironmentMap::Right:
+        case Cubemapping::Right:
             return Mind::Vector3f(u, -1.f, -v) ;
-        case EnvironmentMap::Top:
+        case Cubemapping::Top:
             return Mind::Vector3f(-v, -u, 1.f) ;
-        case EnvironmentMap::Bottom:
+        case Cubemapping::Bottom:
             return Mind::Vector3f(v, -u, -1.f) ;
         default:
             throw std::runtime_error(Texts::EnvironmentMap_UnknownFaceID) ;

@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/ogl/textures/environment/EnvironmentMap.hpp>
+#include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
 #include <geometry/points/Point2Df.hpp>
@@ -21,10 +21,18 @@ namespace Hope::GL {
 
         public:
             /**
+             * Load a raw picture from a file.
+             * @param 	path	Path to the environment map.
+             * @return Structure containing the raw bytes of the picture file.
+             */
+            exported static Spite::RawImage LoadRawPicture(const std::string& path) ;
+
+            /**
              * Load an environment map.
              * Its type is found from its aspect ratio.
+             * @param input     Image to load.
              */
-            exported static void Load(const std::string& path) ;
+            exported static void Load(Spite::RawImage& input) ;
 
         private:
             /**
@@ -42,7 +50,7 @@ namespace Hope::GL {
              */
             exported static void LoadCubemap(
                 Spite::RawImage& rawData,
-                const EnvironmentMap::CubemapType type
+                const Cubemapping::CubemapType type
             ) ;
 
             /**
@@ -56,18 +64,7 @@ namespace Hope::GL {
                 const std::vector<unsigned char>& faceBytes,
                 const Spite::ColorFormat& format,
                 const unsigned int faceSize,
-                const EnvironmentMap::CubeFaces face
-            ) ;
-
-            /**
-             * Load a raw picture from a file.
-             * @param 	path	Path to the environment map.
-             * @param 	rawData Structure containing the raw bytes of the
-             *					picture file.
-             */
-            exported static void LoadRawPicture(
-                const std::string& path,
-                Spite::RawImage& rawData
+                const Cubemapping::CubeFaces face
             ) ;
 
             /**
@@ -77,8 +74,8 @@ namespace Hope::GL {
              * @param 	outPixels	Output pixels data of the face.
              */
             exported static void ReadCubeFace(
-                const EnvironmentMap::CubemapType type,
-                const EnvironmentMap::CubeFaces face,
+                const Cubemapping::CubemapType type,
+                const Cubemapping::CubeFaces face,
                 Spite::RawImage& pictureData,
                 std::vector<unsigned char>& outPixels
             ) ;

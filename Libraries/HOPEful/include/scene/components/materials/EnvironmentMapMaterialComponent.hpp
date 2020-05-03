@@ -13,7 +13,7 @@
 
 #ifdef OGL
     #include <scene/ogl/rendering/capabilities/DepthTest.hpp>
-    #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
+    #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -53,9 +53,10 @@ namespace Hope {
 
             /**
              * Set the cubemap texture.
+             * @warning The environment map is stolen from the provided @a map!
              */
-            exported void setCubemap(std::unique_ptr<API::EnvironmentMapTexture> map) {
-                m_map = std::move(map) ;
+            exported void setCubemap(std::unique_ptr<API::EnvironmentMap>& map) {
+                m_map = std::move(map -> environment()) ;
             }
 
             /**

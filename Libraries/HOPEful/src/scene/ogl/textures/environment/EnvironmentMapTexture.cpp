@@ -9,36 +9,41 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, EnvironmentMap::AmountFaces>& paths) {
-    glGenTextures(1, &m_textureID) ;
-    glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
+EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Cubemapping::AmountFaces>& paths) {
+    generateTextureID() ;
 
     // Load all the faces.
-    for (int face = EnvironmentMap::First ; face <= EnvironmentMap::Last ; ++face) {
+    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
         TextureLoader::LoadFromFile(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
             paths[face],
-            EnvironmentMap::FlipVerticalAxis
+            Cubemapping::FlipVerticalAxis
         ) ;
     }
 
-    // Setup wrapping and filtering.
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, FilterMode::Linear) ;
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE) ;
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE) ;
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE) ;
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    setupTexture() ;
 }
 
 EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
-	glGenTextures(1, &m_textureID) ;
-	glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
+    generateTextureID() ;
+	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
+    EnvironmentMapProcessing::Load(texture) ;
+    setupTexture() ;
+}
 
-	EnvironmentMapProcessing::Load(path) ;
+EnvironmentMapTexture::EnvironmentMapTexture(Spite::RawImage& input) {
+    generateTextureID() ;
+	EnvironmentMapProcessing::Load(input) ;
+    setupTexture() ;
+}
 
-	// Setup wrapping and filtering.
+EnvironmentMapTexture::~EnvironmentMapTexture() {
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
+    glDeleteTextures(1, &m_textureID) ;
+}
+
+void EnvironmentMapTexture::setupTexture() {
+    // Setup wrapping and filtering.
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, FilterMode::Linear) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE) ;
@@ -48,7 +53,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-EnvironmentMapTexture::~EnvironmentMapTexture() {
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
-    glDeleteTextures(1, &m_textureID) ;
+void EnvironmentMapTexture::generateTextureID() {
+    glGenTextures(1, &m_textureID) ;
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID) ;
 }

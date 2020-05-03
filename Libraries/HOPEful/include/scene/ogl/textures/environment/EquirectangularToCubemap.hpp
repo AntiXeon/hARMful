@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/ogl/textures/environment/EnvironmentMap.hpp>
+#include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
 #include <geometry/points/Point2Df.hpp>
@@ -26,7 +26,7 @@ namespace Hope::GL {
             /**
              * Type of the generated cubemap.
              */
-            static const EnvironmentMap::CubemapType ResultMapType = EnvironmentMap::Cube_LeftAligned ;
+            static const Cubemapping::CubemapType ResultMapType = Cubemapping::Cube_LeftAligned ;
 
             /**
              * Amount of channels in the HDR maps.
@@ -75,7 +75,7 @@ namespace Hope::GL {
             /**
              * Bytes of the different faces.
              */
-            std::array<std::vector<unsigned char>, EnvironmentMap::AmountFaces> m_faceBytes ;
+            std::array<std::vector<unsigned char>, Cubemapping::AmountFaces> m_faceBytes ;
 
         public:
             /**
@@ -101,7 +101,7 @@ namespace Hope::GL {
              * Get the bytes of a specific face.
              * @return Bytes of a specific face.
              */
-            exported const std::vector<unsigned char>& getFaceBytes(const EnvironmentMap::CubeFaces face) {
+            exported const std::vector<unsigned char>& getFaceBytes(const Cubemapping::CubeFaces face) {
                 return m_faceBytes[face] ;
             }
 
@@ -131,7 +131,7 @@ namespace Hope::GL {
             exported Mind::Vector3f orientation(
                 const float u,
                 const float v,
-                const EnvironmentMap::CubeFaces face
+                const Cubemapping::CubeFaces face
             ) ;
 
             /**

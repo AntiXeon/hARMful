@@ -13,37 +13,20 @@ using namespace Hope::GL ;
 const float EnvironmentMapProcessing::EquirectangularMapWHRatio = 2.f / 1.f ;
 const float EnvironmentMapProcessing::CubeMapWHRatio = 4.f / 3.f ;
 
-void EnvironmentMapProcessing::Load(const std::string& path) {
-    Spite::RawImage rawData ;
-	LoadRawPicture(path, rawData) ;
-
+void EnvironmentMapProcessing::Load(Spite::RawImage& input) {
     // Compute the ratio to determine the type of picture.
-    unsigned int imageWidth = rawData.width() ;
-    unsigned int imageHeight = rawData.height() ;
+    unsigned int imageWidth = input.width() ;
+    unsigned int imageHeight = input.height() ;
     float ratio = static_cast<float>(imageWidth) / static_cast<float>(imageHeight) ;
 
-    // Write the error in the log.
-    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-    auto logSharedPtr = logWeakPtr.lock() ;
-
     if (Mind::Math::equal(ratio, EquirectangularMapWHRatio)) {
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Info ;
-            logSharedPtr -> writeLine(level, Texts::EnvironmentMap_Load21 + path) ;
-        }
-
-        LoadEquirectangular21(rawData) ;
+        LoadEquirectangular21(input) ;
     }
     else if (Mind::Math::equal(ratio, CubeMapWHRatio)) {
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Info ;
-            logSharedPtr -> writeLine(level, Texts::EnvironmentMap_LoadCubemap + path) ;
-        }
-
-        LoadCubemap(rawData, EnvironmentMap::Cube_FrontAligned) ;
+        LoadCubemap(input, Cubemapping::Cube_FrontAligned) ;
     }
     else {
-        throw std::runtime_error(Texts::EnvironmentMap_UnknownAspectRatio + path) ;
+        throw std::runtime_error(Texts::EnvironmentMap_UnknownAspectRatio) ;
     }
 }
 
@@ -51,8 +34,8 @@ void EnvironmentMapProcessing::LoadEquirectangular21(Spite::RawImage& rawData) {
     EquirectangularToCubemap converter(rawData) ;
     converter.convert() ;
 
-    for (int face = EnvironmentMap::First ; face <= EnvironmentMap::Last ; ++face) {
-        auto faceID = static_cast<EnvironmentMap::CubeFaces>(face) ;
+    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
+        auto faceID = static_cast<Cubemapping::CubeFaces>(face) ;
 
         LoadFace(
             converter.getFaceBytes(faceID),
@@ -65,14 +48,14 @@ void EnvironmentMapProcessing::LoadEquirectangular21(Spite::RawImage& rawData) {
 
 void EnvironmentMapProcessing::LoadCubemap(
     Spite::RawImage& rawData,
-    const EnvironmentMap::CubemapType type
+    const Cubemapping::CubemapType type
 ) {
 	// Amount of data to get per line.
-	auto faceWidth = Mind::Math::closestPower2(rawData.width() / EnvironmentMap::AmountCubeFacesX) ;
+	auto faceWidth = Mind::Math::closestPower2(rawData.width() / Cubemapping::AmountCubeFacesX) ;
 
-	for (int face = EnvironmentMap::First ; face <= EnvironmentMap::Last ; ++face) {
+	for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
 		std::vector<unsigned char> pixelData ;
-        auto faceID = static_cast<EnvironmentMap::CubeFaces>(face) ;
+        auto faceID = static_cast<Cubemapping::CubeFaces>(face) ;
 
 		ReadCubeFace(
             type,
@@ -94,14 +77,14 @@ void EnvironmentMapProcessing::LoadFace(
     const std::vector<unsigned char>& faceBytes,
     const Spite::ColorFormat& format,
     const unsigned int faceSize,
-    const EnvironmentMap::CubeFaces face
+    const Cubemapping::CubeFaces face
 ) {
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
     const bool StandardColors = false ;
 
     glTexImage2D(
-        EnvironmentMap::GLCoordinates(face),
+        Cubemapping::GLCoordinates(face),
         TextureLoD,
         static_cast<GLint>(TextureLoader::ConvertInternalColorFormat(format, StandardColors)),
         faceSize,
@@ -113,13 +96,11 @@ void EnvironmentMapProcessing::LoadFace(
     ) ;
 }
 
-void EnvironmentMapProcessing::LoadRawPicture(
-	const std::string& path,
-	Spite::RawImage& rawData
-) {
-	Spite::ImageFile file(path, EnvironmentMap::FlipVerticalAxis) ;
+Spite::RawImage EnvironmentMapProcessing::LoadRawPicture(const std::string& path) {
+    Spite::RawImage output ;
+	Spite::ImageFile file(path, Cubemapping::FlipVerticalAxis) ;
 
-    if (!file.load(&rawData)) {
+    if (!file.load(&output)) {
         // Write the error in the log.
         auto logWeakPtr = Doom::LogSystem::GetInstance() ;
         auto logSharedPtr = logWeakPtr.lock() ;
@@ -128,11 +109,13 @@ void EnvironmentMapProcessing::LoadRawPicture(
             logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
         }
     }
+
+    return output ;
 }
 
 void EnvironmentMapProcessing::ReadCubeFace(
-    const EnvironmentMap::CubemapType type,
-	const EnvironmentMap::CubeFaces face,
+    const Cubemapping::CubemapType type,
+	const Cubemapping::CubeFaces face,
 	Spite::RawImage& pictureData,
 	std::vector<unsigned char>& outPixels
 ) {
@@ -145,7 +128,7 @@ void EnvironmentMapProcessing::ReadCubeFace(
 	unsigned int amountPixelsDataX = (pictureWidth / 4) * pixelSizeBytes ;
 	unsigned int amountPixelsY = (pictureHeight / 3) ;
 
-    auto&& coordinates = EnvironmentMap::CoordinatesFaces(type) ;
+    auto&& coordinates = Cubemapping::CoordinatesFaces(type) ;
 	unsigned int bytePictureWidth = pictureWidth * pixelSizeBytes ;
 	unsigned int startX = bytePictureWidth * coordinates[face].startX ;
 	unsigned int stopX = bytePictureWidth * coordinates[face].stopX ;
