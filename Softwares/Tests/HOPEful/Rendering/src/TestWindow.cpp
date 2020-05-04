@@ -13,15 +13,15 @@
 #include <scene/components/mesh/builtin/CubeGeometryComponent.hpp>
 #include <scene/components/mesh/builtin/QuadGeometryComponent.hpp>
 #include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
-#include <scene/components/materials/CubemapMaterialComponent.hpp>
+#include <scene/components/materials/EnvironmentMapMaterialComponent.hpp>
 #include <scene/components/lights/DirectionalLightComponent.hpp>
 #include <scene/components/lights/PointLightComponent.hpp>
 #include <scene/ogl/rendering/capabilities/SeamlessCubemap.hpp>
 
 #include <files/images/ImageFile.hpp>
+#include <Math.hpp>
 
 #include <algorithm>
-#include <cmath>
 #include <memory>
 
 const std::string TestWindow::AppName = "Rendering test" ;
@@ -39,7 +39,7 @@ TestWindow::TestWindow()
     m_cameraTransform = new Hope::Transform(root()) ;
     m_cameraComponent = new Hope::PerspectiveCameraComponent() ;
 
-    m_cameraComponent -> setClearColor(Hope::Color(0.1f, 0.1f, 0.1f));
+    m_cameraComponent -> setClearColor(Hope::Color(0.5f, 0.1f, 0.1f));
     m_cameraComponent -> setFOV(50.f);
     m_cameraComponent -> setFarPlaneDistance(100.f);
     m_cameraComponent -> lookAt(Mind::Vector3f(0.f, 0.f, 0.f)) ;
@@ -47,30 +47,23 @@ TestWindow::TestWindow()
     m_cameraTransform -> entity() -> addComponent(m_cameraComponent);
     m_cameraTransform -> entity() -> setLocked(true) ;
 
-    // // Cubemap.
-    // {
-    //     std::array<std::string, Hope::GL::CubemapTexture::AmountFaces> cubemapTexturePaths = {
-    //         "../data/meshes/cubemap/right.jpg",
-    //         "../data/meshes/cubemap/left.jpg",
-    //         "../data/meshes/cubemap/top.jpg",
-    //         "../data/meshes/cubemap/bottom.jpg",
-    //         "../data/meshes/cubemap/back.jpg",
-    //         "../data/meshes/cubemap/front.jpg"
-    //     } ;
-	//
-    //     Hope::Transform* cubemapTransform = new Hope::Transform(root()) ;
-    //     cubemapTransform -> entity() -> setLocked(true) ;
-	//
-    //     auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
-    //     Hope::CubemapMaterialComponent* cubemapMaterial = new Hope::CubemapMaterialComponent() ;
-    //     cubemapMaterial -> setCubemap(std::move(cubemapTexture)) ;
-	//
-    //     cubemapTransform -> entity() -> addComponent(cubemapMaterial) ;
-    //     Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
-    //     cubemapTransform -> entity() -> addComponent(cubeGeometry) ;
-    // }
+    // Cubemap.
+    {
+        Hope::Transform* cubemapTransform = new Hope::Transform(root()) ;
+        cubemapTransform -> entity() -> setLocked(true) ;
 
+        // auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
+		auto cubemap = std::make_unique<Hope::GL::EnvironmentMap>("../data/meshes/textures/palermo_sidewalk_1k.hdr") ;
 
+        Hope::EnvironmentMapMaterialComponent* cubemapMaterial = new Hope::EnvironmentMapMaterialComponent() ;
+        cubemapMaterial -> setCubemap(cubemap) ;
+
+        cubemapTransform -> entity() -> addComponent(cubemapMaterial) ;
+        Hope::CubeGeometryComponent* cubeGeometry = new Hope::CubeGeometryComponent() ;
+        cubemapTransform -> entity() -> addComponent(cubeGeometry) ;
+    }
+
+/*
     // Mesh test.
     {
         Hope::Transform* meshTreeTransform = new Hope::Transform(root()) ;
@@ -80,7 +73,7 @@ TestWindow::TestWindow()
 
         m_cubeTransform = meshTreeComponent -> transform("Cube") ;
     }
-
+*/
     // Create a directional light.
     Hope::DirectionalLightComponent* dirLightComponent = nullptr ;
 	{
@@ -161,13 +154,13 @@ TestWindow::TestWindow()
     //renderingActiveCameraNode -> setParent(viewportNode) ;
     activeCameraNode -> setParent(viewportNode) ;
 
-    // Hope::RenderCapabilityNode* capabilitiesNode = new Hope::RenderCapabilityNode(activeCameraNode) ;
-    // Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
-    // capabilitiesNode -> addCapability(seamlessCubemap) ;
+    Hope::RenderCapabilityNode* capabilitiesNode = new Hope::RenderCapabilityNode(activeCameraNode) ;
+    Hope::GL::SeamlessCubemap* seamlessCubemap = new Hope::GL::SeamlessCubemap() ;
+    capabilitiesNode -> addCapability(seamlessCubemap) ;
 
     Hope::GBufferRenderNode* gBufferNode = new Hope::GBufferRenderNode(
         Mind::Dimension2Di(WIDTH, HEIGHT),
-        activeCameraNode//capabilitiesNode
+        capabilitiesNode
     ) ;
 
     Hope::ClearBuffersNode* clearBuffers = new Hope::ClearBuffersNode(Hope::GL::BufferClearer::Buffer::ColorDepth, gBufferNode) ;

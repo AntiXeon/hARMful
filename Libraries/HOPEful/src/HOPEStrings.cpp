@@ -26,6 +26,7 @@ namespace Hope {
         /* Keep the final whitespace. */
         std::string EnvironmentMap_UnknownAspectRatio = i18n("The environment map type cannot be determined...") ;
         std::string EnvironmentMap_UnknownFaceID = i18n("Unknown cubemap face ID") ;
+        std::string EnvironmentMap_UnknownFormat = i18n("Unknown environment map format") ;
         /* Keep the final whitespace. */
         std::string EnvironmentMap_Load21 =      i18n("Load environment map (2:1 equirectangular): ") ;
         /* Keep the final whitespace. */

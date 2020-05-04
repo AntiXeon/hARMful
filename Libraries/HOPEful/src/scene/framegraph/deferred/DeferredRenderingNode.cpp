@@ -2,6 +2,8 @@
 
 using namespace Hope ;
 
+const bool DeferredRenderingNode::FollowWindowSize = true ;
+
 DeferredRenderingNode::DeferredRenderingNode(
     GBufferRenderNode* gBuffer,
     FrameGraphNode* parent
@@ -31,6 +33,14 @@ DeferredRenderingNode::DeferredRenderingNode(
 
     m_displayStepNode = std::make_unique<DisplayStepNode>(m_framebufferNode.get(), this) ;
 }
+
+// DeferredRenderingNode(
+//     std::unique_ptr<API::EnvironmentMap>& environment,
+//     GBufferRenderNode* gBuffer,
+//     FrameGraphNode* parent = nullptr
+// ) : DeferredRenderingNode(gBuffer, parent) {
+//
+// }
 
 void DeferredRenderingNode::setupFramebuffer() {
     // Render target to apply shading to.

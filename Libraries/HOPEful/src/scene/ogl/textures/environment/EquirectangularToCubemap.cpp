@@ -20,7 +20,7 @@ EquirectangularToCubemap::EquirectangularToCubemap(Spite::RawImage& equirectData
     unsigned int equirectByteSize = equirectData.data().size() ;
 
     for (unsigned int pixel = 0 ; pixel < equirectByteSize ; pixel += pixelWidth) {
-        RGB pixelColor = *reinterpret_cast<RGB*>(rawEquirectData + pixel) ;
+        Hope::HDRRGB pixelColor = *reinterpret_cast<Hope::HDRRGB*>(rawEquirectData + pixel) ;
         m_equirectPixelChannels.push_back(pixelColor) ;
     }
 }
@@ -28,7 +28,7 @@ EquirectangularToCubemap::EquirectangularToCubemap(Spite::RawImage& equirectData
 void EquirectangularToCubemap::convert() {
     const float DefaultRotation = Mind::Math::toRadians(180) ;
 
-    std::vector<RGB> facePixels ;
+    std::vector<Hope::HDRRGB> facePixels ;
     unsigned int faceSize = m_faceEdgeLength * m_faceEdgeLength ;
     facePixels.resize(faceSize) ;
 
@@ -67,7 +67,7 @@ void EquirectangularToCubemap::convert() {
             m_faceBytes[face].insert(
                 m_faceBytes[face].end(),
                 facePixels[pixel].bytes,
-                facePixels[pixel].bytes + sizeof(RGB)
+                facePixels[pixel].bytes + sizeof(Hope::HDRRGB)
             ) ;
         }
     }
@@ -77,7 +77,7 @@ void EquirectangularToCubemap::writeBilinearInterpolation(
     const float xFrom,
     const float yFrom,
     const unsigned int to,
-    std::vector<RGB>& facePixels
+    std::vector<Hope::HDRRGB>& facePixels
 ) {
     unsigned int xl = std::clamp(std::floor(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
     unsigned int xr = std::clamp(std::ceil(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
@@ -92,10 +92,10 @@ void EquirectangularToCubemap::writeBilinearInterpolation(
     unsigned int p01 = From2DTo1D(xl, yr, m_equirectWidth) ;
     unsigned int p11 = From2DTo1D(xr, yr, m_equirectWidth) ;
 
-    RGB p00Pixel = m_equirectPixelChannels[p00] ;
-    RGB p10Pixel = m_equirectPixelChannels[p10] ;
-    RGB p01Pixel = m_equirectPixelChannels[p01] ;
-    RGB p11Pixel = m_equirectPixelChannels[p11] ;
+    Hope::HDRRGB p00Pixel = m_equirectPixelChannels[p00] ;
+    Hope::HDRRGB p10Pixel = m_equirectPixelChannels[p10] ;
+    Hope::HDRRGB p01Pixel = m_equirectPixelChannels[p01] ;
+    Hope::HDRRGB p11Pixel = m_equirectPixelChannels[p11] ;
 
     for (unsigned int channel = 0 ; channel < AmountRGBChannels ; ++channel) {
         float p0 = p00Pixel.array[channel] * (1.f - xf) + p10Pixel.array[channel] * xf ;

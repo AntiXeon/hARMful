@@ -23,11 +23,31 @@ namespace Hope::GL {
              */
             std::unique_ptr<EnvironmentMapTexture> m_irradianceMap = nullptr ;
 
+            /**
+             * The radiance map as a cubemap.
+             */
+            std::unique_ptr<EnvironmentMapTexture> m_radianceMap = nullptr ;
+
         public:
             /**
              * Create a new environment map.
+             * It builds the environment map and both its irradiance and
+             * radiance maps. Notice that it can be a quite long process,
+             * including if needed, the conversion from 2:1 equirectangular to
+             * cubemap.
              */
             EnvironmentMap(const std::string& path) ;
+
+            /**
+             * Create a new environment map.
+             * Directly load precomputed environment, irradiance and radiance
+             * maps.
+             */
+            EnvironmentMap(
+                const std::string& pathEnvironment,
+                const std::string& pathIrradiance,
+                const std::string& pathRadiance
+            ) ;
 
             /**
              * Get the environment map.
@@ -40,6 +60,13 @@ namespace Hope::GL {
              * Get the irradiance map.
              */
             std::unique_ptr<EnvironmentMapTexture> irradiance() {
+                return std::move(m_irradianceMap) ;
+            }
+
+            /**
+             * Get the radiance map.
+             */
+            std::unique_ptr<EnvironmentMapTexture> radiance() {
                 return std::move(m_irradianceMap) ;
             }
     } ;

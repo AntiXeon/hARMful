@@ -37,7 +37,6 @@ namespace Spite {
 			 */
 			ColorFormat::ComponentType m_type ;
 
-
         public:
             /**
              * Create a new RawImage.

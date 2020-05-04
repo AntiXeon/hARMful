@@ -3,6 +3,7 @@
 
 #include <utils/Platform.hpp>
 
+#include <scene/common/RGB.hpp>
 #include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
@@ -19,38 +20,14 @@ namespace Hope::GL {
     class EquirectangularToCubemap final {
         private:
             /**
-             * Data type for HDR maps.
-             */
-            using HDRDataType = float ;
-
-            /**
              * Type of the generated cubemap.
              */
             static const Cubemapping::CubemapType ResultMapType = Cubemapping::Cube_LeftAligned ;
 
             /**
-             * Amount of channels in the HDR maps.
-             */
-            static const int AmountRGBChannels = 3 ;
-
-            /**
-             * Union to easily convert bytes to floats and vice versa.
-             * Easier management of channels for looping on them (through array)
-             * while processing the map.
-             */
-            union RGB {
-               HDRDataType red ;
-               HDRDataType green ;
-               HDRDataType blue ;
-
-               HDRDataType array[AmountRGBChannels] ;
-               unsigned char bytes[AmountRGBChannels * sizeof(HDRDataType)] ;
-            } ;
-
-            /**
              * Pixel values of the loaded map.
              */
-            std::vector<RGB> m_equirectPixelChannels ;
+            std::vector<Hope::HDRRGB> m_equirectPixelChannels ;
 
             /**
              * Width of the loaded map.
@@ -119,7 +96,7 @@ namespace Hope::GL {
                 const float xFrom,
                 const float yFrom,
                 const unsigned int to,
-                std::vector<RGB>& facePixels
+                std::vector<Hope::HDRRGB>& facePixels
             ) ;
 
             /**

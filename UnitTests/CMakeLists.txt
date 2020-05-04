@@ -35,4 +35,3 @@ add_subdirectory(${HOPEFUL_ABSOLUTE}/build ./build/HOPEful)
 # Set tests executable sources
 add_subdirectory(${CMAKE_SOURCE_DIR}/DOOMful/build)
 add_subdirectory(${CMAKE_SOURCE_DIR}/MINDful/build)
-add_subdirectory(${CMAKE_SOURCE_DIR}/HOPEful/build)
