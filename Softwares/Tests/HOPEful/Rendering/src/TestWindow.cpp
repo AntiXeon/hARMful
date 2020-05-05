@@ -53,7 +53,7 @@ TestWindow::TestWindow()
         cubemapTransform -> entity() -> setLocked(true) ;
 
         // auto cubemapTexture = std::make_unique<Hope::GL::CubemapTexture>(cubemapTexturePaths) ;
-		auto cubemap = std::make_unique<Hope::GL::EnvironmentMap>("../data/meshes/textures/palermo_sidewalk_1k.hdr") ;
+		auto cubemap = std::make_unique<Hope::GL::EnvironmentMap>("../data/meshes/textures/", "palermo_sidewalk_1k") ;
 
         Hope::EnvironmentMapMaterialComponent* cubemapMaterial = new Hope::EnvironmentMapMaterialComponent() ;
         cubemapMaterial -> setCubemap(cubemap) ;

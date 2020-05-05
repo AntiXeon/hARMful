@@ -31,22 +31,15 @@ namespace Hope::GL {
         public:
             /**
              * Create a new environment map.
-             * It builds the environment map and both its irradiance and
-             * radiance maps. Notice that it can be a quite long process,
-             * including if needed, the conversion from 2:1 equirectangular to
-             * cubemap.
-             */
-            EnvironmentMap(const std::string& path) ;
-
-            /**
-             * Create a new environment map.
-             * Directly load precomputed environment, irradiance and radiance
-             * maps.
+             * Loads the different map components (environment, irradiance and
+             * radiance) from a directory.
+             * @param   directory   Directory to search for the maps.
+             * @param   name        Name of the environment map (used in
+             *                      filenames).
              */
             EnvironmentMap(
-                const std::string& pathEnvironment,
-                const std::string& pathIrradiance,
-                const std::string& pathRadiance
+                const std::string& directory,
+                const std::string& name
             ) ;
 
             /**
