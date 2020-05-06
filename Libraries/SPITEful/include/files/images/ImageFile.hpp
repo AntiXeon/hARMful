@@ -66,7 +66,7 @@ namespace Spite {
              * Check if the file must be flipped on load,
              * based on file extension name.
              */
-            exported void checkFlipOnLoad();
+            exported void checkFlipOnLoad() ;
 
             /**
              * Open the File in the given mode.

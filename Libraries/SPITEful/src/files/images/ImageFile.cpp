@@ -1,4 +1,5 @@
 #include <files/images/ImageFile.hpp>
+#include <files/images/ImageWriter.hpp>
 #include <debug/ErrorsManagement.hpp>
 #include <utils/StringExt.hpp>
 #include <SPITEStrings.hpp>
@@ -76,11 +77,14 @@ bool ImageFile::load(IFileData* filedata) {
 }
 
 bool ImageFile::save(
-    IFileData*,
-    const std::string&
+    IFileData* output,
+    const std::string& path
 ) {
-    // Needs implementation!
-    return false ;
+    auto* imageData = static_cast<RawImage*>(output) ;
+    fs::path filepath(path) ;
+
+    ImageWriter writer(*imageData, filepath) ;
+    return writer.process() ;
 }
 
 RawImage ImageFile::Resize(

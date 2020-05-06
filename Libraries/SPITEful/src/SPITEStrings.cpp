@@ -58,6 +58,13 @@ namespace Spite {
         namespace Error {
             const std::string EndOfFile = i18n("End of file is reached while writing.") ;
         }
+
+        namespace Info {
+            // Keep final space!
+            const std::string HDRExtensionNotMatching = i18n("The extension of the file is modified to fit its HDR file format: ") ;
+            // Keep final space!
+            const std::string ImageWrittenOK = i18n("The image file has successfully been written: ") ;
+        }
     }
 
     namespace ReaderMsg {

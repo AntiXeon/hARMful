@@ -1,6 +1,8 @@
 #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
 #include <files/images/ImageFile.hpp>
 
+#include <files/images/ImageWriter.hpp>
+
 using namespace Hope::GL ;
 
 EnvironmentMap::EnvironmentMap(

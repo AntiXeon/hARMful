@@ -37,7 +37,7 @@ BinaryFile::BinaryFile(
             Doom::LogSystem::Gravity::Error,
             FileMsg::Error::InsufficientMemory,
             fs::absolute(filepath).string().c_str()
-         ) ;
+        ) ;
     }
 }
 

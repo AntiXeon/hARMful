@@ -54,6 +54,11 @@ namespace Spite {
         namespace Error {
             extern const std::string EndOfFile ;
         }
+
+        namespace Info {
+            extern const std::string HDRExtensionNotMatching ;
+            extern const std::string ImageWrittenOK ;
+        }
     }
 
     namespace ReaderMsg {
