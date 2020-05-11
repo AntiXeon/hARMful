@@ -71,7 +71,7 @@ namespace Hope { namespace GL {
             exported void run() ;
 
             /**
-             * Get the root entity of the scene.
+             * Get the root transform of the scene.
              */
             exported Transform* root() const {
                 return m_scene -> root() ;
