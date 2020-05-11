@@ -1,13 +1,13 @@
 #ifndef __HOPE__GL_MESH_GEOMETRY__
 #define __HOPE__GL_MESH_GEOMETRY__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <vector>
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/mesh/Geometry.hpp>
 #include <scene/ogl/mesh/GeometryPart.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

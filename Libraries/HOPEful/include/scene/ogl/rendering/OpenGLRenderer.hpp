@@ -5,6 +5,7 @@
 
 #include <scene/ogl/mesh/builtin/QuadGeometry.hpp>
 #include <scene/ogl/rendering/RenderPass.hpp>
+#include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <scene/ogl/rendering/glsl/ubo/BaseGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/LightGLSLDataUBO.hpp>
 #include <scene/ogl/rendering/glsl/ubo/ModelGLSLDataUBO.hpp>
@@ -55,6 +56,11 @@ namespace Hope::GL {
              * Quad used for deferred shading.
              */
             QuadGeometry m_deferredShadingQuad ;
+
+            /**
+             * The default framebuffer.
+             */
+            Framebuffer* m_defaultFramebufferID = nullptr ;
 
         public:
             /**
@@ -112,6 +118,13 @@ namespace Hope::GL {
              */
             exported BaseGLSLDataUBO& baseUBO() {
                 return m_baseUBO ;
+            }
+
+            /**
+             * Set the default FBO.
+             */
+            exported void setDefaultFramebuffer(Framebuffer* defaultFBO) {
+                m_defaultFramebufferID = defaultFBO ;
             }
 
         private:

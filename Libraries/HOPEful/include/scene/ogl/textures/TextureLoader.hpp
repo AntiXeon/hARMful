@@ -1,11 +1,11 @@
 #ifndef __HOPE__GL_TEXTURE_LOADER__
 #define __HOPE__GL_TEXTURE_LOADER__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <files/images/data/RawImage.hpp>
-#include <GL/glew.h>
 #include <string>
 
 namespace Hope::GL {

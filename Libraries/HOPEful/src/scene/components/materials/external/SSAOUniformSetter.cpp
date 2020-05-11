@@ -4,7 +4,6 @@
 
 #ifdef OGL
     #include <scene/components/materials/shaders/GLSL/includes/Ao.hpp>
-    #include <GL/glew.h>
 #endif
 
 #include <utils/StringExt.hpp>

@@ -4,6 +4,7 @@
 #include <interfaces/visitors/framegraph/IFrameGraphVisitor.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
 #include <geometry/dimensions/Dimension2Di.hpp>
+#include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <scene/ogl/rendering/OpenGLRenderer.hpp>
 #include <scene/framegraph/ProcessedSceneNode.hpp>
 #include <scene/framegraph/FrameGraphBranchState.hpp>
@@ -76,7 +77,14 @@ namespace Hope::GL {
             /**
              * Create an OpenGLFrameGraphVisitor instance.
              */
-            OpenGLFrameGraphVisitor() ;
+            OpenGLFrameGraphVisitor(Framebuffer* defaultFramebuffer = nullptr) ;
+
+            /**
+             * Set the default framebuffer when performing the rendering step.
+             */
+            void setDefaultFramebuffer(Framebuffer* defaultFramebuffer) {
+                m_renderer.setDefaultFramebuffer(defaultFramebuffer) ;
+            }
 
             /**
              * Set the window size.

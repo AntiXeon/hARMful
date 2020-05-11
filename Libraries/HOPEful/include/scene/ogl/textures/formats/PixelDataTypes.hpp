@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_TEXTURE_PIXEL_DATA_TYPES__
 #define __HOPE__GL_TEXTURE_PIXEL_DATA_TYPES__
 
-#include <GL/glew.h>
+#include <HopeAPI.hpp>
 
 namespace Hope::GL {
     /**

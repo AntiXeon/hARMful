@@ -1,8 +1,8 @@
 #ifndef __HOPE__GL_CUBEMAPPING__
 #define __HOPE__GL_CUBEMAPPING__
 
+#include <HopeAPI.hpp>
 #include <array>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

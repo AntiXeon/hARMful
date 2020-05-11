@@ -72,6 +72,44 @@ namespace Hope::GL {
             ) ;
 
             /**
+             * Get the texture width.
+             * @return  The texture width.
+             */
+            exported uint32_t width() const {
+                return m_size.width() ;
+            }
+
+            /**
+             * Get the texture height.
+             * @return  The texture height.
+             */
+            exported uint32_t height() const {
+                return m_size.height() ;
+            }
+
+            /**
+             * Get the texture depth.
+             * @return  The texture depth.
+             */
+            exported uint32_t depth() const {
+                return m_size.depth() ;
+            }
+
+            /**
+             * Get the pixel format of the texture.
+             */
+            exported PixelFormat pixelFormat() const {
+                return m_pixelFormat ;
+            }
+
+            /**
+             * Get the pixel data type of the texture.
+             */
+            exported PixelDataType pixelDataType() const {
+                return m_pixelDataType ;
+            }
+
+            /**
              * Set the wrap mode for each dimension of the texture.
              */
             exported void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;

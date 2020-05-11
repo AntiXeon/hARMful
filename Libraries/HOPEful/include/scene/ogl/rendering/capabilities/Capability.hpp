@@ -1,9 +1,9 @@
 #ifndef __HOPE__GL_CAPABILITY__
 #define __HOPE__GL_CAPABILITY__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
-#include <GL/glew.h>
 #include <scene/ogl/rendering/capabilities/CapabilityTypes.hpp>
 
 namespace Hope {

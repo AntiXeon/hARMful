@@ -1,11 +1,11 @@
 #ifndef __HOPE__GL_ENVIRONMENTMAP__
 #define __HOPE__GL_ENVIRONMENTMAP__
 
+#include <HopeAPI.hpp>
 #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
 #include <scene/ogl/textures/environment/EnvironmentMapProcessing.hpp>
 #include <array>
 #include <memory>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

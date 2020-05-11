@@ -8,7 +8,6 @@
 #include <HopeAPI.hpp>
 
 #ifdef OGL
-    #include <GL/glew.h>
     namespace API = Hope::GL ;
 #endif
 

@@ -1,10 +1,10 @@
 #ifndef __HOPE__GL_SHADER_UNIFORM_APPLICATOR__
 #define __HOPE__GL_SHADER_UNIFORM_APPLICATOR__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/framegraph/shading/ShaderValue.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

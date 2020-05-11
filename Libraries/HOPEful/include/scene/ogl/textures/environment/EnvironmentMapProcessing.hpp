@@ -1,13 +1,13 @@
 #ifndef __HOPE__GL_ENVIRONMENTMAP_PROCESSING__
 #define __HOPE__GL_ENVIRONMENTMAP_PROCESSING__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
 #include <geometry/points/Point2Df.hpp>
-#include <GL/glew.h>
 #include <array>
 
 namespace Hope::GL {

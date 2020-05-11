@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_FRAMEBUFFER__
 #define __HOPE__GL_FRAMEBUFFER__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/GLDefines.hpp>
@@ -10,7 +11,6 @@
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <geometry/dimensions/Dimension2Di.hpp>
 #include <geometry/dimensions/Dimension2Df.hpp>
-#include <GL/glew.h>
 #include <list>
 #include <memory>
 #include <vector>
@@ -65,6 +65,13 @@ namespace Hope::GL {
              * Destruction of the Framebuffer.
              */
             exported virtual ~Framebuffer() ;
+
+            /**
+             * Get the ID of the current Framebuffer.
+             */
+            exported GLuint id() const {
+                return m_fboID ;
+            }
 
             /**
              * Resize the framebuffer.

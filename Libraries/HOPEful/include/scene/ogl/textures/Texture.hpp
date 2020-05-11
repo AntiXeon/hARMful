@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_TEXTURE__
 #define __HOPE__GL_TEXTURE__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
@@ -12,7 +13,6 @@
 #include <geometry/dimensions/Dimension3Di.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

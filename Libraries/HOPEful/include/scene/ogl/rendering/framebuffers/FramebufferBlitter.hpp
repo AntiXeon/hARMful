@@ -1,10 +1,10 @@
 #ifndef __HOPE__GL_FRAMEBUFFER_BLITTER__
 #define __HOPE__GL_FRAMEBUFFER_BLITTER__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/GLDefines.hpp>
-#include <GL/glew.h>
 #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
 #include <geometry/rectangles/Rectangle2Df.hpp>
 

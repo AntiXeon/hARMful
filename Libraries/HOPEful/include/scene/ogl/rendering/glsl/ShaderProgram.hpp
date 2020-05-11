@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_SHADER_PROGRAM__
 #define __HOPE__GL_SHADER_PROGRAM__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/rendering/glsl/shaders/VertexShader.hpp>
@@ -8,7 +9,6 @@
 #include <scene/ogl/rendering/glsl/shaders/GeometryShader.hpp>
 #include <scene/ogl/rendering/glsl/shaders/TesselationControlShader.hpp>
 #include <scene/ogl/rendering/glsl/shaders/TesselationEvaluationShader.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

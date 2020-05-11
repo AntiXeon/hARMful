@@ -5,7 +5,6 @@
 
 #ifdef OGL
     #include <scene/components/materials/shaders/GLSL/includes/TextureUnits.hpp>
-    #include <GL/glew.h>
 #endif
 
 using namespace Hope ;

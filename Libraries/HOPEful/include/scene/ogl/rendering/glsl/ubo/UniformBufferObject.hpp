@@ -1,10 +1,10 @@
 #ifndef __HOPE__GL_UNIFORM_BUFFER_OBJECT__
 #define __HOPE__GL_UNIFORM_BUFFER_OBJECT__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/GLDefines.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

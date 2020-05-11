@@ -16,14 +16,15 @@
 #include <scene/components/RenderConfiguration.hpp>
 #include <Math.hpp>
 #include <GLFW/glfw3.h>
-#include <GL/glew.h>
+#include <HopeAPI.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
 
-OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor()
+OpenGLFrameGraphVisitor::OpenGLFrameGraphVisitor(Framebuffer* defaultFramebuffer)
     : IFrameGraphVisitor() {
     m_aggregators.push_back(FrameGraphBranchState()) ;
+    m_renderer.setDefaultFramebuffer(defaultFramebuffer) ;
 }
 
 void OpenGLFrameGraphVisitor::setSceneRoot(Hope::Transform* root) {

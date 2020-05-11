@@ -1,13 +1,13 @@
 #ifndef __HOPE__GL_ENVIRONMENTMAP_TEXTURE__
 #define __HOPE__GL_ENVIRONMENTMAP_TEXTURE__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
-#include <GL/glew.h>
 #include <array>
 
 namespace Hope::GL {

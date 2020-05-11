@@ -2,7 +2,6 @@
 #define __HOPE__GL_TEXTURE_STORAGE_2D__
 
 #include <utils/Platform.hpp>
-
 #include <scene/ogl/textures/Texture.hpp>
 
 namespace Hope::GL {
@@ -42,6 +41,22 @@ namespace Hope::GL {
              * @param   pixelData   Pixel data that fit the new size.
              */
             exported void resize(const Mind::Dimension2Di& size) ;
+
+            /**
+             * Get the texture width.
+             * @return  The texture width.
+             */
+            exported uint32_t width() const {
+                return m_size.width() ;
+            }
+
+            /**
+             * Get the texture height.
+             * @return  The texture height.
+             */
+            exported uint32_t height() const {
+                return m_size.height() ;
+            }
 
             /**
              * Set the wrap mode for each dimension of the texture.

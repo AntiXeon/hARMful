@@ -75,6 +75,22 @@ namespace Hope::GL {
             exported void resize(const Mind::Dimension2Di& size) ;
 
             /**
+             * Get the texture width.
+             * @return  The texture width.
+             */
+            exported uint32_t width() const {
+                return m_size.width() ;
+            }
+
+            /**
+             * Get the texture height.
+             * @return  The texture height.
+             */
+            exported uint32_t height() const {
+                return m_size.height() ;
+            }
+
+            /**
              * Set the wrap mode for each dimension of the texture.
              */
             exported void setWrapModes(std::array<WrapMode, AmountCoordinates> modes) ;

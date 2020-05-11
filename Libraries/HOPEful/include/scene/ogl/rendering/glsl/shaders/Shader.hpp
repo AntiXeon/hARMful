@@ -1,9 +1,9 @@
 #ifndef __HOPE__GL_SHADER__
 #define __HOPE__GL_SHADER__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
-#include <GL/glew.h>
 #include <string>
 #include <vector>
 

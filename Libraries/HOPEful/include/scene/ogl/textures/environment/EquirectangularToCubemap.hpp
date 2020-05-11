@@ -1,6 +1,7 @@
 #ifndef __HOPE__GL_EQUIRECTANGULAR_TO_CUBEMAP__
 #define __HOPE__GL_EQUIRECTANGULAR_TO_CUBEMAP__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/common/RGB.hpp>
@@ -9,7 +10,6 @@
 #include <files/images/data/RawImage.hpp>
 #include <geometry/points/Point2Df.hpp>
 #include <geometry/points/Point3Df.hpp>
-#include <GL/glew.h>
 #include <array>
 #include <functional>
 

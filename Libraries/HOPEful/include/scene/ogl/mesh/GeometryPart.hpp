@@ -1,10 +1,10 @@
 #ifndef __HOPE__GL_MESHPART__
 #define __HOPE__GL_MESHPART__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/GLDefines.hpp>
-#include <GL/glew.h>
 #include <cstdint>
 
 namespace Hope::GL {

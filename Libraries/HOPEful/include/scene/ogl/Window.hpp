@@ -1,9 +1,9 @@
 #ifndef __HOPE__GL_WINDOW__
 #define __HOPE__GL_WINDOW__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <scene/Scene.hpp>
 #include <scene/ogl/visitors/OpenGLFrameGraphVisitor.hpp>
@@ -12,7 +12,8 @@
 
 namespace Hope { namespace GL {
     /**
-     * A window containing an OpenGL application.
+     * A standalone window containing an OpenGL application. Based on GLFW.
+     * You can implement your own window class for any other use.
      */
     class Window {
         private:

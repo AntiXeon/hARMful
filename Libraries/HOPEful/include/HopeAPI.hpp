@@ -7,6 +7,7 @@
 #ifdef OGL
     namespace Hope::GL {}
     namespace API = Hope::GL ;
+    #include <GL/glew.h>
 #elif defined VK
     #error "Unsupported graphics API"
 #endif

@@ -1,9 +1,8 @@
 #ifndef __HOPE__GL_BUFFER_CLEARER__
 #define __HOPE__GL_BUFFER_CLEARER__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
-
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

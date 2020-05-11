@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_COMPARISON_OPERATORS__
 #define __HOPE__GL_COMPARISON_OPERATORS__
 
-#include <GL/glew.h>
+#include <HopeAPI.hpp>
 
 namespace Hope::GL {
     /**

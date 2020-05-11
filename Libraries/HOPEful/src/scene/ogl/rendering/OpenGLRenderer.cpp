@@ -15,6 +15,10 @@ void OpenGLRenderer::render(
     std::vector<Hope::GeometryData>& dataList,
     const uint32_t memoryBarrier
 ) {
+    if (m_defaultFramebufferID) {
+        m_defaultFramebufferID -> bind() ;
+    }
+
     for (Hope::GeometryData& meshData : dataList) {
         m_modelUBO.setMatrices(
             meshData.worldTransformation,
@@ -66,6 +70,10 @@ void OpenGLRenderer::render(
         }
 
         geometry -> unbind() ;
+    }
+
+    if (m_defaultFramebufferID) {
+        m_defaultFramebufferID -> unbind() ;
     }
 }
 

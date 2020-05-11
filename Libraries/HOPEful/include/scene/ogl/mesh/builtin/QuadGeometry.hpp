@@ -1,13 +1,13 @@
 #ifndef __HOPE__GL_QUAD_GEOMETRY__
 #define __HOPE__GL_QUAD_GEOMETRY__
 
+#include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
 #include <array>
 #include <scene/ogl/mesh/Geometry.hpp>
 #include <scene/ogl/mesh/GeometryPart.hpp>
 #include <scene/ogl/GLDefines.hpp>
-#include <GL/glew.h>
 
 namespace Hope::GL {
     /**

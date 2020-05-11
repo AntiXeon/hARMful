@@ -1,7 +1,7 @@
 #ifndef __HOPE__GL_TEXTURE_INTERNAL_FORMATS__
 #define __HOPE__GL_TEXTURE_INTERNAL_FORMATS__
 
-#include <GL/glew.h>
+#include <HopeAPI.hpp>
 
 namespace Hope::GL {
     /**
