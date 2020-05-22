@@ -18,7 +18,7 @@ namespace Hope::GL {
              * Load the texture from the provided file.
              * @param   path    Path to the texture file.
              */
-            exported static void LoadFromFile(
+            exported static Spite::RawImage LoadFromFile(
                 const GLenum target,
                 const std::string& path,
                 const bool flipVertically

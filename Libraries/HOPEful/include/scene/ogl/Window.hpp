@@ -113,6 +113,11 @@ namespace Hope { namespace GL {
             exported void fullscreen() const ;
 
             /**
+             * Show or hide the window.
+             */
+            exported void show(const bool shown) ;
+
+            /**
              * Show the mouse cursor.
              */
             exported void showMouseCursor() const ;
@@ -139,6 +144,13 @@ namespace Hope { namespace GL {
              */
             exported GLFWwindow* handler() const {
                 return m_window;
+            }
+
+            /**
+             * Set the default framebuffer to write to.
+             */
+            exported void setDefaultFramebuffer(Framebuffer* defaultFramebuffer) {
+                m_frameGraphVisitor -> setDefaultFramebuffer(defaultFramebuffer) ;
             }
 
             /**

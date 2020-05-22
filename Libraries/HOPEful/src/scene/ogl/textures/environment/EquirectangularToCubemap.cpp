@@ -50,12 +50,12 @@ void EquirectangularToCubemap::convert() {
                 float cubeZ = cube.get(Mind::Vector3f::Z) ;
 
                 float r = std::sqrt((cubeX * cubeX) + (cubeY * cubeY) + (cubeZ * cubeZ)) ;
-                float lon = std::fmod(std::atan2(cubeY, cubeX) + DefaultRotation, Mind::Math::PiTwice) ;
-                float lat = std::acos(cubeZ / r) ;
+                float theta = std::fmod(std::atan2(cubeY, cubeX) + DefaultRotation, Mind::Math::PiTwice) ;
+                float phi = std::acos(cubeZ / r) ;
 
                 writeBilinearInterpolation(
-                    (m_equirectWidth * lon / Mind::Math::Pi / 2.f - 0.5f),
-                    (m_equirectHeight * lat / Mind::Math::Pi - 0.5f),
+                    theta,
+                    phi,
                     to,
                     facePixels
                 ) ;
@@ -74,11 +74,14 @@ void EquirectangularToCubemap::convert() {
 }
 
 void EquirectangularToCubemap::writeBilinearInterpolation(
-    const float xFrom,
-    const float yFrom,
+    const float theta,
+    const float phi,
     const unsigned int to,
     std::vector<Hope::HDRRGB>& facePixels
 ) {
+    float xFrom = (m_equirectWidth * theta / Mind::Math::Pi / 2.f - 0.5f) ;
+    float yFrom = (m_equirectHeight * phi / Mind::Math::Pi - 0.5f) ;
+    
     unsigned int xl = std::clamp(std::floor(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
     unsigned int xr = std::clamp(std::ceil(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
     float xf = xFrom - xl ;

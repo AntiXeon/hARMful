@@ -4,10 +4,12 @@
 #include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
 
+#include <scene/ogl/textures/environment/CubeFaces.hpp>
 #include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
+#include <geometry/dimensions/Dimension2Di.hpp>
 #include <array>
 
 namespace Hope::GL {
@@ -21,6 +23,11 @@ namespace Hope::GL {
              * ID of the texture on GPU side.
              */
             GLuint m_textureID = INVALID_VALUE ;
+
+            /**
+             * Dimension of a single face texture.
+             */
+            Mind::Dimension2Di m_faceDimension ;
 
         public:
             /**
@@ -42,6 +49,12 @@ namespace Hope::GL {
 			 * @param 	input Blob in memory containing the texture data.
 			 */
             exported EnvironmentMapTexture(Spite::RawImage& input) ;
+
+            /**
+             * Generate an empty EnvironmentMapTexture with predefined edge
+             * length of cube faces.
+             */
+            exported EnvironmentMapTexture(const unsigned int cubeSize) ;
 
             /**
              * Destruction of the EnvironmentMapTexture.
@@ -67,6 +80,27 @@ namespace Hope::GL {
              */
             exported void unbind() const {
                 glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
+            }
+
+            /**
+             * Get the texture ID.
+             */
+            exported GLuint id() const {
+                return m_textureID ;
+            }
+
+            /**
+             * Get the width of a single face.
+             */
+            exported unsigned int faceWidth() const {
+                return m_faceDimension.width() ;
+            }
+
+            /**
+             * Get the height of a single face.
+             */
+            exported unsigned int faceHeight() const {
+                return m_faceDimension.height() ;
             }
 
         private:

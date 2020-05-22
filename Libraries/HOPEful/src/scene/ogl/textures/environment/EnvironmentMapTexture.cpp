@@ -1,6 +1,9 @@
 #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
 #include <scene/ogl/textures/environment/EnvironmentMapProcessing.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
+#include <scene/ogl/textures/formats/InternalFormats.hpp>
+#include <scene/ogl/textures/formats/PixelFormats.hpp>
+#include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <scene/ogl/textures/formats/FilterModes.hpp>
 #include <files/images/ImageFile.hpp>
 #include <utils/LogSystem.hpp>
@@ -12,13 +15,34 @@ using namespace Hope::GL ;
 EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Cubemapping::AmountFaces>& paths) {
     generateTextureID() ;
 
+    bool initialized = false ;
+
     // Load all the faces.
     for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
-        TextureLoader::LoadFromFile(
+        auto image = TextureLoader::LoadFromFile(
             GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
             paths[face],
             Cubemapping::FlipVerticalAxis
         ) ;
+
+        if (!initialized) {
+            m_faceDimension = Mind::Dimension2Di(image.width(), image.height()) ;
+        }
+        else {
+            bool differentWidths = m_faceDimension.width() != image.width() ;
+            bool differentHeights = m_faceDimension.height() != image.height() ;
+
+            if (differentWidths || differentHeights) {
+                // Write the error in the log.
+                auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+                auto logSharedPtr = logWeakPtr.lock() ;
+                if (logSharedPtr) {
+                    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+                    logSharedPtr -> writeLine(level, Texts::EnvironmentMap_InconsistentSize + paths[face]) ;
+                    return ;
+                }
+            }
+        }
     }
 
     setupTexture() ;
@@ -28,12 +52,39 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
     generateTextureID() ;
 	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
     EnvironmentMapProcessing::Load(texture) ;
+
+    //m_faceDimension = Mind::Dimension2Di(image.width(), image.height()) ;
+
     setupTexture() ;
 }
 
 EnvironmentMapTexture::EnvironmentMapTexture(Spite::RawImage& input) {
     generateTextureID() ;
 	EnvironmentMapProcessing::Load(input) ;
+    setupTexture() ;
+}
+
+EnvironmentMapTexture::EnvironmentMapTexture(const unsigned int cubeSize) {
+    const GLint TextureLoD = 0 ;
+    const GLint Border = 0 ;
+
+    generateTextureID() ;
+    m_faceDimension = Mind::Dimension2Di(cubeSize, cubeSize) ;
+
+    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
+        glTexImage2D(
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+            TextureLoD,
+            static_cast<GLint>(InternalFormat::RedGreenBlue16f),
+            cubeSize,
+            cubeSize,
+            Border,
+            static_cast<GLint>(PixelFormat::RedGreenBlue),
+            static_cast<GLint>(PixelDataType::Float),
+            nullptr
+        ) ;
+    }
+
     setupTexture() ;
 }
 

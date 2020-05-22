@@ -11,13 +11,11 @@ namespace Hope {
      * List all the uniform names available in a shader program.
      */
     struct UniformNames {
-        const int AmbientLocation = 0 ;
-        const int DiffuseLocation = 1 ;
-        const int SpecularLocation = 2 ;
-        const int ShininessLocation = 3 ;
-
         // Materials uniforms names.
         exported static std::string MaterialCubemapUniformName() { return "cubemap" ; }
+        exported static std::string MaterialEnvRadianceUniformName() { return "envRadiance" ; }
+        exported static std::string MaterialEnvIrradianceUniformName() { return "envIrradiance" ; }
+        exported static std::string MaterialEnvSpecularUniformName() { return "envSpecular" ; }
 
         exported static std::string MaterialUseShadowUniformName() { return "useShadow" ; }
         exported static std::string MaterialAmountCascadesUniformName() { return "amountCascades" ; }

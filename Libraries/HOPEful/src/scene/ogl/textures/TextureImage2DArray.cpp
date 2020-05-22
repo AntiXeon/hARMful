@@ -11,7 +11,7 @@ TextureImage2DArray::TextureImage2DArray(
     const InternalFormat internalFormat,
     const PixelFormat pixelFormat,
     const PixelDataType pixelDataType,
-    const float* pixelData,
+    const unsigned char* pixelData,
     const bool mipmap
 ) : Texture(
         GL_TEXTURE_2D_ARRAY,
@@ -26,7 +26,7 @@ TextureImage2DArray::TextureImage2DArray(
 
 void TextureImage2DArray::resize(
     const Mind::Dimension3Di& size,
-    const float* pixelData
+    const unsigned char* pixelData
 ) {
     glBindTexture(GL_TEXTURE_2D_ARRAY, id()) ;
 

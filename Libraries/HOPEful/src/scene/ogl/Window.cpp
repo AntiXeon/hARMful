@@ -16,7 +16,8 @@ Window::Window(
 ) : m_title(title) {
     Doom::LogSystem::Initialize(m_title, Doom::LogSystem::Gravity::Info) ;
 
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE) ;
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE) ;
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE) ;
 
     createInternalWindow(width, height, m_title) ;
     useCurrentContext() ;
@@ -73,6 +74,15 @@ void Window::fullscreen() const {
     GLFWmonitor* monitor = glfwGetPrimaryMonitor() ;
     const GLFWvidmode* mode = glfwGetVideoMode(monitor) ;
     glfwSetWindowMonitor(m_window, monitor, 0, 0, mode -> width, mode -> height, mode -> refreshRate) ;
+}
+
+void Window::show(const bool shown) {
+    if (shown) {
+        glfwShowWindow(m_window) ;
+    }
+    else {
+        glfwHideWindow(m_window) ;
+    }
 }
 
 void Window::showMouseCursor() const {

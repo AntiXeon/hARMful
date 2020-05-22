@@ -15,8 +15,8 @@ void OpenGLRenderer::render(
     std::vector<Hope::GeometryData>& dataList,
     const uint32_t memoryBarrier
 ) {
-    if (m_defaultFramebufferID) {
-        m_defaultFramebufferID -> bind() ;
+    if (m_defaultFramebuffer) {
+        m_defaultFramebuffer -> bind() ;
     }
 
     for (Hope::GeometryData& meshData : dataList) {
@@ -72,8 +72,8 @@ void OpenGLRenderer::render(
         geometry -> unbind() ;
     }
 
-    if (m_defaultFramebufferID) {
-        m_defaultFramebufferID -> unbind() ;
+    if (m_defaultFramebuffer) {
+        m_defaultFramebuffer -> unbind() ;
     }
 }
 

@@ -57,7 +57,7 @@ namespace Hope::GL {
                 const InternalFormat internalFormat,
                 const PixelFormat pixelFormat,
                 const PixelDataType pixelDataType,
-                const float* pixelData = nullptr,
+                const unsigned char* pixelData = nullptr,
                 const bool mipmap = true
             ) ;
 
@@ -68,7 +68,7 @@ namespace Hope::GL {
              */
             exported void resize(
                 const Mind::Dimension3Di& size,
-                const float* pixelData = nullptr
+                const unsigned char* pixelData = nullptr
             ) ;
 
             /**

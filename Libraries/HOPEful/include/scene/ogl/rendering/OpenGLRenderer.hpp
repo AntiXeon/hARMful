@@ -60,7 +60,7 @@ namespace Hope::GL {
             /**
              * The default framebuffer.
              */
-            Framebuffer* m_defaultFramebufferID = nullptr ;
+            Framebuffer* m_defaultFramebuffer = nullptr ;
 
         public:
             /**
@@ -124,7 +124,14 @@ namespace Hope::GL {
              * Set the default FBO.
              */
             exported void setDefaultFramebuffer(Framebuffer* defaultFBO) {
-                m_defaultFramebufferID = defaultFBO ;
+                m_defaultFramebuffer = defaultFBO ;
+            }
+
+            /**
+             * Get the default FBO.
+             */
+            exported Framebuffer* defaultFramebuffer() const {
+                return m_defaultFramebuffer ;
             }
 
         private:

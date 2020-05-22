@@ -146,13 +146,25 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
     Mind::Point2Df relativePosition = node -> position() ;
     Mind::Dimension2Df relativeDimension = node -> dimension() ;
 
+    unsigned int fboWidth = 0 ;
+    unsigned int fboHeight = 0 ;
+
+    if (m_renderer.defaultFramebuffer()) {
+        fboWidth = m_renderer.defaultFramebuffer() -> width() ;
+        fboHeight = m_renderer.defaultFramebuffer() -> height() ;
+    }
+    else {
+        fboWidth = m_windowSize.width() ;
+        fboHeight = m_windowSize.height() ;
+    }
+
     Mind::Point2Df absolutePosition(
-        relativePosition.get(Mind::Point2Df::X) * m_windowSize.width(),
-        relativePosition.get(Mind::Point2Df::Y) * m_windowSize.height()
+        relativePosition.get(Mind::Point2Df::X) * fboWidth,
+        relativePosition.get(Mind::Point2Df::Y) * fboHeight
     ) ;
 
-    m_projectionData.absoluteAreaWidth = relativeDimension.width() * m_windowSize.width() ;
-    m_projectionData.absoluteAreaHeight = relativeDimension.height() * m_windowSize.height() ;
+    m_projectionData.absoluteAreaWidth = relativeDimension.width() * fboWidth ;
+    m_projectionData.absoluteAreaHeight = relativeDimension.height() * fboHeight ;
 
     // Apply the viewport parameters.
     glViewport(

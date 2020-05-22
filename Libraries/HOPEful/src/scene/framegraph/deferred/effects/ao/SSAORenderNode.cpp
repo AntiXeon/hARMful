@@ -41,7 +41,7 @@ void SSAORenderNode::generateNoiseTexture() {
         API::InternalFormat::RedGreenBlueAlpha16f,
         API::PixelFormat::RedGreenBlueAlpha,
         API::PixelDataType::Float,
-        noiseData.data(),
+        reinterpret_cast<unsigned char*>(noiseData.data()),
         GenerateMipmap
     ) ;
 

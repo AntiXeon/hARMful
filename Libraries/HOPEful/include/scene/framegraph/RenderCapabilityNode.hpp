@@ -41,19 +41,13 @@ namespace Hope {
             /**
              * Add a new capability.
              */
-            exported void addCapability(API::Capability* capability) {
-                if (capability) {
-                    m_capabilities.push_back(capability) ;
-                }
-            }
+            exported void addCapability(API::Capability* capability) ;
 
         protected:
             /**
              * Accept the visitor.
              */
-            exported void specificAccept(IFrameGraphVisitor* visitor) override {
-                visitor -> visit(this) ;
-            }
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
 
         private:
             /**

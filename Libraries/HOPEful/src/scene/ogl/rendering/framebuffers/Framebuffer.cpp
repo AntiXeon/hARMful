@@ -46,6 +46,22 @@ void Framebuffer::useNoColorBuffers() {
     glNamedFramebufferDrawBuffers(m_fboID, Size, None) ;
 }
 
+void Framebuffer::attachCubeColor(
+    const unsigned char attachmentIndex,
+    const EnvironmentMapTexture* texture,
+    const CubeFace faceIndex
+) {
+    bind() ;
+    glFramebufferTexture2D(
+        GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0 + attachmentIndex,
+        faceIndex,
+        texture -> id(),
+        Framebuffer::MipmapLevel
+    ) ;
+    unbind() ;
+}
+
 void Framebuffer::detachColor(const int attachmentIndex) {
     glBindFramebuffer(GL_FRAMEBUFFER, m_fboID) ;
     glFramebufferTexture2D(

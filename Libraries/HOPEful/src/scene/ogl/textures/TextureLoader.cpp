@@ -7,7 +7,7 @@
 
 using namespace Hope::GL ;
 
-void TextureLoader::LoadFromFile(
+Spite::RawImage TextureLoader::LoadFromFile(
     const GLenum target,
     const std::string& path,
     const bool flipVertically
@@ -46,6 +46,8 @@ void TextureLoader::LoadFromFile(
         dataType,
         pixelData.data()
     ) ;
+
+    return rawData ;
 }
 
 InternalFormat TextureLoader::ConvertInternalColorFormat(const Spite::ColorFormat& format, const bool standard) {

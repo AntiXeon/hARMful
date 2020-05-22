@@ -13,24 +13,45 @@ using namespace Hope::GL ;
 const float EnvironmentMapProcessing::EquirectangularMapWHRatio = 2.f / 1.f ;
 const float EnvironmentMapProcessing::CubeMapWHRatio = 4.f / 3.f ;
 
-void EnvironmentMapProcessing::Load(Spite::RawImage& input) {
+Spite::RawImage EnvironmentMapProcessing::LoadRawPicture(const std::string& path) {
+    Spite::RawImage output ;
+	Spite::ImageFile file(path, Cubemapping::FlipVerticalAxis) ;
+
+    if (!file.load(&output)) {
+        // Write the error in the log.
+        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
+        auto logSharedPtr = logWeakPtr.lock() ;
+        if (logSharedPtr) {
+            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+            logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
+        }
+    }
+
+    return output ;
+}
+
+Mind::Dimension2Di EnvironmentMapProcessing::Load(Spite::RawImage& input) {
     // Compute the ratio to determine the type of picture.
     unsigned int imageWidth = input.width() ;
     unsigned int imageHeight = input.height() ;
     float ratio = static_cast<float>(imageWidth) / static_cast<float>(imageHeight) ;
 
+    Mind::Dimension2Di faceDimension ;
+
     if (Mind::Math::equal(ratio, EquirectangularMapWHRatio)) {
-        LoadEquirectangular21(input) ;
+        faceDimension = LoadEquirectangular21(input) ;
     }
     else if (Mind::Math::equal(ratio, CubeMapWHRatio)) {
-        LoadCubemap(input, Cubemapping::Cube_FrontAligned) ;
+        faceDimension = LoadCubemap(input, Cubemapping::Cube_FrontAligned) ;
     }
     else {
         throw std::runtime_error(Texts::EnvironmentMap_UnknownAspectRatio) ;
     }
+
+    return faceDimension ;
 }
 
-void EnvironmentMapProcessing::LoadEquirectangular21(Spite::RawImage& rawData) {
+Mind::Dimension2Di EnvironmentMapProcessing::LoadEquirectangular21(Spite::RawImage& rawData) {
     EquirectangularToCubemap converter(rawData) ;
     converter.convert() ;
 
@@ -44,9 +65,11 @@ void EnvironmentMapProcessing::LoadEquirectangular21(Spite::RawImage& rawData) {
             faceID
         ) ;
     }
+
+    return Mind::Dimension2Di(converter.faceSize(), converter.faceSize()) ;
 }
 
-void EnvironmentMapProcessing::LoadCubemap(
+Mind::Dimension2Di EnvironmentMapProcessing::LoadCubemap(
     Spite::RawImage& rawData,
     const Cubemapping::CubemapType type
 ) {
@@ -71,6 +94,8 @@ void EnvironmentMapProcessing::LoadCubemap(
             faceID
         ) ;
 	}
+
+    return Mind::Dimension2Di(faceWidth, faceWidth) ;
 }
 
 void EnvironmentMapProcessing::LoadFace(
@@ -94,23 +119,6 @@ void EnvironmentMapProcessing::LoadFace(
         TextureLoader::ConvertDataType(format),
         faceBytes.data()
     ) ;
-}
-
-Spite::RawImage EnvironmentMapProcessing::LoadRawPicture(const std::string& path) {
-    Spite::RawImage output ;
-	Spite::ImageFile file(path, Cubemapping::FlipVerticalAxis) ;
-
-    if (!file.load(&output)) {
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
-        }
-    }
-
-    return output ;
 }
 
 void EnvironmentMapProcessing::ReadCubeFace(

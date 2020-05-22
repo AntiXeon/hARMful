@@ -7,6 +7,7 @@
 #include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
+#include <geometry/dimensions/Dimension2Di.hpp>
 #include <geometry/points/Point2Df.hpp>
 #include <array>
 
@@ -31,24 +32,27 @@ namespace Hope::GL {
              * Load an environment map.
              * Its type is found from its aspect ratio.
              * @param input     Image to load.
+             * @return  Dimension of a single face.
              */
-            exported static void Load(Spite::RawImage& input) ;
+            exported static Mind::Dimension2Di Load(Spite::RawImage& input) ;
 
         private:
             /**
              * Load an equirectangular (ratio w=2:h=1) and convert it to a
              * cubemap that is then loaded.
              * @param 	rawData  Raw bytes of the uncompressed picture file.
+             * @return  Dimension of a single face.
              */
-            exported static void LoadEquirectangular21(Spite::RawImage& rawData) ;
+            exported static Mind::Dimension2Di LoadEquirectangular21(Spite::RawImage& rawData) ;
 
             /**
              * Load a cubemap contained in a single image file.
              * @param 	rawData Raw bytes of the uncompressed picture file.
              * @param   type    Type of the cubemap (ie. how are set top and
              *                  bottom tiles).
+             * @return  Dimension of a single face.
              */
-            exported static void LoadCubemap(
+            exported static Mind::Dimension2Di LoadCubemap(
                 Spite::RawImage& rawData,
                 const Cubemapping::CubemapType type
             ) ;

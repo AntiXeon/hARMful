@@ -29,7 +29,7 @@ TextureImage2D::TextureImage2D(
     const InternalFormat internalFormat,
     const PixelFormat pixelFormat,
     const PixelDataType pixelDataType,
-    const float* pixelData,
+    const unsigned char* pixelData,
     const bool mipmap
 ) : Texture(
         GL_TEXTURE_2D,
@@ -44,7 +44,7 @@ TextureImage2D::TextureImage2D(
 
 void TextureImage2D::resize(
     const Mind::Dimension2Di& size,
-    const float* pixelData
+    const unsigned char* pixelData
 ) {
     m_size = size ;
 

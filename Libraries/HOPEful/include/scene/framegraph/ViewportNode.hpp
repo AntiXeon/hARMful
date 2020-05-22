@@ -39,26 +39,12 @@ namespace Hope {
              * Set the position of the top left corner of the viewport in
              * relative value (between 0 and 1).
              */
-            exported void setPosition(const Mind::Point2Df& position) {
-                const float MinValue = 0.f ;
-                const float MaxValue = 1.f ;
-
-                float x = std::clamp(position.get(Mind::Point2Df::X), MinValue, MaxValue) ;
-                float y = std::clamp(position.get(Mind::Point2Df::Y), MinValue, MaxValue) ;
-                m_position.set(x, y) ;
-            }
+            exported void setPosition(const Mind::Point2Df& position) ;
 
             /**
              * Set the dimension of the viewport.
              */
-            exported void setDimension(const Mind::Dimension2Df& dimension) {
-                const float MinValue = 0.f ;
-                const float MaxValue = 1.f ;
-
-                float w = std::clamp(dimension.width(), MinValue, MaxValue) ;
-                float h = std::clamp(dimension.height(), MinValue, MaxValue) ;
-                m_dimension.set(w, h) ;
-            }
+            exported void setDimension(const Mind::Dimension2Df& dimension) ;
 
             /**
              * Get the position of the top left corner of the viewport in
@@ -79,9 +65,7 @@ namespace Hope {
             /**
              * Accept the visitor.
              */
-            exported void specificAccept(IFrameGraphVisitor* visitor) override {
-                visitor -> visit(this) ;
-            }
+            exported void specificAccept(IFrameGraphVisitor* visitor) override ;
     } ;
 }
 

@@ -6,6 +6,7 @@
 
 #include <scene/ogl/GLDefines.hpp>
 #include <scene/ogl/textures/Texture.hpp>
+#include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
@@ -152,6 +153,26 @@ namespace Hope::GL {
                 const unsigned char attachmentIndex,
                 const Texture* texture
             ) = 0 ;
+
+            /**
+             * Attach an external color texture to the framebuffer from a
+             * cubemap.
+             * Notice that several textures can be attached to a same
+             * framebuffer in order to perform multiple render target
+             * operations.
+             * @param   attachmentIndex Index of the attachment point to the
+             *                          framebuffer. Starts at 0, you can get
+             *                          the amount of color attachment with the
+             *                          GetColorAttachmentCount() method.
+             * @param   texture         The external texture to attach to the
+             *                          framebuffer.
+             * @param   faceIndex       Index of the face in the cubemap
+             */
+            exported void attachCubeColor(
+                const unsigned char attachmentIndex,
+                const EnvironmentMapTexture* texture,
+                const CubeFace faceIndex
+            ) ;
 
             /**
              * Attach the depth buffer.
