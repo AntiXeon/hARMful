@@ -16,10 +16,6 @@ FrameGraphNode::FrameGraphNode(FrameGraphNode* parent) {
 }
 
 FrameGraphNode::~FrameGraphNode() {
-    for (FrameGraphNode* child : m_children) {
-        delete child ;
-    }
-
     m_children.clear() ;
 }
 

@@ -44,11 +44,6 @@ namespace Hope {
                 FrameGraphNode* parent = nullptr
             ) ;
 
-            /**
-             * Destruction of the ShadingStepNode instance.
-             */
-            exported virtual ~ShadingStepNode() ;
-
             // Remove copy/move operations.
             ShadingStepNode(const ShadingStepNode& copied) = delete;
             ShadingStepNode(ShadingStepNode&& moved) = delete;

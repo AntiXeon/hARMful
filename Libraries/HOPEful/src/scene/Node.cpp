@@ -15,10 +15,6 @@ Node::Node(Node* parent) {
 }
 
 Node::~Node() {
-    for (Node* child : m_children) {
-        delete child ;
-    }
-
     m_children.clear() ;
 }
 

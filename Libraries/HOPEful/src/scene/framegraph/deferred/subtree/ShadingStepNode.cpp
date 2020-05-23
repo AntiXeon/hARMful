@@ -14,11 +14,6 @@ ShadingStepNode::ShadingStepNode(
     ),
     m_shadingFBO(shadingFBO) {}
 
-ShadingStepNode::~ShadingStepNode() {
-    // Use smart pointers instead!
-    delete material() ;
-}
-
 void ShadingStepNode::specificAccept(IFrameGraphVisitor* visitor) {
     m_shadingFBO -> setDrawBuffers({ ShadingRenderTarget }) ;
     visitor -> visit(this) ;
