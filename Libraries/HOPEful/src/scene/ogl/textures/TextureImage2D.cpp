@@ -15,10 +15,13 @@ TextureImage2D::TextureImage2D(
 
     glBindTexture(GL_TEXTURE_2D, id()) ;
     TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
-    setFiltering(FilterMode::Linear_MipLinear, FilterMode::Linear_MipLinear) ;
 
     if (mipmap) {
         glGenerateMipmap(GL_TEXTURE_2D) ;
+        setFiltering(FilterMode::Linear_MipLinear, FilterMode::Linear_MipLinear) ;
+    }
+    else {
+        setFiltering(FilterMode::Linear, FilterMode::Linear) ;
     }
 
     glBindTexture(GL_TEXTURE_2D, 0) ;
