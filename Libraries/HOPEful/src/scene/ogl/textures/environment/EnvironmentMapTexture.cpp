@@ -64,7 +64,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(Spite::RawImage& input) {
 EnvironmentMapTexture::EnvironmentMapTexture(
     const unsigned int cubeSize,
     const bool mipmap
-) {
+) : m_hasMipmap(mipmap) {
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
 
@@ -85,7 +85,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(
         ) ;
     }
 
-    setupTexture(mipmap) ;
+    setupTexture() ;
 }
 
 EnvironmentMapTexture::~EnvironmentMapTexture() {
@@ -93,8 +93,8 @@ EnvironmentMapTexture::~EnvironmentMapTexture() {
     glDeleteTextures(1, &m_textureID) ;
 }
 
-void EnvironmentMapTexture::setupTexture(const bool mipmap) {
-    FilterMode minFilter = mipmap ? FilterMode::Linear_MipLinear : FilterMode::Linear ;
+void EnvironmentMapTexture::setupTexture() {
+    FilterMode minFilter = m_hasMipmap ? FilterMode::Linear_MipLinear : FilterMode::Linear ;
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, minFilter) ;
@@ -102,11 +102,37 @@ void EnvironmentMapTexture::setupTexture(const bool mipmap) {
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE) ;
 
-    if (mipmap) {
+    if (m_hasMipmap) {
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP) ;
     }
 
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+void EnvironmentMapTexture::resize(const unsigned int size) {
+    const GLint TextureLoD = 0 ;
+    const GLint Border = 0 ;
+
+    m_faceDimension = Mind::Dimension2Di(size, size) ;
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, id()) ;
+
+    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
+        glTexImage2D(
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+            TextureLoD,
+            static_cast<GLint>(InternalFormat::RedGreenBlue16f),
+            size,
+            size,
+            Border,
+            static_cast<GLint>(PixelFormat::RedGreenBlue),
+            static_cast<GLint>(PixelDataType::Float),
+            nullptr
+        ) ;
+    }
+
+    setupTexture() ;
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
 }
 
 void EnvironmentMapTexture::generateTextureID() {

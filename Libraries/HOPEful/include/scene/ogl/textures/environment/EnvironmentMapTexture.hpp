@@ -29,6 +29,11 @@ namespace Hope::GL {
              */
             Mind::Dimension2Di m_faceDimension ;
 
+            /**
+             * To know if mipmapping is enabled for this texture.
+             */
+            bool m_hasMipmap = false ;
+
         public:
             /**
              * Creation of a new EnvironmentMapTexture.
@@ -53,6 +58,7 @@ namespace Hope::GL {
             /**
              * Generate an empty EnvironmentMapTexture with predefined edge
              * length of cube faces.
+             * @param mipmap true to enable mipmapping; false otherwise.
              */
             exported EnvironmentMapTexture(
                 const unsigned int cubeSize,
@@ -86,6 +92,12 @@ namespace Hope::GL {
             }
 
             /**
+             * Resize the texture (single face dimensions).
+             * @param   size        The new size to apply on a square face.
+             */
+            exported void resize(const unsigned int size) ;
+
+            /**
              * Get the texture ID.
              */
             exported GLuint id() const {
@@ -114,9 +126,8 @@ namespace Hope::GL {
 
             /**
              * Set up the texture.
-             * @param mipmap    true to enable mipmapping; false otherwise.
              */
-            exported void setupTexture(const bool mipmap = false) ;
+            exported void setupTexture() ;
     } ;
 }
 
