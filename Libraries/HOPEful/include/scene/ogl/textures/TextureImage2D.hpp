@@ -50,7 +50,8 @@ namespace Hope::GL {
              */
             exported TextureImage2D(
                 const std::string& path,
-                const bool mipmap = true
+                const bool mipmap = true,
+                const bool flipVerticalAxis = true
             ) ;
 
             /**

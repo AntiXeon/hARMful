@@ -9,12 +9,11 @@ using namespace Hope::GL ;
 
 TextureImage2D::TextureImage2D(
     const std::string& path,
-    const bool mipmap
+    const bool mipmap,
+    const bool flipVerticalAxis
 ) : Texture(GL_TEXTURE_2D) {
-    static const bool FlipVerticalAxis = true ;
-
     glBindTexture(GL_TEXTURE_2D, id()) ;
-    TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, FlipVerticalAxis) ;
+    TextureLoader::LoadFromFile(GL_TEXTURE_2D, path, flipVerticalAxis) ;
 
     if (mipmap) {
         glGenerateMipmap(GL_TEXTURE_2D) ;
