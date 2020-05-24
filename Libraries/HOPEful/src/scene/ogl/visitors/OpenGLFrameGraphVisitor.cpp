@@ -137,7 +137,12 @@ void OpenGLFrameGraphVisitor::visit(RenderPassSelectorNode* node) {
 }
 
 void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
-    if (!m_hasWindowChanged && (m_projectionData.lastViewport == node)) {
+    bool offscreenRender = m_renderer.defaultFramebuffer() != nullptr ;
+
+    if (!m_hasWindowChanged
+            && !offscreenRender
+            && (m_projectionData.lastViewport == node)
+       ) {
         return ;
     }
 
@@ -149,7 +154,7 @@ void OpenGLFrameGraphVisitor::visit(ViewportNode* node) {
     unsigned int fboWidth = 0 ;
     unsigned int fboHeight = 0 ;
 
-    if (m_renderer.defaultFramebuffer()) {
+    if (offscreenRender) {
         fboWidth = m_renderer.defaultFramebuffer() -> width() ;
         fboHeight = m_renderer.defaultFramebuffer() -> height() ;
     }
