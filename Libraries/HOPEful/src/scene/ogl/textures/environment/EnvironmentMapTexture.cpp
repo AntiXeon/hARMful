@@ -105,8 +105,6 @@ void EnvironmentMapTexture::setupTexture() {
     if (m_hasMipmap) {
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP) ;
     }
-
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 void EnvironmentMapTexture::resize(const unsigned int size) {
@@ -132,7 +130,11 @@ void EnvironmentMapTexture::resize(const unsigned int size) {
     }
 
     setupTexture() ;
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0) ;
+}
+
+void EnvironmentMapTexture::generateMipmap() {
+    bind() ;
+    glGenerateMipmap(GL_TEXTURE_CUBE_MAP) ;
 }
 
 void EnvironmentMapTexture::generateTextureID() {

@@ -118,6 +118,11 @@ namespace Hope::GL {
                 return m_faceDimension.height() ;
             }
 
+            /**
+             * Generate mipmap.
+             */
+            exported void generateMipmap() ;
+
         private:
             /**
              * Generate the texture ID on GPU.
