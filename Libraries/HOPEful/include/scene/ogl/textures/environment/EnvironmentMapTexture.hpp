@@ -54,7 +54,10 @@ namespace Hope::GL {
              * Generate an empty EnvironmentMapTexture with predefined edge
              * length of cube faces.
              */
-            exported EnvironmentMapTexture(const unsigned int cubeSize) ;
+            exported EnvironmentMapTexture(
+                const unsigned int cubeSize,
+                const bool mipmap = false
+            ) ;
 
             /**
              * Destruction of the EnvironmentMapTexture.
@@ -111,8 +114,9 @@ namespace Hope::GL {
 
             /**
              * Set up the texture.
+             * @param mipmap    true to enable mipmapping; false otherwise.
              */
-            exported void setupTexture() ;
+            exported void setupTexture(const bool mipmap = false) ;
     } ;
 }
 

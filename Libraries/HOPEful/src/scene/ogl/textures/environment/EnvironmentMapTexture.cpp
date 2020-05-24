@@ -52,9 +52,6 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
     generateTextureID() ;
 	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
     EnvironmentMapProcessing::Load(texture) ;
-
-    //m_faceDimension = Mind::Dimension2Di(image.width(), image.height()) ;
-
     setupTexture() ;
 }
 
@@ -64,7 +61,10 @@ EnvironmentMapTexture::EnvironmentMapTexture(Spite::RawImage& input) {
     setupTexture() ;
 }
 
-EnvironmentMapTexture::EnvironmentMapTexture(const unsigned int cubeSize) {
+EnvironmentMapTexture::EnvironmentMapTexture(
+    const unsigned int cubeSize,
+    const bool mipmap
+) {
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
 
@@ -85,7 +85,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(const unsigned int cubeSize) {
         ) ;
     }
 
-    setupTexture() ;
+    setupTexture(mipmap) ;
 }
 
 EnvironmentMapTexture::~EnvironmentMapTexture() {
@@ -93,13 +93,18 @@ EnvironmentMapTexture::~EnvironmentMapTexture() {
     glDeleteTextures(1, &m_textureID) ;
 }
 
-void EnvironmentMapTexture::setupTexture() {
-    // Setup wrapping and filtering.
+void EnvironmentMapTexture::setupTexture(const bool mipmap) {
+    FilterMode minFilter = mipmap ? FilterMode::Linear_MipLinear : FilterMode::Linear ;
+
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, FilterMode::Linear) ;
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, FilterMode::Linear) ;
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, minFilter) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE) ;
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE) ;
+
+    if (mipmap) {
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP) ;
+    }
 
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
