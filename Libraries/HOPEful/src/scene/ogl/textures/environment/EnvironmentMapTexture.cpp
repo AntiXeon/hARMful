@@ -12,7 +12,10 @@
 using namespace Hope ;
 using namespace Hope::GL ;
 
-EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Cubemapping::AmountFaces>& paths) {
+EnvironmentMapTexture::EnvironmentMapTexture(
+    const std::array<std::string, Cubemapping::AmountFaces>& paths,
+    const bool mipmap
+) : m_hasMipmap(mipmap) {
     generateTextureID() ;
 
     bool initialized = false ;
@@ -48,14 +51,20 @@ EnvironmentMapTexture::EnvironmentMapTexture(const std::array<std::string, Cubem
     setupTexture() ;
 }
 
-EnvironmentMapTexture::EnvironmentMapTexture(const std::string& path) {
+EnvironmentMapTexture::EnvironmentMapTexture(
+    const std::string& path,
+    const bool mipmap
+) : m_hasMipmap(mipmap) {
     generateTextureID() ;
 	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
     EnvironmentMapProcessing::Load(texture) ;
     setupTexture() ;
 }
 
-EnvironmentMapTexture::EnvironmentMapTexture(Spite::RawImage& input) {
+EnvironmentMapTexture::EnvironmentMapTexture(
+    Spite::RawImage& input,
+    const bool mipmap
+) : m_hasMipmap(mipmap) {
     generateTextureID() ;
 	EnvironmentMapProcessing::Load(input) ;
     setupTexture() ;
@@ -133,8 +142,10 @@ void EnvironmentMapTexture::resize(const unsigned int size) {
 }
 
 void EnvironmentMapTexture::generateMipmap() {
+    m_hasMipmap = true ;
+
     bind() ;
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP) ;
+    setupTexture() ;
 }
 
 void EnvironmentMapTexture::generateTextureID() {

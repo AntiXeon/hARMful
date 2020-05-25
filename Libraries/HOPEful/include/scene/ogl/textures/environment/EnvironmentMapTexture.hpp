@@ -40,25 +40,38 @@ namespace Hope::GL {
              * @param   paths   Path to the texture for each face of the cube.
              *                  The expected order of the maps is as follow:
              *                  right, left, top, bottom, back, front.
+             * @param mipmap    true to enable mipmapping; false otherwise.
              */
-            exported EnvironmentMapTexture(const std::array<std::string, Cubemapping::AmountFaces>& paths) ;
+            exported EnvironmentMapTexture(
+                const std::array<std::string, Cubemapping::AmountFaces>& paths,
+                const bool mipmap = false
+            ) ;
 
 			/**
 			 * Creation of a new EnvironmentMapTexture.
 			 * @param 	path	Path to the environment map.
+             * @param mipmap    true to enable mipmapping; false otherwise.
 			 */
-			exported EnvironmentMapTexture(const std::string& path) ;
+			exported EnvironmentMapTexture(
+                const std::string& path,
+                const bool mipmap = false
+            ) ;
 
             /**
 			 * Creation of a new EnvironmentMapTexture.
 			 * @param 	input Blob in memory containing the texture data.
+             * @param mipmap    true to enable mipmapping; false otherwise.
 			 */
-            exported EnvironmentMapTexture(Spite::RawImage& input) ;
+            exported EnvironmentMapTexture(
+                Spite::RawImage& input,
+                const bool mipmap = false
+            ) ;
 
             /**
              * Generate an empty EnvironmentMapTexture with predefined edge
              * length of cube faces.
-             * @param mipmap true to enable mipmapping; false otherwise.
+             * @param cubeSize  Size of an edge of the cube maps.
+             * @param mipmap    true to enable mipmapping; false otherwise.
              */
             exported EnvironmentMapTexture(
                 const unsigned int cubeSize,
