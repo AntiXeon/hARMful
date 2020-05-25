@@ -2,13 +2,11 @@
 #define __HOPE__GL_CUBE_FACES__
 
 #include <HopeAPI.hpp>
+#include <string>
 
 namespace Hope::GL {
-    /**
-     * Comparison operators.
-     */
-    enum CubeFace : GLint {
-        Right = GL_TEXTURE_CUBE_MAP_POSITIVE_X ,
+    enum CubeFace : GLenum {
+        Right = GL_TEXTURE_CUBE_MAP_POSITIVE_X,
         Left = GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
         Top = GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
         Bottom = GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
@@ -18,6 +16,11 @@ namespace Hope::GL {
         First = Right,
         Last = Front
     } ;
+
+    /**
+     * Get the name of a face.
+     */
+    const std::string& FaceName(const Hope::GL::CubeFace face) ;
 }
 
 #endif

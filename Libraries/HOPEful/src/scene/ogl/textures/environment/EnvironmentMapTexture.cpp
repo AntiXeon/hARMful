@@ -57,7 +57,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(
 ) : m_hasMipmap(mipmap) {
     generateTextureID() ;
 	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
-    EnvironmentMapProcessing::Load(texture) ;
+    m_faceDimension = EnvironmentMapProcessing::Load(texture) ;
     setupTexture() ;
 }
 
@@ -66,7 +66,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(
     const bool mipmap
 ) : m_hasMipmap(mipmap) {
     generateTextureID() ;
-	EnvironmentMapProcessing::Load(input) ;
+	m_faceDimension = EnvironmentMapProcessing::Load(input) ;
     setupTexture() ;
 }
 
