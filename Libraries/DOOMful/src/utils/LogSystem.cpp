@@ -27,12 +27,9 @@ namespace Doom {
             // and this behavior throws an exception. However, this is not a
             // critical error and the exception can be caught to continue the
             // execution.
-            if (Instance) {
-                std::string errorMessage = Translation::Get(Texts::LogSys_AlreadyInitialized) ;
-                throw std::runtime_error(errorMessage) ;
+            if (!Instance) {
+                Instance = std::shared_ptr<LogSystem>(new LogSystem(path + LogFileExtension, minLevel)) ;
             }
-
-            Instance = std::shared_ptr<LogSystem>(new LogSystem(path + LogFileExtension, minLevel)) ;
         }
         ClassMutex.unlock() ;
     }
