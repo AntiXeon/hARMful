@@ -1,8 +1,11 @@
 #include <files/archives/TARFile.hpp>
+#include <utils/LogSystem.hpp>
 #include <utils/StringExt.hpp>
 #include <SPITEStrings.hpp>
+#include <filesystem>
 #include <stdexcept>
 
+namespace fs = std::filesystem ;
 using namespace Spite ;
 
 TARFile::TARFile(const std::string& path)
@@ -25,14 +28,22 @@ bool TARFile::addBinaryFile(
         success = mtar_write_file_header(&m_memory, filename.c_str(), dataLength) ;
 
         if (success != MTAR_ESUCCESS) {
-            // print error msg.
+            Doom::LogSystem::WriteLine(
+                Doom::LogSystem::Gravity::Error,
+                mtar_strerror(success),
+                fs::absolute(path()).string()
+            ) ;
             return false ;
         }
 
         success = mtar_write_data(&m_memory, bytes, dataLength) ;
 
         if (success != MTAR_ESUCCESS) {
-            // print error msg.
+            Doom::LogSystem::WriteLine(
+                Doom::LogSystem::Gravity::Error,
+                mtar_strerror(success),
+                fs::absolute(path()).string()
+            ) ;
             return false ;
         }
 
@@ -54,14 +65,22 @@ bool TARFile::addText(
         success = mtar_write_file_header(&m_memory, filename.c_str(), textLength) ;
 
         if (success != MTAR_ESUCCESS) {
-            // print error msg.
+            Doom::LogSystem::WriteLine(
+                Doom::LogSystem::Gravity::Error,
+                mtar_strerror(success),
+                fs::absolute(path()).string()
+            ) ;
             return false ;
         }
 
         success = mtar_write_data(&m_memory, text.c_str(), textLength) ;
 
         if (success != MTAR_ESUCCESS) {
-            // print error msg.
+            Doom::LogSystem::WriteLine(
+                Doom::LogSystem::Gravity::Error,
+                mtar_strerror(success),
+                fs::absolute(path()).string()
+            ) ;
             return false ;
         }
 
@@ -100,7 +119,11 @@ void TARFile::openImpl(File::OpenMode mode) {
     ) ;
 
     if (success != MTAR_ESUCCESS) {
-        // print error msg.
+        Doom::LogSystem::WriteLine(
+            Doom::LogSystem::Gravity::Error,
+            mtar_strerror(success),
+            fs::absolute(path()).string()
+        ) ;
         close() ;
     }
 }
