@@ -103,14 +103,8 @@ void Window::createInternalWindow(
     const std::string& title
 ) {
     if (!glfwInit()) {
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
         Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            logSharedPtr -> writeLine(level, Texts::Init_Bad_GLFW) ;
-        }
-
+        Doom::LogSystem::WriteLine(level, Texts::Init_Bad_GLFW) ;
         exit(EXIT_FAILURE) ;
     }
 
@@ -137,49 +131,43 @@ void Window::useCurrentContext() {
 }
 
 void Window::initializeGLEW()    {
-    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-    auto logSharedPtr = logWeakPtr.lock() ;
-
     // Required for the core profile set in the main window.
     glewExperimental = true ;
 
     GLenum initEror = glewInit() ;
 
     if (initEror != GLEW_OK) {
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
 
-            logSharedPtr -> writeLine(
-                level,
-                Texts::Init_Bad_GLEW,
-                glewGetErrorString(initEror)
-            ) ;
-        }
+        Doom::LogSystem::WriteLine(
+            level,
+            Texts::Init_Bad_GLEW,
+            glewGetErrorString(initEror)
+        ) ;
 
         exit(EXIT_FAILURE) ;
     }
 
+    glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS) ;
     glEnable(GL_DEPTH_TEST) ;
     glDepthFunc(GL_LESS) ;
 
     // Get version info.
+    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Info ;
+
     const GLubyte* renderer = glGetString(GL_RENDERER) ;
+    Doom::LogSystem::WriteLine(
+        level,
+        Texts::Init_GL_Renderer,
+        renderer
+    ) ;
+
     const GLubyte* version = glGetString(GL_VERSION) ;
-    if (logSharedPtr) {
-        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Info ;
-
-        logSharedPtr -> writeLine(
-            level,
-            Texts::Init_GL_Renderer,
-            renderer
-        ) ;
-
-        logSharedPtr -> writeLine(
-            level,
-            Texts::Init_GL_Vendor,
-            version
-        ) ;
-    }
+    Doom::LogSystem::WriteLine(
+        level,
+        Texts::Init_GL_Vendor,
+        version
+    ) ;
 }
 
 void Window::setInputMode() {
@@ -250,13 +238,8 @@ void Window::GLFWErrorCallback(
     int /*error*/,
     const char* description
 ) {
-    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
     Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
-
-    auto logSharedPtr = logWeakPtr.lock() ;
-    if (logSharedPtr) {
-        logSharedPtr -> writeLine(level, description) ;
-    }
+    Doom::LogSystem::WriteLine(level, description) ;
 }
 
 void Window::GLErrorCallback(
@@ -284,14 +267,10 @@ void Window::GLErrorCallback(
             break;
     }
 
-    auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-    auto logSharedPtr = logWeakPtr.lock() ;
-    if (logSharedPtr) {
-        logSharedPtr -> writeLine(
-            level,
-            message
-        ) ;
-    }
+    Doom::LogSystem::WriteLine(
+        level,
+        message
+    ) ;
 }
 
 void Window::resizedWindow(

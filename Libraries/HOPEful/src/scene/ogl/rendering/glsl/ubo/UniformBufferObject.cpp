@@ -12,13 +12,8 @@ UniformBufferObject::UniformBufferObject(const GLuint bindingPointIndex) {
         glGenBuffers(1, &m_uniformBuffer) ;
     }
     else {
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            logSharedPtr -> writeLine(level, Hope::Texts::UBO_BadBindingIndex) ;
-        }
+        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+        Doom::LogSystem::WriteLine(level, Hope::Texts::UBO_BadBindingIndex) ;
     }
 }
 

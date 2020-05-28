@@ -13,16 +13,13 @@ static void PrintErrno(
     const char* function,
     const char* message = nullptr
 ) {
-    std::weak_ptr<LogSystem> logWeakPtr = LogSystem::GetInstance() ;
-    std::shared_ptr<LogSystem> logSys = logWeakPtr.lock() ;
-
-    if (!logSys) {
+    if (!LogSystem::Ready()) {
         return ;
     }
 
 #ifdef LinuxPlatform
     if (message) {
-        logSys -> writeLine<const char*, const char*, int, const char*, const char*, const char*, char*, const char*, const char*>(
+        LogSystem::WriteLine<const char*, const char*, int, const char*, const char*, const char*, char*, const char*, const char*>(
             LogSystem::Gravity::Error,
             file,
             "::",
@@ -36,7 +33,7 @@ static void PrintErrno(
         ) ;
     }
     else {
-        logSys -> writeLine<const char*, const char*, int, const char*, const char*, const char*, char*>(
+        LogSystem::WriteLine<const char*, const char*, int, const char*, const char*, const char*, char*>(
             LogSystem::Gravity::Error,
             file,
             "::",
@@ -49,7 +46,7 @@ static void PrintErrno(
     }
 #elif defined(WindowsPlatform)
     if (message) {
-        logSys->writeLine<const char*, const char*, const char*, const char*, int, const char*, const char*>(
+        LogSystem::WriteLine<const char*, const char*, const char*, const char*, int, const char*, const char*>(
             LogSystem::Gravity::Error,
             message,
             "\n",
@@ -58,17 +55,17 @@ static void PrintErrno(
             line,
             "@",
             function
-            );
+        );
     }
     else {
-        logSys->writeLine<const char*, const char*, int, const char*, const char*>(
+        LogSystem::WriteLine<const char*, const char*, int, const char*, const char*>(
             LogSystem::Gravity::Error,
             file,
             "::",
             line,
             "@",
             function
-            );
+        );
     }
 #endif
 }

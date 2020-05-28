@@ -2,10 +2,10 @@
 #define __DOOM__LOG_SYSTEM__
 
 #include <utils/Platform.hpp>
-#include <patterns/singleton/Singleton.hpp>
 #include <utils/Time.hpp>
 #include <utils/printers/Console.hpp>
 #include <utils/printers/FilePrinter.hpp>
+#include <DOOMStrings.hpp>
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -14,7 +14,7 @@ namespace Doom {
     /**
      * System to write logs in the Console and/or in a file.
      */
-    class LogSystem : private Singleton {
+    class LogSystem final {
         public:
             /**
              * Extension of the log file.
@@ -36,7 +36,7 @@ namespace Doom {
             /**
              * The unique instance of the LogSystem.
              */
-            static std::shared_ptr<LogSystem> Instance ;
+            static std::unique_ptr<LogSystem> LogInstance ;
 
             /**
              * Mutex for the static methods of the class.
@@ -56,13 +56,14 @@ namespace Doom {
             /**
              * File printer to save important log messages.
              */
-            std::shared_ptr<FilePrinter> m_printer ;
+            std::unique_ptr<FilePrinter> m_printer = nullptr ;
 
             /**
              * Minimal level to write logs, lower gravity messages are ignored.
              */
             Gravity m_minLevel ;
 
+        private:
             /**
              * Instantiate the LogSystem.
              * @param   path        Path to the file that will contain the
@@ -70,41 +71,19 @@ namespace Doom {
              * @param   minLevel    Minimal level of the log system messages to
              *                      be written.
              */
-            LogSystem(const std::string& path, const Gravity minLevel) ;
-
-            /**
-             * Disable copy of LogSystem.
-             */
-            LogSystem(const LogSystem&) ;
-
-            /**
-             * Disable move of LogSystem.
-             */
-            LogSystem(LogSystem&&) noexcept ;
-
-            /**
-             * Disable affectation.
-             */
-            void operator= (const LogSystem&) ;
-
-            /**
-             * Disable move.
-             */
-            void operator= (LogSystem&&) noexcept ;
+            LogSystem(
+                const std::string& path,
+                const Gravity minLevel
+             ) ;
 
             /**
              * Format the current date and time to be printed in the logs.
              * @return String representing the printed date and time in the
              *         logs.
              */
-            exported std::string formatCurrentDateTime() ;
+            exported static std::string FormatCurrentDateTime() ;
 
         public:
-            /**
-             * Destruction of the LogSystem.
-             */
-            virtual ~LogSystem() noexcept ;
-
             /**
              * Initialize the LogSystem. This is required before any call to the
              * GetInstance function.
@@ -115,14 +94,18 @@ namespace Doom {
              * @exception   An exception is thrown if the LogSystem is
              *              initialized more than once.
              */
-            exported static void Initialize(const std::string& path, const Gravity minLevel) ;
+            exported static void Initialize(
+                const std::string& path,
+                const Gravity minLevel
+            ) ;
 
             /**
-             * Get the unique instance of the LogSystem.
-             * @exception   A runtime error is thrown if the instance is got
-             *              before it has been initialized.
+             * To know if the LogSystem is ready to be used.
+             * @see Initialize()
              */
-            exported static std::weak_ptr<LogSystem> GetInstance() ;
+            exported static bool Ready() {
+                return LogInstance != nullptr ;
+            }
 
             /**
              * Write a message on the Console and the FilePrinter.
@@ -130,16 +113,20 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            exported void writeLine(const Gravity level, const T& value) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
+            exported static void WriteLine(const Gravity level, const T& value) {
+                if (!LogInstance) {
+                    throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
+                }
 
-                    m_mutex.lock() ;
+                if (level <= LogInstance -> m_minLevel) {
+                    std::string dateTime = FormatCurrentDateTime() ;
+
+                    LogInstance -> m_mutex.lock() ;
                     {
-                        m_console.writeLine(dateTime, value) ;
-                        m_printer -> writeLine(dateTime, value) ;
+                        LogInstance -> m_console.writeLine(dateTime, value) ;
+                        LogInstance -> m_printer -> writeLine(dateTime, value) ;
                     }
-                    m_mutex.unlock() ;
+                    LogInstance -> m_mutex.unlock() ;
                 }
             }
 
@@ -150,19 +137,23 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            exported void writeLine(const Gravity level, const T& value, const Args& ... args) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
+            exported static void WriteLine(const Gravity level, const T& value, const Args& ... args) {
+                if (!LogInstance) {
+                    throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
+                }
 
-                    m_mutex.lock() ;
+                if (level <= LogInstance -> m_minLevel) {
+                    std::string dateTime = FormatCurrentDateTime() ;
+
+                    LogInstance -> m_mutex.lock() ;
                     {
-                        m_console.write(dateTime) ;
-                        m_console.writeLine(value, args...) ;
+                        LogInstance -> m_console.write(dateTime) ;
+                        LogInstance -> m_console.writeLine(value, args...) ;
 
-                        m_printer -> write(dateTime) ;
-                        m_printer -> writeLine(value, args...) ;
+                        LogInstance -> m_printer -> write(dateTime) ;
+                        LogInstance -> m_printer -> writeLine(value, args...) ;
                     }
-                    m_mutex.unlock() ;
+                    LogInstance -> m_mutex.unlock() ;
                 }
             }
 
@@ -172,15 +163,19 @@ namespace Doom {
              * @param   value   The value to be printed.
              */
             template<class T>
-            exported void printLine(const Gravity level, const T& value) {
-                if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
+            exported static void PrintLine(const Gravity level, const T& value) {
+                if (!LogInstance) {
+                    throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
+                }
 
-                    m_mutex.lock() ;
+                if (level <= LogInstance -> m_minLevel) {
+                    std::string dateTime = FormatCurrentDateTime() ;
+
+                    LogInstance -> m_mutex.lock() ;
                     {
-                        m_console.writeLine(dateTime, value) ;
+                        LogInstance -> m_console.writeLine(dateTime, value) ;
                     }
-                    m_mutex.unlock() ;
+                    LogInstance -> m_mutex.unlock() ;
                 }
             }
 
@@ -193,14 +188,14 @@ namespace Doom {
             template<class T, class ... Args>
             exported void printLine(const Gravity level, const T& value, const Args& ... args) {
                 if (level <= m_minLevel) {
-                    std::string dateTime = formatCurrentDateTime() ;
+                    std::string dateTime = FormatCurrentDateTime() ;
 
-                    m_mutex.lock() ;
+                    LogInstance -> m_mutex.lock() ;
                     {
-                        m_console.write(dateTime) ;
-                        m_console.writeLine(value, args...) ;
+                        LogInstance -> m_console.write(dateTime) ;
+                        LogInstance -> m_console.writeLine(value, args...) ;
                     }
-                    m_mutex.unlock() ;
+                    LogInstance -> m_mutex.unlock() ;
                 }
             }
     } ;

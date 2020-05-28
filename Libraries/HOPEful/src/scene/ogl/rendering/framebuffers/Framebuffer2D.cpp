@@ -1,5 +1,4 @@
 #include <scene/ogl/rendering/framebuffers/Framebuffer2D.hpp>
-#include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope::GL ;

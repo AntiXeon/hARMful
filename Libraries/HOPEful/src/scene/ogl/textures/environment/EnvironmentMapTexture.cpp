@@ -36,14 +36,8 @@ EnvironmentMapTexture::EnvironmentMapTexture(
             bool differentHeights = m_faceDimension.height() != image.height() ;
 
             if (differentWidths || differentHeights) {
-                // Write the error in the log.
-                auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-                auto logSharedPtr = logWeakPtr.lock() ;
-                if (logSharedPtr) {
-                    Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-                    logSharedPtr -> writeLine(level, Texts::EnvironmentMap_InconsistentSize + paths[face]) ;
-                    return ;
-                }
+                auto level = Doom::LogSystem::Gravity::Critical ;
+                Doom::LogSystem::WriteLine(level, Texts::EnvironmentMap_InconsistentSize + paths[face]) ;
             }
         }
     }

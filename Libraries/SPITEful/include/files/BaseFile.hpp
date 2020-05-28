@@ -24,7 +24,7 @@ namespace Spite {
             /**
              * Mode in which the file has been opened.
              */
-            std::ios_base::openmode m_openMode;
+            std::ios_base::openmode m_stdOpenMode;
 
         public:
             /**
@@ -37,18 +37,6 @@ namespace Spite {
              * Destroy the BaseFile.
              */
             exported virtual ~BaseFile() ;
-
-            /**
-             * Open the BaseFile in the given mode.
-             * @param   mode    Mode to access BaseFile and perform some
-             *                  operations on it.
-             */
-            exported void open(File::OpenMode mode) ;
-
-            /**
-             * Close the BaseFile.
-             */
-            exported void close() ;
 
             /**
              * Save a data at a given place on disk.
@@ -75,10 +63,22 @@ namespace Spite {
 
         protected:
             /**
+             * Open the BaseFile in the given mode.
+             * @param   mode    Mode to access BaseFile and perform some
+             *                  operations on it.
+             */
+            exported void openImpl(File::OpenMode mode) ;
+
+            /**
+             * Close the BaseFile.
+             */
+            exported void closeImpl() ;
+
+            /**
              * Open the BaseFile.
              * @param   mode    Mode to open the BaseFile.
              */
-            exported void open(std::ios_base::openmode mode) ;
+            exported void open_fs(std::ios_base::openmode mode) ;
 
             /**
              * Save a data at a given place on disk.
@@ -133,12 +133,6 @@ namespace Spite {
              * @return  TRUE if the BaseFile instance can be used. FALSE else.
              */
             exported virtual bool isValid() const = 0 ;
-
-            /**
-             * Check if the BaseFile is open.
-             * @return  TRUE if the BaseFile is already open, FALSE else.
-             */
-            exported bool isOpen() const ;
 
             /**
              * Get the mode in which the BaseFile has been opened on last time.

@@ -77,13 +77,8 @@ void Shader::printCompilationError() {
         errorLog.resize(logSize) ;
         glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]) ;
 
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
-            logSharedPtr -> writeLine(level, errorLog) ;
-        }
+        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Error ;
+        Doom::LogSystem::WriteLine(level, errorLog) ;
     }
 
     // Delete the shader as it failed.

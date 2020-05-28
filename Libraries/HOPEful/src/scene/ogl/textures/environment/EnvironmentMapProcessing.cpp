@@ -18,13 +18,8 @@ Spite::RawImage EnvironmentMapProcessing::LoadRawPicture(const std::string& path
 	Spite::ImageFile file(path, Cubemapping::FlipVerticalAxis) ;
 
     if (!file.load(&output)) {
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
-        }
+        auto level = Doom::LogSystem::Gravity::Critical ;
+        Doom::LogSystem::WriteLine(level, Texts::Texture_UnknownFormat + path) ;
     }
 
     return output ;

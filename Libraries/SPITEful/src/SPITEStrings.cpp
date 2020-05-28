@@ -23,6 +23,8 @@ namespace Spite {
             const std::string InsufficientMemory = i18n("Unable to open %s because of memory lack.") ;
             const std::string FailureOnOpening = i18n("An unexpected error occured while opening file ") ;
             const std::string UnknownAccessMode = i18n("Unknown file access mode.") ;
+
+            const std::string BadAccessMode = i18n("This file type can only be opened in ReadOnly or WriteOnly modes.") ;
         } ;
     } ;
 

@@ -2,7 +2,6 @@
 #define __DOOM__PROFILER__
 
 #include <utils/Platform.hpp>
-#include <patterns/singleton/Singleton.hpp>
 #include <utils/Chrono.hpp>
 #include <map>
 #include <mutex>
@@ -16,7 +15,7 @@ namespace Doom {
      *          of the class. Indeed, they are more efficient for released
      *          softwares by disabling the profiler.
      */
-    class Profiler final : private Singleton {
+    class Profiler final {
         private:
             /**
              * The unique instance of the Profiler.
@@ -51,27 +50,27 @@ namespace Doom {
             /**
              * Disable copy of Profiler.
              */
-            Profiler(const Profiler&) ;
+            Profiler(const Profiler&) = delete ;
 
             /**
              * Disable move of Profiler.
              */
-            Profiler(Profiler&&) noexcept ;
+            Profiler(Profiler&&) = delete ;
 
             /**
              * Destruction of the Profiler.
              */
-            virtual ~Profiler() noexcept ;
+            ~Profiler() noexcept ;
 
             /**
              * Disable affectation.
              */
-            void operator= (const Profiler&) ;
+            void operator= (const Profiler&) = delete ;
 
             /**
              * Disable move.
              */
-            void operator= (Profiler&&) noexcept ;
+            void operator= (Profiler&&) = delete ;
 
         public:
             /**

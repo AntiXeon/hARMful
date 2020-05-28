@@ -1,7 +1,6 @@
 #include <scene/ogl/textures/TextureImage2DMultisample.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
 #include <scene/ogl/textures/formats/FilterModes.hpp>
-#include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope ;

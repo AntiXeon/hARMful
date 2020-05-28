@@ -17,16 +17,28 @@ namespace Spite {
             /**
              * Mode in which the BaseFile can be opened.
              */
-            enum OpenMode {
+            enum class OpenMode {
                 Open_None        = 0,
                 Open_ReadOnly    = 1,
                 Open_Append      = 2,
                 Open_WriteOnly   = 4,
+                Open_WriteAppend = Open_WriteOnly | Open_Append,
                 Open_ReadWrite   = Open_ReadOnly | Open_WriteOnly,
                 Open_ReadAppend  = Open_ReadOnly | Open_Append
             } ;
 
         protected:
+            /**
+             * To know if the file has already been closed.
+             */
+            bool m_isClosed = false ;
+
+            /**
+             * Mode in which the file has been opened. If the file is not
+             * opened, its mode is set to Open_None.
+             */
+            OpenMode m_openMode = OpenMode::Open_None ;
+
             /**
              * Path to the file.
              */
@@ -42,16 +54,32 @@ namespace Spite {
             }
 
             /**
+             * Destruction of the File in memory.
+             */
+            exported ~File() = default ;
+
+            /**
              * Open the File in the given mode.
              * @param   mode    Mode to access File and perform some
              *                  operations on it.
              */
-            exported virtual void open(OpenMode mode) = 0 ;
+            exported void open(OpenMode mode) {
+                if (!isOpened()) {
+                    m_openMode = mode ;
+                    openImpl(mode) ;
+                }
+            }
 
             /**
              * Close the File.
              */
-            exported virtual void close() = 0 ;
+            exported void close() {
+                if (isOpened()) {
+                    m_isClosed = true ;
+                    m_openMode = OpenMode::Open_None ;
+                    closeImpl() ;
+                }
+            }
 
             /**
              * Get the path to the File.
@@ -60,6 +88,48 @@ namespace Spite {
             exported const std::filesystem::path& path() const {
                 return m_path ;
             }
+
+            /**
+             * To know if the file is opened.
+             */
+            exported bool isOpened() const {
+                return m_openMode != OpenMode::Open_None ;
+            }
+
+            /**
+             * To know if the file is closed.
+             */
+            exported bool isClosed() const {
+                return m_isClosed ;
+            }
+
+            /**
+             * Mode in which the file has been opened. If the file is not
+             * opened, its mode is set to Open_None.
+             */
+            exported OpenMode openMode() const {
+                return m_openMode ;
+            }
+
+        protected:
+            /**
+             * Open the File in the given mode.
+             * @param   mode    Mode to access File and perform some
+             *                  operations on it.
+             */
+            exported virtual void openImpl(OpenMode mode) = 0 ;
+
+            /**
+             * Close the File.
+             */
+            exported virtual void closeImpl() = 0 ;
+
+        private:
+            // Disable copy and move.
+            exported File(const File&) = delete ;
+            exported File(File&&) = delete ;
+            exported File& operator=(const File&) = delete ;
+            exported File& operator=(File&&) = delete ;
     } ;
 }
 

@@ -41,14 +41,6 @@ bool ImageWriter::process() {
 
     bool success = false ;
 
-    // Log info.
-    std::weak_ptr<Doom::LogSystem> logWeakPtr = Doom::LogSystem::GetInstance() ;
-    std::shared_ptr<Doom::LogSystem> logSystem = logWeakPtr.lock() ;
-
-    if (!logSystem) {
-        return success ;
-    }
-
     auto fileExtension = m_path.extension().string() ;
     Doom::StringExt::TextCase(
         fileExtension,
@@ -57,7 +49,7 @@ bool ImageWriter::process() {
 
     if ((m_data.get().format().type() == ColorFormat::FloatingPoint)
             && (fileExtension != HDRFileExtension)) {
-        logSystem -> writeLine(
+        Doom::LogSystem::WriteLine(
             Doom::LogSystem::Gravity::Info,
             WriterMsg::Info::HDRExtensionNotMatching,
             m_path.string()
@@ -75,7 +67,7 @@ bool ImageWriter::process() {
             m_path.string()
         ) ;
 
-        logSystem -> writeLine(
+        Doom::LogSystem::WriteLine(
             Doom::LogSystem::Gravity::Info,
             WriterMsg::Info::ImageWrittenOK,
             m_path.string()

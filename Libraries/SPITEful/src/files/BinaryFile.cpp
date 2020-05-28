@@ -25,15 +25,7 @@ BinaryFile::BinaryFile(
         }
     }
     catch(std::bad_alloc&) {
-        // Log error.
-        std::weak_ptr<Doom::LogSystem> logWeakPtr = Doom::LogSystem::GetInstance() ;
-        std::shared_ptr<Doom::LogSystem> logSystem = logWeakPtr.lock() ;
-
-        if (!logSystem) {
-            return ;
-        }
-
-        logSystem -> writeLine(
+        Doom::LogSystem::WriteLine(
             Doom::LogSystem::Gravity::Error,
             FileMsg::Error::InsufficientMemory,
             fs::absolute(filepath).string().c_str()

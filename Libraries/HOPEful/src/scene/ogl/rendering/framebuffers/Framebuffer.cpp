@@ -159,13 +159,8 @@ bool Framebuffer::isComplete() const {
                 break ;
         }
 
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            logSharedPtr -> writeLine(level, errorLog) ;
-        }
+        Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
+        Doom::LogSystem::WriteLine(level, errorLog) ;
     }
 
     return IsComplete ;

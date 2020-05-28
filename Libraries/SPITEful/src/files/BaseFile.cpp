@@ -16,31 +16,11 @@ BaseFile::~BaseFile() {
     close() ;
 }
 
-void BaseFile::open(File::OpenMode mode) {
-    std::ios_base::openmode specificOpenMode ;
-    std::ios_base::openmode finalOpenMode ;
-
-    if (hasSpecificMode(specificOpenMode)) {
-        finalOpenMode = defineOpenMode(mode) | specificOpenMode ;
-    }
-    else {
-        finalOpenMode = defineOpenMode(mode) ;
-    }
-
-    open(finalOpenMode) ;
-}
-
-void BaseFile::close() {
-    if (isOpen()) {
-        m_fs.close() ;
-    }
-}
-
 bool BaseFile::save(
     IFileData* filedata,
     const std::string& path
 ) {
-    if (m_openMode & std::fstream::out) {
+    if (m_stdOpenMode & std::fstream::out) {
         return saveSpecific(filedata, path) ;
     }
     else {
@@ -53,7 +33,7 @@ bool BaseFile::save(
 }
 
 bool BaseFile::load(IFileData* filedata) {
-    if (m_openMode & std::fstream::in) {
+    if (m_stdOpenMode & std::fstream::in) {
         return loadSpecific(filedata) ;
     }
     else {
@@ -65,18 +45,31 @@ bool BaseFile::load(IFileData* filedata) {
     }
 }
 
-void BaseFile::open(std::ios_base::openmode mode) {
+void BaseFile::openImpl(File::OpenMode mode) {
+    std::ios_base::openmode specificOpenMode ;
+    std::ios_base::openmode finalOpenMode ;
+
+    if (hasSpecificMode(specificOpenMode)) {
+        finalOpenMode = defineOpenMode(mode) | specificOpenMode ;
+    }
+    else {
+        finalOpenMode = defineOpenMode(mode) ;
+    }
+
+    open_fs(finalOpenMode) ;
+}
+
+void BaseFile::closeImpl() {
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+}
+
+void BaseFile::open_fs(std::ios_base::openmode mode) {
     // Only a valid BaseFile can be opened.
     if (!isValid()) {
         // Log error.
-        std::weak_ptr<Doom::LogSystem> logWeakPtr = Doom::LogSystem::GetInstance() ;
-        std::shared_ptr<Doom::LogSystem> logSystem = logWeakPtr.lock() ;
-
-        if (!logSystem) {
-            return ;
-        }
-
-        logSystem -> writeLine(
+        Doom::LogSystem::WriteLine(
             Doom::LogSystem::Gravity::Error,
             FileMsg::Error::InsufficientMemory,
             fs::absolute(m_path).string().c_str()
@@ -86,7 +79,7 @@ void BaseFile::open(std::ios_base::openmode mode) {
     }
 
     // If so, open it if not already accessed.
-    if (!isOpen()) {
+    if (!m_fs.is_open()) {
         // If it is all OK, open the file with wanted mode.
         m_fs.open(fs::absolute(m_path).string().c_str(), mode) ;
 
@@ -99,7 +92,7 @@ void BaseFile::open(std::ios_base::openmode mode) {
             ) ;
         }
         else {
-            m_openMode = mode ;
+            m_stdOpenMode = mode ;
 
             // Internally set the filestream to the FileReader.
             FileReader* fileReader = defineFileReader() ;
@@ -113,19 +106,22 @@ void BaseFile::open(std::ios_base::openmode mode) {
 
 std::ios_base::openmode BaseFile::defineOpenMode(File::OpenMode mode) {
     switch (mode) {
-        case File::Open_ReadOnly :
+        case File::OpenMode::Open_ReadOnly :
             return std::fstream::in ;
 
-        case File::Open_Append :
+        case File::OpenMode::Open_Append :
             return std::fstream::app ;
 
-        case File::Open_WriteOnly :
+        case File::OpenMode::Open_WriteOnly :
             return std::fstream::out ;
 
-        case File::Open_ReadWrite :
+        case File::OpenMode::Open_WriteAppend :
+            return std::fstream::out | std::fstream::app ;
+
+        case File::OpenMode::Open_ReadWrite :
             return std::fstream::in | std::fstream::out ;
 
-        case File::Open_ReadAppend :
+        case File::OpenMode::Open_ReadAppend :
             return std::fstream::in | std::fstream::app ;
 
         default:
@@ -133,10 +129,6 @@ std::ios_base::openmode BaseFile::defineOpenMode(File::OpenMode mode) {
     }
 }
 
-bool BaseFile::isOpen() const {
-    return m_fs.is_open() ;
-}
-
 std::ios_base::openmode BaseFile::openMode() const {
-    return m_openMode ;
+    return m_stdOpenMode ;
 }

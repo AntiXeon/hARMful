@@ -16,13 +16,8 @@ Spite::RawImage TextureLoader::LoadFromFile(
     Spite::RawImage rawData ;
 
     if (!file.load(&rawData)) {
-        // Write the error in the log.
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-            logSharedPtr -> writeLine(level, Texts::Texture_UnknownFormat + path) ;
-        }
+        auto level = Doom::LogSystem::Gravity::Critical ;
+        Doom::LogSystem::WriteLine(level, Texts::Texture_UnknownFormat + path) ;
     }
 
     // Convert pictures to OpenGL structures.

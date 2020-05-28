@@ -73,12 +73,12 @@ namespace Spite {
              * @param   mode    Mode to access File and perform some
              *                  operations on it.
              */
-            exported void open(OpenMode) override {}
+            exported void openImpl(OpenMode) override {}
 
             /**
              * Close the File.
              */
-            exported void close() override {}
+            exported void closeImpl() override {}
     } ;
 }
 

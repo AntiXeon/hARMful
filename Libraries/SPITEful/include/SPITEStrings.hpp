@@ -19,6 +19,8 @@ namespace Spite {
             extern const std::string InsufficientMemory ;
             extern const std::string FailureOnOpening ;
             extern const std::string UnknownAccessMode ;
+
+            extern const std::string BadAccessMode ;
         } ;
     } ;
 

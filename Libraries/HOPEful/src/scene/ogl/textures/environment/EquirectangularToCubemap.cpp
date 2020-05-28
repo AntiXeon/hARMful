@@ -1,6 +1,5 @@
 #include <scene/ogl/textures/environment/EquirectangularToCubemap.hpp>
 #include <files/images/ImageFile.hpp>
-#include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 #include <Math.hpp>
 #include <algorithm>
@@ -81,7 +80,7 @@ void EquirectangularToCubemap::writeBilinearInterpolation(
 ) {
     float xFrom = (m_equirectWidth * theta / Mind::Math::Pi / 2.f - 0.5f) ;
     float yFrom = (m_equirectHeight * phi / Mind::Math::Pi - 0.5f) ;
-    
+
     unsigned int xl = std::clamp(std::floor(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
     unsigned int xr = std::clamp(std::ceil(xFrom), 0.f, (m_equirectWidth - 1.f)) ;
     float xf = xFrom - xl ;

@@ -1,6 +1,5 @@
 #include <scene/ogl/rendering/framebuffers/Framebuffer2DStack.hpp>
 #include <scene/ogl/textures/formats/WrapModes.hpp>
-#include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope::GL ;

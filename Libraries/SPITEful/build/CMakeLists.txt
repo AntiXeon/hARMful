@@ -14,6 +14,8 @@ file (
     GLOB_RECURSE
     SOURCES
     ${CMAKE_HOME_DIRECTORY}/src/*.cpp
+    ${CMAKE_HOME_DIRECTORY}/src/third_party/*.c
+    ${CMAKE_HOME_DIRECTORY}/src/third_party/*.cpp
 )
 
 # Set the include files for the library.

@@ -16,14 +16,8 @@ Scene::Scene(std::shared_ptr<IFrameGraphVisitor> visitor)
 
 void Scene::render() {
     if (!m_isPrepared) {
-        auto logWeakPtr = Doom::LogSystem::GetInstance() ;
         Doom::LogSystem::Gravity level = Doom::LogSystem::Gravity::Critical ;
-
-        auto logSharedPtr = logWeakPtr.lock() ;
-        if (logSharedPtr) {
-            logSharedPtr -> writeLine(level, Texts::Scene_NotPrepared) ;
-        }
-
+        Doom::LogSystem::WriteLine(level, Texts::Scene_NotPrepared) ;
         exit(EXIT_FAILURE) ;
     }
 
