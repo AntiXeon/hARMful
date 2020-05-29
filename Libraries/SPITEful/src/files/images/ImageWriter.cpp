@@ -11,9 +11,10 @@ using namespace Spite ;
 namespace fs = std::filesystem ;
 
 const std::string ImageWriter::HDRFileExtension = ".hdr" ;
+const std::string ImageWriter::PNGFileExtension = ".png" ;
 
 const std::map<std::string, Image::FileSave::Functor> ImageWriter::ExtensionFileSave = {
-    { ".png", Image::FileSave::SavePNG },
+    { ImageWriter::PNGFileExtension, Image::FileSave::SavePNG },
     { ".jpg", Image::FileSave::SaveJPEG },
     { ".jpeg", Image::FileSave::SaveJPEG },
     { ".bmp", Image::FileSave::SaveBMP },
@@ -25,7 +26,7 @@ const std::map<std::string, Image::FileSave::Functor> ImageWriter::ExtensionFile
 } ;
 
 const std::map<std::string, Image::BufferSave::Functor> ImageWriter::ExtensionBufferSave = {
-    { ".png", Image::BufferSave::SavePNG },
+    { ImageWriter::PNGFileExtension, Image::BufferSave::SavePNG },
     { ".jpg", Image::BufferSave::SaveJPEG },
     { ".jpeg", Image::BufferSave::SaveJPEG },
     { ".bmp", Image::BufferSave::SaveBMP },
@@ -62,50 +63,13 @@ bool ImageWriter::process() {
 
     bool success = false ;
 
-    auto fileExtension = m_path.extension().string() ;
-    Doom::StringExt::TextCase(
-        fileExtension,
-        Doom::StringExt::CharacterCase::Lower
-    ) ;
-
-    if ((m_data.get().format().type() == ColorFormat::FloatingPoint)
-            && (fileExtension != HDRFileExtension)) {
-        Doom::LogSystem::WriteLine(
-            Doom::LogSystem::Gravity::Info,
-            WriterMsg::Info::HDRExtensionNotMatching,
-            m_path.string()
-        ) ;
-
-        // It is not possible to convert HDR to another format here!
-        m_path.replace_extension(HDRFileExtension) ;
-        fileExtension = HDRFileExtension ;
-    }
-
     switch (m_output) {
         case Output::File:
-            if (ExtensionFileSave.count(fileExtension)) {
-                auto save = ExtensionFileSave.at(fileExtension) ;
-                success = save(
-                    m_data.get(),
-                    m_path.string()
-                ) ;
-
-                Doom::LogSystem::WriteLine(
-                    Doom::LogSystem::Gravity::Info,
-                    WriterMsg::Info::ImageWrittenOK,
-                    m_path.string()
-                ) ;
-            }
+            success = processFile() ;
             break ;
 
         case Output::Buffer:
-            if (ExtensionBufferSave.count(fileExtension)) {
-                auto save = ExtensionBufferSave.at(fileExtension) ;
-                success = save(
-                    m_data.get(),
-                    *m_buffer
-                ) ;
-            }
+            success = processBuffer() ;
             break ;
     }
 
@@ -127,4 +91,66 @@ void ImageWriter::SetPNGFilter(const PNGFilter filter) {
 
 void ImageWriter::SetCompressTGAWithRLE(const bool rleEnabled) {
     stbi_write_tga_with_rle = rleEnabled ;
+}
+
+bool ImageWriter::processFile() {
+    bool success = false ;
+    std::string fileExtension ;
+
+    fileExtension = m_path.extension().string() ;
+    Doom::StringExt::TextCase(
+        fileExtension,
+        Doom::StringExt::CharacterCase::Lower
+    ) ;
+
+    if ((m_data.get().format().type() == ColorFormat::FloatingPoint)
+            && (fileExtension != HDRFileExtension)) {
+        Doom::LogSystem::WriteLine(
+            Doom::LogSystem::Gravity::Info,
+            WriterMsg::Info::HDRExtensionNotMatching,
+            m_path.string()
+        ) ;
+
+        // It is not possible to convert HDR to another format here!
+        m_path.replace_extension(HDRFileExtension) ;
+        fileExtension = HDRFileExtension ;
+    }
+
+    if (ExtensionFileSave.count(fileExtension)) {
+        auto save = ExtensionFileSave.at(fileExtension) ;
+        success = save(
+            m_data.get(),
+            m_path.string()
+        ) ;
+
+        Doom::LogSystem::WriteLine(
+            Doom::LogSystem::Gravity::Info,
+            WriterMsg::Info::ImageWrittenOK,
+            m_path.string()
+        ) ;
+    }
+
+    return success ;
+}
+
+bool ImageWriter::processBuffer() {
+    bool success = false ;
+    std::string fileExtension ;
+
+    if (m_data.get().format().type() == ColorFormat::FloatingPoint) {
+        fileExtension = HDRFileExtension ;
+    }
+    else {
+        fileExtension = PNGFileExtension ;
+    }
+
+    if (ExtensionBufferSave.count(fileExtension)) {
+        auto save = ExtensionBufferSave.at(fileExtension) ;
+        success = save(
+            m_data.get(),
+            *m_buffer
+        ) ;
+    }
+
+    return success ;
 }

@@ -43,6 +43,11 @@ namespace Spite {
             static const std::string HDRFileExtension ;
 
             /**
+             * Extension of PNG files.
+             */
+            static const std::string PNGFileExtension ;
+
+            /**
              * Bind extensions to their functor to save file on disk.
              */
             static const std::map<std::string, Image::FileSave::Functor> ExtensionFileSave ;
@@ -140,6 +145,17 @@ namespace Spite {
              * @param   rleEnabled  true to enable; false otherwise.
              */
             exported static void SetCompressTGAWithRLE(const bool rleEnabled) ;
+
+        private:
+            /**
+             * Process file saving.
+             */
+            bool processFile() ;
+
+            /**
+             * Process buffer storing.
+             */
+            bool processBuffer() ;
     } ;
 }
 
