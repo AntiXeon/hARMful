@@ -12,26 +12,47 @@ namespace fs = std::filesystem ;
 
 const std::string ImageWriter::HDRFileExtension = ".hdr" ;
 
-const std::map<std::string, ImageWriter::SaveFunctor> ImageWriter::ExtensionSave = {
-    { ".png", ImageWriter::SavePNG },
-    { ".jpg", ImageWriter::SaveJPEG },
-    { ".jpeg", ImageWriter::SaveJPEG },
-    { ".bmp", ImageWriter::SaveBMP },
-    { ".rle", ImageWriter::SaveBMP },
-    { ".dib", ImageWriter::SaveBMP },
-    { ".tga", ImageWriter::SaveTGA },
-    { ".tpic", ImageWriter::SaveTGA },
-    { ImageWriter::HDRFileExtension, ImageWriter::SaveHDR }
+const std::map<std::string, Image::FileSave::Functor> ImageWriter::ExtensionFileSave = {
+    { ".png", Image::FileSave::SavePNG },
+    { ".jpg", Image::FileSave::SaveJPEG },
+    { ".jpeg", Image::FileSave::SaveJPEG },
+    { ".bmp", Image::FileSave::SaveBMP },
+    { ".rle", Image::FileSave::SaveBMP },
+    { ".dib", Image::FileSave::SaveBMP },
+    { ".tga", Image::FileSave::SaveTGA },
+    { ".tpic", Image::FileSave::SaveTGA },
+    { ImageWriter::HDRFileExtension, Image::FileSave::SaveHDR }
 } ;
 
-int ImageWriter::JPEGQuality = 90 ;
+const std::map<std::string, Image::BufferSave::Functor> ImageWriter::ExtensionBufferSave = {
+    { ".png", Image::BufferSave::SavePNG },
+    { ".jpg", Image::BufferSave::SaveJPEG },
+    { ".jpeg", Image::BufferSave::SaveJPEG },
+    { ".bmp", Image::BufferSave::SaveBMP },
+    { ".rle", Image::BufferSave::SaveBMP },
+    { ".dib", Image::BufferSave::SaveBMP },
+    { ".tga", Image::BufferSave::SaveTGA },
+    { ".tpic", Image::BufferSave::SaveTGA },
+    { ImageWriter::HDRFileExtension, Image::BufferSave::SaveHDR }
+} ;
 
 ImageWriter::ImageWriter(
     RawImage& data,
     const std::filesystem::path& path,
     const bool verticalFlip
-) : m_data(data),
+) : m_output(Output::File),
+    m_data(data),
     m_path(path),
+    m_verticalFlip(verticalFlip)
+{}
+
+ImageWriter::ImageWriter(
+    RawImage& data,
+    std::vector<unsigned char>& buffer,
+    const bool verticalFlip
+) : m_output(Output::Buffer),
+    m_data(data),
+    m_buffer(&buffer),
     m_verticalFlip(verticalFlip)
 {}
 
@@ -60,18 +81,32 @@ bool ImageWriter::process() {
         fileExtension = HDRFileExtension ;
     }
 
-    if (ExtensionSave.count(fileExtension)) {
-        SaveFunctor save = ExtensionSave.at(fileExtension) ;
-        success = save(
-            m_data.get(),
-            m_path.string()
-        ) ;
+    switch (m_output) {
+        case Output::File:
+            if (ExtensionFileSave.count(fileExtension)) {
+                auto save = ExtensionFileSave.at(fileExtension) ;
+                success = save(
+                    m_data.get(),
+                    m_path.string()
+                ) ;
 
-        Doom::LogSystem::WriteLine(
-            Doom::LogSystem::Gravity::Info,
-            WriterMsg::Info::ImageWrittenOK,
-            m_path.string()
-        ) ;
+                Doom::LogSystem::WriteLine(
+                    Doom::LogSystem::Gravity::Info,
+                    WriterMsg::Info::ImageWrittenOK,
+                    m_path.string()
+                ) ;
+            }
+            break ;
+
+        case Output::Buffer:
+            if (ExtensionBufferSave.count(fileExtension)) {
+                auto save = ExtensionBufferSave.at(fileExtension) ;
+                success = save(
+                    m_data.get(),
+                    *m_buffer
+                ) ;
+            }
+            break ;
     }
 
     stbi_flip_vertically_on_write(cachedFlipBefore) ;
@@ -90,97 +125,6 @@ void ImageWriter::SetPNGFilter(const PNGFilter filter) {
     stbi_write_force_png_filter = filter ;
 }
 
-void ImageWriter::SetJPEGQuality(const int quality) {
-    const int MinQuality = 1 ;
-    const int MaxQuality = 100 ;
-    int clampedQuality = std::clamp(quality, MinQuality, MaxQuality) ;
-    JPEGQuality = clampedQuality ;
-}
-
 void ImageWriter::SetCompressTGAWithRLE(const bool rleEnabled) {
     stbi_write_tga_with_rle = rleEnabled ;
-}
-
-bool ImageWriter::SavePNG(
-    RawImage& image,
-    const std::string& path
-) {
-    auto amountComponents = image.format().amountOfComponents() ;
-    auto pixelSize = image.format().pixelSizeInBytes() ;
-    auto& imageBytes = image.data() ;
-
-    return stbi_write_png(
-        path.c_str(),
-        image.width(),
-        image.height(),
-        amountComponents,
-        imageBytes.data(),
-        pixelSize * image.width()
-    ) ;
-}
-
-bool ImageWriter::SaveJPEG(
-    RawImage& image,
-    const std::string& path
-) {
-    auto amountComponents = image.format().amountOfComponents() ;
-    auto& imageBytes = image.data() ;
-
-    return stbi_write_jpg(
-        path.c_str(),
-        image.width(),
-        image.height(),
-        amountComponents,
-        imageBytes.data(),
-        JPEGQuality
-    ) ;
-}
-
-bool ImageWriter::SaveTGA(
-    RawImage& image,
-    const std::string& path
-) {
-    auto amountComponents = image.format().amountOfComponents() ;
-    auto& imageBytes = image.data() ;
-
-    return stbi_write_tga(
-        path.c_str(),
-        image.width(),
-        image.height(),
-        amountComponents,
-        imageBytes.data()
-    ) ;
-}
-
-bool ImageWriter::SaveBMP(
-    RawImage& image,
-    const std::string& path
-) {
-    auto amountComponents = image.format().amountOfComponents() ;
-    auto& imageBytes = image.data() ;
-
-    return stbi_write_bmp(
-        path.c_str(),
-        image.width(),
-        image.height(),
-        amountComponents,
-        imageBytes.data()
-    ) ;
-}
-
-bool ImageWriter::SaveHDR(
-    RawImage& image,
-    const std::string& path
-) {
-    auto amountComponents = image.format().amountOfComponents() ;
-    auto& imageBytes = image.data() ;
-    auto* imageFloat = reinterpret_cast<float*>(imageBytes.data()) ;
-
-    return stbi_write_hdr(
-        path.c_str(),
-        image.width(),
-        image.height(),
-        amountComponents,
-        imageFloat
-    ) ;
 }

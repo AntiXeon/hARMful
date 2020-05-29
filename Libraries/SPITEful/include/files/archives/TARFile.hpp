@@ -2,7 +2,6 @@
 #define __SPITE__TAR_FILE__
 
 #include <File.hpp>
-#include <third_party/microtar.h>
 #include <string>
 #include <vector>
 
@@ -11,12 +10,6 @@ namespace Spite {
      * Class for creating a .tar archive file.
      */
     class TARFile final : public File {
-        private:
-            /**
-             * Inner data structure in memory.
-             */
-            mtar_t m_memory ;
-
         public:
             /**
              * Create a new TARFile instance.
@@ -30,21 +23,23 @@ namespace Spite {
             exported ~TARFile() ;
 
             /**
-             * Add a binary file into the archive.
+             * Load a data at a given place on disk.
+             * @param   filedata    File data to store data in.
+             * @return  TRUE on success, FALSE on failure.
              */
-            template <typename T>
-            exported bool addBinaryFile(
-                const std::string& filename,
-                const std::vector<T*> bytes
-            ) ;
+            exported bool load(IFileData* fileData) override ;
 
             /**
-             * A a text file into the archive.
+             * Save a data at a given place on disk.
+             * @param   filedata    Raw data to write on disk. They can be
+             *                      processed before saving.
+             * @param   path        Path to the location on filesystem.
+             * @return  TRUE on success, FALSE on failure.
              */
-            exported bool addText(
-                const std::string& filename,
-                const std::string& text
-            ) ;
+            exported bool save(
+                IFileData* fileData,
+                const std::string& path = ""
+            ) override ;
 
         private:
             /**
@@ -52,12 +47,12 @@ namespace Spite {
              * @param   mode    Mode to access File and perform some
              *                  operations on it.
              */
-            exported void openImpl(File::OpenMode mode) override ;
+            exported void openImpl(File::OpenMode) override {}
 
             /**
              * Close the File.
              */
-            exported void closeImpl() override ;
+            exported void closeImpl() override {}
 
             // Disable copy and move.
             exported TARFile(const TARFile&) = delete ;

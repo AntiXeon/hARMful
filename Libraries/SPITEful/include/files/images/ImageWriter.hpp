@@ -3,8 +3,9 @@
 
 #include <utils/Platform.hpp>
 #include <files/images/data/RawImage.hpp>
+#include <files/images/save/FileSave.hpp>
+#include <files/images/save/BufferSave.hpp>
 #include <filesystem>
-#include <functional>
 #include <map>
 #include <string>
 
@@ -25,9 +26,17 @@ namespace Spite {
                 Paeth
             } ;
 
-        private:
-            using SaveFunctor = std::function<bool(RawImage&, const std::string&)> ;
+            /**
+             * Output type.
+             * - File to write compressed data on disk;
+             * - Buffer to write compressed data in a memory buffer.
+             */
+            enum class Output {
+                File,
+                Buffer
+            } ;
 
+        private:
             /**
              * Extension of HDR files.
              */
@@ -36,12 +45,23 @@ namespace Spite {
             /**
              * Bind extensions to their functor to save file on disk.
              */
-            static const std::map<std::string, SaveFunctor> ExtensionSave ;
+            static const std::map<std::string, Image::FileSave::Functor> ExtensionFileSave ;
+
+            /**
+             * Bind extensions to their functor to store compressed image in
+             * memory.
+             */
+            static const std::map<std::string, Image::BufferSave::Functor> ExtensionBufferSave ;
 
             /**
              * JPEG quality.
              */
             static int JPEGQuality ;
+
+            /**
+             * Output type.
+             */
+            Output m_output ;
 
             /**
              * Data to save.
@@ -54,13 +74,18 @@ namespace Spite {
             std::filesystem::path m_path ;
 
             /**
+             * Buffer to write data in memory.
+             */
+            std::vector<unsigned char>* m_buffer = nullptr ;
+
+            /**
              * true to flip vertically on save; false otherwise.
              */
             bool m_verticalFlip = false ;
 
         public:
             /**
-             * Create a new ImageWriter.
+             * Create a new ImageWriter to write compressed data in a file.
              * @param   data         Binary data containing raw picture data.
              * @param   path         Path of the file to save to.
              * @param   verticalFlip true to flip vertically; false otherwise.
@@ -68,6 +93,18 @@ namespace Spite {
             exported ImageWriter(
                 RawImage& data,
                 const std::filesystem::path& path,
+                const bool verticalFlip = false
+            ) ;
+
+            /**
+             * Create a new ImageWriter to write compressed data in memory.
+             * @param   data         Binary data containing raw picture data.
+             * @param   buffer       Buffer to write data in memory.
+             * @param   verticalFlip true to flip vertically; false otherwise.
+             */
+            exported ImageWriter(
+                RawImage& data,
+                std::vector<unsigned char>& buffer,
                 const bool verticalFlip = false
             ) ;
 
@@ -103,52 +140,6 @@ namespace Spite {
              * @param   rleEnabled  true to enable; false otherwise.
              */
             exported static void SetCompressTGAWithRLE(const bool rleEnabled) ;
-
-        private:
-            /**
-             * Save PNG file.
-             * @return  true on success; false otherwise.
-             */
-            exported static bool SavePNG(
-                RawImage& image,
-                const std::string& path
-            ) ;
-
-            /**
-             * Save JPEG file.
-             * @return  true on success; false otherwise.
-             */
-            exported static bool SaveJPEG(
-                RawImage& image,
-                const std::string& path
-            ) ;
-
-            /**
-             * Save TGA file.
-             * @return  true on success; false otherwise.
-             */
-            exported static bool SaveTGA(
-                RawImage& image,
-                const std::string& path
-            ) ;
-
-            /**
-             * Save BMP file.
-             * @return  true on success; false otherwise.
-             */
-            exported static bool SaveBMP(
-                RawImage& image,
-                const std::string& path
-            ) ;
-
-            /**
-             * Save HDR file.
-             * @return  true on success; false otherwise.
-             */
-            exported static bool SaveHDR(
-                RawImage& image,
-                const std::string& path
-            ) ;
     } ;
 }
 
