@@ -149,6 +149,13 @@ namespace Hope::GL {
             exported InternalFormat internalFormat() const {
                 return m_internalFormat ;
             }
+
+        private:
+            // Remove copy/move operations.
+            Texture(const Texture& copied) = delete ;
+            Texture(Texture&& moved) = delete ;
+            Texture& operator=(const Texture& copied) = delete ;
+            Texture& operator=(Texture&& moved) = delete ;
     } ;
 }
 

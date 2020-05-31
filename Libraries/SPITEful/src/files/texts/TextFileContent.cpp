@@ -1,0 +1,60 @@
+#include <files/texts/TextFileContent.hpp>
+#include <SPITEStrings.hpp>
+#include <utils/LogSystem.hpp>
+#include <stdexcept>
+#include <ios>
+
+using namespace Spite ;
+
+TextFileContent::TextFileContent(const std::string& filepath)
+    : m_path(filepath) {}
+
+TextFileContent::~TextFileContent() {
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+}
+
+void TextFileContent::save(const std::string& text) {
+    open_fs(std::fstream::in) ;
+
+    m_writer.clear() ;
+    m_writer.write(text) ;
+
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+}
+
+std::string TextFileContent::load() {
+    open_fs(std::fstream::out) ;
+
+    std::string text ;
+    m_reader.readAll(text) ;
+
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+
+    return text ;
+}
+
+void TextFileContent::open_fs(std::ios_base::openmode mode) {
+    // If so, open it if not already accessed.
+    if (!m_fs.is_open()) {
+        // If it is all OK, open the file with wanted mode.
+        m_fs.open(fs::absolute(m_path).string(), mode) ;
+
+        if (!m_fs.good()) {
+            m_fs.close() ;
+
+            throw std::ios_base::failure(
+                FileMsg::Error::FailureOnOpening
+                     + fs::absolute(m_path).string()
+            ) ;
+        }
+        else {
+            m_stdOpenMode = mode ;
+        }
+    }
+}

@@ -3,14 +3,14 @@
 
 #include <utils/Platform.hpp>
 #include <files/images/data/ColorFormat.hpp>
-#include <interfaces/IFileData.hpp>
+#include <vector>
 
 namespace Spite {
 
     /**
      * Image containing raw uncompressed data.
      */
-    class RawImage final : public IFileData {
+    class RawImage final {
         private:
             /**
              * Width of the picture.

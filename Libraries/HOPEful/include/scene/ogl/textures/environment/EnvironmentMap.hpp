@@ -1,66 +1,64 @@
 #ifndef __HOPE__GL_ENVIRONMENTMAP__
 #define __HOPE__GL_ENVIRONMENTMAP__
 
-#include <HopeAPI.hpp>
+#include <utils/Platform.hpp>
 #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
-#include <scene/ogl/textures/environment/EnvironmentMapProcessing.hpp>
-#include <array>
 #include <memory>
+#include <string>
 
 namespace Hope::GL {
     /**
-     * Aggregate an environment map and its related irradiance map.
+     * An environment map contains all the required data for performing image
+     * based lighting: environment map itself (cubemap to be displayed as sky
+     * for example), its specular maps (for different roughness degrees in
+     * physics-based shading pipeline) and irradiance map (for ambient lighting
+     * based on the environment map).
      */
     class EnvironmentMap final {
         private:
             /**
-             * The environment map as a cubemap.
+             * Environment map itself (sky, etc).
              */
-            std::unique_ptr<EnvironmentMapTexture> m_environmentMap = nullptr ;
+            std::unique_ptr<EnvironmentMapTexture> m_envMap = nullptr ;
 
             /**
-             * The irradiance map as a cubemap.
+             * Specular map (with roughness levels as mipmap) to display
+             * precomputed specular on objects.
+             */
+            std::unique_ptr<EnvironmentMapTexture> m_specularMap = nullptr ;
+
+            /**
+             * Irradiance map for ambient lighting.
              */
             std::unique_ptr<EnvironmentMapTexture> m_irradianceMap = nullptr ;
 
-            /**
-             * The radiance map as a cubemap.
-             */
-            std::unique_ptr<EnvironmentMapTexture> m_radianceMap = nullptr ;
-
         public:
             /**
-             * Create a new environment map.
-             * Loads the different map components (environment, irradiance and
-             * radiance) from a directory.
-             * @param   directory   Directory to search for the maps.
-             * @param   name        Name of the environment map (used in
-             *                      filenames).
+             * Create a new EnvironmentMap instance.
+             * @param   hemFilepath Path to the HEM archive containing all
+             *                      the image files.
              */
-            EnvironmentMap(
-                const std::string& directory,
-                const std::string& name
-            ) ;
+            exported EnvironmentMap(const std::string& hemFilepath) ;
 
             /**
-             * Get the environment map.
+             * Get the environment map texture.
              */
-            std::unique_ptr<EnvironmentMapTexture> environment() {
-                return std::move(m_environmentMap) ;
+            exported EnvironmentMapTexture* envMap() const {
+                return m_envMap.get() ;
             }
 
             /**
-             * Get the irradiance map.
+             * Get the specular map texture.
              */
-            std::unique_ptr<EnvironmentMapTexture> irradiance() {
-                return std::move(m_irradianceMap) ;
+            exported EnvironmentMapTexture* specularMap() const {
+                return m_specularMap.get() ;
             }
 
             /**
-             * Get the radiance map.
+             * Get the irradiance map texture.
              */
-            std::unique_ptr<EnvironmentMapTexture> radiance() {
-                return std::move(m_irradianceMap) ;
+            exported EnvironmentMapTexture* irradianceMap() const {
+                return m_irradianceMap.get() ;
             }
     } ;
 }

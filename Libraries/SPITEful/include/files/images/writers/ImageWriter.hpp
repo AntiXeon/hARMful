@@ -3,18 +3,41 @@
 
 #include <utils/Platform.hpp>
 #include <files/images/data/RawImage.hpp>
-#include <files/images/save/FileSave.hpp>
-#include <files/images/save/BufferSave.hpp>
-#include <filesystem>
-#include <map>
-#include <string>
+#include <functional>
 
 namespace Spite {
     /**
-     * Dedicated class to save images on disk.
+     * Dedicated class to store compressed images.
      */
-    class ImageWriter final {
+    class ImageWriter {
         public:
+            /** Extension of HDR files. */
+            static const std::string HDRFileExtension ;
+
+            /** Extension of PNG files. */
+            static const std::string PNGFileExtension ;
+
+            /** Extension of JPEG files. */
+            static const std::string JPEGFileExtension ;
+
+            /** Extension of JPG files. */
+            static const std::string JPGFileExtension ;
+
+            /** Extension of BMP files. */
+            static const std::string BMPFileExtension ;
+
+            /** Extension of RLE files. */
+            static const std::string RLEFileExtension ;
+
+            /** Extension of SIB files. */
+            static const std::string DIBFileExtension ;
+
+            /** Extension of TGA files. */
+            static const std::string TGAFileExtension ;
+
+            /** Extension of TPIC files. */
+            static const std::string TPICFileExtension ;
+
             /**
              * Filter algorithms on data for optimum compression.
              */
@@ -26,62 +49,17 @@ namespace Spite {
                 Paeth
             } ;
 
-            /**
-             * Output type.
-             * - File to write compressed data on disk;
-             * - Buffer to write compressed data in a memory buffer.
-             */
-            enum class Output {
-                File,
-                Buffer
-            } ;
-
-        private:
-            /**
-             * Extension of HDR files.
-             */
-            static const std::string HDRFileExtension ;
-
-            /**
-             * Extension of PNG files.
-             */
-            static const std::string PNGFileExtension ;
-
-            /**
-             * Bind extensions to their functor to save file on disk.
-             */
-            static const std::map<std::string, Image::FileSave::Functor> ExtensionFileSave ;
-
-            /**
-             * Bind extensions to their functor to store compressed image in
-             * memory.
-             */
-            static const std::map<std::string, Image::BufferSave::Functor> ExtensionBufferSave ;
-
+        protected:
             /**
              * JPEG quality.
              */
             static int JPEGQuality ;
 
-            /**
-             * Output type.
-             */
-            Output m_output ;
-
+        private:
             /**
              * Data to save.
              */
             std::reference_wrapper<RawImage> m_data ;
-
-            /**
-             * Path to save the file to.
-             */
-            std::filesystem::path m_path ;
-
-            /**
-             * Buffer to write data in memory.
-             */
-            std::vector<unsigned char>* m_buffer = nullptr ;
 
             /**
              * true to flip vertically on save; false otherwise.
@@ -92,24 +70,10 @@ namespace Spite {
             /**
              * Create a new ImageWriter to write compressed data in a file.
              * @param   data         Binary data containing raw picture data.
-             * @param   path         Path of the file to save to.
              * @param   verticalFlip true to flip vertically; false otherwise.
              */
             exported ImageWriter(
                 RawImage& data,
-                const std::filesystem::path& path,
-                const bool verticalFlip = false
-            ) ;
-
-            /**
-             * Create a new ImageWriter to write compressed data in memory.
-             * @param   data         Binary data containing raw picture data.
-             * @param   buffer       Buffer to write data in memory.
-             * @param   verticalFlip true to flip vertically; false otherwise.
-             */
-            exported ImageWriter(
-                RawImage& data,
-                std::vector<unsigned char>& buffer,
                 const bool verticalFlip = false
             ) ;
 
@@ -146,16 +110,25 @@ namespace Spite {
              */
             exported static void SetCompressTGAWithRLE(const bool rleEnabled) ;
 
-        private:
+        protected:
             /**
-             * Process file saving.
+             * Perform save.
              */
-            bool processFile() ;
+            virtual exported bool processSpecific() = 0 ;
 
             /**
-             * Process buffer storing.
+             * Get the data to write.
              */
-            bool processBuffer() ;
+            exported RawImage& data() {
+                return m_data.get() ;
+            }
+
+            /**
+             * true to flip vertically on save; false otherwise.
+             */
+            exported bool verticalFlip() {
+                return m_verticalFlip ;
+            }
     } ;
 }
 

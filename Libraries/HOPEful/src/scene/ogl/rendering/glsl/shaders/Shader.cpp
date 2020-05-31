@@ -1,6 +1,5 @@
 #include <scene/ogl/rendering/glsl/shaders/Shader.hpp>
-#include <files/text/TextFile.hpp>
-#include <files/text/TextData.hpp>
+#include <files/texts/TextFileContent.hpp>
 #include <utils/LogSystem.hpp>
 #include <algorithm>
 #include <array>
@@ -19,12 +18,9 @@ Shader::~Shader() {
 }
 
 void Shader::addSourceFile(const std::string& filepath) {
-    Spite::TextFile shaderFile(filepath) ;
-    shaderFile.open(Spite::File::OpenMode::Open_ReadOnly) ;
-
-    Spite::TextData textData ;
-    shaderFile.load(&textData) ;
-    addSourceCode(textData.toString()) ;
+    Spite::TextFileContent shaderFile(filepath) ;
+    auto sourceCode = shaderFile.load() ;
+    addSourceCode(sourceCode) ;
 }
 
 bool Shader::compile() {

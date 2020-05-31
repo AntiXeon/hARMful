@@ -1,68 +1,14 @@
 #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
-#include <scene/ogl/textures/environment/EnvironmentMapProcessing.hpp>
 #include <scene/ogl/textures/TextureLoader.hpp>
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <scene/ogl/textures/formats/PixelFormats.hpp>
 #include <scene/ogl/textures/formats/PixelDataTypes.hpp>
 #include <scene/ogl/textures/formats/FilterModes.hpp>
-#include <files/images/ImageFile.hpp>
 #include <utils/LogSystem.hpp>
 #include <HOPEStrings.hpp>
 
 using namespace Hope ;
 using namespace Hope::GL ;
-
-EnvironmentMapTexture::EnvironmentMapTexture(
-    const std::array<std::string, Cubemapping::AmountFaces>& paths,
-    const bool mipmap
-) : m_hasMipmap(mipmap) {
-    generateTextureID() ;
-
-    bool initialized = false ;
-
-    // Load all the faces.
-    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
-        auto image = TextureLoader::LoadFromFile(
-            GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
-            paths[face],
-            Cubemapping::FlipVerticalAxis
-        ) ;
-
-        if (!initialized) {
-            m_faceDimension = Mind::Dimension2Di(image.width(), image.height()) ;
-        }
-        else {
-            bool differentWidths = m_faceDimension.width() != image.width() ;
-            bool differentHeights = m_faceDimension.height() != image.height() ;
-
-            if (differentWidths || differentHeights) {
-                auto level = Doom::LogSystem::Gravity::Critical ;
-                Doom::LogSystem::WriteLine(level, Texts::EnvironmentMap_InconsistentSize + paths[face]) ;
-            }
-        }
-    }
-
-    setupTexture() ;
-}
-
-EnvironmentMapTexture::EnvironmentMapTexture(
-    const std::string& path,
-    const bool mipmap
-) : m_hasMipmap(mipmap) {
-    generateTextureID() ;
-	Spite::RawImage texture = EnvironmentMapProcessing::LoadRawPicture(path) ;
-    m_faceDimension = EnvironmentMapProcessing::Load(texture) ;
-    setupTexture() ;
-}
-
-EnvironmentMapTexture::EnvironmentMapTexture(
-    Spite::RawImage& input,
-    const bool mipmap
-) : m_hasMipmap(mipmap) {
-    generateTextureID() ;
-	m_faceDimension = EnvironmentMapProcessing::Load(input) ;
-    setupTexture() ;
-}
 
 EnvironmentMapTexture::EnvironmentMapTexture(
     const unsigned int cubeSize,
@@ -74,9 +20,9 @@ EnvironmentMapTexture::EnvironmentMapTexture(
     generateTextureID() ;
     m_faceDimension = Mind::Dimension2Di(cubeSize, cubeSize) ;
 
-    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
+    for (GLenum face = CubeFace::First ; face <= CubeFace::Last ; ++face) {
         glTexImage2D(
-            GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+            face,
             TextureLoD,
             static_cast<GLint>(InternalFormat::RedGreenBlue16f),
             cubeSize,
@@ -118,9 +64,9 @@ void EnvironmentMapTexture::resize(const unsigned int size) {
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, id()) ;
 
-    for (int face = Cubemapping::First ; face <= Cubemapping::Last ; ++face) {
+    for (GLenum face = CubeFace::First ; face <= CubeFace::Last ; ++face) {
         glTexImage2D(
-            GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+            face,
             TextureLoD,
             static_cast<GLint>(InternalFormat::RedGreenBlue16f),
             size,

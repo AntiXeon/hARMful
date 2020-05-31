@@ -1,17 +1,15 @@
 #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
-#include <files/images/ImageFile.hpp>
+#include <files/archives/TARUtils.hpp>
 
-#include <files/images/ImageWriter.hpp>
+#include <iostream>
 
 using namespace Hope::GL ;
 
-EnvironmentMap::EnvironmentMap(
-    const std::string& directory,
-    const std::string& name
-) {
-    Spite::RawImage rawData = EnvironmentMapProcessing::LoadRawPicture(directory + "/" + name + ".hdr") ;
-    m_environmentMap = std::make_unique<EnvironmentMapTexture>(rawData) ;
+EnvironmentMap::EnvironmentMap(const std::string& hemFilepath) {
+    auto hemContent = Spite::TARUtils::Load(hemFilepath) ;
 
-    auto resizedMap = Spite::ImageFile::Resize(rawData, 128, 64) ;
-    m_irradianceMap = std::make_unique<EnvironmentMapTexture>(resizedMap) ;
+    auto listDirectories = hemContent.directories() ;
+    for (auto& dirPath : listDirectories) {
+        std::cout << dirPath.string() << std::endl ;
+    }
 }

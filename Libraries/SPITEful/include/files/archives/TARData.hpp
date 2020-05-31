@@ -1,8 +1,8 @@
 #ifndef __SPITE__TAR_DATA__
 #define __SPITE__TAR_DATA__
 
+#include <utils/Platform.hpp>
 #include <utils/LogSystem.hpp>
-#include <interfaces/IFileData.hpp>
 #include <third_party/microtar.h>
 #include <string>
 #include <vector>
@@ -16,11 +16,15 @@ namespace Spite {
     /**
      * Class for creating a .tar archive file.
      */
-    class TARData final : public IFileData {
-        friend class TARFile ;
+    class TARData final {
+        friend class TARUtils ;
 
         private:
+            /**
+             * Type of the file.
+             */
             enum class FileType {
+                Unknown,
                 Text,
                 Binary
             } ;
@@ -40,7 +44,12 @@ namespace Spite {
             std::vector<unsigned char> m_fileBytes ;
 
             /**
-             * infos of the file bytes at a destination path.
+             * List of the directories in the archive.
+             */
+            std::set<fs::path> m_directories ;
+
+            /**
+             * Infos of the file bytes at a destination path.
              */
             std::map<fs::path, FileInfo> m_infos ;
 
@@ -80,10 +89,20 @@ namespace Spite {
             ) ;
 
             /**
+             * Get the directory paths contained in the archive.
+             */
+            exported const std::set<fs::path>& directories() const ;
+
+            /**
+             * Get the file paths contained in the archive.
+             */
+            exported std::vector<fs::path> paths() const ;
+
+            /**
              * Get the file raw data.
              * @return  Output the raw data of the file.
              */
-            exported std::vector<unsigned char>& data() override ;
+            exported std::vector<unsigned char>& data() ;
 
         private:
             /**
@@ -128,7 +147,10 @@ namespace Spite {
                 const FileInfo& infos
             ) ;
 
-            // TODO: read from mtar_t.
+            /**
+             * Read the content of the archive.
+             */
+            exported void read(mtar_t& tar) ;
     } ;
 
     template <typename T>
@@ -152,6 +174,8 @@ namespace Spite {
             .begin = begin,
             .end = end
         } ;
+
+        m_directories.insert(filepath.parent_path()) ;
 
         return true ;
     }

@@ -18,6 +18,11 @@ namespace Hope::GL {
     } ;
 
     /**
+     * Amount of faces in a cubemap.
+     */
+    extern const unsigned int AmountFaces ;
+
+    /**
      * Get the name of a face.
      */
     const std::string& FaceName(const Hope::GL::CubeFace face) ;

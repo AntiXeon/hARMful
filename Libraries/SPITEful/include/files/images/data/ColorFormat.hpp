@@ -29,12 +29,13 @@ namespace Spite {
 			enum ComponentType {
 				UnknownType   = 0x10,
 				Byte		  = 0x20,
+                Short         = 0x40,
 				FloatingPoint = 0x30
 			} ;
 
         private:
 			static const unsigned char AmountOfIDs = 5 ;
-			static const unsigned char AmountOfTypes = 2 ;
+			static const unsigned char AmountOfTypes = 3 ;
 
 			/**
 			 * Amount of available IDs.

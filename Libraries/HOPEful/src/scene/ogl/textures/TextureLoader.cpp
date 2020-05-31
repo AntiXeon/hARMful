@@ -1,6 +1,6 @@
 #include <scene/ogl/textures/TextureLoader.hpp>
 #include <scene/ogl/GLDefines.hpp>
-#include <files/images/ImageFile.hpp>
+#include <files/images/readers/ImageFileReader.hpp>
 #include <utils/LogSystem.hpp>
 #include <utils/StringExt.hpp>
 #include <HOPEStrings.hpp>
@@ -12,13 +12,8 @@ Spite::RawImage TextureLoader::LoadFromFile(
     const std::string& path,
     const bool flipVertically
 ) {
-    Spite::ImageFile file(path, flipVertically) ;
-    Spite::RawImage rawData ;
-
-    if (!file.load(&rawData)) {
-        auto level = Doom::LogSystem::Gravity::Critical ;
-        Doom::LogSystem::WriteLine(level, Texts::Texture_UnknownFormat + path) ;
-    }
+    Spite::ImageFileReader reader(path, flipVertically) ;
+    Spite::RawImage rawData = reader.process() ;
 
     // Convert pictures to OpenGL structures.
     std::vector<unsigned char>& pixelData = rawData.data() ;

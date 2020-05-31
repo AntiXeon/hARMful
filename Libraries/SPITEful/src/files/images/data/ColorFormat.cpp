@@ -129,6 +129,10 @@ void ColorFormat::SetDataForFormat(
 			componentSize = static_cast<unsigned char>(sizeof(unsigned char)) ;
 			break ;
 
+        case Short:
+			componentSize = static_cast<unsigned char>(sizeof(unsigned short)) ;
+			break ;
+
 		case FloatingPoint:
 			componentSize = static_cast<unsigned char>(sizeof(float)) ;
 			break ;

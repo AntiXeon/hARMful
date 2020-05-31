@@ -3,7 +3,6 @@
 
 #include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
-
 #include <scene/ogl/textures/formats/InternalFormats.hpp>
 #include <files/images/data/RawImage.hpp>
 #include <string>

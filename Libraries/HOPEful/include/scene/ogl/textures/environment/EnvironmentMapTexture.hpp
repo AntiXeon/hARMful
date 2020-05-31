@@ -5,7 +5,6 @@
 #include <utils/Platform.hpp>
 
 #include <scene/ogl/textures/environment/CubeFaces.hpp>
-#include <scene/ogl/textures/environment/Cubemapping.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
@@ -35,38 +34,6 @@ namespace Hope::GL {
             bool m_hasMipmap = false ;
 
         public:
-            /**
-             * Creation of a new EnvironmentMapTexture.
-             * @param   paths   Path to the texture for each face of the cube.
-             *                  The expected order of the maps is as follow:
-             *                  right, left, top, bottom, back, front.
-             * @param mipmap    true to enable mipmapping; false otherwise.
-             */
-            exported EnvironmentMapTexture(
-                const std::array<std::string, Cubemapping::AmountFaces>& paths,
-                const bool mipmap = false
-            ) ;
-
-			/**
-			 * Creation of a new EnvironmentMapTexture.
-			 * @param 	path	Path to the environment map.
-             * @param mipmap    true to enable mipmapping; false otherwise.
-			 */
-			exported EnvironmentMapTexture(
-                const std::string& path,
-                const bool mipmap = false
-            ) ;
-
-            /**
-			 * Creation of a new EnvironmentMapTexture.
-			 * @param 	input Blob in memory containing the texture data.
-             * @param mipmap    true to enable mipmapping; false otherwise.
-			 */
-            exported EnvironmentMapTexture(
-                Spite::RawImage& input,
-                const bool mipmap = false
-            ) ;
-
             /**
              * Generate an empty EnvironmentMapTexture with predefined edge
              * length of cube faces.
@@ -146,6 +113,12 @@ namespace Hope::GL {
              * Set up the texture.
              */
             exported void setupTexture() ;
+
+            // Remove copy/move operations.
+            EnvironmentMapTexture(const EnvironmentMapTexture& copied) = delete ;
+            EnvironmentMapTexture(EnvironmentMapTexture&& moved) = delete ;
+            EnvironmentMapTexture& operator=(const EnvironmentMapTexture& copied) = delete ;
+            EnvironmentMapTexture& operator=(EnvironmentMapTexture&& moved) = delete ;
     } ;
 }
 

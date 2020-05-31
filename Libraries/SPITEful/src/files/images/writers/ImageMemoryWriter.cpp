@@ -1,17 +1,64 @@
-#include <files/images/save/BufferSave.hpp>
+#include <files/images/writers/ImageMemoryWriter.hpp>
+#include <debug/ErrorsManagement.hpp>
+#include <utils/StringExt.hpp>
+#include <SPITEStrings.hpp>
+#include <utils/LogSystem.hpp>
 #include <third_party/stb_image_write.h>
-#include <array>
-#include <limits>
 
-using namespace Spite::Image ;
+using namespace Spite ;
+namespace fs = std::filesystem ;
 
-void write_bytes_func(void* context, void* data, int size) {
+const std::map<std::string, ImageMemoryWriter::Functor> ImageMemoryWriter::ExtensionMemorySave = {
+    { ImageWriter::PNGFileExtension,  ImageMemoryWriter::SavePNG },
+    { ImageWriter::JPGFileExtension,  ImageMemoryWriter::SaveJPEG },
+    { ImageWriter::JPEGFileExtension, ImageMemoryWriter::SaveJPEG },
+    { ImageWriter::BMPFileExtension,  ImageMemoryWriter::SaveBMP },
+    { ImageWriter::RLEFileExtension,  ImageMemoryWriter::SaveBMP },
+    { ImageWriter::DIBFileExtension,  ImageMemoryWriter::SaveBMP },
+    { ImageWriter::TGAFileExtension,  ImageMemoryWriter::SaveTGA },
+    { ImageWriter::TPICFileExtension, ImageMemoryWriter::SaveTGA },
+    { ImageWriter::HDRFileExtension,  ImageMemoryWriter::SaveHDR }
+} ;
+
+ImageMemoryWriter::ImageMemoryWriter(
+    RawImage& data,
+    const bool verticalFlip
+) : ImageWriter(data, verticalFlip)
+{}
+
+bool ImageMemoryWriter::processSpecific() {
+    bool success = false ;
+    std::string fileExtension ;
+
+    if (data().format().type() == ColorFormat::FloatingPoint) {
+        fileExtension = HDRFileExtension ;
+    }
+    else {
+        fileExtension = PNGFileExtension ;
+    }
+
+    if (ExtensionMemorySave.count(fileExtension)) {
+        auto save = ExtensionMemorySave.at(fileExtension) ;
+        success = save(
+            data(),
+            buffer()
+        ) ;
+    }
+
+    return success ;
+}
+
+std::vector<unsigned char>& ImageMemoryWriter::buffer() {
+    return m_buffer ;
+}
+
+void ImageMemoryWriter::WriteBytesFunc(void* context, void* data, int size) {
     auto* contextBuffer = reinterpret_cast<std::vector<unsigned char>*>(context) ;
     auto* byteData = reinterpret_cast<unsigned char*>(data) ;
     (*contextBuffer).insert((*contextBuffer).end(), byteData, byteData + size) ;
 }
 
-bool BufferSave::SavePNG(
+bool ImageMemoryWriter::SavePNG(
     RawImage& image,
     std::vector<unsigned char>& buffer
 ) {
@@ -20,7 +67,7 @@ bool BufferSave::SavePNG(
     auto& imageBytes = image.data() ;
 
     return stbi_write_png_to_func(
-        &write_bytes_func,
+        &ImageMemoryWriter::WriteBytesFunc,
         reinterpret_cast<void*>(&buffer),
         image.width(),
         image.height(),
@@ -30,26 +77,25 @@ bool BufferSave::SavePNG(
     ) ;
 }
 
-bool BufferSave::SaveJPEG(
+bool ImageMemoryWriter::SaveJPEG(
     RawImage& image,
     std::vector<unsigned char>& buffer
 ) {
-    static const int JPEGQuality = 100 ;
     auto amountComponents = image.format().amountOfComponents() ;
     auto& imageBytes = image.data() ;
 
     return stbi_write_jpg_to_func(
-        &write_bytes_func,
+        &ImageMemoryWriter::WriteBytesFunc,
         reinterpret_cast<void*>(&buffer),
         image.width(),
         image.height(),
         amountComponents,
         imageBytes.data(),
-        JPEGQuality
+        ImageWriter::JPEGQuality
     ) ;
 }
 
-bool BufferSave::SaveTGA(
+bool ImageMemoryWriter::SaveTGA(
     RawImage& image,
     std::vector<unsigned char>& buffer
 ) {
@@ -57,7 +103,7 @@ bool BufferSave::SaveTGA(
     auto& imageBytes = image.data() ;
 
     return stbi_write_tga_to_func(
-        &write_bytes_func,
+        &ImageMemoryWriter::WriteBytesFunc,
         reinterpret_cast<void*>(&buffer),
         image.width(),
         image.height(),
@@ -66,7 +112,7 @@ bool BufferSave::SaveTGA(
     ) ;
 }
 
-bool BufferSave::SaveBMP(
+bool ImageMemoryWriter::SaveBMP(
     RawImage& image,
     std::vector<unsigned char>& buffer
 ) {
@@ -74,7 +120,7 @@ bool BufferSave::SaveBMP(
     auto& imageBytes = image.data() ;
 
     return stbi_write_bmp_to_func(
-        &write_bytes_func,
+        &ImageMemoryWriter::WriteBytesFunc,
         reinterpret_cast<void*>(&buffer),
         image.width(),
         image.height(),
@@ -83,7 +129,7 @@ bool BufferSave::SaveBMP(
     ) ;
 }
 
-bool BufferSave::SaveHDR(
+bool ImageMemoryWriter::SaveHDR(
     RawImage& image,
     std::vector<unsigned char>& buffer
 ) {
@@ -92,7 +138,7 @@ bool BufferSave::SaveHDR(
     auto* imageFloat = reinterpret_cast<float*>(imageBytes.data()) ;
 
     return stbi_write_hdr_to_func(
-        &write_bytes_func,
+        &ImageMemoryWriter::WriteBytesFunc,
         reinterpret_cast<void*>(&buffer),
         image.width(),
         image.height(),

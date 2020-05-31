@@ -1,6 +1,7 @@
 #include <files/archives/TARData.hpp>
 #include <utils/StringExt.hpp>
 #include <SPITEStrings.hpp>
+#include <algorithm>
 #include <filesystem>
 #include <stdexcept>
 
@@ -27,6 +28,8 @@ bool TARData::addTextFile(
         .end = end
     } ;
 
+    m_directories.insert(filepath.parent_path()) ;
+
     return true ;
 }
 
@@ -46,6 +49,25 @@ bool TARData::readTextFile(
     text.copy(bytes, infos.begin, contentLength) ;
 
     return true ;
+}
+
+const std::set<fs::path>& TARData::directories() const {
+    return m_directories ;
+}
+
+std::vector<fs::path> TARData::paths() const {
+    std::vector<fs::path> listPaths ;
+
+    std::transform(
+        std::begin(m_infos),
+        std::end(m_infos),
+        std::back_inserter(listPaths),
+        [](auto const& pair) {
+            return pair.first ;
+        }
+    ) ;
+
+    return listPaths ;
 }
 
 std::vector<unsigned char>& TARData::data() {
@@ -98,6 +120,7 @@ void TARData::write(mtar_t& tar) {
         auto type = info.type ;
 
         switch (type) {
+            default:
             case FileType::Binary:
                 writeBinary(tar, path.string(), info) ;
                 break ;
@@ -189,4 +212,37 @@ bool TARData::writeText(
     }
 
     return true ;
+}
+
+void TARData::read(mtar_t& tar) {
+    mtar_header_t fileHeader ;
+
+    while ((mtar_read_header(&tar, &fileHeader)) != MTAR_ENULLRECORD) {
+        if (m_infos.count(fileHeader.name) > 0) {
+            continue ;
+        }
+
+        if (fileHeader.size == 0) {
+            // It is a directory.
+            m_directories.insert(fileHeader.name) ;
+        }
+        else {
+            // It is a file.
+            FileInfo info = {
+                .type = FileType::Unknown,
+                .begin = tar.pos,
+                .end = tar.pos + fileHeader.size,
+            } ;
+
+            std::vector<char*> fileBytes ;
+            fileBytes.resize(fileHeader.size) ;
+            mtar_read_data(&tar, fileBytes.data(), fileHeader.size) ;
+            auto* fileBytesUC = reinterpret_cast<unsigned char*>(fileBytes.data()) ;
+
+            m_infos[fileHeader.name] = info ;
+            m_fileBytes.insert(m_fileBytes.end(), fileBytesUC, fileBytesUC + fileHeader.size) ;
+        }
+
+        mtar_next(&tar) ;
+    }
 }
