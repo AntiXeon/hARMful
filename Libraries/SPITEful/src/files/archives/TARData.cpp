@@ -33,6 +33,22 @@ bool TARData::addTextFile(
     return true ;
 }
 
+bool TARData::readBinaryFile(
+    const fs::path& filepath,
+    std::vector<unsigned char>& buffer
+) {
+    if (m_infos.count(filepath) == 0) {
+        return false ;
+    }
+
+    buffer.clear() ;
+
+    auto infos = m_infos[filepath] ;
+    auto bytes = reinterpret_cast<unsigned char*>(m_fileBytes.data()) ;
+    buffer.insert(buffer.begin(), bytes + infos.begin, bytes + infos.end) ;
+    return true ;
+}
+
 bool TARData::readTextFile(
     const fs::path& filepath,
     std::string& text
@@ -219,6 +235,7 @@ void TARData::read(mtar_t& tar) {
 
     while ((mtar_read_header(&tar, &fileHeader)) != MTAR_ENULLRECORD) {
         if (m_infos.count(fileHeader.name) > 0) {
+            mtar_next(&tar) ;
             continue ;
         }
 
@@ -228,19 +245,22 @@ void TARData::read(mtar_t& tar) {
         }
         else {
             // It is a file.
-            FileInfo info = {
-                .type = FileType::Unknown,
-                .begin = tar.pos,
-                .end = tar.pos + fileHeader.size,
-            } ;
-
-            std::vector<char*> fileBytes ;
+            std::vector<char> fileBytes ;
             fileBytes.resize(fileHeader.size) ;
             mtar_read_data(&tar, fileBytes.data(), fileHeader.size) ;
             auto* fileBytesUC = reinterpret_cast<unsigned char*>(fileBytes.data()) ;
 
-            m_infos[fileHeader.name] = info ;
+            size_t beginFilePosition = m_fileBytes.size() ;
             m_fileBytes.insert(m_fileBytes.end(), fileBytesUC, fileBytesUC + fileHeader.size) ;
+            size_t endFilePosition = m_fileBytes.size() ;
+
+            FileInfo info = {
+                .type = FileType::Unknown,
+                .begin = beginFilePosition,
+                .end = endFilePosition
+            } ;
+
+            m_infos[fileHeader.name] = info ;
         }
 
         mtar_next(&tar) ;

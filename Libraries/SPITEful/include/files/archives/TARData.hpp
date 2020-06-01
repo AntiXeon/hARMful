@@ -83,6 +83,14 @@ namespace Spite {
             /**
              * Read the content of a file at a given path in the archive.
              */
+            exported bool readBinaryFile(
+                const fs::path& filepath,
+                std::vector<unsigned char>& buffer
+            ) ;
+
+            /**
+             * Read the content of a file at a given path in the archive.
+             */
             exported bool readTextFile(
                 const fs::path& filepath,
                 std::string& text

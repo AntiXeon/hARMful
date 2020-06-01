@@ -3,13 +3,16 @@
 
 #include <HopeAPI.hpp>
 #include <utils/Platform.hpp>
-
+#include <files/archives/TARData.hpp>
 #include <scene/ogl/textures/environment/CubeFaces.hpp>
 #include <scene/common/Color.hpp>
 #include <scene/ogl/GLDefines.hpp>
 #include <files/images/data/RawImage.hpp>
 #include <geometry/dimensions/Dimension2Di.hpp>
 #include <array>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace Hope::GL {
     /**
@@ -17,6 +20,14 @@ namespace Hope::GL {
      * environment as a texture and illuminate the scene.
      */
     class EnvironmentMapTexture final {
+        friend class EnvironmentMap ;
+
+        public:
+            /**
+             * Extension file of the HDR images.
+             */
+            static const std::string HDRFileExtension ;
+
 		private:
             /**
              * ID of the texture on GPU side.
@@ -105,6 +116,36 @@ namespace Hope::GL {
 
         private:
             /**
+             * Create a EnvironmentMapTexture from a HEM file content.
+             * @param hemContent  Archive containing all the files to be
+             *                    loaded.
+             * @param dirPath     Directory containing all the images of the
+             *                    faces.
+             * @param autoMipmap  true to generate default mipmaps; false for
+             *                    adding them manually.
+             * @see EnvironmentMapTexture::addMipmap()
+             */
+            exported EnvironmentMapTexture(
+                Spite::TARData& hemContent,
+                const fs::path& path,
+                const bool autoMipmap
+            ) ;
+
+            /**
+             * Add manually a mipmap level to the texture.
+             * @param hemContent  Archive containing all the files to be
+             *                    loaded.
+             * @param dirPath     Directory containing all the images of the
+             *                    faces.
+             * @param level       Mipmap level that is added.
+             */
+            exported void addMipmap(
+                Spite::TARData& hemContent,
+                const fs::path& path,
+                const unsigned int level
+            ) ;
+
+            /**
              * Generate the texture ID on GPU.
              */
             exported void generateTextureID() ;
@@ -112,7 +153,7 @@ namespace Hope::GL {
             /**
              * Set up the texture.
              */
-            exported void setupTexture() ;
+            exported void setupTexture(const bool autoMipmap = true) ;
 
             // Remove copy/move operations.
             EnvironmentMapTexture(const EnvironmentMapTexture& copied) = delete ;

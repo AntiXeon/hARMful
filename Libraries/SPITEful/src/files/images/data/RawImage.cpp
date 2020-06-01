@@ -8,9 +8,8 @@ using namespace Spite ;
 RawImage::RawImage(
     const ColorFormat::ID format,
     const ColorFormat::ComponentType type
-)
-    : m_format(format),
-      m_type(type) {}
+) : m_format(format),
+    m_type(type) {}
 
 void RawImage::setDimensions(
     const unsigned int& width,

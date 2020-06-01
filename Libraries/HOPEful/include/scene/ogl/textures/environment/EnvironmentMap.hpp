@@ -3,8 +3,12 @@
 
 #include <utils/Platform.hpp>
 #include <scene/ogl/textures/environment/EnvironmentMapTexture.hpp>
+#include <files/archives/TARData.hpp>
 #include <memory>
 #include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace Hope::GL {
     /**
@@ -15,6 +19,11 @@ namespace Hope::GL {
      * based on the environment map).
      */
     class EnvironmentMap final {
+        public:
+            static const std::string EnvironmentMapName ;
+            static const std::string IrradianceMapName ;
+            static const std::string SpecularMapName ;
+
         private:
             /**
              * Environment map itself (sky, etc).
@@ -60,6 +69,23 @@ namespace Hope::GL {
             exported EnvironmentMapTexture* irradianceMap() const {
                 return m_irradianceMap.get() ;
             }
+
+        private:
+            /**
+             * Get the specular levels in order from bigger size to smaller one.
+             * @param hemContent    TAR archive that contains the environment map
+             *                      cube face textures.
+             * @return  Ordered list of specular map sizes.
+             */
+             exported bool orderedSpecularLevels(
+                 const Spite::TARData& hemContent,
+                 std::vector<unsigned int>& levels
+             ) ;
+
+            /**
+             * Check the specular levels have the expected values.
+             */
+            exported bool checkSpecularLevels(const std::vector<unsigned int>& levels) ;
     } ;
 }
 
