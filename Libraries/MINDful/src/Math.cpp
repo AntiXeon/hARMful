@@ -52,10 +52,24 @@ namespace Mind {
             return diff < epsilon ;
         }
 
+        unsigned int lowClosestPower2(const unsigned int value) {
+            static const auto Log2 = std::log(2.) ;
+            auto logValue = std::log(static_cast<double>(value)) ;
+            auto power2 = std::pow(2., std::floor(logValue / Log2)) ;
+            return static_cast<unsigned int>(power2) ;
+        }
+
         unsigned int closestPower2(const unsigned int value) {
             static const auto Log2 = std::log(2.) ;
             auto logValue = std::log(static_cast<double>(value)) ;
             auto power2 = std::pow(2., std::round(logValue / Log2)) ;
+            return static_cast<unsigned int>(power2) ;
+        }
+
+        unsigned int highClosestPower2(const unsigned int value) {
+            static const auto Log2 = std::log(2.) ;
+            auto logValue = std::log(static_cast<double>(value)) ;
+            auto power2 = std::pow(2., std::ceil(logValue / Log2)) ;
             return static_cast<unsigned int>(power2) ;
         }
     } ;

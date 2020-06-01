@@ -22,6 +22,7 @@ void RawImage::setDimensions(
     m_width = width ;
     m_height = height ;
     m_pixelData.clear();
+    m_pixelData.resize(width * height * format().pixelSizeInBytes()) ;
 }
 
 void RawImage::setFormat(

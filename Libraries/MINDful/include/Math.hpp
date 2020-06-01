@@ -96,11 +96,25 @@ namespace Mind {
         ) ;
 
         /**
+         * Get the lower closest power of 2 for the given value.
+         * @param value The value to get the closest power of 2.
+         * @return  The closest power of 2 of @a value.
+         */
+        exported unsigned int lowClosestPower2(const unsigned int value) ;
+
+        /**
          * Get the closest power of 2 for the given value.
          * @param value The value to get the closest power of 2.
          * @return  The closest power of 2 of @a value.
          */
         exported unsigned int closestPower2(const unsigned int value) ;
+
+        /**
+         * Get the higher closest power of 2 for the given value.
+         * @param value The value to get the closest power of 2.
+         * @return  The closest power of 2 of @a value.
+         */
+        exported unsigned int highClosestPower2(const unsigned int value) ;
     } ;
 
     /**************************** IMPLEMENTATIONS *****************************/
