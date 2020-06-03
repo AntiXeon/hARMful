@@ -1,4 +1,5 @@
 #include <files/images/writers/ImageFileWriter.hpp>
+#include <files/images/ImageUtils.hpp>
 #include <debug/ErrorsManagement.hpp>
 #include <utils/StringExt.hpp>
 #include <SPITEStrings.hpp>
@@ -8,15 +9,15 @@
 using namespace Spite ;
 
 const std::map<std::string, ImageFileWriter::Functor> ImageFileWriter::ExtensionFileSave = {
-    { ImageWriter::PNGFileExtension,  ImageFileWriter::SavePNG },
-    { ImageWriter::JPGFileExtension,  ImageFileWriter::SaveJPEG },
-    { ImageWriter::JPEGFileExtension, ImageFileWriter::SaveJPEG },
-    { ImageWriter::BMPFileExtension,  ImageFileWriter::SaveBMP },
-    { ImageWriter::RLEFileExtension,  ImageFileWriter::SaveBMP },
-    { ImageWriter::DIBFileExtension,  ImageFileWriter::SaveBMP },
-    { ImageWriter::TGAFileExtension,  ImageFileWriter::SaveTGA },
-    { ImageWriter::TPICFileExtension, ImageFileWriter::SaveTGA },
-    { ImageWriter::HDRFileExtension,  ImageFileWriter::SaveHDR }
+    { ImageUtils::PNGFileExtension, ImageFileWriter::SavePNG },
+    { ImageUtils::JPGFileExtension, ImageFileWriter::SaveJPEG },
+    { ImageUtils::JPEGFileExtension, ImageFileWriter::SaveJPEG },
+    { ImageUtils::BMPFileExtension, ImageFileWriter::SaveBMP },
+    { ImageUtils::RLEFileExtension, ImageFileWriter::SaveBMP },
+    { ImageUtils::DIBFileExtension, ImageFileWriter::SaveBMP },
+    { ImageUtils::TGAFileExtension, ImageFileWriter::SaveTGA },
+    { ImageUtils::TPICFileExtension, ImageFileWriter::SaveTGA },
+    { ImageUtils::HDRFileExtension, ImageFileWriter::SaveHDR }
 } ;
 
 ImageFileWriter::ImageFileWriter(
@@ -38,7 +39,7 @@ bool ImageFileWriter::processSpecific() {
     ) ;
 
     if ((data().format().type() == ColorFormat::FloatingPoint)
-            && (fileExtension != HDRFileExtension)) {
+            && (fileExtension != ImageUtils::HDRFileExtension)) {
         Doom::LogSystem::WriteLine(
             Doom::LogSystem::Gravity::Info,
             WriterMsg::Info::HDRExtensionNotMatching,
@@ -46,8 +47,8 @@ bool ImageFileWriter::processSpecific() {
         ) ;
 
         // It is not possible to convert HDR to another format here!
-        m_path.replace_extension(HDRFileExtension) ;
-        fileExtension = HDRFileExtension ;
+        m_path.replace_extension(ImageUtils::HDRFileExtension) ;
+        fileExtension = ImageUtils::HDRFileExtension ;
     }
 
     if (ExtensionFileSave.count(fileExtension)) {

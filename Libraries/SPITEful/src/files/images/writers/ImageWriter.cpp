@@ -10,16 +10,6 @@
 using namespace Spite ;
 namespace fs = std::filesystem ;
 
-const std::string ImageWriter::HDRFileExtension = ".hdr" ;
-const std::string ImageWriter::PNGFileExtension = ".png" ;
-const std::string ImageWriter::JPEGFileExtension = ".jpeg" ;
-const std::string ImageWriter::JPGFileExtension = ".jpg" ;
-const std::string ImageWriter::BMPFileExtension = ".bmp" ;
-const std::string ImageWriter::RLEFileExtension = ".rle" ;
-const std::string ImageWriter::DIBFileExtension = ".dib" ;
-const std::string ImageWriter::TGAFileExtension = ".tga" ;
-const std::string ImageWriter::TPICFileExtension = ".tpic" ;
-
 int ImageWriter::JPEGQuality = 90 ;
 
 ImageWriter::ImageWriter(

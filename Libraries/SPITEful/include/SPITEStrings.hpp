@@ -70,7 +70,6 @@ namespace Spite {
     }
 } ;
 
-
 // Files
 #define     STR_ERROR__FILE__MEMORY_LACK                                        "Unable to open %s because of memory lack."
 #define     STR_ERROR__FILE__ERROR_ON_OPENING                                   "An unexpected error occured while opening file "

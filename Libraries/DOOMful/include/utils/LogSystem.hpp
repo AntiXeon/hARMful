@@ -186,14 +186,43 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            exported void printLine(const Gravity level, const T& value, const Args& ... args) {
-                if (level <= m_minLevel) {
+            exported void static PrintLine(const Gravity level, const T& value, const Args& ... args) {
+                if (!LogInstance) {
+                    throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
+                }
+
+                if (level <= LogInstance -> m_minLevel) {
                     std::string dateTime = FormatCurrentDateTime() ;
 
                     LogInstance -> m_mutex.lock() ;
                     {
                         LogInstance -> m_console.write(dateTime) ;
                         LogInstance -> m_console.writeLine(value, args...) ;
+                    }
+                    LogInstance -> m_mutex.unlock() ;
+                }
+            }
+
+            /**
+             * Write a message on the Console.
+             * @param   level   Level of gravity for the provided value.
+             * @param   value   The value to be printed.
+             * @param   args    Remaining arguments to be printed.
+             */
+            template<class T, class ... Args>
+            exported void PrintLineReplace(const Gravity level, const T& value, const Args& ... args) {
+                if (!LogInstance) {
+                    throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
+                }
+
+                if (level <= LogInstance -> m_minLevel) {
+                    std::string dateTime = FormatCurrentDateTime() ;
+
+                    LogInstance -> m_mutex.lock() ;
+                    {
+                        LogInstance -> m_console.write(dateTime) ;
+                        LogInstance -> m_console.write(value, args...) ;
+                        LogInstance -> m_console.write("\r") ;
                     }
                     LogInstance -> m_mutex.unlock() ;
                 }

@@ -11,33 +11,6 @@ namespace Spite {
      */
     class ImageWriter {
         public:
-            /** Extension of HDR files. */
-            static const std::string HDRFileExtension ;
-
-            /** Extension of PNG files. */
-            static const std::string PNGFileExtension ;
-
-            /** Extension of JPEG files. */
-            static const std::string JPEGFileExtension ;
-
-            /** Extension of JPG files. */
-            static const std::string JPGFileExtension ;
-
-            /** Extension of BMP files. */
-            static const std::string BMPFileExtension ;
-
-            /** Extension of RLE files. */
-            static const std::string RLEFileExtension ;
-
-            /** Extension of SIB files. */
-            static const std::string DIBFileExtension ;
-
-            /** Extension of TGA files. */
-            static const std::string TGAFileExtension ;
-
-            /** Extension of TPIC files. */
-            static const std::string TPICFileExtension ;
-
             /**
              * Filter algorithms on data for optimum compression.
              */

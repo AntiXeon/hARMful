@@ -1,4 +1,5 @@
 #include <files/images/writers/ImageMemoryWriter.hpp>
+#include <files/images/ImageUtils.hpp>
 #include <debug/ErrorsManagement.hpp>
 #include <utils/StringExt.hpp>
 #include <SPITEStrings.hpp>
@@ -9,15 +10,15 @@ using namespace Spite ;
 namespace fs = std::filesystem ;
 
 const std::map<std::string, ImageMemoryWriter::Functor> ImageMemoryWriter::ExtensionMemorySave = {
-    { ImageWriter::PNGFileExtension,  ImageMemoryWriter::SavePNG },
-    { ImageWriter::JPGFileExtension,  ImageMemoryWriter::SaveJPEG },
-    { ImageWriter::JPEGFileExtension, ImageMemoryWriter::SaveJPEG },
-    { ImageWriter::BMPFileExtension,  ImageMemoryWriter::SaveBMP },
-    { ImageWriter::RLEFileExtension,  ImageMemoryWriter::SaveBMP },
-    { ImageWriter::DIBFileExtension,  ImageMemoryWriter::SaveBMP },
-    { ImageWriter::TGAFileExtension,  ImageMemoryWriter::SaveTGA },
-    { ImageWriter::TPICFileExtension, ImageMemoryWriter::SaveTGA },
-    { ImageWriter::HDRFileExtension,  ImageMemoryWriter::SaveHDR }
+    { ImageUtils::PNGFileExtension, ImageMemoryWriter::SavePNG },
+    { ImageUtils::JPGFileExtension, ImageMemoryWriter::SaveJPEG },
+    { ImageUtils::JPEGFileExtension, ImageMemoryWriter::SaveJPEG },
+    { ImageUtils::BMPFileExtension, ImageMemoryWriter::SaveBMP },
+    { ImageUtils::RLEFileExtension, ImageMemoryWriter::SaveBMP },
+    { ImageUtils::DIBFileExtension, ImageMemoryWriter::SaveBMP },
+    { ImageUtils::TGAFileExtension, ImageMemoryWriter::SaveTGA },
+    { ImageUtils::TPICFileExtension, ImageMemoryWriter::SaveTGA },
+    { ImageUtils::HDRFileExtension, ImageMemoryWriter::SaveHDR }
 } ;
 
 ImageMemoryWriter::ImageMemoryWriter(
@@ -31,10 +32,10 @@ bool ImageMemoryWriter::processSpecific() {
     std::string fileExtension ;
 
     if (data().format().type() == ColorFormat::FloatingPoint) {
-        fileExtension = HDRFileExtension ;
+        fileExtension = ImageUtils::HDRFileExtension ;
     }
     else {
-        fileExtension = PNGFileExtension ;
+        fileExtension = ImageUtils::PNGFileExtension ;
     }
 
     if (ExtensionMemorySave.count(fileExtension)) {

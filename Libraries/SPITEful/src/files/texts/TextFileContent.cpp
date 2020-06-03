@@ -7,7 +7,10 @@
 using namespace Spite ;
 
 TextFileContent::TextFileContent(const std::string& filepath)
-    : m_path(filepath) {}
+    : m_path(filepath) {
+    m_reader.setFileStream(&m_fs) ;
+    m_writer.setFileStream(&m_fs) ;
+}
 
 TextFileContent::~TextFileContent() {
     if (m_fs.is_open()) {
@@ -16,7 +19,11 @@ TextFileContent::~TextFileContent() {
 }
 
 void TextFileContent::save(const std::string& text) {
-    open_fs(std::fstream::in) ;
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+
+    open_fs(std::fstream::out) ;
 
     m_writer.clear() ;
     m_writer.write(text) ;
@@ -27,7 +34,11 @@ void TextFileContent::save(const std::string& text) {
 }
 
 std::string TextFileContent::load() {
-    open_fs(std::fstream::out) ;
+    if (m_fs.is_open()) {
+        m_fs.close() ;
+    }
+
+    open_fs(std::fstream::in) ;
 
     std::string text ;
     m_reader.readAll(text) ;

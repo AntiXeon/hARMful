@@ -7,6 +7,16 @@
 
 using namespace Spite ;
 
+const std::string ImageUtils::PNGFileExtension = ".png" ;
+const std::string ImageUtils::JPGFileExtension = ".jpg" ;
+const std::string ImageUtils::JPEGFileExtension = ".jpeg" ;
+const std::string ImageUtils::BMPFileExtension = ".bmp" ;
+const std::string ImageUtils::RLEFileExtension = ".rle" ;
+const std::string ImageUtils::DIBFileExtension = ".dib" ;
+const std::string ImageUtils::TGAFileExtension = ".tga" ;
+const std::string ImageUtils::TPICFileExtension = ".tpic" ;
+const std::string ImageUtils::HDRFileExtension = ".hdr" ;
+
 RawImage ImageUtils::Resize(
     RawImage& original,
     const unsigned int width,
