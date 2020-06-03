@@ -186,7 +186,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            exported void static PrintLine(const Gravity level, const T& value, const Args& ... args) {
+            exported static void PrintLine(const Gravity level, const T& value, const Args& ... args) {
                 if (!LogInstance) {
                     throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
                 }
@@ -210,7 +210,7 @@ namespace Doom {
              * @param   args    Remaining arguments to be printed.
              */
             template<class T, class ... Args>
-            exported void PrintLineReplace(const Gravity level, const T& value, const Args& ... args) {
+            exported static void PrintLineReplace(const Gravity level, const T& value, const Args& ... args) {
                 if (!LogInstance) {
                     throw std::runtime_error(Doom::Texts::LogSys_NotInitialized) ;
                 }
