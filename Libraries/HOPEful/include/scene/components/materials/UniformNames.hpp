@@ -13,9 +13,9 @@ namespace Hope {
     struct UniformNames {
         // Materials uniforms names.
         exported static std::string MaterialCubemapUniformName() { return "cubemap" ; }
-        exported static std::string MaterialEnvRadianceUniformName() { return "envRadiance" ; }
-        exported static std::string MaterialEnvIrradianceUniformName() { return "envIrradiance" ; }
-        exported static std::string MaterialEnvSpecularUniformName() { return "envSpecular" ; }
+        exported static std::string MaterialEnvIrradianceUniformName() { return "iblIrradiance" ; }
+        exported static std::string MaterialEnvSpecularUniformName() { return "iblSpecular" ; }
+        exported static std::string MaterialBrdfLUTUniformName() { return "iblBrdfLUT" ; }
 
         exported static std::string MaterialUseShadowUniformName() { return "useShadow" ; }
         exported static std::string MaterialAmountCascadesUniformName() { return "amountCascades" ; }

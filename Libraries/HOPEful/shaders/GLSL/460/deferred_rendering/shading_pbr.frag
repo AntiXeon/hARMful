@@ -6,14 +6,21 @@ layout(binding = 1) uniform sampler2DMS gEmissiveRoughness ;
 layout(binding = 2) uniform sampler2DMS gAO ;
 layout(binding = 3) uniform sampler2DMS gNormal ;
 layout(binding = 4) uniform sampler2DMS gDepth ;
-// layout(binding = 5) uniform vec3 ambientLightColor ;
-layout(location = 10) uniform int msaaQuality ;
+layout(location = 5) uniform int msaaQuality ;
+
+// Image-based lighting related maps.
+layout(binding = 6) uniform sampler2D iblBrdfLUT ;
+layout(binding = 20) uniform samplerCube iblIrradiance ;
+layout(binding = 30) uniform samplerCube iblSpecular ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
 out vec3 outColor ;
 
 const float Gamma = 2.2f ;
+
+// TODO: Uniform value.
+const float MaxReflectionLOD = 4.0f ;   // For 5 mipmap levels in [0-4].
 
 void main() {
     const ivec2 FragCoords = ivec2(gl_FragCoord.xy) ;
@@ -33,20 +40,49 @@ void main() {
 		currentFragment.emissive = texelFetch(gEmissiveRoughness, FragCoords, sampleIndex).rgb ;
 		currentFragment.roughness = texelFetch(gEmissiveRoughness, FragCoords, sampleIndex).a ;
 		currentFragment.ao = texelFetch(gAO, FragCoords, sampleIndex).r ;
-        currentFragment.normal = normalize(DecodeSpheremapNormals(texelFetch(gNormal, FragCoords, sampleIndex).xy)) ;
+        currentFragment.normal = DecodeSpheremapNormals(texelFetch(gNormal, ivec2(gl_FragCoord), sampleIndex).rg) ;
         currentFragment.viewPosition = ComputeViewSpacePosition(inTexCoords, depthValue) ;
         currentFragment.depth = depthValue ;
+        currentFragment.f0 = reflectivity(currentFragment.albedo, currentFragment.metalness) ;
+
+        vec3 worldNormal = normalize((inverseViewMatrix * vec4(currentFragment.normal, 0.f)).xyz) ;
+        vec3 viewDirection = normalize(-currentFragment.viewPosition.xyz) ;
 
         // Compute ligh shading.
-		vec3 ambient = /*ambientLightColor **/ vec3(0.05f) * currentFragment.albedo * currentFragment.ao ;
-
-        vec3 viewDirection = normalize(-currentFragment.viewPosition.xyz) ;
         vec3 lightsReflectance = ComputeLightsReflectance(
             viewDirection,
             currentFragment
         ) ;
 
-		vec3 shadedColor = ambient + lightsReflectance ;
+
+        vec3 reflectVec = reflect(currentFragment.viewPosition.xyz, currentFragment.normal) ;
+        reflectVec = mat3(inverseViewMatrix) * reflectVec ;
+        vec3 envSpecular = textureLod(
+            iblSpecular,
+            reflectVec,
+            currentFragment.roughness * MaxReflectionLOD
+        ).rgb ;
+
+        vec2 envBrdf = texture(
+            iblBrdfLUT,
+            vec2(
+                max(dot(viewDirection, currentFragment.normal), 0.f),
+                currentFragment.roughness
+            )
+        ).rg ;
+
+        // Get ambient color (IBL).
+        float cosTheta = max(dot(currentFragment.normal, viewDirection), 0.f) ;
+        vec3 f = fresnelSchlickRoughness(cosTheta, currentFragment.f0, currentFragment.roughness) ;
+        vec3 kD = 1.f - f ;
+        kD *= 1.f - currentFragment.metalness ;
+
+        vec3 irradiance = texture(iblIrradiance, worldNormal).rgb ;
+        vec3 diffuse = irradiance * currentFragment.albedo ;
+        vec3 specular = envSpecular * (f * envBrdf.x + envBrdf.y) ;
+        vec3 ambientColor = (kD * diffuse + specular) * currentFragment.ao ;
+
+        vec3 shadedColor = ambientColor + lightsReflectance ;
 
 		// Apply fog.
         applyFog(abs(currentFragment.viewPosition.z), shadedColor) ;
@@ -68,5 +104,9 @@ void main() {
 	fragmentColor /= msaaQuality ;
 
 	fragmentColor = fragmentColor / (fragmentColor + vec3(1.f)) ;
-	outColor = pow(fragmentColor, vec3(1.f / Gamma)) ;
+
+    float exposure = 10.f ;
+    vec3 toneMappedColor = vec3(1.f) - exp(-fragmentColor * exposure) ;
+
+	outColor = pow(toneMappedColor, vec3(1.f / Gamma)) ;
 }

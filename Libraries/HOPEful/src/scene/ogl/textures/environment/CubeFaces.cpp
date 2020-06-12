@@ -10,8 +10,8 @@ namespace Hope::GL {
             "left",
             "top",
             "bottom",
-            "back",
-            "front"
+            "front",
+            "back"
         }} ;
 
         return FaceNames[face - Hope::GL::CubeFace::First] ;

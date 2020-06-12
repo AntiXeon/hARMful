@@ -17,7 +17,8 @@ const std::string EnvironmentMapTexture::HDRFileExtension = "hdr" ;
 EnvironmentMapTexture::EnvironmentMapTexture(
     const unsigned int cubeSize,
     const bool mipmap
-) : m_hasMipmap(mipmap) {
+) : m_hasMipmap(mipmap),
+    m_mipmapLevels(1) {
     const GLint TextureLoD = 0 ;
     const GLint Border = 0 ;
 
@@ -38,6 +39,7 @@ EnvironmentMapTexture::EnvironmentMapTexture(
         ) ;
     }
 
+    bind() ;
     setupTexture() ;
 }
 
@@ -51,8 +53,7 @@ void EnvironmentMapTexture::resize(const unsigned int size) {
     const GLint Border = 0 ;
 
     m_faceDimension = Mind::Dimension2Di(size, size) ;
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, id()) ;
+    bind() ;
 
     for (GLenum face = CubeFace::First ; face <= CubeFace::Last ; ++face) {
         glTexImage2D(
@@ -73,7 +74,6 @@ void EnvironmentMapTexture::resize(const unsigned int size) {
 
 void EnvironmentMapTexture::generateMipmap() {
     m_hasMipmap = true ;
-
     bind() ;
     setupTexture() ;
 }
@@ -87,6 +87,8 @@ EnvironmentMapTexture::EnvironmentMapTexture(
 
     generateTextureID() ;
     addMipmap(hemContent, path, TextureLoD) ;
+
+    bind() ;
     setupTexture(autoMipmap) ;
 }
 
@@ -96,7 +98,6 @@ void EnvironmentMapTexture::addMipmap(
     const unsigned int level
 ) {
     const GLint Border = 0 ;
-
     bool isSizeInitialized = false ;
 
     for (GLenum face = CubeFace::First ; face <= CubeFace::Last ; ++face) {
@@ -108,7 +109,7 @@ void EnvironmentMapTexture::addMipmap(
         hemContent.readBinaryFile(faceFilepath, imageBuffer) ;
 
         // Uncompress the HDR file.
-        Spite::ImageMemoryReader reader(imageBuffer, true) ;
+        Spite::ImageMemoryReader reader(imageBuffer, false) ;
         auto image = reader.process() ;
         auto imageBytes = image.data() ;
 
@@ -134,6 +135,8 @@ void EnvironmentMapTexture::addMipmap(
             imageBytes.data()
         ) ;
     }
+
+    m_mipmapLevels++ ;
 }
 
 void EnvironmentMapTexture::generateTextureID() {

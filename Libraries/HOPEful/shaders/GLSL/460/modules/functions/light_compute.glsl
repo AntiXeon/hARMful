@@ -15,9 +15,9 @@ layout (std140, binding = LIGHTS_DATA_UBO_BINDING_INDEX) uniform LightsData
  * @return  Light contribution color.
  */
 vec3 ComputeDirectionalLightReflectance(
-    DirectionalLight light,
-    vec3 viewDirection,
-    PBRFragmentData fragment
+    in DirectionalLight light,
+    in vec3 viewDirection,
+    inout PBRFragmentData fragment
 ) {
 	vec3 lightRadiance = light.color * light.power ;
 
@@ -49,9 +49,9 @@ vec3 ComputeDirectionalLightReflectance(
  * @return  Light contribution color.
  */
 vec3 ComputePointLightReflectance(
-    PointLight light,
+    in PointLight light,
     vec3 viewDirection,
-    PBRFragmentData fragment
+    inout PBRFragmentData fragment
 ) {
 	vec3 diffLighFragment = light.position - fragment.viewPosition.xyz ;
 
@@ -76,8 +76,8 @@ vec3 ComputePointLightReflectance(
  * @return  Color of the whole scene lights contribution.
  */
 vec3 ComputeLightsReflectance(
-    vec3 viewDirection,
-    PBRFragmentData fragment
+    in vec3 viewDirection,
+    inout PBRFragmentData fragment
 ) {
 	// Reflectance equation.
 	vec3 totalL0 = vec3(0.f) ;

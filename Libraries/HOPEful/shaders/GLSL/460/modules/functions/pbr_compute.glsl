@@ -1,67 +1,90 @@
 const vec3 DefaultBaseReflectivity = vec3(0.04f) ;
 const float Pi = 3.14159265359f ;
 
-vec3 reflectivity(PBRFragmentData fragment) {
-	return mix(DefaultBaseReflectivity, fragment.albedo, fragment.metalness) ;
+vec3 reflectivity(in vec3 albedo, in float metalness) {
+	return mix(DefaultBaseReflectivity, albedo, metalness) ;
 }
 
-vec3 fresnelSchlick(float cosTheta, vec3 f0) {
-    float f = pow(1.f - cosTheta, 5.f) ;
-	return f + f0 * (1.f - f) ;
+vec3 fresnelSchlick(
+    in float cosTheta,
+    in vec3 f0
+) {
+    return f0 + (1.f - f0) * pow(1.f - cosTheta, 5.f) ;
 }
 
-float ggxDistribution(float nDotH, float roughness) {
-	float alpha = roughness * roughness ;
-	float alphaSquared = alpha * alpha ;
-	float nDotHSquared = nDotH * nDotH ;
+vec3 fresnelSchlickRoughness(
+    in float cosTheta,
+    in vec3 f0,
+    in float roughness
+) {
+    return f0 + (max(vec3(1.f - roughness), f0) - f0) * pow(1.f - cosTheta, 5.f) ;
+}
 
-	float fracDenom = nDotHSquared * (alphaSquared - 1.f) + 1.f ;
-	fracDenom = Pi * fracDenom * fracDenom ;
-	return alphaSquared / fracDenom ;
+float ggxDistribution(
+    in float nDotH,
+    in float roughness
+) {
+    float a = roughness * roughness ;
+    float a2 = a * a ;
+    float nDotH2 = nDotH * nDotH ;
+
+    float nom = a2;
+    float denom = (nDotH2 * (a2 - 1.f) + 1.f) ;
+    denom = Pi * denom * denom ;
+
+    return nom / denom ;
 }
 
 float geometrySchlickGGX(
-	float nDotV,
-	float roughness
+	in float nDotV,
+	in float roughness
 ) {
-	float r = (roughness + 1.f) ;
-	float k = (r * r) / 8.f ;
+    float r = (roughness + 1.f) ;
+    float k = (r * r) / 8.f ;
 
-	float fracDenominator = nDotV * (1.f - k) + k ;
-	return nDotV / fracDenominator ;
+    float nom = nDotV ;
+    float denom = nDotV * (1.f - k) + k ;
+
+    return nom / denom ;
 }
 
-float geometrySmith(float dotProd, float roughness) {
-	float k = (roughness + 1.f) * (roughness + 1.f) / 8.f ;
-	float fracDenom = dotProd * (1.f - k) + k ;
-	return 1.f / fracDenom ;
+float geometrySmith(
+    in float nDotV,
+    in float nDotL,
+    in float roughness
+) {
+    float ggx2 = geometrySchlickGGX(nDotV, roughness) ;
+    float ggx1 = geometrySchlickGGX(nDotL, roughness) ;
+
+    return ggx1 * ggx2 ;
 }
 
 vec3 brdfCookTorrance(
-	vec3 viewDirection,
-	vec3 lightRadiance,
-	vec3 lightDirection,
-	PBRFragmentData fragment
+	in vec3 viewDirection,
+	in vec3 lightRadiance,
+	in vec3 lightDirection,
+	inout PBRFragmentData fragment
 ) {
-	vec3 f0 = reflectivity(fragment) ;
-
 	vec3 n = fragment.normal ;
 	vec3 v = viewDirection ;
 	vec3 l = lightDirection ;
 	vec3 h = normalize(v + l) ;
-	float nDotH = max(dot( n, h ), 0.f) ;
-	float lDotH = max(dot( l, h ), 0.f) ;
-	float nDotL = max(dot( n, l ), 0.f) ;
-	float nDotV = max(dot( n, v ), 0.f) ;
+	float nDotH = max(dot(n, h), 0.f) ;
+	float lDotH = max(dot(l, h), 0.f) ;
+	float nDotL = max(dot(n, l), 0.f) ;
+	float nDotV = max(dot(n, v), 0.f) ;
+    float hDotV = max(dot(h, v), 0.f) ;
 
-	float ggxL = geometrySmith(nDotL, fragment.roughness) ;
-	float ggxV = geometrySmith(nDotV, fragment.roughness) ;
-
-	vec3 f = fresnelSchlick(lDotH, f0) ;
-	float g = ggxL * ggxV ;
+	vec3 f = fresnelSchlick(hDotV, fragment.f0) ;
+    float g = geometrySmith(nDotV, nDotL, fragment.roughness) ;
 	float ndf = ggxDistribution(nDotH, fragment.roughness) ;
 
-	vec3 specBrdf = 0.25f * ndf * f * g ;
+    vec3 nominator = ndf * f * g ;
+    float denominator = 4.f * nDotV * nDotL + 0.001f ;
+    vec3 specular = nominator / denominator ;
 
-	return (fragment.albedo + Pi * specBrdf) * lightRadiance * nDotL ;
+    vec3 kS = f ;
+    vec3 kD = vec3(1.f) - kS ;
+    kD *= 1.f - fragment.metalness ;
+    return (kD * fragment.albedo / Pi + specular) * lightRadiance * nDotL ;
 }

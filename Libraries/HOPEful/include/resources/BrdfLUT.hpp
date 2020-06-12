@@ -9,6 +9,8 @@
 #define BRDFLUT_HPP
 
 #include <stddef.h>
+#include <string>
+#include <vector>
 
 namespace Hope
 {
@@ -17,13 +19,12 @@ namespace Hope
   class EmbeddedFileData
   {
   public:
-    virtual size_t getSize() const = 0;
-    virtual const char * getFilename() const = 0;
-    virtual const char * getBuffer() const = 0;
-    virtual bool save(const char * iFilename) const = 0;
+    virtual size_t size() const = 0 ;
+    virtual std::string filename() const = 0 ;
+    virtual const std::vector<unsigned char>& buffer() const = 0 ;
   };
   #endif //BIN2CPP_EMBEDDEDFILE_CLASS
-  const EmbeddedFileData & getBrdfLUTFile();
+  const EmbeddedFileData& getBrdfLUTFile() ;
 }; //Hope
 
 #endif //BRDFLUT_HPP

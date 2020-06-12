@@ -6,6 +6,7 @@ const bool DeferredRenderingNode::FollowWindowSize = true ;
 
 DeferredRenderingNode::DeferredRenderingNode(
     GBufferRenderNode* gBuffer,
+    const API::EnvironmentMap* envMap,
     FrameGraphNode* parent
 ) : FrameGraphNode(parent),
     m_gBuffer(gBuffer) {
@@ -25,7 +26,7 @@ DeferredRenderingNode::DeferredRenderingNode(
 
     // To put m_framebufferNode after m_computeSSAONode in graph.
     m_framebufferNode -> setParent(this) ;
-    m_shadingNode = std::make_unique<ShadingStepNode>(m_gBuffer, outputFBO, m_framebufferNode.get()) ;
+    m_shadingNode = std::make_unique<ShadingStepNode>(m_gBuffer, outputFBO, envMap, m_framebufferNode.get()) ;
     m_postProdNode = std::make_unique<PostProdStepNode>(outputFBO, m_framebufferNode.get()) ;
 
     m_aoApplyNode = std::make_unique<AOApplyEffectNode>(m_framebufferNode.get()) ;
@@ -46,25 +47,25 @@ void DeferredRenderingNode::setupFramebuffer() {
     // Render target to apply shading to.
     m_framebufferNode -> framebuffer() -> attachColor(
         ShadingStepNode::ShadingRenderTarget,
-        API::InternalFormat::RedGreenBlueAlpha,
+        API::InternalFormat::RedGreenBlueAlpha32f,
         API::PixelFormat::RedGreenBlueAlpha,
-        API::PixelDataType::UnsignedByte
+        API::PixelDataType::Float
     ) ;
 
     // Render target to compute ambient occlusion to.
     // Try to use RED channel only.
     m_framebufferNode -> framebuffer() -> attachColor(
        SSAORenderNode::AORenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha,
+       API::InternalFormat::RedGreenBlueAlpha32f,
        API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::UnsignedByte
+       API::PixelDataType::Float
     ) ;
 
     // Render target to apply post production effects.
     m_framebufferNode -> framebuffer() -> attachColor(
        PostProdStepNode::PostProdRenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha,
+       API::InternalFormat::RedGreenBlueAlpha32f,
        API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::UnsignedByte
+       API::PixelDataType::Float
     ) ;
 }

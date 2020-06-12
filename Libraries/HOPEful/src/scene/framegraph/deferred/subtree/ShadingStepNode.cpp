@@ -7,9 +7,10 @@ using namespace Hope ;
 ShadingStepNode::ShadingStepNode(
     GBufferRenderNode* gBuffer,
     API::Framebuffer* shadingFBO,
+    const API::EnvironmentMap* envMap,
     FrameGraphNode* parent
 ) : OffscreenRenderingNode(
-        std::make_unique<GBufferQuadMaterialComponent>(gBuffer),
+        std::make_unique<GBufferQuadMaterialComponent>(gBuffer, envMap),
         parent
     ),
     m_shadingFBO(shadingFBO) {}

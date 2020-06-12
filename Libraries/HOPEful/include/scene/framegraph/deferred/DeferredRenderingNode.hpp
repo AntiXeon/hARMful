@@ -13,6 +13,11 @@
 #include <scene/framegraph/deferred/postprod/AOApplyEffectNode.hpp>
 #include <memory>
 
+#ifdef OGL
+    #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
+    namespace API = Hope::GL ;
+#endif
+
 namespace Hope {
     /**
      * Framegraph node to perform deferred rendering.
@@ -67,12 +72,15 @@ namespace Hope {
              * Create a new DeferredRenderingNode instance.
              * @param   gBuffer     G-Buffer used for the rendering (shading,
              *                      SSAO, ...).
+             * @param envMap        Environment map for using specular and
+             *                      irradiance textures.
              * @param   windowSize  If true, the size of the framebuffer follows
              *                      the size of the window. If false, the size
              *                      of the framebuffer is fixed.
              */
             exported DeferredRenderingNode(
                 GBufferRenderNode* gBuffer,
+                const API::EnvironmentMap* envMap = nullptr,
                 FrameGraphNode* parent = nullptr
             ) ;
 

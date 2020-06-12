@@ -2,11 +2,11 @@
 #define __HOPE__SHADING_STEP_NODE__
 
 #include <utils/Platform.hpp>
-
 #include <HopeAPI.hpp>
 
 #ifdef OGL
     #include <scene/ogl/rendering/framebuffers/Framebuffer.hpp>
+    #include <scene/ogl/textures/environment/EnvironmentMap.hpp>
     namespace API = Hope::GL ;
 #endif
 
@@ -37,10 +37,13 @@ namespace Hope {
             /**
              * Create a new ShadingStepNode instance.
              * @param   gBuffer G-Buffer used for the deferred shading.
+             * @param envMap    Environment map for using specular and
+             *                  irradiance textures.
              */
             exported ShadingStepNode(
                 GBufferRenderNode* gBuffer,
                 API::Framebuffer* shadingFBO,
+                const API::EnvironmentMap* envMap = nullptr,
                 FrameGraphNode* parent = nullptr
             ) ;
 

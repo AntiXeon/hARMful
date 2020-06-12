@@ -2,9 +2,13 @@
 #define __HOPE__GL_TEXTURE_IMAGE_2D__
 
 #include <utils/Platform.hpp>
-
+#include <files/images/data/RawImage.hpp>
 #include <scene/ogl/textures/Texture.hpp>
 #include <array>
+
+namespace Hope {
+    class EmbeddedFileData ;
+}
 
 namespace Hope::GL {
     /**
@@ -73,6 +77,16 @@ namespace Hope::GL {
                 const PixelFormat pixelFormat,
                 const PixelDataType pixelDataType,
                 const unsigned char* pixelData = nullptr,
+                const bool mipmap = true
+            ) ;
+
+            /**
+             * Create a new TextureImage2D instance.
+             * @param   In memory data of the image to load on GPU.
+             * @warning Performance issues! Only for specific allocations.
+             */
+            exported TextureImage2D(
+                Spite::RawImage& rawImage,
                 const bool mipmap = true
             ) ;
 

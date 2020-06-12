@@ -66,13 +66,6 @@ namespace Hope::GL {
             }
 
             /**
-             * Bind texture unit.
-             */
-            exported void bindUnit(const unsigned int unit) const {
-                glBindTextureUnit(unit, m_textureID) ;
-            }
-
-            /**
              * Bind the current texture.
              */
             exported void bind() const {
@@ -84,6 +77,13 @@ namespace Hope::GL {
              */
             exported void unbind() const {
                 glBindTexture(m_target, 0) ;
+            }
+
+            /**
+             * Bind texture unit.
+             */
+            exported void bindUnit(const unsigned int unit) const {
+                glBindTextureUnit(unit, m_textureID) ;
             }
 
             /**

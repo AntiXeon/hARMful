@@ -10,6 +10,11 @@
 
 namespace fs = std::filesystem;
 
+namespace Hope {
+    class EnvironmentMapMaterialComponent ;
+    class GBufferQuadMaterialComponent ;
+}
+
 namespace Hope::GL {
     /**
      * An environment map contains all the required data for performing image
@@ -19,6 +24,9 @@ namespace Hope::GL {
      * based on the environment map).
      */
     class EnvironmentMap final {
+        friend class Hope::EnvironmentMapMaterialComponent ;
+        friend class Hope::GBufferQuadMaterialComponent ;
+
         public:
             static const std::string EnvironmentMapName ;
             static const std::string IrradianceMapName ;
@@ -28,18 +36,18 @@ namespace Hope::GL {
             /**
              * Environment map itself (sky, etc).
              */
-            std::unique_ptr<EnvironmentMapTexture> m_envMap = nullptr ;
+            std::shared_ptr<EnvironmentMapTexture> m_envMap = nullptr ;
 
             /**
              * Specular map (with roughness levels as mipmap) to display
              * precomputed specular on objects.
              */
-            std::unique_ptr<EnvironmentMapTexture> m_specularMap = nullptr ;
+            std::shared_ptr<EnvironmentMapTexture> m_specularMap = nullptr ;
 
             /**
              * Irradiance map for ambient lighting.
              */
-            std::unique_ptr<EnvironmentMapTexture> m_irradianceMap = nullptr ;
+            std::shared_ptr<EnvironmentMapTexture> m_irradianceMap = nullptr ;
 
         public:
             /**
@@ -49,28 +57,28 @@ namespace Hope::GL {
              */
             exported EnvironmentMap(const std::string& hemFilepath) ;
 
+        private:
             /**
              * Get the environment map texture.
              */
-            exported EnvironmentMapTexture* envMap() const {
-                return m_envMap.get() ;
+            exported std::shared_ptr<EnvironmentMapTexture> envMap() const {
+                return m_envMap ;
             }
 
             /**
              * Get the specular map texture.
              */
-            exported EnvironmentMapTexture* specularMap() const {
-                return m_specularMap.get() ;
+            exported std::shared_ptr<EnvironmentMapTexture> specularMap() const {
+                return m_specularMap ;
             }
 
             /**
              * Get the irradiance map texture.
              */
-            exported EnvironmentMapTexture* irradianceMap() const {
-                return m_irradianceMap.get() ;
+            exported std::shared_ptr<EnvironmentMapTexture> irradianceMap() const {
+                return m_irradianceMap ;
             }
 
-        private:
             /**
              * Get the specular levels in order from bigger size to smaller one.
              * @param hemContent    TAR archive that contains the environment map

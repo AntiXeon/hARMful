@@ -32,6 +32,17 @@ namespace Spite {
              */
             exported RawImage process() ;
 
+            /**
+             * Shortcut in a single static method
+             */
+            exported static RawImage Read(
+                const std::string& filepath,
+                const bool verticalFlip = false
+            ) {
+                ImageFileReader reader(filepath, verticalFlip) ;
+                return reader.process() ;
+            }
+
         private:
             /**
              * Read images.

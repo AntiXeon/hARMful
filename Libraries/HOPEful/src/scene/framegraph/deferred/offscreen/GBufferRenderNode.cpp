@@ -12,30 +12,30 @@ GBufferRenderNode::GBufferRenderNode(
 void GBufferRenderNode::setup() {
     framebuffer() -> attachColor(
         AlbedoMetalnessRenderTarget,
-        API::InternalFormat::RedGreenBlueAlpha,
-        API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
-        API::PixelDataType::UnsignedByte        // useless for MSAA
+        API::InternalFormat::RedGreenBlueAlpha16f,
+        API::PixelFormat::RedGreenBlueAlpha,            // useless for MSAA
+        API::PixelDataType::Float                       // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        EmissiveRoughnessRenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha,
-       API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
-       API::PixelDataType::UnsignedByte        // useless for MSAA
+       API::InternalFormat::RedGreenBlueAlpha16f,
+       API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
+       API::PixelDataType::Float                        // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        AORenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha,
-       API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
-       API::PixelDataType::UnsignedByte        // useless for MSAA
+       API::InternalFormat::RedGreenBlueAlpha16f,
+       API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
+       API::PixelDataType::Float                        // useless for MSAA
    ) ;
 
    framebuffer() -> attachColor(
 	  NormalRenderTarget,
-	  API::InternalFormat::RedGreenBlue10Alpha2,
-	  API::PixelFormat::RedGreenBlueAlpha,    // useless for MSAA
-	  API::PixelDataType::UnsignedByte        // useless for MSAA
+	  API::InternalFormat::RedGreenBlueAlpha16f,
+	  API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
+	  API::PixelDataType::Float                        // useless for MSAA
   ) ;
 
    framebuffer() -> setDrawBuffers({

@@ -43,6 +43,18 @@ TextureImage2D::TextureImage2D(
     resize(size, pixelData) ;
 }
 
+TextureImage2D::TextureImage2D(
+    Spite::RawImage& rawImage,
+    const bool mipmap
+) : TextureImage2D(
+        Mind::Dimension2Di(rawImage.width(), rawImage.height()),
+        TextureLoader::ConvertInternalColorFormat(rawImage.format(), false),
+        static_cast<PixelFormat>(TextureLoader::ConvertColorFormat(rawImage.format())),
+        static_cast<PixelDataType>(TextureLoader::ConvertDataType(rawImage.format())),
+        rawImage.data().data(),
+        mipmap
+) {}
+
 void TextureImage2D::resize(
     const Mind::Dimension2Di& size,
     const unsigned char* pixelData
@@ -73,6 +85,8 @@ void TextureImage2D::resize(
 }
 
 void TextureImage2D::setWrapModes(std::array<WrapMode, AmountCoordinates> modes) {
+    glBindTexture(GL_TEXTURE_2D, id()) ;
     glTexParameteri(target(), GL_TEXTURE_WRAP_S, modes[0]) ;
     glTexParameteri(target(), GL_TEXTURE_WRAP_T, modes[1]) ;
+    glBindTexture(GL_TEXTURE_2D, 0) ;
 }

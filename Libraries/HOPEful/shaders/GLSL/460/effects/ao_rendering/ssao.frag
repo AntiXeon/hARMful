@@ -14,14 +14,14 @@ out vec4 fragColor ;
 const float Epsilon = 0.0001f ;
 
 // Compute the world position of the current fragment.
-vec3 computeWorldPosition(vec2 texCoords) {
+vec3 computeWorldPosition(in vec2 texCoords) {
     ivec2 texSize = textureSize(depth) ;
     float depthValue = texelFetch(depth, ivec2(texCoords * texSize), 0).r ;
     return ComputeWorldSpacePosition(inTexCoords, depthValue).xyz ;
 }
 
 // Compute the view-space position of the current fragment.
-vec3 computeViewSpacePosition(vec2 texCoords) {
+vec3 computeViewSpacePosition(in vec2 texCoords) {
     ivec2 texSize = textureSize(depth) ;
     float depthValue = texelFetch(depth, ivec2(texCoords * texSize), 0).r ;
     return ComputeViewSpacePosition(inTexCoords, depthValue).xyz ;
@@ -35,16 +35,18 @@ vec2 noiseTextureCoords() {
 
 // Compute a TBN matrix with a random orientation.
 mat3 computeTBNMatrix() {
+    const int MSAASample = 0 ;
+
     vec3 randDirection = normalize(texture(noise, noiseTextureCoords()).xyz) ;
-    vec3 normalValue = DecodeSpheremapNormals(texelFetch(normal, ivec2(gl_FragCoord), 0).xy) ;
+    vec3 normalValue = DecodeSpheremapNormals(texelFetch(normal, ivec2(gl_FragCoord), MSAASample).rg) ;
     vec3 bitangent = cross(normalValue, randDirection) ;
 
     if (length(bitangent) < Epsilon) {
-        bitangent = cross(normalValue, vec3(0,0,1)) ;
+        bitangent = cross(normalValue, vec3(0.f, 0.f, 1.f)) ;
     }
 
     bitangent = normalize(bitangent) ;
-    vec3 tangent = cross(bitangent, normalValue) ;
+    vec3 tangent = normalize(cross(bitangent, normalValue)) ;
     return mat3(tangent, bitangent, normalValue) ;
 }
 
@@ -52,31 +54,32 @@ void main() {
     float occlusion = 1.f ;
 
     if (useSSAO == 1) {
-        vec3 worldPosition = computeViewSpacePosition(inTexCoords) ;
-        mat3 tbnMatrix = computeTBNMatrix() ;
+        vec3 camPosition = computeViewSpacePosition(inTexCoords) ;
+        mat3 toCamSpaceMatrix = computeTBNMatrix() ;
 
         occlusion = 0.f ;
         for (int sampleIndex = 0 ; sampleIndex < AO_KERNEL_SIZE ; ++sampleIndex) {
             // Sample position.
-            vec3 kernelSample = tbnMatrix * kernel[sampleIndex] ;
-            kernelSample = worldPosition + AO_RADIUS * kernelSample ;
+            vec3 kernelSample = toCamSpaceMatrix * kernel[sampleIndex] ;
+            kernelSample = camPosition + AO_RADIUS * kernelSample ;
 
             // Project the sample onto the texture (screen-space position).
             vec4 offset = vec4(kernelSample, 1.f) ;
             offset = projectionMatrix * offset ;
-            offset.xyz /= offset.w ;
+            offset /= offset.w ;
             offset.xyz = offset.xyz * 0.5f + 0.5f ;
 
             // Kernel sample depth.
             float sampleDepth = computeViewSpacePosition(offset.xy).z ;
-            float EpsilonZ = sampleDepth - worldPosition.z ;
+            float EpsilonZ = sampleDepth - camPosition.z ;
 
             // Range check and accumulate points that are occluded.
             float rangeCheck = smoothstep(0.f, 1.f, AO_RADIUS / EpsilonZ) ;
             occlusion += (sampleDepth >= (kernelSample.z + AO_BIAS) ? 1.f : 0.f) * rangeCheck ;
         }
 
-        occlusion = 1.f - (occlusion / AO_KERNEL_SIZE) ;
+        occlusion = occlusion / AO_KERNEL_SIZE ;
+        occlusion = 1.f - occlusion ;
     }
 
     fragColor = vec4(occlusion) ;

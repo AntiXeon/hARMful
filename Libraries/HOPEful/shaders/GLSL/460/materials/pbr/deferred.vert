@@ -11,13 +11,10 @@ layout(location = 1) out vec3 outNormal ;
 layout(location = 2) out mat3 outTBNMatrix ;
 
 void correctTBNMatrix() {
-	vec3 normalVector = vec3(normalMatrix * vec4(normal, 0.f)) ;
-	outNormal = normalVector ;
-
-    vec3 correctedTangent = normalize(vec3(normalMatrix * vec4(tangent, 0.f))) ;
-    vec3 correctedBitangent = normalize(vec3(normalMatrix * vec4(bitangent, 0.f))) ;
-    vec3 correctedNormal = normalize(normalVector) ;
-
+    outNormal = normalize(modelViewMatrix * vec4(normal, 0.f)).xyz ;
+    vec3 correctedTangent = normalize(modelViewMatrix * vec4(tangent, 0.f)).xyz ;
+    vec3 correctedBitangent = normalize(modelViewMatrix * vec4(bitangent, 0.f)).xyz ;
+    vec3 correctedNormal = outNormal ;
     outTBNMatrix = mat3(correctedTangent, correctedBitangent, correctedNormal) ;
 }
 

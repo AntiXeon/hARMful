@@ -22,4 +22,7 @@ struct PBRFragmentData {
 
     // Depth of the fragment.
     float depth ;
+
+    // Reflectivity.
+    vec3 f0 ;
 } ;

@@ -93,9 +93,9 @@ void SSAORenderNode::generateFramegraphSubtree() {
         // Try to use RED channel only.
         m_subtree.aoRendering.offscreen -> framebuffer() -> attachColor(
             AORenderTarget,
-            API::InternalFormat::RedGreenBlueAlpha,
+            API::InternalFormat::RedGreenBlueAlpha16f,
             API::PixelFormat::RedGreenBlueAlpha,
-            API::PixelDataType::UnsignedInt
+            API::PixelDataType::Float
         ) ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 

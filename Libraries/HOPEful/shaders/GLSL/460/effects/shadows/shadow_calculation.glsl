@@ -9,7 +9,7 @@ layout(binding = SHADOW_DEPTH_MAP_BINDING_UNIT) uniform sampler2DArrayShadow cas
  * @param   Position to know the distance from the camera.
  * @return  Distance between the given position and the camera location.
  */
-float distanceFromCamera(vec4 position) {
+float distanceFromCamera(in vec4 position) {
     vec4 projectedPosition = projectionMatrix * position ;
     return projectedPosition.z / farPlaneDistance ;
 }
@@ -26,10 +26,10 @@ float distanceFromCamera(vec4 position) {
  *          the depth taken from the light depth map.
  */
 float ShadowCompute(
-    vec3 lightDirection,
-    vec4 position,
-    vec3 normal,
-    float depth
+    in vec3 lightDirection,
+    in vec4 position,
+    in vec3 normal,
+    in float depth
 ) {
     float litFragment = 1.f ;
 

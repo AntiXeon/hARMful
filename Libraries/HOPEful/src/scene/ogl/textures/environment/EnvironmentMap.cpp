@@ -18,11 +18,11 @@ EnvironmentMap::EnvironmentMap(const std::string& hemFilepath) {
     orderedSpecularLevels(hemContent, specularLevels) ;
     unsigned int amountLevels = specularLevels.size() ;
 
-    m_envMap = std::unique_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, EnvironmentMapName, true)) ;
-    m_irradianceMap = std::unique_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, IrradianceMapName, true)) ;
+    m_envMap = std::shared_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, EnvironmentMapName, true)) ;
+    m_irradianceMap = std::shared_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, IrradianceMapName, true)) ;
 
     fs::path specularPath(SpecularMapName + "/" + std::to_string(specularLevels.front())) ;
-    m_specularMap = std::unique_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, specularPath, false)) ;
+    m_specularMap = std::shared_ptr<EnvironmentMapTexture>(new EnvironmentMapTexture(hemContent, specularPath, true)) ;
 
     for (unsigned int level = 1 ; level < amountLevels ; ++level) {
         specularPath = fs::path(SpecularMapName + "/" + std::to_string(specularLevels[level])) ;

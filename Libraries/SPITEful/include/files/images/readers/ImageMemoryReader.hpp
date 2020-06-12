@@ -33,6 +33,17 @@ namespace Spite {
              */
             exported RawImage process() ;
 
+            /**
+             * Shortcut in a single static method
+             */
+            exported static RawImage Read(
+                const std::vector<unsigned char>& buffer,
+                const bool verticalFlip = false
+            ) {
+                ImageMemoryReader reader(buffer, verticalFlip) ;
+                return reader.process() ;
+            }
+
         private:
             /**
              * Buffer raw bytes.

@@ -74,6 +74,8 @@ GLenum TextureLoader::ConvertDataType(const Spite::ColorFormat& format) {
     switch (format.type()) {
         case Spite::ColorFormat::Byte:
             return GL_UNSIGNED_BYTE ;
+        case Spite::ColorFormat::Short:
+            return GL_UNSIGNED_SHORT ;
         case Spite::ColorFormat::FloatingPoint:
             return GL_FLOAT ;
         default:

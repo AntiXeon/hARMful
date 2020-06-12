@@ -1,8 +1,12 @@
 #include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
 #include <scene/components/materials/UniformNames.hpp>
+#include <files/images/readers/ImageMemoryReader.hpp>
+#include <resources/BrdfLUT.hpp>
 #include <memory>
 
 #ifdef OGL
+    #include <scene/ogl/textures/formats/WrapModes.hpp>
+    #include <scene/ogl/textures/formats/FilterModes.hpp>
     #include <scene/components/materials/shaders/GLSL/460/Modules.hpp>
 	#include <scene/components/materials/shaders/GLSL/460/modules/Includes.hpp>
 	#include <scene/components/materials/shaders/GLSL/460/modules/Structures.hpp>
@@ -13,11 +17,28 @@
 
 using namespace Hope ;
 
-GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(const GBufferRenderNode* gBuffer)
-    : MaterialComponent(),
-      m_gBuffer(gBuffer) {
+std::unique_ptr<API::TextureImage2D> GBufferQuadMaterialComponent::BrdfLUT = nullptr ;
+
+GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(
+    const GBufferRenderNode* gBuffer,
+    const API::EnvironmentMap* envMap
+)
+: MaterialComponent(),
+  m_gBuffer(gBuffer) {
     setupForwardShader() ;
     setupUniforms() ;
+
+    if (envMap) {
+        m_specularMap = envMap -> specularMap() ;
+        m_irradianceMap = envMap -> irradianceMap() ;
+    }
+
+    if (!BrdfLUT) {
+        auto rawImage = Spite::ImageMemoryReader::Read(getBrdfLUTFile().buffer(), true) ;
+        BrdfLUT = std::make_unique<API::TextureImage2D>(rawImage, true) ;
+        BrdfLUT -> setWrapModes({ API::ClampToEdge, API::ClampToEdge }) ;
+        BrdfLUT -> setFiltering(API::Linear, API::Linear) ;
+    }
 }
 
 void GBufferQuadMaterialComponent::updateUniformValues() {
@@ -28,13 +49,38 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
 	framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
     uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
+
+    if (m_irradianceMap && m_specularMap) {
+        BrdfLUT -> bindUnit(BrdfLUTBinding) ;
+        m_irradianceMap -> bindUnit(IrradianceBinding) ;
+        m_specularMap -> bindUnit(SpecularBinding) ;
+    }
 }
 
 void GBufferQuadMaterialComponent::setupUniforms() {
-    auto msaaQualityUniform = std::make_unique<Hope::ShaderUniform>() ;
-    msaaQualityUniform -> setName(UniformNames::MSAAQualityUniformName()) ;
-    msaaQualityUniform -> setLocation(MSAAQualityUniformLocation) ;
-    uniforms(ForwardPassID).add(std::move(msaaQualityUniform)) ;
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MSAAQualityUniformName(),
+        MSAAQualityUniformLocation
+    ) ;
+
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MaterialEnvSpecularUniformName(),
+        SpecularBinding
+    ) ;
+
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MaterialEnvIrradianceUniformName(),
+        IrradianceBinding
+    ) ;
+
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MaterialBrdfLUTUniformName(),
+        BrdfLUTBinding
+    ) ;
 }
 
 void GBufferQuadMaterialComponent::setupForwardShader() {

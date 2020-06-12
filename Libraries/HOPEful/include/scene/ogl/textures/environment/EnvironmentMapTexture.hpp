@@ -44,6 +44,11 @@ namespace Hope::GL {
              */
             bool m_hasMipmap = false ;
 
+            /**
+             * Mipmap levels contained in the texture.
+             */
+            unsigned short m_mipmapLevels = 0 ;
+
         public:
             /**
              * Generate an empty EnvironmentMapTexture with predefined edge
@@ -83,6 +88,20 @@ namespace Hope::GL {
             }
 
             /**
+             * Bind texture unit.
+             */
+            exported void bindUnit(const unsigned int unit) const {
+                glBindTextureUnit(unit, m_textureID) ;
+            }
+
+            /**
+             * Unbind texture unit.
+             */
+            exported void unbindUnit(const unsigned int unit) const {
+                glBindTextureUnit(unit, 0) ;
+            }
+
+            /**
              * Resize the texture (single face dimensions).
              * @param   size        The new size to apply on a square face.
              */
@@ -107,6 +126,13 @@ namespace Hope::GL {
              */
             exported unsigned int faceHeight() const {
                 return m_faceDimension.height() ;
+            }
+
+            /**
+             * Available levels of mipmapping.
+             */
+            exported unsigned short mipmapLevel() const {
+                return m_mipmapLevels ;
             }
 
             /**

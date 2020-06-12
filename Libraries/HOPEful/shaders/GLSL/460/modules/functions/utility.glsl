@@ -1,16 +1,22 @@
 /**
  * Adjust a normal vector with a Tangent-Bitangent-Normal matrix.
  */
-vec3 AdjustNormalVector(mat3 tbnMatrix, vec3 normalValue) {
-    vec3 adjustedNormalVector = normalize((normalValue * 2.f) - 1.f) ;
-    adjustedNormalVector = normalize(tbnMatrix * adjustedNormalVector) ;
+vec3 AdjustNormalMapVector(
+    in mat3 tbnMatrix,
+    in vec3 normalMapVector
+) {
+    vec3 adjustedNormalVector = normalize(normalMapVector * 2.f - 1.f) ;
+    adjustedNormalVector = normalize(tbnMatrix * normalMapVector) ;
     return adjustedNormalVector ;
 }
 
 /**
  * Retrieve a view space position from texture coordinates and depth.
  */
-vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {
+vec4 ComputeViewSpacePosition(
+    in vec2 texCoords,
+    in float depth
+) {
     vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;
 	float x = adjustedTexCoords.x ;
 	float y = adjustedTexCoords.y ;
@@ -25,7 +31,10 @@ vec4 ComputeViewSpacePosition(vec2 texCoords, float depth) {
 /**
  * Retrieve a world space position from texture coordinates and depth.
  */
-vec4 ComputeWorldSpacePosition(vec2 texCoords, float depth) {
+vec4 ComputeWorldSpacePosition(
+    in vec2 texCoords,
+    in float depth
+) {
     vec2 adjustedTexCoords = texCoords * 2.f - 1.f ;
 	float x = adjustedTexCoords.x ;
 	float y = adjustedTexCoords.y ;
@@ -42,7 +51,7 @@ vec4 ComputeWorldSpacePosition(vec2 texCoords, float depth) {
  * Encode normals using the Lambert azimuthal equal-area projection.
  * See http://aras-p.info/texts/CompactNormalStorage.html
  */
-vec2 EncodeSpheremapNormals(vec3 normal) {
+vec2 EncodeSpheremapNormals(in vec3 normal) {
     vec3 normalizedNormal = normalize(normal) ;
     float zEncoding = sqrt(normalizedNormal.z * 8.f + 8.f) ;
     return (normalizedNormal.xy / zEncoding) + 0.5f ;
@@ -52,7 +61,7 @@ vec2 EncodeSpheremapNormals(vec3 normal) {
  * Decode normals using the Lambert azimuthal equal-area projection.
  * See http://aras-p.info/texts/CompactNormalStorage.html
  */
-vec3 DecodeSpheremapNormals(vec2 sphereNormal) {
+vec3 DecodeSpheremapNormals(in vec2 sphereNormal) {
     vec2 adjustedSphereNormal = sphereNormal * 4.f - 2.f ;
     float dotResult = dot(adjustedSphereNormal, adjustedSphereNormal) ;
     float zInverseDecoding = sqrt(1.f - dotResult / 4.f) ;
