@@ -12,6 +12,8 @@ The repository is structured in different parts:
 -   **Tools**: some internal tools developed to help creating the libraries. They are not required to use the library nor to be integrated into the applications;
 -   **UnitTests**: unit tests to check that the different classes and modules are working as expected, without regressions. The unit tests use a home-made build system. They are run at each commit through the continuous integration;
 
+![hARMful render](./docs/assets/images/hARMful.jpg)
+
 ## Dependencies
 ### HOPEful (OpenGL rendering)
 -   [GLFW 3.2.1](https://github.com/glfw/glfw) (for window and inputs)
@@ -23,8 +25,6 @@ The repository is structured in different parts:
 -   A "modern" Intel/AMD CPU with, at least, SSE2 support is required
 -   SSE4 support is recommanded for improved performances
 -   ARM CPUs with NEON are not yet supported
-
-![hARMful render](./docs/assets/images/renders/shadows.jpg)
 
 ## Compilation
 ### GNU/Linux
@@ -71,3 +71,5 @@ The compilation process for Windows users is shown in this video: https://www.yo
 
 ### Mac™ OS
 Not officially supported.
+
+![hARMful render](./docs/assets/images/renders/shadows.jpg)
