@@ -6,6 +6,7 @@ title: About
 hARMful was - at its very beginning - an idea. It was the idea of a 3D video game I could never produce as it would be too complicated to create for a single developer. In this survival video game, the player was in danger in a very hostile environment.
 
 ![hARMful banner](assets/images/renders/shadows.jpg)
+_Rendered with old Blinn-Phong shaders_
 
 Later, this idea became a little bit more concrete for a project at the engineering school on a Raspberry Pi. I compiled the Irrlicht game engine on this platform to create a small 3D application in splitscreen with a classmate. The aim was to control two players on the same computer with two keyboards and mouses. Moreover, I began to develop a kind of character behavior during this project. This was what hARMful looked like at this time: a naive video game artificial intelligence.
 
@@ -25,4 +26,5 @@ The logo of the engine is inspired by the pun of its name. It represents a *box 
 
 That's it, you know the secrets of the hARMful project!
 
-![hARMful banner](assets/images/logo/hARMful_Preview.png)
+_![hARMful screenshot](./assets/images/renders/pbr/walther.jpg)
+Model by [Rajil Jose Macatangay](https://3dmodelhaven.com/model/?m=Walther_01)_

@@ -47,8 +47,8 @@ Some of them are already implemented and a demonstration video is available. A "
 - Scripting (✗)
 - [Bullet physics engine](https://github.com/bulletphysics/bullet3) integration (✗)
 
-![hARMful screenshot](./assets/images/hARMful.jpg)
-[Fullscreen](./assets/images/hARMful_big.jpg)
+![hARMful screenshot (Cerberus by Andrew Maximov)](./assets/images/hARMful.jpg)
+[Fullscreen](./assets/images/hARMful_big.jpg) - _Model by [Andrew Maximov](https://artisaverb.info/Cerberus.html)_
 
 ### Features of MINDful
 - SIMD implementations:
@@ -75,6 +75,9 @@ Some of them are already implemented and a demonstration video is available. A "
     - Linux (✓)
     - Windows (✗)
 - Random numbers (integer, floats) generation (✓)
+
+_![hARMful screenshot](./assets/images/renders/pbr/chandelier.jpg)
+Model by [Kirill Sannikov](https://3dmodelhaven.com/model/?m=Chandelier_01)_
 
 ## Roadmap
 After the release of the version 1.0, the following versions will be prepared by specific features.
@@ -148,3 +151,6 @@ A second step for improving performances of the engine.
 * Use of the SPIR-V language for shaders
 * Support of the Vulkan API
 * ...
+
+_![hARMful screenshot](./assets/images/renders/pbr/mustang.jpg)
+Rendered from a FBX (not PBR compliant) - Model by [Tryder](https://www.blendswap.com/blend/16609)_
