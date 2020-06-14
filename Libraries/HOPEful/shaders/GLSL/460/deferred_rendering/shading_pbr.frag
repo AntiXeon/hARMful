@@ -21,9 +21,6 @@ out vec3 outColor ;
 
 const float Gamma = 2.2f ;
 
-// TODO: Uniform value.
-// const float MaxReflectionLOD = 4.0f ;   // For 5 mipmap levels in [0-4].
-
 void main() {
     const ivec2 FragCoords = ivec2(gl_FragCoord.xy) ;
 
@@ -104,7 +101,6 @@ void main() {
     }
 
 	fragmentColor /= msaaQuality ;
-	fragmentColor = fragmentColor / (fragmentColor + vec3(1.f)) ;
-    vec3 toneMappedColor = vec3(1.f) - exp(-fragmentColor * exposure) ;
-	outColor = pow(toneMappedColor, vec3(1.f / Gamma)) ;
+    fragmentColor = vec3(1.f) - exp(-fragmentColor * exposure) ;
+    outColor = pow(fragmentColor, vec3(1.f / Gamma)) ;
 }

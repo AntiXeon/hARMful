@@ -15,7 +15,7 @@ ShadingStepNode::ShadingStepNode(
     ),
     m_shadingFBO(shadingFBO) {
     auto* shadingMaterial = static_cast<GBufferQuadMaterialComponent*>(material()) ;
-    shadingMaterial -> setExposure(10.f) ;
+    shadingMaterial -> setExposure(5.f) ;
 }
 
 void ShadingStepNode::specificAccept(IFrameGraphVisitor* visitor) {
