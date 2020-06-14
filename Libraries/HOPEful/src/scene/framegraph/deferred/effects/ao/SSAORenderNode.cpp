@@ -70,8 +70,8 @@ void SSAORenderNode::generateKernel() {
 void SSAORenderNode::generateFramegraphSubtree() {
     API::Framebuffer* gFramebuffer = m_gBuffer -> framebuffer() ;
     Mind::Dimension2Di framebufferDimension(
-        gFramebuffer -> width(),
-        gFramebuffer -> height()
+        gFramebuffer -> width() / 2.f,
+        gFramebuffer -> height() / 2.f
     ) ;
 
     bool windowSized = m_gBuffer -> windowSize() ;
