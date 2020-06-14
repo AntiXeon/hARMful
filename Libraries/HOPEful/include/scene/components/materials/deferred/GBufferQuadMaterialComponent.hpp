@@ -38,6 +38,11 @@ namespace Hope {
             static const int ExposureUniformLocation = 6 ;
 
             /**
+             * Location of the uniform for exposure.
+             */
+            static const int ReflectionLODUniformLocation = 7 ;
+
+            /**
              * Binding of the BRDF look-up table.
              */
             static const int BrdfLUTBinding = 10 ;

@@ -8,6 +8,7 @@ layout(binding = 3) uniform sampler2DMS gNormal ;
 layout(binding = 4) uniform sampler2DMS gDepth ;
 layout(location = 5) uniform int msaaQuality ;
 layout(location = 6) uniform float exposure ;
+layout(location = 7) uniform float reflectionLOD ;
 
 // Image-based lighting related maps.
 layout(binding = 10) uniform sampler2D iblBrdfLUT ;
@@ -21,7 +22,7 @@ out vec3 outColor ;
 const float Gamma = 2.2f ;
 
 // TODO: Uniform value.
-const float MaxReflectionLOD = 4.0f ;   // For 5 mipmap levels in [0-4].
+// const float MaxReflectionLOD = 4.0f ;   // For 5 mipmap levels in [0-4].
 
 void main() {
     const ivec2 FragCoords = ivec2(gl_FragCoord.xy) ;
@@ -60,7 +61,7 @@ void main() {
         vec3 envSpecular = textureLod(
             iblSpecular,
             reflectVec,
-            currentFragment.roughness * MaxReflectionLOD
+            currentFragment.roughness * reflectionLOD
         ).rgb ;
 
         vec2 envBrdf = texture(

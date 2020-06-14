@@ -51,6 +51,9 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
     uniforms(ForwardPassID).at(UniformNames::MaterialExposureUniformName()) -> setFloating(m_exposure) ;
 
+    float reflectionLOD = static_cast<float>(m_specularMap -> mipmapLevel() - 1) ;
+    uniforms(ForwardPassID).at(UniformNames::MaterialReflectionLODUniformName()) -> setFloating(reflectionLOD) ;
+
     if (m_irradianceMap && m_specularMap) {
         BrdfLUT -> bindUnit(BrdfLUTBinding) ;
         m_irradianceMap -> bindUnit(IrradianceBinding) ;
@@ -73,6 +76,12 @@ void GBufferQuadMaterialComponent::setupUniforms() {
         ForwardPassID,
         UniformNames::MaterialExposureUniformName(),
         ExposureUniformLocation
+    ) ;
+
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MaterialReflectionLODUniformName(),
+        ReflectionLODUniformLocation
     ) ;
 
     generateUniform(
