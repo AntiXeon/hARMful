@@ -49,6 +49,7 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
 	framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
     uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
+    uniforms(ForwardPassID).at(UniformNames::MaterialExposureUniformName()) -> setFloating(m_exposure) ;
 
     if (m_irradianceMap && m_specularMap) {
         BrdfLUT -> bindUnit(BrdfLUTBinding) ;
@@ -57,11 +58,21 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     }
 }
 
+void GBufferQuadMaterialComponent::setExposure(const float exposure) {
+    m_exposure = exposure ;
+}
+
 void GBufferQuadMaterialComponent::setupUniforms() {
     generateUniform(
         ForwardPassID,
         UniformNames::MSAAQualityUniformName(),
         MSAAQualityUniformLocation
+    ) ;
+
+    generateUniform(
+        ForwardPassID,
+        UniformNames::MaterialExposureUniformName(),
+        ExposureUniformLocation
     ) ;
 
     generateUniform(

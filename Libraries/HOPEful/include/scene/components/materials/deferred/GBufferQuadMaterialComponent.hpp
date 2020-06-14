@@ -33,19 +33,24 @@ namespace Hope {
             static const int MSAAQualityUniformLocation = 5 ;
 
             /**
+             * Location of the uniform for exposure.
+             */
+            static const int ExposureUniformLocation = 6 ;
+
+            /**
              * Binding of the BRDF look-up table.
              */
-            static const int BrdfLUTBinding = 6 ;
+            static const int BrdfLUTBinding = 10 ;
 
             /**
              * Binding of the environment irradiance map.
              */
-            static const int IrradianceBinding = 20 ;
+            static const int IrradianceBinding = 30 ;
 
             /**
              * Binding of the environment specular map.
              */
-            static const int SpecularBinding = 30 ;
+            static const int SpecularBinding = 40 ;
 
             /**
              * BRDF look-up table.
@@ -57,6 +62,11 @@ namespace Hope {
              * shading step.
              */
             const GBufferRenderNode* m_gBuffer = nullptr ;
+
+            /**
+             * Exposure value.
+             */
+            float m_exposure = 1.f ;
 
             /**
              * Specular cubemap texture.
@@ -86,6 +96,11 @@ namespace Hope {
              * component.
              */
             exported void updateUniformValues() override ;
+
+            /**
+             * Set the exposure of the rendered image.
+             */
+            exported void setExposure(const float exposure) ;
 
         private:
             /**

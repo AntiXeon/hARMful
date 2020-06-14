@@ -35,14 +35,6 @@ DeferredRenderingNode::DeferredRenderingNode(
     m_displayStepNode = std::make_unique<DisplayStepNode>(m_framebufferNode.get(), this) ;
 }
 
-// DeferredRenderingNode(
-//     std::unique_ptr<API::EnvironmentMap>& environment,
-//     GBufferRenderNode* gBuffer,
-//     FrameGraphNode* parent = nullptr
-// ) : DeferredRenderingNode(gBuffer, parent) {
-//
-// }
-
 void DeferredRenderingNode::setupFramebuffer() {
     // Render target to apply shading to.
     m_framebufferNode -> framebuffer() -> attachColor(

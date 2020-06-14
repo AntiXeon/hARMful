@@ -13,7 +13,10 @@ ShadingStepNode::ShadingStepNode(
         std::make_unique<GBufferQuadMaterialComponent>(gBuffer, envMap),
         parent
     ),
-    m_shadingFBO(shadingFBO) {}
+    m_shadingFBO(shadingFBO) {
+    auto* shadingMaterial = static_cast<GBufferQuadMaterialComponent*>(material()) ;
+    shadingMaterial -> setExposure(10.f) ;
+}
 
 void ShadingStepNode::specificAccept(IFrameGraphVisitor* visitor) {
     m_shadingFBO -> setDrawBuffers({ ShadingRenderTarget }) ;

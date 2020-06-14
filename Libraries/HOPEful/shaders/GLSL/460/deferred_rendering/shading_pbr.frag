@@ -7,11 +7,12 @@ layout(binding = 2) uniform sampler2DMS gAO ;
 layout(binding = 3) uniform sampler2DMS gNormal ;
 layout(binding = 4) uniform sampler2DMS gDepth ;
 layout(location = 5) uniform int msaaQuality ;
+layout(location = 6) uniform float exposure ;
 
 // Image-based lighting related maps.
-layout(binding = 6) uniform sampler2D iblBrdfLUT ;
-layout(binding = 20) uniform samplerCube iblIrradiance ;
-layout(binding = 30) uniform samplerCube iblSpecular ;
+layout(binding = 10) uniform sampler2D iblBrdfLUT ;
+layout(binding = 30) uniform samplerCube iblIrradiance ;
+layout(binding = 40) uniform samplerCube iblSpecular ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
@@ -45,7 +46,6 @@ void main() {
         currentFragment.depth = depthValue ;
         currentFragment.f0 = reflectivity(currentFragment.albedo, currentFragment.metalness) ;
 
-        vec3 worldNormal = normalize(mat3(inverseViewMatrix) * currentFragment.normal).xyz ;
         vec3 viewDirection = normalize(-currentFragment.viewPosition.xyz) ;
 
         // Compute ligh shading.
@@ -77,6 +77,7 @@ void main() {
         vec3 kD = 1.f - f ;
         kD *= 1.f - currentFragment.metalness ;
 
+        vec3 worldNormal = normalize(mat3(inverseViewMatrix) * currentFragment.normal).xyz ;
         vec3 irradiance = texture(iblIrradiance, worldNormal).rgb ;
         vec3 diffuse = irradiance * currentFragment.albedo ;
         vec3 specular = envSpecular * (f * envBrdf.x + envBrdf.y) ;
@@ -102,11 +103,7 @@ void main() {
     }
 
 	fragmentColor /= msaaQuality ;
-
 	fragmentColor = fragmentColor / (fragmentColor + vec3(1.f)) ;
-
-    float exposure = 10.f ;
     vec3 toneMappedColor = vec3(1.f) - exp(-fragmentColor * exposure) ;
-
 	outColor = pow(toneMappedColor, vec3(1.f / Gamma)) ;
 }

@@ -16,6 +16,7 @@ namespace Hope {
         exported static std::string MaterialEnvIrradianceUniformName() { return "iblIrradiance" ; }
         exported static std::string MaterialEnvSpecularUniformName() { return "iblSpecular" ; }
         exported static std::string MaterialBrdfLUTUniformName() { return "iblBrdfLUT" ; }
+        exported static std::string MaterialExposureUniformName() { return "exposure" ; }
 
         exported static std::string MaterialUseShadowUniformName() { return "useShadow" ; }
         exported static std::string MaterialAmountCascadesUniformName() { return "amountCascades" ; }

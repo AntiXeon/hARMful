@@ -84,23 +84,6 @@ namespace Hope {
                 FrameGraphNode* parent = nullptr
             ) ;
 
-            /**
-             * Create a new DeferredRenderingNode instance.
-             * @param   environment Environment map to get its irradiance map.
-             * @param   gBuffer     G-Buffer used for the rendering (shading,
-             *                      SSAO, ...).
-             * @param   windowSize  If true, the size of the framebuffer follows
-             *                      the size of the window. If false, the size
-             *                      of the framebuffer is fixed.
-             * @warning The irradiance map is stolen from the provided @a
-             *          environment.
-             */
-            // exported DeferredRenderingNode(
-            //     std::unique_ptr<API::EnvironmentMap>& environment,
-            //     GBufferRenderNode* gBuffer,
-            //     FrameGraphNode* parent = nullptr
-            // ) ;
-
         private:
             /**
              * Set up the framebuffer for deferred rendering.
