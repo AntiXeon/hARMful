@@ -95,7 +95,7 @@ void SSAORenderNode::generateFramegraphSubtree() {
             AORenderTarget,
             API::InternalFormat::RedGreenBlueAlpha16f,
             API::PixelFormat::RedGreenBlueAlpha,
-            API::PixelDataType::Float
+            API::PixelDataType::HalfFloat
         ) ;
         m_subtree.aoRendering.offscreen -> framebuffer() -> setDrawBuffers({ AORenderTarget }) ;
 

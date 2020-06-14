@@ -45,7 +45,7 @@ void main() {
         currentFragment.depth = depthValue ;
         currentFragment.f0 = reflectivity(currentFragment.albedo, currentFragment.metalness) ;
 
-        vec3 worldNormal = normalize((inverseViewMatrix * vec4(currentFragment.normal, 0.f)).xyz) ;
+        vec3 worldNormal = normalize(mat3(inverseViewMatrix) * currentFragment.normal).xyz ;
         vec3 viewDirection = normalize(-currentFragment.viewPosition.xyz) ;
 
         // Compute ligh shading.
@@ -56,7 +56,7 @@ void main() {
 
 
         vec3 reflectVec = reflect(currentFragment.viewPosition.xyz, currentFragment.normal) ;
-        reflectVec = mat3(inverseViewMatrix) * reflectVec ;
+        reflectVec = normalize(mat3(inverseViewMatrix) * reflectVec) ;
         vec3 envSpecular = textureLod(
             iblSpecular,
             reflectVec,

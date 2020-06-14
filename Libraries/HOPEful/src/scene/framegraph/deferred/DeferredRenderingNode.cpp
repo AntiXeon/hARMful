@@ -47,25 +47,25 @@ void DeferredRenderingNode::setupFramebuffer() {
     // Render target to apply shading to.
     m_framebufferNode -> framebuffer() -> attachColor(
         ShadingStepNode::ShadingRenderTarget,
-        API::InternalFormat::RedGreenBlueAlpha32f,
+        API::InternalFormat::RedGreenBlueAlpha16f,
         API::PixelFormat::RedGreenBlueAlpha,
-        API::PixelDataType::Float
+        API::PixelDataType::HalfFloat
     ) ;
 
     // Render target to compute ambient occlusion to.
     // Try to use RED channel only.
     m_framebufferNode -> framebuffer() -> attachColor(
        SSAORenderNode::AORenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha32f,
+       API::InternalFormat::RedGreenBlueAlpha16f,
        API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::Float
+       API::PixelDataType::HalfFloat
     ) ;
 
     // Render target to apply post production effects.
     m_framebufferNode -> framebuffer() -> attachColor(
        PostProdStepNode::PostProdRenderTarget,
-       API::InternalFormat::RedGreenBlueAlpha32f,
+       API::InternalFormat::RedGreenBlueAlpha16f,
        API::PixelFormat::RedGreenBlueAlpha,
-       API::PixelDataType::Float
+       API::PixelDataType::HalfFloat
     ) ;
 }

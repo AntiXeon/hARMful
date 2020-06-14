@@ -42,7 +42,8 @@ vec4 ComputeWorldSpacePosition(
     float w = 1.f ;
 
 	vec4 positionProjection = vec4(x, y, z, w) ;
-	vec4 positionView = inverseViewProjectionMatrix * positionProjection ;
+	// vec4 positionView = inverseViewProjectionMatrix * positionProjection ;
+    vec4 positionView = inverseProjectionMatrix * positionProjection ;
     positionView /= positionView.w ;
 	return positionView ;
 }

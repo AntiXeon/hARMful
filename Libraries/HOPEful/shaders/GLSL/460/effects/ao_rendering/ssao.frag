@@ -13,13 +13,6 @@ out vec4 fragColor ;
 
 const float Epsilon = 0.0001f ;
 
-// Compute the world position of the current fragment.
-vec3 computeWorldPosition(in vec2 texCoords) {
-    ivec2 texSize = textureSize(depth) ;
-    float depthValue = texelFetch(depth, ivec2(texCoords * texSize), 0).r ;
-    return ComputeWorldSpacePosition(inTexCoords, depthValue).xyz ;
-}
-
 // Compute the view-space position of the current fragment.
 vec3 computeViewSpacePosition(in vec2 texCoords) {
     ivec2 texSize = textureSize(depth) ;

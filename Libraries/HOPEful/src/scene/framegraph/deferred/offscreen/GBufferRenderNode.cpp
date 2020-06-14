@@ -14,28 +14,28 @@ void GBufferRenderNode::setup() {
         AlbedoMetalnessRenderTarget,
         API::InternalFormat::RedGreenBlueAlpha16f,
         API::PixelFormat::RedGreenBlueAlpha,            // useless for MSAA
-        API::PixelDataType::Float                       // useless for MSAA
+        API::PixelDataType::HalfFloat                       // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        EmissiveRoughnessRenderTarget,
        API::InternalFormat::RedGreenBlueAlpha16f,
        API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
-       API::PixelDataType::Float                        // useless for MSAA
+       API::PixelDataType::HalfFloat                        // useless for MSAA
     ) ;
 
     framebuffer() -> attachColor(
        AORenderTarget,
        API::InternalFormat::RedGreenBlueAlpha16f,
        API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
-       API::PixelDataType::Float                        // useless for MSAA
+       API::PixelDataType::HalfFloat                        // useless for MSAA
    ) ;
 
    framebuffer() -> attachColor(
 	  NormalRenderTarget,
 	  API::InternalFormat::RedGreenBlueAlpha16f,
 	  API::PixelFormat::RedGreenBlueAlpha,             // useless for MSAA
-	  API::PixelDataType::Float                        // useless for MSAA
+	  API::PixelDataType::HalfFloat                        // useless for MSAA
   ) ;
 
    framebuffer() -> setDrawBuffers({
