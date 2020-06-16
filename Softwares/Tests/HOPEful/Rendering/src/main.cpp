@@ -1,9 +1,8 @@
 #include <iostream>
-#include <TestWindow.hpp>
+#include <MainWindow.hpp>
 
 int main(int, char**) {
-    TestWindow mainWindow ;
+    MainWindow mainWindow(1280, 800) ;
     mainWindow.run() ;
-
     return 0 ;
 }
