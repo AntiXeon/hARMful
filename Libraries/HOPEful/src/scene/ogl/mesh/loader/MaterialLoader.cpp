@@ -21,20 +21,22 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 ) {
 	// Override the default material from Assimp.
 	static const aiString DefaultMaterialName(AI_DEFAULT_MATERIAL_NAME) ;
-	aiString currentName ;
-	material -> Get(AI_MATKEY_NAME, currentName) ;
+	aiString materialName ;
+	material -> Get(AI_MATKEY_NAME, materialName) ;
 
-	if (currentName == DefaultMaterialName) {
+	if (materialName == DefaultMaterialName) {
 		auto defaultMaterial = std::make_unique<PBRMaterialComponent>() ;
 		return defaultMaterial ;
 	}
 	else {
+        fs::path materialPath(materialName.C_Str()) ;
 		auto pbrMat = std::make_unique<PBRMaterialComponent>() ;
 
 		// Albedo.
 		pbrMat -> setAlbedo(
 			PropertyColor(
-				meshPath,
+                meshPath,
+				materialPath,
 				material,
 				AI_MATKEY_COLOR_DIFFUSE,
 				AlbedoFilename
@@ -44,7 +46,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 		// Ambient occlusion.
 		pbrMat -> setAmbientOcclusion(
 			PropertyValue(
-				meshPath,
+                meshPath,
+				materialPath,
 				material,
 				nullptr, 1, 0,
 				AmbientOcclusionFilename
@@ -54,7 +57,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 		// Emissive.
 		pbrMat -> setEmissive(
 			PropertyColor(
-				meshPath,
+                meshPath,
+				materialPath,
 				material,
 				AI_MATKEY_COLOR_EMISSIVE,
 				EmissiveFilename
@@ -64,7 +68,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 		// Metalness.
 		pbrMat -> setMetalness(
 			PropertyValue(
-				meshPath,
+                meshPath,
+				materialPath,
 				material,
 				nullptr, 0, 0,
 				MetalnessFilename
@@ -74,7 +79,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 		// Normal.
 		pbrMat -> setNormalMap(
 			GetTexture(
-				meshPath,
+                meshPath,
+				materialPath,
 				NormalFilename
 			)
 		) ;
@@ -82,7 +88,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 		// Roughness.
 		pbrMat -> setRoughness(
 			PropertyValue(
-				meshPath,
+                meshPath,
+				materialPath,
 				material,
 				nullptr, 0, 0,
 				RoughnessFilename
@@ -94,7 +101,8 @@ std::unique_ptr<MaterialComponent> MaterialLoader::ConvertMaterial(
 }
 
 Hope::ValueTexture MaterialLoader::PropertyValue(
-	const fs::path& meshPath,
+    const fs::path& meshPath,
+	const fs::path& materialPath,
 	const aiMaterial* material,
 	const char* pKey,
 	const unsigned int type,
@@ -102,7 +110,7 @@ Hope::ValueTexture MaterialLoader::PropertyValue(
 	const std::string& textureName
 ) {
 	ValueTexture value ;
-	value.setTexture(GetTexture(meshPath, textureName)) ;
+	value.setTexture(GetTexture(meshPath, materialPath, textureName)) ;
 
 	if (pKey) {
 		float aiValue = 0.f ;
@@ -119,7 +127,8 @@ Hope::ValueTexture MaterialLoader::PropertyValue(
 }
 
 Hope::ColorTexture MaterialLoader::PropertyColor(
-	const fs::path& meshPath,
+    const fs::path& meshPath,
+	const fs::path& materialPath,
 	const aiMaterial* material,
 	const char* pKey,
 	const unsigned int type,
@@ -127,7 +136,7 @@ Hope::ColorTexture MaterialLoader::PropertyColor(
 	const std::string& textureName
 ) {
 	ColorTexture color ;
-	color.setTexture(GetTexture(meshPath, textureName)) ;
+	color.setTexture(GetTexture(meshPath, materialPath, textureName)) ;
 
 	if (pKey) {
 		aiColor4D aiColor ;
@@ -143,7 +152,8 @@ Hope::ColorTexture MaterialLoader::PropertyColor(
 }
 
 std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
-	const fs::path& meshPath,
+    const fs::path& meshPath,
+	const fs::path& materialPath,
 	const std::string& textureName
 ) {
 	std::string texturePath ;
@@ -152,7 +162,7 @@ std::unique_ptr<TextureImage2D> MaterialLoader::GetTexture(
 		fs::path textureFilename(textureName + extension) ;
 
 		fs::path texturePath(TextureFolderName) ;
-		texturePath = texturePath / meshPath.stem() / textureFilename ;
+		texturePath = texturePath / materialPath / textureFilename ;
 
 		fs::path absoluteTexturePath ;
 		absoluteTexturePath = meshPath.parent_path() / texturePath ;

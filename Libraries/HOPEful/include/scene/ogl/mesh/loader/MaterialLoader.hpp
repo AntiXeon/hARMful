@@ -32,12 +32,8 @@ namespace Hope::GL {
 
         public:
             /**
-             * Convert the Assimp material structure to a material component
+             * Convert the Assimp material structure to a material component.
              * that can be attached to an entity.
-             * @param   meshPath    Path of the mesh that is currently loaded.
-             *                      It is useful to retreive the absolute path
-             *                      to the textures in case it is relative to
-             *                      the file.
              * @param   material    Material to convert as a component.
              */
             static std::unique_ptr<MaterialComponent> ConvertMaterial(
@@ -55,13 +51,14 @@ namespace Hope::GL {
         private:
             /**
              * Load a single value property of the material.
-			 * @param 	meshPath			Path to the mesh.
+			 * @param 	materialPath        Path name of the material.
 			 * @param 	material			Material structure from Assimp.
 			 * @param 	propertyKeyValue	Key value of the property.
 			 * @param 	propertyTextureType	Texture type of the property.
              */
             exported static Hope::ValueTexture PropertyValue(
-				const fs::path& meshPath,
+                const fs::path& meshPath,
+				const fs::path& materialPath,
 				const aiMaterial* material,
 				const char* pKey,
 				const unsigned int type,
@@ -71,13 +68,14 @@ namespace Hope::GL {
 
 			/**
              * Load a color value property of the material.
-			 * @param 	meshPath			Path to the mesh.
+			 * @param 	materialPath        Path name of the material.
 			 * @param 	material			Material structure from Assimp.
 			 * @param 	propertyKeyValue	Key value of the property.
 			 * @param 	propertyTextureType	Texture type of the property.
              */
 			exported static Hope::ColorTexture PropertyColor(
-				const fs::path& meshPath,
+                const fs::path& meshPath,
+				const fs::path& materialPath,
 				const aiMaterial* material,
 				const char* pKey,
 				const unsigned int type,
@@ -91,20 +89,22 @@ namespace Hope::GL {
 			 * The textures are search into the folder called
 			 * "$TextureFolderName" at the same level as the loaded mesh file.
 			 * The textures are put into a subfolder sharing the same name as
-			 * the loaded mesh file.
+			 * the material loaded mesh file. The object can have several
+             * materials.
 			 * Texture files must have the names among the "$xxxFilename" static
 			 * properties of the MaterialLoader.
 			 * Texture files must have the "$TextureExtensions" extensions.
 			 *
 			 * For example:
-			 * + LoadedMesh.obj
-			 * + textures/LoadedMesh/alebdo.jpg
-			 * + textures/LoadedMesh/metalness.jpg
-			 * + textures/LoadedMesh/roughness.jpg
+			 * + LoadedMesh.obj having MyMaterial material definition:
+			 * + textures/MyMaterial/alebdo.jpg
+			 * + textures/MyMaterial/metalness.jpg
+			 * + textures/MyMaterial/roughness.jpg
 			 * etc.
 			 */
 			exported static std::unique_ptr<TextureImage2D> GetTexture(
-				const fs::path& meshPath,
+                const fs::path& meshPath,
+				const fs::path& materialPath,
 				const std::string& textureName
 			) ;
 

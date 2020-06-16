@@ -45,6 +45,11 @@ void Window::run() {
     m_scene -> lockEntities(true) ;
 
     while (!glfwWindowShouldClose(m_window)) {
+        float currentFrameTime = glfwGetTime() ;
+        float deltaTime = currentFrameTime - m_lastFrameTime ;
+        m_lastFrameTime = currentFrameTime ;
+        keyboard(deltaTime) ;
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
         preRender() ;
@@ -203,19 +208,6 @@ void Window::setCallbacks() {
         that -> resizedWindow(window, width, height) ;
     } ;
     glfwSetWindowSizeCallback(m_window, resizeCallbackFunc) ;
-
-    // Callback for keyboard key inputs.
-    auto keyboardKeyCallbackFunc = [](
-        GLFWwindow* window,
-        const int key,
-        const int scancode,
-        const int action,
-        const int mods
-      ) {
-        Window* that = static_cast<Window*>(glfwGetWindowUserPointer(window)) ;
-        that -> keyboard(key, scancode, action, mods) ;
-    } ;
-    glfwSetKeyCallback(m_window, keyboardKeyCallbackFunc) ;
 
     // Callback for mouse position changes.
     auto mousePositionCallbackFunc = [](

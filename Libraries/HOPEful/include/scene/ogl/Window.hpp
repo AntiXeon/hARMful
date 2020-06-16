@@ -47,6 +47,11 @@ namespace Hope { namespace GL {
              */
             std::unique_ptr<Scene> m_scene = nullptr ;
 
+            /**
+             * Last time update.
+             */
+            float m_lastFrameTime = 0.f ;
+
         public:
             /**
              * Create a new Window.
@@ -168,12 +173,7 @@ namespace Hope { namespace GL {
             /**
              * Allow the user to set the keyboard inputs.
              */
-            exported virtual void keyboard(
-                [[maybe_unused]] const int key,
-                [[maybe_unused]] const int scancode,
-                [[maybe_unused]] const int action,
-                [[maybe_unused]] const int mods
-            ) {}
+            exported virtual void keyboard([[maybe_unused]] const float deltaTime) {}
 
             /**
              * Allow the user to use mouse movements.

@@ -60,7 +60,6 @@ bool Component::detach(Entity* entity) {
     if (!entity -> isEditable()) {
         return false ;
     }
-
     auto posEntity = std::find(m_entities.begin(), m_entities.end(), entity) ;
     bool isAttached = (posEntity != m_entities.end()) ;
 
