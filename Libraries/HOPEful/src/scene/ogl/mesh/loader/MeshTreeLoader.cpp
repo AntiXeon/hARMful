@@ -166,7 +166,7 @@ void MeshTreeLoader::loadNodeData(
     geometry -> completed() ;
 
     // Add the components to the entity.
-    MeshGeometryComponent* geometryComponent = new MeshGeometryComponent(geometry) ;
+    auto geometryComponent = std::make_shared<MeshGeometryComponent>(geometry) ;
     entity -> addComponent(geometryComponent) ;
 }
 
@@ -186,7 +186,7 @@ uint32_t MeshTreeLoader::materialProcessing(
         ) ;
     }
 
-    MaterialComponent* materialComponent = m_materialRelations[aiMaterialIndex].get() ;
+    auto materialComponent = m_materialRelations[aiMaterialIndex] ;
     partMaterialIndex = entity -> addComponent(materialComponent) ;
 
     return partMaterialIndex ;

@@ -43,7 +43,7 @@ namespace Hope {
             /**
              * Components attached to the current entity.
              */
-            std::vector<std::vector<Component*>> m_components ;
+            std::vector<std::vector<std::shared_ptr<Component>>> m_components ;
 
 			/**
 			 * Link to the transform of the entity.
@@ -72,23 +72,17 @@ namespace Hope {
              * @return  Index of component in the list of its type.
              *          0xFFFFFFFF if the component has not been added.
              */
-            exported int32_t addComponent(Component* component) ;
-
-            /**
-             * Remove a component from the current entity.
-             * @param   component   Component to remove.
-             */
-            exported void removeComponent(Component* component) ;
+            exported int32_t addComponent(const std::shared_ptr<Component>& component) ;
 
             /**
              * Remove a component from the current entity.
              * @param   type    Type of the component to remove.
              * @param   index   Index of the component to remove.
              */
-            exported void removeComponent(const ComponentType type, const uint32_t index) {
-                Component* toRemove = component(type, index) ;
-                removeComponent(toRemove) ;
-            }
+            exported void removeComponent(
+                const ComponentType type,
+                const uint32_t index
+            ) ;
 
             /**
              * Remove the components of the provided type.
@@ -107,13 +101,7 @@ namespace Hope {
             exported Component* component(
                 const ComponentType type,
                 const uint32_t index = 0
-            ) const {
-                if (m_components[type].empty()) {
-                    return nullptr ;
-                }
-
-                return m_components[type][index] ;
-            }
+            ) const ;
 
             /**
              * Get a component of the wanted type.
@@ -128,7 +116,7 @@ namespace Hope {
                     return nullptr ;
                 }
 
-                return static_cast<T*>(m_components[T::ClassType][index]) ;
+                return static_cast<T*>(m_components[T::ClassType][index].get()) ;
             }
 
             /**
@@ -195,13 +183,6 @@ namespace Hope {
                 return *m_transform ;
             }
 
-            /**
-             * Get the list of the components attached to the current entity.
-             */
-            exported const std::vector<std::vector<Component*>>& components() const {
-                return m_components ;
-            }
-
             // Remove copy/move operations.
             Entity(const Entity& copied) = delete;
             Entity(Entity&& moved) = delete;
@@ -210,13 +191,15 @@ namespace Hope {
 
         private:
             /**
+             * Remove a component from the current entity.
+             * @param   component   Component to remove.
+             */
+            exported void removeComponent(const std::weak_ptr<Component>& wkComponent) ;
+
+            /**
              * Update the Entity state for edition (add/remove Component).
              */
-            exported void setRenderState(const bool running) {
-                if (running && m_isLocked) {
-                    m_isEditable = false ;
-                }
-            }
+            exported void setRenderState(const bool running) ;
     } ;
 }
 

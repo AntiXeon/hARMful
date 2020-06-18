@@ -10,7 +10,7 @@ Scene::Scene(std::shared_ptr<IFrameGraphVisitor> visitor)
     : m_root(std::make_unique<Transform>()),
       m_renderConfig(std::make_unique<RenderConfiguration>()),
       m_frameGraphVisitor(visitor) {
-    m_root -> entity() -> addComponent(m_renderConfig.get()) ;
+    m_root -> entity() -> addComponent(m_renderConfig) ;
     m_frameGraphVisitor -> setSceneRoot(m_root.get()) ;
 }
 

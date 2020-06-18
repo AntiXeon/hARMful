@@ -52,7 +52,7 @@ namespace Hope {
             /**
              * Camera component that is used to render the cascade shadow map.
              */
-            std::unique_ptr<DirectionalLightCameraComponent> m_lightCamera = nullptr ;
+            std::shared_ptr<DirectionalLightCameraComponent> m_lightCamera = nullptr ;
 
             /**
              * An orthographic camera used to compute the matrices to apply.

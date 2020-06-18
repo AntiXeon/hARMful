@@ -98,8 +98,8 @@ void DirectionalLightShadowNode::generateSubtree() {
     // Generate an OrthographicCamera, to compute light matrices, that is child
     // of the cascade root.
     m_computeCamTransform = std::make_unique<Transform>(m_cascadeRoot.get()) ;
-    m_computeCameraComponent = std::make_unique<OrthographicCameraComponent>() ;
-    m_computeCamTransform -> entity() -> addComponent(m_computeCameraComponent.get()) ;
+    m_computeCameraComponent = std::make_shared<OrthographicCameraComponent>() ;
+    m_computeCamTransform -> entity() -> addComponent(m_computeCameraComponent) ;
 
     // Compute cascade distances.
     std::vector<float> cascadedSplits(m_parameters.amountCascades + 1) ;

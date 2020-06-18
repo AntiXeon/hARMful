@@ -29,14 +29,14 @@ struct SceneGraph {
             std::unique_ptr<Hope::Transform> transform = nullptr ;
 
             /**
-             * Environment map material.    // Should be a shared_ptr!
+             * Environment map material.
              */
-            std::unique_ptr<Hope::EnvironmentMapMaterialComponent> material = nullptr ;
+            std::shared_ptr<Hope::EnvironmentMapMaterialComponent> material = nullptr ;
 
             /**
-             * Environment map material.    // Should be a shared_ptr!
+             * Environment map material.
              */
-            std::unique_ptr<Hope::CubeGeometryComponent> mesh = nullptr ;
+            std::shared_ptr<Hope::CubeGeometryComponent> mesh = nullptr ;
         } envmap ;
 
         struct Camera {
@@ -46,9 +46,9 @@ struct SceneGraph {
             std::unique_ptr<Hope::Transform> transform = nullptr ;
 
             /**
-             * Camera component.            // Should be a shared_ptr!
+             * Camera component.
              */
-            std::unique_ptr<Hope::PerspectiveCameraComponent> component = nullptr ;
+            std::shared_ptr<Hope::PerspectiveCameraComponent> component = nullptr ;
 
             /**
              * Camera controller.
@@ -63,9 +63,9 @@ struct SceneGraph {
             std::unique_ptr<Hope::Transform> transform = nullptr ;
 
             /**
-             * Mesh tree.                   // Should be a shared_ptr!
+             * Mesh tree.
              */
-            std::unique_ptr<Hope::MeshTreeComponent> tree = nullptr ;
+            std::shared_ptr<Hope::MeshTreeComponent> tree = nullptr ;
         } mesh ;
 
         struct SunLight {
@@ -75,9 +75,9 @@ struct SceneGraph {
             std::unique_ptr<Hope::Transform> transform = nullptr ;
 
             /**
-             * Directional light component. // Should be a shared_ptr!
+             * Directional light component.
              */
-            std::unique_ptr<Hope::DirectionalLightComponent> component = nullptr ;
+            std::shared_ptr<Hope::DirectionalLightComponent> component = nullptr ;
         } mainLight ;
 
         /**

@@ -29,7 +29,7 @@ namespace Hope {
              * Enable the configuration of the rendering through frame graph
              * nodes.
              */
-            std::unique_ptr<RenderConfiguration> m_renderConfig = nullptr ;
+            std::shared_ptr<RenderConfiguration> m_renderConfig = nullptr ;
 
             /**
              * Frame graph visitor for rendering the scene.

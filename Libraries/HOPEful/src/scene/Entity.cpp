@@ -12,18 +12,14 @@ Entity::Entity(Transform* transform)
 }
 
 Entity::~Entity() {
-    for (std::vector<Component*> componentList : m_components) {
-        for (Component* component : componentList) {
-            if (component) {
-                component -> detach(this) ;
-            }
-        }
+    for (int componentType = MaterialComponentType ; componentType != LastComponentType ; ++componentType) {
+        removeComponents(componentType) ;
     }
 
     m_components.clear() ;
 }
 
-int32_t Entity::addComponent(Component* component) {
+int32_t Entity::addComponent(const std::shared_ptr<Component>& component) {
     const int32_t FailAddIndex = -1 ;
 
     if (!component) {
@@ -52,22 +48,12 @@ int32_t Entity::addComponent(Component* component) {
     }
 }
 
-void Entity::removeComponent(Component* component) {
-    if (!component) {
-        return ;
-    }
+void Entity::removeComponent(const ComponentType type, const uint32_t index) {
+    std::weak_ptr<Component> toRemove ;
 
-    if (component -> isRemovable()) {
-        bool isDetached = component -> detach(this) ;
-
-        if (!isDetached) {
-            return ;
-        }
-
-        ComponentType componentType = component -> type() ;
-        std::vector<Component*>& components = m_components[componentType] ;
-        auto position = std::find(components.begin(), components.end(), component) ;
-        components.erase(position) ;
+    if (m_components[type].size() > 0) {
+        toRemove = m_components[type][index] ;
+        removeComponent(toRemove) ;
     }
 }
 
@@ -77,12 +63,50 @@ void Entity::removeComponents(const ComponentType type) {
     }
 
     if (m_components[type].size() > 0) {
-        std::vector<Component*>& components = m_components[type] ;
+        std::vector<std::shared_ptr<Component>>& components = m_components[type] ;
 
-        for (Component* component : components) {
+        for (std::shared_ptr<Component>& component : components) {
             component -> detach(this) ;
         }
 
         components.clear() ;
+    }
+}
+
+Component* Entity::component(
+    const ComponentType type,
+    const uint32_t index
+) const {
+    if (m_components[type].empty()) {
+        return nullptr ;
+    }
+
+    return m_components[type][index].get() ;
+}
+
+void Entity::removeComponent(const std::weak_ptr<Component>& wkComponent) {
+    if (auto component = wkComponent.lock()) {
+        if (!component) {
+            return ;
+        }
+
+        if (component -> isRemovable()) {
+            bool isDetached = component -> detach(this) ;
+
+            if (!isDetached) {
+                return ;
+            }
+
+            ComponentType componentType = component -> type() ;
+            std::vector<std::shared_ptr<Component>>& components = m_components[componentType] ;
+            auto position = std::find(components.begin(), components.end(), component) ;
+            components.erase(position) ;
+        }
+    }
+}
+
+void Entity::setRenderState(const bool running) {
+    if (running && m_isLocked) {
+        m_isEditable = false ;
     }
 }

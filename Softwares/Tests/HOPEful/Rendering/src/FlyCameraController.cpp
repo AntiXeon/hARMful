@@ -5,7 +5,7 @@
 #include <iostream>
 
 const float FlyCameraController::WalkSpeed = 5.f ;
-const float FlyCameraController::RunSpeed = 15.f ;
+const float FlyCameraController::RunSpeed = 100.f ;
 
 FlyCameraController::FlyCameraController(Hope::CameraComponent* camera)
 : m_camera(camera),

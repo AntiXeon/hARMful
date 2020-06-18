@@ -45,7 +45,7 @@ namespace Hope::GL {
              * Link the materials from the input file to the material components
              * used by entities and the rendering step.
              */
-            std::map<unsigned int, std::unique_ptr<MaterialComponent>> m_materialRelations ;
+            std::map<unsigned int, std::shared_ptr<MaterialComponent>> m_materialRelations ;
 
             /**
              * Path to the source file.

@@ -23,8 +23,8 @@ ShadowCascade::ShadowCascade(
         // the camera matrices that are sent to the shaders, to compute the
         // related shadow depth map.
         m_lightCamTransform = std::make_unique<Transform>(cascadeRoot);
-        m_lightCamera = std::make_unique<DirectionalLightCameraComponent>();
-        m_lightCamTransform -> entity() -> addComponent(m_lightCamera.get());
+        m_lightCamera = std::make_shared<DirectionalLightCameraComponent>();
+        m_lightCamTransform -> entity() -> addComponent(m_lightCamera);
     }
 }
 

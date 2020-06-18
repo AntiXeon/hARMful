@@ -87,7 +87,7 @@ namespace Hope {
              * Orthographic camera, to compute light matrices, that is child
              * of the cascade root.
              */
-            std::unique_ptr<OrthographicCameraComponent> m_computeCameraComponent = nullptr ;
+            std::shared_ptr<OrthographicCameraComponent> m_computeCameraComponent = nullptr ;
 
             /**
              * Framebuffer that is shared among the different
