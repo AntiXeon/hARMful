@@ -1,5 +1,5 @@
-#ifndef __HOPE__DEFERRED_RENDERING_SCREEN_QUAD_MATERIAL_COMPONENT__
-#define __HOPE__DEFERRED_RENDERING_SCREEN_QUAD_MATERIAL_COMPONENT__
+#ifndef __HOPE__SHADING_DEFERRED_RENDER_MATERIAL_COMPONENT__
+#define __HOPE__SHADING_DEFERRED_RENDER_MATERIAL_COMPONENT__
 
 #include <utils/Platform.hpp>
 
@@ -19,7 +19,7 @@ namespace Hope {
      * Material used on a quad having taking the whole viewport area to display
      * the content of the G-Buffer (deferred rendering).
      */
-    class GBufferQuadMaterialComponent final : public MaterialComponent {
+    class ShadingDeferredRenderMaterialComponent final : public MaterialComponent {
         public:
             /**
              * Component class type.
@@ -85,13 +85,13 @@ namespace Hope {
 
         public:
             /**
-             * Create a GBufferQuadMaterialComponent.
+             * Create a ShadingDeferredRenderMaterialComponent.
              * @param gBuffer   G-Buffer contening all the required data to
              *                  perform the deferred shading step.
              * @param envMap    Environment map for taking specular and
              *                  irradiance textures.
              */
-            exported GBufferQuadMaterialComponent(
+            exported ShadingDeferredRenderMaterialComponent(
                 const GBufferRenderNode* gBuffer,
                 const API::EnvironmentMap* envMap = nullptr
             ) ;

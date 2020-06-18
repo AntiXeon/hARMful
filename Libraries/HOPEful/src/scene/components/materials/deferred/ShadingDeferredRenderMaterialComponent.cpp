@@ -1,4 +1,4 @@
-#include <scene/components/materials/deferred/GBufferQuadMaterialComponent.hpp>
+#include <scene/components/materials/deferred/ShadingDeferredRenderMaterialComponent.hpp>
 #include <scene/components/materials/UniformNames.hpp>
 #include <files/images/readers/ImageMemoryReader.hpp>
 #include <resources/BrdfLUT.hpp>
@@ -17,9 +17,9 @@
 
 using namespace Hope ;
 
-std::unique_ptr<API::TextureImage2D> GBufferQuadMaterialComponent::BrdfLUT = nullptr ;
+std::unique_ptr<API::TextureImage2D> ShadingDeferredRenderMaterialComponent::BrdfLUT = nullptr ;
 
-GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(
+ShadingDeferredRenderMaterialComponent::ShadingDeferredRenderMaterialComponent(
     const GBufferRenderNode* gBuffer,
     const API::EnvironmentMap* envMap
 )
@@ -41,7 +41,7 @@ GBufferQuadMaterialComponent::GBufferQuadMaterialComponent(
     }
 }
 
-void GBufferQuadMaterialComponent::updateUniformValues() {
+void ShadingDeferredRenderMaterialComponent::updateUniformValues() {
     const API::Framebuffer* framebuffer = m_gBuffer -> framebuffer() ;
     framebuffer -> bindUnitColor(GBufferRenderNode::AlbedoMetalnessRenderTarget) ;
     framebuffer -> bindUnitColor(GBufferRenderNode::EmissiveRoughnessRenderTarget) ;
@@ -61,11 +61,11 @@ void GBufferQuadMaterialComponent::updateUniformValues() {
     }
 }
 
-void GBufferQuadMaterialComponent::setExposure(const float exposure) {
+void ShadingDeferredRenderMaterialComponent::setExposure(const float exposure) {
     m_exposure = exposure ;
 }
 
-void GBufferQuadMaterialComponent::setupUniforms() {
+void ShadingDeferredRenderMaterialComponent::setupUniforms() {
     generateUniform(
         ForwardPassID,
         UniformNames::MSAAQualityUniformName(),
@@ -103,7 +103,7 @@ void GBufferQuadMaterialComponent::setupUniforms() {
     ) ;
 }
 
-void GBufferQuadMaterialComponent::setupForwardShader() {
+void ShadingDeferredRenderMaterialComponent::setupForwardShader() {
     std::unique_ptr<API::RenderPass> renderPass = std::make_unique<API::RenderPass>(ForwardPassID) ;
     API::ShaderProgram* shaderProgram = renderPass -> shaderProgram() ;
 

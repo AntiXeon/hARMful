@@ -12,7 +12,7 @@ namespace fs = std::filesystem;
 
 namespace Hope {
     class EnvironmentMapMaterialComponent ;
-    class GBufferQuadMaterialComponent ;
+    class ShadingDeferredRenderMaterialComponent ;
 }
 
 namespace Hope::GL {
@@ -25,7 +25,7 @@ namespace Hope::GL {
      */
     class EnvironmentMap final {
         friend class Hope::EnvironmentMapMaterialComponent ;
-        friend class Hope::GBufferQuadMaterialComponent ;
+        friend class Hope::ShadingDeferredRenderMaterialComponent ;
 
         public:
             static const std::string EnvironmentMapName ;
