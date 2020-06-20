@@ -83,17 +83,13 @@ void main() {
 
 	{
         // Normal
-        vec2 compressedNormalVector ;
-
 		if (normalUseTexture > 0.5f) {
 			vec3 normalVector = texture(normalTexture, inTexCoord).rgb ;
 			normalVector = AdjustNormalMapVector(inTBNMatrix, normalVector) ;
-            compressedNormalVector = EncodeSpheremapNormals(normalVector) ;
+            gNormal = vec4(normalVector, 0.f) ;
 		}
         else {
-            compressedNormalVector = EncodeSpheremapNormals(inNormal) ;
+            gNormal = vec4(inNormal, 0.f) ;
         }
-
-        gNormal = vec4(compressedNormalVector, 0.f, 0.f) ;
 	}
 }

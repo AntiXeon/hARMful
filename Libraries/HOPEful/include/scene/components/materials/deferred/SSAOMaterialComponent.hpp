@@ -4,7 +4,7 @@
 #include <utils/Platform.hpp>
 
 #include <scene/components/materials/MaterialComponent.hpp>
-#include <scene/framegraph/deferred/offscreen/base/AbstractFramebufferRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/GBufferRenderNode.hpp>
 
 namespace Hope {
     /**
@@ -19,10 +19,15 @@ namespace Hope {
 
         private:
             /**
+             * Location of the uniform for the MSAA quality.
+             */
+            static const int MSAAQualityUniformLocation = 5 ;
+
+            /**
              * G-Buffer contening all the required data to perform the deferred
              * shading step.
              */
-            const AbstractFramebufferRenderNode* m_gBuffer = nullptr ;
+            const GBufferRenderNode* m_gBuffer = nullptr ;
 
         public:
             /**
@@ -30,7 +35,7 @@ namespace Hope {
              * @param   gBuffer G-Buffer contening all the required data to
              *                  perform the deferred shading step.
              */
-            exported SSAOMaterialComponent(const AbstractFramebufferRenderNode* gBuffer) ;
+            exported SSAOMaterialComponent(const GBufferRenderNode* gBuffer) ;
 
             /**
              * Update the uniform values before the processing of the material

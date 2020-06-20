@@ -2,10 +2,10 @@
 
 layout(location = UNIFORM_AO_USE_LOCATION) uniform int useSSAO ;
 layout(location = UNIFORM_AO_KERNEL_LOCATION) uniform vec3 kernel[AO_KERNEL_SIZE] ;
-layout(binding = 0) uniform sampler2DMS albedo ;
+layout(binding = 0) uniform sampler2D albedo ;
 layout(binding = 1) uniform sampler2D noise ;
-layout(binding = 3) uniform sampler2DMS normal ;
-layout(binding = 4) uniform sampler2DMS depth ;
+layout(binding = 3) uniform sampler2D normal ;
+layout(binding = 4) uniform sampler2D depth ;
 
 layout(location = 0) in vec2 inTexCoords ;
 
@@ -15,8 +15,8 @@ const float Epsilon = 0.0001f ;
 
 // Compute the view-space position of the current fragment.
 vec3 computeViewSpacePosition(in vec2 texCoords) {
-    ivec2 texSize = textureSize(depth) ;
-    float depthValue = texelFetch(depth, ivec2(texCoords * texSize), 0).r ;
+    ivec2 texSize = textureSize(depth, 0) ;
+    float depthValue = texture(depth, texCoords).r ;
     return ComputeViewSpacePosition(inTexCoords, depthValue).xyz ;
 }
 
@@ -28,10 +28,8 @@ vec2 noiseTextureCoords() {
 
 // Compute a TBN matrix with a random orientation.
 mat3 computeTBNMatrix() {
-    const int MSAASample = 0 ;
-
     vec3 randDirection = normalize(texture(noise, noiseTextureCoords()).xyz) ;
-    vec3 normalValue = DecodeSpheremapNormals(texelFetch(normal, ivec2(gl_FragCoord), MSAASample).rg) ;
+    vec3 normalValue = texture(normal, inTexCoords).rgb ;
     vec3 bitangent = cross(normalValue, randDirection) ;
 
     if (length(bitangent) < Epsilon) {

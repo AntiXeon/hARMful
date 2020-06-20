@@ -10,6 +10,6 @@ out vec4 outColor ;
 
 void main() {
     vec3 shadedPixel = texture(rendering, inTexCoords).rgb ;
-    float aoPixel = pow(texture(ambientOcclusion, inTexCoords).r, 2.f) ;
+    float aoPixel = texture(ambientOcclusion, inTexCoords).r ;
     outColor = vec4(shadedPixel * aoPixel, 1.f) ;
 }

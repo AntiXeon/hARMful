@@ -28,11 +28,6 @@ namespace Hope {
 
         private:
             /**
-             * Location of the uniform for the MSAA quality.
-             */
-            static const int MSAAQualityUniformLocation = 5 ;
-
-            /**
              * Location of the uniform for exposure.
              */
             static const int ExposureUniformLocation = 6 ;

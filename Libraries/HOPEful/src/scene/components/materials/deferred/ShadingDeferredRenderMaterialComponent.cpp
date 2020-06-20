@@ -48,7 +48,6 @@ void ShadingDeferredRenderMaterialComponent::updateUniformValues() {
     framebuffer -> bindUnitColor(GBufferRenderNode::AORenderTarget) ;
 	framebuffer -> bindUnitColor(GBufferRenderNode::NormalRenderTarget) ;
     framebuffer -> bindUnitDepth(GBufferRenderNode::DepthRenderTarget) ;
-    uniforms(ForwardPassID).at(UniformNames::MSAAQualityUniformName()) -> setInteger(m_gBuffer -> multisamplingQuality()) ;
     uniforms(ForwardPassID).at(UniformNames::MaterialExposureUniformName()) -> setFloating(m_exposure) ;
 
     float reflectionLOD = static_cast<float>(m_specularMap -> mipmapLevel() - 1) ;
@@ -66,12 +65,6 @@ void ShadingDeferredRenderMaterialComponent::setExposure(const float exposure) {
 }
 
 void ShadingDeferredRenderMaterialComponent::setupUniforms() {
-    generateUniform(
-        ForwardPassID,
-        UniformNames::MSAAQualityUniformName(),
-        MSAAQualityUniformLocation
-    ) ;
-
     generateUniform(
         ForwardPassID,
         UniformNames::MaterialExposureUniformName(),

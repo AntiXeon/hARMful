@@ -3,7 +3,7 @@
 
 #include <utils/Platform.hpp>
 
-#include <scene/framegraph/deferred/offscreen/base/FramebufferMultisampleRenderNode.hpp>
+#include <scene/framegraph/deferred/offscreen/base/FramebufferRenderNode.hpp>
 
 namespace Hope {
     /**
@@ -19,7 +19,7 @@ namespace Hope {
      * - RT3: normal  				(ARGB2101010 [RGB: normal], [A: unused])
      * - Depth buffer
      */
-    class GBufferRenderNode final : public FramebufferMultisampleRenderNode {
+    class GBufferRenderNode final : public FramebufferRenderNode {
         public:
             static const unsigned char AlbedoMetalnessRenderTarget = 0 ;
             static const unsigned char EmissiveRoughnessRenderTarget = 1 ;
@@ -39,13 +39,6 @@ namespace Hope {
                 const Mind::Dimension2Di& size,
                 FrameGraphNode* parent = nullptr
             ) ;
-
-            /**
-             * Get the multisampling quality (amount of samples).
-             */
-            exported int multisamplingQuality() const {
-                return framebufferMultisample() -> samples() ;
-            }
 
         protected:
             /**
