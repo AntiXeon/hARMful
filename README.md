@@ -72,4 +72,5 @@ The compilation process for Windows users is shown in this video: https://www.yo
 ### Mac™ OS
 Not officially supported.
 
-![hARMful render](./docs/assets/images/renders/shadows.jpg)
+![hARMful render](./docs/assets/images/renders/shadows.jpg)<br/>
+_Rendered with hARMful v1.x using Blinn-Phong materials_
