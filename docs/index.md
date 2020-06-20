@@ -3,7 +3,7 @@ title: hARMful
 layout: default
 ---
 
-**hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications.
+**hARMful** is a project aimed at making a whole experience for programming video games and interactive 2D/3D applications. It is written in C++17 and extensively uses smart pointers to manage dynamic memory allocations.
 
 hARMful is a young project, leaded by a single developer. It evolves slowly but many features are expected.
 Some of them are already implemented and a demonstration video is available. A "✗" symbol indicates that the feature is not yet implemented; a "✓" symbol is used to signal non-graphic features that are implemented.
@@ -68,13 +68,13 @@ Some of them are already implemented and a demonstration video is available. A "
     - HDR (✓)
     - DDS (✗)
 
-### Features of HOPEful
-- Log system (✓)
+### Features of DOOMful
+- Log system with message levels, file and console (✓)
 - Profiling tool (✓)
 - Translation abstraction tool:
     - Linux (✓)
     - Windows (✗)
-- Random numbers (integer, floats) generation (✓)
+- Thread pool to easily handle a multithread task (✗)
 
 _![hARMful screenshot](./assets/images/renders/pbr/chandelier.jpg)
 Model by [Kirill Sannikov](https://3dmodelhaven.com/model/?m=Chandelier_01)_
