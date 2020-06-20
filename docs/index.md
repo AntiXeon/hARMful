@@ -21,7 +21,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Diffuse, normal and specular maps material [[Demo](https://www.youtube.com/watch?v=KRRrB-G3OOY)]
 - Alpha channel supporting materials (✗)
 - Order-independent transparency (✗)
-- Physics based rendering materials (✗)
+- Physics based rendering materials (✓)
 - Cascade shadow mapping [[Demo 1](https://www.youtube.com/watch?v=8Q3Ci3c_1Pg)] [[Demo 2](https://www.youtube.com/watch?v=BIaklMRR1RQ)]
 - Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
 - Support of deferred rendering (✓)
@@ -65,7 +65,7 @@ Some of them are already implemented and a demonstration video is available. A "
     - PNG (✓)
     - JPEG (✓)
     - TGA (✓)
-	- HDR (✓)
+    - HDR (✓)
     - DDS (✗)
 
 ### Features of HOPEful
@@ -86,7 +86,7 @@ The development time for each of them will vary, depending on the content of the
 A study on this development time will be done to provide an estimated release date.
 
 ### Version 1.0
-The first version of hARMful is waited for mid-2020. It is not yet well evolved and it still is a "baby" engine as it contains the base of the project structure and rendering features. Some advanced features are integrated as well to test the capability of the engine to evolve as wanted in the future.
+The first version of hARMful has been released on March 2020. It is not yet well evolved and it still is a "baby" engine as it contains the base of the project structure and rendering features. Some advanced features are integrated as well to test the capability of the engine to evolve as wanted in the future.
 * Support of GNU/Linux and Windows 10
 * Intel SSE support for mathematics
 * Image loader (JPEG/PNG)
@@ -101,18 +101,18 @@ The first version of hARMful is waited for mid-2020. It is not yet well evolved 
 
 ### Version 2.0 [Physics-based rendering]
 Blinn-Phong materials are deprecated and huge change in scene tree are made (tree of transforms instead of entities).
-This version adds instead a much more realistic rendering.
+This version adds instead a much more realistic rendering. This version is awaited for fall 2020.
+* Support of glTF/glb file formats
 * Support of PBR materials
 * Support of image-based lighting
 * Support of HDR
-* Parallax mapping
+* Better performances
 
 ### Version 2.1 [Lighting and shadows]
 It continues for graphics improvements with a much more realistic lighting.
 * Support of soft shadows (Screen Space Percentage-Closer Soft Shadows)
 * Point light shadows
 * Spot light and their shadows
-* Ground-truth ambient occlusion
 
 ### Version 2.2 [Transparency]
 Mainly oriented towards the integration of transparent materials and their related effects.
@@ -121,33 +121,25 @@ Mainly oriented towards the integration of transparent materials and their relat
 * Transparent materials (blending and clipping)
 * Refraction and reflection of cubemaps
 
-### Version 2.3 [Performances - Step #1]
-A first step for improving performances of the engine.
-* Manage static and dynamic objects on rendering
-
-### Version 2.4 [Interactions]
+### Version 2.3 [Interactions]
 A version to add user interactions in the engine. It begins bringing life with physics, in order to continue this effort in the next version.
 * [v1.4a] User inputs
     * Keyboard + mouse
     * Controlers
 * [v1.4b] Integration of the Bullet physics engine (rigid bodies)
 
-### Version 2.5 [Animation]
+### Version 2.4 [Animation]
 Animated meshes and animations following user defined tracks.
 * Motion based on defined paths (curves)
 * Interpolation types
 * IK mesh animation (bones)
-
-### Version 2.6 [Performances - Step #2]
-A second step for improving performances of the engine.
-* Octrees
-* Frustum culling
 
 ### Version x.y [Planned features]
 * Scripting (Python)
 * Sky generation in GLSL
 * Global illumination
 * Radiosity
+* Ground-truth ambient occlusion
 * Use of the SPIR-V language for shaders
 * Support of the Vulkan API
 * ...
