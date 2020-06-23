@@ -21,7 +21,7 @@ Some of them are already implemented and a demonstration video is available. A "
 - Diffuse, normal and specular maps material [[Demo](https://www.youtube.com/watch?v=KRRrB-G3OOY)]
 - Alpha channel supporting materials (✗)
 - Order-independent transparency (✗)
-- Physics based rendering materials (✓)
+- Physics based rendering materials [[Demo](https://www.youtube.com/watch?v=TOFYPtxJ3Vw)]
 - Cascade shadow mapping [[Demo 1](https://www.youtube.com/watch?v=8Q3Ci3c_1Pg)] [[Demo 2](https://www.youtube.com/watch?v=BIaklMRR1RQ)]
 - Render passes management [[Demo](https://www.youtube.com/watch?v=_oQXAGGpcu8)]
 - Support of deferred rendering (✓)
