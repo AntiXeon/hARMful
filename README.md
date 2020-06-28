@@ -5,6 +5,8 @@
 
 > Learn more and read the documentation on [https://dcarlus.github.io/hARMful/](https://dcarlus.github.io/hARMful/).
 
+:warning: On June, 28th 2020 the development is paused for few weeks.
+
 ## Repository
 The repository is structured in different parts:
 -   **Libraries**: the source code of the libraries that compose the project;
