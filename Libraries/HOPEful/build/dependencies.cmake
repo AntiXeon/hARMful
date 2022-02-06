@@ -1,8 +1,9 @@
 # Minimal versions of the dependencies.
-SET(LIBGLEW_REQUIRED_VERSION "2.1.0")
-SET(LIBGLFW_REQUIRED_VERSION "3.3.2")
+SET(LIBGLEW_REQUIRED_VERSION "2.2.0")
+SET(LIBGLFW_REQUIRED_VERSION "3.3.5")
 SET(LIBASSIMP_REQUIRED_VERSION "5.0.1")
 
+set(USE_CONAN_LIBS OFF)
 set(CONAN_LIBS "")
 set(CONAN_LINK "")
 
@@ -16,7 +17,7 @@ if (GLEW_FOUND AND NOT ${USE_CONAN_LIBS})
     target_link_libraries(${PROJECT_NAME} ${GLEW_LIBRARIES})
 else()
     set(USE_CONAN_LIBS ON)
-    list(APPEND CONAN_LIBS "glew/${LIBGLEW_REQUIRED_VERSION}@bincrafters/stable")
+    list(APPEND CONAN_LIBS "glew/${LIBGLEW_REQUIRED_VERSION}")
     list(APPEND CONAN_LINK CONAN_PKG::glew)
 endif()
 
@@ -31,11 +32,12 @@ if (GLFW_FOUND AND NOT ${USE_CONAN_LIBS})
     target_link_libraries(${PROJECT_NAME} ${GLFW_LIBRARIES})
 else()
     set(USE_CONAN_LIBS ON)
-    list(APPEND CONAN_LIBS "glfw/${LIBGLFW_REQUIRED_VERSION}@bincrafters/stable")
+    list(APPEND CONAN_LIBS "glfw/${LIBGLFW_REQUIRED_VERSION}")
     list(APPEND CONAN_LINK CONAN_PKG::glfw)
 endif()
 
 # Assimp (3D models)
+cmake_policy(SET CMP0012 OLD)
 find_package(assimp ${LIBASSIMP_REQUIRED_VERSION} QUIET)
 if (assimp_FOUND AND NOT ${USE_CONAN_LIBS})
     # Because ASSIMP find_package seems to be broken...

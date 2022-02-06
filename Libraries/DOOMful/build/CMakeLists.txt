@@ -6,7 +6,7 @@ set(CMAKE_HOME_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib/${CMAKE_BUILD_TYPE})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib/${CMAKE_BUILD_TYPE})
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # List source files
@@ -39,9 +39,9 @@ target_link_libraries(${PROJECT_NAME})
 if (UNIX)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         if(DEBUG)
-            list(APPEND CMAKE_CXX_FLAGS "-W -Wall -Werror -std=c++1z -g ${CMAKE_CXX_FLAGS}")
+            list(APPEND CMAKE_CXX_FLAGS "-W -Wall -Werror -std=c++20 -g ${CMAKE_CXX_FLAGS}")
         else()
-            list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++1z ${CMAKE_CXX_FLAGS}")
+            list(APPEND CMAKE_CXX_FLAGS "-O3 -W -Wall -Werror -std=c++20 ${CMAKE_CXX_FLAGS}")
         endif()
     endif()
 

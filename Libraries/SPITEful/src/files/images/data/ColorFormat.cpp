@@ -29,14 +29,16 @@ void ColorFormat::Create(
 	const ColorFormat::ID id,
 	const ColorFormat::ComponentType type
 ) {
-    if (ColorFormats.count(id|type) == 0) {
+    auto format = static_cast<uint32_t>(id) | static_cast<uint32_t>(type) ;
+
+    if (ColorFormats.count(format) == 0) {
         // Get the data on the wanted color format.
         std::string name ;
 		unsigned char amountComponents ;
         unsigned char componentSize ;
         SetDataForFormat(id, type, name, amountComponents, componentSize) ;
         // Apply the data to the color format.
-        ColorFormats[id|type] = ColorFormat(
+        ColorFormats[format] = ColorFormat(
             id,
             name,
             amountComponents,
@@ -54,8 +56,10 @@ const ColorFormat& ColorFormat::Get(
     const ColorFormat::ID id,
 	const ColorFormat::ComponentType type
 ) {
+    auto format = static_cast<uint32_t>(id) | static_cast<uint32_t>(type) ;
+
     Create(id, type) ;
-    return ColorFormats.at(id|type) ;
+    return ColorFormats.at(format) ;
 }
 
 ColorFormat::ID ColorFormat::id() const {
